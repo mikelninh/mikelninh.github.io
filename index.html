@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digitale Demokratie — Open Source Ökosystem von Michael Ninh</title>
+  <meta name="description" content="4 Open-Source-Projekte für ein faireres Deutschland: FairEint, GitLaw, Public Money Mirror, SafeVoice. Einigkeit beginnt mit Fairness.">
+  <meta property="og:title" content="Digitale Demokratie — Open Source Ökosystem">
+  <meta property="og:description" content="4 Projekte, 1 Vision: Transparenz, Gerechtigkeit, Bürgermacht. Von einem Bürger, für alle Bürger.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇩🇪</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #FAFAF7; color: #1A1A1A; line-height: 1.7; }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+    header { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 80px 24px 40px; }
+    h1 { font-family: Georgia, serif; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.2; margin-bottom: 16px; }
+    h1 span { color: #8B6914; }
+    .subtitle { font-size: 1.1rem; color: #777; max-width: 500px; margin: 0 auto 32px; }
+    .vision { background: #F5ECD7; border: 1px solid #E5D5B0; border-radius: 16px; padding: 20px 24px; display: inline-block; font-size: 0.9rem; color: #444; }
+
+    .projects { padding: 60px 0; }
+    .projects h2 { font-family: Georgia, serif; font-size: 1.8rem; text-align: center; margin-bottom: 8px; }
+    .projects p.sub { text-align: center; color: #777; margin-bottom: 40px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+
+    .card { background: white; border: 1px solid #E5E3DE; border-radius: 16px; padding: 28px; text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s; display: block; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+    .card .emoji { font-size: 2rem; margin-bottom: 12px; display: block; }
+    .card h3 { font-family: Georgia, serif; font-size: 1.2rem; margin-bottom: 4px; }
+    .card .question { color: #8B6914; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; }
+    .card .desc { color: #777; font-size: 0.85rem; }
+    .card .status { display: inline-block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 10px; border-radius: 99px; margin-top: 12px; }
+    .live { background: #E6F4EC; color: #1B7A40; }
+    .proto { background: #F5ECD7; color: #8B6914; }
+
+    .connection { padding: 60px 0; text-align: center; }
+    .connection h2 { font-family: Georgia, serif; font-size: 1.8rem; margin-bottom: 16px; }
+    .flow { font-size: 0.95rem; color: #444; line-height: 2; max-width: 500px; margin: 0 auto 32px; }
+    .flow strong { color: #1A1A1A; }
+
+    .about { padding: 60px 0; border-top: 1px solid #E5E3DE; }
+    .about-inner { display: flex; gap: 32px; align-items: flex-start; }
+    @media (max-width: 600px) { .about-inner { flex-direction: column; } }
+    .about h2 { font-family: Georgia, serif; font-size: 1.4rem; margin-bottom: 12px; }
+    .about p { color: #777; font-size: 0.9rem; margin-bottom: 12px; }
+    .about a { color: #8B6914; }
+
+    .support { background: #F5ECD7; border-radius: 16px; padding: 20px 24px; text-align: center; }
+    .support a { display: inline-block; padding: 10px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.85rem; margin: 4px; }
+    .btn-gold { background: #8B6914; color: white; }
+    .btn-outline { background: white; border: 1px solid #E5E3DE; color: #444; }
+
+    footer { padding: 32px 0; text-align: center; color: #999; font-size: 0.8rem; border-top: 1px solid #E5E3DE; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>Digitale <span>Demokratie</span></h1>
+      <p class="subtitle">4 Open-Source-Projekte, 1 Vision: Ein transparenteres, faireres Deutschland. Von einem Bürger, für alle Bürger.</p>
+      <div class="vision">Einigkeit beginnt mit Fairness. #FairEint</div>
+    </div>
+  </header>
+
+  <section class="projects">
+    <div class="container">
+      <h2>Das Ökosystem</h2>
+      <p class="sub">Jedes Projekt beantwortet eine Frage. Zusammen ergeben sie ein Bild.</p>
+      <div class="grid">
+        <a href="https://mikelninh.github.io/faireint/" class="card">
+          <span class="emoji">⚖️</span>
+          <div class="question">Was sollte Deutschland anders machen?</div>
+          <h3>FairEint</h3>
+          <p class="desc">10 evidenzbasierte Reformen mit Policy-Simulator, Kosten-Rechnung, UBS-Wallet-Demo und Parteien-Check.</p>
+          <span class="status live">Live</span>
+        </a>
+        <a href="https://mikelninh.github.io/gitlaw/" class="card">
+          <span class="emoji">📜</span>
+          <div class="question">Was steht im Gesetz?</div>
+          <h3>GitLaw</h3>
+          <p class="desc">Alle 5.936 deutschen Bundesgesetze durchsuchbar, AI-erklärbar, mit RAG-Chat und 20 Musterbriefen.</p>
+          <span class="status live">Live</span>
+        </a>
+        <a href="https://github.com/mikelninh/Public-Money-Mirror" class="card">
+          <span class="emoji">💸</span>
+          <div class="question">Wohin fließt das Steuergeld?</div>
+          <h3>Public Money Mirror</h3>
+          <p class="desc">Anomalie-Erkennung im Bundeshaushalt. MdB Transparenz-Index: 5 Faktoren, eine Schulnote für jeden Abgeordneten.</p>
+          <span class="status proto">Prototyp</span>
+        </a>
+        <a href="https://github.com/mikelninh/safevoice" class="card">
+          <span class="emoji">🛡️</span>
+          <div class="question">Wer wird online angegriffen?</div>
+          <h3>SafeVoice</h3>
+          <p class="desc">Digitale Belästigung dokumentieren, unter deutschem Recht klassifizieren (12 Gesetze), Berichte generieren.</p>
+          <span class="status proto">Deploy Ready</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="connection">
+    <div class="container">
+      <h2>Wie alles zusammenhängt</h2>
+      <div class="flow">
+        <strong>FairEint</strong> zeigt was sich ändern sollte.<br>
+        <strong>GitLaw</strong> zeigt was aktuell im Gesetz steht.<br>
+        <strong>Public Money Mirror</strong> zeigt wohin das Geld fließt.<br>
+        <strong>SafeVoice</strong> schützt die, die sich äußern.<br><br>
+        Zusammen: <strong>Transparenz + Gerechtigkeit + Sicherheit = Demokratie die funktioniert.</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="container">
+      <div class="about-inner">
+        <div style="flex: 1;">
+          <h2>Über mich</h2>
+          <p>Ich bin Michael Ninh — deutsch-vietnamesisch, in Deutschland aufgewachsen, mit Wurzeln in zwei Kulturen. Ich glaube dass Demokratie besser sein kann, wenn Bürger Zugang zu den richtigen Werkzeugen haben.</p>
+          <p>Alle Projekte sind Open Source, ehrenamtlich, unabhängig. Keine Partei, kein Verein, keine Lobby.</p>
+          <p><a href="https://www.linkedin.com/in/michael-ninh/">LinkedIn</a> · <a href="https://github.com/mikelninh">GitHub</a></p>
+        </div>
+        <div class="support">
+          <p style="font-weight: 600; margin-bottom: 8px; color: #444;">Diese Arbeit unterstützen</p>
+          <p style="font-size: 0.8rem; color: #777; margin-bottom: 12px;">Ehrenamtlich und kostenlos. Jede Unterstützung hilft weiterzumachen.</p>
+          <a href="https://ko-fi.com/mikel777" class="btn-gold support-link">Ko-fi</a>
+          <a href="https://github.com/sponsors/mikelninh" class="btn-outline support-link">GitHub Sponsors</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>Digitale Demokratie — Open Source Ökosystem · MIT Lizenz</p>
+      <p style="margin-top: 4px;">Quellen: OECD · WHO · IMF · Bundesbank · abgeordnetenwatch.de · bundestag.de</p>
+    </div>
+  </footer>
+
+</body>
+</html>
