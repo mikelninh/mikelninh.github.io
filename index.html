@@ -120,6 +120,88 @@
     </div>
   </section>
 
+  <!-- LIVE DEMO -->
+  <section style="padding: 50px 0; background: #1A1A1A; color: white;">
+    <div class="container">
+      <h2 style="color: white; font-family: Georgia, serif; font-size: 1.8rem; text-align: center; margin-bottom: 6px;">Probier es aus</h2>
+      <p style="text-align: center; color: #999; margin-bottom: 24px; font-size: 0.9rem;">Gib einen belästigenden Text ein — SafeVoice klassifiziert ihn live unter deutschem Recht.</p>
+
+      <div style="max-width: 500px; margin: 0 auto;">
+        <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+          <input id="demo-input" type="text" placeholder="z.B. 'ich bringe dich um du dreckiger ausländer'" style="flex: 1; padding: 14px 16px; border-radius: 12px; border: 1px solid #333; background: #2A2A2A; color: white; font-size: 0.9rem; outline: none;">
+          <button onclick="runDemo()" id="demo-btn" style="padding: 14px 24px; border-radius: 12px; background: #8B6914; color: white; border: none; font-weight: 700; font-size: 0.9rem; cursor: pointer; white-space: nowrap;">Analysieren</button>
+        </div>
+
+        <!-- Quick test buttons -->
+        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
+          <button onclick="document.getElementById('demo-input').value='ich bringe dich um'; runDemo()" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Todesdrohung</button>
+          <button onclick="document.getElementById('demo-input').value='dreckige ausländer raus'; runDemo()" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Volksverhetzung</button>
+          <button onclick="document.getElementById('demo-input').value='ich veröffentliche deine nacktbilder'; runDemo()" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Deepfake/Racheporno</button>
+          <button onclick="document.getElementById('demo-input').value='ich weiß wo du wohnst'; runDemo()" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Stalking</button>
+        </div>
+
+        <div id="demo-result" style="display: none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    async function runDemo() {
+      const input = document.getElementById('demo-input');
+      const result = document.getElementById('demo-result');
+      const btn = document.getElementById('demo-btn');
+      const text = input.value.trim();
+      if (!text) return;
+
+      btn.textContent = '...';
+      btn.disabled = true;
+      result.style.display = 'none';
+
+      try {
+        const res = await fetch('https://safevoice-production-0847.up.railway.app/api/analyze/text', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text })
+        });
+        const data = await res.json();
+
+        const sevColors = { critical: '#C44030', high: '#C08B20', medium: '#C08B20', low: '#777' };
+        const sevLabels = { critical: 'KRITISCH', high: 'HOCH', medium: 'MITTEL', low: 'NIEDRIG' };
+        const sevColor = sevColors[data.severity] || '#777';
+
+        const laws = data.applicable_laws.map(l =>
+          `<span style="display: inline-block; background: #2A2A2A; border: 1px solid #333; border-radius: 6px; padding: 3px 10px; font-size: 0.75rem; margin: 2px;">${l.paragraph}</span>`
+        ).join(' ');
+
+        result.innerHTML = `
+          <div style="background: #2A2A2A; border: 1px solid #333; border-radius: 16px; padding: 20px; text-align: left;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+              <span style="background: ${sevColor}; color: white; padding: 4px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">${sevLabels[data.severity]}</span>
+              <span style="color: #999; font-size: 0.8rem;">Konfidenz: ${Math.round(data.confidence * 100)}%</span>
+              ${data.requires_immediate_action ? '<span style="color: #C44030; font-size: 0.8rem; font-weight: 600;">Sofortiges Handeln empfohlen</span>' : ''}
+            </div>
+            <p style="color: #ddd; font-size: 0.85rem; margin-bottom: 12px;">${data.summary_de}</p>
+            <div style="margin-bottom: 8px;">
+              <span style="color: #999; font-size: 0.75rem; display: block; margin-bottom: 4px;">Relevante Gesetze:</span>
+              ${laws}
+            </div>
+            <p style="color: #777; font-size: 0.75rem; margin-top: 12px; border-top: 1px solid #333; padding-top: 8px;">${data.potential_consequences_de}</p>
+          </div>
+        `;
+        result.style.display = 'block';
+      } catch (e) {
+        result.innerHTML = '<p style="color: #C44030; text-align: center;">Verbindungsfehler — bitte erneut versuchen.</p>';
+        result.style.display = 'block';
+      } finally {
+        btn.textContent = 'Analysieren';
+        btn.disabled = false;
+      }
+    }
+
+    // Enter key support
+    document.getElementById('demo-input').addEventListener('keydown', e => { if (e.key === 'Enter') runDemo(); });
+  </script>
+
   <section class="connection">
     <div class="container">
       <h2>Wie alles zusammenhängt</h2>
