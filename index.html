@@ -3,417 +3,265 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digitale Demokratie — Open Source Ökosystem von Michael Ninh</title>
-  <meta name="description" content="4 Open-Source-Projekte für ein faireres Deutschland: FairEint, GitLaw, Public Money Mirror, SafeVoice. Einigkeit beginnt mit Fairness.">
-  <meta property="og:title" content="Digitale Demokratie — Open Source Ökosystem">
-  <meta property="og:description" content="4 Projekte, 1 Vision: Transparenz, Gerechtigkeit, Bürgermacht. Von einem Bürger, für alle Bürger.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇩🇪</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>Michael Ninh — Digitale Demokratie Ökosystem</title>
+  <meta name="description" content="4 Open-Source-Projekte für ein faireres Deutschland. FairEint, SafeVoice, GitLaw, Public Money Mirror. Einigkeit beginnt mit Fairness.">
+  <meta property="og:title" content="Michael Ninh — Digitale Demokratie">
+  <meta property="og:description" content="4 Projekte, 1 Vision. Geschätztes Einsparpotenzial: €62-146 Mrd./Jahr. Open Source. #FairEint #Fair1">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: #FAFAF7; color: #1A1A1A; line-height: 1.7; }
-    .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',system-ui,sans-serif;background:#FAFAF7;color:#1A1A1A;line-height:1.7}
+    .c{max-width:800px;margin:0 auto;padding:0 24px}
+    a{color:#8B6914}
+    h2{font-family:Georgia,serif;font-size:clamp(1.5rem,3vw,2rem);margin-bottom:8px}
+    .tag{display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:99px;background:#F5ECD7;color:#8B6914}
+    .tag-green{background:#E6F4EC;color:#1B7A40}
+    .btn{display:inline-block;padding:10px 24px;border-radius:12px;text-decoration:none;font-weight:600;font-size:.85rem}
+    .btn-gold{background:#8B6914;color:white!important}
+    .btn-outline{background:white;border:1px solid #E5E3DE;color:#444!important}
+    .card{background:white;border:1px solid #E5E3DE;border-radius:16px;padding:24px;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s;display:block}
+    .card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.08)}
+    @keyframes fadeStep{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:600px){.grid-3{grid-template-columns:1fr!important}.hero-flex{flex-direction:column!important}}
 
-    header { min-height: 50vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 60px 24px 20px; }
-    h1 { font-family: Georgia, serif; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.2; margin-bottom: 16px; }
-    h1 span { color: #8B6914; }
-    .subtitle { font-size: 1.1rem; color: #777; max-width: 500px; margin: 0 auto 32px; }
-    .vision { background: #F5ECD7; border: 1px solid #E5D5B0; border-radius: 16px; padding: 20px 24px; display: inline-block; font-size: 0.9rem; color: #444; }
-
-    .projects { padding: 40px 0; }
-    .projects h2 { font-family: Georgia, serif; font-size: 1.8rem; text-align: center; margin-bottom: 8px; }
-    .projects p.sub { text-align: center; color: #777; margin-bottom: 24px; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
-
-    .card { background: white; border: 1px solid #E5E3DE; border-radius: 16px; padding: 28px; text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s; display: block; }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
-    .card .emoji { font-size: 2rem; margin-bottom: 12px; display: block; }
-    .card h3 { font-family: Georgia, serif; font-size: 1.2rem; margin-bottom: 4px; }
-    .card .question { color: #8B6914; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; }
-    .card .desc { color: #777; font-size: 0.85rem; }
-    .card .status { display: inline-block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 10px; border-radius: 99px; margin-top: 12px; }
-    .live { background: #E6F4EC; color: #1B7A40; }
-    .proto { background: #F5ECD7; color: #8B6914; }
-
-    .connection { padding: 30px 0; text-align: center; }
-    .connection h2 { font-family: Georgia, serif; font-size: 1.8rem; margin-bottom: 12px; }
-    .flow { font-size: 0.95rem; color: #444; line-height: 1.9; max-width: 500px; margin: 0 auto 16px; }
-    .flow strong { color: #1A1A1A; }
-
-    .about { padding: 40px 0; border-top: 1px solid #E5E3DE; }
-    .about-inner { display: flex; gap: 32px; align-items: flex-start; }
-    @media (max-width: 600px) { .about-inner { flex-direction: column; } }
-    .about h2 { font-family: Georgia, serif; font-size: 1.4rem; margin-bottom: 12px; }
-    .about p { color: #777; font-size: 0.9rem; margin-bottom: 12px; }
-    .about a { color: #8B6914; }
-
-    .support { background: #F5ECD7; border-radius: 16px; padding: 20px 24px; text-align: center; }
-    .support a { display: inline-block; padding: 10px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.85rem; margin: 4px; }
-    .btn-gold { background: #8B6914; color: white !important; }
-    .btn-outline { background: white; border: 1px solid #E5E3DE; color: #444 !important; }
-
-    footer { padding: 32px 0; text-align: center; color: #999; font-size: 0.8rem; border-top: 1px solid #E5E3DE; }
-    @keyframes fadeStep { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    /* Nav */
+    nav{position:fixed;top:0;width:100%;z-index:50;background:rgba(250,250,247,.9);backdrop-filter:blur(12px);border-bottom:1px solid #E5E3DE}
+    nav .inner{max-width:800px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:48px}
+    nav a.logo{font-family:Georgia,serif;font-size:1.1rem;text-decoration:none;color:#1A1A1A}
+    nav a.logo span{color:#8B6914}
+    nav .links{display:flex;gap:4px;font-size:.8rem}
+    nav .links a{color:#777;text-decoration:none;padding:4px 10px;border-radius:8px}
+    nav .links a:hover{color:#1A1A1A;background:#F3F1EC}
   </style>
 </head>
 <body>
 
-  <header>
-    <div>
-      <h1>Digitale <span>Demokratie</span></h1>
-      <p class="subtitle">4 Open-Source-Projekte, 1 Vision: Ein transparenteres, faireres Deutschland. Von einem Bürger, für alle Bürger.</p>
-      <div class="vision" style="max-width: 440px; margin: 0 auto; text-align: left; line-height: 1.7;">
-        <strong style="color: #8B6914;">FairEint</strong> &mdash; ein Wort, zwei Bedeutungen:<br>
-        <span style="color: #555;">Deutschland ist fair <em>vereint</em>.</span> <span style="color: #999;">(Zustand)</span><br>
-        <span style="color: #555;">Fairness <em>eint</em> uns.</span> <span style="color: #999;">(Aktion)</span><br>
-        <span style="font-size: 0.85rem; color: #999; display: block; margin-top: 6px;">Einigkeit und Recht und Freiheit &mdash; aber Einigkeit funktioniert nur, wenn sie fair ist. <strong style="color: #8B6914;">#FairEint #Fair1</strong></span>
+  <!-- Nav -->
+  <nav>
+    <div class="inner">
+      <a href="#" class="logo">Michael <span>Ninh</span></a>
+      <div class="links">
+        <a href="#projekte">Projekte</a>
+        <a href="#demo">Demo</a>
+        <a href="#impact">Impact</a>
+        <a href="https://ko-fi.com/mikel777" target="_blank" class="btn-gold" style="padding:4px 12px;font-size:.75rem;border-radius:8px;">Unterstützen</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header style="min-height:80vh;display:flex;align-items:center;padding:80px 24px 40px">
+    <div class="c">
+      <div class="hero-flex" style="display:flex;gap:40px;align-items:center">
+        <div style="flex:1">
+          <span class="tag" style="margin-bottom:12px">Open Source Ökosystem</span>
+          <h1 style="font-family:Georgia,serif;font-size:clamp(2rem,5vw,3.2rem);line-height:1.15;margin:12px 0">Digitale<br><span style="color:#8B6914">Demokratie</span></h1>
+          <p style="color:#777;font-size:1rem;margin-bottom:24px;max-width:400px">4 Projekte. 1 Vision. Ein transparenteres, faireres Deutschland — gebaut von einem Bürger, für alle Bürger.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <a href="#projekte" class="btn btn-gold">Projekte ansehen</a>
+            <a href="#demo" class="btn btn-outline">Live Demo</a>
+          </div>
+        </div>
+        <div style="flex:0 0 280px;background:#F5ECD7;border:1px solid #E5D5B0;border-radius:20px;padding:24px;line-height:1.7">
+          <p style="font-family:Georgia,serif;font-size:1.3rem;margin-bottom:8px"><strong style="color:#8B6914">FairEint</strong></p>
+          <p style="font-size:.85rem;color:#555">Deutschland ist fair <em>vereint</em>. <span style="color:#999">(Zustand)</span></p>
+          <p style="font-size:.85rem;color:#555">Fairness <em>eint</em> uns. <span style="color:#999">(Aktion)</span></p>
+          <p style="font-size:.78rem;color:#999;margin-top:10px">Einigkeit und Recht und Freiheit — aber nur wenn sie fair ist.</p>
+          <p style="font-size:.78rem;color:#8B6914;font-weight:600;margin-top:6px">#FairEint #Fair1</p>
+        </div>
       </div>
     </div>
   </header>
 
-  <section class="projects">
-    <div class="container">
-      <h2>Das Ökosystem</h2>
-      <p class="sub">Jedes Projekt beantwortet eine Frage. Zusammen ergeben sie ein Bild.</p>
+  <!-- Personal Story — dark section -->
+  <section style="background:#1A1A1A;color:white;padding:50px 0">
+    <div class="c" style="max-width:600px;text-align:center">
+      <p style="font-size:1.8rem;margin-bottom:16px">🇩🇪 🇻🇳</p>
+      <p style="font-size:1.05rem;color:#ddd;line-height:1.8;margin-bottom:16px"><strong>Ich bin Michael Ninh</strong> — deutsch-vietnamesisch, aufgewachsen zwischen zwei Kulturen. Als Mensch mit Migrationshintergrund kenne ich digitale Anfeindungen aus erster Hand.</p>
+      <p style="font-size:.9rem;color:#999;line-height:1.8">Ich habe SafeVoice gebaut, weil ich mir gewünscht hätte, dass es so ein Werkzeug gibt, als ich es selbst gebraucht habe. Ich habe FairEint gebaut, weil ich glaube dass Einigkeit nur funktioniert, wenn sie fair ist.</p>
+      <div style="display:flex;gap:16px;justify-content:center;margin-top:20px">
+        <a href="https://www.linkedin.com/in/michael-ninh/" target="_blank" style="color:#999;font-size:.85rem;text-decoration:none">LinkedIn</a>
+        <a href="https://github.com/mikelninh" target="_blank" style="color:#999;font-size:.85rem;text-decoration:none">GitHub</a>
+      </div>
+    </div>
+  </section>
 
-      <!-- FairEint — Hero Project -->
-      <a href="https://mikelninh.github.io/faireint/" class="card" style="margin-bottom: 16px; border: 2px solid #8B6914; background: linear-gradient(135deg, #FFFDF5, #FFF); position: relative; overflow: hidden;">
-        <div style="display: flex; align-items: flex-start; gap: 20px;">
-          <span style="font-size: 3rem;">⚖️</span>
-          <div style="flex: 1;">
-            <div class="question" style="font-size: 0.9rem;">Flaggschiff — Was sollte Deutschland anders machen?</div>
-            <h3 style="font-size: 1.5rem; margin-bottom: 6px;">FairEint</h3>
-            <p class="desc" style="font-size: 0.85rem; margin-bottom: 10px;">10 evidenzbasierte Reformen. Policy-Simulator mit 23 Personas. Grunddienste-Wallet (Universal Basic Services)-Demo. Parteien-Check. Fahrplan 2026-2035. Bürger-Abstimmung. FAQ mit Gegenargumenten. Experten-Zitate (DIW, IMF, WHO).</p>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <span class="status live">Live</span>
-              <span style="background: #F5ECD7; color: #8B6914; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 10px; border-radius: 99px;">10 Reformen</span>
-              <span style="background: #F5ECD7; color: #8B6914; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 10px; border-radius: 99px;">23 Personas</span>
-              <span style="background: #F5ECD7; color: #8B6914; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 10px; border-radius: 99px;">12+ Länder</span>
+  <!-- Projects -->
+  <section id="projekte" style="padding:50px 0">
+    <div class="c">
+      <div style="text-align:center;margin-bottom:24px">
+        <span class="tag">Das Ökosystem</span>
+        <h2 style="margin-top:8px">Jedes Projekt beantwortet eine Frage</h2>
+      </div>
+
+      <!-- FairEint Hero Card -->
+      <a href="https://mikelninh.github.io/faireint/" class="card" style="margin-bottom:16px;border:2px solid #8B6914;background:linear-gradient(135deg,#FFFDF5,#FFF)">
+        <div style="display:flex;align-items:flex-start;gap:16px">
+          <span style="font-size:2.5rem">⚖️</span>
+          <div style="flex:1">
+            <span class="tag" style="margin-bottom:6px">Flaggschiff · Einsparpotenzial €60-140 Mrd./Jahr</span>
+            <h3 style="font-family:Georgia,serif;font-size:1.4rem;margin:6px 0 4px">FairEint</h3>
+            <p style="color:#777;font-size:.82rem;margin-bottom:8px">Was sollte Deutschland anders machen? 10 Reformen, 23-Persona-Simulator, UBS-Wallet-Demo, Parteien-Check, 5-Jahres-Fahrplan.</p>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <span class="tag-green" style="display:inline-block;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:99px">Live</span>
+              <span class="tag" style="font-size:.6rem">10 Reformen</span>
+              <span class="tag" style="font-size:.6rem">23 Personas</span>
+              <span class="tag" style="font-size:.6rem">12+ Länder</span>
             </div>
           </div>
         </div>
       </a>
 
-      <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
-        <a href="https://safevoice-production-0847.up.railway.app" class="card">
-          <span class="emoji">🛡️</span>
-          <div class="question">Wer wird online angegriffen?</div>
-          <h3>SafeVoice</h3>
-          <p class="desc">AI klassifiziert unter 12 deutschen Gesetzen. Beweissicherung. PDF-Reports. Rechtliche Rückfragen per AI-Chat.</p>
-          <span class="status live">Live</span>
+      <div class="grid-3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+        <a href="https://safevoice-production-0847.up.railway.app" class="card" style="padding:20px">
+          <span style="font-size:1.8rem;display:block;margin-bottom:8px">🛡️</span>
+          <p style="color:#8B6914;font-weight:600;font-size:.75rem;margin-bottom:4px">Wer wird angegriffen?</p>
+          <h3 style="font-family:Georgia,serif;font-size:1rem;margin-bottom:4px">SafeVoice</h3>
+          <p style="color:#777;font-size:.75rem">AI-Classifier · 12 Gesetze · PDF-Reports</p>
+          <span class="tag-green" style="display:inline-block;font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:99px;margin-top:8px">Live</span>
         </a>
-        <a href="https://github.com/mikelninh/Public-Money-Mirror" class="card">
-          <span class="emoji">💸</span>
-          <div class="question">Wohin fließt das Steuergeld?</div>
-          <h3>Public Money Mirror</h3>
-          <p class="desc">Anomalie-Erkennung im €520 Mrd. Bundeshaushalt. MdB Transparenz-Index. 10-Tab Analyse-Dashboard. Einspar-Reports.</p>
-          <span class="status proto">Prototyp</span>
+        <a href="https://github.com/mikelninh/Public-Money-Mirror" class="card" style="padding:20px">
+          <span style="font-size:1.8rem;display:block;margin-bottom:8px">💸</span>
+          <p style="color:#8B6914;font-weight:600;font-size:.75rem;margin-bottom:4px">Wohin fließt das Steuergeld?</p>
+          <h3 style="font-family:Georgia,serif;font-size:1rem;margin-bottom:4px">Public Money Mirror</h3>
+          <p style="color:#777;font-size:.75rem">€520 Mrd. Haushalt · MdB-Index · Anomalien</p>
+          <span class="tag" style="font-size:.6rem;margin-top:8px">Prototyp</span>
         </a>
-        <a href="https://mikelninh.github.io/gitlaw/" class="card">
-          <span class="emoji">📜</span>
-          <div class="question">Was steht im Gesetz?</div>
-          <h3>GitLaw</h3>
-          <p class="desc">5.936 Bundesgesetze durchsuchbar. AI-Erklärungen. RAG-Chat. 20 Musterbriefe. 6 Rechts-Widersprüche aufgedeckt.</p>
-          <span class="status live">Live</span>
+        <a href="https://mikelninh.github.io/gitlaw/" class="card" style="padding:20px">
+          <span style="font-size:1.8rem;display:block;margin-bottom:8px">📜</span>
+          <p style="color:#8B6914;font-weight:600;font-size:.75rem;margin-bottom:4px">Was steht im Gesetz?</p>
+          <h3 style="font-family:Georgia,serif;font-size:1rem;margin-bottom:4px">GitLaw</h3>
+          <p style="color:#777;font-size:.75rem">5.936 Gesetze · AI-Chat · 20 Musterbriefe</p>
+          <span class="tag-green" style="display:inline-block;font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:99px;margin-top:8px">Live</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- LIVE DEMO -->
-  <section style="padding: 50px 0; background: #1A1A1A; color: white;">
-    <div class="container">
-      <h2 style="color: white; font-family: Georgia, serif; font-size: 1.8rem; text-align: center; margin-bottom: 6px;">Probier es aus</h2>
-      <p style="text-align: center; color: #999; margin-bottom: 24px; font-size: 0.9rem;">Gib einen belästigenden Text ein — SafeVoice klassifiziert ihn live unter deutschem Recht.</p>
-
-      <div style="max-width: 500px; margin: 0 auto;">
-        <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-          <input id="demo-input" type="text" placeholder="z.B. 'ich bringe dich um du dreckiger ausländer'" style="flex: 1; padding: 14px 16px; border-radius: 12px; border: 1px solid #333; background: #2A2A2A; color: white; font-size: 0.9rem; outline: none;">
-          <button onclick="runDemo()" id="demo-btn" style="padding: 14px 24px; border-radius: 12px; background: #8B6914; color: white; border: none; font-weight: 700; font-size: 0.9rem; cursor: pointer; white-space: nowrap;">Analysieren ▸</button>
+  <!-- Live Demo — dark -->
+  <section id="demo" style="padding:50px 0;background:#1A1A1A;color:white">
+    <div class="c">
+      <div style="text-align:center;margin-bottom:20px">
+        <span class="tag" style="background:#333;color:#999">Live Demo</span>
+        <h2 style="color:white;margin-top:8px">Probier es aus</h2>
+        <p style="color:#777;font-size:.85rem">SafeVoice klassifiziert Text live unter deutschem Recht. Direkt hier.</p>
+      </div>
+      <div style="max-width:500px;margin:0 auto">
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          <input id="demo-input" type="text" placeholder="Belästigenden Text eingeben..." style="flex:1;padding:12px 16px;border-radius:12px;border:1px solid #333;background:#2A2A2A;color:white;font-size:.85rem;outline:none">
+          <button onclick="runDemo()" id="demo-btn" style="padding:12px 20px;border-radius:12px;background:#8B6914;color:white;border:none;font-weight:700;font-size:.85rem;cursor:pointer;white-space:nowrap">Analysieren ▸</button>
         </div>
-
-        <!-- Quick test buttons — realistic scenarios -->
-        <p style="color: #555; font-size: 0.75rem; margin-bottom: 8px;">Oder teste ein realistisches Szenario:</p>
-        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
-          <button onclick="setAndRun('du hässliches kind, hurensohn, ich schlitze dich auf wenn ich dich sehe')" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Morddrohung + Beleidigung</button>
-          <button onclick="setAndRun('alle Muslime gehören vergast, Deutschland den Deutschen, Ausländer raus')" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Volksverhetzung</button>
-          <button onclick="setAndRun('ich hab deine Nacktbilder und wenn du nicht 500€ zahlst veröffentliche ich sie überall')" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Erpressung + Racheporno</button>
-          <button onclick="setAndRun('ich beobachte dich seit Wochen, ich weiß wo du wohnst und arbeitest, du kannst mir nicht entkommen')" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Stalking</button>
-          <button onclick="setAndRun('Investiere jetzt 500€ in Bitcoin, ich garantiere 30% monatliche Rendite, schick Geld an diese Wallet')" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Krypto-Betrug</button>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+          <button onclick="setAndRun('du hässliches kind, hurensohn, ich schlitze dich auf wenn ich dich sehe')" style="padding:5px 10px;border-radius:8px;background:#2A2A2A;border:1px solid #333;color:#777;font-size:.7rem;cursor:pointer">Morddrohung</button>
+          <button onclick="setAndRun('alle Muslime gehören vergast, Deutschland den Deutschen')" style="padding:5px 10px;border-radius:8px;background:#2A2A2A;border:1px solid #333;color:#777;font-size:.7rem;cursor:pointer">Volksverhetzung</button>
+          <button onclick="setAndRun('ich hab deine Nacktbilder und veröffentliche sie wenn du nicht 500€ zahlst')" style="padding:5px 10px;border-radius:8px;background:#2A2A2A;border:1px solid #333;color:#777;font-size:.7rem;cursor:pointer">Erpressung</button>
+          <button onclick="setAndRun('ich beobachte dich seit Wochen, ich weiß wo du wohnst')" style="padding:5px 10px;border-radius:8px;background:#2A2A2A;border:1px solid #333;color:#777;font-size:.7rem;cursor:pointer">Stalking</button>
+          <button onclick="setAndRun('Investiere 500€ in Bitcoin, 30% monatliche Rendite garantiert')" style="padding:5px 10px;border-radius:8px;background:#2A2A2A;border:1px solid #333;color:#777;font-size:.7rem;cursor:pointer">Betrug</button>
         </div>
-
-        <div id="demo-result" style="display: none;"></div>
+        <div id="demo-result" style="display:none"></div>
       </div>
     </div>
   </section>
 
   <script>
-    function setAndRun(text) {
-      document.getElementById('demo-input').value = text;
-      setTimeout(runDemo, 50);
+    function setAndRun(t){document.getElementById('demo-input').value=t;setTimeout(runDemo,50)}
+    async function runDemo(){
+      const input=document.getElementById('demo-input'),result=document.getElementById('demo-result'),btn=document.getElementById('demo-btn'),text=input.value.trim();
+      if(!text)return;
+      btn.textContent='Läuft...';btn.disabled=true;
+      const steps=[{i:'🔍',t:'Text wird analysiert...'},{i:'⚖️',t:'Rechtliche Einordnung...'},{i:'📊',t:'Schweregrad wird berechnet...'},{i:'📋',t:'Bericht wird erstellt...'}];
+      result.innerHTML='<div id="ds" style="background:#2A2A2A;border:1px solid #333;border-radius:16px;padding:16px"></div>';result.style.display='block';
+      const ds=document.getElementById('ds');
+      for(const s of steps){await new Promise(r=>setTimeout(r,500));ds.innerHTML+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;animation:fadeStep .3s ease forwards"><span>${s.i}</span><span style="color:#999;font-size:.8rem">${s.t}</span><span style="color:#1B7A40;margin-left:auto">✓</span></div>`}
+      try{
+        const res=await fetch('https://safevoice-production-0847.up.railway.app/api/analyze/text',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});
+        const d=await res.json();
+        const sc={critical:'#C44030',high:'#C08B20',medium:'#C08B20',low:'#777'},sl={critical:'KRITISCH',high:'HOCH',medium:'MITTEL',low:'NIEDRIG'},se={critical:'🔴',high:'🟠',medium:'🟡',low:'⚪'};
+        const laws=d.applicable_laws.map(l=>`<div style="background:#1A1A1A;border:1px solid #333;border-radius:10px;padding:10px 14px;margin-bottom:6px"><div style="display:flex;justify-content:space-between"><span style="color:#ddd;font-weight:600;font-size:.8rem">${l.paragraph}</span><span style="color:#666;font-size:.7rem">${l.max_penalty}</span></div><p style="color:#888;font-size:.72rem;margin-top:3px">${l.title_de} — ${l.applies_because_de}</p></div>`).join('');
+        await new Promise(r=>setTimeout(r,300));
+        result.innerHTML=`<div style="background:#2A2A2A;border:1px solid #333;border-radius:16px;padding:20px;animation:fadeStep .4s ease forwards">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap"><span style="font-size:1.3rem">${se[d.severity]}</span><span style="background:${sc[d.severity]};color:white;padding:3px 12px;border-radius:8px;font-size:.75rem;font-weight:700;text-transform:uppercase">${sl[d.severity]}</span><span style="color:#666;font-size:.75rem">Konfidenz: ${Math.round(d.confidence*100)}%</span>${d.requires_immediate_action?'<span style="background:#C44030;color:white;padding:2px 8px;border-radius:6px;font-size:.65rem;font-weight:600">SOFORT HANDELN</span>':''}</div>
+          <p style="color:#ddd;font-size:.85rem;margin-bottom:14px;line-height:1.6">${d.summary_de}</p>
+          <p style="color:#666;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Relevante Gesetze</p>${laws}
+          <div style="background:#1A1A1A;border-left:3px solid ${sc[d.severity]};border-radius:0 10px 10px 0;padding:10px 14px;margin-top:10px"><p style="color:#666;font-size:.65rem;font-weight:600;text-transform:uppercase;margin-bottom:3px">Empfohlene Maßnahmen</p><p style="color:#aaa;font-size:.78rem;line-height:1.5">${d.potential_consequences_de}</p></div>
+          <div style="text-align:center;margin-top:14px;padding-top:10px;border-top:1px solid #333"><a href="https://safevoice-production-0847.up.railway.app" target="_blank" style="color:#8B6914;font-size:.78rem;font-weight:600;text-decoration:none">Vollständige Dokumentation auf SafeVoice →</a></div></div>`;
+      }catch(e){result.innerHTML='<p style="color:#C44030;text-align:center">Verbindungsfehler — bitte erneut versuchen.</p>';result.style.display='block'}
+      finally{btn.textContent='Analysieren ▸';btn.disabled=false}
     }
-
-    async function runDemo() {
-      const input = document.getElementById('demo-input');
-      const result = document.getElementById('demo-result');
-      const btn = document.getElementById('demo-btn');
-      const text = input.value.trim();
-      if (!text) return;
-
-      btn.textContent = 'Läuft...';
-      btn.disabled = true;
-
-      // Step-by-step analysis animation
-      const steps = [
-        { icon: '🔍', text: 'Text wird analysiert...', delay: 0 },
-        { icon: '⚖️', text: 'Rechtliche Einordnung — Zuordnung zu deutschen Gesetzen...', delay: 600 },
-        { icon: '📊', text: 'Schweregrad wird berechnet...', delay: 1200 },
-        { icon: '📋', text: 'Bericht wird erstellt...', delay: 1800 },
-      ];
-
-      result.innerHTML = `<div id="demo-steps" style="background: #2A2A2A; border: 1px solid #333; border-radius: 16px; padding: 20px;"></div>`;
-      result.style.display = 'block';
-      const stepsEl = document.getElementById('demo-steps');
-
-      // Show steps progressively
-      for (const step of steps) {
-        await new Promise(r => setTimeout(r, step.delay ? 600 : 0));
-        stepsEl.innerHTML += `<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px; opacity: 0; animation: fadeStep 0.3s ease forwards;">
-          <span style="font-size: 1.1rem;">${step.icon}</span>
-          <span style="color: #999; font-size: 0.82rem;">${step.text}</span>
-          <span style="color: #1B7A40; margin-left: auto;">✓</span>
-        </div>`;
-      }
-
-      try {
-        const res = await fetch('https://safevoice-production-0847.up.railway.app/api/analyze/text', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text })
-        });
-        const data = await res.json();
-
-        const sevColors = { critical: '#C44030', high: '#C08B20', medium: '#C08B20', low: '#777' };
-        const sevLabels = { critical: 'KRITISCH', high: 'HOCH', medium: 'MITTEL', low: 'NIEDRIG' };
-        const sevEmoji = { critical: '🔴', high: '🟠', medium: '🟡', low: '⚪' };
-        const sevColor = sevColors[data.severity] || '#777';
-
-        const laws = data.applicable_laws.map(l =>
-          `<div style="background: #1A1A1A; border: 1px solid #333; border-radius: 10px; padding: 10px 14px; margin-bottom: 6px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="color: #ddd; font-weight: 600; font-size: 0.82rem;">${l.paragraph}</span>
-              <span style="color: #777; font-size: 0.7rem;">${l.max_penalty}</span>
-            </div>
-            <p style="color: #999; font-size: 0.75rem; margin-top: 4px;">${l.title_de}</p>
-            <p style="color: #666; font-size: 0.7rem; margin-top: 2px;">${l.applies_because_de}</p>
-          </div>`
-        ).join('');
-
-        // Replace steps with full result
-        await new Promise(r => setTimeout(r, 400));
-        result.innerHTML = `
-          <div style="background: #2A2A2A; border: 1px solid #333; border-radius: 16px; padding: 24px; text-align: left; animation: fadeStep 0.4s ease forwards;">
-            <!-- Severity header -->
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
-              <span style="font-size: 1.5rem;">${sevEmoji[data.severity]}</span>
-              <div>
-                <span style="background: ${sevColor}; color: white; padding: 4px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">${sevLabels[data.severity]}</span>
-                <span style="color: #777; font-size: 0.8rem; margin-left: 8px;">Konfidenz: ${Math.round(data.confidence * 100)}%</span>
-              </div>
-              ${data.requires_immediate_action ? '<span style="background: #C44030; color: white; padding: 3px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; margin-left: auto;">SOFORT HANDELN</span>' : ''}
-            </div>
-
-            <!-- Summary -->
-            <p style="color: #eee; font-size: 0.9rem; margin-bottom: 16px; line-height: 1.6;">${data.summary_de}</p>
-
-            <!-- Laws -->
-            <p style="color: #999; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">Relevante Gesetze</p>
-            ${laws}
-
-            <!-- Consequences -->
-            <div style="background: #1A1A1A; border-left: 3px solid ${sevColor}; border-radius: 0 10px 10px 0; padding: 12px 16px; margin-top: 12px;">
-              <p style="color: #999; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; margin-bottom: 4px;">Empfohlene Maßnahmen</p>
-              <p style="color: #bbb; font-size: 0.8rem; line-height: 1.6;">${data.potential_consequences_de}</p>
-            </div>
-
-            <!-- CTA -->
-            <div style="text-align: center; margin-top: 16px; padding-top: 12px; border-top: 1px solid #333;">
-              <a href="https://safevoice-production-0847.up.railway.app" target="_blank" style="color: #8B6914; font-size: 0.8rem; font-weight: 600; text-decoration: none;">Vollständige Dokumentation auf SafeVoice öffnen →</a>
-            </div>
-          </div>
-        `;
-        result.style.display = 'block';
-      } catch (e) {
-        result.innerHTML = '<p style="color: #C44030; text-align: center;">Verbindungsfehler — bitte erneut versuchen.</p>';
-        result.style.display = 'block';
-      } finally {
-        btn.textContent = 'Analysieren ▸';
-        btn.disabled = false;
-      }
-    }
-
-    // Enter key support
-    document.getElementById('demo-input').addEventListener('keydown', e => { if (e.key === 'Enter') runDemo(); });
+    document.getElementById('demo-input').addEventListener('keydown',e=>{if(e.key==='Enter')runDemo()});
   </script>
 
-  <section class="connection">
-    <div class="container">
-      <h2>Wie alles zusammenhängt</h2>
-      <div class="flow">
-        <strong>FairEint</strong> zeigt was sich ändern sollte.<br>
-        <strong>GitLaw</strong> zeigt was aktuell im Gesetz steht.<br>
-        <strong>Public Money Mirror</strong> zeigt wohin das Geld fließt.<br>
-        <strong>SafeVoice</strong> schützt die, die sich äußern.<br><br>
-        Zusammen: <strong>Transparenz + Gerechtigkeit + Sicherheit = Demokratie die funktioniert.</strong>
+  <!-- Impact -->
+  <section id="impact" style="padding:50px 0">
+    <div class="c">
+      <div style="text-align:center;margin-bottom:24px">
+        <span class="tag tag-green">Impact</span>
+        <h2 style="margin-top:8px">Was Deutschland davon hat</h2>
+        <p style="color:#777;font-size:.85rem">Unsere Tools sparen Geld — das an die Bürger zurückfließt.</p>
+      </div>
+
+      <!-- Compact ROI grid -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div class="card" style="cursor:default;padding:16px 20px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:1.2rem">⚖️</span><strong style="font-size:.85rem">FairEint</strong></div>
+          <p style="color:#777;font-size:.75rem;line-height:1.6;margin-bottom:8px">Ungleichheit kostet €70-110 Mrd./Jahr. 10 Reformen mit Kosten-Nutzen-Rechnung. Simulator testet Akzeptanz VOR Umsetzung.</p>
+          <span class="tag tag-green" style="font-size:.6rem">€60-140 Mrd./Jahr</span>
+        </div>
+        <div class="card" style="cursor:default;padding:16px 20px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:1.2rem">💸</span><strong style="font-size:.85rem">Public Money Mirror</strong></div>
+          <p style="color:#777;font-size:.75rem;line-height:1.6;margin-bottom:8px">€520 Mrd. Bundeshaushalt durchleuchten. Anomalien finden. MdB-Transparenz erzeugt Handlungsdruck.</p>
+          <span class="tag tag-green" style="font-size:.6rem">€1-5 Mrd./Jahr</span>
+        </div>
+        <div class="card" style="cursor:default;padding:16px 20px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:1.2rem">🛡️</span><strong style="font-size:.85rem">SafeVoice</strong></div>
+          <p style="color:#777;font-size:.75rem;line-height:1.6;margin-bottom:8px">Polizei spart ~2h/Fall. Gerichte sparen Wochen. 300.000 Fälle/Jahr = 600.000 Arbeitsstunden weniger.</p>
+          <span class="tag tag-green" style="font-size:.6rem">€500M+/Jahr</span>
+        </div>
+        <div class="card" style="cursor:default;padding:16px 20px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:1.2rem">📜</span><strong style="font-size:.85rem">GitLaw</strong></div>
+          <p style="color:#777;font-size:.75rem;line-height:1.6;margin-bottom:8px">€10 Mrd. Rechtsberatung/Jahr. 5% durch verständliche Gesetze + Musterbriefe ersetzen.</p>
+          <span class="tag tag-green" style="font-size:.6rem">€200-500M/Jahr</span>
+        </div>
+      </div>
+
+      <div style="background:#F5ECD7;border:1px solid #E5D5B0;border-radius:16px;padding:16px;text-align:center">
+        <p style="font-size:.9rem;color:#444;font-weight:600">Zusammen: geschätztes Einsparpotenzial €62-146 Mrd./Jahr</p>
+        <p style="font-size:.75rem;color:#999;margin-top:4px">Gesparte Milliarden → Grunddienste → Produktivität → Wachstum → Reinvestieren. Skandinavien beweist es seit 50 Jahren.</p>
       </div>
     </div>
   </section>
 
-  <section class="projects" style="padding-top: 20px;">
-    <div class="container">
-      <h2>Was Deutschland davon hat</h2>
-      <p class="sub">Unsere Tools sparen Geld — das an die Bürger zurückfließt.</p>
-      <p style="text-align: center; font-size: 0.85rem; color: #777; margin-bottom: 20px;">Deutschland verliert <strong style="color: #C44030;">€70-110 Mrd./Jahr</strong> durch Ungleichheit + Milliarden durch Bürokratie und Verschwendung. Unsere Tools helfen, das zu ändern.</p>
-
-      <div style="display: grid; gap: 16px; margin-bottom: 24px;">
-        <div class="card" style="cursor: default; padding: 20px 24px;">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-            <span style="font-size: 1.5rem;">🛡️</span>
-            <h3 style="margin: 0;">SafeVoice</h3>
-          </div>
-          <ul style="font-size: 0.82rem; color: #777; list-style: none; padding: 0; margin: 0 0 10px 0; line-height: 1.8;">
-            <li>Polizei spart ~2h pro Fall (fertig klassifizierte Anzeigen)</li>
-            <li>Gerichte sparen Wochen (standardisierte Beweispakete)</li>
-            <li>Plattformen reagieren schneller (automatische NetzDG-Beschwerden)</li>
-            <li>Weniger Langzeitschäden durch unbehandelte digitale Gewalt</li>
-          </ul>
-          <div style="background: #E6F4EC; border-radius: 8px; padding: 6px 12px; display: inline-block;">
-            <span style="font-weight: 600; color: #1B7A40; font-size: 0.8rem;">Geschätztes Einsparpotenzial: €500M+/Jahr</span>
-          </div>
-        </div>
-
-        <div class="card" style="cursor: default; padding: 20px 24px;">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-            <span style="font-size: 1.5rem;">📜</span>
-            <h3 style="margin: 0;">GitLaw</h3>
-          </div>
-          <ul style="font-size: 0.82rem; color: #777; list-style: none; padding: 0; margin: 0 0 10px 0; line-height: 1.8;">
-            <li>Bürger verstehen Gesetze selbst — weniger Rechtsberatungskosten</li>
-            <li>Anwälte finden Paragraphen schneller — höhere Produktivität</li>
-            <li>Widersprüche aufgedeckt — bessere Gesetzgebung</li>
-            <li>20 Musterbriefe — Bürger lösen Probleme selbst statt Ämter zu belasten</li>
-          </ul>
-          <div style="background: #E6F4EC; border-radius: 8px; padding: 6px 12px; display: inline-block;">
-            <span style="font-weight: 600; color: #1B7A40; font-size: 0.8rem;">Geschätztes Einsparpotenzial: €200-500M/Jahr</span>
-          </div>
-        </div>
-
-        <div class="card" style="cursor: default; padding: 20px 24px;">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-            <span style="font-size: 1.5rem;">💸</span>
-            <h3 style="margin: 0;">Public Money Mirror</h3>
-          </div>
-          <ul style="font-size: 0.82rem; color: #777; list-style: none; padding: 0; margin: 0 0 10px 0; line-height: 1.8;">
-            <li>Anomalien im €520 Mrd. Bundeshaushalt finden — direkte Einsparungen</li>
-            <li>Überteuerte Beschaffung aufdecken — bessere Verhandlungspositionen</li>
-            <li>MdB-Transparenz-Index — Abgeordnete unter öffentlichem Druck</li>
-            <li>Bürger sehen wohin Steuergeld fließt — Vertrauen steigt</li>
-          </ul>
-          <div style="background: #E6F4EC; border-radius: 8px; padding: 6px 12px; display: inline-block;">
-            <span style="font-weight: 600; color: #1B7A40; font-size: 0.8rem;">Geschätztes Einsparpotenzial: €1-5 Mrd./Jahr</span>
-          </div>
-        </div>
-
-        <div class="card" style="cursor: default; padding: 20px 24px;">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-            <span style="font-size: 1.5rem;">⚖️</span>
-            <h3 style="margin: 0;">FairEint</h3>
-          </div>
-          <ul style="font-size: 0.82rem; color: #777; list-style: none; padding: 0; margin: 0 0 10px 0; line-height: 1.8;">
-            <li>10 Reformen, jede existiert bereits irgendwo — mit Kosten-Nutzen-Rechnung</li>
-            <li>Simulator testet Akzeptanz VOR Umsetzung — weniger gescheiterte Reformen</li>
-            <li>Ungleichheit kostet €70-110 Mrd./Jahr — die Lösung kostet €30-45 Mrd.</li>
-            <li>Konservativ: +€60 Mrd./Jahr. Optimistisch: +€140 Mrd./Jahr Nettogewinn</li>
-          </ul>
-          <div style="background: #E6F4EC; border-radius: 8px; padding: 6px 12px; display: inline-block;">
-            <span style="font-weight: 600; color: #1B7A40; font-size: 0.8rem;">Geschätztes Einsparpotenzial: €60-140 Mrd./Jahr</span>
-          </div>
-        </div>
-      </div>
-
-      <div style="background: #F5ECD7; border: 1px solid #E5D5B0; border-radius: 16px; padding: 20px; text-align: center;">
-        <p style="font-size: 0.9rem; color: #444; margin-bottom: 4px; font-weight: 600;">
-          Zusammen: geschätztes Einsparpotenzial €62-146 Mrd./Jahr
-        </p>
-        <p style="font-size: 0.8rem; color: #777; margin-bottom: 8px;">Gesparte Milliarden → Grunddienste für alle → Produktivität → Wachstum → Mehr Steuereinnahmen → Reinvestieren</p>
-        <p style="font-size: 0.75rem; color: #999;">Das ist kein Idealismus — das ist der Kreislauf den Skandinavien seit 50 Jahren beweist. Open Source — jedes Land kann es adaptieren.</p>
+  <!-- Roadmap — subtle -->
+  <section style="padding:40px 0;background:#F3F1EC">
+    <div class="c" style="text-align:center">
+      <span class="tag">Nächste Schritte</span>
+      <h2 style="margin-top:8px;margin-bottom:16px">Prototype Fund Bewerbung — Oktober 2026</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:left">
+        <div style="background:white;border-radius:12px;padding:14px"><p style="font-weight:600;font-size:.8rem;color:#1B7A40;margin-bottom:4px">eIDAS-Zeitstempel</p><p style="font-size:.72rem;color:#777">Gerichtsfeste Beweissicherung</p></div>
+        <div style="background:white;border-radius:12px;padding:14px"><p style="font-weight:600;font-size:.8rem;color:#1B7A40;margin-bottom:4px">NetzDG Ein-Klick</p><p style="font-size:.72rem;color:#777">Automatische Plattform-Beschwerden</p></div>
+        <div style="background:white;border-radius:12px;padding:14px"><p style="font-weight:600;font-size:.8rem;color:#8B6914;margin-bottom:4px">HateAid-Integration</p><p style="font-size:.72rem;color:#777">Werkzeug für Berater:innen</p></div>
       </div>
     </div>
   </section>
 
-  <section class="projects" style="padding-top: 20px;">
-    <div class="container">
-      <h2>Was als Nächstes kommt</h2>
-      <p class="sub">Prototype Fund Bewerbung geplant für Oktober 2026</p>
-      <div class="grid" style="grid-template-columns: 1fr;">
-        <div class="card" style="cursor: default;">
-          <h3 style="margin-bottom: 12px;">SafeVoice — Roadmap zur Gerichtsfestigkeit</h3>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-            <div style="background: #E6F4EC; border-radius: 12px; padding: 12px;">
-              <p style="font-weight: 600; font-size: 0.85rem; color: #1B7A40; margin-bottom: 4px;">eIDAS-Zeitstempel</p>
-              <p style="font-size: 0.8rem; color: #777;">Gerichtsfeste Beweissicherung statt selbst-generierter Hashes</p>
-            </div>
-            <div style="background: #E6F4EC; border-radius: 12px; padding: 12px;">
-              <p style="font-weight: 600; font-size: 0.85rem; color: #1B7A40; margin-bottom: 4px;">NetzDG Ein-Klick</p>
-              <p style="font-size: 0.8rem; color: #777;">Automatische Beschwerden an Instagram, X, TikTok</p>
-            </div>
-            <div style="background: #E6F4EC; border-radius: 12px; padding: 12px;">
-              <p style="font-weight: 600; font-size: 0.85rem; color: #1B7A40; margin-bottom: 4px;">Trauma-informiertes UX</p>
-              <p style="font-size: 0.8rem; color: #777;">Gestaltung validiert mit Psycholog:innen</p>
-            </div>
-            <div style="background: #E6F4EC; border-radius: 12px; padding: 12px;">
-              <p style="font-weight: 600; font-size: 0.85rem; color: #1B7A40; margin-bottom: 4px;">DSGVO-Audit</p>
-              <p style="font-size: 0.8rem; color: #777;">Externe Prüfung der Datenverarbeitung</p>
-            </div>
-            <div style="background: #F5ECD7; border-radius: 12px; padding: 12px;">
-              <p style="font-weight: 600; font-size: 0.85rem; color: #8B6914; margin-bottom: 4px;">HateAid-Integration</p>
-              <p style="font-size: 0.8rem; color: #777;">SafeVoice als tägliches Werkzeug für Berater:innen</p>
-            </div>
-            <div style="background: #F5ECD7; border-radius: 12px; padding: 12px;">
-              <p style="font-weight: 600; font-size: 0.85rem; color: #8B6914; margin-bottom: 4px;">Forschungsdaten</p>
-              <p style="font-size: 0.8rem; color: #777;">Anonymisierter Datensatz für Wissenschaft und Politik</p>
-            </div>
-          </div>
-          <p style="font-size: 0.8rem; color: #999; margin-top: 16px; text-align: center;">Förderantrag beim Prototype Fund (BMBF) in Vorbereitung — Oktober 2026</p>
-        </div>
+  <!-- Support -->
+  <section style="padding:40px 0">
+    <div class="c" style="text-align:center">
+      <h2>Diese Arbeit unterstützen</h2>
+      <p style="color:#777;font-size:.85rem;margin-bottom:16px">Ehrenamtlich, kostenlos, unabhängig. Keine Partei, kein Verein, keine Lobby.</p>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <a href="https://ko-fi.com/mikel777" target="_blank" class="btn btn-gold">☕ Ko-fi</a>
+        <a href="https://github.com/sponsors/mikelninh" target="_blank" class="btn btn-outline">GitHub Sponsors</a>
       </div>
     </div>
   </section>
 
-  <section class="about">
-    <div class="container">
-      <div class="about-inner">
-        <div style="flex: 1;">
-          <h2>Über mich</h2>
-          <p>Ich bin Michael Ninh — deutsch-vietnamesisch, in Deutschland aufgewachsen, mit Wurzeln in zwei Kulturen. Ich glaube dass Demokratie besser sein kann, wenn Bürger Zugang zu den richtigen Werkzeugen haben.</p>
-          <p>Alle Projekte sind Open Source, ehrenamtlich, unabhängig. Keine Partei, kein Verein, keine Lobby.</p>
-          <p><a href="https://www.linkedin.com/in/michael-ninh/">LinkedIn</a> · <a href="https://github.com/mikelninh">GitHub</a></p>
-        </div>
-        <div class="support">
-          <p style="font-weight: 600; margin-bottom: 8px; color: #444;">Diese Arbeit unterstützen</p>
-          <p style="font-size: 0.8rem; color: #777; margin-bottom: 12px;">Ehrenamtlich und kostenlos. Jede Unterstützung hilft weiterzumachen.</p>
-          <a href="https://ko-fi.com/mikel777" class="btn-gold support-link">Ko-fi</a>
-          <a href="https://github.com/sponsors/mikelninh" class="btn-outline support-link">GitHub Sponsors</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <p>Digitale Demokratie — Open Source Ökosystem · MIT Lizenz</p>
-      <p style="margin-top: 4px;">Quellen: OECD · WHO · IMF · Bundesbank · abgeordnetenwatch.de · bundestag.de</p>
+  <!-- Footer -->
+  <footer style="padding:24px 0;text-align:center;color:#999;font-size:.75rem;border-top:1px solid #E5E3DE">
+    <div class="c">
+      <p><a href="https://www.linkedin.com/in/michael-ninh/" style="color:#999;text-decoration:none">LinkedIn</a> · <a href="https://github.com/mikelninh" style="color:#999;text-decoration:none">GitHub</a> · <a href="https://ko-fi.com/mikel777" style="color:#999;text-decoration:none">Ko-fi</a></p>
+      <p style="margin-top:4px">FairEint — Einigkeit beginnt mit Fairness · MIT Lizenz · Open Source</p>
     </div>
   </footer>
 
