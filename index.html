@@ -14,15 +14,15 @@
     body { font-family: 'Inter', system-ui, sans-serif; background: #FAFAF7; color: #1A1A1A; line-height: 1.7; }
     .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
 
-    header { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 80px 24px 40px; }
+    header { min-height: 50vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 60px 24px 20px; }
     h1 { font-family: Georgia, serif; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.2; margin-bottom: 16px; }
     h1 span { color: #8B6914; }
     .subtitle { font-size: 1.1rem; color: #777; max-width: 500px; margin: 0 auto 32px; }
     .vision { background: #F5ECD7; border: 1px solid #E5D5B0; border-radius: 16px; padding: 20px 24px; display: inline-block; font-size: 0.9rem; color: #444; }
 
-    .projects { padding: 60px 0; }
+    .projects { padding: 40px 0; }
     .projects h2 { font-family: Georgia, serif; font-size: 1.8rem; text-align: center; margin-bottom: 8px; }
-    .projects p.sub { text-align: center; color: #777; margin-bottom: 40px; }
+    .projects p.sub { text-align: center; color: #777; margin-bottom: 24px; }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
 
@@ -36,12 +36,12 @@
     .live { background: #E6F4EC; color: #1B7A40; }
     .proto { background: #F5ECD7; color: #8B6914; }
 
-    .connection { padding: 60px 0; text-align: center; }
-    .connection h2 { font-family: Georgia, serif; font-size: 1.8rem; margin-bottom: 16px; }
-    .flow { font-size: 0.95rem; color: #444; line-height: 2; max-width: 500px; margin: 0 auto 32px; }
+    .connection { padding: 30px 0; text-align: center; }
+    .connection h2 { font-family: Georgia, serif; font-size: 1.8rem; margin-bottom: 12px; }
+    .flow { font-size: 0.95rem; color: #444; line-height: 1.9; max-width: 500px; margin: 0 auto 16px; }
     .flow strong { color: #1A1A1A; }
 
-    .about { padding: 60px 0; border-top: 1px solid #E5E3DE; }
+    .about { padding: 40px 0; border-top: 1px solid #E5E3DE; }
     .about-inner { display: flex; gap: 32px; align-items: flex-start; }
     @media (max-width: 600px) { .about-inner { flex-direction: column; } }
     .about h2 { font-family: Georgia, serif; font-size: 1.4rem; margin-bottom: 12px; }
@@ -50,8 +50,8 @@
 
     .support { background: #F5ECD7; border-radius: 16px; padding: 20px 24px; text-align: center; }
     .support a { display: inline-block; padding: 10px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.85rem; margin: 4px; }
-    .btn-gold { background: #8B6914; color: white; }
-    .btn-outline { background: white; border: 1px solid #E5E3DE; color: #444; }
+    .btn-gold { background: #8B6914; color: white !important; }
+    .btn-outline { background: white; border: 1px solid #E5E3DE; color: #444 !important; }
 
     footer { padding: 32px 0; text-align: center; color: #999; font-size: 0.8rem; border-top: 1px solid #E5E3DE; }
   </style>
@@ -124,33 +124,33 @@
         <div class="card" style="cursor: default;">
           <span class="emoji">🛡️</span>
           <h3>SafeVoice</h3>
-          <p class="desc" style="margin-bottom: 8px;">Fertige Anzeigen sparen der Polizei Stunden. Standardisierte Beweise sparen Gerichten Wochen. Automatische NetzDG-Beschwerden zwingen Plattformen zum Handeln.</p>
+          <p class="desc" style="margin-bottom: 8px;">Eine fertig klassifizierte Anzeige spart der Polizei ~2h pro Fall. Bei 300.000 Fällen digitaler Gewalt/Jahr = 600.000 Arbeitsstunden weniger. Standardisierte Beweise verkürzen Gerichtsverfahren.</p>
           <div style="background: #E6F4EC; border-radius: 8px; padding: 8px 12px; text-align: center;">
-            <span style="font-weight: 600; color: #1B7A40; font-size: 0.85rem;">Spart: €500M – 1 Mrd./Jahr</span>
+            <span style="font-weight: 600; color: #1B7A40; font-size: 0.85rem;">Einsparpotenzial: geschätzt €500M+/Jahr</span>
           </div>
         </div>
         <div class="card" style="cursor: default;">
           <span class="emoji">📜</span>
           <h3>GitLaw</h3>
-          <p class="desc" style="margin-bottom: 8px;">Bürger verstehen Gesetze selbst — weniger Rechtsberatungskosten. Musterbriefe lösen Probleme ohne Ämter. Widersprüche aufgedeckt = bessere Gesetze.</p>
+          <p class="desc" style="margin-bottom: 8px;">Deutschland gibt ~€10 Mrd./Jahr für Rechtsberatung aus. Wenn 5% der Anfragen durch verständliche Gesetze + Musterbriefe entfallen, spart das €500M. Plus: Widersprüche im Gesetz aufdecken = bessere Gesetzgebung.</p>
           <div style="background: #E6F4EC; border-radius: 8px; padding: 8px 12px; text-align: center;">
-            <span style="font-weight: 600; color: #1B7A40; font-size: 0.85rem;">Spart: €200 – 500M/Jahr</span>
+            <span style="font-weight: 600; color: #1B7A40; font-size: 0.85rem;">Einsparpotenzial: geschätzt €200-500M/Jahr</span>
           </div>
         </div>
         <div class="card" style="cursor: default;">
           <span class="emoji">💸</span>
           <h3>Public Money Mirror</h3>
-          <p class="desc" style="margin-bottom: 8px;">Überteuerte Beschaffung aufdecken. Anomalien im Haushalt finden. MdB-Transparenz = Abgeordnete unter Druck, effizienter zu arbeiten.</p>
+          <p class="desc" style="margin-bottom: 8px;">Der Bundeshaushalt: €520 Mrd. Studien zeigen 2-5% Einsparpotenzial durch Transparenz und bessere Beschaffung. Das wären €10-26 Mrd. Selbst 0,5% = €2,6 Mrd. Jeder aufgedeckte überteuerte Vertrag zählt.</p>
           <div style="background: #E6F4EC; border-radius: 8px; padding: 8px 12px; text-align: center;">
-            <span style="font-weight: 600; color: #1B7A40; font-size: 0.85rem;">Spart: €1 – 5 Mrd./Jahr</span>
+            <span style="font-weight: 600; color: #1B7A40; font-size: 0.85rem;">Einsparpotenzial: geschätzt €1-5 Mrd./Jahr</span>
           </div>
         </div>
         <div class="card" style="cursor: default;">
           <span class="emoji">⚖️</span>
           <h3>FairEint</h3>
-          <p class="desc" style="margin-bottom: 8px;">Simulator zeigt Akzeptanz VOR Umsetzung — weniger gescheiterte Reformen. UBS-Wallet = weniger Verwaltung. Internationale Vorbilder = schnelleres Lernen.</p>
+          <p class="desc" style="margin-bottom: 8px;">Ungleichheit kostet Deutschland €70-110 Mrd./Jahr (IMF, OECD). UBS kostet €30-45 Mrd. Der Simulator testet Akzeptanz VOR der Umsetzung — weniger gescheiterte Reformen, weniger politische Kosten.</p>
           <div style="background: #E6F4EC; border-radius: 8px; padding: 8px 12px; text-align: center;">
-            <span style="font-weight: 600; color: #1B7A40; font-size: 0.85rem;">Spart: €10 – 50 Mrd./Jahr</span>
+            <span style="font-weight: 600; color: #1B7A40; font-size: 0.85rem;">Einsparpotenzial: geschätzt €10-50 Mrd./Jahr</span>
           </div>
         </div>
       </div>
