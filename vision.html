@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vision — Michael Ninh</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',system-ui,sans-serif;background:#FAFAF7;color:#1A1A1A;line-height:1.7}
+    .c{max-width:700px;margin:0 auto;padding:0 24px}
+    a{color:#8B6914}
+    h1,h2,h3{font-family:Georgia,serif}
+    .tag{display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:99px;background:#F5ECD7;color:#8B6914}
+    .tag-green{background:#E6F4EC;color:#1B7A40}
+    .tag-blue{background:#E8F0F8;color:#2870B0}
+    .card{background:white;border:1px solid #E5E3DE;border-radius:16px;padding:20px;margin-bottom:12px}
+    nav{position:fixed;top:0;width:100%;z-index:50;background:rgba(250,250,247,.9);backdrop-filter:blur(12px);border-bottom:1px solid #E5E3DE}
+    nav .inner{max-width:700px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:48px}
+    nav a.logo{font-family:Georgia,serif;font-size:1.1rem;text-decoration:none;color:#1A1A1A}
+    nav a.logo span{color:#8B6914}
+    nav .links{display:flex;gap:4px;font-size:.8rem}
+    nav .links a{color:#777;text-decoration:none;padding:4px 10px;border-radius:8px}
+    nav .links a:hover{color:#1A1A1A;background:#F3F1EC}
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="inner">
+      <a href="index.html" class="logo">Michael <span>Ninh</span></a>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="index.html#projekte">Projekte</a>
+        <a href="index.html#demo">Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <main style="padding:80px 0 60px">
+    <div class="c">
+
+      <span class="tag">Vision & Nächste Schritte</span>
+      <h1 style="font-size:clamp(1.8rem,4vw,2.5rem);margin:12px 0 8px">Wohin das führt</h1>
+      <p style="color:#777;font-size:.95rem;margin-bottom:40px">Prototype Fund Antrag, Wunsch-Arbeitgeber, und wer von diesem Ökosystem profitiert.</p>
+
+      <!-- Prototype Fund -->
+      <section style="margin-bottom:48px">
+        <h2 style="font-size:1.4rem;margin-bottom:4px">Prototype Fund</h2>
+        <p style="color:#777;font-size:.85rem;margin-bottom:16px">Bewerbung Oktober 2026 · BMBF-gefördert · €47.500 für 6 Monate · Open Source</p>
+
+        <div class="card" style="border:2px solid #8B6914;background:linear-gradient(135deg,#FFFDF5,#FFF)">
+          <h3 style="font-size:1.1rem;margin-bottom:8px">SafeVoice — AI-gestützte Dokumentation digitaler Gewalt</h3>
+          <p style="color:#777;font-size:.82rem;line-height:1.7;margin-bottom:12px">
+            Alle 3 Minuten wird jemand in Deutschland online belästigt. SafeVoice automatisiert den Dokumentationsprozess: Text eingeben → AI klassifiziert unter 12 deutschen Gesetzen → Beweis kryptografisch gesichert → PDF-Bericht generiert. Kostenlos, Open Source, für Opfer.
+          </p>
+          <p style="font-size:.8rem;font-weight:600;margin-bottom:10px">Was die Förderung ermöglicht:</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="background:#E6F4EC;border-radius:10px;padding:10px"><p style="font-weight:600;font-size:.78rem;color:#1B7A40">eIDAS-Zeitstempel</p><p style="font-size:.7rem;color:#777">Gerichtsfeste Beweise</p></div>
+            <div style="background:#E6F4EC;border-radius:10px;padding:10px"><p style="font-weight:600;font-size:.78rem;color:#1B7A40">NetzDG Ein-Klick</p><p style="font-size:.7rem;color:#777">Automatische Beschwerden</p></div>
+            <div style="background:#F5ECD7;border-radius:10px;padding:10px"><p style="font-weight:600;font-size:.78rem;color:#8B6914">HateAid-Integration</p><p style="font-size:.7rem;color:#777">Werkzeug für Berater:innen</p></div>
+            <div style="background:#F5ECD7;border-radius:10px;padding:10px"><p style="font-weight:600;font-size:.78rem;color:#8B6914">DSGVO-Audit</p><p style="font-size:.7rem;color:#777">Externe Datenprüfung</p></div>
+          </div>
+          <p style="font-size:.75rem;color:#999;margin-top:12px">Prototyp existiert und ist live: <a href="https://safevoice-production-0847.up.railway.app">safevoice-production-0847.up.railway.app</a></p>
+        </div>
+      </section>
+
+      <!-- Wunsch-Arbeitgeber -->
+      <section style="margin-bottom:48px">
+        <h2 style="font-size:1.4rem;margin-bottom:4px">Organisationen die ich bewundere</h2>
+        <p style="color:#777;font-size:.85rem;margin-bottom:16px">Wer von diesem Ökosystem profitiert — und mit wem Zusammenarbeit Sinn macht.</p>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <span style="font-size:1.5rem">💙</span>
+            <div><h3 style="font-size:1rem;margin:0">HateAid e.V.</h3><p style="font-size:.75rem;color:#777">Digitale Gewalt · Berlin · ~40 Mitarbeiter</p></div>
+            <span class="tag" style="margin-left:auto">Partnerschaft</span>
+          </div>
+          <p style="font-size:.8rem;color:#777;line-height:1.7">SafeVoice als tägliches Werkzeug für Berater:innen. Fälle schneller dokumentieren, Gesetze automatisch zuordnen, Berichte auf Knopfdruck. Gemeinsamer Prototype Fund Antrag geplant.</p>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <span style="font-size:1.5rem">🔍</span>
+            <div><h3 style="font-size:1rem;margin:0">FragDenStaat / Open Knowledge Foundation</h3><p style="font-size:.75rem;color:#777">Transparenz · Open Data · Berlin · ~30 Mitarbeiter</p></div>
+            <span class="tag-blue" style="display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:99px;margin-left:auto">Job</span>
+          </div>
+          <p style="font-size:.8rem;color:#777;line-height:1.7">GitLaw + Public Money Mirror passen perfekt zur Mission. Betreiben auch den Prototype Fund — kennen das Ökosystem.</p>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <span style="font-size:1.5rem">🏛️</span>
+            <div><h3 style="font-size:1rem;margin:0">DigitalService (Bund)</h3><p style="font-size:.75rem;color:#777">Digitale Verwaltung · Berlin · ~200 Mitarbeiter</p></div>
+            <span class="tag-blue" style="display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:99px;margin-left:auto">Job</span>
+          </div>
+          <p style="font-size:.8rem;color:#777;line-height:1.7">FairEint's Vision (eID als Bürgerkarte, Firmengründung in 24h) ist exakt deren Auftrag. Brasilien hat Pix in 3 Jahren geschafft — Deutschland kann das auch.</p>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <span style="font-size:1.5rem">📊</span>
+            <div><h3 style="font-size:1rem;margin:0">Abgeordnetenwatch</h3><p style="font-size:.75rem;color:#777">Politiker-Transparenz · Hamburg/Berlin · ~15 Mitarbeiter</p></div>
+            <span class="tag" style="margin-left:auto">Kooperation</span>
+          </div>
+          <p style="font-size:.8rem;color:#777;line-height:1.7">Der MdB-Transparenz-Index in Public Money Mirror nutzt deren Daten. Der Index als Open-Source-Feature für ihre Plattform — keine Kosten, nur Zusammenarbeit.</p>
+        </div>
+      </section>
+
+      <!-- Wer profitiert -->
+      <section style="margin-bottom:48px">
+        <h2 style="font-size:1.4rem;margin-bottom:16px">Wer davon profitiert</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="background:#E6F4EC;border-radius:12px;padding:14px"><p style="font-weight:600;font-size:.82rem;color:#1B7A40">Opfer digitaler Gewalt</p><p style="font-size:.72rem;color:#777">13 Mio. Betroffene in DE (Forsa/HateAid 2024)</p></div>
+          <div style="background:#E6F4EC;border-radius:12px;padding:14px"><p style="font-weight:600;font-size:.82rem;color:#1B7A40">Beratungsstellen</p><p style="font-size:.72rem;color:#777">HateAid, Weißer Ring, Frauenhäuser</p></div>
+          <div style="background:#F5ECD7;border-radius:12px;padding:14px"><p style="font-weight:600;font-size:.82rem;color:#8B6914">Bürger:innen</p><p style="font-size:.72rem;color:#777">Gesetze verstehen, Rechte kennen, handeln</p></div>
+          <div style="background:#F5ECD7;border-radius:12px;padding:14px"><p style="font-weight:600;font-size:.82rem;color:#8B6914">Steuerzahler:innen</p><p style="font-size:.72rem;color:#777">Transparenz wohin €520 Mrd./Jahr fließen</p></div>
+          <div style="background:#E8F0F8;border-radius:12px;padding:14px"><p style="font-weight:600;font-size:.82rem;color:#2870B0">Politiker:innen</p><p style="font-size:.72rem;color:#777">Evidenzbasierte Entscheidungen statt Bauchgefühl</p></div>
+          <div style="background:#E8F0F8;border-radius:12px;padding:14px"><p style="font-weight:600;font-size:.82rem;color:#2870B0">Forscher:innen</p><p style="font-size:.72rem;color:#777">Anonymisierte Datensätze zu digitaler Gewalt</p></div>
+        </div>
+      </section>
+
+      <!-- Back -->
+      <div style="text-align:center;padding-top:20px;border-top:1px solid #E5E3DE">
+        <a href="index.html" style="font-size:.85rem;text-decoration:none">← Zurück zur Übersicht</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer style="padding:24px 0;text-align:center;color:#999;font-size:.75rem;border-top:1px solid #E5E3DE">
+    <div class="c">
+      <p>FairEint — Einigkeit beginnt mit Fairness · MIT Lizenz · Open Source</p>
+    </div>
+  </footer>
+
+</body>
+</html>
