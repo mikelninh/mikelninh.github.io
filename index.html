@@ -54,6 +54,7 @@
     .btn-outline { background: white; border: 1px solid #E5E3DE; color: #444 !important; }
 
     footer { padding: 32px 0; text-align: center; color: #999; font-size: 0.8rem; border-top: 1px solid #E5E3DE; }
+    @keyframes fadeStep { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
@@ -155,7 +156,28 @@
 
       btn.textContent = '...';
       btn.disabled = true;
-      result.style.display = 'none';
+
+      // Step-by-step analysis animation
+      const steps = [
+        { icon: '🔍', text: 'Text wird analysiert...', delay: 0 },
+        { icon: '⚖️', text: 'Rechtliche Einordnung — Zuordnung zu deutschen Gesetzen...', delay: 600 },
+        { icon: '📊', text: 'Schweregrad wird berechnet...', delay: 1200 },
+        { icon: '📋', text: 'Bericht wird erstellt...', delay: 1800 },
+      ];
+
+      result.innerHTML = `<div id="demo-steps" style="background: #2A2A2A; border: 1px solid #333; border-radius: 16px; padding: 20px;"></div>`;
+      result.style.display = 'block';
+      const stepsEl = document.getElementById('demo-steps');
+
+      // Show steps progressively
+      for (const step of steps) {
+        await new Promise(r => setTimeout(r, step.delay ? 600 : 0));
+        stepsEl.innerHTML += `<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px; opacity: 0; animation: fadeStep 0.3s ease forwards;">
+          <span style="font-size: 1.1rem;">${step.icon}</span>
+          <span style="color: #999; font-size: 0.82rem;">${step.text}</span>
+          <span style="color: #1B7A40; margin-left: auto;">✓</span>
+        </div>`;
+      }
 
       try {
         const res = await fetch('https://safevoice-production-0847.up.railway.app/api/analyze/text', {
@@ -167,25 +189,51 @@
 
         const sevColors = { critical: '#C44030', high: '#C08B20', medium: '#C08B20', low: '#777' };
         const sevLabels = { critical: 'KRITISCH', high: 'HOCH', medium: 'MITTEL', low: 'NIEDRIG' };
+        const sevEmoji = { critical: '🔴', high: '🟠', medium: '🟡', low: '⚪' };
         const sevColor = sevColors[data.severity] || '#777';
 
         const laws = data.applicable_laws.map(l =>
-          `<span style="display: inline-block; background: #2A2A2A; border: 1px solid #333; border-radius: 6px; padding: 3px 10px; font-size: 0.75rem; margin: 2px;">${l.paragraph}</span>`
-        ).join(' ');
+          `<div style="background: #1A1A1A; border: 1px solid #333; border-radius: 10px; padding: 10px 14px; margin-bottom: 6px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="color: #ddd; font-weight: 600; font-size: 0.82rem;">${l.paragraph}</span>
+              <span style="color: #777; font-size: 0.7rem;">${l.max_penalty}</span>
+            </div>
+            <p style="color: #999; font-size: 0.75rem; margin-top: 4px;">${l.title_de}</p>
+            <p style="color: #666; font-size: 0.7rem; margin-top: 2px;">${l.applies_because_de}</p>
+          </div>`
+        ).join('');
 
+        // Replace steps with full result
+        await new Promise(r => setTimeout(r, 400));
         result.innerHTML = `
-          <div style="background: #2A2A2A; border: 1px solid #333; border-radius: 16px; padding: 20px; text-align: left;">
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-              <span style="background: ${sevColor}; color: white; padding: 4px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">${sevLabels[data.severity]}</span>
-              <span style="color: #999; font-size: 0.8rem;">Konfidenz: ${Math.round(data.confidence * 100)}%</span>
-              ${data.requires_immediate_action ? '<span style="color: #C44030; font-size: 0.8rem; font-weight: 600;">Sofortiges Handeln empfohlen</span>' : ''}
+          <div style="background: #2A2A2A; border: 1px solid #333; border-radius: 16px; padding: 24px; text-align: left; animation: fadeStep 0.4s ease forwards;">
+            <!-- Severity header -->
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+              <span style="font-size: 1.5rem;">${sevEmoji[data.severity]}</span>
+              <div>
+                <span style="background: ${sevColor}; color: white; padding: 4px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">${sevLabels[data.severity]}</span>
+                <span style="color: #777; font-size: 0.8rem; margin-left: 8px;">Konfidenz: ${Math.round(data.confidence * 100)}%</span>
+              </div>
+              ${data.requires_immediate_action ? '<span style="background: #C44030; color: white; padding: 3px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; margin-left: auto;">SOFORT HANDELN</span>' : ''}
             </div>
-            <p style="color: #ddd; font-size: 0.85rem; margin-bottom: 12px;">${data.summary_de}</p>
-            <div style="margin-bottom: 8px;">
-              <span style="color: #999; font-size: 0.75rem; display: block; margin-bottom: 4px;">Relevante Gesetze:</span>
-              ${laws}
+
+            <!-- Summary -->
+            <p style="color: #eee; font-size: 0.9rem; margin-bottom: 16px; line-height: 1.6;">${data.summary_de}</p>
+
+            <!-- Laws -->
+            <p style="color: #999; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">Relevante Gesetze</p>
+            ${laws}
+
+            <!-- Consequences -->
+            <div style="background: #1A1A1A; border-left: 3px solid ${sevColor}; border-radius: 0 10px 10px 0; padding: 12px 16px; margin-top: 12px;">
+              <p style="color: #999; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; margin-bottom: 4px;">Empfohlene Maßnahmen</p>
+              <p style="color: #bbb; font-size: 0.8rem; line-height: 1.6;">${data.potential_consequences_de}</p>
             </div>
-            <p style="color: #777; font-size: 0.75rem; margin-top: 12px; border-top: 1px solid #333; padding-top: 8px;">${data.potential_consequences_de}</p>
+
+            <!-- CTA -->
+            <div style="text-align: center; margin-top: 16px; padding-top: 12px; border-top: 1px solid #333;">
+              <a href="https://safevoice-production-0847.up.railway.app" target="_blank" style="color: #8B6914; font-size: 0.8rem; font-weight: 600; text-decoration: none;">Vollständige Dokumentation auf SafeVoice öffnen →</a>
+            </div>
           </div>
         `;
         result.style.display = 'block';
