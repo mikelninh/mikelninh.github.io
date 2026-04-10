@@ -130,15 +130,17 @@
       <div style="max-width: 500px; margin: 0 auto;">
         <div style="display: flex; gap: 8px; margin-bottom: 16px;">
           <input id="demo-input" type="text" placeholder="z.B. 'ich bringe dich um du dreckiger ausländer'" style="flex: 1; padding: 14px 16px; border-radius: 12px; border: 1px solid #333; background: #2A2A2A; color: white; font-size: 0.9rem; outline: none;">
-          <button onclick="runDemo()" id="demo-btn" style="padding: 14px 24px; border-radius: 12px; background: #8B6914; color: white; border: none; font-weight: 700; font-size: 0.9rem; cursor: pointer; white-space: nowrap;">Analysieren</button>
+          <button onclick="runDemo()" id="demo-btn" style="padding: 14px 24px; border-radius: 12px; background: #8B6914; color: white; border: none; font-weight: 700; font-size: 0.9rem; cursor: pointer; white-space: nowrap;">Analysieren ▸</button>
         </div>
 
-        <!-- Quick test buttons -->
+        <!-- Quick test buttons — realistic scenarios -->
+        <p style="color: #555; font-size: 0.75rem; margin-bottom: 8px;">Oder teste ein realistisches Szenario:</p>
         <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
-          <button onclick="document.getElementById('demo-input').value='ich bringe dich um'; runDemo()" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Todesdrohung</button>
-          <button onclick="document.getElementById('demo-input').value='dreckige ausländer raus'; runDemo()" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Volksverhetzung</button>
-          <button onclick="document.getElementById('demo-input').value='ich veröffentliche deine nacktbilder'; runDemo()" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Deepfake/Racheporno</button>
-          <button onclick="document.getElementById('demo-input').value='ich weiß wo du wohnst'; runDemo()" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Stalking</button>
+          <button onclick="setAndRun('du hässliches kind, hurensohn, ich schlitze dich auf wenn ich dich sehe')" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Morddrohung + Beleidigung</button>
+          <button onclick="setAndRun('alle Muslime gehören vergast, Deutschland den Deutschen, Ausländer raus')" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Volksverhetzung</button>
+          <button onclick="setAndRun('ich hab deine Nacktbilder und wenn du nicht 500€ zahlst veröffentliche ich sie überall')" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Erpressung + Racheporno</button>
+          <button onclick="setAndRun('ich beobachte dich seit Wochen, ich weiß wo du wohnst und arbeitest, du kannst mir nicht entkommen')" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Stalking</button>
+          <button onclick="setAndRun('Investiere jetzt 500€ in Bitcoin, ich garantiere 30% monatliche Rendite, schick Geld an diese Wallet')" style="padding: 6px 12px; border-radius: 8px; background: #2A2A2A; border: 1px solid #333; color: #999; font-size: 0.75rem; cursor: pointer;">Krypto-Betrug</button>
         </div>
 
         <div id="demo-result" style="display: none;"></div>
@@ -147,6 +149,11 @@
   </section>
 
   <script>
+    function setAndRun(text) {
+      document.getElementById('demo-input').value = text;
+      setTimeout(runDemo, 50);
+    }
+
     async function runDemo() {
       const input = document.getElementById('demo-input');
       const result = document.getElementById('demo-result');
@@ -154,7 +161,7 @@
       const text = input.value.trim();
       if (!text) return;
 
-      btn.textContent = '...';
+      btn.textContent = 'Läuft...';
       btn.disabled = true;
 
       // Step-by-step analysis animation
@@ -241,7 +248,7 @@
         result.innerHTML = '<p style="color: #C44030; text-align: center;">Verbindungsfehler — bitte erneut versuchen.</p>';
         result.style.display = 'block';
       } finally {
-        btn.textContent = 'Analysieren';
+        btn.textContent = 'Analysieren ▸';
         btn.disabled = false;
       }
     }
