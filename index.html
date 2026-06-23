@@ -7,7 +7,7 @@
   <meta name="description" content="Portfolio of Michael Ninh — AI Engineer building agentic workflows for public services, health, democracy, and mission-driven teams." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #fbf7ef;
@@ -197,8 +197,8 @@
 
     /* ── design refresh: distinctive type, paper grain, one accent, motion ── */
     :root{
-      --display:"Fraunces", Georgia, "Times New Roman", serif;
-      --body:"Spline Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --display:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+      --body:"Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
       --accent:#3f6b4a;
     }
     body{
@@ -210,7 +210,7 @@
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
     header, main, footer{ position:relative; z-index:2; }
-    h1, h2, .quote, .manifesto, .brand{ font-family:var(--display); font-optical-sizing:auto; font-feature-settings:"ss01"; }
+    h1, h2, .quote, .manifesto, .brand{ font-family:var(--display); font-optical-sizing:auto; }
     h1{ letter-spacing:-.025em; font-weight:600; }
     h2{ letter-spacing:-.02em; font-weight:600; }
     .manifesto{ letter-spacing:-.025em; font-weight:500; }
@@ -230,6 +230,39 @@
       .hero h1{ animation-delay:.08s } .hero p{ animation-delay:.18s } .hero .cta-row{ animation-delay:.28s }
       @keyframes rise{ from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:none} }
     }
+
+    /* at-a-glance strip — quick scan for reviewers / coach */
+    .glance{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:rgba(255,255,255,.42); }
+    .glance .wrap{ display:grid; grid-template-columns:repeat(4,1fr); gap:26px; padding:26px 0; }
+    .glance small{ display:block; font:700 11px/1 ui-monospace, monospace; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:9px; }
+    .glance b{ display:block; font-size:15px; letter-spacing:-.01em; margin-bottom:4px; }
+    .glance span{ font-size:13px; color:var(--muted); }
+
+    /* visual match meters on target cards */
+    .meter{ height:6px; border-radius:999px; background:rgba(21,18,15,.1); margin:14px 0 9px; overflow:hidden; }
+    .meter span{ display:block; height:100%; border-radius:999px; }
+    .match b{ color:var(--ink); }
+    .rolelink{ margin:10px 0 0; font-size:13px; font-weight:700; color:var(--accent); }
+    a.target{ display:block; }
+    a.target:hover h3{ color:var(--accent); }
+
+    /* interactive demos — runs fully in the browser */
+    .demos{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .demo{ border:1px solid var(--line); background:rgba(255,255,255,.55); border-radius:24px; padding:22px; }
+    .demo h3{ margin:0 0 6px; font-size:19px; letter-spacing:-.02em; }
+    .demo .demo-sub{ margin:0 0 14px; color:var(--muted); font-size:14px; }
+    .demo textarea, .demo input, .demo select{ width:100%; font:inherit; font-size:14px; padding:10px 12px; border:1px solid var(--line); border-radius:12px; background:#fffdf8; margin-bottom:10px; color:var(--ink); }
+    .demo label{ display:block; font-size:13px; color:var(--muted); margin-bottom:6px; }
+    .demo button{ font:inherit; font-weight:700; font-size:14px; padding:10px 16px; border-radius:999px; border:none; background:var(--ink); color:#fffaf0; cursor:pointer; transition:background .2s; }
+    .demo button:hover{ background:var(--accent); }
+    .demo .demo-out{ margin-top:14px; font-size:14px; }
+    .demo .demo-out:empty{ display:none; }
+    .ill{ font:700 10px/1 ui-monospace, monospace; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:4px 7px; vertical-align:middle; }
+    .score{ font-size:34px; font-weight:700; letter-spacing:-.03em; line-height:1; }
+    .ev{ margin:10px 0 0; padding:0; list-style:none; }
+    .ev li{ padding:7px 0; border-top:1px solid var(--line); color:var(--muted); }
+    .ev b{ color:var(--ink); }
+    @media (max-width:900px){ .glance .wrap{ grid-template-columns:1fr 1fr; } .demos{ grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -241,6 +274,7 @@
         <a href="#agents">Agents</a>
         <a href="#targets">Targets</a>
         <a href="#proof">Projects</a>
+        <a href="#demos">Play</a>
         <a href="#contact">Contact</a>
         <a href="https://github.com/mikelninh" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
@@ -258,6 +292,31 @@
         <a class="btn secondary" href="mailto:mikel_ninh@yahoo.de">Let's build</a>
       </div>
     </section>
+
+    <div class="glance">
+      <div class="wrap">
+        <div>
+          <small>Role</small>
+          <b>AI Engineer · AI Operations</b>
+          <span>Berlin / EU / remote · open, ready now</span>
+        </div>
+        <div>
+          <small>Shipped &amp; running</small>
+          <b>GitLaw · SafeVoice · Recht-MCP servers · INCA-Loop</b>
+          <span>real users &amp; pilots · open source</span>
+        </div>
+        <div>
+          <small>Targeting</small>
+          <b>aconium · Langdock · DigitalService Bund · n8n …</b>
+          <span>GovTech · agents · workflow automation · health</span>
+        </div>
+        <div>
+          <small>Stack</small>
+          <b>Python · FastAPI · LLMs · RAG · MCP · durable loops</b>
+          <span>OpenAI Structured Outputs · React · TS</span>
+        </div>
+      </div>
+    </div>
 
     <section id="vision">
       <div class="wrap">
@@ -293,71 +352,83 @@
         </div>
 
         <div class="target-list">
+          <a class="target" href="https://aconium.eu/project/ai-engineer-m-w-d/" target="_blank" rel="noopener">
+            <small>GovTech / public sector · active application</small>
+            <h3>aconium ↗</h3>
+            <p>Document AI as an agentic processing tool — agentic RAG, MCP integration, workflow automation for the public sector.</p>
+            <div class="meter"><span style="width:95%;background:var(--accent)"></span></div>
+            <p class="match"><b>95% match</b> — their AI-Engineer role reads like my project list.</p>
+            <p class="rolelink">View the AI-Engineer role ↗</p>
+          </a>
+          <article class="target">
+            <small>Active application</small>
+            <h3>INCA</h3>
+            <p>AI for insurance claims — agentic loops, eval harnesses, and humane automation in a high-volume operations context.</p>
+            <div class="meter"><span style="width:90%;background:var(--accent)"></span></div>
+            <p class="match"><b>90% match</b> — I built a mini-version of their claims loop (see INCA Loop).</p>
+          </article>
           <article class="target">
             <small>Top AI-agent target</small>
             <h3>Langdock</h3>
             <p>AI adoption, agent workflows, integrations, customer-facing implementation, and real-world automation.</p>
-            <p class="match">Match — agent workflows &amp; integrations are exactly what I build.</p>
+            <div class="meter"><span style="width:88%;background:var(--accent)"></span></div>
+            <p class="match"><b>88% match</b> — agent workflows &amp; integrations are exactly what I build.</p>
           </article>
           <article class="target">
             <small>GovTech core</small>
             <h3>Verwaltungssprung</h3>
             <p>AI for public administration, digital bureaucracy, trustworthy systems, and better citizen services.</p>
-            <p class="match">Strong fit — GitLaw is civic-AI for precisely this.</p>
+            <div class="meter"><span style="width:85%;background:var(--accent)"></span></div>
+            <p class="match"><b>85% match</b> — GitLaw is civic-AI for precisely this.</p>
           </article>
           <article class="target">
             <small>Public-service digitalisation</small>
             <h3>DigitalService Bund</h3>
             <p>Modern public services, user-centred government software, and digital infrastructure that works for everyone.</p>
-            <p class="match">Mission match — public services that work for everyone.</p>
-          </article>
-          <article class="target">
-            <small>GovTech / public sector</small>
-            <h3>aconium</h3>
-            <p>Digital transformation, public-sector projects, infrastructure, and practical implementation for government contexts.</p>
-            <p class="match">Strong match — their AI-Engineer role reads like my project list.</p>
+            <div class="meter"><span style="width:82%;background:var(--accent)"></span></div>
+            <p class="match"><b>82% match</b> — public services that work for everyone.</p>
           </article>
           <article class="target">
             <small>Automation builder</small>
             <h3>n8n</h3>
             <p>AI orchestration, workflow automation, API connections, and builder-friendly agentic systems.</p>
-            <p class="match">Fit — durable loops &amp; API orchestration are my daily work.</p>
-          </article>
-          <article class="target">
-            <small>Health AI</small>
-            <h3>voize</h3>
-            <p>AI documentation for care work — reducing admin burden so care teams can focus on people.</p>
-            <p class="match">Vision fit — humane AI that gives care teams time back.</p>
-          </article>
-          <article class="target">
-            <small>AI agents at scale</small>
-            <h3>Parloa</h3>
-            <p>Conversational and agentic AI in production environments. Strong stretch target due to senior-heavy roles.</p>
-            <p class="match">Stretch — agentic AI in production; roles skew senior.</p>
+            <div class="meter"><span style="width:80%;background:var(--accent)"></span></div>
+            <p class="match"><b>80% match</b> — durable loops &amp; API orchestration are my daily work.</p>
           </article>
           <article class="target">
             <small>Strategic watchlist</small>
             <h3>Polyteia</h3>
             <p>Data, workflows, and AI for public administrations. Strong mission fit for citizen and government tools.</p>
-            <p class="match">Mission match — data &amp; AI for public administration.</p>
+            <div class="meter"><span style="width:78%;background:#b8862f"></span></div>
+            <p class="match"><b>78% match</b> — data &amp; AI for public administration.</p>
+          </article>
+          <article class="target">
+            <small>Health AI</small>
+            <h3>voize</h3>
+            <p>AI documentation for care work — reducing admin burden so care teams can focus on people.</p>
+            <div class="meter"><span style="width:70%;background:#b8862f"></span></div>
+            <p class="match"><b>70% match</b> — humane AI that gives care teams time back.</p>
           </article>
           <article class="target">
             <small>Ethical systems</small>
             <h3>ProVeg</h3>
             <p>Sustainable food systems, animal welfare, and software tooling for a more conscious food future.</p>
-            <p class="match">Values fit — ethical tech for a more conscious future.</p>
+            <div class="meter"><span style="width:62%;background:#b8862f"></span></div>
+            <p class="match"><b>62% match</b> — values fit; ethical tech for a more conscious future.</p>
           </article>
           <article class="target">
-            <small>Active application</small>
-            <h3>INCA</h3>
-            <p>AI for insurance claims — agentic loops, eval harnesses, and humane automation in a high-volume operations context.</p>
-            <p class="match">Match — I built a mini-version of their claims loop (see INCA Loop).</p>
+            <small>AI agents at scale</small>
+            <h3>Parloa</h3>
+            <p>Conversational and agentic AI in production environments. Strong stretch target due to senior-heavy roles.</p>
+            <div class="meter"><span style="width:58%;background:#9b9486"></span></div>
+            <p class="match"><b>58% — stretch</b> — agentic AI in production; roles skew senior.</p>
           </article>
           <article class="target">
             <small>Watchlist</small>
             <h3>Everlast</h3>
             <p>AI products with real-world impact — a team I'd love to build durable agent systems with.</p>
-            <p class="match">Watchlist — confirming the focus.</p>
+            <div class="meter"><span style="width:50%;background:#9b9486"></span></div>
+            <p class="match"><b>Watchlist</b> — confirming the focus (tell me what they do).</p>
           </article>
         </div>
 
@@ -398,6 +469,43 @@
           </article>
         </div>
         <p class="note">All code on GitHub: <a href="https://github.com/mikelninh" target="_blank" rel="noopener" style="color:var(--ink);font-weight:700">github.com/mikelninh</a></p>
+      </div>
+    </section>
+
+    <section id="demos">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Play with it</h2>
+          <p>Don't take my word for it — try the tools. Everything below runs entirely in your browser, no signup, no backend.</p>
+        </div>
+        <div class="demos">
+          <div class="demo">
+            <h3>Job-Fit calculator</h3>
+            <p class="demo-sub">Paste a job description → a measurable fit score and the evidence behind it. Same logic as my durable Job-Radar.</p>
+            <textarea id="jd" rows="4" placeholder="Paste an AI / engineering job description…"></textarea>
+            <button onclick="runFit()">Score the fit →</button>
+            <div id="jd-out" class="demo-out"></div>
+          </div>
+          <div class="demo">
+            <h3>EU261 flight compensation</h3>
+            <p class="demo-sub">Flight delayed? See what you're owed under EU law — the logic behind my flight-rights MCP server.</p>
+            <label>Distance (km)<input id="fdist" type="number" value="1500"></label>
+            <label>Delay (hours)<input id="fdelay" type="number" value="3"></label>
+            <button onclick="runFlight()">Calculate →</button>
+            <div id="flight-out" class="demo-out"></div>
+          </div>
+          <div class="demo">
+            <h3>SafeVoice classifier <span class="ill">illustrative</span></h3>
+            <p class="demo-sub">How a hate comment maps to German criminal law. The live tool uses an LLM; this is a canned preview.</p>
+            <select id="svpick" onchange="runSafe()">
+              <option value="">Pick an example comment…</option>
+              <option value="0">„Ich weiß, wo du wohnst. Pass auf."</option>
+              <option value="1">„Du dumme … halt die Klappe."</option>
+              <option value="2">„Solche Leute gehören vergast."</option>
+            </select>
+            <div id="safe-out" class="demo-out"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -445,6 +553,55 @@
     <a href="https://github.com/mikelninh" target="_blank" rel="noopener" style="color:var(--ink);font-weight:700">github.com/mikelninh</a>
   </footer>
 
+  <script>
+    // ── Job-Fit calculator: the capability logic from the durable Job-Radar ──
+    const CAPS = [
+      {need:'RAG / Retrieval', w:2, kw:['rag','retrieval','vektor','vector','faiss','embedding'], proof:'GitLaw — German law as RAG over FAISS'},
+      {need:'MCP integration', w:2, kw:['mcp','model context protocol','tool integration'], proof:'Own MCP servers: AGB-Reader, Elterngeld, flight rights'},
+      {need:'FastAPI / Python', w:2, kw:['fastapi','python','rest api','microservice',' api '], proof:'FastAPI + OpenAI Structured Outputs (standard stack)'},
+      {need:'Agents / workflow automation', w:2, kw:['agent','agentic','workflow','automation','automatisierung','orchestr'], proof:'INCA — agent loop with eval harness + receipts'},
+      {need:'LLM / Generative AI', w:2, kw:['llm','openai','generative','gpt','claude','mistral','sprachmodell'], proof:'Multiple products on gpt-4o-mini, structured outputs'},
+      {need:'Document AI', w:1, kw:['document ai','document processing','ocr','dokument'], proof:'AGB-Reader checks contracts vs §305 ff. BGB'},
+      {need:'Frontend / React', w:1, kw:['react','typescript','frontend','vite','tailwind','next.js'], proof:'React 19 + TS + Tailwind across projects'},
+      {need:'GovTech / public sector', w:1, kw:['govtech','public sector','public administration','government','kommune','behörde','verwaltung'], proof:'GitLaw (legal-tech) + FairEint (democracy)'},
+    ];
+    function runFit(){
+      const t = ' ' + (document.getElementById('jd').value||'').toLowerCase() + ' ';
+      const out = document.getElementById('jd-out');
+      if(!t.trim()){ out.innerHTML='<span style="color:var(--muted)">Paste a job description first.</span>'; return; }
+      const hits = CAPS.filter(c => c.kw.some(k => t.includes(k)));
+      const pct = Math.round(Math.min(hits.reduce((s,c)=>s+c.w,0)/10,1)*100);
+      const verdict = pct>=80?'strong fit':pct>=50?'good fit':'weak fit';
+      const col = pct>=80?'var(--accent)':pct>=50?'#b8862f':'#9b9486';
+      out.innerHTML = '<div class="score">'+pct+'%</div><div style="color:var(--muted);margin:2px 0 6px">'+verdict+'</div>'
+        + '<div class="meter"><span style="width:'+pct+'%;background:'+col+'"></span></div>'
+        + (hits.length ? '<ul class="ev">'+hits.map(h=>'<li><b>'+h.need+'</b> → '+h.proof+'</li>').join('')+'</ul>'
+                       : '<p style="color:var(--muted)">No strong keyword overlap — try a more technical JD.</p>');
+    }
+    function runFlight(){
+      const d = +document.getElementById('fdist').value, h = +document.getElementById('fdelay').value;
+      const out = document.getElementById('flight-out'); let eur=0, note='';
+      if(isNaN(d)||isNaN(h)){ out.innerHTML='<span style="color:var(--muted)">Enter distance and delay.</span>'; return; }
+      if(h<3){ eur=0; note='Delay under 3 h — no compensation under EU261.'; }
+      else if(d<=1500){ eur=250; note='Short flight, ≥3 h late.'; }
+      else if(d<=3500){ eur=400; note='Medium flight, ≥3 h late.'; }
+      else { eur = h<4?300:600; note = h<4?'Long-haul, 3–4 h late → 50% reduced.':'Long-haul, ≥4 h late.'; }
+      out.innerHTML = '<div class="score">'+eur+' €</div><div style="color:var(--muted);margin-top:4px">'+note+'</div>';
+    }
+    const SAFE = [
+      {p:'§ 241 StGB — Bedrohung', s:'high', n:'Threat of a crime against the victim → a court-ready Strafanzeige can be generated.'},
+      {p:'§ 185 StGB — Beleidigung', s:'medium', n:'Insult to personal honour → documented with a hash-verified evidence chain.'},
+      {p:'§ 130 StGB — Volksverhetzung', s:'severe', n:'Incitement to hatred → high-priority, reportable to authorities.'},
+    ];
+    function runSafe(){
+      const i = document.getElementById('svpick').value, out = document.getElementById('safe-out');
+      if(i===''){ out.innerHTML=''; return; }
+      const r = SAFE[+i];
+      out.innerHTML = '<div style="font-weight:700;font-size:16px">'+r.p+'</div>'
+        + '<div style="color:var(--muted);margin:4px 0 8px">severity: '+r.s+'</div>'
+        + '<div style="color:var(--muted)">'+r.n+'</div>';
+    }
+  </script>
   <script>
     if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
       const io = new IntersectionObserver((es) => es.forEach((e) => {
