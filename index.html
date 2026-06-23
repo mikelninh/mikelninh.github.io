@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Michael Ninh — AI Agents for Humane Systems</title>
   <meta name="description" content="Portfolio of Michael Ninh — AI Engineer building agentic workflows for public services, health, democracy, and mission-driven teams." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #fbf7ef;
@@ -167,6 +170,7 @@
     }
     .target h3 { margin: 0 0 8px; font-size: 24px; letter-spacing: -.04em; }
     .target p { margin: 0; color: var(--muted); font-size: 15px; }
+    .target .match { margin: 12px 0 0; font-size: 13px; font-weight: 700; color: #3f6b4a; letter-spacing: -.01em; }
     .tag {
       display: inline-block;
       padding: 8px 11px;
@@ -189,6 +193,42 @@
       .grid, .target-list { grid-template-columns: 1fr; }
       .links { display: none; }
       .hero { padding-top: 70px; }
+    }
+
+    /* ── design refresh: distinctive type, paper grain, one accent, motion ── */
+    :root{
+      --display:"Fraunces", Georgia, "Times New Roman", serif;
+      --body:"Spline Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --accent:#3f6b4a;
+    }
+    body{
+      font-family:var(--body);
+      background:linear-gradient(180deg, var(--bg), #f4ecdf 72%, #fdfaf4);
+    }
+    body::before{
+      content:""; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.05; mix-blend-mode:multiply;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    header, main, footer{ position:relative; z-index:2; }
+    h1, h2, .quote, .manifesto, .brand{ font-family:var(--display); font-optical-sizing:auto; font-feature-settings:"ss01"; }
+    h1{ letter-spacing:-.025em; font-weight:600; }
+    h2{ letter-spacing:-.02em; font-weight:600; }
+    .manifesto{ letter-spacing:-.025em; font-weight:500; }
+    .quote{ letter-spacing:-.025em; font-weight:500; }
+    .brand{ letter-spacing:-.01em; font-weight:600; }
+    .eyebrow::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--accent); display:inline-block; }
+    a:not(.btn):not(.card):hover{ color:var(--accent); }
+    a.card h3{ transition:color .2s ease; }
+    a.card:hover h3{ color:var(--accent); }
+    .target{ transition:transform .2s ease; }
+    .target:hover{ transform:translateY(-2px); }
+    .target:hover small{ color:var(--accent); }
+    @media (prefers-reduced-motion: no-preference){
+      .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+      .reveal.in{ opacity:1; transform:none; }
+      .hero .eyebrow, .hero h1, .hero p, .hero .cta-row{ opacity:0; animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards; }
+      .hero h1{ animation-delay:.08s } .hero p{ animation-delay:.18s } .hero .cta-row{ animation-delay:.28s }
+      @keyframes rise{ from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:none} }
     }
   </style>
 </head>
@@ -213,7 +253,8 @@
       <h1>Building AI agents for humane systems.</h1>
       <p>I want to build practical AI tools that reduce friction, increase agency, and help people navigate complex systems — especially in public services, health, democracy, and mission-driven organisations.</p>
       <div class="cta-row">
-        <a class="btn" href="#targets">See target companies</a>
+        <a class="btn" href="https://mikelninh.github.io/inca-site/" target="_blank" rel="noopener">Touch the running agent →</a>
+        <a class="btn secondary" href="#targets">See target companies</a>
         <a class="btn secondary" href="mailto:mikel_ninh@yahoo.de">Let's build</a>
       </div>
     </section>
@@ -256,56 +297,67 @@
             <small>Top AI-agent target</small>
             <h3>Langdock</h3>
             <p>AI adoption, agent workflows, integrations, customer-facing implementation, and real-world automation.</p>
+            <p class="match">Match — agent workflows &amp; integrations are exactly what I build.</p>
           </article>
           <article class="target">
             <small>GovTech core</small>
             <h3>Verwaltungssprung</h3>
             <p>AI for public administration, digital bureaucracy, trustworthy systems, and better citizen services.</p>
+            <p class="match">Strong fit — GitLaw is civic-AI for precisely this.</p>
           </article>
           <article class="target">
             <small>Public-service digitalisation</small>
             <h3>DigitalService Bund</h3>
             <p>Modern public services, user-centred government software, and digital infrastructure that works for everyone.</p>
+            <p class="match">Mission match — public services that work for everyone.</p>
           </article>
           <article class="target">
             <small>GovTech / public sector</small>
             <h3>aconium</h3>
             <p>Digital transformation, public-sector projects, infrastructure, and practical implementation for government contexts.</p>
+            <p class="match">Strong match — their AI-Engineer role reads like my project list.</p>
           </article>
           <article class="target">
             <small>Automation builder</small>
             <h3>n8n</h3>
             <p>AI orchestration, workflow automation, API connections, and builder-friendly agentic systems.</p>
+            <p class="match">Fit — durable loops &amp; API orchestration are my daily work.</p>
           </article>
           <article class="target">
             <small>Health AI</small>
             <h3>voize</h3>
             <p>AI documentation for care work — reducing admin burden so care teams can focus on people.</p>
+            <p class="match">Vision fit — humane AI that gives care teams time back.</p>
           </article>
           <article class="target">
             <small>AI agents at scale</small>
             <h3>Parloa</h3>
             <p>Conversational and agentic AI in production environments. Strong stretch target due to senior-heavy roles.</p>
+            <p class="match">Stretch — agentic AI in production; roles skew senior.</p>
           </article>
           <article class="target">
             <small>Strategic watchlist</small>
             <h3>Polyteia</h3>
             <p>Data, workflows, and AI for public administrations. Strong mission fit for citizen and government tools.</p>
+            <p class="match">Mission match — data &amp; AI for public administration.</p>
           </article>
           <article class="target">
             <small>Ethical systems</small>
             <h3>ProVeg</h3>
             <p>Sustainable food systems, animal welfare, and software tooling for a more conscious food future.</p>
+            <p class="match">Values fit — ethical tech for a more conscious future.</p>
           </article>
           <article class="target">
             <small>Active application</small>
             <h3>INCA</h3>
             <p>AI for insurance claims — agentic loops, eval harnesses, and humane automation in a high-volume operations context.</p>
+            <p class="match">Match — I built a mini-version of their claims loop (see INCA Loop).</p>
           </article>
           <article class="target">
             <small>Watchlist</small>
             <h3>Everlast</h3>
             <p>AI products with real-world impact — a team I'd love to build durable agent systems with.</p>
+            <p class="match">Watchlist — confirming the focus.</p>
           </article>
         </div>
 
@@ -392,5 +444,16 @@
     © Michael Ninh · Berlin / Remote · AI agents &amp; durable loops for humane systems ·
     <a href="https://github.com/mikelninh" target="_blank" rel="noopener" style="color:var(--ink);font-weight:700">github.com/mikelninh</a>
   </footer>
+
+  <script>
+    if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      const io = new IntersectionObserver((es) => es.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      }), { threshold: .12 });
+      document.querySelectorAll('section:not(.hero) .wrap > *').forEach((el) => {
+        el.classList.add('reveal'); io.observe(el);
+      });
+    }
+  </script>
 </body>
 </html>
