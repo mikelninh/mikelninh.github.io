@@ -263,6 +263,15 @@
     .ev li{ padding:7px 0; border-top:1px solid var(--line); color:var(--muted); }
     .ev b{ color:var(--ink); }
     @media (max-width:900px){ .glance .wrap{ grid-template-columns:1fr 1fr; } .demos{ grid-template-columns:1fr; } }
+
+    /* statement panel in the Agents section — dark, bold, fills the dead space */
+    .big-card.statement{ background:var(--ink); color:#fbf7ef; display:flex; flex-direction:column; justify-content:center; gap:24px; }
+    .statement .quote{ color:#fbf7ef !important; font-size:clamp(32px,3.6vw,50px); line-height:1.04; margin:0; }
+    .statement .quote em{ color:#bcd6b0; font-style:normal; }
+    .loopbadges{ display:flex; flex-wrap:wrap; gap:8px; }
+    .loopbadges span{ font:700 12px/1 ui-monospace, monospace; letter-spacing:.08em; text-transform:uppercase; color:#fbf7ef; border:1px solid rgba(255,255,255,.28); border-radius:999px; padding:9px 14px; }
+    .statement-note{ color:rgba(255,255,255,.62) !important; font-size:15px; margin:0 !important; }
+    .big-card strong{ color:var(--accent); }
   </style>
 </head>
 <body>
@@ -338,8 +347,10 @@
           <p><strong>Workflow Builder:</strong> connects tools, APIs, data, and LLMs into useful automations people actually want to use.</p>
           <p><strong>The pattern underneath:</strong> durable agent loops — Loop · Skill · Orchestrator — that checkpoint every step, retry on failure, and keep running whether or not a human is watching. I've already built a working one (see Projects).</p>
         </div>
-        <div class="big-card">
-          <p class="quote">Less friction. More agency. Better systems for real human lives.</p>
+        <div class="big-card statement">
+          <p class="quote">Less friction.<br>More agency.<br><em>Better systems</em> for real human lives.</p>
+          <div class="loopbadges"><span>Loop</span><span>Skill</span><span>Orchestrator</span></div>
+          <p class="statement-note">The durable pattern under every agent I build — checkpoint each step, retry on failure, keep running whether or not a human is watching.</p>
         </div>
       </div>
     </section>
