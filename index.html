@@ -272,6 +272,11 @@
     .loopbadges span{ font:700 12px/1 ui-monospace, monospace; letter-spacing:.08em; text-transform:uppercase; color:#fbf7ef; border:1px solid rgba(255,255,255,.28); border-radius:999px; padding:9px 14px; }
     .statement-note{ color:rgba(255,255,255,.62) !important; font-size:15px; margin:0 !important; }
     .big-card strong{ color:var(--accent); }
+
+    /* explainable match rubric on target cards */
+    .rubric{ display:grid; grid-template-columns:1fr 1fr; gap:4px 14px; margin:11px 0 0; font:600 10px/1.4 ui-monospace, monospace; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+    .rubric b{ color:var(--accent); font-weight:700; letter-spacing:1px; }
+    .reallink{ display:inline-block; margin-top:12px; font-size:13px; font-weight:700; color:var(--accent); }
   </style>
 </head>
 <body>
@@ -359,7 +364,7 @@
       <div class="wrap">
         <div class="section-head">
           <h2>Target company map</h2>
-          <p>Berlin and remote teams where AI agents, public-good technology, workflow automation, health, and democratic infrastructure meet.</p>
+          <p>Berlin and remote teams where AI agents, public-good technology, workflow automation, health, and democratic infrastructure meet. <br><strong style="color:var(--ink)">Match = my honest score on four axes</strong> — agentic/LLM engineering · mission fit · stack overlap · role-level realism. Sorted best first.</p>
         </div>
 
         <div class="target-list">
@@ -367,79 +372,90 @@
             <small>GovTech / public sector · active application</small>
             <h3>aconium ↗</h3>
             <p>Document AI as an agentic processing tool — agentic RAG, MCP integration, workflow automation for the public sector.</p>
-            <div class="meter"><span style="width:95%;background:var(--accent)"></span></div>
-            <p class="match"><b>95% match</b> — their AI-Engineer role reads like my project list.</p>
+            <div class="meter"><span style="width:94%;background:var(--accent)"></span></div>
+            <p class="match"><b>94% match</b> — their AI-Engineer role reads like my project list.</p>
+            <div class="rubric"><span>Agentic <b>●●●●</b></span><span>Mission <b>●●●●</b></span><span>Stack <b>●●●●</b></span><span>Level <b>●●●○</b></span></div>
             <p class="rolelink">View the AI-Engineer role ↗</p>
           </a>
           <article class="target">
-            <small>Active application</small>
+            <small>AI Operations · active application</small>
             <h3>INCA</h3>
             <p>AI for insurance claims — agentic loops, eval harnesses, and humane automation in a high-volume operations context.</p>
-            <div class="meter"><span style="width:90%;background:var(--accent)"></span></div>
-            <p class="match"><b>90% match</b> — I built a mini-version of their claims loop (see INCA Loop).</p>
+            <div class="meter"><span style="width:81%;background:var(--accent)"></span></div>
+            <p class="match"><b>81% match</b> — I built a mini-version of their claims loop (see INCA Loop).</p>
+            <div class="rubric"><span>Agentic <b>●●●●</b></span><span>Mission <b>●●●○</b></span><span>Stack <b>●●●○</b></span><span>Level <b>●●●○</b></span></div>
           </article>
           <article class="target">
-            <small>Top AI-agent target</small>
-            <h3>Langdock</h3>
-            <p>AI adoption, agent workflows, integrations, customer-facing implementation, and real-world automation.</p>
-            <div class="meter"><span style="width:88%;background:var(--accent)"></span></div>
-            <p class="match"><b>88% match</b> — agent workflows &amp; integrations are exactly what I build.</p>
-          </article>
-          <article class="target">
-            <small>GovTech core</small>
+            <small>GovTech / public administration</small>
             <h3>Verwaltungssprung</h3>
             <p>AI for public administration, digital bureaucracy, trustworthy systems, and better citizen services.</p>
-            <div class="meter"><span style="width:85%;background:var(--accent)"></span></div>
-            <p class="match"><b>85% match</b> — GitLaw is civic-AI for precisely this.</p>
+            <div class="meter"><span style="width:81%;background:var(--accent)"></span></div>
+            <p class="match"><b>81% match</b> — GitLaw is civic-AI for precisely this.</p>
+            <div class="rubric"><span>Agentic <b>●●●○</b></span><span>Mission <b>●●●●</b></span><span>Stack <b>●●●○</b></span><span>Level <b>●●●○</b></span></div>
+          </article>
+          <article class="target">
+            <small>Data + AI · public sector</small>
+            <h3>Polyteia</h3>
+            <p>Data, workflows, and AI for public administrations. Strong mission fit for citizen and government tools.</p>
+            <div class="meter"><span style="width:81%;background:var(--accent)"></span></div>
+            <p class="match"><b>81% match</b> — data &amp; AI for public administration.</p>
+            <div class="rubric"><span>Agentic <b>●●●○</b></span><span>Mission <b>●●●●</b></span><span>Stack <b>●●●○</b></span><span>Level <b>●●●○</b></span></div>
+          </article>
+          <article class="target">
+            <small>AI-agent platform</small>
+            <h3>Langdock</h3>
+            <p>AI adoption, agent workflows, integrations, customer-facing implementation, and real-world automation.</p>
+            <div class="meter"><span style="width:75%;background:#b8862f"></span></div>
+            <p class="match"><b>75% match</b> — agent workflows &amp; integrations are exactly what I build.</p>
+            <div class="rubric"><span>Agentic <b>●●●●</b></span><span>Mission <b>●●○○</b></span><span>Stack <b>●●●○</b></span><span>Level <b>●●●○</b></span></div>
           </article>
           <article class="target">
             <small>Public-service digitalisation</small>
             <h3>DigitalService Bund</h3>
             <p>Modern public services, user-centred government software, and digital infrastructure that works for everyone.</p>
-            <div class="meter"><span style="width:82%;background:var(--accent)"></span></div>
-            <p class="match"><b>82% match</b> — public services that work for everyone.</p>
+            <div class="meter"><span style="width:75%;background:#b8862f"></span></div>
+            <p class="match"><b>75% match</b> — public services that work for everyone.</p>
+            <div class="rubric"><span>Agentic <b>●●○○</b></span><span>Mission <b>●●●●</b></span><span>Stack <b>●●●○</b></span><span>Level <b>●●●○</b></span></div>
           </article>
           <article class="target">
-            <small>Automation builder</small>
+            <small>Workflow automation</small>
             <h3>n8n</h3>
             <p>AI orchestration, workflow automation, API connections, and builder-friendly agentic systems.</p>
-            <div class="meter"><span style="width:80%;background:var(--accent)"></span></div>
-            <p class="match"><b>80% match</b> — durable loops &amp; API orchestration are my daily work.</p>
-          </article>
-          <article class="target">
-            <small>Strategic watchlist</small>
-            <h3>Polyteia</h3>
-            <p>Data, workflows, and AI for public administrations. Strong mission fit for citizen and government tools.</p>
-            <div class="meter"><span style="width:78%;background:#b8862f"></span></div>
-            <p class="match"><b>78% match</b> — data &amp; AI for public administration.</p>
+            <div class="meter"><span style="width:75%;background:#b8862f"></span></div>
+            <p class="match"><b>75% match</b> — durable loops &amp; API orchestration are my daily work.</p>
+            <div class="rubric"><span>Agentic <b>●●●●</b></span><span>Mission <b>●●○○</b></span><span>Stack <b>●●●○</b></span><span>Level <b>●●●○</b></span></div>
           </article>
           <article class="target">
             <small>Health AI</small>
             <h3>voize</h3>
             <p>AI documentation for care work — reducing admin burden so care teams can focus on people.</p>
-            <div class="meter"><span style="width:70%;background:#b8862f"></span></div>
-            <p class="match"><b>70% match</b> — humane AI that gives care teams time back.</p>
+            <div class="meter"><span style="width:69%;background:#b8862f"></span></div>
+            <p class="match"><b>69% match</b> — humane AI that gives care teams time back. Roles skew senior.</p>
+            <div class="rubric"><span>Agentic <b>●●●○</b></span><span>Mission <b>●●●●</b></span><span>Stack <b>●●○○</b></span><span>Level <b>●●○○</b></span></div>
           </article>
           <article class="target">
-            <small>Ethical systems</small>
+            <small>Ethical / food systems</small>
             <h3>ProVeg</h3>
             <p>Sustainable food systems, animal welfare, and software tooling for a more conscious food future.</p>
-            <div class="meter"><span style="width:62%;background:#b8862f"></span></div>
-            <p class="match"><b>62% match</b> — values fit; ethical tech for a more conscious future.</p>
+            <div class="meter"><span style="width:63%;background:#b8862f"></span></div>
+            <p class="match"><b>63% match</b> — values fit; ethical tech for a more conscious future.</p>
+            <div class="rubric"><span>Agentic <b>●●○○</b></span><span>Mission <b>●●●○</b></span><span>Stack <b>●●○○</b></span><span>Level <b>●●●○</b></span></div>
           </article>
           <article class="target">
-            <small>AI agents at scale</small>
+            <small>Conversational AI at scale · stretch</small>
             <h3>Parloa</h3>
             <p>Conversational and agentic AI in production environments. Strong stretch target due to senior-heavy roles.</p>
-            <div class="meter"><span style="width:58%;background:#9b9486"></span></div>
-            <p class="match"><b>58% — stretch</b> — agentic AI in production; roles skew senior.</p>
+            <div class="meter"><span style="width:50%;background:#9b9486"></span></div>
+            <p class="match"><b>50% — stretch</b> — agentic AI in production; roles skew senior.</p>
+            <div class="rubric"><span>Agentic <b>●●●●</b></span><span>Mission <b>●○○○</b></span><span>Stack <b>●●○○</b></span><span>Level <b>●○○○</b></span></div>
           </article>
           <article class="target">
-            <small>Watchlist</small>
+            <small>Watchlist · needs info</small>
             <h3>Everlast</h3>
             <p>AI products with real-world impact — a team I'd love to build durable agent systems with.</p>
-            <div class="meter"><span style="width:50%;background:#9b9486"></span></div>
-            <p class="match"><b>Watchlist</b> — confirming the focus (tell me what they do).</p>
+            <div class="meter"><span style="width:0%;background:#9b9486"></span></div>
+            <p class="match"><b>Unrated</b> — tell me what Everlast does and I'll score it honestly.</p>
+            <div class="rubric"><span>Agentic <b>○○○○</b></span><span>Mission <b>○○○○</b></span><span>Stack <b>○○○○</b></span><span>Level <b>○○○○</b></span></div>
           </article>
         </div>
 
@@ -496,6 +512,7 @@
             <textarea id="jd" rows="4" placeholder="Paste an AI / engineering job description…"></textarea>
             <button onclick="runFit()">Score the fit →</button>
             <div id="jd-out" class="demo-out"></div>
+            <a class="reallink" href="https://github.com/mikelninh/agent-loop-lab" target="_blank" rel="noopener">See the real durable loop — code + architecture ↗</a>
           </div>
           <div class="demo">
             <h3>EU261 flight compensation</h3>
@@ -504,6 +521,7 @@
             <label>Delay (hours)<input id="fdelay" type="number" value="3"></label>
             <button onclick="runFlight()">Calculate →</button>
             <div id="flight-out" class="demo-out"></div>
+            <a class="reallink" href="https://github.com/mikelninh/flight-rights-mcp" target="_blank" rel="noopener">See the real flight-rights MCP server ↗</a>
           </div>
           <div class="demo">
             <h3>SafeVoice classifier <span class="ill">illustrative</span></h3>
@@ -515,6 +533,7 @@
               <option value="2">„Solche Leute gehören vergast."</option>
             </select>
             <div id="safe-out" class="demo-out"></div>
+            <a class="reallink" href="https://github.com/mikelninh/safevoice" target="_blank" rel="noopener">See the real SafeVoice ↗</a>
           </div>
         </div>
       </div>
