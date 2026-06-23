@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>(function(){var t=localStorage.getItem('mn-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();function toggleTheme(){var c=document.documentElement.getAttribute('data-theme')||'light';var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('mn-theme',n);}</script>
   <title>Michael Ninh — AI Agents for Humane Systems</title>
   <meta name="description" content="Portfolio of Michael Ninh — AI Engineer building agentic workflows for public services, health, democracy, and mission-driven teams." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -277,6 +278,40 @@
     .rubric{ display:grid; grid-template-columns:1fr 1fr; gap:4px 14px; margin:11px 0 0; font:600 10px/1.4 ui-monospace, monospace; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
     .rubric b{ color:var(--accent); font-weight:700; letter-spacing:1px; }
     .reallink{ display:inline-block; margin-top:12px; font-size:13px; font-weight:700; color:var(--accent); }
+
+    /* ── DARK THEME ("CV-Look") — shared toggle, persisted across pages ── */
+    .nav-toggle{ background:none; border:0; color:inherit; font:inherit; font-size:16px; line-height:1; cursor:pointer; padding:0 4px; }
+    html[data-theme="dark"]{
+      --bg:#0d1020; --ink:#f8f7f2; --muted:rgba(248,247,242,.72); --faint:rgba(248,247,242,.5);
+      --line:rgba(255,255,255,.14); --card:rgba(255,255,255,.06); --accent:#f4c96a;
+    }
+    html[data-theme="dark"] body{
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 16% 8%, rgba(169,161,255,0.20), transparent 34rem),
+        radial-gradient(circle at 84% 0%, rgba(137,247,210,0.16), transparent 34rem),
+        linear-gradient(135deg, #080a13 0%, #0d1020 44%, #111328 100%);
+    }
+    html[data-theme="dark"] body::before{ mix-blend-mode:normal; opacity:.04; }
+    html[data-theme="dark"] header{ background:rgba(10,12,24,0.66); border-bottom-color:var(--line); }
+    html[data-theme="dark"] .eyebrow{ background:rgba(255,255,255,.06); border-color:var(--line); color:var(--muted); }
+    html[data-theme="dark"] .btn{ background:var(--accent); color:#15120f; border-color:transparent; }
+    html[data-theme="dark"] .btn.secondary{ background:transparent; color:var(--ink); border-color:var(--line); }
+    html[data-theme="dark"] .big-card,
+    html[data-theme="dark"] .target,
+    html[data-theme="dark"] .glance,
+    html[data-theme="dark"] .demo,
+    html[data-theme="dark"] .card{ background:var(--card); border-color:var(--line); }
+    html[data-theme="dark"] .big-card.statement{ background:#171b2e; }
+    html[data-theme="dark"] .statement .quote{ color:var(--ink) !important; }
+    html[data-theme="dark"] .tag{ background:rgba(255,255,255,.06); color:var(--muted); border-color:var(--line); }
+    html[data-theme="dark"] .meter{ background:rgba(255,255,255,.12); }
+    html[data-theme="dark"] .demo textarea,
+    html[data-theme="dark"] .demo input,
+    html[data-theme="dark"] .demo select{ background:rgba(255,255,255,.06); color:var(--ink); border-color:var(--line); }
+    html[data-theme="dark"] .demo button{ background:var(--accent); color:#15120f; }
+    html[data-theme="dark"] .demo button:hover{ background:#ffe4a5; }
+    html[data-theme="dark"] .match b{ color:var(--ink); }
   </style>
 </head>
 <body>
@@ -292,6 +327,7 @@
         <a href="cv.html">CV</a>
         <a href="#contact">Contact</a>
         <a href="https://github.com/mikelninh" target="_blank" rel="noopener">GitHub ↗</a>
+        <button class="nav-toggle" onclick="toggleTheme()" aria-label="Toggle Portfolio-Look / CV-Look" title="Portfolio-Look / CV-Look">◐</button>
       </div>
     </nav>
   </header>
@@ -386,6 +422,14 @@
             <p class="match"><b>81% match</b> — I built a mini-version of their claims loop (see INCA Loop).</p>
             <div class="rubric"><span>Agentic <b>●●●●</b></span><span>Mission <b>●●●○</b></span><span>Stack <b>●●●○</b></span><span>Level <b>●●●○</b></span></div>
           </article>
+          <a class="target" href="https://www.everlastconsulting.de/" target="_blank" rel="noopener">
+            <small>AI consulting &amp; development · remote-friendly</small>
+            <h3>Everlast Consulting ↗</h3>
+            <p>AI strategy, custom AI apps, voice agents, and workflow automation for B2B — pilot-to-scale with governance. Actively hiring AI developers.</p>
+            <div class="meter"><span style="width:81%;background:var(--accent)"></span></div>
+            <p class="match"><b>81% match</b> — strong on agents, building &amp; team-level; lighter on the public-good mission.</p>
+            <div class="rubric"><span>Agentic <b>●●●●</b></span><span>Mission <b>●●○○</b></span><span>Stack <b>●●●○</b></span><span>Level <b>●●●●</b></span></div>
+          </a>
           <article class="target">
             <small>GovTech / public administration</small>
             <h3>Verwaltungssprung</h3>
@@ -449,14 +493,6 @@
             <div class="meter"><span style="width:50%;background:#9b9486"></span></div>
             <p class="match"><b>50% — stretch</b> — agentic AI in production; roles skew senior.</p>
             <div class="rubric"><span>Agentic <b>●●●●</b></span><span>Mission <b>●○○○</b></span><span>Stack <b>●●○○</b></span><span>Level <b>●○○○</b></span></div>
-          </article>
-          <article class="target">
-            <small>Watchlist · needs info</small>
-            <h3>Everlast</h3>
-            <p>AI products with real-world impact — a team I'd love to build durable agent systems with.</p>
-            <div class="meter"><span style="width:0%;background:#9b9486"></span></div>
-            <p class="match"><b>Unrated</b> — tell me what Everlast does and I'll score it honestly.</p>
-            <div class="rubric"><span>Agentic <b>○○○○</b></span><span>Mission <b>○○○○</b></span><span>Stack <b>○○○○</b></span><span>Level <b>○○○○</b></span></div>
           </article>
         </div>
 

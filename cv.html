@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>(function(){var t=localStorage.getItem('mn-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
   <title>Michael Ninh · AI Engineer</title>
   <meta name="description" content="Michael Ninh — AI Engineer for agentic workflows, RAG/MCP systems, durable loops, and humane AI products. Berlin / Remote." />
   <meta property="og:title" content="Michael Ninh · AI Engineer" />
@@ -620,6 +621,63 @@
       .timeline-card { grid-template-columns: 0.75fr 1.25fr; }
       a { color: #111111; }
     }
+    /* ── LIGHT THEME ("Portfolio-Look") — shared toggle, persisted across pages ── */
+    html[data-theme="light"]{
+      --text:#1a1510; --muted:rgba(26,21,16,0.74); --soft:rgba(26,21,16,0.52);
+      --line:rgba(21,18,15,0.14); --line-strong:rgba(21,18,15,0.22);
+      --accent:#3f6b4a; --accent-2:#3f6b4a; --accent-3:#8a6d2f;
+      --shadow:0 18px 50px rgba(21,18,15,0.08);
+    }
+    html[data-theme="light"] body{
+      color:var(--text);
+      background:
+        radial-gradient(circle at 16% 8%, rgba(63,107,74,0.10), transparent 34rem),
+        radial-gradient(circle at 84% 0%, rgba(244,201,106,0.10), transparent 34rem),
+        linear-gradient(135deg, #f7f3ea 0%, #f4efe6 44%, #efe7d8 100%);
+    }
+    html[data-theme="light"] body::before{
+      mask-image:none; opacity:.05; background-size:auto;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    html[data-theme="light"] .topbar{ background:rgba(244,239,230,0.82); border-bottom-color:var(--line); }
+    html[data-theme="light"] .hero-card,
+    html[data-theme="light"] .signal-card,
+    html[data-theme="light"] .section-card,
+    html[data-theme="light"] .project-card,
+    html[data-theme="light"] .timeline-card,
+    html[data-theme="light"] .mini-card{ background:#fffdf8; border-color:var(--line); box-shadow:var(--shadow); backdrop-filter:none; }
+    html[data-theme="light"] .project-card:hover{ border-color:rgba(63,107,74,0.34); background:#fff; }
+    html[data-theme="light"] .mark{ background:linear-gradient(135deg, rgba(63,107,74,0.16), rgba(244,201,106,0.14)); color:var(--accent); border-color:var(--line-strong); box-shadow:none; }
+    html[data-theme="light"] .eyebrow{ background:rgba(63,107,74,0.08); border-color:rgba(63,107,74,0.28); color:var(--text); }
+    html[data-theme="light"] .button{ background:rgba(21,18,15,0.05); border-color:var(--line-strong); color:var(--text); }
+    html[data-theme="light"] .button:hover{ background:rgba(21,18,15,0.09); }
+    html[data-theme="light"] .button.primary{ background:linear-gradient(135deg, var(--accent), #6f9c78); color:#fff; box-shadow:0 12px 30px rgba(63,107,74,0.18); }
+    html[data-theme="light"] .button.primary:hover{ color:#fff; }
+    html[data-theme="light"] .quote{ color:#2a3b2e; }
+    html[data-theme="light"] .badge{ background:rgba(63,107,74,0.10); border-color:rgba(63,107,74,0.25); color:var(--accent); }
+    html[data-theme="light"] .tag,
+    html[data-theme="light"] .project-meta span{ background:rgba(21,18,15,0.04); border-color:var(--line); color:var(--text); }
+    html[data-theme="light"] .navlinks a:hover,
+    html[data-theme="light"] .navlinks button:hover{ background:rgba(21,18,15,0.06); color:var(--text); }
+    html[data-theme="light"] .orbit{ background:radial-gradient(circle at 50% 50%, rgba(63,107,74,0.12), transparent 42%), rgba(21,18,15,0.03); border-color:var(--line); }
+    html[data-theme="light"] .orbit-ring{ border-color:rgba(21,18,15,0.16); }
+    html[data-theme="light"] .core{ background:linear-gradient(135deg, rgba(21,18,15,0.08), rgba(21,18,15,0.03)); border-color:var(--line); color:var(--accent); }
+    html[data-theme="light"] .status-item{ border-bottom-color:rgba(21,18,15,0.10); }
+    html[data-theme="light"] .timeline-kicker{ color:var(--accent); }
+    html[data-theme="light"] .contact-card{ background:radial-gradient(circle at 15% 0%, rgba(63,107,74,0.12), transparent 36rem), #fffdf8; border-color:var(--line); }
+    html[data-theme="light"] a:hover{ color:var(--accent); }
+    html[data-theme="light"] .footer{ color:var(--soft); }
+
+    .theme-toggle{ font-size:16px; line-height:1; }
+
+    /* cleaner print: don't slice cards across pages */
+    @media print {
+      .hero-card, .signal-card, .section-card, .project-card, .timeline-card, .mini-card, .contact-card { break-inside: avoid; page-break-inside: avoid; }
+      section, .hero, .contact { padding: 12px 0; }
+      .theme-toggle { display: none !important; }
+      h1 { letter-spacing: -0.04em; }
+      .section-head { margin-bottom: 10px; }
+    }
   </style>
 </head>
 <body>
@@ -634,6 +692,7 @@
         <a href="#skills">Skills</a>
         <a href="#experience">Experience</a>
         <a href="#contact" class="keep">Contact</a>
+        <button class="keep theme-toggle" onclick="toggleTheme()" aria-label="Toggle Portfolio-Look / CV-Look" title="Portfolio-Look / CV-Look">◐</button>
         <button class="keep" onclick="window.print()">Print / PDF</button>
       </div>
     </nav>
@@ -872,6 +931,14 @@
   <div id="toast" class="toast" role="status" aria-live="polite">Email copied ✨</div>
 
   <script>
+    // shared theme: light = "Portfolio-Look", dark = "CV-Look" (CV default = dark)
+    (function(){ const t = localStorage.getItem('mn-theme'); if (t) document.documentElement.setAttribute('data-theme', t); })();
+    function toggleTheme(){
+      const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = cur === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('mn-theme', next);
+    }
     const EMAIL = "mikel_ninh@yahoo.de";
     function copyEmail() {
       if (navigator.clipboard && navigator.clipboard.writeText) {
