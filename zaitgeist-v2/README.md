@@ -11,31 +11,29 @@ A small, testable GovTech AI sandbox for the fictional city Beispielsburg.
 - Simulated appointment / callback / ticket receipts
 - Evaluation set from `eval.json`
 
-## What works on Vercel with an LLM key
+## What works on Vercel with OpenRouter
 
 - Server-side LLM call through `/api/charly`
 - Retrieved chunks are passed as grounded context
 - JSON output includes citizen answer, intent, department, action, confidence, sources, next steps and receipt
-- Provider can be OpenRouter/DeepSeek or OpenAI
+- Provider is OpenRouter only, to keep usage cheap and avoid OpenAI fallback costs
 
-## Cheap default: OpenRouter + DeepSeek V3.1
-
-Recommended environment variables:
+## Recommended cheap default
 
 ```bash
-LLM_PROVIDER=openrouter
 OPENROUTER_API_KEY=your_openrouter_key_here
 LLM_MODEL=deepseek/deepseek-chat-v3.1
 SITE_URL=https://YOUR-VERCEL-DOMAIN/zaitgeist-v2/
 ```
 
-## Optional: OpenAI instead
+## Other cheap-enough model options
 
 ```bash
-LLM_PROVIDER=openai
-OPENAI_API_KEY=your_openai_key_here
-LLM_MODEL=gpt-5.5
+LLM_MODEL=qwen/qwen3-32b
+LLM_MODEL=google/gemini-2.5-flash-lite
 ```
+
+DeepSeek V3.1 is the default because it is strong enough for grounded German service answers, JSON output and simple routing. For even cheaper experiments, test Qwen3 32B. For huge context windows, test Gemini Flash Lite.
 
 ## Deploy
 
