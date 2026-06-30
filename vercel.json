@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "functions": {
+    "api/charly.js": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/zaitgeist-v2",
+      "destination": "/zaitgeist-v2/index.html"
+    }
+  ]
+}
