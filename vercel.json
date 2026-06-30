@@ -5,9 +5,20 @@
       "maxDuration": 30
     }
   },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/zaitgeist-v2/",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/zaitgeist-v2",
+      "destination": "/zaitgeist-v2/index.html"
+    },
+    {
+      "source": "/zaitgeist-v2/",
       "destination": "/zaitgeist-v2/index.html"
     }
   ]
