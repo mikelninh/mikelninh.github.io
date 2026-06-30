@@ -6,7 +6,7 @@
   <title>Michael Ninh — AI Systems für Verwaltung & Bürgerzugang</title>
   <meta name="description" content="Michael Ninh — AI Engineer in Berlin. RAG, LLM-Agenten und produktnahe AI-Systeme für Verwaltung, Recht und komplexe Bürgerprozesse." />
   <meta property="og:title" content="Michael Ninh — AI Systems für Verwaltung & Bürgerzugang" />
-  <meta property="og:description" content="Eine fokussierte Portfolio-Seite für Zaitgeist / Charly: RAG, Voice/Chat, Evaluation, Datenschutz und Civic AI mit shipped proof." />
+  <meta property="og:description" content="Eine fokussierte Portfolio-Seite für Zaitgeist / Charly: RAG, Voice/Chat, Evaluation, Datenschutz und Civic AI mit Mini-Prototyp." />
   <meta property="og:type" content="website" />
   <link rel="stylesheet" href="./style.css" />
 </head>
@@ -17,6 +17,7 @@
     <div class="links">
       <a href="#fit">Fit</a>
       <a href="#proof">Proof</a>
+      <a href="#prototype">Mini-Prototyp</a>
       <a href="#charly">Charly-Ansatz</a>
       <a href="#contact">Kontakt</a>
     </div>
@@ -31,7 +32,7 @@
         <h1>AI-Systeme für Verwaltung, Recht und Bürgerzugang.</h1>
         <p class="lead">Ich baue praktische LLM-Workflows, RAG-Systeme und Agenten, die komplexe Informationen in nächste Schritte übersetzen — besonders dort, wo Menschen mit Verwaltung, Regeln, Formularen und Fristen kämpfen.</p>
         <div class="btns">
-          <a class="btn" href="#fit">Warum Zaitgeist?</a>
+          <a class="btn" href="#prototype">Mini-Prototyp ansehen</a>
           <a class="btn secondary" href="#proof">Shipped Proof</a>
           <a class="btn secondary" href="mailto:mikel_ninh@yahoo.de">Kontakt</a>
         </div>
@@ -57,7 +58,7 @@
       <div class="stat"><small>Rolle</small><b>AI Engineer · Systems Builder</b><span>Berlin / Remote · schnell im Prototyp, ernst in Production</span></div>
       <div class="stat"><small>Proof</small><b>GitLaw · SafeVoice · Recht-MCP · INCA-Loop</b><span>öffentliche Repos, Demos, anfassbare Systeme</span></div>
       <div class="stat"><small>Zaitgeist-Fit</small><b>GovTech · RAG · Voice/Chat</b><span>starker Problem- und Mission-Fit</span></div>
-      <div class="stat"><small>Stack</small><b>Python · FastAPI · RAG · MCP · React/TS</b><span>LLMs, Evaluation, Tool-Use</span></div>
+      <div class="stat"><small>Demo</small><b>Bürgeranliegen-Router</b><span>kleiner Charly-naher Proof direkt auf der Seite</span></div>
     </div>
   </div>
 
@@ -113,7 +114,61 @@
           <a class="card" href="https://github.com/mikelninh/civic-ai-mcp-toolkit" target="_blank" rel="noopener"><h3>Recht-MCP ↗</h3><p>Geprüfte Tools für LLMs: Verträge, Wohnen, Leistungen und Rechte — Tool-Use statt bloß Chat.</p></a>
           <a class="card" href="https://github.com/mikelninh/safevoice" target="_blank" rel="noopener"><h3>SafeVoice ↗</h3><p>Strukturierte Einordnung, Evidenz und Report-Logik für sensible Online-Kommunikation.</p></a>
           <a class="card" href="https://mikelninh.github.io/inca-site/" target="_blank" rel="noopener"><h3>INCA Claims-Loop ↗</h3><p>Eine anfassbare Agenten-Demo mit Rollen, Entscheidungsreceipt und Eval-Denke.</p></a>
-          <article class="card"><h3>Job-Radar</h3><p>Richtung: messbare Fit-Scores, Belege, Bewerbungs-Loops und transparente next actions.</p></article>
+          <a class="card" href="#prototype"><h3>Charly-naher Mini-Prototyp ↓</h3><p>Ein kleiner Bürgeranliegen-Router: Anfrage, Intent, Wissensquellen, Antwort, Weiterleitung und Qualitätscheck.</p></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo" id="prototype">
+    <div class="wrap">
+      <div class="head">
+        <h2>Mini-Prototyp: Bürgeranliegen-Router</h2>
+        <p>Kein Charly-Klon, sondern ein kleiner Proof of Understanding: So denke ich über Voice/Chat-Anliegen, RAG-Kontext, Routing, Antwortqualität und menschliche Übergabe.</p>
+      </div>
+      <div class="demo-shell">
+        <div class="demo-top">
+          <div>
+            <div class="kicker">Anfassbarer Proof</div>
+            <h3>Vom Satz zur geklärten nächsten Aktion</h3>
+            <p>Wähle ein Beispielanliegen. Der Router zeigt, was ich in einem echten Test-Working ausbauen würde: Klassifikation, Quellenlogik, Antwort, Weiterleitung und Evaluation.</p>
+          </div>
+          <a class="btn secondary" href="#contact">Als Test-Working ausbauen</a>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Beispielanliegen">
+          <button class="tab active" data-case="wohngeld">Wohngeld</button>
+          <button class="tab" data-case="ausweis">Personalausweis</button>
+          <button class="tab" data-case="kita">Kita-Platz</button>
+        </div>
+        <div class="demo-body">
+          <div class="demo-left">
+            <div class="input-box">
+              <small>Bürgeranliegen</small>
+              <p id="demo-input">Ich habe einen Brief zum Wohngeld bekommen und verstehe nicht, welche Unterlagen fehlen.</p>
+            </div>
+            <div class="pipeline">
+              <div class="pill"><b>1</b><span id="demo-intent">Intent: Wohngeld · fehlende Unterlagen · Frist-Risiko</span></div>
+              <div class="pill"><b>2</b><span id="demo-route">Routing: Sozialamt / Wohngeldstelle · Rückfrage falls Aktenzeichen fehlt</span></div>
+              <div class="pill"><b>3</b><span id="demo-safety">Guardrail: keine Rechtsberatung, klare nächste Schritte, menschliche Übergabe bei Sonderfall</span></div>
+            </div>
+          </div>
+          <div class="demo-right">
+            <div class="answer">
+              <h3 id="demo-title">Antwortentwurf</h3>
+              <p id="demo-answer">Ich würde zuerst das Aktenzeichen, die Frist und die im Brief genannten Unterlagen prüfen. Falls Unterlagen fehlen, sollte die Person eine kurze Liste erhalten und direkt zur zuständigen Wohngeldstelle weitergeleitet werden. Bei drohender Fristüberschreitung: Rückrufbitte oder Priorisierung.</p>
+              <div class="sources">
+                <div class="source"><b id="source-a">Quelle A</b><span id="source-a-text">Kommunale Wissensbasis: Wohngeld-Unterlagen</span></div>
+                <div class="source"><b id="source-b">Quelle B</b><span id="source-b-text">Formularseite + Öffnungszeiten + Kontaktweg</span></div>
+              </div>
+              <p class="tiny" id="demo-handoff">Handoff: Wohngeldstelle, mit Aktenzeichen und Rückrufbitte, falls Daten unvollständig sind.</p>
+            </div>
+            <div class="quality">
+              <div class="receipt"><small>Confidence</small><strong id="q-confidence">82%</strong><div class="bar"><span id="bar-confidence" style="width:82%"></span></div></div>
+              <div class="receipt"><small>Handoff</small><strong id="q-handoff">Ja</strong><div class="bar"><span id="bar-handoff" style="width:76%"></span></div></div>
+              <div class="receipt"><small>Eval-Fokus</small><strong id="q-eval">Routing</strong><div class="bar"><span id="bar-eval" style="width:70%"></span></div></div>
+            </div>
+            <p class="tiny">In Produktion würde ich daraus ein Eval-Set bauen: Intent Accuracy, Source Coverage, Escalation Precision, Antwortklarheit und Frist-/Risiko-Erkennung.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -187,5 +242,64 @@
 <footer>
   <div class="wrap">© Michael Ninh · Berlin · AI systems for Verwaltung, Recht & Bürgerzugang · <a href="https://github.com/mikelninh" target="_blank" rel="noopener">github.com/mikelninh</a></div>
 </footer>
+
+<script>
+const cases = {
+  wohngeld: {
+    input: 'Ich habe einen Brief zum Wohngeld bekommen und verstehe nicht, welche Unterlagen fehlen.',
+    intent: 'Intent: Wohngeld · fehlende Unterlagen · Frist-Risiko',
+    route: 'Routing: Sozialamt / Wohngeldstelle · Rückfrage falls Aktenzeichen fehlt',
+    safety: 'Guardrail: keine Rechtsberatung, klare nächste Schritte, menschliche Übergabe bei Sonderfall',
+    answer: 'Ich würde zuerst das Aktenzeichen, die Frist und die im Brief genannten Unterlagen prüfen. Falls Unterlagen fehlen, sollte die Person eine kurze Liste erhalten und direkt zur zuständigen Wohngeldstelle weitergeleitet werden. Bei drohender Fristüberschreitung: Rückrufbitte oder Priorisierung.',
+    sourceA: 'Kommunale Wissensbasis', sourceAText: 'Wohngeld-Unterlagen, Fristen, Kontaktweg',
+    sourceB: 'Formularseite', sourceBText: 'Nachreichung, Öffnungszeiten, Online-Termin',
+    handoff: 'Handoff: Wohngeldstelle, mit Aktenzeichen und Rückrufbitte, falls Daten unvollständig sind.',
+    confidence: '82%', handoffLabel: 'Ja', eval: 'Routing', bars: [82,76,70]
+  },
+  ausweis: {
+    input: 'Mein Personalausweis läuft bald ab. Brauche ich einen Termin und was muss ich mitbringen?',
+    intent: 'Intent: Personalausweis · Termin · benötigte Unterlagen',
+    route: 'Routing: Bürgeramt · Terminbuchung · Dokumentencheck',
+    safety: 'Guardrail: lokale Gebühren und Verfügbarkeit nur aus aktueller Quelle nennen',
+    answer: 'Der Assistent sollte direkt die Terminlogik prüfen, die Standardunterlagen nennen und nur lokal bestätigte Informationen ausgeben. Wenn Termine knapp sind, kann er alternative Bürgerämter oder eine Rückruf-/E-Mail-Option anbieten.',
+    sourceA: 'Bürgeramt-Wissensbasis', sourceAText: 'Ausweis, Passfoto, alter Ausweis, Gebührenhinweis',
+    sourceB: 'Termin-Service', sourceBText: 'Verfügbarkeit, Standort, Öffnungszeiten',
+    handoff: 'Handoff: Bürgeramt nur bei Sonderfall, sonst Self-Service-Link + Checkliste.',
+    confidence: '91%', handoffLabel: 'Selten', eval: 'Klarheit', bars: [91,42,86]
+  },
+  kita: {
+    input: 'Wir ziehen neu in die Stadt. Wie finde ich einen Kita-Platz und welche Fristen gelten?',
+    intent: 'Intent: Kita-Platz · Zuzug · Fristen · Beratungsbedarf',
+    route: 'Routing: Jugendamt / Kita-Koordination · Infopaket · Beratung möglich',
+    safety: 'Guardrail: keine Platzgarantie, Erwartungen klar managen, menschliche Beratung anbieten',
+    answer: 'Hier sollte der Assistent zuerst Alter des Kindes, Zuzugsdatum und gewünschte Betreuung klären. Danach: lokales Portal, Fristen, benötigte Dokumente und Kontakt der Kita-Koordination. Wegen hoher emotionaler Relevanz ist eine freundliche menschliche Übergabe sinnvoll.',
+    sourceA: 'Kita-Portal', sourceAText: 'Anmeldung, Prioritäten, Fristen, Nachweise',
+    sourceB: 'Jugendamt-Kontakt', sourceBText: 'Beratung, Sonderfälle, Zuzug',
+    handoff: 'Handoff: Kita-Koordination, wenn Dringlichkeit, Zuzug oder besonderer Betreuungsbedarf vorliegt.',
+    confidence: '78%', handoffLabel: 'Empfohlen', eval: 'Empathie', bars: [78,88,74]
+  }
+};
+function setCase(key){
+  const c = cases[key];
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.case === key));
+  document.getElementById('demo-input').textContent = c.input;
+  document.getElementById('demo-intent').textContent = c.intent;
+  document.getElementById('demo-route').textContent = c.route;
+  document.getElementById('demo-safety').textContent = c.safety;
+  document.getElementById('demo-answer').textContent = c.answer;
+  document.getElementById('source-a').textContent = c.sourceA;
+  document.getElementById('source-a-text').textContent = c.sourceAText;
+  document.getElementById('source-b').textContent = c.sourceB;
+  document.getElementById('source-b-text').textContent = c.sourceBText;
+  document.getElementById('demo-handoff').textContent = c.handoff;
+  document.getElementById('q-confidence').textContent = c.confidence;
+  document.getElementById('q-handoff').textContent = c.handoffLabel;
+  document.getElementById('q-eval').textContent = c.eval;
+  document.getElementById('bar-confidence').style.width = c.bars[0] + '%';
+  document.getElementById('bar-handoff').style.width = c.bars[1] + '%';
+  document.getElementById('bar-eval').style.width = c.bars[2] + '%';
+}
+document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => setCase(tab.dataset.case)));
+</script>
 </body>
 </html>
