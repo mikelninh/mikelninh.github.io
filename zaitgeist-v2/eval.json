@@ -1,0 +1,17 @@
+{
+  "name": "Beispielsburg Charly Micro-Eval",
+  "updated": "2026-06-30",
+  "tests": [
+    {"q":"Wie bekomme ich einen neuen Personalausweis?","expectTopic":"personalausweis","expectAction":"appointment"},
+    {"q":"Mein Ausweis ist abgelaufen, was muss ich mitbringen?","expectTopic":"personalausweis","expectAction":"appointment"},
+    {"q":"Ich bin nach Beispielsburg gezogen und muss mich anmelden","expectTopic":"ummeldung","expectAction":"appointment_or_callback"},
+    {"q":"Brauche ich eine Wohnungsgeberbestätigung?","expectTopic":"ummeldung","expectAction":"appointment_or_callback"},
+    {"q":"Wann hat das Rathaus geöffnet?","expectTopic":"oeffnungszeiten","expectAction":"answer"},
+    {"q":"Ist Donnerstag offen oder brauche ich einen Termin?","expectTopic":"oeffnungszeiten","expectAction":"answer"},
+    {"q":"Die Straßenlaterne in meiner Straße ist kaputt","expectTopic":"maengelmelder","expectAction":"ticket"},
+    {"q":"Auf dem Gehweg liegt wilder Müll","expectTopic":"maengelmelder","expectAction":"ticket"},
+    {"q":"Kann mich jemand vom Amt zurückrufen?","expectTopic":"rueckruf","expectAction":"callback"},
+    {"q":"Ich brauche einen Termin im Bürgeramt","expectTopic":"kalender","expectAction":"appointment"},
+    {"q":"Wie prüft ihr, ob die Antwort richtig ist?","expectTopic":"qualitaetssicherung","expectAction":"eval"}
+  ]
+}
