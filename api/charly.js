@@ -4,7 +4,7 @@ import OpenAI from 'openai';
 
 const provider = 'openrouter';
 const apiKey = process.env.OPENROUTER_API_KEY;
-const model = process.env.LLM_MODEL || 'deepseek/deepseek-chat-v3.1';
+const model = process.env.LLM_MODEL || 'qwen/qwen3-32b';
 
 const client = new OpenAI({
   apiKey,
@@ -61,17 +61,21 @@ function extractJson(text) {
   return null;
 }
 async function callLlm(prompt) {
-  const completion = await client.chat.completions.create({
+  const base = {
     model,
     messages: [
       { role: 'system', content: 'Return valid JSON only. No markdown.' },
       { role: 'user', content: prompt }
     ],
-    temperature: 0.2,
-    response_format: { type: 'json_object' }
-  });
-  const raw = completion.choices?.[0]?.message?.content || '{}';
-  return { raw, usage: completion.usage || null };
+    temperature: 0.2
+  };
+  try {
+    const completion = await client.chat.completions.create({ ...base, response_format: { type: 'json_object' } });
+    return { raw: completion.choices?.[0]?.message?.content || '{}', usage: completion.usage || null, jsonMode: true };
+  } catch (e) {
+    const completion = await client.chat.completions.create(base);
+    return { raw: completion.choices?.[0]?.message?.content || '{}', usage: completion.usage || null, jsonMode: false, jsonModeError: e.message };
+  }
 }
 
 export default async function handler(req, res) {
@@ -91,14 +95,16 @@ export default async function handler(req, res) {
 
     const prompt = `You are a careful German municipal service assistant prototype for the fictional city Beispielsburg. Answer only using the provided context. If the context is insufficient, ask a clarifying question and recommend human handoff. Return valid JSON only with these keys: mode, citizen_answer, intent, department, action, confidence, sources, next_steps, receipt, simulated.\n\nUser question: ${question}\n\nRetrieved context:\n${context}\n\nRules:\n- citizen_answer must be plain German, helpful for a normal citizen, no jargon.\n- sources must cite chunk ids and source names from context.\n- action must be one of appointment, ticket, callback, answer, eval, appointment_or_callback.\n- receipt must explain what would be logged for quality: intent, source coverage, routing, next action.\n- simulated is true for appointment, ticket and callback integrations.\n- Do not invent opening hours, documents, fees, laws or contacts beyond context.`;
 
-    const { raw, usage } = await callLlm(prompt);
-    let data = extractJson(raw);
-    if (!data) data = { mode: 'llm_rag', citizen_answer: raw, intent: hits[0].topic, department: hits[0].department, action: hits[0].action, confidence: Math.min(0.9, 0.55 + hits[0].score / 20), sources: hits.map(h => ({ id: h.id, source: h.source, score: h.score })), next_steps: hits[0].steps || [], receipt: 'LLM output was not JSON. Fallback wrapper used.', simulated: true };
+    const llm = await callLlm(prompt);
+    let data = extractJson(llm.raw);
+    if (!data) data = { mode: 'llm_rag', citizen_answer: llm.raw, intent: hits[0].topic, department: hits[0].department, action: hits[0].action, confidence: Math.min(0.9, 0.55 + hits[0].score / 20), sources: hits.map(h => ({ id: h.id, source: h.source, score: h.score })), next_steps: hits[0].steps || [], receipt: 'LLM output was not JSON. Fallback wrapper used.', simulated: true };
 
     data.mode = data.mode || 'llm_rag';
     data.provider = provider;
     data.model = model;
-    data.usage = usage;
+    data.usage = llm.usage;
+    data.jsonMode = llm.jsonMode;
+    if (llm.jsonModeError) data.jsonModeError = llm.jsonModeError;
     data.sources = Array.isArray(data.sources) && data.sources.length ? data.sources : hits.map(h => ({ id: h.id, source: h.source, score: h.score }));
     data.retrieved = hits.map(h => ({ id: h.id, title: h.title, source: h.source, score: h.score, action: h.action, department: h.department }));
     return res.status(200).json(data);
