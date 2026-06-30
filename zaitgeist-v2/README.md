@@ -11,23 +11,36 @@ A small, testable GovTech AI sandbox for the fictional city Beispielsburg.
 - Simulated appointment / callback / ticket receipts
 - Evaluation set from `eval.json`
 
-## What works on Vercel with `OPENAI_API_KEY`
+## What works on Vercel with an LLM key
 
-- Server-side OpenAI call through `/api/charly`
+- Server-side LLM call through `/api/charly`
 - Retrieved chunks are passed as grounded context
-- GPT-5.5 generates a plain-German citizen answer
-- JSON output includes intent, department, action, confidence, sources, next steps and receipt
+- JSON output includes citizen answer, intent, department, action, confidence, sources, next steps and receipt
+- Provider can be OpenRouter/DeepSeek or OpenAI
+
+## Cheap default: OpenRouter + DeepSeek V3.1
+
+Recommended environment variables:
+
+```bash
+LLM_PROVIDER=openrouter
+OPENROUTER_API_KEY=your_openrouter_key_here
+LLM_MODEL=deepseek/deepseek-chat-v3.1
+SITE_URL=https://YOUR-VERCEL-DOMAIN/zaitgeist-v2/
+```
+
+## Optional: OpenAI instead
+
+```bash
+LLM_PROVIDER=openai
+OPENAI_API_KEY=your_openai_key_here
+LLM_MODEL=gpt-5.5
+```
 
 ## Deploy
 
 1. Import this GitHub repo into Vercel.
-2. Add environment variables:
-
-```bash
-OPENAI_API_KEY=your_api_key_here
-OPENAI_MODEL=gpt-5.5
-```
-
+2. Add the environment variables above.
 3. Open:
 
 ```text
