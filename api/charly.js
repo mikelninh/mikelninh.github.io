@@ -3,7 +3,7 @@ import path from 'path';
 import OpenAI from 'openai';
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-const model = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
+const model = process.env.OPENAI_MODEL || 'gpt-5.5';
 
 function loadKnowledge() {
   const file = path.join(process.cwd(), 'zaitgeist-v2', 'knowledge.json');
@@ -28,7 +28,7 @@ function retrieve(question, chunks) {
   const ranked = chunks.map(c => ({ ...c, score: score(question, c) })).sort((a, b) => b.score - a.score);
   return ranked[0]?.score ? ranked.slice(0, 3) : [];
 }
-function fallback(question) {
+function fallback() {
   return {
     mode: 'fallback',
     answer: 'Ich bin mir noch nicht sicher, welches Anliegen gemeint ist. Ich würde eine kurze Rückfrage stellen oder eine Rückrufbitte an die Telefonzentrale vorbereiten, statt eine unsichere Auskunft zu geben.',
@@ -55,7 +55,7 @@ export default async function handler(req, res) {
 
     const kb = loadKnowledge();
     const hits = retrieve(question, kb.chunks || []);
-    if (!hits.length) return res.status(200).json(fallback(question));
+    if (!hits.length) return res.status(200).json(fallback());
 
     const context = hits.map((h, i) => `[${i + 1}] ${h.id}\nTitle: ${h.title}\nDepartment: ${h.department}\nAction: ${h.action}\nSource: ${h.source}\nText: ${h.text}\nSteps: ${(h.steps || []).join(' | ')}`).join('\n\n');
 
