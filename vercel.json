@@ -8,11 +8,19 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "/zaitgeist-v2/",
+      "destination": "/zaitgeist-v3/",
       "permanent": false
     }
   ],
   "rewrites": [
+    {
+      "source": "/zaitgeist-v3",
+      "destination": "/zaitgeist-v3/index.html"
+    },
+    {
+      "source": "/zaitgeist-v3/",
+      "destination": "/zaitgeist-v3/index.html"
+    },
     {
       "source": "/zaitgeist-v2",
       "destination": "/zaitgeist-v2/index.html"
