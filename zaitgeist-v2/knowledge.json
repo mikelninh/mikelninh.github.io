@@ -1,0 +1,77 @@
+{
+  "city": "Beispielsburg",
+  "version": "0.1",
+  "updated": "2026-06-30",
+  "chunks": [
+    {
+      "id": "bb-ausweis-001",
+      "topic": "personalausweis",
+      "department": "Bürgeramt",
+      "action": "appointment",
+      "title": "Personalausweis beantragen oder erneuern",
+      "text": "Für einen neuen Personalausweis in Beispielsburg ist ein Termin beim Bürgeramt erforderlich. Bürgerinnen und Bürger bringen den alten Ausweis, ein aktuelles biometrisches Passfoto und bei Verlust eine Verlustanzeige mit. Minderjährige benötigen zusätzlich die Zustimmung der Sorgeberechtigten.",
+      "steps": ["Termin im Bürgeramt buchen", "biometrisches Passfoto vorbereiten", "alten Ausweis oder Verlustanzeige mitbringen", "bei Minderjährigen Sorgeberechtigte einbeziehen"],
+      "source": "Beispielsburg Wissensbasis: Bürgeramt / Personalausweis"
+    },
+    {
+      "id": "bb-ummeldung-001",
+      "topic": "ummeldung",
+      "department": "Bürgerbüro",
+      "action": "appointment_or_callback",
+      "title": "Ummeldung nach Umzug",
+      "text": "Nach einem Umzug nach oder innerhalb von Beispielsburg muss die neue Adresse beim Bürgerbüro angemeldet werden. Benötigt werden Ausweisdokument, Wohnungsgeberbestätigung und die neue Anschrift. Bei unklaren Fristen oder fehlenden Unterlagen bietet die Verwaltung eine Rückrufbitte an.",
+      "steps": ["Zuzugsdatum und neue Adresse klären", "Wohnungsgeberbestätigung bereithalten", "Ausweis oder Pass mitbringen", "Termin buchen oder Rückrufbitte auslösen"],
+      "source": "Beispielsburg Wissensbasis: Bürgerbüro / Ummeldung"
+    },
+    {
+      "id": "bb-oeffnungszeiten-001",
+      "topic": "oeffnungszeiten",
+      "department": "Allgemeine Auskunft",
+      "action": "answer",
+      "title": "Öffnungszeiten Verwaltung",
+      "text": "Das Rathaus Beispielsburg ist Montag, Mittwoch und Freitag von 09:00 bis 13:00 Uhr geöffnet. Dienstag ist von 10:00 bis 18:00 Uhr geöffnet. Donnerstag ist nur mit Termin geöffnet. Fachbereiche können abweichende Zeiten haben.",
+      "steps": ["Fachbereich klären", "Öffnungszeiten ausgeben", "bei Donnerstag auf Terminpflicht hinweisen", "bei Fachbereichsfragen weiterleiten"],
+      "source": "Beispielsburg Wissensbasis: Rathaus / Öffnungszeiten"
+    },
+    {
+      "id": "bb-maengel-001",
+      "topic": "maengelmelder",
+      "department": "Bauhof / Tiefbauamt",
+      "action": "ticket",
+      "title": "Mängel und Defekte melden",
+      "text": "Mängel wie defekte Straßenlaternen, Schlaglöcher, beschädigte Schilder oder wilde Müllablagerungen können über den Mängelmelder gemeldet werden. Wichtig sind Standort, kurze Beschreibung, Kategorie und wenn möglich ein Foto. Bei akuter Gefahr wird an die Leitstelle verwiesen.",
+      "steps": ["Standort aufnehmen", "Kategorie des Mangels bestimmen", "Dringlichkeit prüfen", "Ticket an Bauhof oder Tiefbauamt übergeben"],
+      "source": "Beispielsburg Wissensbasis: Mängelmelder"
+    },
+    {
+      "id": "bb-rueckruf-001",
+      "topic": "rueckruf",
+      "department": "Telefonzentrale",
+      "action": "callback",
+      "title": "Rückrufbitte aufnehmen",
+      "text": "Wenn ein Anliegen nicht abschließend beantwortet werden kann, nimmt Charly eine Rückrufbitte auf. Erfasst werden Name, Telefonnummer, Anliegen, zuständiger Fachbereich und eine kurze Zusammenfassung. Persönliche Daten werden nur erhoben, wenn sie für den Rückruf nötig sind.",
+      "steps": ["Name und Telefonnummer erfragen", "Anliegen kurz zusammenfassen", "zuständigen Fachbereich auswählen", "Rückrufbitte mit Quelle und Kontext übergeben"],
+      "source": "Beispielsburg Prozess: Rückrufbitten"
+    },
+    {
+      "id": "bb-kalender-001",
+      "topic": "kalender",
+      "department": "Terminservice",
+      "action": "appointment",
+      "title": "Terminbuchung und Kalenderintegration",
+      "text": "Für terminpflichtige Anliegen schlägt Charly passende freie Zeiten vor und kann einen Termin vormerken. In der Demo sind Termine simuliert. In Produktion würde die Kalenderintegration verfügbare Slots, Standort und Anliegenart berücksichtigen.",
+      "steps": ["Anliegenart prüfen", "freien Slot suchen", "Termin vormerken", "Bestätigung und Checkliste ausgeben"],
+      "source": "Beispielsburg Prozess: Terminservice"
+    },
+    {
+      "id": "bb-qualitaet-001",
+      "topic": "qualitaetssicherung",
+      "department": "AI Operations",
+      "action": "eval",
+      "title": "Fortlaufende Qualitätssicherung",
+      "text": "Jede Antwort soll anhand von Intent-Erkennung, Quellenabdeckung, Routing, nächster Aktion und Bürgerzufriedenheit geprüft werden. Unsichere Antworten werden nicht erfunden, sondern führen zu Rückfrage oder menschlicher Übergabe.",
+      "steps": ["Intent Accuracy messen", "Source Coverage prüfen", "Routing Accuracy prüfen", "Fallbacks und Zufriedenheit auswerten"],
+      "source": "Beispielsburg AI Operations: Qualitätssicherung"
+    }
+  ]
+}
