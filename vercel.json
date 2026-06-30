@@ -11,11 +11,19 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "/zaitgeist-v5/",
+      "destination": "/zaitgeist-send/",
       "permanent": false
     }
   ],
   "rewrites": [
+    {
+      "source": "/zaitgeist-send",
+      "destination": "/zaitgeist-send/index.html"
+    },
+    {
+      "source": "/zaitgeist-send/",
+      "destination": "/zaitgeist-send/index.html"
+    },
     {
       "source": "/zaitgeist-v5",
       "destination": "/zaitgeist-v5/index.html"
