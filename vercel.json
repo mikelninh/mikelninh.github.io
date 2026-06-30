@@ -3,16 +3,27 @@
   "functions": {
     "api/charly.js": {
       "maxDuration": 30
+    },
+    "api/import-source.js": {
+      "maxDuration": 30
     }
   },
   "redirects": [
     {
       "source": "/",
-      "destination": "/zaitgeist-v4/",
+      "destination": "/zaitgeist-v5/",
       "permanent": false
     }
   ],
   "rewrites": [
+    {
+      "source": "/zaitgeist-v5",
+      "destination": "/zaitgeist-v5/index.html"
+    },
+    {
+      "source": "/zaitgeist-v5/",
+      "destination": "/zaitgeist-v5/index.html"
+    },
     {
       "source": "/zaitgeist-v4",
       "destination": "/zaitgeist-v4/index.html"
