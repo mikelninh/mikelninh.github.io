@@ -1,0 +1,83 @@
+{
+  "name": "charlykit-municipal-tools",
+  "version": "0.1.0",
+  "status": "draft",
+  "purpose": "Reusable municipal RAG, source, truth and action tools for agents.",
+  "tools": [
+    {
+      "name": "import_source",
+      "description": "Import a public municipal source URL or pasted text and propose reviewed knowledge chunks.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "url": {"type": "string"},
+          "text": {"type": "string"},
+          "municipality": {"type": "string"}
+        }
+      }
+    },
+    {
+      "name": "search_sources",
+      "description": "Search approved municipal knowledge chunks for a citizen question.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "query": {"type": "string"},
+          "municipality": {"type": "string"},
+          "limit": {"type": "number"}
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "classify_statement",
+      "description": "Classify a statement as factual claim, value/norm, belief, prediction, preference or ambiguity.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "statement": {"type": "string"}
+        },
+        "required": ["statement"]
+      }
+    },
+    {
+      "name": "create_action_payload",
+      "description": "Create a draft appointment, callback or ticket payload from an intent and context.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "intent": {"type": "string"},
+          "action": {"type": "string"},
+          "citizen_context": {"type": "object"}
+        },
+        "required": ["intent", "action"]
+      }
+    },
+    {
+      "name": "create_receipt",
+      "description": "Create a human-readable and machine-readable receipt for a response or workflow step.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "question": {"type": "string"},
+          "intent": {"type": "string"},
+          "source_ids": {"type": "array", "items": {"type": "string"}},
+          "action": {"type": "string"},
+          "confidence": {"type": "number"}
+        },
+        "required": ["question", "intent", "action"]
+      }
+    },
+    {
+      "name": "run_eval",
+      "description": "Run a small evaluation set against the current knowledge base and routing rules.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "testset_id": {"type": "string"},
+          "municipality": {"type": "string"}
+        }
+      }
+    }
+  ]
+}
