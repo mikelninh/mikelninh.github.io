@@ -18,22 +18,25 @@ A small, testable GovTech AI sandbox for the fictional city Beispielsburg.
 - JSON output includes citizen answer, intent, department, action, confidence, sources, next steps and receipt
 - Provider is OpenRouter only, to keep usage cheap and avoid OpenAI fallback costs
 
-## Recommended cheap default
+## Cheapest first test setup
 
 ```bash
 OPENROUTER_API_KEY=your_openrouter_key_here
-LLM_MODEL=deepseek/deepseek-chat-v3.1
+LLM_MODEL=qwen/qwen3-32b
 SITE_URL=https://YOUR-VERCEL-DOMAIN/zaitgeist-v2/
 ```
 
-## Other cheap-enough model options
+## Upgrade model if needed
 
 ```bash
-LLM_MODEL=qwen/qwen3-32b
+# Stronger still cheap model
+LLM_MODEL=deepseek/deepseek-chat-v3.1
+
+# Long-context model
 LLM_MODEL=google/gemini-2.5-flash-lite
 ```
 
-DeepSeek V3.1 is the default because it is strong enough for grounded German service answers, JSON output and simple routing. For even cheaper experiments, test Qwen3 32B. For huge context windows, test Gemini Flash Lite.
+Start with Qwen3 32B for cheap testing. If German answer quality or JSON discipline is not good enough, switch to DeepSeek V3.1. If the knowledge base becomes much larger, test Gemini Flash Lite.
 
 ## Deploy
 
