@@ -3,225 +3,108 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Hey Son · CharlyKit von Michael</title>
-  <meta name="description" content="Eine persönliche CharlyKit-Demo von Michael für Son: GovTech AI, geprüfte Quellen, Serviceflows, Truth Analyzer, SafeVoice und die Frage, ob daraus ein Match entstehen könnte.">
+  <title>Hey Son · kleines AI-Experiment von Michael</title>
+  <meta name="description" content="Eine persönliche, spielerische Mini-Seite von Michael für Son: Charly-inspiriertes AI-Serviceflow-Experiment, SafeVoice-Nebenquest und Einladung zum Reconnect.">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <div class="halo"></div>
-  <header>
-    <nav class="wrap">
-      <a class="logo" href="#top">Hey Son<span> · Michael hat gebastelt</span></a>
-      <div>
-        <a href="#personal">Warum</a>
-        <a href="#demo">Mini-Demo</a>
-        <a href="#scope">Echt?</a>
-        <a href="#questions">Fragen</a>
-        <a href="#safevoice">SafeVoice</a>
-        <a href="#coffee">Kaffee/Sport</a>
-      </div>
-    </nav>
-  </header>
-
-  <main id="top">
-    <section class="hero wrap">
-      <div class="heroCopy">
-        <p class="eyebrow">Persönliche Notiz · GovTech AI · kleine Neugier-Eskalation</p>
-        <h1>Hey Son — ich hab euer Charly-Thema gesehen und mein Gehirn hat daraus ein kleines AI-Spielzeug gebaut.</h1>
-        <p class="lead">Kein Pitch-Deck. Kein Clone. Eher: “Was passiert, wenn Michael versucht, in 3 Minuten zu zeigen, wie Bürgerfragen kontrolliert zu Serviceflows werden könnten?”</p>
-        <div class="row">
-          <a class="btn" href="#demo">Spielzeug anklicken</a>
-          <a class="btn ghost" href="#personal">Warum ich das gebaut habe</a>
-          <a class="btn ghost" href="#coffee">Danach Sport/Kaffee?</a>
-        </div>
-        <div class="trust">
-          <span>Bürgerfrage → Quelle → Antwort → Aktion</span>
-          <span>Admin Review</span>
-          <span>Receipt + Eval</span>
-          <span>MCP/Agent-Idee</span>
+  <main>
+    <section class="hero">
+      <div class="note">
+        <p class="kicker">Hey Son, kleine Neugier-Eskalation.</p>
+        <h1>Ich hab euer Charly-Thema gesehen — und mein Kopf hat daraus ein kleines AI-Experiment gebaut.</h1>
+        <p class="lead">Kein Pitch. Kein Clone. Eher ein kleiner Gedanken-Prototyp: Was wäre, wenn eine Bürgerfrage nicht einfach “beantwortet” wird, sondern sauber durch Quelle, nächste Aktion und Vertrauen läuft?</p>
+        <div class="actions">
+          <a class="btn" href="#toy">Mini-Experiment öffnen</a>
+          <a class="btn soft" href="#letter">Warum ich dir das zeige</a>
         </div>
       </div>
-      <aside class="heroCard">
-        <small>Mini-Spielregel</small>
-        <h2>Wenn du danach Ly in 2 Minuten erzählen kannst, was ich meine, hat die Seite gewonnen.</h2>
-        <ol class="tryList">
-          <li>Vier Demo-Schritte durchklicken.</li>
-          <li>Einmal “Was ist echt?” anschauen.</li>
-          <li>Eine Truth-Analyzer-Aussage testen.</li>
-          <li>Mir brutal ehrlich sagen, wo ich naiv bin.</li>
-        </ol>
-      </aside>
-    </section>
-
-    <section class="wrap section" id="personal">
-      <div class="head">
-        <p class="eyebrow">Warum ich das gebaut habe</p>
-        <h2>Deine Arbeit hat mich ehrlich neugierig gemacht.</h2>
-        <p>Ich versuche gerade meinen eigenen Weg zwischen AI Engineering, sinnvollen Produkten, öffentlichen Systemen und menschenfreundlicher Technologie zu finden. Als ich mir Zaitgeist/Charly angeschaut habe, dachte ich: Genau an dieser Schnittstelle wird es spannend.</p>
-      </div>
-      <div class="whyGrid">
-        <div><b>AI Engineering</b><p>Mich interessiert nicht nur, ob ein Modell antwortet, sondern wie man es kontrolliert, testet und in echte Workflows einbettet.</p></div>
-        <div><b>Public-good Tech</b><p>Verwaltung, Recht und Zugang zu Information sind Bereiche, in denen gute Systeme wirklich Frust und Leid reduzieren können.</p></div>
-        <div><b>Vertrauen</b><p>Gerade bei Bürgeranliegen muss klar sein: Welche Quelle? Wie sicher? Wann Handoff? Was wurde entschieden?</p></div>
-        <div><b>Match?</b><p>Ich weiß nicht, ob daraus beruflich, freundschaftlich oder projektmäßig etwas wird. Aber ich würde gerne herausfinden, ob es einen echten Resonanzpunkt gibt.</p></div>
+      <div class="postcard">
+        <span>Spielregel</span>
+        <p>Wenn du das danach Ly in zwei Minuten erzählen kannst, hat die Seite gewonnen.</p>
       </div>
     </section>
 
-    <section class="wrap section" id="demo">
-      <div class="head">
-        <p class="eyebrow">3-Minuten Mini-Demo</p>
-        <h2>Nicht “noch ein Chatbot”, sondern ein kleiner Serviceflow.</h2>
-        <p>Bürgerfrage → geprüfte Quelle → sichere Antwort → nächste Aktion → Receipt → Qualitätsschleife.</p>
-      </div>
-      <div class="demoGrid">
-        <section class="panel stepper">
-          <button class="step active" data-step="citizen"><b>1</b><span>Bürgerfrage</span></button>
-          <button class="step" data-step="source"><b>2</b><span>Quelle & Review</span></button>
-          <button class="step" data-step="action"><b>3</b><span>Assistierte Aktion</span></button>
-          <button class="step" data-step="quality"><b>4</b><span>Qualität & Ops</span></button>
-        </section>
-        <section class="panel stage" id="stage"></section>
-      </div>
+    <section class="letter" id="letter">
+      <p>Ich versuche gerade herauszufinden, wo mein Weg zwischen AI Engineering, sinnvollen Produkten, Recht/Verwaltung und menschenfreundlicher Technologie liegt.</p>
+      <p>Als ich mir Zaitgeist/Charly angeschaut habe, dachte ich: Genau diese Schnittstelle ist spannend — nicht “KI antwortet”, sondern “KI hilft kontrolliert durch ein echtes Anliegen”.</p>
+      <p>Ich weiß nicht, ob daraus beruflich, freundschaftlich oder projektmäßig etwas wird. Aber ich würde gerne herausfinden, ob es da einen echten Resonanzpunkt gibt.</p>
     </section>
 
-    <section class="wrap section" id="scope">
-      <div class="head">
-        <p class="eyebrow">Was ist echt?</p>
-        <h2>Ehrlicher Scope statt Demo-Nebel.</h2>
-        <p>Ich wollte bewusst nicht so tun, als wäre das production-ready. Lieber klar zeigen: Was läuft wirklich, was ist prototypisch, und was wären die nächsten Engineering-Schritte.</p>
+    <section class="toy" id="toy">
+      <div class="toyHead">
+        <p class="kicker">Das kleine Spielzeug</p>
+        <h2>Eine Bürgerfrage geht auf eine kleine Reise.</h2>
       </div>
-      <div class="scopeGrid">
-        <div class="scopeCard real">
-          <h3>Real now</h3>
-          <ul>
-            <li>Static Frontend, deploybar auf Vercel</li>
-            <li>Serverless Source Importer Endpoint</li>
-            <li>OpenRouter-ready LLM/RAG API</li>
-            <li>Local Retrieval + Action Routing</li>
-            <li>Truth/Text Analyzer</li>
-            <li>MCP Tool Schema Draft</li>
-          </ul>
-        </div>
-        <div class="scopeCard proto">
-          <h3>Prototype / simulated</h3>
-          <ul>
-            <li>Demo-Wissensbasis statt echter Kommune</li>
-            <li>LocalStorage statt Datenbank</li>
-            <li>Lexical Retrieval statt Embeddings</li>
-            <li>Simulierte Kalender-, Ticket- und Rückrufadapter</li>
-            <li>Admin Review als UI-Flow, noch kein Login</li>
-          </ul>
-        </div>
-        <div class="scopeCard next">
-          <h3>Next production step</h3>
-          <ul>
-            <li>DB-backed Source Registry</li>
-            <li>Real MCP Server</li>
-            <li>Embeddings / Vector Search</li>
-            <li>Eval Harness in CI</li>
-            <li>Ticket-, Kalender- und Rückrufintegrationen</li>
-          </ul>
-        </div>
+      <div class="journey">
+        <button class="card active" data-scene="question"><b>1</b><span>Frage</span></button>
+        <button class="card" data-scene="source"><b>2</b><span>Quelle</span></button>
+        <button class="card" data-scene="action"><b>3</b><span>Aktion</span></button>
+        <button class="card" data-scene="trust"><b>4</b><span>Vertrauen</span></button>
       </div>
+      <div class="screen" id="scene"></div>
     </section>
 
-    <section class="wrap section" id="architecture">
-      <div class="head">
-        <p class="eyebrow">Technischer Kern</p>
-        <h2>Mein aktuelles Mental Model.</h2>
-        <p>Ich wollte modellieren, was solche Systeme vertrauenswürdig macht: nicht Magie im Prompt, sondern getrennte Bausteine, die man prüfen und verbessern kann.</p>
-      </div>
-      <div class="arch">
-        <div class="layer"><span>01</span><h3>Source Registry</h3><p>Quellen mit URL, Amt, Status, Review, Aktualität und Vertrauenslevel.</p></div>
-        <div class="layer"><span>02</span><h3>Importer</h3><p>URL/Text wird extrahiert, in Chunks vorgeschlagen und nie blind veröffentlicht.</p></div>
-        <div class="layer"><span>03</span><h3>Retrieval</h3><p>Fragen werden gegen freigegebene Chunks gesucht. Confidence ist Trefferstärke, kein Wahrheitswert.</p></div>
-        <div class="layer"><span>04</span><h3>Serviceflow</h3><p>Antwort, Routing, Termin, Ticket, Rückruf oder Handoff werden vorbereitet.</p></div>
-        <div class="layer"><span>05</span><h3>Receipt</h3><p>Jeder Vorgang wird menschenlesbar und maschinenlesbar nachvollziehbar.</p></div>
-        <div class="layer"><span>06</span><h3>MCP Tools</h3><p>Agents könnten später dieselben Tools nutzen: import_source, search_sources, classify_statement, create_receipt.</p></div>
-      </div>
+    <section class="underhood">
+      <details>
+        <summary>Unter der Haube, falls du CTO-Modus willst</summary>
+        <div class="hoodGrid">
+          <div><b>Echt gebaut</b><p>Static Frontend, Source-Importer-Endpoint, OpenRouter-ready API, Local Retrieval, Truth Analyzer, MCP-Tool-Schema.</p></div>
+          <div><b>Absichtlich Prototyp</b><p>Demo-Daten, LocalStorage, simulierte Integrationen, lexical retrieval statt Embeddings.</p></div>
+          <div><b>Nächste echte Schritte</b><p>Source Registry, real MCP Server, Embeddings, Eval in CI, Ticket/Kalender/Rückruf-Adapter.</p></div>
+        </div>
+      </details>
     </section>
 
-    <section class="wrap section" id="truth">
-      <div class="head">
-        <p class="eyebrow">Truth / Text Analyzer</p>
-        <h2>Worüber streiten wir eigentlich?</h2>
-        <p>Eine Nebenidee, die mich schon länger beschäftigt: Aussagen sauberer trennen. Fakt, Wert, Gefühl, Glaube, Prognose. Für Bürgerkommunikation, interne Diskussionen und Agents kann das extrem hilfreich sein.</p>
-      </div>
-      <div class="truthBox">
-        <div class="claimCards">
+    <section class="truth">
+      <p class="kicker">Nebenidee</p>
+      <h2>Worüber streiten wir eigentlich?</h2>
+      <p class="muted">Ein kleiner Text-Kompass: Ist das ein Fakt, ein Wert, ein Gefühl, ein Glaube oder eine Prognose?</p>
+      <div class="truthGrid">
+        <div class="chips">
           <button data-claim="Die Öffnungszeiten sind Dienstag von 10 bis 18 Uhr.">🔎 Fakt</button>
           <button data-claim="Berlin sollte digitale Bürgerdienste menschlicher gestalten.">⚖️ Wert</button>
           <button data-claim="Ich fühle mich vom Amt unfair behandelt.">💬 Gefühl</button>
           <button data-claim="Wenn Quellen besser gepflegt werden, sinkt die Handoff-Rate.">🔮 Prognose</button>
-          <button data-claim="Ich glaube, Liebe ist die tiefste Wahrheit.">✨ Glaube</button>
         </div>
-        <div class="panel">
-          <label>Aussage</label>
+        <div class="truthBox">
           <textarea id="claim">Berlin sollte mehr Bürgerdienste automatisieren, weil Wartezeiten zu lang sind.</textarea>
-          <button class="btn" id="analyze">Aussage einordnen</button>
-        </div>
-        <div class="panel result" id="truthResult"></div>
-      </div>
-    </section>
-
-    <section class="wrap section" id="questions">
-      <div class="head">
-        <p class="eyebrow">Fragen an dich</p>
-        <h2>Ich würde wirklich gerne deine ehrliche Sicht hören.</h2>
-        <p>Nicht als “bitte gib mir einen Job”-Vibe. Eher: Du baust in der Realität an solchen Themen. Ich würde gerne verstehen, wo mein Mental Model stimmt — und wo es naiv ist.</p>
-      </div>
-      <div class="nextGrid">
-        <div><h3>1. Nah dran?</h3><p>Ist dieses Modell ungefähr nah an dem, wie du über Charly-artige Systeme denkst?</p></div>
-        <div><h3>2. Was ist naiv?</h3><p>Welche Stelle wirkt aus echter Produkt-/Engineering-Sicht zu einfach gedacht?</p></div>
-        <div><h3>3. Wo beginnt Komplexität?</h3><p>Bei Quellen, Zuständigkeiten, Integrationen, Datenschutz, Betrieb, Vertrieb — wo wird es wirklich hart?</p></div>
-        <div><h3>4. Gibt es ein Match?</h3><p>Siehst du irgendwo Resonanz: als Gespräch, kleines Projekt, Feedback-Loop oder vielleicht sogar Zusammenarbeit?</p></div>
-      </div>
-    </section>
-
-    <section class="wrap section" id="next">
-      <div class="head">
-        <p class="eyebrow">Wenn ich weiterbauen würde</p>
-        <h2>Die nächsten echten Engineering-Schritte.</h2>
-      </div>
-      <div class="nextGrid">
-        <div><h3>1. Persistente Source Registry</h3><p>Postgres/Supabase statt LocalStorage. Quellen, Chunks, Reviews, Owner, Versionshistorie.</p></div>
-        <div><h3>2. Real MCP Server</h3><p>Ein kleiner Server mit Tools für Import, Suche, Klassifikation, Action Payloads und Receipts.</p></div>
-        <div><h3>3. Embeddings + Eval</h3><p>Vector Search sobald mehrere echte Quellen vorliegen; Eval verhindert Regressionen.</p></div>
-        <div><h3>4. Integrationen</h3><p>Kalender, Ticketing, Rückrufsystem und Analytics als austauschbare Adapter.</p></div>
-      </div>
-    </section>
-
-    <section class="wrap section" id="safevoice">
-      <div class="head">
-        <p class="eyebrow">Nebenquest: SafeVoice</p>
-        <h2>Weil Legal/Civic-AI anscheinend mein Rabbithole ist.</h2>
-        <p>SafeVoice ist ein kleines Open-Source-Projekt, das digitale Belästigung dokumentieren, grob unter deutschem Recht einordnen und daraus einen sauberen Anzeige-/Report-Entwurf vorbereiten soll. Nicht als Rechtsberatung, sondern als Schutz- und Dokumentationshilfe für Betroffene.</p>
-      </div>
-      <div class="safeGrid">
-        <div class="panel">
-          <label>Mini-Demo Text</label>
-          <textarea id="svInput">Ich werde deine Adresse posten, wenn du nicht aufhörst. Niemand wird dir glauben.</textarea>
-          <div class="row">
-            <button class="btn" id="svRun">SafeVoice kurz testen</button>
-            <a class="btn ghost" href="https://github.com/mikelninh/safevoice" target="_blank" rel="noopener">GitHub öffnen</a>
-          </div>
-        </div>
-        <div class="panel result" id="svResult">
-          <div><b>Was passiert hier?</b><p>Klick auf “kurz testen”. Die Demo zeigt nur ein lokales Mock-Ergebnis: Risiko, mögliche Kategorien und nächste Dokumentationsschritte.</p></div>
+          <button class="btn small" id="analyze">einordnen</button>
+          <div id="truthResult" class="result"></div>
         </div>
       </div>
     </section>
 
-    <section class="wrap section" id="coffee">
-      <div class="sendBox inviteBox">
-        <b>Und unabhängig vom Projekt:</b>
-        <p>Ich würde mich freuen, dich mal wieder zu sehen. Kaffee, Spaziergang, Basketball, Bouldern — was auch immer gerade passt.</p>
-        <p>Gerne auch mit unserem gemeinsamen Kumpel Bao dazu. Er ist Anwalt, und ich baue gerade für/mit ihm an <strong>GitLaw Pro</strong> — vielleicht hättest du sogar Lust, da mal mit draufzuschauen oder einfach mitzudenken. Kein Pitch-Deck-Vibe. Eher reconnecten, bisschen Sport/Kaffee, und schauen, ob menschlich oder inhaltlich ein Match da ist.</p>
+    <section class="sidequest" id="safevoice">
+      <p class="kicker">After Credits: SafeVoice</p>
+      <h2>Falls du noch 30 Sekunden stöbern willst.</h2>
+      <p class="muted">SafeVoice ist ein kleines Legal/Civic-AI-Projekt: digitale Belästigung dokumentieren, grob einordnen und Betroffenen helfen, aus Chaos eine saubere Dokumentation zu machen. Keine Rechtsberatung — eher Schutzengel mit Formular-Talent.</p>
+      <div class="safeDemo">
+        <textarea id="svInput">Ich werde deine Adresse posten, wenn du nicht aufhörst. Niemand wird dir glauben.</textarea>
+        <div class="actions">
+          <button class="btn small" id="svRun">kurz testen</button>
+          <a class="btn soft small" href="https://github.com/mikelninh/safevoice" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <div id="svResult" class="result quiet">Mock-Demo: zeigt Risiko, mögliche Kategorien und nächste Dokumentationsschritte.</div>
       </div>
+    </section>
+
+    <section class="questions">
+      <h2>Was ich dich wirklich fragen will</h2>
+      <div class="qGrid">
+        <p>Ist mein Mental Model nah dran — oder romantisiere ich die Komplexität?</p>
+        <p>Wo beginnt bei Charly-artigen Systemen die echte Härte: Quellen, Betrieb, Vertrieb, Datenschutz, Integrationen?</p>
+        <p>Siehst du irgendwo Resonanz — als Gespräch, Feedback-Loop, kleines Projekt oder vielleicht irgendwann mehr?</p>
+      </div>
+    </section>
+
+    <section class="invite" id="coffee">
+      <p>Und unabhängig vom Projekt: Ich würde mich freuen, dich mal wieder zu sehen.</p>
+      <h2>Kaffee, Spaziergang, Basketball, Bouldern?</h2>
+      <p>Gerne auch mit Bao dazu. Er ist Anwalt, und ich baue gerade für/mit ihm an <strong>GitLaw Pro</strong> — vielleicht hättest du sogar Lust, da mal mit draufzuschauen oder einfach mitzudenken.</p>
+      <p class="last">Kein Pitch-Deck-Vibe. Eher reconnecten, bisschen Sport/Kaffee, und schauen, ob menschlich oder inhaltlich ein Match da ist.</p>
     </section>
   </main>
-
-  <footer><div class="wrap">Michael Ninh · CharlyKit · persönliche Notiz für Son</div></footer>
   <script src="./app.js"></script>
 </body>
 </html>
