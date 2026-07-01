@@ -6,8 +6,11 @@
   <title>Für Son · Citizen Signal</title>
   <meta name="description" content="Eine persönliche electric-blue AI-Story für Son: Bürgerfrage, Quelle, Aktion, Receipt — gebaut für Bürger:innen.">
   <link rel="stylesheet" href="./style.css">
+  <style>
+    .manifesto{position:relative;margin:0;padding:92px 7vw;border-bottom:1px solid rgba(255,255,255,.16);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(0,0,70,.26));overflow:hidden}.manifesto:before{content:'PEOPLE';position:absolute;right:-4vw;top:-.12em;font-family:Cormorant Garamond,serif;font-size:clamp(150px,24vw,420px);line-height:1;color:rgba(255,255,255,.055);letter-spacing:-.08em;pointer-events:none}.manifestoHead{position:relative;z-index:1;display:grid;grid-template-columns:.85fr 1.15fr;gap:40px;align-items:end;margin-bottom:34px}.manifestoHead h2{font-size:clamp(48px,7.4vw,112px);line-height:.86;letter-spacing:-.07em;margin:0}.manifestoHead p{font-size:21px;line-height:1.55;color:rgba(255,255,255,.74);margin:0;max-width:720px}.manifestoGrid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:18px}.manifestoCard{border:1px solid rgba(255,255,255,.24);background:rgba(0,0,70,.22);border-radius:18px;padding:30px;box-shadow:inset 0 0 45px rgba(255,255,255,.035)}.manifestoCard small{font-family:Space Mono,monospace;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.62)}.manifestoCard p{font-family:Cormorant Garamond,serif;font-size:clamp(30px,3.4vw,56px);line-height:1.02;letter-spacing:-.04em;margin:18px 0 0}.manifestoCard em{font-style:italic}.manifestoFuture{position:relative;z-index:1;margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px}.futureLang{opacity:.38;filter:grayscale(.2);border:1px dashed rgba(255,255,255,.25);border-radius:14px;padding:18px;background:rgba(0,0,0,.08)}.futureLang small{font-family:Space Mono,monospace;text-transform:uppercase;letter-spacing:.15em}.futureLang p{margin:10px 0 0;color:rgba(255,255,255,.72);line-height:1.45}.signalQuestion{margin-top:30px;position:relative;z-index:1;font-family:Space Mono,monospace;text-transform:uppercase;letter-spacing:.16em;font-size:12px;color:#fff;display:flex;gap:14px;align-items:center;flex-wrap:wrap}.signalQuestion:before{content:'';width:76px;height:1px;background:#fff;box-shadow:0 0 16px #fff}@media(max-width:850px){.manifestoHead,.manifestoGrid,.manifestoFuture{grid-template-columns:1fr}.manifesto{padding:72px 22px}.manifestoCard{padding:24px}}
+  </style>
 </head>
-<body>
+<body data-signal="question">
   <div class="signalLoader" id="signalLoader"><div class="loaderOrb"></div><p>citizen signal</p><span>more power to the little people</span></div>
   <div class="cursorAura" id="cursorAura"></div>
   <div class="blue-noise"></div>
@@ -17,7 +20,7 @@
     <a class="brand" href="#top"><span></span>Für Son</a>
     <div class="meta">private link · 02 min · no pitch deck</div>
     <nav>
-      <a href="#story">Story</a>
+      <a href="#manifesto">Manifesto</a>
       <a href="#prototype">Prototype</a>
       <a href="#safevoice">SafeVoice</a>
       <a href="#invite">Reconnect</a>
@@ -33,7 +36,7 @@
         <h1>Ich wollte dir nicht nur sagen,<br>dass ich Charly spannend finde.<br>Ich wollte dir zeigen, was es<br>in mir <em>ausgelöst</em> hat.</h1>
         <p class="sub">Eine Bürgerfrage. Eine Quelle. Ein nächster Schritt.<br>Und am Ende ein kleiner Beleg, warum die Antwort<br>vertrauenswürdig sein könnte.</p>
         <div class="ctaRow">
-          <a class="button primary" href="#prototype">Enter <span>→</span></a>
+          <a class="button primary" href="#manifesto">Enter <span>→</span></a>
           <a class="button ghost" href="#invite">Direkt zum Kaffee <span>☕</span></a>
         </div>
         <div class="signalLine" aria-hidden="true"><span>citizen</span><i></i><span>source</span><i></i><span>action</span><i></i><span>trust</span></div>
@@ -70,7 +73,29 @@
 
       <div class="madeFor">MADE FOR CITIZENS · MEHR MACHT DEN KLEINEN LEUTEN</div>
       <div class="waveform" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-      <a class="scroll" href="#prototype"><span>↓</span>scroll</a>
+      <a class="scroll" href="#manifesto"><span>↓</span>scroll</a>
+    </section>
+
+    <section class="manifesto" id="manifesto">
+      <div class="manifestoHead">
+        <h2>Not AI theater.<br>Citizen leverage.</h2>
+        <p>Das ist der Kern, den ich fühle: Wir bauen nicht für Screenshots. Wir bauen für Menschen, die einen Hebel brauchen.</p>
+      </div>
+      <div class="manifestoGrid">
+        <div class="manifestoCard">
+          <small>English</small>
+          <p>Not for dashboards.<br>Not for demos.<br>Not for AI theater.<br><br>For the person who does not know<br>which form matters,<br>which source is true,<br>which step comes next.<br><br><em>More power to the little people.</em></p>
+        </div>
+        <div class="manifestoCard">
+          <small>Deutsch</small>
+          <p>Nicht für Dashboards.<br>Nicht für Demos.<br>Nicht für KI-Theater.<br><br>Für den Menschen, der nicht weiß,<br>welches Formular zählt,<br>welche Quelle stimmt,<br>welcher Schritt als Nächstes kommt.<br><br><em>Mehr Macht den kleinen Leuten.</em></p>
+        </div>
+      </div>
+      <div class="manifestoFuture" aria-label="Spätere Sprachversionen">
+        <div class="futureLang"><small>Tiếng Việt · später MVP</small><p>Không phải cho sân khấu AI. Mà cho người cần một bước tiếp theo rõ ràng.</p></div>
+        <div class="futureLang"><small>Türkçe · später MVP</small><p>AI gösterisi için değil. Bir sonraki adımı arayan insanlar için.</p></div>
+      </div>
+      <div class="signalQuestion">Who are we building this for? For citizens. That is what unites us.</div>
     </section>
 
     <section class="prototype" id="prototype">
