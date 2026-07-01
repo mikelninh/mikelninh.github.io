@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Für Son · ein kleines AI-Experiment</title>
-  <meta name="description" content="Eine persönliche, hochwertige interaktive AI-Story von Michael für Son — Charly-inspirierter Serviceflow, SafeVoice Side Quest und Einladung zum Reconnect.">
+  <title>Für Son · Citizen Signal</title>
+  <meta name="description" content="Eine persönliche electric-blue AI-Story für Son: Bürgerfrage, Quelle, Aktion, Receipt — gebaut für Bürger:innen.">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <div class="ambient"></div>
-  <div class="noise"></div>
+  <div class="blue-noise"></div>
+  <div class="stars" aria-hidden="true"></div>
 
-  <header class="topbar">
-    <a href="#top" class="brand">Für Son</a>
+  <header class="nav">
+    <a class="brand" href="#top"><span></span>Für Son</a>
+    <div class="meta">private link · 02 min · no pitch deck</div>
     <nav>
       <a href="#story">Story</a>
       <a href="#prototype">Prototype</a>
@@ -22,71 +23,95 @@
   </header>
 
   <main id="top">
-    <section class="hero fullbleed">
-      <div class="heroMeta">
-        <span>private link</span>
-        <span>02 min</span>
-        <span>no pitch deck</span>
-      </div>
-      <div class="heroInner">
-        <p class="overline">Hey Son</p>
-        <h1>Ich wollte dir nicht schreiben, dass ich Charly spannend finde. Ich wollte dir zeigen, was es in meinem Kopf ausgelöst hat.</h1>
-        <p class="heroText">Eine Bürgerfrage. Eine Quelle. Ein nächster Schritt. Und am Ende ein kleiner Beleg, warum die Antwort vertrauenswürdig sein könnte.</p>
-        <div class="heroActions">
-          <a class="primary" href="#story">Enter</a>
-          <a class="secondary" href="#invite">Direkt zum Kaffee</a>
-        </div>
-      </div>
-      <div class="scrollCue">scroll</div>
-    </section>
+    <section class="portal">
+      <div class="giantWord" aria-hidden="true">SON</div>
 
-    <section class="story" id="story">
-      <div class="chapterLabel">01 · Der Gedanke</div>
-      <div class="split">
-        <div>
-          <h2>Nicht “Chatbot”. Eher: ein kleiner Begleiter durch ein Anliegen.</h2>
-        </div>
-        <div class="copyBlock">
-          <p>Ich versuche gerade herauszufinden, wo mein Weg zwischen AI Engineering, sinnvollen Produkten, Recht/Verwaltung und menschenfreundlicher Technologie liegt.</p>
-          <p>Als ich mir Zaitgeist/Charly angeschaut habe, dachte ich: Genau hier wird es spannend — wenn KI nicht nur redet, sondern sauber hilft, ohne Vertrauen zu verspielen.</p>
-          <p>Deshalb diese Mini-Seite. Kein Bewerbungstanz. Kein Clone. Eher ein kleines Signal: So denke ich gerade über solche Systeme nach.</p>
+      <div class="heroCopy">
+        <p class="micro">more power to the little people</p>
+        <h1>Ich wollte dir nicht nur sagen,<br>dass ich Charly spannend finde.<br>Ich wollte dir zeigen, was es<br>in mir <em>ausgelöst</em> hat.</h1>
+        <p class="sub">Eine Bürgerfrage. Eine Quelle. Ein nächster Schritt.<br>Und am Ende ein kleiner Beleg, warum die Antwort<br>vertrauenswürdig sein könnte.</p>
+        <div class="ctaRow">
+          <a class="button primary" href="#prototype">Enter <span>→</span></a>
+          <a class="button ghost" href="#invite">Direkt zum Kaffee <span>☕</span></a>
         </div>
       </div>
+
+      <div class="orbStage" aria-hidden="true">
+        <div class="verticalRay"></div>
+        <div class="orbit orbitA"></div>
+        <div class="orbit orbitB"></div>
+        <div class="orbit orbitC"></div>
+        <div class="orb" id="orb">
+          <div class="orbMap"></div>
+          <div class="orbGlow"></div>
+          <div class="orbSpark s1"></div>
+          <div class="orbSpark s2"></div>
+          <div class="orbSpark s3"></div>
+        </div>
+        <svg class="hand" viewBox="0 0 540 260" role="img" aria-label="Hand holding a glowing orb">
+          <path d="M58 226 C116 214 162 197 206 171 C235 154 263 133 287 118 C310 103 332 96 346 105 C360 114 352 132 329 149" />
+          <path d="M176 184 C222 155 262 127 292 101 C311 84 331 69 348 75 C365 81 361 101 342 119" />
+          <path d="M231 143 C264 108 285 79 309 56 C326 39 347 32 360 43 C373 54 365 75 347 93" />
+          <path d="M286 111 C315 73 337 50 361 27 C377 12 398 8 408 22 C418 36 407 55 389 75" />
+          <path d="M333 105 C358 81 386 62 414 48 C432 39 452 41 457 55 C462 70 445 82 425 94 C392 113 366 134 334 158" />
+          <path d="M54 228 C123 242 204 250 282 224 C340 205 391 174 454 146 C478 135 501 142 505 158 C510 178 481 190 455 202 C396 229 333 249 263 252 C193 256 126 244 58 226" />
+          <path d="M194 206 C245 218 305 213 365 186" />
+          <path d="M239 191 C285 198 331 190 379 165" />
+          <path d="M285 175 C323 177 356 167 392 145" />
+        </svg>
+      </div>
+
+      <div class="madeFor">MADE FOR CITIZENS · MEHR MACHT DEN KLEINEN LEUTEN</div>
+      <a class="scroll" href="#prototype"><span>↓</span>scroll</a>
     </section>
 
     <section class="prototype" id="prototype">
-      <div class="chapterLabel">02 · Das Spielzeug</div>
-      <div class="prototypeHead">
-        <h2>Eine Bürgerfrage geht durch vier Räume.</h2>
-        <p>Drück dich durch die Räume. Das ist der Kern, nicht die UI-Deko.</p>
+      <div class="processIntro">
+        <h2>Eine Bürgerfrage<br>geht durch <em>vier</em> Räume.</h2>
+        <p>Wer bauen wir das für? Für die Menschen, die im Formularnebel stehen. Das ist vielleicht der gemeinsame Nenner.</p>
       </div>
-      <div class="prototypeShell">
-        <div class="rail" id="rail">
-          <button class="railBtn active" data-scene="question"><span>01</span><b>Frage</b></button>
-          <button class="railBtn" data-scene="source"><span>02</span><b>Quelle</b></button>
-          <button class="railBtn" data-scene="action"><span>03</span><b>Aktion</b></button>
-          <button class="railBtn" data-scene="receipt"><span>04</span><b>Receipt</b></button>
-        </div>
-        <div class="cinemaCard" id="scene"></div>
+      <div class="processCards">
+        <button class="processCard active" data-scene="question">
+          <span class="num">01</span><h3>Frage</h3><p>Was bewegt uns wirklich? Wir stellen die Frage klar und öffentlich.</p><i>?</i>
+        </button>
+        <button class="processCard" data-scene="source">
+          <span class="num">02</span><h3>Quelle</h3><p>Wir prüfen. Wir verifizieren. Wir zeigen, woher Information stammt.</p><i>▣</i>
+        </button>
+        <button class="processCard" data-scene="action">
+          <span class="num">03</span><h3>Aktion</h3><p>Wir übersetzen Erkenntnis in einen nächsten Schritt.</p><i>↗</i>
+        </button>
+        <button class="processCard" data-scene="receipt">
+          <span class="num">04</span><h3>Receipt</h3><p>Wir machen den Weg nachvollziehbar — damit Vertrauen bleibt.</p><i>✓</i>
+        </button>
+      </div>
+      <div class="scenePanel" id="scenePanel"></div>
+    </section>
+
+    <section class="story" id="story">
+      <p class="micro">why this matters</p>
+      <h2>Mehr Macht den kleinen Leuten.</h2>
+      <div class="storyGrid">
+        <p>Ich glaube, gute AI-Systeme sollten nicht nur mächtige Organisationen schneller machen. Sie sollten auch Menschen helfen, die sonst im Verwaltungs-, Rechts- oder Informationsnebel hängen.</p>
+        <p>Vielleicht ist genau das der gemeinsame Nenner: Charly, GitLaw, SafeVoice — unterschiedliche Oberflächen, aber derselbe Impuls. Weniger Ohnmacht. Mehr Orientierung. Mehr Würde im Prozess.</p>
       </div>
     </section>
 
     <section class="underhood">
       <details>
-        <summary>Technik unter der Haube</summary>
-        <div class="bento">
-          <div><span>real</span><p>Static Frontend, Source-Importer Endpoint, OpenRouter-ready API, Local Retrieval, MCP Tool Schema.</p></div>
-          <div><span>prototype</span><p>Demo-Daten, LocalStorage, simulierte Integrationen, lexical retrieval statt Embeddings.</p></div>
-          <div><span>next</span><p>Source Registry, echter MCP Server, Embeddings, Eval in CI, Ticket/Kalender/Rückruf-Adapter.</p></div>
+        <summary>Unter der Haube, falls du CTO-Modus willst</summary>
+        <div class="hoodGrid">
+          <div><b>real</b><p>Static Frontend, Source-Importer Endpoint, OpenRouter-ready API, Local Retrieval, MCP Tool Schema.</p></div>
+          <div><b>prototype</b><p>Demo-Daten, LocalStorage, simulierte Integrationen, lexical retrieval statt Embeddings.</p></div>
+          <div><b>next</b><p>Source Registry, echter MCP Server, Embeddings, Eval in CI, Ticket/Kalender/Rückruf-Adapter.</p></div>
         </div>
       </details>
     </section>
 
     <section class="safevoice" id="safevoice">
-      <div class="chapterLabel">03 · Side Quest</div>
-      <div class="safeIntro">
+      <div class="safeHead">
+        <p class="micro">side quest</p>
         <h2>SafeVoice</h2>
-        <p>Eine zweite Civic/Legal-AI-Idee: digitale Belästigung aus dem Nebel holen und in saubere Dokumentation übersetzen. Nicht als Rechtsberatung. Eher als Schutzengel mit Formular-Talent.</p>
+        <p>Digitale Belästigung aus dem Nebel holen und in saubere Dokumentation übersetzen. Keine Rechtsberatung — eher Schutzengel mit Formular-Talent.</p>
       </div>
       <div class="safeShell">
         <div class="casePicker">
@@ -98,32 +123,20 @@
         <div class="safeWork">
           <textarea id="svInput">Ich werde deine Adresse posten, wenn du nicht aufhörst. Niemand wird dir glauben.</textarea>
           <div class="inlineActions">
-            <button class="primary small" id="svRun">Mock analysieren</button>
-            <a class="secondary small" href="https://github.com/mikelninh/safevoice" target="_blank" rel="noopener">GitHub</a>
+            <button class="button primary small" id="svRun">Mock analysieren</button>
+            <a class="button ghost small" href="https://github.com/mikelninh/safevoice" target="_blank" rel="noopener">GitHub</a>
           </div>
         </div>
         <div class="safeOutput" id="svResult"></div>
       </div>
     </section>
 
-    <section class="questions">
-      <div class="chapterLabel">04 · Was ich wissen will</div>
-      <h2>Wo bin ich naiv?</h2>
-      <div class="questionCards">
-        <p>Ist das Mental Model nah dran — oder romantisiere ich die Komplexität?</p>
-        <p>Wo beginnt in solchen Systemen die echte Härte: Quellen, Betrieb, Datenschutz, Integrationen, Vertrieb?</p>
-        <p>Siehst du irgendwo Resonanz — Gespräch, Feedback-Loop, kleines Projekt, irgendwann mehr?</p>
-      </div>
-    </section>
-
     <section class="invite" id="invite">
-      <div class="inviteCard">
-        <p class="overline">Final scene</p>
-        <h2>Und unabhängig vom Projekt: Lass uns mal wieder sehen.</h2>
-        <p>Kaffee, Spaziergang, Basketball, Bouldern — was auch immer gerade passt. Gerne auch mit Bao dazu.</p>
-        <p>Bao ist Anwalt, und ich baue gerade für/mit ihm an <strong>GitLaw Pro</strong>. Vielleicht hättest du sogar Lust, da mal mit draufzuschauen oder einfach mitzudenken.</p>
-        <p class="softText">Kein Pitch-Deck-Vibe. Eher reconnecten, bisschen Sport/Kaffee, und schauen, ob menschlich oder inhaltlich ein Match da ist.</p>
-      </div>
+      <p class="micro">final scene</p>
+      <h2>Und unabhängig vom Projekt:<br>Lass uns mal wieder sehen.</h2>
+      <p>Kaffee, Spaziergang, Basketball, Bouldern — was auch immer gerade passt. Gerne auch mit Bao dazu.</p>
+      <p>Bao ist Anwalt, und ich baue gerade für/mit ihm an <strong>GitLaw Pro</strong>. Vielleicht hättest du sogar Lust, da mal mit draufzuschauen oder einfach mitzudenken.</p>
+      <p class="soft">Kein Pitch-Deck-Vibe. Eher reconnecten, bisschen Sport/Kaffee, und schauen, ob menschlich oder inhaltlich ein Match da ist.</p>
     </section>
   </main>
 
