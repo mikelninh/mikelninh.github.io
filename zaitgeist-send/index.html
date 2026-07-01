@@ -3,122 +3,113 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Für Son · Citizen Signal</title>
-  <meta name="description" content="Eine persönliche electric-blue AI-Story für Son: Bürgerfrage, Quelle, Aktion, Receipt — gebaut für Bürger:innen.">
+  <title>Für Son · Die Welle</title>
+  <meta name="description" content="Eine persönliche, ruhige AI-Story für Son: nicht KI-Theater, sondern Orientierung für Bürger:innen.">
   <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./ascii.css">
-  <style>
-    .manifesto{position:relative;margin:0;padding:92px 7vw;border-bottom:1px solid rgba(255,255,255,.16);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(0,0,70,.26));overflow:hidden}.manifesto:before{content:'PEOPLE';position:absolute;right:-4vw;top:-.12em;font-family:Cormorant Garamond,serif;font-size:clamp(150px,24vw,420px);line-height:1;color:rgba(255,255,255,.055);letter-spacing:-.08em;pointer-events:none}.manifestoHead{position:relative;z-index:1;display:grid;grid-template-columns:.85fr 1.15fr;gap:40px;align-items:end;margin-bottom:34px}.manifestoHead h2{font-size:clamp(48px,7.4vw,112px);line-height:.86;letter-spacing:-.07em;margin:0}.manifestoHead p{font-size:21px;line-height:1.55;color:rgba(255,255,255,.74);margin:0;max-width:720px}.manifestoGrid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:18px}.manifestoCard{border:1px solid rgba(255,255,255,.24);background:rgba(0,0,70,.22);border-radius:18px;padding:30px;box-shadow:inset 0 0 45px rgba(255,255,255,.035)}.manifestoCard small{font-family:Space Mono,monospace;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.62)}.manifestoCard p{font-family:Cormorant Garamond,serif;font-size:clamp(30px,3.4vw,56px);line-height:1.02;letter-spacing:-.04em;margin:18px 0 0}.manifestoCard em{font-style:italic}.manifestoFuture{position:relative;z-index:1;margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px}.futureLang{opacity:.38;filter:grayscale(.2);border:1px dashed rgba(255,255,255,.25);border-radius:14px;padding:18px;background:rgba(0,0,0,.08)}.futureLang small{font-family:Space Mono,monospace;text-transform:uppercase;letter-spacing:.15em}.futureLang p{margin:10px 0 0;color:rgba(255,255,255,.72);line-height:1.45}.signalQuestion{margin-top:30px;position:relative;z-index:1;font-family:Space Mono,monospace;text-transform:uppercase;letter-spacing:.16em;font-size:12px;color:#fff;display:flex;gap:14px;align-items:center;flex-wrap:wrap}.signalQuestion:before{content:'';width:76px;height:1px;background:#fff;box-shadow:0 0 16px #fff}@media(max-width:850px){.manifestoHead,.manifestoGrid,.manifestoFuture{grid-template-columns:1fr}.manifesto{padding:72px 22px}.manifestoCard{padding:24px}}
-  </style>
+  <link rel="stylesheet" href="./wave.css">
 </head>
 <body data-signal="question">
-  <div class="signalLoader" id="signalLoader"><div class="loaderOrb"></div><p>citizen signal</p><span>more power to the little people</span></div>
+  <div class="signalLoader" id="signalLoader"><div class="loaderOrb"></div><p>kleine welle lädt</p><span>bitte nicht kentern</span></div>
   <div class="cursorAura" id="cursorAura"></div>
   <div class="blue-noise"></div>
   <div class="stars" aria-hidden="true"></div>
 
   <header class="nav">
     <a class="brand" href="#top"><span></span>Für Son</a>
-    <div class="meta">private link · 02 min · no pitch deck</div>
+    <div class="meta">private link · 02 min · kein pitch deck</div>
     <nav>
-      <a href="#manifesto">Manifesto</a>
-      <a href="#prototype">Prototype</a>
-      <a href="#safevoice">SafeVoice</a>
-      <a href="#invite">Reconnect</a>
+      <a href="#manifest">Manifest</a>
+      <a href="#warum">Warum</a>
+      <a href="#denkmodell">Denkmodell</a>
+      <a href="#frage">Frage</a>
     </nav>
   </header>
 
   <main id="top">
-    <section class="portal asciiPortal">
-      <div class="giantWord" aria-hidden="true">SON</div>
-
+    <section class="waveHero">
       <div class="heroCopy">
-        <p class="micro">more power to the little people</p>
-        <h1>Ich wollte dir nicht nur sagen,<br>dass ich Charly spannend finde.<br>Ich wollte dir zeigen, was es<br>in mir <em>ausgelöst</em> hat.</h1>
-        <p class="sub">Eine Bürgerfrage. Eine Quelle. Ein nächster Schritt.<br>Und am Ende ein kleiner Beleg, warum die Antwort<br>vertrauenswürdig sein könnte.</p>
+        <p class="micro">eine kleine ai-welle</p>
+        <h1>Nicht die Welle ist der Punkt.<br><em>Sondern der Mensch darin.</em></h1>
+        <p class="sub">Was mich an Charly interessiert, ist nicht “Voice AI für Verwaltung”. Mich interessiert, ob man Menschen in einem Moment von Unsicherheit einen klaren nächsten Schritt geben kann.</p>
         <div class="ctaRow">
-          <a class="button primary" href="#manifesto">Enter <span>→</span></a>
-          <a class="button ghost" href="#invite">Direkt zum Kaffee <span>☕</span></a>
-        </div>
-        <div class="signalLine" aria-hidden="true"><span>citizen</span><i></i><span>source</span><i></i><span>action</span><i></i><span>trust</span></div>
-      </div>
-
-      <div class="asciiStage" aria-label="Animated ASCII signal core">
-        <div class="asciiFrame">
-          <div class="asciiHeader"><span>citizen.signal</span><span id="asciiState">QUESTION</span></div>
-          <pre id="asciiOrb" class="asciiOrb" aria-hidden="true"></pre>
-          <div class="asciiFooter"><span>form → source → action → receipt</span><span>live signal</span></div>
-        </div>
-        <div class="asciiOrbitText orbitTextA">frage · quelle · aktion · receipt ·</div>
-        <div class="asciiOrbitText orbitTextB">for citizens · not ai theater ·</div>
-        <div class="asciiNode nodeA">?</div>
-        <div class="asciiNode nodeB">src</div>
-        <div class="asciiNode nodeC">↗</div>
-        <div class="asciiNode nodeD">✓</div>
-        <div class="asciiConsole">
-          <p><span>01</span> Anliegen erkennen</p>
-          <p><span>02</span> Quelle sichtbar machen</p>
-          <p><span>03</span> nächsten Schritt bauen</p>
-          <p><span>04</span> Vertrauen als Spur lassen</p>
+          <a class="button primary" href="#manifest">Manifest lesen <span>↓</span></a>
+          <a class="button ghost" href="#frage">Direkt zur Frage</a>
         </div>
       </div>
 
-      <div class="madeFor">MADE FOR CITIZENS · MEHR MACHT DEN KLEINEN LEUTEN</div>
-      <div class="waveform" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-      <a class="scroll" href="#manifesto"><span>↓</span>scroll</a>
+      <div class="waveStage" aria-label="Animierte Welle als Metapher für Komplexität">
+        <div class="waveCard">
+          <svg class="waveSvg" viewBox="0 0 760 520" role="img" aria-label="Eine ruhige, animierte Welle über einem kleinen Boot">
+            <path class="waveLine" d="M70 350 C150 310 210 320 265 364 C305 396 344 414 397 385 C462 349 470 279 425 232 C388 194 360 160 392 118 C431 66 522 84 568 142 C636 229 600 355 505 411 C382 483 225 440 126 392"/>
+            <path class="waveLine two" d="M110 330 C185 296 239 314 285 354 C326 390 366 395 409 365 C459 330 455 276 421 240 C390 207 374 174 402 137 C432 98 497 103 536 150 C589 214 562 323 483 373 C380 438 238 410 146 370"/>
+            <path class="waveLine three" d="M143 306 C206 281 251 300 292 333 C332 365 372 366 407 339 C447 309 437 266 409 238 C383 212 383 188 407 158 C433 127 481 134 511 171 C549 219 528 296 464 336 C382 388 266 374 174 345"/>
+            <circle class="foam" cx="520" cy="145" r="8"/>
+            <circle class="foam" cx="548" cy="172" r="5"/>
+            <circle class="foam" cx="445" cy="105" r="6"/>
+            <circle class="foam" cx="386" cy="126" r="4"/>
+            <circle class="foam" cx="590" cy="235" r="4"/>
+            <path class="boat" d="M236 413 C278 426 325 427 368 414 C348 440 275 447 236 413 Z"/>
+            <path class="boat" d="M265 410 L287 382 L318 411"/>
+            <circle class="person" cx="302" cy="382" r="5"/>
+          </svg>
+          <div class="waveCaption"><span>Komplexität</span><span>Orientierung</span><span>nächster Schritt</span></div>
+        </div>
+      </div>
+      <div class="madeFor">Für Bürger:innen · mehr Macht den kleinen Leuten</div>
+      <a class="scroll" href="#manifest">scroll</a>
     </section>
 
-    <section class="manifesto" id="manifesto">
-      <div class="manifestoHead">
-        <h2>Not AI theater.<br>Citizen leverage.</h2>
-        <p>Das ist der Kern, den ich fühle: Wir bauen nicht für Screenshots. Wir bauen für Menschen, die einen Hebel brauchen.</p>
+    <section class="manifest" id="manifest">
+      <div class="manifestInner">
+        <p class="micro">Manifest</p>
+        <h2>Kein KI-Theater.</h2>
+        <p class="manifestText">Nicht für Dashboards.<br>Nicht für Demos.<br>Nicht für KI-Theater.<br><br>Für den Menschen, der nicht weiß,<br>welches Formular zählt,<br>welche Quelle stimmt,<br>welcher Schritt als Nächstes kommt.<br><br><em>Mehr Macht den kleinen Leuten.</em></p>
       </div>
-      <div class="manifestoGrid">
-        <div class="manifestoCard">
-          <small>English</small>
-          <p>Not for dashboards.<br>Not for demos.<br>Not for AI theater.<br><br>For the person who does not know<br>which form matters,<br>which source is true,<br>which step comes next.<br><br><em>More power to the little people.</em></p>
-        </div>
-        <div class="manifestoCard">
-          <small>Deutsch</small>
-          <p>Nicht für Dashboards.<br>Nicht für Demos.<br>Nicht für KI-Theater.<br><br>Für den Menschen, der nicht weiß,<br>welches Formular zählt,<br>welche Quelle stimmt,<br>welcher Schritt als Nächstes kommt.<br><br><em>Mehr Macht den kleinen Leuten.</em></p>
-        </div>
-      </div>
-      <div class="manifestoFuture" aria-label="Spätere Sprachversionen">
-        <div class="futureLang"><small>Tiếng Việt · später MVP</small><p>Không phải cho sân khấu AI. Mà cho người cần một bước tiếp theo rõ ràng.</p></div>
-        <div class="futureLang"><small>Türkçe · später MVP</small><p>AI gösterisi için değil. Bir sonraki adımı arayan insanlar için.</p></div>
-      </div>
-      <div class="signalQuestion">Who are we building this for? For citizens. That is what unites us.</div>
     </section>
 
-    <section class="prototype" id="prototype">
+    <section class="letter" id="warum">
+      <div class="letterGrid">
+        <div>
+          <p class="micro">Warum ich dir das schicke</p>
+          <h2>Ich glaube, da liegt ein gemeinsamer Nerv.</h2>
+        </div>
+        <div>
+          <p>Ich merke, dass mich immer wieder ähnliche Probleme anziehen: Menschen hängen in komplexen Systemen fest — Verwaltung, Recht, digitale Gewalt, Informationschaos — und brauchen nicht noch mehr Nebel, sondern einen nächsten Schritt.</p>
+          <p>Bei Charly sehe ich genau diesen Hebel in groß: nicht KI als Spektakel, sondern als Infrastruktur für Orientierung.</p>
+          <p>Deshalb wollte ich dir nicht einfach “spannend!” schreiben. Das wäre sehr LinkedIn. Und dafür kennen wir uns dann doch zu gut.</p>
+          <p class="tinyJoke">kleine ehrliche neugier &gt; großes pitch deck</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="prototype" id="denkmodell">
       <div class="processIntro">
-        <h2>Eine Bürgerfrage<br>geht durch <em>vier</em> Räume.</h2>
-        <p>Für wen bauen wir das? Für die Menschen, die im Formularnebel stehen. Das ist vielleicht der gemeinsame Nenner.</p>
+        <h2>Eine Bürgerfrage geht durch vier Räume.</h2>
+        <p>Sehr grob, aber für mich ist das der Produktkern: aus Unsicherheit wird Struktur.</p>
       </div>
       <div class="processCards">
         <button class="processCard active" data-scene="question">
-          <span class="num">01</span><h3>Frage</h3><p>Was bewegt uns wirklich? Wir stellen die Frage klar und öffentlich.</p><i>?</i>
+          <span class="num">01</span><h3>Frage</h3><p>Was bewegt den Menschen wirklich?</p><i>?</i>
         </button>
         <button class="processCard" data-scene="source">
-          <span class="num">02</span><h3>Quelle</h3><p>Wir prüfen. Wir verifizieren. Wir zeigen, woher Information stammt.</p><i>▣</i>
+          <span class="num">02</span><h3>Quelle</h3><p>Woher wissen wir, dass es stimmt?</p><i>▣</i>
         </button>
         <button class="processCard" data-scene="action">
-          <span class="num">03</span><h3>Aktion</h3><p>Wir übersetzen Erkenntnis in einen nächsten Schritt.</p><i>↗</i>
+          <span class="num">03</span><h3>Aktion</h3><p>Was ist jetzt konkret zu tun?</p><i>↗</i>
         </button>
         <button class="processCard" data-scene="receipt">
-          <span class="num">04</span><h3>Receipt</h3><p>Wir machen den Weg nachvollziehbar — damit Vertrauen bleibt.</p><i>✓</i>
+          <span class="num">04</span><h3>Spur</h3><p>Was bleibt nachvollziehbar?</p><i>✓</i>
         </button>
       </div>
       <div class="scenePanel" id="scenePanel"></div>
     </section>
 
-    <section class="story" id="story">
-      <p class="micro">why this matters</p>
-      <h2>Mehr Macht den kleinen Leuten.</h2>
-      <div class="manifestoStrip"><span>Für Bürger:innen</span><span>gegen Formularnebel</span><span>für nachvollziehbare Systeme</span></div>
-      <div class="storyGrid">
-        <p>Ich glaube, gute AI-Systeme sollten nicht nur mächtige Organisationen schneller machen. Sie sollten auch Menschen helfen, die sonst im Verwaltungs-, Rechts- oder Informationsnebel hängen.</p>
-        <p>Vielleicht ist genau das der gemeinsame Nenner: Charly, GitLaw, SafeVoice — unterschiedliche Oberflächen, aber derselbe Impuls. Weniger Ohnmacht. Mehr Orientierung. Mehr Würde im Prozess.</p>
+    <section class="question" id="frage">
+      <div class="questionBox">
+        <p class="micro">Die eigentliche Frage</p>
+        <h2>Son, was denkst du?</h2>
+        <p class="questionStrong">Ist das nah an eurer Realität — oder schöne, aber naive Romantik?</p>
+        <p>Mich interessiert ehrlich, was daran stark ist, was danebenliegt, und wo du echten Hebel siehst.</p>
       </div>
     </section>
 
@@ -133,36 +124,16 @@
       </details>
     </section>
 
-    <section class="safevoice" id="safevoice">
-      <div class="safeHead">
-        <p class="micro">side quest</p>
-        <h2>SafeVoice</h2>
-        <p>Digitale Belästigung aus dem Nebel holen und in saubere Dokumentation übersetzen. Keine Rechtsberatung — eher Schutzengel mit Formular-Talent.</p>
-      </div>
-      <div class="safeShell">
-        <div class="casePicker">
-          <button class="caseBtn active" data-safe="doxxing">Doxxing</button>
-          <button class="caseBtn" data-safe="stalking">Stalking</button>
-          <button class="caseBtn" data-safe="blackmail">Erpressung</button>
-          <button class="caseBtn" data-safe="insult">Herabwürdigung</button>
-        </div>
-        <div class="safeWork">
-          <textarea id="svInput">Ich werde deine Adresse posten, wenn du nicht aufhörst. Niemand wird dir glauben.</textarea>
-          <div class="inlineActions">
-            <button class="button primary small" id="svRun">Mock analysieren</button>
-            <a class="button ghost small" href="https://github.com/mikelninh/safevoice" target="_blank" rel="noopener">GitHub</a>
-          </div>
-        </div>
-        <div class="safeOutput" id="svResult"></div>
-      </div>
-    </section>
-
     <section class="invite" id="invite">
-      <p class="micro">final scene</p>
-      <h2>Und unabhängig vom Projekt:<br>Lass uns mal wieder sehen.</h2>
-      <p>Kaffee, Spaziergang, Basketball, Bouldern — was auch immer gerade passt. Gerne auch mit Bao dazu.</p>
-      <p>Bao ist Anwalt, und ich baue gerade für/mit ihm an <strong>GitLaw Pro</strong>. Vielleicht hättest du sogar Lust, da mal mit draufzuschauen oder einfach mitzudenken.</p>
-      <p class="soft">Kein Pitch-Deck-Vibe. Eher reconnecten, bisschen Sport/Kaffee, und schauen, ob menschlich oder inhaltlich ein Match da ist.</p>
+      <p class="micro">Niedrigschwelliger Call to Action, wie man im Startup sagt, wenn man eigentlich Kaffee meint</p>
+      <h2>Lass uns das auseinandernehmen.</h2>
+      <p>Kaffee, Spaziergang, Basketball, Bouldern — was gerade passt. Gerne auch mit Bao dazu.</p>
+      <p>Bao ist Anwalt, und ich baue gerade für/mit ihm an <strong>GitLaw Pro</strong>. Vielleicht hättest du Lust, da mal mit draufzuschauen oder einfach mitzudenken.</p>
+      <div class="inviteActions">
+        <a class="button primary" href="mailto:?subject=Kaffee%20oder%20Bouldern%3F&body=Son%2C%20was%20denkst%20du%3F%20Ist%20das%20nah%20an%20eurer%20Realit%C3%A4t%20%E2%80%94%20oder%20sch%C3%B6ne%2C%20aber%20naive%20Romantik%3F">Sag mir ehrlich deine Meinung</a>
+        <a class="button ghost" href="#top">Noch mal zur Welle</a>
+      </div>
+      <p class="soft">Kein Pitch-Deck-Vibe. Eher reconnecten, kurz ehrlich sein, und schauen, ob menschlich oder inhaltlich ein Match da ist.</p>
     </section>
   </main>
 
