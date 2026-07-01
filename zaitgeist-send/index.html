@@ -3,105 +3,109 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Hey Son · kleines AI-Experiment von Michael</title>
-  <meta name="description" content="Eine persönliche, spielerische Mini-Seite von Michael für Son: Charly-inspiriertes AI-Serviceflow-Experiment, SafeVoice-Nebenquest und Einladung zum Reconnect.">
+  <title>Hey Son · eine kleine AI-Szene von Michael</title>
+  <meta name="description" content="Eine persönliche, cinematische Mini-Seite von Michael für Son: Charly-inspirierter Serviceflow, SafeVoice-Nebenquest und Einladung zum Reconnect.">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+  <div class="grain"></div>
   <main>
-    <section class="hero">
-      <div class="note">
-        <p class="kicker">Hey Son, kleine Neugier-Eskalation.</p>
-        <h1>Ich hab euer Charly-Thema gesehen — und mein Kopf hat daraus ein kleines AI-Experiment gebaut.</h1>
-        <p class="lead">Kein Pitch. Kein Clone. Eher ein kleiner Gedanken-Prototyp: Was wäre, wenn eine Bürgerfrage nicht einfach “beantwortet” wird, sondern sauber durch Quelle, nächste Aktion und Vertrauen läuft?</p>
-        <div class="actions">
-          <a class="btn" href="#toy">Mini-Experiment öffnen</a>
-          <a class="btn soft" href="#letter">Warum ich dir das zeige</a>
+    <section class="hero sceneBlock">
+      <div class="sceneLabel">Opening shot · Für Son</div>
+      <div class="heroGrid">
+        <div class="heroCopy">
+          <p class="eyebrow">kleine Neugier-Eskalation</p>
+          <h1>Ich hab euer Charly-Thema gesehen — und kurz einen Mini-Film im Kopf bekommen.</h1>
+          <p class="lead">Nicht: “noch ein Chatbot”. Sondern: Eine Bürgerfrage betritt die Szene, findet eine Quelle, bekommt einen nächsten Schritt — und am Ende bleibt nachvollziehbar, was passiert ist.</p>
+          <div class="actions">
+            <a class="btn" href="#film">Mini-Szene starten</a>
+            <a class="btn ghost" href="#after">After Credits</a>
+          </div>
         </div>
-      </div>
-      <div class="postcard">
-        <span>Spielregel</span>
-        <p>Wenn du das danach Ly in zwei Minuten erzählen kannst, hat die Seite gewonnen.</p>
+        <aside class="poster">
+          <span>Spielregel</span>
+          <p>Wenn du das danach Ly in zwei Minuten erzählen kannst, hat die Seite gewonnen.</p>
+        </aside>
       </div>
     </section>
 
-    <section class="letter" id="letter">
+    <section class="letter sceneBlock">
       <p>Ich versuche gerade herauszufinden, wo mein Weg zwischen AI Engineering, sinnvollen Produkten, Recht/Verwaltung und menschenfreundlicher Technologie liegt.</p>
-      <p>Als ich mir Zaitgeist/Charly angeschaut habe, dachte ich: Genau diese Schnittstelle ist spannend — nicht “KI antwortet”, sondern “KI hilft kontrolliert durch ein echtes Anliegen”.</p>
-      <p>Ich weiß nicht, ob daraus beruflich, freundschaftlich oder projektmäßig etwas wird. Aber ich würde gerne herausfinden, ob es da einen echten Resonanzpunkt gibt.</p>
+      <p>Als ich mir Zaitgeist/Charly angeschaut habe, dachte ich: Genau diese Schnittstelle ist spannend — nicht KI als Show, sondern KI als kontrollierter Begleiter durch echte Anliegen.</p>
+      <p>Ich weiß nicht, ob daraus beruflich, freundschaftlich oder projektmäßig etwas wird. Aber ich wollte dir lieber etwas Kleines zeigen als nur zu sagen: “find ich spannend”.</p>
     </section>
 
-    <section class="toy" id="toy">
-      <div class="toyHead">
-        <p class="kicker">Das kleine Spielzeug</p>
-        <h2>Eine Bürgerfrage geht auf eine kleine Reise.</h2>
+    <section class="film sceneBlock" id="film">
+      <div class="sectionHead">
+        <p class="eyebrow">Mini-Szene</p>
+        <h2>Eine Bürgerfrage geht durch vier Räume.</h2>
       </div>
-      <div class="journey">
-        <button class="card active" data-scene="question"><b>1</b><span>Frage</span></button>
-        <button class="card" data-scene="source"><b>2</b><span>Quelle</span></button>
-        <button class="card" data-scene="action"><b>3</b><span>Aktion</span></button>
-        <button class="card" data-scene="trust"><b>4</b><span>Vertrauen</span></button>
+      <div class="filmGrid">
+        <nav class="sceneNav">
+          <button class="sceneBtn active" data-scene="question"><span>01</span>Frage</button>
+          <button class="sceneBtn" data-scene="source"><span>02</span>Quelle</button>
+          <button class="sceneBtn" data-scene="action"><span>03</span>Aktion</button>
+          <button class="sceneBtn" data-scene="trust"><span>04</span>Vertrauen</button>
+        </nav>
+        <div class="screen" id="scene"></div>
       </div>
-      <div class="screen" id="scene"></div>
     </section>
 
-    <section class="underhood">
+    <section class="underhood sceneBlock">
       <details>
         <summary>Unter der Haube, falls du CTO-Modus willst</summary>
         <div class="hoodGrid">
-          <div><b>Echt gebaut</b><p>Static Frontend, Source-Importer-Endpoint, OpenRouter-ready API, Local Retrieval, Truth Analyzer, MCP-Tool-Schema.</p></div>
+          <div><b>Echt gebaut</b><p>Static Frontend, Source-Importer-Endpoint, OpenRouter-ready API, Local Retrieval, MCP-Tool-Schema.</p></div>
           <div><b>Absichtlich Prototyp</b><p>Demo-Daten, LocalStorage, simulierte Integrationen, lexical retrieval statt Embeddings.</p></div>
-          <div><b>Nächste echte Schritte</b><p>Source Registry, real MCP Server, Embeddings, Eval in CI, Ticket/Kalender/Rückruf-Adapter.</p></div>
+          <div><b>Nächste Schritte</b><p>Source Registry, real MCP Server, Embeddings, Eval in CI, Ticket/Kalender/Rückruf-Adapter.</p></div>
         </div>
       </details>
     </section>
 
-    <section class="truth">
-      <p class="kicker">Nebenidee</p>
-      <h2>Worüber streiten wir eigentlich?</h2>
-      <p class="muted">Ein kleiner Text-Kompass: Ist das ein Fakt, ein Wert, ein Gefühl, ein Glaube oder eine Prognose?</p>
-      <div class="truthGrid">
-        <div class="chips">
-          <button data-claim="Die Öffnungszeiten sind Dienstag von 10 bis 18 Uhr.">🔎 Fakt</button>
-          <button data-claim="Berlin sollte digitale Bürgerdienste menschlicher gestalten.">⚖️ Wert</button>
-          <button data-claim="Ich fühle mich vom Amt unfair behandelt.">💬 Gefühl</button>
-          <button data-claim="Wenn Quellen besser gepflegt werden, sinkt die Handoff-Rate.">🔮 Prognose</button>
+    <section class="after sceneBlock" id="after">
+      <div class="sectionHead">
+        <p class="eyebrow">After Credits · SafeVoice</p>
+        <h2>Falls du noch 30 Sekunden stöbern willst.</h2>
+        <p>SafeVoice ist eine zweite kleine Civic/Legal-AI-Idee: digitale Belästigung nicht im Chaos lassen, sondern in saubere Dokumentation übersetzen. Für Betroffene. Ohne Rechtsberatung zu spielen.</p>
+      </div>
+      <div class="safeGrid">
+        <div class="safePanel">
+          <div class="exampleStack">
+            <button data-safe="doxxing">Adresse drohen / Doxxing</button>
+            <button data-safe="stalking">wiederholte Nachrichten</button>
+            <button data-safe="blackmail">Erpressung / Einschüchterung</button>
+            <button data-safe="insult">Beleidigung / Herabwürdigung</button>
+          </div>
+          <textarea id="svInput">Ich werde deine Adresse posten, wenn du nicht aufhörst. Niemand wird dir glauben.</textarea>
+          <div class="actions compact">
+            <button class="btn" id="svRun">Mock-Analyse starten</button>
+            <a class="btn ghost" href="https://github.com/mikelninh/safevoice" target="_blank" rel="noopener">GitHub ansehen</a>
+          </div>
         </div>
-        <div class="truthBox">
-          <textarea id="claim">Berlin sollte mehr Bürgerdienste automatisieren, weil Wartezeiten zu lang sind.</textarea>
-          <button class="btn small" id="analyze">einordnen</button>
-          <div id="truthResult" class="result"></div>
+        <div class="safeResult" id="svResult">
+          <small>Was die Demo zeigt</small>
+          <p>Risiko-Level, mögliche Kategorien und konkrete Dokumentationsschritte. Nicht als Urteil — eher als erste Ordnung im Nebel.</p>
         </div>
       </div>
     </section>
 
-    <section class="sidequest" id="safevoice">
-      <p class="kicker">After Credits: SafeVoice</p>
-      <h2>Falls du noch 30 Sekunden stöbern willst.</h2>
-      <p class="muted">SafeVoice ist ein kleines Legal/Civic-AI-Projekt: digitale Belästigung dokumentieren, grob einordnen und Betroffenen helfen, aus Chaos eine saubere Dokumentation zu machen. Keine Rechtsberatung — eher Schutzengel mit Formular-Talent.</p>
-      <div class="safeDemo">
-        <textarea id="svInput">Ich werde deine Adresse posten, wenn du nicht aufhörst. Niemand wird dir glauben.</textarea>
-        <div class="actions">
-          <button class="btn small" id="svRun">kurz testen</button>
-          <a class="btn soft small" href="https://github.com/mikelninh/safevoice" target="_blank" rel="noopener">GitHub</a>
-        </div>
-        <div id="svResult" class="result quiet">Mock-Demo: zeigt Risiko, mögliche Kategorien und nächste Dokumentationsschritte.</div>
+    <section class="questions sceneBlock">
+      <div class="sectionHead">
+        <p class="eyebrow">Was ich dich wirklich fragen will</p>
+        <h2>Ist da irgendwo Resonanz?</h2>
       </div>
-    </section>
-
-    <section class="questions">
-      <h2>Was ich dich wirklich fragen will</h2>
       <div class="qGrid">
         <p>Ist mein Mental Model nah dran — oder romantisiere ich die Komplexität?</p>
         <p>Wo beginnt bei Charly-artigen Systemen die echte Härte: Quellen, Betrieb, Vertrieb, Datenschutz, Integrationen?</p>
-        <p>Siehst du irgendwo Resonanz — als Gespräch, Feedback-Loop, kleines Projekt oder vielleicht irgendwann mehr?</p>
+        <p>Siehst du irgendwo einen Match: Gespräch, Feedback-Loop, kleines Projekt oder irgendwann mehr?</p>
       </div>
     </section>
 
-    <section class="invite" id="coffee">
-      <p>Und unabhängig vom Projekt: Ich würde mich freuen, dich mal wieder zu sehen.</p>
-      <h2>Kaffee, Spaziergang, Basketball, Bouldern?</h2>
-      <p>Gerne auch mit Bao dazu. Er ist Anwalt, und ich baue gerade für/mit ihm an <strong>GitLaw Pro</strong> — vielleicht hättest du sogar Lust, da mal mit draufzuschauen oder einfach mitzudenken.</p>
+    <section class="invite sceneBlock" id="coffee">
+      <p class="eyebrow">Final scene</p>
+      <h2>Und unabhängig vom Projekt: mal wieder sehen?</h2>
+      <p>Kaffee, Spaziergang, Basketball, Bouldern — was auch immer gerade passt.</p>
+      <p>Gerne auch mit Bao dazu. Er ist Anwalt, und ich baue gerade für/mit ihm an <strong>GitLaw Pro</strong>. Vielleicht hättest du sogar Lust, da mal mit draufzuschauen oder einfach mitzudenken.</p>
       <p class="last">Kein Pitch-Deck-Vibe. Eher reconnecten, bisschen Sport/Kaffee, und schauen, ob menschlich oder inhaltlich ein Match da ist.</p>
     </section>
   </main>
