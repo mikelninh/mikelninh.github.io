@@ -1,1 +1,185 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CharlyKit · CTO Demo by Michael Ninh</title><meta name="description" content="A CTO-sendable municipal AI serviceflow demo: source-grounded answers, admin review, truth analyzer, dashboard and reusable agent tools."><link rel="stylesheet" href="./style.css"></head><body><div class="halo"></div><header><nav class="wrap"><a class="logo" href="#top">CharlyKit<span> by Michael</span></a><div><a href="#demo">3-Min-Demo</a><a href="#why">Warum relevant</a><a href="#architecture">Architektur</a><a href="#truth">Truth</a><a href="#next">Next</a></div></nav></header><main id="top"><section class="hero wrap"><div class="heroCopy"><p class="eyebrow">CTO Demo · Municipal RAG · Source Review · AI Ops</p><h1>Ein kleiner, wiederverwendbarer Serviceflow-Kern für Bürgeranliegen.</h1><p class="lead">Ich habe kein Charly geklont. Ich habe gebaut, was ich als Kern dahinter spannend finde: geprüfte Quellen, verständliche Antworten, Routing, nächste Aktionen, Admin-Review, Receipts und Qualitätssignale.</p><div class="row"><a class="btn" href="#demo">Demo starten</a><a class="btn ghost" href="#architecture">System sehen</a><a class="btn ghost" href="../zaitgeist-v5/">Lab-Version</a></div><div class="trust"><span>OpenRouter-ready</span><span>LLM optional</span><span>Importer ohne LLM-Kosten</span><span>MCP-Toolvertrag</span></div></div><aside class="heroCard"><small>In 30 Sekunden</small><h2>Frage → Quelle → Antwort → Aktion → Receipt</h2><p>Der Mehrwert ist nicht “Chatbot”. Der Mehrwert ist ein kontrollierter Serviceflow, der Bürgern hilft und Fachbereiche entlastet.</p><div class="miniFlow"><b>Quelle geprüft</b><b>Handoff bei Unsicherheit</b><b>Admin verbessert Wissen</b><b>Eval misst Qualität</b></div></aside></section><section class="wrap section" id="demo"><div class="head"><p class="eyebrow">3-Minuten Demo</p><h2>Geführter Ablauf, kein Labyrinth.</h2><p>Ein CTO soll nicht suchen müssen. Diese vier Schritte zeigen die Idee kompakt.</p></div><div class="demoGrid"><section class="panel stepper"><button class="step active" data-step="citizen"><b>1</b><span>Bürgerfrage</span></button><button class="step" data-step="source"><b>2</b><span>Quelle & Review</span></button><button class="step" data-step="action"><b>3</b><span>Assistierte Aktion</span></button><button class="step" data-step="quality"><b>4</b><span>Qualität & Ops</span></button></section><section class="panel stage" id="stage"></section></div></section><section class="wrap section" id="why"><div class="head"><p class="eyebrow">Warum relevant</p><h2>Die interessante Frage ist nicht: “Kann eine KI antworten?”</h2><p>Die interessante Frage ist: Kann sie kontrolliert, nachvollziehbar und nützlich in echte Verwaltungsprozesse eingebettet werden?</p></div><div class="whyGrid"><div><b>Für Bürger</b><p>Sie bekommen eine verständliche Antwort, eine Checkliste und Hilfe beim nächsten Schritt.</p></div><div><b>Für Fachbereiche</b><p>Sie bekommen strukturierte Übergaben statt chaotischer Freitext-Anliegen.</p></div><div><b>Für Admins</b><p>Sie können Wissen pflegen, statt auf Code-Deployments zu warten.</p></div><div><b>Für CTOs</b><p>Daten, Tools, Modelle und UI sind getrennt. Das macht das System testbar und austauschbar.</p></div></div></section><section class="wrap section" id="architecture"><div class="head"><p class="eyebrow">Architektur</p><h2>Ein kleiner Stack, der größer werden kann.</h2></div><div class="arch"><div class="layer"><span>01</span><h3>Source Registry</h3><p>Quellen mit URL, Amt, Status, Review, Aktualität und Vertrauenslevel.</p></div><div class="layer"><span>02</span><h3>Importer</h3><p>URL/Text wird extrahiert, in Chunks vorgeschlagen und nie blind veröffentlicht.</p></div><div class="layer"><span>03</span><h3>Retrieval</h3><p>Fragen werden gegen freigegebene Chunks gesucht. Confidence ist Trefferstärke, kein Wahrheitswert.</p></div><div class="layer"><span>04</span><h3>Serviceflow</h3><p>Antwort, Routing, Termin, Ticket, Rückruf oder Handoff werden vorbereitet.</p></div><div class="layer"><span>05</span><h3>Receipt</h3><p>Jeder Vorgang wird menschenlesbar und maschinenlesbar nachvollziehbar.</p></div><div class="layer"><span>06</span><h3>MCP Tools</h3><p>Agents können später dieselben Tools nutzen: import_source, search_sources, classify_statement, create_receipt.</p></div></div></section><section class="wrap section" id="truth"><div class="head"><p class="eyebrow">Truth / Text Analyzer</p><h2>Worüber streiten wir eigentlich?</h2><p>Für Bürgerkommunikation, interne Diskussionen und Agenten ist es wertvoll, Aussagearten zu trennen: Fakt, Wert, Gefühl, Glaube, Prognose.</p></div><div class="truthBox"><div class="claimCards"><button data-claim="Die Öffnungszeiten sind Dienstag von 10 bis 18 Uhr.">🔎 Fakt</button><button data-claim="Berlin sollte digitale Bürgerdienste menschlicher gestalten.">⚖️ Wert</button><button data-claim="Ich fühle mich vom Amt unfair behandelt.">💬 Gefühl</button><button data-claim="Wenn Quellen besser gepflegt werden, sinkt die Handoff-Rate.">🔮 Prognose</button><button data-claim="Ich glaube, Liebe ist die tiefste Wahrheit.">✨ Glaube</button></div><div class="panel"><label>Aussage</label><textarea id="claim">Berlin sollte mehr Bürgerdienste automatisieren, weil Wartezeiten zu lang sind.</textarea><button class="btn" id="analyze">Aussage einordnen</button></div><div class="panel result" id="truthResult"></div></div></section><section class="wrap section" id="next"><div class="head"><p class="eyebrow">Was ich als Nächstes bauen würde</p><h2>Vom Prototyp zum Tool, das andere Agents nutzen können.</h2></div><div class="nextGrid"><div><h3>1. Persistente Source Registry</h3><p>Postgres/Supabase statt LocalStorage. Quellen, Chunks, Reviews, Owner, Versionshistorie.</p></div><div><h3>2. Real MCP Server</h3><p>Ein kleiner Server mit Tools für Import, Suche, Klassifikation, Action Payloads und Receipts.</p></div><div><h3>3. Eval Harness</h3><p>Jeder neue Chunk muss Standardfragen bestehen. Regressionen werden sichtbar.</p></div><div><h3>4. Integrationen</h3><p>Kalender, Ticketing, Rückrufsystem und Analytics als austauschbare Adapter.</p></div></div><div class="sendBox"><b>Was ich ihm schreiben würde:</b><p>“Ich habe eine kleine CTO-Demo gebaut, weil ich spannend finde, wie Charly-artige Systeme kontrolliert funktionieren könnten: nicht als Chatbot, sondern als Serviceflow-Kern mit geprüften Quellen, Admin-Review, Actions, Receipts und Eval. Ist noch Prototyp, aber ich glaube, die Richtung ist relevant.”</p></div></section></main><footer><div class="wrap">Michael Ninh · CharlyKit CTO Demo · Berlin / Remote</div></footer><script src="./app.js"></script></body></html>
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CharlyKit · CTO Demo by Michael Ninh</title>
+  <meta name="description" content="A CTO-sendable municipal AI serviceflow demo: source-grounded answers, admin review, truth analyzer, dashboard and reusable agent tools.">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="halo"></div>
+  <header>
+    <nav class="wrap">
+      <a class="logo" href="#top">CharlyKit<span> by Michael</span></a>
+      <div>
+        <a href="#demo">3-Min-Demo</a>
+        <a href="#scope">Was ist echt?</a>
+        <a href="#architecture">Architektur</a>
+        <a href="#truth">Truth</a>
+        <a href="#next">Next</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap">
+      <div class="heroCopy">
+        <p class="eyebrow">CTO Demo · Municipal RAG · Source Review · AI Ops</p>
+        <h1>A tiny Charly-like serviceflow kernel — not a clone.</h1>
+        <p class="lead">Citizen question → verified source → safe answer → next action → human/machine receipt → quality loop.</p>
+        <div class="row">
+          <a class="btn" href="#demo">Start the 3-min demo</a>
+          <a class="btn ghost" href="#scope">What is real?</a>
+          <a class="btn ghost" href="../zaitgeist-v5/">Open lab version</a>
+        </div>
+        <div class="trust">
+          <span>OpenRouter-ready</span>
+          <span>LLM optional</span>
+          <span>Importer without LLM costs</span>
+          <span>MCP-ready architecture</span>
+        </div>
+      </div>
+      <aside class="heroCard">
+        <small>Try this first</small>
+        <h2>60 seconds, no setup.</h2>
+        <ol class="tryList">
+          <li>Click through the 4 demo steps below.</li>
+          <li>Open “What is real?” to see the scope.</li>
+          <li>Try one Truth Analyzer example.</li>
+          <li>Open the lab version only if you want raw details.</li>
+        </ol>
+      </aside>
+    </section>
+
+    <section class="wrap section" id="demo">
+      <div class="head">
+        <p class="eyebrow">3-Minuten Demo</p>
+        <h2>Geführter Ablauf, kein Labyrinth.</h2>
+        <p>Die Demo zeigt nicht “noch einen Chatbot”, sondern einen kontrollierten Serviceflow für Bürgeranliegen.</p>
+      </div>
+      <div class="demoGrid">
+        <section class="panel stepper">
+          <button class="step active" data-step="citizen"><b>1</b><span>Bürgerfrage</span></button>
+          <button class="step" data-step="source"><b>2</b><span>Quelle & Review</span></button>
+          <button class="step" data-step="action"><b>3</b><span>Assistierte Aktion</span></button>
+          <button class="step" data-step="quality"><b>4</b><span>Qualität & Ops</span></button>
+        </section>
+        <section class="panel stage" id="stage"></section>
+      </div>
+    </section>
+
+    <section class="wrap section" id="scope">
+      <div class="head">
+        <p class="eyebrow">Was ist echt?</p>
+        <h2>Ehrlicher Scope statt Demo-Nebel.</h2>
+        <p>Das ist ein Prototyp, aber mit bewusstem Systemdesign. Die Grenzen sind sichtbar — genau das macht ihn glaubwürdig.</p>
+      </div>
+      <div class="scopeGrid">
+        <div class="scopeCard real">
+          <h3>Real now</h3>
+          <ul>
+            <li>Static frontend, deploybar auf Vercel</li>
+            <li>Serverless Source Importer Endpoint</li>
+            <li>OpenRouter-ready LLM/RAG API</li>
+            <li>Local retrieval + action routing</li>
+            <li>Truth/Text Analyzer</li>
+            <li>MCP tool schema draft</li>
+          </ul>
+        </div>
+        <div class="scopeCard proto">
+          <h3>Prototype / simulated</h3>
+          <ul>
+            <li>Demo-Wissensbasis statt echter Kommune</li>
+            <li>LocalStorage statt Datenbank</li>
+            <li>Lexical retrieval statt embeddings</li>
+            <li>Simulierte Kalender-, Ticket- und Rückrufadapter</li>
+            <li>Admin Review als UI-Flow, noch kein Login</li>
+          </ul>
+        </div>
+        <div class="scopeCard next">
+          <h3>Next production step</h3>
+          <ul>
+            <li>DB-backed Source Registry</li>
+            <li>Real MCP server</li>
+            <li>Embeddings / vector search</li>
+            <li>Eval harness in CI</li>
+            <li>Ticket, calendar and callback integrations</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="why">
+      <div class="head">
+        <p class="eyebrow">Warum relevant</p>
+        <h2>Die interessante Frage ist nicht: “Kann eine KI antworten?”</h2>
+        <p>Die interessante Frage ist: Kann sie kontrolliert, nachvollziehbar und nützlich in echte Verwaltungsprozesse eingebettet werden?</p>
+      </div>
+      <div class="whyGrid">
+        <div><b>Für Bürger</b><p>Sie bekommen eine verständliche Antwort, eine Checkliste und Hilfe beim nächsten Schritt.</p></div>
+        <div><b>Für Fachbereiche</b><p>Sie bekommen strukturierte Übergaben statt chaotischer Freitext-Anliegen.</p></div>
+        <div><b>Für Admins</b><p>Sie können Wissen pflegen, statt auf Code-Deployments zu warten.</p></div>
+        <div><b>Für CTOs</b><p>Daten, Tools, Modelle und UI sind getrennt. Das macht das System testbar und austauschbar.</p></div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="architecture">
+      <div class="head">
+        <p class="eyebrow">Architektur</p>
+        <h2>Ein kleiner Stack, der größer werden kann.</h2>
+      </div>
+      <div class="arch">
+        <div class="layer"><span>01</span><h3>Source Registry</h3><p>Quellen mit URL, Amt, Status, Review, Aktualität und Vertrauenslevel.</p></div>
+        <div class="layer"><span>02</span><h3>Importer</h3><p>URL/Text wird extrahiert, in Chunks vorgeschlagen und nie blind veröffentlicht.</p></div>
+        <div class="layer"><span>03</span><h3>Retrieval</h3><p>Fragen werden gegen freigegebene Chunks gesucht. Confidence ist Trefferstärke, kein Wahrheitswert.</p></div>
+        <div class="layer"><span>04</span><h3>Serviceflow</h3><p>Antwort, Routing, Termin, Ticket, Rückruf oder Handoff werden vorbereitet.</p></div>
+        <div class="layer"><span>05</span><h3>Receipt</h3><p>Jeder Vorgang wird menschenlesbar und maschinenlesbar nachvollziehbar.</p></div>
+        <div class="layer"><span>06</span><h3>MCP Tools</h3><p>Agents können später dieselben Tools nutzen: import_source, search_sources, classify_statement, create_receipt.</p></div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="truth">
+      <div class="head">
+        <p class="eyebrow">Truth / Text Analyzer</p>
+        <h2>Worüber streiten wir eigentlich?</h2>
+        <p>Für Bürgerkommunikation, interne Diskussionen und Agents ist es wertvoll, Aussagearten zu trennen: Fakt, Wert, Gefühl, Glaube, Prognose.</p>
+      </div>
+      <div class="truthBox">
+        <div class="claimCards">
+          <button data-claim="Die Öffnungszeiten sind Dienstag von 10 bis 18 Uhr.">🔎 Fakt</button>
+          <button data-claim="Berlin sollte digitale Bürgerdienste menschlicher gestalten.">⚖️ Wert</button>
+          <button data-claim="Ich fühle mich vom Amt unfair behandelt.">💬 Gefühl</button>
+          <button data-claim="Wenn Quellen besser gepflegt werden, sinkt die Handoff-Rate.">🔮 Prognose</button>
+          <button data-claim="Ich glaube, Liebe ist die tiefste Wahrheit.">✨ Glaube</button>
+        </div>
+        <div class="panel">
+          <label>Aussage</label>
+          <textarea id="claim">Berlin sollte mehr Bürgerdienste automatisieren, weil Wartezeiten zu lang sind.</textarea>
+          <button class="btn" id="analyze">Aussage einordnen</button>
+        </div>
+        <div class="panel result" id="truthResult"></div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="next">
+      <div class="head">
+        <p class="eyebrow">Was ich als Nächstes bauen würde</p>
+        <h2>Vom Prototyp zum Tool, das andere Agents nutzen können.</h2>
+      </div>
+      <div class="nextGrid">
+        <div><h3>1. Persistente Source Registry</h3><p>Postgres/Supabase statt LocalStorage. Quellen, Chunks, Reviews, Owner, Versionshistorie.</p></div>
+        <div><h3>2. Real MCP Server</h3><p>Ein kleiner Server mit Tools für Import, Suche, Klassifikation, Action Payloads und Receipts.</p></div>
+        <div><h3>3. Embeddings + Eval</h3><p>Vector Search sobald mehrere echte Quellen vorliegen; Eval verhindert Regressionen.</p></div>
+        <div><h3>4. Integrationen</h3><p>Kalender, Ticketing, Rückrufsystem und Analytics als austauschbare Adapter.</p></div>
+      </div>
+      <div class="sendBox">
+        <b>Was ich ihm schreiben würde:</b>
+        <p>“Ich habe eine kleine CTO-Demo gebaut, weil ich spannend finde, wie Charly-artige Systeme kontrolliert funktionieren könnten: nicht als Chatbot, sondern als Serviceflow-Kern mit geprüften Quellen, Admin-Review, Actions, Receipts und Eval. Ist noch Prototyp, aber ich glaube, die Richtung ist relevant.”</p>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap">Michael Ninh · CharlyKit CTO Demo · Berlin / Remote</div></footer>
+  <script src="./app.js"></script>
+</body>
+</html>
