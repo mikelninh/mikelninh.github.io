@@ -1,0 +1,29 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GoodFood Access V7 — Production Roadmap</title><style>body{margin:0;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Inter,system-ui,sans-serif;background:#f7efe3;color:#111}.wrap{max-width:1180px;margin:auto;padding:28px}h1{font-size:58px;line-height:.94;letter-spacing:-.055em;margin-bottom:14px}p{color:#6f675d;line-height:1.48}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{background:#fffdf8;border:1px solid #eadfce;border-radius:24px;padding:18px;box-shadow:0 18px 50px #0001}h2{font-size:26px;margin:0 0 10px}.tag{display:inline-block;border-radius:99px;padding:5px 9px;margin:4px 4px 0 0;background:#e6f4d1;color:#1f673d;font-weight:900;font-size:12px}.warn{background:#fff1d8;color:#80500f}.bad{background:#ffe2dc;color:#873026}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:white;border:1px solid #eee;border-radius:16px;padding:14px;white-space:pre-wrap;overflow:auto;color:#333}table{width:100%;border-spacing:0 8px}td,th{text-align:left;background:white;border-top:1px solid #eee;border-bottom:1px solid #eee;padding:10px;vertical-align:top}td:first-child,th:first-child{border-left:1px solid #eee;border-radius:12px 0 0 12px}td:last-child,th:last-child{border-right:1px solid #eee;border-radius:0 12px 12px 0}.hero{padding:48px 0 20px}.nav a{margin-right:12px}.ok{color:#237a46;font-weight:900}@media(max-width:850px){.grid{grid-template-columns:1fr}h1{font-size:42px}}</style></head><body><main class="wrap"><p class="nav"><a href="./">Hub/V4</a> <a href="./v5.html">V5</a> <a href="./v6.html">V6</a></p><section class="hero"><p style="font:12px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.08em">V7 · prepared</p><h1>Production-ready heißt: AI dort einsetzen, wo sie wirklich hilft.</h1><p>GoodFood Access V7 ist die Roadmap von Demo zu Produkt. Die Kernlogik bleibt deterministisch: Nährwerte, Budget, Warenkorb-Optimierung, Förderfähigkeit. AI kommt als Interface-, Personalization- und Agent-Schicht obendrauf — nicht als Quelle der Wahrheit.</p><span class="tag">deterministic core</span><span class="tag">verified nutrition data</span><span class="tag">AI explanations</span><span class="tag">agent checkout later</span><span class="tag warn">not medical advice</span></section><section class="grid"><div class="card"><h2>Was braucht keine AI?</h2><table><tr><th>Bereich</th><th>Warum deterministisch?</th></tr><tr><td>Nährstoffberechnung</td><td>Muss prüfbar, reproduzierbar und auditierbar sein.</td></tr><tr><td>Budget-Gap</td><td>Mathematik, keine LLM-Antwort.</td></tr><tr><td>Förderfähigkeit</td><td>Regeln: bonusfähig / nicht bonusfähig / self-pay.</td></tr><tr><td>Cheapest Basket</td><td>Optimizer/Constraint-Solver statt Chatbot.</td></tr></table></div><div class="card"><h2>Wo AI Sinn macht</h2><table><tr><th>AI Use</th><th>Nutzen</th></tr><tr><td>Erklärungen</td><td>Warum B12? Warum Jod? Warum reicht Protein vegan?</td></tr><tr><td>Rezepte</td><td>Budget, Kultur, Allergien, Zeit, Lieblingsgerichte.</td></tr><tr><td>Sprache</td><td>Deutsch, Vietnamesisch, Türkisch, Arabisch, einfache Sprache.</td></tr><tr><td>Agenten</td><td>Preise aktualisieren, Alternativen finden, Warenkorb übertragen.</td></tr></table></div><div class="card"><h2>RAG: ja, aber eng begrenzt</h2><p>RAG macht Sinn für geprüfte Wissensquellen, nicht für freie Ernährungsbehauptungen. Quellen könnten sein: Open Food Facts Datenmodell, DGE-/EFSA-nahe Referenzwerte, Händlerbedingungen, Förderregeln, kommunale Programme.</p><div class="mono">RAG query examples:
+- “Was sagt die Quelle zu B12 bei veganer Ernährung?”
+- “Welche Produkte sind laut Policy bonusfähig?”
+- “Welche Händlerbedingungen erlauben Warenkorb-Transfer?”</div></div><div class="card"><h2>Agenten: erst später</h2><p>Agents sind sinnvoll, wenn es externe Aktionen gibt. In V7 wären sie nicht der Kern, sondern Worker:</p><ul><li>Preisagent: Händlerpreise aktualisieren</li><li>Substitutionsagent: günstigere Alternative finden</li><li>Checkout-Agent: Warenkorb an Händler übergeben</li><li>Policy-Agent: neue Förderregeln prüfen</li><li>Monitoring-Agent: Datenfehler und Preis-Ausreißer markieren</li></ul></div><div class="card"><h2>Produktarchitektur</h2><div class="mono">frontend/
+  BasketPlanner.tsx
+  NutrientProof.tsx
+  PolicyCalculator.tsx
+
+core/
+  products.schema.ts
+  nutrientTargets.ts
+  optimizer.ts
+  eligibilityRules.ts
+
+data/
+  products.sqlite / postgres
+  prices_by_store
+  sources
+
+ai/
+  recipe_explainer.ts
+  rag_sources.ts
+  agent_jobs.ts
+
+backend/
+  user_profiles
+  saved_proofs
+  price_refresh
+  checkout_links</div></div><div class="card"><h2>Production Checklist</h2><table><tr><td>Verified product DB</td><td class="ok">Next</td></tr><tr><td>Constraint optimizer tests</td><td class="ok">Next</td></tr><tr><td>Open Food Facts import</td><td>V7 build</td></tr><tr><td>Store price ingestion</td><td>Partner/API required</td></tr><tr><td>Medical/nutrition review</td><td>Required before claims</td></tr><tr><td>Checkout partnerships</td><td>Later</td></tr><tr><td>Privacy/account system</td><td>When profiles sync</td></tr></table></div></section><section class="card" style="margin-top:14px"><h2>V7 in einem Satz</h2><p><b>GoodFood Access V7</b> turns vegan food access into a verified, auditable workflow: real product data → deterministic optimizer → nutrient proof → budget gap → AI explanations → agent-assisted purchasing.</p></section></main></body></html>
