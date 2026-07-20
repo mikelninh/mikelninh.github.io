@@ -32,7 +32,20 @@ jobs:
         with:
           node-version: '22'
       - name: Validate data, sources, buy links and images
+        id: audit
+        continue-on-error: true
         run: node ramen/scripts/validate-data.mjs
+      - name: Upload deterministic audit report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ramen-validation-report
+          path: ramen-validation-report.md
+          if-no-files-found: error
+          retention-days: 30
       - name: Independent source-grounded AI review
-        if: ${{ env.OPENAI_API_KEY != '' }}
+        if: ${{ steps.audit.outcome == 'success' && env.OPENAI_API_KEY != '' }}
         run: node ramen/scripts/agent-fact-check.mjs
+      - name: Fail release when deterministic audit fails
+        if: ${{ steps.audit.outcome == 'failure' }}
+        run: exit 1
