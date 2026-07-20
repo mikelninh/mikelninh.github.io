@@ -1,0 +1,50 @@
+name: Ramen data quality
+
+on:
+  push:
+    paths:
+      - 'vegan/ramen-data.js'
+      - 'vegan/scripts/validate-data.mjs'
+      - '.github/workflows/ramen-data-quality.yml'
+  pull_request:
+    paths:
+      - 'vegan/ramen-data.js'
+      - 'vegan/scripts/validate-data.mjs'
+      - '.github/workflows/ramen-data-quality.yml'
+
+jobs:
+  validate-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate required ramen data
+        run: node vegan/scripts/validate-data.mjs
+      - name: Check source, image and buy URLs
+        shell: bash
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const vm = require('vm');
+          const source = fs.readFileSync('vegan/ramen-data.js','utf8');
+          const sandbox = {window:{}};
+          vm.createContext(sandbox);
+          vm.runInContext(source,sandbox);
+          const records = sandbox.window.RAMEN_DATA;
+          fs.writeFileSync('/tmp/ramen-urls.txt', records.flatMap(p => ['source','image','buy'].map(k => p[k]).filter(Boolean)).join('\n'));
+          NODE
+          failed=0
+          while IFS= read -r url; do
+            code=$(curl -L --retry 2 --connect-timeout 12 --max-time 30 -A 'Mozilla/5.0 ramen-data-check/1.0' -o /dev/null -s -w '%{http_code}' "$url" || true)
+            if [[ "$code" =~ ^(200|204|301|302|303|307|308|401|403)$ ]]; then
+              echo "OK $code $url"
+            else
+              echo "BROKEN $code $url"
+              failed=1
+            fi
+          done < /tmp/ramen-urls.txt
+          exit $failed
