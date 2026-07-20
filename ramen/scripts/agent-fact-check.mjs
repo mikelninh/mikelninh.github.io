@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';
-import vm from 'node:vm';
+import {loadRamenData} from './load-data.mjs';
 
 if (!process.env.OPENAI_API_KEY) {
   console.log('OPENAI_API_KEY is not configured; optional agent review skipped.');
@@ -7,14 +7,7 @@ if (!process.env.OPENAI_API_KEY) {
 }
 
 const ramenRoot = new URL('../', import.meta.url);
-const baseSource = await fs.readFile(new URL('../vegan/ramen-data.js', ramenRoot), 'utf8');
-const overrideSource = await fs.readFile(new URL('germany-overrides.js', ramenRoot), 'utf8');
-const context = {window:{}};
-vm.createContext(context);
-vm.runInContext(baseSource, context);
-vm.runInContext(overrideSource, context);
-const data = context.window.RAMEN_DATA;
-
+const data = await loadRamenData();
 const model = process.env.OPENAI_FACT_CHECK_MODEL || 'gpt-5';
 const batches = chunk(data, 10);
 const findings = [];
