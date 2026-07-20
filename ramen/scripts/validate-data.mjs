@@ -1,14 +1,7 @@
 import fs from 'node:fs/promises';
-import vm from 'node:vm';
+import {loadRamenData} from './load-data.mjs';
 
-const ramenRoot = new URL('../', import.meta.url);
-const baseSource = await fs.readFile(new URL('../vegan/ramen-data.js', ramenRoot), 'utf8');
-const overrideSource = await fs.readFile(new URL('germany-overrides.js', ramenRoot), 'utf8');
-const context = {window:{}};
-vm.createContext(context);
-vm.runInContext(baseSource, context, {filename:'vegan/ramen-data.js'});
-vm.runInContext(overrideSource, context, {filename:'ramen/germany-overrides.js'});
-const data = context.window.RAMEN_DATA;
+const data = await loadRamenData();
 
 const errors = [];
 const warnings = [];
