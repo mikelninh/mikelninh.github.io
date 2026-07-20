@@ -84,16 +84,26 @@
   const removedIds = new Set(['nissin-cup-chicken']);
   const patched = base
     .filter(item => !removedIds.has(item.id))
-    .map(item => ({
-      market: 'Global · Germany review pending',
-      verificationLevel: 'needs-germany-review',
-      verifiedAt: null,
-      buy: null,
-      gtin: null,
-      imageSource: item.image ? item.source : null,
-      ...item,
-      ...(overrides[item.id] || {})
-    }));
+    .map(item => {
+      const override = overrides[item.id];
+      const downgradeGlobalVeganClaim = !override && item.vegan === 'verified';
+      return {
+        ...item,
+        globalVeganStatus: item.vegan,
+        market: 'Global · Germany review pending',
+        verificationLevel: 'needs-germany-review',
+        verifiedAt: null,
+        buy: null,
+        gtin: null,
+        imageSource: item.image ? item.source : null,
+        vegan: downgradeGlobalVeganClaim ? 'check' : item.vegan,
+        evidence: downgradeGlobalVeganClaim ? {
+          en: 'A version outside Germany may be described as vegan, but the German/EU retail pack has not yet been verified. Check the exact package before buying.',
+          de: 'Eine Version außerhalb Deutschlands kann als vegan beschrieben sein; die deutsche/EU-Verkaufspackung ist jedoch noch nicht geprüft. Vor dem Kauf die konkrete Packung kontrollieren.'
+        } : item.evidence,
+        ...(override || {})
+      };
+    });
 
   patched.push({
     rank: 6,
@@ -106,6 +116,7 @@
     spice: 4,
     gtin: '8801043069588',
     vegan: 'not',
+    globalVeganStatus: 'not',
     verificationLevel: 'germany-retailer',
     verifiedAt: VERIFIED_AT,
     image: 'https://static.y-mart.de/media/0af6bbf8a646b57379ad03e79b1fcd80/8801043069588-800.webp',
