@@ -83,7 +83,12 @@ async function checkUrl(url) {
     if (/\.(png|jpe?g|webp)(\?|$)/i.test(url) && !type.startsWith('image/')) return {kind:'warning',url,message:`expected image, received ${type || 'unknown content type'}`};
     return {kind:'ok',url};
   } catch (error) {
-    const message = error?.cause?.code || error?.name || error?.message || 'fetch failed';
+    const code = error?.cause?.code || error?.code || '';
+    const name = error?.name || '';
+    const message = code || name || error?.message || 'fetch failed';
+    if (code === 'ETIMEDOUT' || name === 'AbortError' || name === 'TimeoutError') {
+      return {kind:'warning',url,message:`${message} (transient timeout)`};
+    }
     return {kind:'error',url,message};
   } finally { clearTimeout(timeout); }
 }
