@@ -23,6 +23,9 @@ jobs:
   deterministic-audit:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_FACT_CHECK_MODEL: gpt-5
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -31,8 +34,5 @@ jobs:
       - name: Validate data, sources, buy links and images
         run: node ramen/scripts/validate-data.mjs
       - name: Independent source-grounded AI review
-        if: ${{ secrets.OPENAI_API_KEY != '' }}
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_FACT_CHECK_MODEL: gpt-5
+        if: ${{ env.OPENAI_API_KEY != '' }}
         run: node ramen/scripts/agent-fact-check.mjs
