@@ -67,7 +67,7 @@ Agentic engineer and product builder focused on LLM integrations, RAG, MCP, stru
 ## Education
 
 - **Masterschool Institute of Technology — AI Engineering & Software Engineering**, Oct 2025–Jun 2026. Certificate completed 8 Jun 2026; 1,600 teaching hours.
-- **TU Berlin — M.Sc. Biomedical Engineering coursework**, Oct 2016–Mar 2019. Product development, entrepreneurship, validation, go-to-market strategy, user-centred design.
+- **TU Berlin — M.Sc. Biomedical Engineering**, Oct 2016–Mar 2019. Product development, entrepreneurship, validation, go-to-market strategy, user-centred design.
 - **TU Berlin — B.Sc. Mechanical Engineering**, Oct 2012–Oct 2016.
 
 ## Languages and working style
