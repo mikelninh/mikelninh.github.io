@@ -62,6 +62,7 @@ const summary = [
   warnings.length ? '## Warnings\n' + warnings.slice(0,100).map(x => `- ${x}`).join('\n') : '## Warnings\n- None'
 ].join('\n');
 
+await fs.writeFile('ramen-validation-report.md', summary + '\n');
 console.log(summary);
 if (process.env.GITHUB_STEP_SUMMARY) await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, summary + '\n');
 if (errors.length) process.exit(1);
