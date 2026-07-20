@@ -22,7 +22,7 @@ permissions:
 jobs:
   deterministic-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       OPENAI_FACT_CHECK_MODEL: gpt-5
@@ -42,6 +42,20 @@ jobs:
           name: ramen-validation-report
           path: ramen-validation-report.md
           if-no-files-found: error
+          retention-days: 30
+      - name: Resolve missing real packshots
+        id: images
+        continue-on-error: true
+        run: node ramen/scripts/resolve-images.mjs
+      - name: Upload packshot research report
+        if: ${{ always() && steps.images.outcome != 'skipped' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ramen-packshot-resolution
+          path: |
+            ramen-image-resolution-report.json
+            ramen-image-overrides.generated.js
+          if-no-files-found: warn
           retention-days: 30
       - name: Independent source-grounded AI review
         if: ${{ steps.audit.outcome == 'success' && env.OPENAI_API_KEY != '' }}
