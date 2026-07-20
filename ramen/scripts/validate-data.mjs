@@ -1,9 +1,9 @@
 import fs from 'node:fs/promises';
 import vm from 'node:vm';
 
-const root = new URL('../', import.meta.url);
-const baseSource = await fs.readFile(new URL('../../vegan/ramen-data.js', root), 'utf8');
-const overrideSource = await fs.readFile(new URL('../germany-overrides.js', root), 'utf8');
+const ramenRoot = new URL('../', import.meta.url);
+const baseSource = await fs.readFile(new URL('../vegan/ramen-data.js', ramenRoot), 'utf8');
+const overrideSource = await fs.readFile(new URL('germany-overrides.js', ramenRoot), 'utf8');
 const context = {window:{}};
 vm.createContext(context);
 vm.runInContext(baseSource, context, {filename:'vegan/ramen-data.js'});
