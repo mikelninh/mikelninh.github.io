@@ -30,3 +30,9 @@ jobs:
           node-version: '22'
       - name: Validate data, sources, buy links and images
         run: node ramen/scripts/validate-data.mjs
+      - name: Independent source-grounded AI review
+        if: ${{ secrets.OPENAI_API_KEY != '' }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_FACT_CHECK_MODEL: gpt-5
+        run: node ramen/scripts/agent-fact-check.mjs
