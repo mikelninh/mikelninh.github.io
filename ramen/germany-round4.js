@@ -1,6 +1,13 @@
 (() => {
   'use strict';
 
+  if (!document.querySelector('link[href="upgrades.css"]')) {
+    const styles = document.createElement('link');
+    styles.rel = 'stylesheet';
+    styles.href = 'upgrades.css';
+    document.head.appendChild(styles);
+  }
+
   const VERIFIED_AT = '2026-07-20';
   const reviewed = {
     'buldak-carbonara': {
