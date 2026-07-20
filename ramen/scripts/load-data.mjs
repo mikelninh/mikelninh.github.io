@@ -11,7 +11,14 @@ export async function loadRamenData() {
     new URL('germany-round4.js', ramenRoot),
     new URL('image-round4.js', ramenRoot)
   ];
-  const context = {window:{}};
+  const context = {
+    window:{},
+    document:{
+      querySelector:()=>null,
+      createElement:()=>({}),
+      head:{appendChild:()=>{}}
+    }
+  };
   vm.createContext(context);
   for (const file of files) {
     const source = await fs.readFile(file, 'utf8');
