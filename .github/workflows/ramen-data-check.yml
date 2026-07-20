@@ -1,0 +1,32 @@
+name: Ramen data release gate
+
+on:
+  pull_request:
+    paths:
+      - 'ramen/**'
+      - 'vegan/ramen-data.js'
+      - '.github/workflows/ramen-data-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'ramen/**'
+      - 'vegan/ramen-data.js'
+      - '.github/workflows/ramen-data-check.yml'
+  schedule:
+    - cron: '17 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deterministic-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate data, sources, buy links and images
+        run: node ramen/scripts/validate-data.mjs
