@@ -1,14 +1,7 @@
 import fs from 'node:fs/promises';
-import vm from 'node:vm';
+import {loadRamenData} from './load-data.mjs';
 
-const ramenRoot = new URL('../', import.meta.url);
-const baseSource = await fs.readFile(new URL('../vegan/ramen-data.js', ramenRoot), 'utf8');
-const overrideSource = await fs.readFile(new URL('germany-overrides.js', ramenRoot), 'utf8');
-const context = {window:{}};
-vm.createContext(context);
-vm.runInContext(baseSource, context);
-vm.runInContext(overrideSource, context);
-const data = context.window.RAMEN_DATA;
+const data = await loadRamenData();
 
 const missing = data.filter(item => !item.image);
 const results = [];
@@ -23,8 +16,8 @@ for (let index = 0; index < missing.length; index++) {
     if (exactOff) candidates.push(exactOff);
   }
 
-  if (item.source) {
-    const sourceImage = await imageFromPage(item.source);
+  for (const pageUrl of [...new Set([item.source,item.buy].filter(Boolean))]) {
+    const sourceImage = await imageFromPage(pageUrl);
     if (sourceImage) candidates.push(sourceImage);
   }
 
@@ -52,6 +45,7 @@ for (let index = 0; index < missing.length; index++) {
     name:item.name,
     query:item.imageQuery,
     source:item.source,
+    buy:item.buy,
     accepted,
     candidates:checked.slice(0,5)
   });
@@ -198,7 +192,7 @@ function scoreCandidate(item, candidate) {
   if (brandTokens.some(token=>candidateText.includes(token))) score += 5;
   if (item.gtin && `${candidate.code || ''} ${candidate.url}`.includes(item.gtin)) score += 12;
   if (candidate.origin === 'source-page') score += 5;
-  if (/logo|banner|icon|avatar/i.test(candidate.url)) score -= 10;
+  if (/logo|banner|icon|avatar|social|og-default|header/i.test(candidate.url)) score -= 12;
   return score;
 }
 
