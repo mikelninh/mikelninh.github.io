@@ -8,6 +8,7 @@ export async function loadRamenData() {
     new URL('germany-overrides.js', ramenRoot),
     new URL('germany-round2.js', ramenRoot),
     new URL('germany-round3.js', ramenRoot),
+    new URL('germany-round4.js', ramenRoot),
     new URL('image-round4.js', ramenRoot)
   ];
   const context = {window:{}};
