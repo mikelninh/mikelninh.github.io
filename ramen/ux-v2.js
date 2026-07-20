@@ -36,9 +36,10 @@
       const key = button.dataset.filter;
       const item = labels[lang()][key];
       if (!item) return;
+      const desired = `<span>${item[0]}</span><b class="filter-count">${countFor(key,state)}</b>`;
       button.dataset.icon = item[1];
       button.setAttribute('aria-pressed', button.classList.contains('active') ? 'true' : 'false');
-      button.innerHTML = `<span>${item[0]}</span><b class="filter-count">${countFor(key,state)}</b>`;
+      if (button.innerHTML !== desired) button.innerHTML = desired;
     });
   }
 
