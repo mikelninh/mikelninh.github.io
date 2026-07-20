@@ -7,7 +7,8 @@ export async function loadRamenData() {
     new URL('../vegan/ramen-data.js', ramenRoot),
     new URL('germany-overrides.js', ramenRoot),
     new URL('germany-round2.js', ramenRoot),
-    new URL('germany-round3.js', ramenRoot)
+    new URL('germany-round3.js', ramenRoot),
+    new URL('image-round4.js', ramenRoot)
   ];
   const context = {window:{}};
   vm.createContext(context);
