@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#171412" />
+  <meta name="description" content="Michael Ninh’s culture shelf — films, games, ideas and creative worlds he keeps returning to." />
+  <title>Culture Shelf — Michael Ninh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#171412;--paper:#f4eee3;--ink:#171412;--text:#f8f1e7;--muted:#b9aea2;--line:rgba(248,241,231,.15);
+      --wine:#a33e42;--gold:#d3a64b;--blue:#577a9b;--green:#5f8065;--violet:#7c668c;--max:1180px;
+      --display:"Bricolage Grotesque",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;--mono:"DM Mono",monospace;
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:var(--body);background:radial-gradient(circle at 8% 0,rgba(163,62,66,.27),transparent 31rem),radial-gradient(circle at 90% 12%,rgba(87,122,155,.21),transparent 30rem),linear-gradient(180deg,#171412,#211b18 68%,#151210);line-height:1.55}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.08;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.77' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+    a{color:inherit;text-decoration:none}.wrap{width:min(var(--max),calc(100% - 40px));margin:auto;position:relative;z-index:1}
+    header{position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line);background:rgba(23,20,18,.78);backdrop-filter:blur(18px)}nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{font-family:var(--display);font-weight:800;letter-spacing:-.03em}.brand span{color:var(--gold)}.links{display:flex;align-items:center;gap:18px;color:var(--muted);font-size:13px}.links a:hover{color:var(--text)}
+    .pill{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;border:1px solid var(--line);border-radius:999px;font-weight:800}.pill.hot{color:var(--ink);background:var(--gold);border-color:transparent}.pill:hover{transform:translateY(-2px)}
+    .hero{padding:96px 0 78px}.index{font:700 11px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}h1,h2,h3{font-family:var(--display);letter-spacing:-.055em;line-height:.94;margin:0}h1{font-size:clamp(63px,10vw,138px);max-width:1040px;margin:22px 0 28px;font-weight:650}h1 em{display:block;color:var(--gold);font-style:normal}.lead{max-width:830px;color:var(--muted);font-size:clamp(18px,2vw,24px);margin:0}.hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}.chip{padding:8px 11px;border:1px solid var(--line);border-radius:999px;color:#d6cbc0;font:600 10px var(--mono);text-transform:uppercase}
+    section{padding:88px 0;border-top:1px solid var(--line)}.section-head{display:grid;grid-template-columns:.75fr 1.25fr;gap:42px;align-items:end;margin-bottom:34px}.section-head p{margin:0;color:var(--muted);font-size:18px;max-width:760px}h2{font-size:clamp(42px,6vw,78px)}
+    .film-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.film{min-height:360px;position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:21px;border:1px solid var(--line);border-radius:25px;overflow:hidden;background:var(--card);transition:.25s ease}.film:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 18%,rgba(0,0,0,.78));z-index:0}.film:after{content:"";position:absolute;width:210px;height:210px;border-radius:50%;right:-65px;top:-65px;background:rgba(255,255,255,.13);filter:blur(2px)}.film>*{position:relative;z-index:1}.film:hover{transform:translateY(-5px) rotate(-.4deg);border-color:rgba(255,255,255,.35)}.film small{font:600 9px var(--mono);text-transform:uppercase;letter-spacing:.1em;color:#f2e7dc}.film h3{font-size:31px;max-width:240px}.film p{color:#ded2c8;font-size:13px;margin:11px 0 0}.f1{--card:linear-gradient(145deg,#3a594f,#0e1d1d)}.f2{--card:linear-gradient(145deg,#8b503f,#2a1716)}.f3{--card:linear-gradient(145deg,#385778,#172337)}.f4{--card:linear-gradient(145deg,#9b6c40,#2f2015)}.f5{--card:linear-gradient(145deg,#6c4f75,#241a2b)}.f6{--card:linear-gradient(145deg,#a44852,#35151d)}.f7{--card:linear-gradient(145deg,#687b91,#202832)}.f8{--card:linear-gradient(145deg,#7c7953,#27271c)}
+    .return-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.return-card{min-height:220px;padding:24px;border:1px solid var(--line);border-radius:25px;background:rgba(255,255,255,.045)}.return-card b{display:block;color:var(--gold);font:700 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:26px}.return-card h3{font-size:31px}.return-card p{color:var(--muted);margin:12px 0 0}
+    .shelf{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.shelf-card{min-height:330px;padding:30px;border-radius:29px;border:1px solid var(--line);background:rgba(255,255,255,.05);position:relative;overflow:hidden}.shelf-card:after{content:attr(data-ghost);position:absolute;right:-8px;bottom:-28px;color:rgba(255,255,255,.045);font:800 clamp(72px,11vw,150px)/.8 var(--display);letter-spacing:-.08em}.shelf-card h3{font-size:44px;max-width:560px}.shelf-card p{max-width:570px;color:var(--muted);font-size:16px}.tokens{display:flex;gap:7px;flex-wrap:wrap;margin-top:22px}.token{padding:7px 10px;border-radius:999px;border:1px solid var(--line);font:600 10px var(--mono);color:#ddd1c6;background:rgba(0,0,0,.12)}
+    .letterboxd{border-radius:34px;padding:clamp(28px,5vw,58px);color:var(--ink);background:linear-gradient(135deg,#f3e6d2,#e2c37d);display:grid;grid-template-columns:1.3fr .7fr;gap:32px;align-items:end}.letterboxd h2{max-width:790px}.letterboxd p{font-size:17px;max-width:720px}.letterboxd .pill{justify-self:end;border-color:rgba(23,20,18,.2);background:var(--ink);color:var(--text)}
+    footer{padding:46px 0;color:var(--muted);font-size:12px;border-top:1px solid var(--line)}.foot{display:flex;justify-content:space-between;gap:18px}.footlinks{display:flex;gap:15px}
+    @media(max-width:980px){.section-head,.letterboxd{grid-template-columns:1fr}.film-grid{grid-template-columns:repeat(2,1fr)}.return-grid{grid-template-columns:1fr}.shelf{grid-template-columns:1fr}.letterboxd .pill{justify-self:start}.links a:not(.pill){display:none}}
+    @media(max-width:580px){.wrap{width:min(var(--max),calc(100% - 24px))}.hero{padding-top:68px}.film-grid{grid-template-columns:1fr}.film{min-height:300px}.foot{display:block}.footlinks{margin-top:12px;flex-wrap:wrap}h1{font-size:61px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.film,.pill{transition:none}}
+  </style>
+</head>
+<body>
+  <header><nav class="wrap"><a class="brand" href="../">Michael<span>.</span>Ninh</a><div class="links"><a href="../">AI portfolio</a><a href="../vegan/">Vegan lab</a><a class="pill hot" href="https://letterboxd.com/Mikel_/" target="_blank" rel="noopener">Letterboxd ↗</a></div></nav></header>
+  <main>
+    <section class="hero"><div class="wrap"><div class="index">09 / Culture shelf</div><h1>Things I keep <em>returning to.</em></h1><p class="lead">A living shelf of films, games, ideas and creative worlds that sharpen my taste, deepen my attention, or quietly rearrange something inside me. Not a canon. Not a content feed. A trail of fingerprints.</p><div class="hero-meta"><span class="chip">Longing</span><span class="chip">Presence</span><span class="chip">Play</span><span class="chip">Consciousness</span><span class="chip">Beautiful systems</span><span class="chip">Useful weirdness</span></div></div></section>
+
+    <section id="films"><div class="wrap"><div class="section-head"><div><div class="index">01 / Cinema</div><h2>Feeling first.</h2></div><p>I return to films that understand timing, longing, memory and the impossible distance between two people standing very close together.</p></div><div class="film-grid">
+      <article class="film f1"><small>Wong Kar-wai · 2000</small><div><h3>In the Mood for Love</h3><p>Restraint, colour, repetition — and everything that is never said.</p></div></article>
+      <article class="film f2"><small>Celine Song · 2023</small><div><h3>Past Lives</h3><p>The lives we choose, the lives we imagine, and the tenderness between them.</p></div></article>
+      <article class="film f3"><small>Richard Linklater · 1995</small><div><h3>Before Sunrise</h3><p>Conversation as adventure. Attention as romance.</p></div></article>
+      <article class="film f4"><small>Céline Sciamma · 2019</small><div><h3>Portrait of a Lady on Fire</h3><p>Looking, remembering, and the fire created by being truly seen.</p></div></article>
+      <article class="film f5"><small>Michel Gondry · 2004</small><div><h3>Eternal Sunshine</h3><p>Memory is messy. Love is messier. Try again anyway.</p></div></article>
+      <article class="film f6"><small>Damien Chazelle · 2016</small><div><h3>La La Land</h3><p>Ambition, music, colour and the aching beauty of another possible ending.</p></div></article>
+      <article class="film f7"><small>Noah Baumbach · 2019</small><div><h3>Marriage Story</h3><p>Love does not always disappear when a relationship changes shape.</p></div></article>
+      <article class="film f8"><small>Makoto Shinkai · 2007</small><div><h3>5 Centimeters per Second</h3><p>Distance measured not only in kilometres, but in time and becoming.</p></div></article>
+    </div></div></section>
+
+    <section><div class="wrap"><div class="section-head"><div><div class="index">02 / What stays</div><h2>The recurring signals.</h2></div><p>The works change. These patterns keep showing up — probably because they are also the questions underneath my own work.</p></div><div class="return-grid">
+      <article class="return-card"><b>Connection</b><h3>Can two inner worlds really meet?</h3><p>I love stories that treat attention, honesty and presence as real forms of action.</p></article>
+      <article class="return-card"><b>Time</b><h3>Who might we have become?</h3><p>Memory, alternate lives and small choices that quietly bend an entire future.</p></article>
+      <article class="return-card"><b>Beauty</b><h3>Can form carry truth?</h3><p>Colour, rhythm, sound, silence and interfaces that make an idea felt before it is explained.</p></article>
+    </div></div></section>
+
+    <section id="worlds"><div class="wrap"><div class="section-head"><div><div class="index">03 / Interactive worlds</div><h2>Play is serious research.</h2></div><p>Games taught me systems thinking before I had a name for it: rules, feedback loops, emergence, mastery, surprise and the joy of trying one more run.</p></div><div class="shelf">
+      <article class="shelf-card" data-ghost="PLAY"><h3>Games that made worlds feel possible</h3><p>Adventure, elegant mechanics and the peculiar magic of a few pixels becoming a place you remember for life.</p><div class="tokens"><span class="token">The Legend of Zelda</span><span class="token">Pokémon Red / Blue</span><span class="token">Tetris</span><span class="token">Chrono Trigger</span><span class="token">Final Fantasy</span><span class="token">EarthBound</span></div></article>
+      <article class="shelf-card" data-ghost="LOOP"><h3>Systems I enjoy learning deeply</h3><p>Drafting, adapting and discovering how simple rules create complex decisions — the same reason I am drawn to agents, games and organisations.</p><div class="tokens"><span class="token">Teamfight Tactics</span><span class="token">Auto-chess</span><span class="token">Polytopia</span><span class="token">Strategy</span><span class="token">Build → test → learn</span></div></article>
+    </div></div></section>
+
+    <section id="ideas"><div class="wrap"><div class="section-head"><div><div class="index">04 / Inner technology</div><h2>Ideas worth practising.</h2></div><p>I am less interested in collecting beliefs than in teachings that change how closely I can look, how kindly I can act, and how lightly I can hold the story of myself.</p></div><div class="shelf">
+      <article class="shelf-card" data-ghost="ONE"><h3>Non-duality & awareness</h3><p>Different traditions, one recurring invitation: investigate experience directly and notice what remains before the labels arrive.</p><div class="tokens"><span class="token">Advaita Vedanta</span><span class="token">Zen</span><span class="token">Dzogchen</span><span class="token">Taoism</span><span class="token">Direct Path</span></div></article>
+      <article class="shelf-card" data-ghost="MAKE"><h3>Art as a way of teaching</h3><p>Music, cinema, humour, design and play can reach places that explanation alone cannot. The lesson lands because the experience was alive.</p><div class="tokens"><span class="token">Storytelling</span><span class="token">Music</span><span class="token">Dance</span><span class="token">Humour</span><span class="token">Visual systems</span></div></article>
+    </div></div></section>
+
+    <section><div class="wrap"><div class="letterboxd"><div><div class="index" style="color:#6d4f1d">My film diary</div><h2>The full shelf keeps moving.</h2><p>Ratings are snapshots; taste is a living organism. My watched films, lists and future discoveries live on Letterboxd.</p></div><a class="pill" href="https://letterboxd.com/Mikel_/" target="_blank" rel="noopener">Open Mikel_ on Letterboxd ↗</a></div></div></section>
+  </main>
+  <footer><div class="wrap foot"><span>© Michael Ninh · Berlin · Culture shelf</span><div class="footlinks"><a href="../">AI portfolio</a><a href="../vegan/">Vegan product lab</a><a href="https://letterboxd.com/Mikel_/" target="_blank" rel="noopener">Letterboxd ↗</a></div></div></footer>
+</body>
+</html>
