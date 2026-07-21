@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+<title id="title">Martial arts practice artwork</title>
+<desc id="desc">Two stylized martial artists training in a warm minimalist dojo.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#552a29"/><stop offset=".58" stop-color="#2d1b1b"/><stop offset="1" stop-color="#11151d"/></linearGradient>
+  <radialGradient id="sun"><stop stop-color="#ffd58c"/><stop offset="1" stop-color="#ffd58c" stop-opacity="0"/></radialGradient>
+  <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b66e52"/><stop offset="1" stop-color="#55312d"/></linearGradient>
+</defs>
+<rect width="1200" height="900" fill="url(#bg)"/>
+<circle cx="605" cy="270" r="250" fill="url(#sun)" opacity=".38"/>
+<path d="M0 675h1200v225H0z" fill="url(#floor)"/>
+<g opacity=".2" stroke="#ffe8c7" stroke-width="5"><path d="M0 676h1200"/><path d="M120 676v224M330 676v224M540 676v224M750 676v224M960 676v224"/></g>
+<circle cx="600" cy="310" r="175" fill="none" stroke="#efc7a0" stroke-width="18" stroke-linecap="round" stroke-dasharray="760 350" opacity=".72" transform="rotate(-42 600 310)"/>
+<g fill="#111923">
+  <g transform="translate(280 285)">
+    <circle cx="105" cy="78" r="37"/>
+    <path d="M70 118h75l58 205H25z"/>
+    <path d="M72 145L-25 260l35 26 105-98zM142 140l160 44-10 40-162-26z"/>
+    <path d="M65 310L-8 515h52l87-174zM150 314l145 180 38-32-125-199z"/>
+  </g>
+  <g transform="translate(700 300)">
+    <circle cx="105" cy="78" r="37"/>
+    <path d="M70 118h75l58 205H25z"/>
+    <path d="M69 145l-156 42 11 42 161-31zM145 139l105 111 33-29-92-123z"/>
+    <path d="M66 311L-72 470l42 34 153-139zM151 314l80 205h50l-65-233z"/>
+  </g>
+</g>
+<g fill="#f1c890"><circle cx="385" cy="363" r="10"/><circle cx="805" cy="378" r="10"/></g>
+<path d="M460 240c85-52 197-55 281-5" fill="none" stroke="#f4d4af" stroke-width="8" stroke-linecap="round" opacity=".45"/>
+</svg>
