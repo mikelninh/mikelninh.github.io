@@ -3,367 +3,623 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Michael Ninh — open application for Overfly. Applied AI builder ready to contribute now and grow into technical leadership." />
+  <meta name="description" content="Michael Ninh — open application for Overfly. Applied AI and product engineering, demonstrated through shipped systems." />
   <meta name="theme-color" content="#f3efe6" />
-  <title>Michael Ninh — Open Application for Overfly</title>
+  <meta property="og:title" content="Michael Ninh × Overfly" />
+  <meta property="og:description" content="An open application built like a product: focused, inspectable and grounded in shipped work." />
+  <meta property="og:type" content="website" />
+  <title>Michael Ninh × Overfly — Open Application</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js');</script>
   <style>
     :root {
       --paper: #f3efe6;
+      --paper-2: #faf7f0;
       --ink: #11110f;
-      --muted: #66645e;
+      --muted: #68655e;
       --line: rgba(17,17,15,.18);
       --accent: #ff5b37;
-      --accent-soft: #ffd9ce;
+      --accent-soft: #ffd9cf;
+      --blue: #263b68;
       --blue-soft: #dfe6ff;
+      --green: #2d5a40;
+      --green-soft: #dce9dc;
+      --lime: #d9ff58;
       --white: #fffdf8;
-      --max: 1240px;
-      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --max: 1320px;
+      --sans: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+      --mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --shadow: 0 30px 90px rgba(17,17,15,.10);
     }
+
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
       color: var(--ink);
-      background: var(--paper);
+      background:
+        radial-gradient(circle at 7% 4%, rgba(255,91,55,.08), transparent 29rem),
+        radial-gradient(circle at 94% 8%, rgba(45,90,64,.09), transparent 31rem),
+        var(--paper);
       font-family: var(--sans);
-      line-height: 1.5;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
     body::before {
       content: "";
       position: fixed;
       inset: 0;
+      z-index: 50;
       pointer-events: none;
-      opacity: .035;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
-      z-index: 99;
+      opacity: .026;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
+
     a { color: inherit; text-decoration: none; }
-    button { font: inherit; }
-    .wrap { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+    a, button { -webkit-tap-highlight-color: transparent; }
+    ::selection { color: var(--ink); background: var(--lime); }
+    section[id] { scroll-margin-top: 86px; }
+    .wrap { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+    .skip {
+      position: fixed;
+      left: 16px;
+      top: -80px;
+      z-index: 100;
+      padding: 10px 14px;
+      color: var(--paper);
+      background: var(--ink);
+      border-radius: 999px;
+      transition: top .2s;
+    }
+    .skip:focus { top: 14px; }
+
     header {
       position: sticky;
       top: 0;
-      z-index: 20;
-      background: rgba(243,239,230,.9);
-      backdrop-filter: blur(18px);
+      z-index: 30;
       border-bottom: 1px solid var(--line);
+      background: rgba(243,239,230,.86);
+      backdrop-filter: blur(20px) saturate(140%);
     }
     nav {
-      min-height: 70px;
+      min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
+      gap: 28px;
     }
-    .brand { font-weight: 900; letter-spacing: -.04em; }
-    .brand small { display: block; color: var(--muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; margin-top: 2px; }
-    .navlinks { display: flex; gap: 22px; align-items: center; font-size: 13px; color: var(--muted); }
-    .navlinks a:hover { color: var(--ink); }
+    .brand { display: flex; align-items: baseline; gap: 11px; font-weight: 900; letter-spacing: -.045em; }
+    .brand small { color: var(--muted); font: 500 9px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .navlinks { display: flex; align-items: center; gap: 23px; color: var(--muted); font-size: 13px; }
+    .navlinks > a:not(.button) { position: relative; }
+    .navlinks > a:not(.button)::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: -5px;
+      height: 1px;
+      background: var(--ink);
+      transition: right .2s ease;
+    }
+    .navlinks > a:not(.button):hover { color: var(--ink); }
+    .navlinks > a:not(.button):hover::after { right: 0; }
+
     .button {
+      min-height: 46px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 44px;
-      padding: 0 17px;
+      gap: 9px;
+      padding: 0 18px;
       border: 1px solid var(--ink);
       border-radius: 999px;
+      color: var(--ink);
+      background: rgba(255,255,255,.26);
       font-weight: 800;
-      background: transparent;
+      font-size: 13px;
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
     }
-    .button:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(17,17,15,.08); }
-    .button.filled { background: var(--ink); color: var(--paper); }
-    .button.accent { background: var(--accent); border-color: var(--accent); color: var(--ink); }
-    .hero { padding: 94px 0 74px; border-bottom: 1px solid var(--line); }
-    .heroGrid { display: grid; grid-template-columns: 1.3fr .7fr; gap: 56px; align-items: end; }
-    .eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-    h1, h2, h3 { margin: 0; letter-spacing: -.055em; line-height: .98; }
-    h1 { font-size: clamp(62px, 9vw, 126px); max-width: 980px; margin: 22px 0 28px; }
-    h1 em { font-family: var(--serif); font-weight: 400; color: var(--accent); }
-    .lead { font-size: clamp(19px, 2.2vw, 28px); max-width: 850px; color: #44433f; margin: 0; }
-    .heroActions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; }
-    .sideNote { border-left: 1px solid var(--ink); padding-left: 22px; color: var(--muted); font-size: 14px; }
-    .sideNote strong { display: block; color: var(--ink); font-size: 24px; line-height: 1.08; margin-bottom: 12px; letter-spacing: -.04em; }
-    .philosophy {
-      margin-top: 54px;
-      padding: 24px 0 0;
-      border-top: 1px solid var(--line);
-      font-family: var(--serif);
-      font-size: clamp(25px, 3.2vw, 43px);
-      line-height: 1.18;
-      max-width: 1050px;
+    .button:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(17,17,15,.10); background: var(--white); }
+    .button.filled { color: var(--paper); background: var(--ink); }
+    .button.filled:hover { background: #292824; }
+    .button.accent { color: var(--ink); background: var(--accent); border-color: var(--accent); }
+    .button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+    .arrow { font: 500 16px var(--mono); }
+
+    .hero {
+      min-height: calc(100svh - 76px);
+      display: flex;
+      align-items: center;
+      padding: clamp(62px, 8vh, 92px) 0 clamp(56px, 7vh, 80px);
+      border-bottom: 1px solid var(--line);
+      overflow: clip;
     }
-    section { padding: 86px 0; border-bottom: 1px solid var(--line); }
-    .sectionHead { display: grid; grid-template-columns: .72fr 1.28fr; gap: 46px; margin-bottom: 42px; }
-    .index { color: var(--accent); font-size: 11px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; }
-    h2 { font-size: clamp(44px, 6vw, 78px); }
-    .intro { color: var(--muted); font-size: 19px; max-width: 780px; margin: 0; }
-    .honest {
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--muted);
+      font: 500 10px var(--mono);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 5px rgba(45,90,64,.10);
+    }
+    h1, h2, h3 { margin: 0; letter-spacing: -.058em; }
+    h1 {
+      max-width: 1250px;
+      margin: 24px 0 42px;
+      font-size: clamp(66px, 7.2vw, 116px);
+      line-height: .89;
+      font-weight: 860;
+      text-wrap: balance;
+    }
+    h1 em { color: var(--accent); font-family: var(--serif); font-weight: 400; }
+    .heroBottom {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1.2fr) minmax(330px, .8fr);
+      gap: clamp(42px, 7vw, 100px);
+      align-items: end;
+    }
+    .lead { max-width: 800px; margin: 0; color: #45433e; font-size: clamp(18px, 1.75vw, 25px); letter-spacing: -.025em; }
+    .heroActions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .proofCard {
+      position: relative;
+      padding: 24px;
       border: 1px solid var(--ink);
-      background: var(--white);
+      background: rgba(255,253,248,.72);
+      box-shadow: var(--shadow);
     }
-    .honest > div { padding: clamp(26px, 4vw, 48px); }
-    .honest > div + div { border-left: 1px solid var(--ink); }
-    .label { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; font-weight: 900; color: var(--muted); }
-    .honest h3 { font-size: clamp(34px, 4vw, 56px); margin: 18px 0; }
-    .honest p { color: var(--muted); font-size: 16px; margin: 0; }
-    .honest .today { background: var(--blue-soft); }
-    .honest .next { background: var(--accent-soft); }
-    .rows { border-top: 1px solid var(--ink); }
-    .row {
+    .proofCard::before {
+      content: "";
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      top: -7px;
+      right: 28px;
+      background: var(--lime);
+      border: 1px solid var(--ink);
+      transform: rotate(45deg);
+    }
+    .proofTop { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+    .proofTop span, .micro { color: var(--muted); font: 500 9px var(--mono); letter-spacing: .11em; text-transform: uppercase; }
+    .proofTop b { font-size: 13px; }
+    .proofRows { border-top: 1px solid var(--ink); }
+    .proofRow { display: grid; grid-template-columns: 92px 1fr; gap: 18px; padding: 15px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+    .proofRow strong { font-size: 28px; letter-spacing: -.055em; }
+    .proofRow span { color: var(--muted); font-size: 12px; }
+    .status { display: flex; align-items: center; gap: 9px; margin-top: 17px; color: var(--green); font: 500 10px var(--mono); }
+    .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+
+    .signalStrip { border-bottom: 1px solid var(--line); background: rgba(255,255,255,.36); }
+    .signals { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .signal { min-height: 104px; padding: 22px 24px; border-right: 1px solid var(--line); }
+    .signal:first-child { border-left: 1px solid var(--line); }
+    .signal small { display: block; margin-bottom: 8px; color: var(--accent); font: 500 9px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .signal b { display: block; font-size: 15px; letter-spacing: -.025em; }
+    .signal span { color: var(--muted); font-size: 12px; }
+
+    section { padding: clamp(78px, 9vw, 120px) 0; border-bottom: 1px solid var(--line); }
+    .sectionHead { display: grid; grid-template-columns: .78fr 1.22fr; gap: 60px; align-items: end; margin-bottom: 50px; }
+    .index { margin-bottom: 12px; color: var(--accent); font: 500 10px var(--mono); letter-spacing: .13em; text-transform: uppercase; }
+    h2 { max-width: 720px; font-size: clamp(48px, 5.8vw, 82px); line-height: .95; font-weight: 830; text-wrap: balance; }
+    .intro { max-width: 760px; margin: 0; color: var(--muted); font-size: clamp(17px, 1.5vw, 20px); }
+
+    .fitGrid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--ink); background: var(--ink); gap: 1px; }
+    .fitCard { min-height: 294px; padding: 28px; background: var(--paper-2); }
+    .fitCard:nth-child(2) { background: var(--green-soft); }
+    .fitCard:nth-child(3) { background: var(--blue-soft); }
+    .fitCard:nth-child(4) { background: var(--accent-soft); }
+    .fitCard .num { color: var(--muted); font: 500 10px var(--mono); }
+    .fitCard h3 { margin: 48px 0 14px; font-size: 31px; line-height: 1; }
+    .fitCard p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .projects { display: grid; grid-template-columns: 1.16fr .84fr; gap: 14px; }
+    .project {
+      min-height: 350px;
+      position: relative;
+      overflow: hidden;
+      padding: clamp(28px, 4vw, 48px);
+      border: 1px solid var(--ink);
+      background: var(--paper-2);
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .project:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .projectMain { grid-row: span 2; min-height: 714px; color: var(--paper); background: var(--ink); }
+    .projectSafe { background: var(--blue-soft); }
+    .projectMcp { background: var(--green-soft); }
+    .project .projectNo { color: var(--muted); font: 500 9px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .projectMain .projectNo { color: #aaa69d; }
+    .project h3 { margin: 36px 0 16px; font-size: clamp(42px, 5.2vw, 76px); line-height: .92; }
+    .projectMain h3 { font-size: clamp(62px, 7vw, 102px); }
+    .project p { max-width: 620px; margin: 0; color: var(--muted); font-size: 16px; }
+    .projectMain p { color: #cbc7bd; }
+    .metrics { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .metric { padding: 7px 10px; border: 1px solid currentColor; border-radius: 999px; font: 500 9px var(--mono); }
+    .projectLink { display: inline-flex; align-items: center; gap: 8px; margin-top: 30px; font-weight: 850; border-bottom: 1px solid currentColor; }
+    .projectLink:hover .arrow { transform: translateX(4px); }
+    .projectLink .arrow { transition: transform .18s; }
+    .flow {
+      position: absolute;
+      left: clamp(28px, 4vw, 48px);
+      right: clamp(28px, 4vw, 48px);
+      bottom: clamp(28px, 4vw, 48px);
       display: grid;
-      grid-template-columns: 48px 1fr 1.2fr;
-      gap: 24px;
-      padding: 24px 0;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid #595b55;
+    }
+    .flow span { min-height: 72px; display: grid; place-items: center; padding: 10px; border-right: 1px solid #595b55; color: #d9d6ce; font: 500 9px var(--mono); text-align: center; }
+    .flow span:last-child { border-right: 0; color: var(--ink); background: var(--lime); }
+
+    .answers { border-top: 1px solid var(--ink); }
+    .answer {
+      display: grid;
+      grid-template-columns: 74px minmax(260px, .78fr) minmax(0, 1.22fr);
+      gap: 30px;
+      padding: 42px 0;
       border-bottom: 1px solid var(--ink);
       align-items: start;
     }
-    .row .num { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; color: var(--muted); }
-    .row h3 { font-size: clamp(25px, 2.7vw, 40px); }
-    .row p { margin: 0; color: var(--muted); }
-    .projects { display: grid; grid-template-columns: 1.15fr .85fr; gap: 1px; background: var(--ink); border: 1px solid var(--ink); }
-    .project { background: var(--paper); padding: clamp(28px, 4vw, 50px); min-height: 410px; position: relative; }
-    .project:first-child { grid-row: span 2; min-height: 821px; background: var(--ink); color: var(--paper); }
-    .project:first-child p { color: #c8c4ba; }
-    .project small { font: 800 10px ui-monospace, monospace; letter-spacing: .1em; color: var(--muted); }
-    .project:first-child small { color: #aaa69d; }
-    .project h3 { font-size: clamp(40px, 5vw, 72px); margin: 28px 0 18px; }
-    .project p { color: var(--muted); max-width: 570px; }
-    .metrics { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 30px; }
-    .metric { border: 1px solid currentColor; border-radius: 999px; padding: 7px 10px; font: 700 10px ui-monospace, monospace; }
-    .project a { display: inline-block; margin-top: 30px; font-weight: 850; text-decoration: underline; text-underline-offset: 5px; }
-    .questions { border-top: 1px solid var(--ink); }
-    details { border-bottom: 1px solid var(--ink); }
-    summary {
-      list-style: none;
-      cursor: pointer;
-      display: grid;
-      grid-template-columns: 48px 1fr auto;
-      gap: 22px;
-      align-items: center;
-      padding: 24px 0;
+    .answer .num { color: var(--accent); font: 500 11px var(--mono); }
+    .answer h3 { max-width: 470px; font-size: clamp(28px, 3.1vw, 44px); line-height: 1.02; }
+    .answerText { max-width: 760px; color: #3f3d38; font-family: var(--serif); font-size: clamp(22px, 2.1vw, 29px); line-height: 1.28; }
+    .answerText p { margin: 0; }
+    .answerText p + p { margin-top: 14px; }
+    .answer:last-child { background: linear-gradient(90deg, transparent, rgba(255,91,55,.08)); }
+    .miniProcess { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 28px; border: 1px solid var(--ink); font-family: var(--sans); }
+    .step { min-height: 98px; padding: 14px; border-right: 1px solid var(--ink); background: rgba(255,255,255,.45); }
+    .step:last-child { border-right: 0; background: var(--lime); }
+    .step small { display: block; margin-bottom: 8px; font: 500 9px var(--mono); }
+    .step b { display: block; font-size: 12px; line-height: 1.3; }
+
+    .clarity { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--ink); }
+    .clarity > div { min-height: 420px; padding: clamp(30px, 5vw, 58px); }
+    .clarity > div + div { border-left: 1px solid var(--ink); }
+    .clarity .now { background: var(--green-soft); }
+    .clarity .next { background: var(--accent-soft); }
+    .clarity h3 { max-width: 540px; margin: 30px 0 20px; font-size: clamp(40px, 4.8vw, 68px); line-height: .96; }
+    .clarity p { max-width: 600px; color: var(--muted); font-size: 16px; }
+    .skillList { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 25px; }
+    .skill { padding: 7px 10px; border: 1px solid var(--ink); border-radius: 999px; font: 500 9px var(--mono); background: rgba(255,255,255,.25); }
+
+    .cta { padding: clamp(84px, 10vw, 136px) 0; }
+    .ctaBox {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(38px, 7vw, 84px);
+      border: 1px solid var(--ink);
+      background: var(--accent);
     }
-    summary::-webkit-details-marker { display: none; }
-    summary h3 { font-size: clamp(24px, 3vw, 42px); }
-    summary .plus { width: 38px; height: 38px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; transition: transform .2s; }
-    details[open] .plus { transform: rotate(45deg); }
-    .answerSpace { padding: 0 0 32px 70px; display: grid; grid-template-columns: .82fr 1.18fr; gap: 34px; }
-    .answerSpace .direction { font-family: var(--serif); font-size: 24px; line-height: 1.25; }
-    .answerSpace .notes { color: var(--muted); }
-    .answerSpace .notes b { color: var(--ink); }
-    .draftTag { display: inline-flex; border: 1px solid var(--accent); color: var(--accent); border-radius: 999px; padding: 5px 8px; font-size: 9px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 13px; }
-    .cta { padding: 92px 0; }
-    .ctaBox { background: var(--accent); border: 1px solid var(--ink); padding: clamp(32px, 6vw, 72px); }
-    .ctaBox h2 { max-width: 950px; }
-    .ctaBox p { max-width: 800px; font-size: 19px; }
-    .ctaBox .heroActions { margin-top: 26px; }
-    footer { padding: 34px 0 50px; color: var(--muted); font-size: 12px; }
+    .ctaBox::after {
+      content: "OVERFLY";
+      position: absolute;
+      right: -20px;
+      bottom: -50px;
+      color: rgba(17,17,15,.07);
+      font-size: clamp(100px, 18vw, 250px);
+      font-weight: 900;
+      letter-spacing: -.09em;
+      line-height: .8;
+      pointer-events: none;
+    }
+    .ctaBox > * { position: relative; z-index: 1; }
+    .ctaBox h2 { max-width: 930px; }
+    .ctaBox p { max-width: 760px; margin: 24px 0 0; font-size: 19px; }
+    .ctaBox .heroActions { margin-top: 30px; }
+
+    footer { padding: 34px 0 46px; color: var(--muted); font-size: 12px; }
     .footerRow { display: flex; justify-content: space-between; gap: 20px; }
-    .footerLinks { display: flex; gap: 16px; }
-    .reveal { opacity: 0; transform: translateY(14px); transition: .65s ease; }
-    .reveal.in { opacity: 1; transform: none; }
-    @media (max-width: 900px) {
-      .heroGrid, .sectionHead, .honest, .projects, .answerSpace { grid-template-columns: 1fr; }
-      .heroGrid { align-items: start; }
-      .sideNote { margin-top: 12px; }
-      .honest > div + div { border-left: 0; border-top: 1px solid var(--ink); }
-      .project:first-child { grid-row: auto; min-height: 520px; }
-      .answerSpace { padding-left: 0; }
-      .navlinks a:not(.button) { display: none; }
-      .row { grid-template-columns: 38px 1fr; }
-      .row p { grid-column: 2; }
+    .footerLinks { display: flex; flex-wrap: wrap; gap: 16px; }
+    .footerLinks a { color: var(--ink); font-weight: 700; }
+
+    .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .js .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 1080px) {
+      .heroBottom, .sectionHead { grid-template-columns: 1fr; }
+      .heroBottom { align-items: start; gap: 38px; }
+      .proofCard { max-width: 620px; }
+      .fitGrid { grid-template-columns: 1fr 1fr; }
+      .projects { grid-template-columns: 1fr; }
+      .projectMain { grid-row: auto; min-height: 650px; }
+      .answer { grid-template-columns: 54px 1fr; }
+      .answerText { grid-column: 2; }
     }
-    @media (max-width: 560px) {
-      .wrap { width: min(var(--max), calc(100% - 24px)); }
-      .hero { padding-top: 64px; }
-      h1 { font-size: 56px; }
-      .brand small { display: none; }
-      .navlinks { gap: 8px; }
-      .navlinks .button { min-height: 39px; padding: 0 12px; }
-      summary { grid-template-columns: 30px 1fr auto; gap: 12px; }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(var(--max), calc(100% - 28px)); }
+      nav { min-height: 68px; }
+      .brand small, .navlinks > a:not(.button) { display: none; }
+      .hero { min-height: auto; padding-top: 58px; overflow: visible; }
+      h1 { margin-bottom: 32px; font-size: clamp(54px, 14vw, 78px); line-height: .91; }
+      .signals { grid-template-columns: 1fr 1fr; }
+      .signal:nth-child(2) { border-right: 0; }
+      .signal:nth-child(n+3) { border-top: 1px solid var(--line); }
+      .fitGrid { grid-template-columns: 1fr; }
+      .fitCard { min-height: 235px; }
+      .projectMain { min-height: 620px; }
+      .flow { grid-template-columns: 1fr 1fr; }
+      .flow span:nth-child(2) { border-right: 0; }
+      .flow span:nth-child(-n+2) { border-bottom: 1px solid #595b55; }
+      .answer { grid-template-columns: 1fr; gap: 16px; padding: 34px 0; }
+      .answerText { grid-column: auto; }
+      .miniProcess { grid-template-columns: 1fr 1fr; }
+      .step:nth-child(2) { border-right: 0; }
+      .step:nth-child(-n+2) { border-bottom: 1px solid var(--ink); }
+      .clarity { grid-template-columns: 1fr; }
+      .clarity > div + div { border-left: 0; border-top: 1px solid var(--ink); }
+    }
+
+    @media (max-width: 480px) {
+      .button { min-height: 43px; padding-inline: 15px; }
+      .heroActions .button { flex: 1 1 auto; }
+      .signals { grid-template-columns: 1fr; }
+      .signal, .signal:first-child { border-left: 0; border-right: 0; border-top: 1px solid var(--line); }
+      .signal:first-child { border-top: 0; }
+      .proofRow { grid-template-columns: 78px 1fr; }
+      .projectMain { min-height: 690px; }
+      .flow { position: absolute; }
       .footerRow { display: block; }
-      .footerLinks { margin-top: 10px; flex-wrap: wrap; }
+      .footerLinks { margin-top: 12px; }
     }
+
     @media (prefers-reduced-motion: reduce) {
-      * { scroll-behavior: auto !important; }
-      .reveal { opacity: 1; transform: none; }
+      * { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      .js .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
-<header>
-  <nav class="wrap">
-    <a class="brand" href="#top">Michael Ninh<small>Open application for Overfly</small></a>
-    <div class="navlinks">
-      <a href="#today">Today / Next</a>
-      <a href="#work">Work</a>
-      <a href="#questions">Questions</a>
-      <a class="button filled" href="cv.md">CV</a>
-    </div>
-  </nav>
-</header>
+  <a class="skip" href="#main">Skip to content</a>
 
-<main id="top">
-  <section class="hero">
-    <div class="wrap">
-      <div class="heroGrid">
-        <div>
-          <div class="eyebrow">Applied AI · product engineering · high-upside builder</div>
-          <h1>I build useful AI products. I want to grow into the engineer who can lead them <em>end to end.</em></h1>
-          <p class="lead">I can already own meaningful product slices across AI workflows, backend systems, interfaces and evaluation. I am looking for a small, demanding team where real client work, strong technical peers and honest feedback can accelerate me into technical leadership.</p>
+  <header>
+    <nav class="wrap" aria-label="Primary navigation">
+      <a class="brand" href="#top"><span>Michael Ninh</span><small>Open application × Overfly</small></a>
+      <div class="navlinks">
+        <a href="#fit">Fit</a>
+        <a href="#work">Work</a>
+        <a href="#answers">Answers</a>
+        <a class="button filled" href="cv.html" target="_blank">CV <span class="arrow">↗</span></a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap">
+        <div class="eyebrow">Berlin · Applied AI · Product engineering</div>
+        <h1>I turn messy workflows into <em>useful AI products.</em></h1>
+
+        <div class="heroBottom">
+          <div>
+            <p class="lead">I combine engineering, product thinking and entrepreneurial ownership to move from an unclear problem to a tested, inspectable system. I am looking for a small team that cares more about real outcomes than AI theatre.</p>
+            <div class="heroActions">
+              <a class="button filled" href="#work">See shipped work <span class="arrow">↓</span></a>
+              <a class="button" href="#answers">Read the three answers</a>
+              <a class="button" href="mailto:mikel_ninh@yahoo.de">Email Michael</a>
+            </div>
+          </div>
+
+          <aside class="proofCard" aria-label="Selected proof">
+            <div class="proofTop"><b>Proof, not promises</b><span>GitLaw</span></div>
+            <div class="proofRows">
+              <div class="proofRow"><strong>5,936</strong><span>German federal laws made searchable</span></div>
+              <div class="proofRow"><strong>53/53</strong><span>citation evaluation cases passing</span></div>
+              <div class="proofRow"><strong>1</strong><span>active law-firm pilot</span></div>
+            </div>
+            <div class="status">Berlin hybrid · ready to contribute</div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <div class="signalStrip" aria-label="Application summary">
+      <div class="wrap signals">
+        <div class="signal"><small>Bias</small><b>Ship over speculate</b><span>Working versions, then feedback.</span></div>
+        <div class="signal"><small>Range</small><b>Product + engineering</b><span>From workflow to interface.</span></div>
+        <div class="signal"><small>Method</small><b>Evaluate the risky parts</b><span>Claims need observable evidence.</span></div>
+        <div class="signal"><small>Location</small><b>Berlin, hybrid</b><span>Neukölln works rather nicely.</span></div>
+      </div>
+    </div>
+
+    <section id="fit">
+      <div class="wrap">
+        <div class="sectionHead reveal">
+          <div><div class="index">01 / The match</div><h2>Your brief, answered with evidence.</h2></div>
+          <p class="intro">Overfly is not hiring for a perfectly labelled seat. You are looking for people who think along, finish things and can cross the distance between an AI opportunity and a product people use. That is the kind of work I want more of.</p>
+        </div>
+
+        <div class="fitGrid reveal">
+          <article class="fitCard">
+            <div class="num">01 / FINISH THINGS</div>
+            <h3>Ideas become artefacts.</h3>
+            <p>GitLaw, SafeVoice and the Civic AI MCP Toolkit are working systems with interfaces, tests, evaluations and documented trade-offs — not lonely notebooks.</p>
+          </article>
+          <article class="fitCard">
+            <div class="num">02 / LEARN FAST</div>
+            <h3>Unfamiliar is an invitation.</h3>
+            <p>I moved from engineering and entrepreneurship into applied AI by building through the unknowns: retrieval, agents, MCP, evaluation and deployment.</p>
+          </article>
+          <article class="fitCard">
+            <div class="num">03 / AI AS A TOOL</div>
+            <h3>The workflow comes first.</h3>
+            <p>I care about who uses the system, what decision improves and where it can fail. The model is one component, not the product strategy.</p>
+          </article>
+          <article class="fitCard">
+            <div class="num">04 / EASY TO WORK WITH</div>
+            <h3>Direct, curious, accountable.</h3>
+            <p>I work independently, surface uncertainty early and ask questions when the answer changes the architecture, the promise or the user outcome.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="wrap">
+        <div class="sectionHead reveal">
+          <div><div class="index">02 / Selected work</div><h2>Systems I have already shipped.</h2></div>
+          <p class="intro">The strongest signal I can offer is the work itself. Each project began with ambiguity and required product decisions across data, AI behaviour, backend, interface, evaluation and trust.</p>
+        </div>
+
+        <div class="projects reveal">
+          <article class="project projectMain">
+            <div class="projectNo">01 · End-to-end ownership</div>
+            <h3>GitLaw</h3>
+            <p>A legal AI and workflow platform across 5,936 German federal laws. I shaped the product and built ingestion, hybrid retrieval, citation verification, APIs, frontend workflows, MCP tools, evaluations and deployment.</p>
+            <div class="metrics">
+              <span class="metric">98,367 vectors</span>
+              <span class="metric">53/53 citation evals</span>
+              <span class="metric">active pilot</span>
+            </div>
+            <a class="projectLink" href="https://github.com/mikelninh/gitlaw" target="_blank" rel="noreferrer">Inspect the system <span class="arrow">↗</span></a>
+            <div class="flow" aria-label="GitLaw product flow">
+              <span>INGEST</span><span>RETRIEVE</span><span>VERIFY</span><span>ANSWER + CITE</span>
+            </div>
+          </article>
+
+          <article class="project projectSafe">
+            <div class="projectNo">02 · Bounded agent</div>
+            <h3>SafeVoice</h3>
+            <p>An eight-tool court-preparation workflow with structured outputs, cost and iteration limits, audit trails and a human checkpoint before external action.</p>
+            <div class="metrics"><span class="metric">35 real cases</span><span class="metric">human approval</span></div>
+            <a class="projectLink" href="https://github.com/mikelninh/safevoice" target="_blank" rel="noreferrer">See the trust model <span class="arrow">↗</span></a>
+          </article>
+
+          <article class="project projectMcp">
+            <div class="projectNo">03 · Reusable engineering</div>
+            <h3>Civic AI MCP Toolkit</h3>
+            <p>A shared Python backbone extracted from six MCP systems: tracing, structured failures, health checks, transports, fixture loading and one-command scaffolding.</p>
+            <div class="metrics"><span class="metric">6 MCP systems</span><span class="metric">19/19 tests</span></div>
+            <a class="projectLink" href="https://github.com/mikelninh/civic-ai-mcp-toolkit" target="_blank" rel="noreferrer">Open the toolkit <span class="arrow">↗</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="answers">
+      <div class="wrap">
+        <div class="sectionHead reveal">
+          <div><div class="index">03 / Application answers</div><h2>The three questions, plainly answered.</h2></div>
+          <p class="intro">No treasure hunt, no accordion and no generic cover-letter fog. These are the answers I would send in the email — with the projects above available for inspection.</p>
+        </div>
+
+        <div class="answers">
+          <article class="answer reveal">
+            <div class="num">01</div>
+            <h3>A project you are passionate about: what is it and why can’t you stop thinking about it?</h3>
+            <div class="answerText">
+              <p>The project I keep returning to is GitLaw: a legal AI system grounded in 5,936 German federal laws, built to give understandable answers with verifiable sources rather than confident guesses. It combines retrieval, structured outputs and citation evaluations, including 53/53 passed citation test cases.</p>
+              <p>I cannot stop thinking about it because access to rights often depends on whether someone has enough time, money or expertise to navigate complexity. GitLaw is one expression of a broader question that motivates me: how can AI make essential systems genuinely easier to access?</p>
+            </div>
+          </article>
+
+          <article class="answer reveal">
+            <div class="num">02</div>
+            <h3>What made you curious about Overfly?</h3>
+            <div class="answerText">
+              <p>Overfly sits exactly at the intersection I want to work in: understanding a real operational problem, identifying where AI creates meaningful value and then building the solution into a usable product. I like that you combine strategy, product thinking and hands-on engineering rather than treating AI as a detached research exercise or a flashy demo.</p>
+              <p>Your small, entrepreneurial team also feels like an environment where I could contribute broadly, learn quickly and take real ownership.</p>
+            </div>
+          </article>
+
+          <article class="answer reveal">
+            <div class="num">03</div>
+            <h3>What would you want to tackle first if you joined us?</h3>
+            <div class="answerText">
+              <p>I would start with one real client workflow and map the full path from the current pain point to a measurable outcome before choosing the technology. Then I would build a thin end-to-end version with structured outputs, evaluations, explicit failure cases and early user feedback.</p>
+              <p>Once it works, I would help turn the reusable parts — evaluation patterns, agent components and implementation learnings — into building blocks that make the next Overfly project faster and more reliable.</p>
+              <div class="miniProcess" aria-label="First workflow approach">
+                <div class="step"><small>01</small><b>Observe the workflow</b></div>
+                <div class="step"><small>02</small><b>Define the outcome</b></div>
+                <div class="step"><small>03</small><b>Ship the thin slice</b></div>
+                <div class="step"><small>04</small><b>Evaluate and harden</b></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="growth">
+      <div class="wrap">
+        <div class="sectionHead reveal">
+          <div><div class="index">04 / Honest range</div><h2>Clear about my edge. Clear about the next one.</h2></div>
+          <p class="intro">I am not presenting myself as a finished senior engineer. I am presenting a useful, product-minded builder who can own meaningful work now and deepen quickly through strong standards, real clients and direct feedback.</p>
+        </div>
+
+        <div class="clarity reveal">
+          <div class="now">
+            <div class="micro">Strongest now</div>
+            <h3>From ambiguity to a working product slice.</h3>
+            <p>Product discovery, applied AI workflows, Python backends, retrieval, MCP, structured outputs, evaluations, guardrails and interfaces that make the system usable.</p>
+            <div class="skillList">
+              <span class="skill">Python</span><span class="skill">FastAPI</span><span class="skill">RAG</span><span class="skill">MCP</span><span class="skill">LLM evals</span><span class="skill">React / TS</span><span class="skill">Product discovery</span>
+            </div>
+          </div>
+          <div class="next">
+            <div class="micro">Growing deliberately</div>
+            <h3>Production judgment at enterprise scale.</h3>
+            <p>Deeper TypeScript and Node ownership, cloud architecture, observability, enterprise security and the judgement to make technical and client commitments that hold under real conditions.</p>
+            <div class="skillList">
+              <span class="skill">Cloud architecture</span><span class="skill">CI/CD</span><span class="skill">Observability</span><span class="skill">Enterprise delivery</span><span class="skill">Technical leadership</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="wrap">
+        <div class="ctaBox reveal">
+          <div class="index" style="color:#11110f">05 / Start somewhere real</div>
+          <h2>Let’s build one useful thing together.</h2>
+          <p>Give me a real workflow, a measurable outcome and honest feedback. I will bring curiosity, ownership and the determination to get a working version into people’s hands.</p>
           <div class="heroActions">
-            <a class="button filled" href="#work">See what I have built</a>
-            <a class="button" href="#questions">Application questions</a>
-            <a class="button" href="https://github.com/mikelninh">GitHub</a>
+            <a class="button filled" href="mailto:mikel_ninh@yahoo.de?subject=Overfly%20%E2%80%94%20let%E2%80%99s%20talk">Email Michael</a>
+            <a class="button" href="cv.html" target="_blank">View CV <span class="arrow">↗</span></a>
+            <a class="button" href="https://www.linkedin.com/in/michael-ninh" target="_blank" rel="noreferrer">LinkedIn <span class="arrow">↗</span></a>
+            <a class="button" href="https://github.com/mikelninh" target="_blank" rel="noreferrer">GitHub <span class="arrow">↗</span></a>
           </div>
         </div>
-        <aside class="sideNote">
-          <strong>Not applying as a finished senior.</strong>
-          I am applying as someone who can contribute now, learn fast, ask good questions and become very valuable quickly in the right environment.
-        </aside>
       </div>
-      <div class="philosophy reveal">I believe technology should expand human agency, reduce unnecessary suffering and help us see reality more clearly — not only make us faster.</div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <section id="today">
-    <div class="wrap">
-      <div class="sectionHead reveal">
-        <div><div class="index">01 / Honest positioning</div><h2>Useful today. Growing deliberately.</h2></div>
-        <p class="intro">Your senior roles describe the direction I want to grow toward: owning architecture, production delivery, client communication and technical direction. I do not yet meet the full seniority bar, and I would rather be precise about that than perform confidence.</p>
-      </div>
-      <div class="honest reveal">
-        <div class="today">
-          <div class="label">What I can own today</div>
-          <h3>Meaningful product slices.</h3>
-          <p>Applied AI workflows, Python backends, React interfaces, APIs, RAG, MCP, evaluation sets, guardrails, product discovery and the messy path from idea to a working first version.</p>
-        </div>
-        <div class="next">
-          <div class="label">Where I want to grow</div>
-          <h3>End-to-end technical leadership.</h3>
-          <p>Deeper TypeScript and Node ownership, cloud architecture, CI/CD, observability, enterprise security, client delivery and the judgment to make technical commitments that hold.</p>
-        </div>
+  <footer>
+    <div class="wrap footerRow">
+      <div>Michael Ninh · Berlin · Open application for Overfly</div>
+      <div class="footerLinks">
+        <a href="mailto:mikel_ninh@yahoo.de">Email</a>
+        <a href="cv.html" target="_blank">CV</a>
+        <a href="https://www.linkedin.com/in/michael-ninh" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://github.com/mikelninh" target="_blank" rel="noreferrer">GitHub</a>
       </div>
     </div>
-  </section>
+  </footer>
 
-  <section>
-    <div class="wrap">
-      <div class="sectionHead reveal">
-        <div><div class="index">02 / Working relationship</div><h2>I want standards, not hand-holding.</h2></div>
-        <p class="intro">I am not expecting to be carried. I am looking for senior engineers who enjoy direct feedback, thoughtful code review and increasing someone’s responsibility through real ownership.</p>
-      </div>
-      <div class="rows">
-        <div class="row reveal"><div class="num">01</div><h3>Give me a real problem.</h3><p>I learn fastest when the work matters, the user is real and the success criteria are visible.</p></div>
-        <div class="row reveal"><div class="num">02</div><h3>Challenge my judgment.</h3><p>I want to understand why an architecture, trade-off or delivery promise is strong — not merely copy the pattern.</p></div>
-        <div class="row reveal"><div class="num">03</div><h3>Increase the scope.</h3><p>I can start with a useful slice and steadily take on more system, client and delivery ownership as the evidence grows.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="work">
-    <div class="wrap">
-      <div class="sectionHead reveal">
-        <div><div class="index">03 / Selected evidence</div><h2>What I have already shipped.</h2></div>
-        <p class="intro">These projects are not substitutes for years of enterprise experience. They are evidence that I can learn difficult systems, make product decisions and finish substantial work without waiting for a perfect brief.</p>
-      </div>
-      <div class="projects reveal">
-        <article class="project">
-          <small>01 · FULL PRODUCT OWNERSHIP</small>
-          <h3>GitLaw</h3>
-          <p>A legal AI and workflow platform across 5,936 German federal laws. I shaped the product and built ingestion, hybrid retrieval, citation verification, APIs, frontend workflows, MCP tools, evaluations and deployment.</p>
-          <div class="metrics"><span class="metric">98,367 vectors</span><span class="metric">53/53 citation evals</span><span class="metric">active law-firm pilot</span></div>
-          <a href="https://github.com/mikelninh/gitlaw">Inspect GitLaw →</a>
-        </article>
-        <article class="project">
-          <small>02 · BOUNDED AGENT</small>
-          <h3>SafeVoice</h3>
-          <p>An eight-tool court-preparation workflow with structured outputs, cost and iteration limits, audit trails and a human checkpoint before external action.</p>
-          <div class="metrics"><span class="metric">35 real cases</span><span class="metric">~30 sec workflow</span></div>
-          <a href="https://github.com/mikelninh/safevoice">See the trust model →</a>
-        </article>
-        <article class="project">
-          <small>03 · REUSABLE ENGINEERING</small>
-          <h3>Civic AI MCP Toolkit</h3>
-          <p>A shared Python backbone extracted from six MCP systems: tracing, structured failures, health checks, transports, fixture loading and one-command scaffolding.</p>
-          <div class="metrics"><span class="metric">6 MCP systems</span><span class="metric">19/19 tests</span></div>
-          <a href="https://github.com/mikelninh/civic-ai-mcp-toolkit">Open the toolkit →</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="questions">
-    <div class="wrap">
-      <div class="sectionHead reveal">
-        <div><div class="index">04 / Application questions</div><h2>Answers in my own words.</h2></div>
-        <p class="intro">I do not want AI-polished answers to replace my actual thinking. The structure is ready; I will write the final 2–5 sentences for each prompt myself before sending the application.</p>
-      </div>
-      <div class="questions reveal">
-        <details open>
-          <summary><span class="num">01</span><h3>A project you built yourself and what made it special.</h3><span class="plus">+</span></summary>
-          <div class="answerSpace">
-            <div><span class="draftTag">Direction, not final answer</span><div class="direction">Connect the project to the deeper belief behind it — what technology should ultimately serve, and why this problem keeps returning to you.</div></div>
-            <div class="notes"><b>Questions for Michael:</b><br>Which project feels closest to your philosophy of reducing suffering, increasing clarity or expanding agency? What did building it teach you about truth, trust, responsibility or human choice? What part matters even if nobody applauds the technology?</div>
-          </div>
-        </details>
-        <details>
-          <summary><span class="num">02</span><h3>Why are you excited about AI — and what do most people get wrong?</h3><span class="plus">+</span></summary>
-          <div class="answerSpace">
-            <div><span class="draftTag">Direction, not final answer</span><div class="direction">Embodied AI: intelligence not only as words or prediction, but as perception, action, feedback, relationship and consequence in the real world.</div></div>
-            <div class="notes"><b>Questions for Michael:</b><br>What changes when AI has a body, sensors, memory and the ability to act? Why might embodiment matter for learning, care, robotics or understanding intelligence itself? What do people miss when they reduce AI to a chatbot or a larger language model?</div>
-          </div>
-        </details>
-        <details>
-          <summary><span class="num">03</span><h3>A full-stack project where you took technical leadership.</h3><span class="plus">+</span></summary>
-          <div class="answerSpace">
-            <div><span class="draftTag">Direction, not final answer</span><div class="direction">Use GitLaw as the ownership story: from ambiguous problem to architecture, implementation, evaluation and a live pilot — while staying precise about the scale you have not yet led.</div></div>
-            <div class="notes"><b>Questions for Michael:</b><br>Which decisions were yours? Where did you change direction after evidence? What did you own across frontend, backend, data, AI and deployment? Which part would you approach differently with a senior engineer beside you?</div>
-          </div>
-        </details>
-        <details>
-          <summary><span class="num">04</span><h3>A clever non-technical solution or “hack” you used to gain an advantage.</h3><span class="plus">+</span></summary>
-          <div class="answerSpace">
-            <div><span class="draftTag">Direction, not final answer</span><div class="direction">Choose a grounded story from ecommerce, operations or customer work where you changed the system creating the problem instead of repeatedly treating the symptom.</div></div>
-            <div class="notes"><b>Questions for Michael:</b><br>What did everyone else assume was unavoidable? What small observation gave you leverage? How did you test it cheaply? What principle from that story still shapes how you build products today?</div>
-          </div>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta" id="contact">
-    <div class="wrap">
-      <div class="ctaBox reveal">
-        <div class="index" style="color:#11110f">05 / The bet</div>
-        <h2>Could I become very valuable here quickly? I think so.</h2>
-        <p>Not because I already know everything, but because I learn fast, care about the real problem, finish what I start and actively seek the feedback that turns range into judgment.</p>
-        <div class="heroActions">
-          <a class="button filled" href="mailto:hello@overf.ly?subject=Open%20Application%20%E2%80%94%20Michael%20Ninh">Email Overfly</a>
-          <a class="button" href="cv.md">Tailored CV</a>
-          <a class="button" href="https://www.linkedin.com/in/michael-ninh">LinkedIn</a>
-          <a class="button" href="https://github.com/mikelninh">GitHub</a>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer>
-  <div class="wrap footerRow">
-    <div>Michael Ninh · Berlin · Open application for Overfly</div>
-    <div class="footerLinks"><a href="mailto:mikel_ninh@yahoo.de">Email</a><a href="https://www.linkedin.com/in/michael-ninh">LinkedIn</a><a href="https://github.com/mikelninh">GitHub</a></div>
-  </div>
-</footer>
-
-<script>
-  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('in');
-  }), { threshold: .08 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+  <script>
+    const items = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .09, rootMargin: '0px 0px -35px' });
+    items.forEach((item) => observer.observe(item));
+  </script>
 </body>
 </html>
