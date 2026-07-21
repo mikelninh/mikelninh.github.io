@@ -1,71 +1,89 @@
 # Michael Ninh — Open Application for Overfly
 
-**Applied AI builder · Berlin · available immediately**
+I build useful AI products and want to grow into the engineer who can lead them end to end.
 
-I turn messy business problems into useful AI products. My background combines hands-on engineering with product, ecommerce, founder and operations experience. I work from unclear requirements to a working prototype, then add the APIs, retrieval, evaluations, guardrails and handover needed to make it useful in the real world.
+I can already own meaningful product slices across AI workflows, backend systems, interfaces and evaluation. I am looking for a small, demanding team where real client work, strong technical peers and honest feedback can accelerate me into technical leadership.
 
-## The three answers
+> I believe technology should expand human agency, reduce unnecessary suffering and help us see reality more clearly — not only make us faster.
 
-### 1. A project I am passionate about
+## Honest positioning
 
-**GitLaw — because confident AI is not enough.**
+Your senior roles describe the direction I want to grow toward: architecture, production delivery, client communication and technical direction. I do not yet meet the full seniority bar, and I would rather be precise about that than perform confidence.
 
-Laws and public processes shape people’s lives, but they are difficult to understand and navigate. I built GitLaw, a legal RAG and MCP platform over 5,936 German federal laws, with hybrid retrieval, local citation verification and 53 passing citation evaluation cases. I keep thinking about the broader problem: how can we make complex systems understandable without hiding uncertainty, evidence or human responsibility?
+### What I can own today
 
-### 2. What made me curious about Overfly
+- Applied AI workflows
+- Python backends and APIs
+- React interfaces
+- RAG and MCP systems
+- Evaluation sets, guardrails and human review
+- Product discovery and rapid vertical slices
 
-Overfly works at the intersection I find most interesting: identifying a valuable use case, shaping the product with users and then engineering it through to production. I also like that you are not hiring for a rigid box. My strongest contribution comes from combining engineering with product judgement, customer empathy and an operator’s instinct for what needs to get finished.
+### Where I want to grow
 
-### 3. What I would tackle first
+- Deeper TypeScript, Node and Next.js ownership
+- Cloud architecture, CI/CD and observability
+- Enterprise security and regulated delivery
+- Client-facing technical leadership
+- End-to-end commitments that hold
 
-I would start by understanding where current client projects repeatedly lose time or confidence between prototype and production. From there, I would build a lightweight Applied AI Delivery Kit: a use-case canvas, evaluation harness, typed tool contracts, cost and latency tracking, decision receipts and a clean handover pack. I have already built many of these components across GitLaw, SafeVoice and my MCP toolkit.
+I am not expecting to be carried. I am looking for senior engineers who value direct feedback, thoughtful code review and increasing responsibility through real ownership.
 
-## Shipped proof
+## Selected evidence
 
 ### GitLaw
 
-- 5,936 German federal laws
+Legal AI and workflow platform across 5,936 German federal laws. I shaped the product and built ingestion, hybrid retrieval, citation verification, APIs, frontend workflows, MCP tools, evaluations and deployment.
+
 - 98,367 vectors
 - 53/53 citation evaluation cases
-- Hybrid retrieval, citation verification, graph navigation and an active law-firm pilot
-- Code: https://github.com/mikelninh/gitlaw
+- Active law-firm pilot
+- https://github.com/mikelninh/gitlaw
 
 ### SafeVoice
 
-- Eight-tool bounded workflow
-- Human approval, audit trails and iteration limits
-- 35 real evaluation cases
-- Code: https://github.com/mikelninh/safevoice
+Eight-tool court-preparation workflow with structured outputs, cost and iteration limits, audit trails and human approval.
+
+- 35 real cases
+- Approx. 30-second workflow
+- https://github.com/mikelninh/safevoice
 
 ### Civic AI MCP Toolkit
 
-- Shared infrastructure extracted from six MCP systems
+Shared Python infrastructure extracted from six MCP systems: tracing, structured failures, health checks, transports, fixtures and scaffolding.
+
+- Six MCP systems
 - 19/19 hermetic tests
-- Tracing, health checks, error contracts and scaffolding
-- Code: https://github.com/mikelninh/civic-ai-mcp-toolkit
+- https://github.com/mikelninh/civic-ai-mcp-toolkit
 
-### Agent Loop Lab
+## Application questions — drafting directions
 
-Checkpointed workflow that retries only the failed step instead of repeating expensive model work.
+The final answers will be written in my own words before the application is sent.
 
-- Code: https://github.com/mikelninh/agent-loop-lab
+### 1. A project you built yourself and what made it special
 
-## What I bring
+Connect the project to the deeper belief behind it: what technology should ultimately serve, why the problem matters even without the technology, and what it taught me about truth, trust, responsibility or human agency.
 
-- **Applied AI engineering:** Python, TypeScript, FastAPI, React, APIs, RAG, MCP, structured outputs and evaluations.
-- **Product judgement:** Turning unclear business needs into workflows, prototypes and acceptance criteria.
-- **Operator mentality:** Experience with systems where weak handovers, edge cases and reliability failures have immediate consequences.
-- **Client empathy:** Clear communication with technical and non-technical people.
+### 2. Why you are excited about AI — and what most people get wrong
 
-## What I want to do more of
+Explore embodied AI: intelligence not only as language or prediction, but as perception, action, feedback, relationship and consequence in the physical world.
 
-I want to work closer to real customer problems and build applied AI products from discovery through production. I am especially interested in document-heavy workflows, internal knowledge systems, operational agents and tools where reliability matters more than a flashy demo.
+### 3. A full-stack project where you took technical leadership
 
-## Links
+Use GitLaw as the ownership story, while remaining precise about the scale of leadership and enterprise delivery I have not yet experienced.
 
-- Live application: https://mikelninh.github.io/overfly/
+### 4. A clever non-technical solution or hack
+
+Choose a grounded ecommerce or operations story where I changed the system producing a recurring problem instead of repeatedly treating the symptom.
+
+## The bet
+
+Could I become very valuable here quickly? I think so.
+
+Not because I already know everything, but because I learn fast, care about the real problem, finish what I start and actively seek the feedback that turns range into judgment.
+
+- Website: https://mikelninh.github.io/overfly/
 - CV: ./cv.md
-- Work sample: ./work-sample.md
-- LinkedIn: https://www.linkedin.com/in/michael-ninh
 - GitHub: https://github.com/mikelninh
+- LinkedIn: https://www.linkedin.com/in/michael-ninh
 - Email: mikel_ninh@yahoo.de
