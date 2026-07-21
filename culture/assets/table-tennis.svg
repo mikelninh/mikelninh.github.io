@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+<title id="title">Table tennis practice artwork</title>
+<desc id="desc">A clear stylized table tennis rally with two players, paddles, a net and a visible ball path.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1f5a61"/><stop offset=".58" stop-color="#17363e"/><stop offset="1" stop-color="#111923"/></linearGradient>
+  <radialGradient id="glow"><stop stop-color="#8ff3e7"/><stop offset="1" stop-color="#8ff3e7" stop-opacity="0"/></radialGradient>
+  <linearGradient id="table" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#2f8aa0"/><stop offset="1" stop-color="#1f5667"/></linearGradient>
+</defs>
+<rect width="1200" height="900" fill="url(#bg)"/>
+<circle cx="930" cy="160" r="260" fill="url(#glow)" opacity=".42"/>
+<path d="M170 520h860l120 250H50z" fill="url(#table)"/>
+<path d="M170 520h860M50 770h1100M600 520v250" fill="none" stroke="#ecfbff" stroke-width="10" opacity=".88"/>
+<g stroke="#d9f7ff" stroke-width="6" opacity=".6"><path d="M600 455v320"/><path d="M570 455h60"/></g>
+<g fill="#101923">
+  <g transform="translate(170 255)">
+    <circle cx="90" cy="70" r="36"/>
+    <path d="M54 110h74l58 190H15z"/>
+    <path d="M57 139L-12 239l32 24 83-86zM126 136l155 52-15 39-151-35z"/>
+    <path d="M57 292L-18 490h48l91-170zM135 292l86 198h49l-68-224z"/>
+    <ellipse cx="286" cy="203" rx="55" ry="72" transform="rotate(28 286 203)" fill="#f0b947"/>
+    <rect x="301" y="238" width="24" height="82" rx="12" transform="rotate(28 301 238)" fill="#f6d59a"/>
+  </g>
+  <g transform="translate(820 270)">
+    <circle cx="90" cy="70" r="36"/>
+    <path d="M54 110h74l58 190H15z"/>
+    <path d="M54 141L-85 191l14 40 149-35zM127 139l92 91 29-31-84-103z"/>
+    <path d="M57 292L-17 490h49l89-170zM137 292l85 198h49l-66-224z"/>
+    <ellipse cx="-102" cy="205" rx="55" ry="72" transform="rotate(-30 -102 205)" fill="#e97163"/>
+    <rect x="-131" y="242" width="24" height="82" rx="12" transform="rotate(-30 -131 242)" fill="#f6d59a"/>
+  </g>
+</g>
+<g fill="#fff6cb"><circle cx="575" cy="285" r="19"/><circle cx="655" cy="258" r="10" opacity=".38"/><circle cx="725" cy="250" r="6" opacity=".2"/></g>
+<path d="M355 330c125-93 313-103 470-21" fill="none" stroke="#fff6cb" stroke-width="7" stroke-linecap="round" stroke-dasharray="12 20" opacity=".72"/>
+</svg>
