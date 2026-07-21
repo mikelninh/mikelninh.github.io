@@ -21,7 +21,7 @@ for (const id of new Set(ids)) {
   if (count > 1) errors.push(`Duplicate HTML id: ${id} (${count} occurrences)`);
 }
 
-for (const file of ['app.js','ux-v2.js','quick-rank.js','germany-overrides.js','germany-round2.js','germany-round3.js','germany-round4.js','image-round4.js']) {
+for (const file of ['app.js','ux-v2.js','quick-rank.js','germany-overrides.js','germany-round2.js','germany-round3.js','germany-round4.js','image-round4.js','source-fixes.js']) {
   const source = await fs.readFile(path.join(root,file),'utf8');
   try { new vm.Script(source,{filename:file}); }
   catch (error) { errors.push(`${file}: ${error.message}`); }
@@ -38,6 +38,7 @@ for (const selector of ['.quick-rank','.quick-stage','.quick-tier','.note-modal'
 }
 
 if (!html.includes('quick-rank.css') || !html.includes('quick-rank.js')) errors.push('Quick-rank assets are not loaded by index.html.');
+if (!html.includes('source-fixes.js')) errors.push('Post-review source fixes are not loaded by index.html.');
 if (html.indexOf('quick-rank.js') < html.indexOf('app.js')) errors.push('quick-rank.js must load after app.js.');
 if (!html.includes('data-en=') || !html.includes('data-de=')) warnings.push('Bilingual page markers were not detected.');
 
