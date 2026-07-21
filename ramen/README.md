@@ -1,105 +1,66 @@
-# Ramen Passport · Germany-first
+# Ramen Passport
 
-Live page: `https://mikelninh.github.io/ramen/`
+Germany-first, source-visible instant-ramen ranking.
 
-This directory contains the Germany-first ramen ranking experience. The product list is fun and shareable, but the data model is intentionally strict: market version, vegan status, evidence, product image and buying link are separate claims and must be checked separately.
+**Live:** https://mikelninh.github.io/ramen/
 
-## Files
+## What it does
 
-- `index.html` — English-first interface with optional German
-- `styles.css` — tier list, audit dashboard and random-pick modal
-- `app.js` — ranking, filters, image handling, language, local persistence and random-pick ranking
-- `germany-overrides.js` — Germany/EU-specific corrections layered over the broader 50-product seed list
-- `scripts/validate-data.mjs` — deterministic schema, duplicate, URL and image-response checks
-- `scripts/agent-fact-check.mjs` — optional independent source-grounded AI reviewer
+- one-product-at-a-time **Quick Rank** with S/A/B/C/F keyboard controls
+- full drag-and-drop board for review and rearrangement
+- Germany/EU-first, vegan-verified, all-product and not-tasted queues
+- product-specific packshots for all 50 entries
+- visible market, vegan status, evidence, source, GTIN and buying route
+- local tasting notes for taste, texture, value, rebuy and free text
+- downloadable ranking cards and challenge links
+- vegan full-meal generator and sourced ramen hacks
+- English by default with optional German
 
-The broader popularity seed currently lives in `../vegan/ramen-data.js`. Germany-specific truth overrides the broad seed on this page.
+Rankings and tasting notes remain in the visitor’s browser.
 
-## Verification levels
+## Trust model
 
-- `germany-retailer` — a German product or retailer page supports the cited pack; record GTIN when available
-- `official-eu` — an official European product catalogue supports the claim and is relevant to Germany/EU
-- `official-global` — a current official manufacturer page supports the product claim, but the German retail pack is not yet verified
-- `needs-germany-review` — do not present the product as Germany-verified
+Market availability, vegan status, packshot identity and buying route are separate claims.
 
-## Vegan labels
+Verification levels:
 
-- `verified` — the cited version is explicitly described as vegan, plant-based or free of animal-origin ingredients
-- `not` — the cited version contains animal ingredients or is explicitly not vegan
-- `vegetarian` — explicitly vegetarian, but not sufficiently verified as vegan
-- `check` — insufficient evidence, market-specific variation or an exact-pack check is required
+- `germany-retailer` — an exact German retailer/product record supports the claim
+- `official-eu` — an official European product record relevant to Germany supports it
+- `official-global` — an official manufacturer record supports the cited version, but not necessarily a German pack
+- `needs-germany-review` — the German/EU recipe still needs review
 
-The exact physical package always wins over this database. Recipes can change by country, importer, GTIN and production date.
+Vegan labels:
 
-## Required data
+- `verified` — explicit vegan, plant-based or no-animal-origin evidence for the cited version
+- `not` — animal ingredients are documented
+- `vegetarian` — explicitly vegetarian but not sufficiently vegan-verified
+- `check` — exact package or market formulation still needs checking
 
-Every product must include:
+The physical package remains authoritative because recipes can change by market, importer, GTIN and production date.
 
-- unique `id`
-- unique seed `rank`
-- `brand` and `name`
-- `country` and `style`
-- `spice`
-- `market`
-- `vegan`
-- bilingual `evidence`
-- working `source`
-- `verificationLevel`
+## Project structure
 
-Germany-checked entries should additionally include:
+- `index.html` — product interface
+- `styles.css`, `upgrades.css`, `quick-rank.css` — visual system
+- `app.js` — core board, filters, language, product details and meal generator
+- `ux-v2.js` — progress and sharing
+- `quick-rank.js` — one-at-a-time ranking, notes, undo and challenge links
+- `ramen-data.js` — local 50-product seed dataset
+- `germany-overrides.js`, `germany-round*.js` — reviewed market-specific layers
+- `image-round4.js` — reviewed deterministic packshots
+- `scripts/check-ui.mjs` — syntax, local-asset and interaction smoke checks
+- `scripts/validate-data.mjs` — schema, sources, URLs and image validation
+- `scripts/resolve-images.mjs` — packshot research report
+- `scripts/agent-fact-check.mjs` — optional independent source-grounded reviewer
 
-- `gtin`, when available
-- `verifiedAt`
-- German product or buying URL
-- deterministic packshot and image source, when legally and technically usable
+The website repository temporarily retains a mirrored copy at `../vegan/ramen-data.js` for compatibility. CI rejects a release when the mirror and `ramen-data.js` differ. The local ramen copy is ready to become canonical in the standalone repository.
 
-## Release gate
+## Run locally
 
-The GitHub Actions workflow `.github/workflows/ramen-data-check.yml` runs on relevant pushes, pull requests, manual dispatches and every Monday.
-
-The deterministic audit checks:
-
-1. exactly 50 products
-2. required fields
-3. unique IDs and ranks
-4. supported verification states
-5. bilingual evidence
-6. valid source, buy and image URLs
-7. explicit review date for vegan-verified claims
-8. URL resolution and image content types
-
-Hard contradictions, missing required fields, DNS failures and 404/410 links fail the release gate. Bot-blocking responses such as 403 are reported as warnings because they do not necessarily mean the public browser link is broken.
-
-## Independent AI reviewer
-
-When the repository secret `OPENAI_API_KEY` is configured, the workflow also runs `scripts/agent-fact-check.mjs`.
-
-The reviewer re-opens the supplied sources and checks:
-
-- whether the source supports the displayed claim
-- whether the cited market matches Germany/EU
-- whether vegan status is justified
-- whether the image matches the named product
-- whether the Germany buying link offers the same version
-
-It returns `PASS`, `REVIEW` or `FAIL`. Contradictions fail the workflow. Missing or ambiguous evidence should become `REVIEW`, never an invented confident claim.
-
-## Images
-
-The UI clearly labels the image state:
-
-- `packshot` — deterministic product image supplied in the dataset
-- `database image` — matched through Open Food Facts and cached locally in the browser
-- `illustration` — safe fallback; not a real product image
-
-A fallback keeps the interface usable, but it does **not** count as image-complete. The data-health dashboard shows the actual real-image count.
-
-## Local preview
-
-Serve the repository root through a local HTTP server, for example:
+From the `ramen` directory:
 
 ```bash
-python -m http.server 8000
+npm run serve
 ```
 
 Then open:
@@ -108,8 +69,43 @@ Then open:
 http://localhost:8000/ramen/
 ```
 
-Run the deterministic gate with Node 22+:
+Run the release checks with Node 22+:
 
 ```bash
-node ramen/scripts/validate-data.mjs
+npm run check
 ```
+
+## Automated release loop
+
+GitHub Actions checks relevant pushes and pull requests, plus a weekly scheduled run:
+
+1. JavaScript syntax and local assets
+2. duplicate HTML IDs and required Quick Rank interactions
+3. dataset synchronization during migration
+4. exactly 50 unique records and ranks
+5. bilingual evidence and popularity rationale
+6. supported market and vegan states
+7. source, buy and image URLs
+8. deterministic packshots and image content types
+9. optional AI contradiction review when `OPENAI_API_KEY` is configured
+
+Missing evidence or ambiguous market recipes must remain visibly unverified rather than being upgraded through inference.
+
+## Standalone repository migration
+
+The standalone repository should contain:
+
+```text
+ramen/
+.github/workflows/ramen-data-check.yml
+.github/workflows/ramen-data-quality.yml
+```
+
+After moving the contents of `ramen/` to the new repository root:
+
+1. change the first script in `index.html` from `../vegan/ramen-data.js` to `ramen-data.js`;
+2. update workflow paths from `ramen/**` to root-relative paths;
+3. update public URLs from `/ramen/` to the new deployment URL;
+4. run `npm run check` before enabling deployment.
+
+The current implementation has no framework or build dependency, so it can deploy directly through GitHub Pages, Vercel, Netlify or any static host.
