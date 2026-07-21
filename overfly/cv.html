@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Michael Ninh — Applied AI Engineer and Product Builder." />
+  <meta name="theme-color" content="#f3efe6" />
+  <title>Michael Ninh — Applied AI Engineer · CV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{--paper:#f3efe6;--white:#fffdf8;--ink:#11110f;--muted:#66635d;--line:rgba(17,17,15,.2);--accent:#ff5b37;--green:#2d5a40;--lime:#d9ff58;--sans:"Inter",sans-serif;--serif:"Instrument Serif",serif;--mono:"DM Mono",monospace}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--paper);font-family:var(--sans);line-height:1.45;-webkit-font-smoothing:antialiased}a{color:inherit}.page{width:min(1120px,calc(100% - 36px));margin:34px auto 70px;border:1px solid var(--ink);background:var(--white);box-shadow:0 28px 90px rgba(17,17,15,.09)}
+    .toolbar{width:min(1120px,calc(100% - 36px));margin:26px auto 0;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:12px}.toolbar a{text-decoration:none;font-weight:800}.actions{display:flex;gap:9px}.button{min-height:40px;display:inline-flex;align-items:center;padding:0 14px;border:1px solid var(--ink);border-radius:999px;background:transparent;font:800 12px var(--sans);cursor:pointer;text-decoration:none}.button.dark{color:var(--paper);background:var(--ink)}
+    header{display:grid;grid-template-columns:1.3fr .7fr;gap:38px;padding:52px;border-bottom:1px solid var(--ink);background:linear-gradient(135deg,var(--paper),#fff)}.kicker{margin-bottom:14px;color:var(--accent);font:500 10px var(--mono);letter-spacing:.13em;text-transform:uppercase}h1,h2,h3{margin:0;letter-spacing:-.05em}h1{max-width:700px;font-size:clamp(54px,7vw,90px);line-height:.88}h1 em{color:var(--accent);font-family:var(--serif);font-weight:400}.summary{max-width:700px;margin:25px 0 0;color:#45423d;font-size:18px}.contact{align-self:end;border-left:1px solid var(--ink);padding-left:24px;color:var(--muted);font-size:13px}.contact a{display:block;margin-top:8px;color:var(--ink);font-weight:700;text-underline-offset:3px}.contact .place{margin-bottom:18px;color:var(--green);font:500 10px var(--mono);text-transform:uppercase;letter-spacing:.1em}
+    .body{display:grid;grid-template-columns:1.55fr .75fr}.main{padding:48px;border-right:1px solid var(--ink)}.side{padding:48px;background:#f8f4eb}.section+.section{margin-top:48px}.sectionLabel{margin-bottom:22px;color:var(--accent);font:500 10px var(--mono);letter-spacing:.13em;text-transform:uppercase}.item{display:grid;grid-template-columns:155px 1fr;gap:24px;padding:22px 0;border-top:1px solid var(--line)}.item:last-child{border-bottom:1px solid var(--line)}.when{color:var(--muted);font:500 10px var(--mono)}h2{font-size:38px;line-height:1}h3{font-size:23px;line-height:1.05}.role{margin-top:6px;color:var(--green);font-size:12px;font-weight:800}.item p{margin:12px 0 0;color:var(--muted);font-size:14px}.project{padding:26px 0;border-top:1px solid var(--line)}.project:last-child{border-bottom:1px solid var(--line)}.projectTop{display:flex;justify-content:space-between;gap:18px;align-items:start}.project h3{font-size:31px}.project a{font:500 10px var(--mono);text-underline-offset:4px}.project p{max-width:650px;margin:12px 0 0;color:var(--muted);font-size:14px}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:15px}.chip{padding:6px 8px;border:1px solid var(--ink);border-radius:999px;font:500 8px var(--mono)}
+    .side h2{font-size:30px}.sideBlock+.sideBlock{margin-top:42px}.sideBlock p{color:var(--muted);font-size:13px}.skillGroup{padding:16px 0;border-top:1px solid var(--line)}.skillGroup:last-child{border-bottom:1px solid var(--line)}.skillGroup b{display:block;margin-bottom:6px;font-size:13px}.skillGroup span{color:var(--muted);font-size:12px}.edu{padding:16px 0;border-top:1px solid var(--line)}.edu:last-child{border-bottom:1px solid var(--line)}.edu b{display:block;font-size:13px}.edu span{display:block;margin-top:4px;color:var(--muted);font-size:11px}.languages{font-size:13px;line-height:1.8}.note{margin-top:40px;padding:20px;border:1px solid var(--ink);background:var(--lime);font-family:var(--serif);font-size:22px;line-height:1.15}
+    @media(max-width:800px){header,.body{grid-template-columns:1fr}.contact{border-left:0;border-top:1px solid var(--ink);padding:22px 0 0}.main{border-right:0;border-bottom:1px solid var(--ink)}.item{grid-template-columns:1fr;gap:8px}.toolbar{align-items:flex-start}.actions{flex-wrap:wrap;justify-content:flex-end}}
+    @media(max-width:520px){.page{width:calc(100% - 20px);margin-top:16px}.toolbar{width:calc(100% - 20px);display:block}.actions{margin-top:12px;justify-content:flex-start}header,.main,.side{padding:28px}h1{font-size:55px}.projectTop{display:block}.projectTop a{display:inline-block;margin-top:8px}}
+    @media print{body{background:#fff}.toolbar{display:none}.page{width:100%;margin:0;border:0;box-shadow:none}header{padding:34px}.main,.side{padding:30px}.section+.section{margin-top:30px}.item,.project{break-inside:avoid}.note{display:none}@page{size:A4;margin:8mm}}
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <a href="index.html">← Back to the Overfly application</a>
+    <div class="actions">
+      <button class="button" onclick="window.print()">Print / save PDF</button>
+      <a class="button dark" href="mailto:mikel_ninh@yahoo.de">Email Michael</a>
+    </div>
+  </div>
+
+  <article class="page">
+    <header>
+      <div>
+        <div class="kicker">Applied AI Engineer · Product Builder · 0→1 Systems</div>
+        <h1>Michael <em>Ninh</em></h1>
+        <p class="summary">Product-minded engineer building useful, inspectable AI systems across retrieval, agents, MCP, evaluation, APIs and user-facing workflows. Entrepreneurial background with a strong bias toward ownership, iteration and shipping.</p>
+      </div>
+      <div class="contact">
+        <div class="place">Berlin, Germany · hybrid / remote</div>
+        <a href="mailto:mikel_ninh@yahoo.de">mikel_ninh@yahoo.de</a>
+        <a href="tel:+4915205380259">+49 1520 5380259</a>
+        <a href="https://github.com/mikelninh" target="_blank" rel="noreferrer">github.com/mikelninh</a>
+        <a href="https://www.linkedin.com/in/michael-ninh" target="_blank" rel="noreferrer">linkedin.com/in/michael-ninh</a>
+      </div>
+    </header>
+
+    <div class="body">
+      <main class="main">
+        <section class="section">
+          <div class="sectionLabel">Selected systems</div>
+
+          <article class="project">
+            <div class="projectTop"><h3>GitLaw</h3><a href="https://github.com/mikelninh/gitlaw" target="_blank" rel="noreferrer">VIEW REPOSITORY ↗</a></div>
+            <p>Verified-citation RAG and MCP platform over 5,936 German federal laws, 98,367 vectors and a 94,178-node citation graph. Built ingestion, hybrid retrieval, citation verification, APIs, frontend workflows, evaluations and deployment; 53/53 citation evals pass in CI and a closed-beta workflow tier is in active pilot with a Berlin law firm.</p>
+            <div class="chips"><span class="chip">RAG</span><span class="chip">FastAPI</span><span class="chip">MCP</span><span class="chip">React</span><span class="chip">Evaluation</span></div>
+          </article>
+
+          <article class="project">
+            <div class="projectTop"><h3>SafeVoice</h3><a href="https://github.com/mikelninh/safevoice" target="_blank" rel="noreferrer">VIEW REPOSITORY ↗</a></div>
+            <p>Bounded eight-tool court-preparation agent with cost and iteration limits, idempotent calls, audit tables, structured outputs, 35 real evaluation cases and human approval before external action.</p>
+            <div class="chips"><span class="chip">Agents</span><span class="chip">Guardrails</span><span class="chip">Structured outputs</span><span class="chip">Human-in-the-loop</span></div>
+          </article>
+
+          <article class="project">
+            <div class="projectTop"><h3>Civic AI MCP Toolkit</h3><a href="https://github.com/mikelninh/civic-ai-mcp-toolkit" target="_blank" rel="noreferrer">VIEW REPOSITORY ↗</a></div>
+            <p>Reusable Python infrastructure extracted from six MCP systems with tracing, error contracts, health checks, transports, a CLI scaffolder and 19/19 hermetic tests.</p>
+            <div class="chips"><span class="chip">Python</span><span class="chip">MCP</span><span class="chip">Tracing</span><span class="chip">Testing</span></div>
+          </article>
+
+          <article class="project">
+            <div class="projectTop"><h3>Agent Loop Lab</h3><a href="https://github.com/mikelninh/agent-loop-lab" target="_blank" rel="noreferrer">VIEW REPOSITORY ↗</a></div>
+            <p>TypeScript and Inngest workflow with step-level checkpoints, selective retry and explicit failure behaviour for inspectable long-running agent execution.</p>
+            <div class="chips"><span class="chip">TypeScript</span><span class="chip">Inngest</span><span class="chip">Agent workflows</span></div>
+          </article>
+        </section>
+
+        <section class="section">
+          <div class="sectionLabel">Experience</div>
+          <div class="item">
+            <div class="when">2018—2025</div>
+            <div><h3>RYUS UG</h3><div class="role">Founder · E-Commerce Manager</div><p>Built and operated an e-commerce business across product, sourcing, marketplaces, marketing, customer experience and day-to-day commercial decisions.</p></div>
+          </div>
+          <div class="item">
+            <div class="when">2021—2024</div>
+            <div><h3>Transit Restaurants, Berlin</h3><div class="role">Service · Operations Manager</div><p>Worked close to customers and frontline operations in a fast-moving environment, coordinating service quality, teams and practical problem-solving under pressure.</p></div>
+          </div>
+          <div class="item">
+            <div class="when">2019—2020</div>
+            <div><h3>everphone GmbH</h3><div class="role">Product Management · Business Development</div><p>Contributed across product and business development in a Berlin technology company, connecting customer needs with product and commercial execution.</p></div>
+          </div>
+        </section>
+      </main>
+
+      <aside class="side">
+        <section class="sideBlock">
+          <div class="sectionLabel">Core capabilities</div>
+          <div class="skillGroup"><b>Applied AI</b><span>RAG · agents · MCP · structured outputs · evaluation · guardrails</span></div>
+          <div class="skillGroup"><b>Engineering</b><span>Python · FastAPI · APIs · TypeScript · React · testing · Git</span></div>
+          <div class="skillGroup"><b>Product</b><span>Discovery · workflow mapping · prototyping · user feedback · 0→1 delivery</span></div>
+          <div class="skillGroup"><b>Working style</b><span>Autonomous · direct · curious · accountable · feedback-seeking</span></div>
+        </section>
+
+        <section class="sideBlock">
+          <div class="sectionLabel">Education</div>
+          <div class="edu"><b>AI Engineering & Software Engineering</b><span>Masterschool Institute of Technology · 2025—2026</span></div>
+          <div class="edu"><b>M.Sc. Biomedical Engineering</b><span>Technische Universität Berlin · 2016—2019</span></div>
+          <div class="edu"><b>B.Sc. Mechanical Engineering</b><span>Technische Universität Berlin · 2012—2016</span></div>
+        </section>
+
+        <section class="sideBlock">
+          <div class="sectionLabel">Languages</div>
+          <div class="languages">German · C2<br>English · C1<br>Vietnamese · B1<br>French · A2<br>Spanish · A1</div>
+        </section>
+
+        <div class="note">“I care about the whole path from a messy real-world problem to a system people can trust and use.”</div>
+      </aside>
+    </div>
+  </article>
+</body>
+</html>
