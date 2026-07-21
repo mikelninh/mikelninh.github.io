@@ -1,8 +1,237 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>Michael Ninh — Open Application for Overfly</title><meta name="description" content="Open application for Overfly: applied AI product builder, shipped systems, client impact and a practical reliability kit."><meta name="theme-color" content="#24162f"><link rel="alternate" type="text/markdown" href="index.md"><style>
-:root{--bg:#f6f1fb;--ink:#21162c;--muted:#6d6474;--purple:#7447f4;--lilac:#ebe2ff;--lime:#d9ff67;--line:#21162c1d;--white:#fff;--max:1200px;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:radial-gradient(circle at 0 0,#ffffff,transparent 29rem),radial-gradient(circle at 100% 5%,#d9ff6750,transparent 31rem),var(--bg);line-height:1.5}a{color:inherit;text-decoration:none}button{font:inherit}.wrap{width:min(var(--max),calc(100% - 36px));margin:auto}header{position:sticky;top:0;z-index:30;background:#f6f1fbdd;backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}nav{height:71px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:950;display:flex;align-items:center;gap:10px;letter-spacing:-.035em}.wing{width:37px;height:37px;border-radius:13px;background:var(--purple);color:#fff;display:grid;place-items:center;font:900 11px ui-monospace;transform:rotate(6deg)}.links,.actions,.btns{display:flex;gap:18px;align-items:center}.links{font-size:14px;color:var(--muted)}.btn{border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:#fff;color:var(--ink);font-weight:850;cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px #28113f15}.primary{background:var(--purple);color:#fff;border-color:transparent}.hero{padding:76px 0 58px}.heroGrid{display:grid;grid-template-columns:1.03fr .97fr;gap:44px;align-items:center}.eyebrow{display:inline-flex;gap:8px;align-items:center;padding:7px 11px;border:1px solid var(--line);background:#fff9;border-radius:999px;color:var(--muted);font-size:13px}.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--purple)}h1,h2,h3{margin:0;line-height:.96;letter-spacing:-.057em}h1{font-size:clamp(58px,8vw,108px);margin:22px 0}h1 span{background:var(--lime);padding:0 .08em .05em;border-radius:.13em;display:inline-block;transform:rotate(-1deg)}.lead{font-size:clamp(18px,2vw,24px);color:var(--muted);max-width:750px;margin:0 0 28px}.signals{display:flex;gap:22px;flex-wrap:wrap;margin-top:28px;color:var(--muted);font-size:12px}.signals b{display:block;color:var(--ink);font-size:14px}.triage{background:#24162f;color:#fff;border-radius:30px;padding:23px;box-shadow:0 35px 90px #28113f26}.triageTop{display:flex;justify-content:space-between;align-items:center;font:800 11px ui-monospace;color:#c9bad8}.idea{font-size:28px;font-weight:900;letter-spacing:-.04em;margin:22px 0 16px}.questions{display:grid;gap:9px}.q{display:flex;align-items:center;justify-content:space-between;padding:13px;border-radius:14px;background:#ffffff0c;border:1px solid #ffffff18}.toggle{width:52px;height:28px;border-radius:999px;background:#ffffff18;padding:3px;cursor:pointer;transition:.2s}.toggle:after{content:"";display:block;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}.toggle.on{background:var(--lime)}.toggle.on:after{transform:translateX(24px);background:#21162c}.score{margin-top:15px;padding:15px;border-radius:16px;background:#ffffff0c}.bar{height:9px;border-radius:999px;background:#ffffff17;overflow:hidden;margin-top:9px}.fill{height:100%;width:25%;background:var(--lime);transition:.35s}section{padding:82px 0;border-top:1px solid var(--line)}.head{display:grid;grid-template-columns:.75fr 1.25fr;gap:42px;margin-bottom:30px}.kicker{font:850 10px ui-monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:11px}h2{font-size:clamp(39px,5vw,68px)}.intro{font-size:18px;color:var(--muted);max-width:760px;margin:0}.answers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.answerCard{background:#fff;border:1px solid var(--line);border-radius:24px;padding:25px;min-height:355px;box-shadow:0 18px 50px #28113f0b}.answerCard small{font:850 10px ui-monospace;color:var(--purple)}.answerCard h3{font-size:32px;margin:24px 0 13px}.answerCard p{color:var(--muted)}.proof{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.proofCard{border-radius:24px;padding:26px;background:#24162f;color:#fff;min-height:300px}.proofCard:nth-child(2),.proofCard:nth-child(3){background:#fff;color:var(--ink);border:1px solid var(--line)}.proofCard small{font:850 10px ui-monospace;color:#bda7d3}.proofCard:nth-child(2) small,.proofCard:nth-child(3) small{color:var(--purple)}.proofCard h3{font-size:38px;margin:24px 0 12px}.proofCard p{color:#c9bad8}.proofCard:nth-child(2) p,.proofCard:nth-child(3) p{color:var(--muted)}.more{display:inline-block;margin-top:18px;color:var(--lime);font-weight:850}.proofCard:nth-child(2) .more,.proofCard:nth-child(3) .more{color:var(--purple)}.kit{background:#fff;border:1px solid var(--line);border-radius:27px;padding:18px}.kitGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.kitItem{padding:18px;border-radius:17px;background:#f5f0fb}.kitItem b{display:block;margin-bottom:8px}.kitItem p{font-size:12px;color:var(--muted)}.cta{border-radius:29px;padding:clamp(30px,5vw,58px);background:linear-gradient(135deg,#7447f4,#4e2db3);color:#fff;box-shadow:0 30px 80px #28113f25}.cta p{color:#ded3eb;max-width:780px;font-size:17px}footer{padding:40px 0;color:var(--muted);font-size:12px}.foot{display:flex;justify-content:space-between;gap:20px}.reveal{opacity:0;transform:translateY(13px);transition:.65s}.reveal.in{opacity:1;transform:none}@media(max-width:900px){.heroGrid,.head,.proof{grid-template-columns:1fr}.answers{grid-template-columns:1fr}.links{display:none}.kitGrid{grid-template-columns:1fr 1fr}}@media(max-width:550px){.wrap{width:min(100% - 24px,var(--max))}h1{font-size:54px}.actions .ghost{display:none}.kitGrid{grid-template-columns:1fr}.signals{display:grid}.foot{display:block}}@media print{.reveal{opacity:1!important;transform:none!important}}
-</style></head><body><header><nav class="wrap"><a class="brand" href="#top"><span class="wing">MN</span>Michael Ninh</a><div class="links"><a href="#answers">Why me</a><a href="#proof">Shipped</a><a href="#kit">First contribution</a><a href="#contact">Contact</a></div><div class="actions"><a class="btn ghost" href="index.md">.md</a><a class="btn primary" href="cv.md">CV →</a></div></nav></header><main id="top"><div class="hero"><div class="wrap heroGrid"><div><div class="eyebrow"><i></i>Open Application · Applied AI · Berlin</div><h1>Interesting AI is easy. <span>Useful AI is the work.</span></h1><p class="lead">I turn unclear business problems into shipped AI products — from use-case framing and interface decisions to RAG, MCP, evaluations, guardrails and the handover that keeps the product alive.</p><div class="btns"><a class="btn primary" href="#answers">Read my three answers →</a><a class="btn" href="#proof">See shipped work</a><a class="btn" href="work-sample.md">Reliability Kit</a></div><div class="signals"><div><b>Builder</b>Python · TypeScript · FastAPI · React</div><div><b>Product</b>use case · UX · feedback · iteration</div><div><b>Operator</b>finish · observe · recover · improve</div></div></div><div class="triage"><div class="triageTop"><span>USE_CASE_TRIAGE</span><span id="label">25% ready</span></div><div class="idea">Enterprise knowledge agent for a messy approval workflow</div><div class="questions"><div class="q"><span>Real user bottleneck?</span><button class="toggle on" aria-label="toggle"></button></div><div class="q"><span>Measurable outcome?</span><button class="toggle" aria-label="toggle"></button></div><div class="q"><span>Reliable evidence?</span><button class="toggle" aria-label="toggle"></button></div><div class="q"><span>Production owner?</span><button class="toggle" aria-label="toggle"></button></div></div><div class="score"><b id="verdict">Interesting. Not ready to build yet.</b><div class="bar"><div class="fill" id="fill"></div></div></div></div></div></div>
-<section id="answers"><div class="wrap"><div class="head reveal"><div><div class="kicker">The three prompts</div><h2>What I would send you.</h2></div><p class="intro">Overfly’s open application rewards clarity more than a ceremonial cover letter. These are my direct answers.</p></div><div class="answers"><article class="answerCard reveal"><small>01 / PROJECT</small><h3>GitLaw — because confident AI is not enough.</h3><p>Laws and official processes shape people’s lives, yet the information is difficult to navigate and AI can create dangerous certainty when it is wrong. I built a live RAG and MCP platform over 5,936 German federal laws with hybrid search, local citation verification and 53/53 passing citation evals. I cannot stop thinking about the broader pattern: making complex systems understandable without hiding uncertainty or human responsibility.</p></article><article class="answerCard reveal"><small>02 / CURIOSITY</small><h3>You live between possible and useful.</h3><p>Your path from high-impact use-case discovery through product and engineering to production fits how I want to work. The open application also signals that you value people who bring a useful combination rather than matching a rigid title — which suits my mix of engineering, product, founder and operations experience.</p></article><article class="answerCard reveal"><small>03 / FIRST MOVE</small><h3>An Applied AI Reliability Kit.</h3><p>I would start with a lightweight shared kit for faster client delivery: use-case canvas, typed skill contract, golden-set harness, guardrail patterns, cost and latency tracking, decision receipts and a clean handover pack. I have already built the pieces across GitLaw, SafeVoice, Agent Loop Lab and a reusable MCP toolkit.</p></article></div></div></section>
-<section id="proof"><div class="wrap"><div class="head reveal"><div><div class="kicker">Track record</div><h2>I finish things and expose how they work.</h2></div><p class="intro">The projects are different on the surface, but they share one operating principle: find the valuable workflow, ship it, measure it and make the failure path visible.</p></div><div class="proof"><article class="proofCard reveal"><small>DOMAIN RAG</small><h3>GitLaw</h3><p>Verified-citation legal AI with hybrid search, graph navigation, evaluation in CI and an active law-firm pilot.</p><a class="more" href="https://github.com/mikelninh/gitlaw">Inspect code →</a></article><article class="proofCard reveal"><small>BOUNDED AGENT</small><h3>SafeVoice</h3><p>Eight-tool workflow with human approval, audit trails, structured outputs and real-case validation.</p><a class="more" href="https://github.com/mikelninh/safevoice">See the guardrails →</a></article><article class="proofCard reveal"><small>DURABLE DELIVERY</small><h3>Agent Loop Lab</h3><p>Checkpointed workflow that selectively retries the failed step rather than repeating expensive work.</p><a class="more" href="https://github.com/mikelninh/agent-loop-lab">Open the failure fixture →</a></article><article class="proofCard reveal"><small>REUSABLE CAPABILITY</small><h3>Civic AI MCP Toolkit</h3><p>Shared infrastructure extracted from six MCP systems and covered by 19/19 hermetic tests.</p><a class="more" href="https://github.com/mikelninh/civic-ai-mcp-toolkit">View the toolkit →</a></article></div></div></section>
-<section id="kit"><div class="wrap"><div class="head reveal"><div><div class="kicker">First contribution</div><h2>Useful speed, not a heavy framework.</h2></div><p class="intro">The kit would exist to answer four questions early: Is it useful? Is it grounded? Does it recover? Can the client inherit it?</p></div><div class="kit reveal"><div class="kitGrid"><article class="kitItem"><b>Use-case canvas</b><p>User, decision, current cost, evidence, action, risk and measurable success.</p></article><article class="kitItem"><b>Typed skill contract</b><p>Inputs, outputs, permissions, failure states and human checkpoint.</p></article><article class="kitItem"><b>Golden-set harness</b><p>Representative, adversarial and edge cases with deterministic assertions first.</p></article><article class="kitItem"><b>Operational rails</b><p>Prompt/model version, latency, cost, retries, idempotency and tool logs.</p></article><article class="kitItem"><b>Decision receipt</b><p>Evidence, assumptions, uncertainty and action in one inspectable record.</p></article><article class="kitItem"><b>Handover pack</b><p>Architecture decision, runbook, eval set, limits and next experiments.</p></article></div></div></div></section>
-<section id="contact"><div class="wrap"><div class="cta reveal"><div class="kicker" style="color:#d9ff67">Berlin · open application</div><h2>I would love to build the useful part with you.</h2><p>I use ChatGPT as my primary AI collaborator today, but the durable value sits in the product, data, tool contracts, evaluation and team learning — not in loyalty to one interface.</p><div class="btns"><a class="btn" style="background:#d9ff67;border-color:transparent" href="mailto:hello@overf.ly?subject=Open%20Application%20-%20Michael%20Ninh">Email Overfly</a><a class="btn" href="cv.md">Tailored CV</a><a class="btn" href="work-sample.md">Reliability Kit</a><a class="btn" href="https://github.com/mikelninh">GitHub</a></div></div></div></section></main><footer><div class="wrap foot"><div>© 2026 Michael Ninh · open application for Overfly</div><div><a href="index.md">Markdown</a> · <a href="llms.txt">llms.txt</a></div></div></footer><script>
-const toggles=[...document.querySelectorAll('.toggle')],fill=document.getElementById('fill'),label=document.getElementById('label'),verdict=document.getElementById('verdict');function update(){const n=toggles.filter(x=>x.classList.contains('on')).length,p=n*25;fill.style.width=p+'%';label.textContent=p+'% ready';verdict.textContent=n===4?'Useful, measurable and owned. Build the smallest proof.':n>=3?'Promising. Resolve the missing contract first.':'Interesting. Not ready to build yet.'}toggles.forEach(t=>t.onclick=()=>{t.classList.toggle('on');update()});update();const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(x=>io.observe(x));</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>Michael Ninh — Open Application for Overfly</title>
+  <meta name="description" content="Michael Ninh turns messy business problems into useful AI products — from use-case discovery and product design to RAG, MCP, evaluations, guardrails and production handover." />
+  <meta name="theme-color" content="#f6f3ee" />
+  <link rel="alternate" type="text/markdown" href="index.md" />
+  <style>
+    :root{
+      --bg:#f6f3ee;--paper:#fffdf8;--ink:#1d1824;--muted:#6e6874;--line:#1d18241a;
+      --purple:#6b43df;--purple-dark:#28193a;--lilac:#eee8ff;--acid:#dfff72;--peach:#ffd3bd;
+      --max:1180px;--radius:28px;--shadow:0 28px 80px rgba(38,24,57,.10);
+      font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(circle at 6% 0,#fff 0,transparent 31rem),radial-gradient(circle at 100% 8%,#e6ff9b80 0,transparent 34rem),var(--bg);color:var(--ink);line-height:1.55}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .wrap{width:min(var(--max),calc(100% - 36px));margin:auto;position:relative;z-index:1}
+    header{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line);background:#f6f3eee8;backdrop-filter:blur(18px)}
+    nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:-.03em}
+    .mark{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:var(--purple);color:white;font:900 11px ui-monospace;transform:rotate(-5deg)}
+    .links,.navActions,.buttons{display:flex;align-items:center;gap:18px}
+    .links{font-size:14px;color:var(--muted)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper);font-weight:850;cursor:pointer;transition:.2s}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(38,24,57,.10)}
+    .btn.primary{background:var(--purple);color:white;border-color:transparent}
+    .btn.dark{background:var(--purple-dark);color:white;border-color:transparent}
+    .hero{padding:88px 0 72px}
+    .heroGrid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:#fff9;color:var(--muted);font-size:13px}
+    .eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--purple);box-shadow:0 0 0 5px #6b43df13}
+    h1,h2,h3{margin:0;line-height:.98;letter-spacing:-.055em}
+    h1{font-size:clamp(55px,8vw,108px);margin:22px 0 24px;max-width:840px}
+    h1 em{font-style:normal;background:linear-gradient(transparent 58%,var(--acid) 58%);padding:0 .04em}
+    .lead{max-width:760px;font-size:clamp(18px,2vw,24px);color:var(--muted);margin:0 0 30px}
+    .signals{display:flex;gap:22px;flex-wrap:wrap;margin-top:30px;color:var(--muted);font-size:12px}
+    .signals b{display:block;color:var(--ink);font-size:14px}
+    .noteCard{background:var(--purple-dark);color:white;border-radius:32px;padding:28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .noteCard:after{content:"SHIP";position:absolute;right:-12px;bottom:-30px;font-size:130px;font-weight:950;letter-spacing:-.09em;color:#ffffff08}
+    .noteCard>*{position:relative;z-index:1}
+    .noteTop{display:flex;justify-content:space-between;gap:16px;color:#c8bbd4;font:800 11px ui-monospace;letter-spacing:.08em}
+    .remember{font-size:clamp(34px,4vw,56px);line-height:1;margin:44px 0 20px;letter-spacing:-.055em}
+    .noteCard p{color:#d8cfe0;font-size:16px;max-width:580px}
+    .miniProof{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:25px}
+    .miniProof div{padding:13px;border:1px solid #ffffff18;border-radius:16px;background:#ffffff09}
+    .miniProof b{display:block;color:var(--acid);font-size:20px}
+    .miniProof span{font-size:11px;color:#c8bbd4}
+    section{padding:88px 0;border-top:1px solid var(--line)}
+    .sectionHead{display:grid;grid-template-columns:.7fr 1.3fr;gap:44px;margin-bottom:34px;align-items:end}
+    .kicker{font:850 10px ui-monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--purple);margin-bottom:12px}
+    h2{font-size:clamp(40px,5vw,70px)}
+    .intro{font-size:18px;color:var(--muted);max-width:760px;margin:0}
+    .answers{display:grid;gap:14px}
+    .answer{display:grid;grid-template-columns:130px 1fr;gap:24px;padding:28px;border:1px solid var(--line);border-radius:24px;background:var(--paper);box-shadow:0 18px 50px rgba(38,24,57,.045)}
+    .answerNum{font:850 11px ui-monospace;color:var(--purple)}
+    .answer h3{font-size:clamp(30px,3.5vw,48px);margin-bottom:13px}
+    .answer p{color:var(--muted);font-size:16px;margin:0;max-width:850px}
+    .proofGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+    .project{border-radius:26px;padding:27px;background:var(--paper);border:1px solid var(--line);min-height:430px;display:flex;flex-direction:column}
+    .project.featured{background:var(--purple-dark);color:white}
+    .project small{font:850 10px ui-monospace;color:var(--purple)}
+    .project.featured small{color:var(--acid)}
+    .project h3{font-size:38px;margin:30px 0 13px}
+    .project p{color:var(--muted)}
+    .project.featured p{color:#cfc5d8}
+    .metricRow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:20px}
+    .metric{border-top:1px solid var(--line);padding-top:10px}
+    .featured .metric{border-color:#ffffff20}
+    .metric b{display:block;font-size:18px}
+    .metric span{font-size:10px;color:var(--muted)}
+    .featured .metric span{color:#b8a9c6}
+    .project .more{margin-top:auto;padding-top:22px;font-weight:850;color:var(--purple)}
+    .project.featured .more{color:var(--acid)}
+    .fourth{margin-top:14px;padding:18px 20px;border:1px dashed var(--line);border-radius:18px;display:flex;justify-content:space-between;gap:16px;color:var(--muted);background:#fff8}
+    .fourth b{color:var(--ink)}
+    .bringGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .bring{padding:25px;border-top:3px solid var(--purple);background:#fff7;border-radius:0 0 22px 22px}
+    .bring h3{font-size:32px;margin:9px 0 12px}
+    .bring p{color:var(--muted);margin:0}
+    .want{background:var(--purple-dark);color:white}
+    .want .intro{color:#cfc6d7}
+    .wantGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
+    .wantList{display:grid;gap:12px}
+    .wantItem{padding:18px;border:1px solid #ffffff18;border-radius:18px;background:#ffffff08}
+    .wantItem b{display:block;color:var(--acid);margin-bottom:6px}
+    .wantItem span{color:#cfc6d7;font-size:14px}
+    .triage{background:var(--paper);border:1px solid var(--line);border-radius:30px;padding:25px;box-shadow:var(--shadow)}
+    .triageTop{display:flex;justify-content:space-between;gap:16px;font:850 11px ui-monospace;color:var(--purple)}
+    .idea{font-size:31px;font-weight:900;letter-spacing:-.045em;margin:23px 0 17px}
+    .questions{display:grid;gap:9px}
+    .q{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 14px;border:1px solid var(--line);border-radius:15px;background:#faf8f5}
+    .toggle{width:53px;height:29px;border:0;border-radius:999px;background:#d9d4dc;padding:3px;cursor:pointer;transition:.2s}
+    .toggle:after{content:"";display:block;width:23px;height:23px;border-radius:50%;background:white;box-shadow:0 3px 10px #0002;transition:.2s}
+    .toggle.on{background:var(--purple)}
+    .toggle.on:after{transform:translateX(24px)}
+    .score{margin-top:15px;padding:16px;border-radius:16px;background:var(--lilac)}
+    .bar{height:9px;border-radius:999px;background:#d8cfec;overflow:hidden;margin-top:10px}
+    .fill{height:100%;width:25%;background:var(--purple);transition:.35s}
+    .first{display:grid;grid-template-columns:.86fr 1.14fr;gap:28px;align-items:start}
+    .firstLead{font-size:22px;color:var(--muted);margin:0}
+    .kit{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .kitItem{padding:18px;border-radius:18px;background:var(--paper);border:1px solid var(--line)}
+    .kitItem b{display:block;margin-bottom:7px}
+    .kitItem p{margin:0;color:var(--muted);font-size:13px}
+    .cta{border-radius:32px;padding:clamp(32px,5vw,62px);background:linear-gradient(135deg,var(--purple),#4f2aac);color:white;box-shadow:var(--shadow)}
+    .cta p{color:#ddd4e8;font-size:17px;max-width:780px}
+    footer{padding:42px 0;color:var(--muted);font-size:12px}
+    .foot{display:flex;justify-content:space-between;gap:20px}
+    .reveal{opacity:0;transform:translateY(14px);transition:.65s}
+    .reveal.in{opacity:1;transform:none}
+    @media(max-width:950px){.heroGrid,.sectionHead,.wantGrid,.first{grid-template-columns:1fr}.proofGrid{grid-template-columns:1fr}.project{min-height:auto}.links{display:none}.answers .answer{grid-template-columns:1fr}.miniProof{grid-template-columns:1fr 1fr 1fr}.bringGrid{grid-template-columns:1fr 1fr}}
+    @media(max-width:620px){.wrap{width:min(100% - 24px,var(--max))}.hero{padding-top:54px}h1{font-size:54px}.navActions .ghost{display:none}.buttons{flex-wrap:wrap}.signals,.miniProof,.bringGrid,.kit{display:grid;grid-template-columns:1fr}.fourth,.foot{display:block}.metricRow{grid-template-columns:1fr}.answer{padding:22px}.noteCard{padding:22px}}
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.btn,.toggle,.fill{transition:none}}
+  </style>
+</head>
+<body>
+<header>
+  <nav class="wrap">
+    <a class="brand" href="#top"><span class="mark">MN</span>Michael Ninh</a>
+    <div class="links"><a href="#answers">Three answers</a><a href="#proof">Shipped work</a><a href="#bring">What I bring</a><a href="#contact">Contact</a></div>
+    <div class="navActions"><a class="btn ghost" href="index.md">.md</a><a class="btn primary" href="cv.md">Download CV</a></div>
+  </nav>
+</header>
+<main id="top">
+  <div class="hero">
+    <div class="wrap heroGrid">
+      <div>
+        <div class="eyebrow"><i></i>Open Application · Applied AI · Berlin</div>
+        <h1>I turn messy business problems into <em>useful AI products.</em></h1>
+        <p class="lead">I am an applied AI builder with a background in engineering, product, ecommerce and operations. I work from unclear requirements to a working prototype, then add the APIs, retrieval, evaluations, guardrails and handover needed to make it useful in the real world.</p>
+        <div class="buttons"><a class="btn primary" href="#answers">Read my three answers →</a><a class="btn" href="#proof">See what I shipped</a><a class="btn" href="cv.md">Download CV</a></div>
+        <div class="signals"><div><b>Engineering</b>Python · TypeScript · FastAPI · React</div><div><b>Applied AI</b>RAG · MCP · structured outputs · evals</div><div><b>Delivery</b>problem → prototype → production handover</div></div>
+      </div>
+      <aside class="noteCard">
+        <div class="noteTop"><span>THE ONE-LINE TAKEAWAY</span><span>OVERFLY × MICHAEL</span></div>
+        <div class="remember">I care enough to make the product work after the demo.</div>
+        <p>I combine hands-on engineering with product judgement, customer empathy and an operator’s instinct for what actually has to get finished.</p>
+        <div class="miniProof"><div><b>5,936</b><span>laws indexed</span></div><div><b>53/53</b><span>citation evals</span></div><div><b>19/19</b><span>MCP toolkit tests</span></div></div>
+      </aside>
+    </div>
+  </div>
+
+  <section id="answers">
+    <div class="wrap">
+      <div class="sectionHead reveal"><div><div class="kicker">The three prompts</div><h2>Direct answers, no ceremonial cover letter.</h2></div><p class="intro">You asked for a project, my reason for being curious, and what I would tackle first. Here is the clearest version.</p></div>
+      <div class="answers">
+        <article class="answer reveal"><div class="answerNum">01 / PROJECT</div><div><h3>GitLaw — because confident AI is not enough.</h3><p>Laws and public processes shape people’s lives, but they are difficult to understand and navigate. I built GitLaw, a legal RAG and MCP platform over 5,936 German federal laws, with hybrid retrieval, local citation verification and 53 passing citation evaluation cases. I keep thinking about the broader problem: how can we make complex systems understandable without hiding uncertainty, evidence or human responsibility?</p></div></article>
+        <article class="answer reveal"><div class="answerNum">02 / WHY OVERFLY</div><div><h3>You work where possible becomes useful.</h3><p>Overfly works at the intersection I find most interesting: identifying a valuable use case, shaping the product with users and then engineering it through to production. I also like that you are not hiring for a rigid box. My strongest contribution comes from combining engineering with product judgement, customer empathy and an operator’s instinct for what needs to get finished.</p></div></article>
+        <article class="answer reveal"><div class="answerNum">03 / FIRST MOVE</div><div><h3>First understand the repeated friction. Then build the shared advantage.</h3><p>I would start by understanding where your current client projects repeatedly lose time or confidence between prototype and production. From there, I would build a lightweight Applied AI Delivery Kit: a use-case canvas, evaluation harness, typed tool contracts, cost and latency tracking, decision receipts and a clean handover pack. I have already built many of these components across GitLaw, SafeVoice and my MCP toolkit.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="proof">
+    <div class="wrap">
+      <div class="sectionHead reveal"><div><div class="kicker">Shipped proof</div><h2>Three projects. Three parts of the job.</h2></div><p class="intro">The systems are different on the surface, but each proves a part of the same loop: turn an ambiguous workflow into something useful, testable and maintainable.</p></div>
+      <div class="proofGrid">
+        <article class="project featured reveal"><small>DOMAIN RAG</small><h3>GitLaw</h3><p>Grounded answers over confident guesses: hybrid search, graph navigation, local citation verification, evaluation in CI and an active law-firm pilot.</p><div class="metricRow"><div class="metric"><b>5,936</b><span>laws</span></div><div class="metric"><b>98,367</b><span>vectors</span></div><div class="metric"><b>53/53</b><span>citation evals</span></div></div><a class="more" href="https://github.com/mikelninh/gitlaw">Inspect code →</a></article>
+        <article class="project reveal"><small>BOUNDED AUTOMATION</small><h3>SafeVoice</h3><p>Automation with visible boundaries: an eight-tool workflow with human approval, audit trails, structured outputs, iteration limits and real-case validation.</p><div class="metricRow"><div class="metric"><b>8 tools</b><span>bounded runtime</span></div><div class="metric"><b>35</b><span>real cases</span></div><div class="metric"><b>~30 sec</b><span>end to end</span></div></div><a class="more" href="https://github.com/mikelninh/safevoice">See the guardrails →</a></article>
+        <article class="project reveal"><small>REUSABLE CAPABILITY</small><h3>Civic AI MCP Toolkit</h3><p>Repeated work should become reusable capability: shared tracing, health checks, error contracts, fixtures and project scaffolding extracted from six MCP systems.</p><div class="metricRow"><div class="metric"><b>6</b><span>MCP systems</span></div><div class="metric"><b>19/19</b><span>hermetic tests</span></div><div class="metric"><b>1 command</b><span>new server</span></div></div><a class="more" href="https://github.com/mikelninh/civic-ai-mcp-toolkit">View the toolkit →</a></article>
+      </div>
+      <div class="fourth reveal"><span><b>Also shipped:</b> Agent Loop Lab — a checkpointed workflow that retries only the failed step instead of repeating expensive model work.</span><a href="https://github.com/mikelninh/agent-loop-lab"><b>Open project →</b></a></div>
+    </div>
+  </section>
+
+  <section id="bring">
+    <div class="wrap">
+      <div class="sectionHead reveal"><div><div class="kicker">What I bring</div><h2>A useful combination, not one rigid title.</h2></div><p class="intro">My advantage is not only that I can build. It is that I can connect the technical system to the business problem, the user and the operational reality around it.</p></div>
+      <div class="bringGrid">
+        <article class="bring reveal"><h3>Applied AI engineering</h3><p>Python, TypeScript, FastAPI, React, APIs, RAG, MCP, structured outputs and evaluation systems.</p></article>
+        <article class="bring reveal"><h3>Product judgement</h3><p>I enjoy turning unclear business needs into concrete workflows, prototypes and acceptance criteria.</p></article>
+        <article class="bring reveal"><h3>Operator mentality</h3><p>I have run ecommerce and operational systems where weak handovers, edge cases and reliability failures have immediate consequences.</p></article>
+        <article class="bring reveal"><h3>Client empathy</h3><p>I can communicate with technical and non-technical people without hiding behind unnecessary complexity.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="want">
+    <div class="wrap wantGrid">
+      <div class="reveal"><div class="kicker" style="color:var(--acid)">What I want to do more of</div><h2>Build closer to real customer problems.</h2><p class="intro">I want to work from discovery through production, take ownership of useful product slices and learn alongside experienced engineers, product builders and strategists.</p></div>
+      <div class="wantList reveal"><div class="wantItem"><b>Document-heavy workflows</b><span>Knowledge systems where evidence, versions and access matter.</span></div><div class="wantItem"><b>Operational agents</b><span>Tools that assist real decisions and actions, not only generate text.</span></div><div class="wantItem"><b>Reliable delivery</b><span>Products where quality, recovery and handover matter more than a flashy demo.</span></div></div>
+    </div>
+  </section>
+
+  <section id="triage">
+    <div class="wrap">
+      <div class="sectionHead reveal"><div><div class="kicker">Mini working session</div><h2>Should we actually build this?</h2></div><p class="intro">A useful AI project starts with the bottleneck, the evidence and the owner — not with the model.</p></div>
+      <div class="triage reveal">
+        <div class="triageTop"><span>USE_CASE_CHECK</span><span id="label">25% ready</span></div>
+        <div class="idea">“An AI agent that automatically processes incoming customer requests.”</div>
+        <div class="questions">
+          <div class="q"><span>Is there a measurable user bottleneck?</span><button class="toggle on" aria-label="Toggle measurable bottleneck"></button></div>
+          <div class="q"><span>Is reliable source data available?</span><button class="toggle" aria-label="Toggle reliable source data"></button></div>
+          <div class="q"><span>Is the action reversible or reviewable?</span><button class="toggle" aria-label="Toggle reviewable action"></button></div>
+          <div class="q"><span>Is there a person who owns the outcome?</span><button class="toggle" aria-label="Toggle outcome owner"></button></div>
+        </div>
+        <div class="score"><b id="verdict">Interesting idea. Not enough evidence to build yet.</b><div class="bar"><div class="fill" id="fill"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="first">
+    <div class="wrap first">
+      <div class="reveal"><div class="kicker">A possible first contribution</div><h2>An Applied AI Delivery Kit.</h2><p class="firstLead">Not a heavy framework. A lightweight shared advantage built around the patterns your team actually sees across client projects.</p></div>
+      <div class="kit reveal">
+        <article class="kitItem"><b>Use-case canvas</b><p>User, decision, current cost, evidence, action, risk and measurable success.</p></article>
+        <article class="kitItem"><b>Evaluation harness</b><p>Representative, adversarial and edge cases with deterministic checks first.</p></article>
+        <article class="kitItem"><b>Typed tool contracts</b><p>Inputs, outputs, permissions, failure states and human review boundaries.</p></article>
+        <article class="kitItem"><b>Operational visibility</b><p>Model version, latency, cost, retries, tool calls and recovery paths.</p></article>
+        <article class="kitItem"><b>Decision receipt</b><p>Evidence, assumptions, uncertainty and action in one inspectable record.</p></article>
+        <article class="kitItem"><b>Clean handover</b><p>Architecture decisions, runbook, evaluation set, limits and next experiments.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="cta reveal"><div class="kicker" style="color:var(--acid)">Berlin · open application</div><h2>I would love to build the useful part with you.</h2><p>I currently use ChatGPT as my main AI workbench, alongside Python, TypeScript and standard development tools. I care less about loyalty to one interface than whether the resulting product is testable, maintainable and useful.</p><div class="buttons"><a class="btn" style="background:var(--acid);border-color:transparent" href="mailto:hello@overf.ly?subject=Open%20Application%20-%20Michael%20Ninh">Email Overfly</a><a class="btn" href="cv.md">Download CV</a><a class="btn" href="work-sample.md">Work sample</a><a class="btn" href="https://www.linkedin.com/in/michael-ninh">LinkedIn</a><a class="btn" href="https://github.com/mikelninh">GitHub</a></div></div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap foot"><div>© 2026 Michael Ninh · open application for Overfly</div><div>Berlin · mikel_ninh@yahoo.de</div></div></footer>
+<script>
+  const toggles=[...document.querySelectorAll('.toggle')], label=document.getElementById('label'), fill=document.getElementById('fill'), verdict=document.getElementById('verdict');
+  function update(){const n=toggles.filter(t=>t.classList.contains('on')).length;const pct=n*25;label.textContent=pct+'% ready';fill.style.width=pct+'%';verdict.textContent=n<=1?'Interesting idea. Not enough evidence to build yet.':n===2?'Promising. Clarify the missing risk and ownership before prototyping.':n===3?'Good prototype candidate. Define the remaining boundary first.':'Ready for a focused vertical slice and evaluation set.'}
+  toggles.forEach(t=>t.addEventListener('click',()=>{t.classList.toggle('on');update()}));update();
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
