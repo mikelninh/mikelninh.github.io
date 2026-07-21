@@ -6,6 +6,10 @@ on:
     paths:
       - 'ramen/**'
       - '.github/workflows/ramen-standalone-package.yml'
+  pull_request:
+    paths:
+      - 'ramen/**'
+      - '.github/workflows/ramen-standalone-package.yml'
   workflow_dispatch:
 
 permissions:
@@ -27,11 +31,12 @@ jobs:
         run: npm run check:ui
       - name: Validate standalone data and URLs
         working-directory: dist/ramen-passport
-        run: npm run check:data
+        run: npm run check:data || (sleep 10 && npm run check:data)
       - name: Upload standalone repository
         uses: actions/upload-artifact@v4
         with:
           name: ramen-passport-standalone-repo
           path: dist/ramen-passport
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 90
