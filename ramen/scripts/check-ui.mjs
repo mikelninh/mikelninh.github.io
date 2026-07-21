@@ -21,11 +21,15 @@ for (const id of new Set(ids)) {
   if (count > 1) errors.push(`Duplicate HTML id: ${id} (${count} occurrences)`);
 }
 
-for (const file of ['app.js','ux-v2.js','quick-rank.js','germany-overrides.js','germany-round2.js','germany-round3.js','germany-round4.js','image-round4.js','source-fixes.js']) {
+for (const file of ['app.js','ux-v2.js','quick-rank.js','ramen-data.js','germany-overrides.js','germany-round2.js','germany-round3.js','germany-round4.js','image-round4.js','source-fixes.js']) {
   const source = await fs.readFile(path.join(root,file),'utf8');
   try { new vm.Script(source,{filename:file}); }
   catch (error) { errors.push(`${file}: ${error.message}`); }
 }
+
+const localData = await fs.readFile(path.join(root,'ramen-data.js'),'utf8');
+const legacyData = await fs.readFile(path.resolve('vegan/ramen-data.js'),'utf8');
+if (localData !== legacyData) errors.push('ramen/ramen-data.js and vegan/ramen-data.js differ. Keep them synchronized until the standalone repository becomes canonical.');
 
 const quick = await fs.readFile(path.join(root,'quick-rank.js'),'utf8');
 for (const required of ['data-quick-tier','quickChallenge','downloadCard','openNote','challengePayload','michael-ramen-tasting-notes-v1']) {
