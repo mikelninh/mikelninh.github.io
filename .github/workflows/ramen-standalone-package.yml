@@ -6,6 +6,10 @@ on:
     paths:
       - 'ramen/**'
       - '.github/workflows/ramen-standalone-package.yml'
+  pull_request:
+    paths:
+      - 'ramen/**'
+      - '.github/workflows/ramen-standalone-package.yml'
   workflow_dispatch:
 
 permissions:
