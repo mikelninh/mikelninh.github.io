@@ -31,6 +31,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Check UI syntax and local assets
+        run: node ramen/scripts/check-ui.mjs
       - name: Validate data, sources, buy links and images
         id: audit
         continue-on-error: true

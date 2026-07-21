@@ -35,7 +35,7 @@
     },
     'buldak-original': {
       market:'Global official · German pack review pending', verificationLevel:'official-global', verifiedAt:VERIFIED_AT,
-      source:'https://www.samyangfoods.com/eng/brand/view.do?searchMainUseYn=Y&seq=245',
+      source:'https://www.samyangfoods.com/eng/brand/view.do?searchMainUseYn=Y&seq=245', imageSource:'https://www.samyangfoods.com/eng/brand/view.do?searchMainUseYn=Y&seq=245',
       evidence:{en:'Samyang’s current global product page verifies the product identity. Vegan status for the German retail pack is not verified.',de:'Samyangs aktuelle globale Produktseite bestätigt die Produktidentität. Der Veganstatus der deutschen Verkaufspackung ist nicht geprüft.'}
     },
     'buldak-habanero': {

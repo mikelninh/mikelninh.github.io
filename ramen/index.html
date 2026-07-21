@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="quick-rank.css" />
 </head>
 <body>
   <header class="site-header">
@@ -83,6 +84,6 @@
   <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="pickName"><div class="modal-card"><button class="modal-close" id="modalClose" aria-label="Close">×</button><span class="section-no" data-en="YOUR NEXT BOWL" data-de="DEINE NÄCHSTE BOWL">YOUR NEXT BOWL</span><div class="pick"><div class="pick-image-wrap"><span class="pick-steam">〰 〰 〰</span><img id="pickImage" alt=""></div><div><h2 id="pickName"></h2><p id="pickMeta"></p><p id="pickEvidence"></p><div class="pick-links" id="pickLinks"></div></div></div><p class="rank-prompt" data-en="Tried it? Stamp your verdict immediately:" data-de="Probiert? Stemple sofort dein Urteil:">Tried it? Stamp your verdict immediately:</p><div class="rank-buttons" id="rankButtons"></div><div class="modal-actions"><button class="btn nori" id="pickTasted" type="button" data-en="Mark as tasted ✓" data-de="Als probiert markieren ✓">Mark as tasted ✓</button><button class="btn miso" id="anotherPick" type="button" data-en="Serve another bowl" data-de="Noch eine Bowl servieren">Serve another bowl</button></div></div></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="../vegan/ramen-data.js"></script><script src="germany-overrides.js"></script><script src="germany-round2.js"></script><script src="germany-round3.js"></script><script src="germany-round4.js"></script><script src="image-round4.js"></script><script src="app.js"></script><script src="ux-v2.js"></script>
+  <script src="../vegan/ramen-data.js"></script><script src="germany-overrides.js"></script><script src="germany-round2.js"></script><script src="germany-round3.js"></script><script src="germany-round4.js"></script><script src="image-round4.js"></script><script src="app.js"></script><script src="ux-v2.js"></script><script src="quick-rank.js"></script>
 </body>
 </html>
