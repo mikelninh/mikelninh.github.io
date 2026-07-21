@@ -10,103 +10,248 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#171412;--text:#f8f1e7;--muted:#b9aea2;--line:rgba(248,241,231,.15);--gold:#d3a64b;--cyan:#71e5dd;--max:1180px;--display:"Bricolage Grotesque",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;--mono:"DM Mono",monospace}
+    :root{
+      --bg:#171412;--text:#f8f1e7;--muted:#b9aea2;--line:rgba(248,241,231,.15);
+      --gold:#d3a64b;--cyan:#71e5dd;--card:#151311;--max:1180px;
+      --display:"Bricolage Grotesque",system-ui,sans-serif;
+      --body:"Inter",system-ui,sans-serif;--mono:"DM Mono",monospace
+    }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;color:var(--text);font-family:var(--body);line-height:1.55;background:radial-gradient(circle at 8% 0,rgba(163,62,66,.27),transparent 31rem),radial-gradient(circle at 90% 12%,rgba(87,122,155,.21),transparent 30rem),linear-gradient(180deg,#171412,#211b18 68%,#151210)}
-    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.77' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+    body{
+      margin:0;color:var(--text);font-family:var(--body);line-height:1.55;
+      background:
+        radial-gradient(circle at 8% 0,rgba(163,62,66,.27),transparent 31rem),
+        radial-gradient(circle at 90% 12%,rgba(87,122,155,.21),transparent 30rem),
+        linear-gradient(180deg,#171412,#211b18 68%,#151210)
+    }
+    body:before{
+      content:"";position:fixed;inset:0;pointer-events:none;opacity:.07;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.77' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+    }
     a{color:inherit;text-decoration:none}
     .wrap{width:min(var(--max),calc(100% - 40px));margin:auto;position:relative;z-index:1}
     header{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:rgba(23,20,18,.82);backdrop-filter:blur(18px)}
     nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
     .brand{font-family:var(--display);font-weight:800;letter-spacing:-.03em}.brand span{color:var(--gold)}
     .links{display:flex;align-items:center;gap:17px;color:var(--muted);font-size:13px}.links a:hover{color:var(--text)}
-    .pill{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;border:1px solid var(--line);border-radius:999px;font-weight:800;transition:.2s}.pill.hot{color:#171412;background:var(--gold);border-color:transparent}.pill:hover{transform:translateY(-2px)}
+    .pill{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;border:1px solid var(--line);border-radius:999px;font-weight:800;transition:.2s}
+    .pill.hot{color:#171412;background:var(--gold);border-color:transparent}.pill:hover{transform:translateY(-2px)}
     h1,h2,h3,blockquote{font-family:var(--display);letter-spacing:-.055em;line-height:.94;margin:0}
-    .hero{padding:96px 0 76px}.index{font:700 10px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
-    h1{max-width:1080px;margin:22px 0 28px;font-size:clamp(62px,10vw,137px);font-weight:650}h1 em{display:block;color:var(--gold);font-style:normal}
+    .hero{padding:96px 0 76px}
+    .index{font:700 10px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+    h1{max-width:1080px;margin:22px 0 28px;font-size:clamp(62px,10vw,137px);font-weight:650}
+    h1 em{display:block;color:var(--gold);font-style:normal}
     .lead{max-width:900px;margin:0;color:var(--muted);font-size:clamp(18px,2vw,24px)}
-    .chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:32px}.chip{padding:8px 11px;border:1px solid var(--line);border-radius:999px;color:#d8cec3;font:600 10px var(--mono);text-transform:uppercase}
-    .context{display:grid;grid-template-columns:.7fr 1.3fr;gap:36px;margin-top:45px;padding-top:25px;border-top:1px solid var(--line)}.context strong{font:600 30px var(--display);letter-spacing:-.04em}.context p{margin:0;color:var(--muted)}
+    .chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:32px}
+    .chip{padding:8px 11px;border:1px solid var(--line);border-radius:999px;color:#d8cec3;font:600 10px var(--mono);text-transform:uppercase}
+    .context{display:grid;grid-template-columns:.7fr 1.3fr;gap:36px;margin-top:45px;padding-top:25px;border-top:1px solid var(--line)}
+    .context strong{font:600 30px var(--display);letter-spacing:-.04em}.context p{margin:0;color:var(--muted)}
     section{padding:86px 0;border-top:1px solid var(--line)}
-    .section-head{display:grid;grid-template-columns:.74fr 1.26fr;gap:42px;align-items:end;margin-bottom:35px}.section-head p{max-width:760px;margin:0;color:var(--muted);font-size:18px}h2{font-size:clamp(42px,6vw,78px)}
+    .section-head{display:grid;grid-template-columns:.74fr 1.26fr;gap:42px;align-items:end;margin-bottom:35px}
+    .section-head p{max-width:760px;margin:0;color:var(--muted);font-size:18px}
+    h2{font-size:clamp(42px,6vw,78px)}
     .source-note{margin:-18px 0 30px;color:#81776e;font:10px var(--mono);letter-spacing:.06em}
 
-    .practice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:stretch}
-    .practice{min-height:420px;display:grid;grid-template-rows:245px 1fr;border:1px solid var(--line);border-radius:29px;overflow:hidden;background:#141210}
-    .practice-media{position:relative;overflow:hidden}
+    .practice-grid,.visual-grid,.film-grid{display:grid;gap:16px;align-items:stretch}
+    .practice-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .visual-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .film-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .practice,.visual-card,.film{
+      overflow:hidden;border:1px solid var(--line);border-radius:28px;background:var(--card);
+      box-shadow:0 18px 60px rgba(0,0,0,.08)
+    }
+
+    .practice{height:430px;display:grid;grid-template-rows:250px 180px}
+    .practice-media{position:relative;overflow:hidden;background:#20201f}
     .practice-media img{width:100%;height:100%;object-fit:cover;display:block}
-    .practice-copy{padding:18px 20px 20px;background:#151311}
-    .practice small{color:var(--cyan);font:700 9px var(--mono);letter-spacing:.11em}
-    .practice h3{margin:7px 0 8px;font-size:31px}
-    .practice p{margin:0;color:#d3c8bd;font-size:12px;line-height:1.42}
-    .martial-art{background:radial-gradient(circle at 50% 42%,rgba(255,221,176,.16),transparent 26%),linear-gradient(145deg,#5a2825,#171312)}
-    .martial-art:before{content:"武";position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,244,229,.9);font:700 112px var(--display);transform:translateY(-6px)}
-    .martial-art:after{content:"PRESENCE · TIMING · RESPONSE";position:absolute;left:18px;right:18px;bottom:16px;color:#efc09a;font:700 8px var(--mono);letter-spacing:.13em;text-align:center}
-    .table-art{background:radial-gradient(circle at 75% 24%,rgba(113,229,221,.28),transparent 18%),linear-gradient(145deg,#24575b,#12191a)}
-    .table-art:before{content:"";position:absolute;width:98px;height:98px;border:11px solid rgba(239,244,239,.9);border-radius:50%;left:39px;top:44px;box-shadow:95px 70px 0 -34px #f2c552}
-    .table-art:after{content:"↔";position:absolute;right:30px;bottom:14px;color:rgba(255,255,255,.82);font:800 88px var(--display)}
-    .volleyball img{object-position:center 40%}
-    .decrypto img{object-fit:contain!important;padding:13px;background:#f1eee7}
+    .practice-media.decrypto{
+      display:grid;place-items:center;
+      background:linear-gradient(145deg,#c7d9df,#f2ded0)
+    }
+    .practice-media.decrypto img{
+      width:92%;height:92%;object-fit:contain;padding:8px;mix-blend-mode:multiply
+    }
+    .practice-copy,.visual-copy,.film-copy{background:var(--card)}
+    .practice-copy{padding:19px 20px 20px}
+    .practice small,.visual-copy small,.film small{font:700 9px var(--mono);letter-spacing:.11em;text-transform:uppercase}
+    .practice small{color:var(--cyan)}
+    .practice h3{margin:7px 0 9px;font-size:31px}
+    .practice p{margin:0;color:#d3c8bd;font-size:12px;line-height:1.45}
 
-    .visual-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start}
-    .visual-card{overflow:hidden;border:1px solid var(--line);border-radius:28px;background:#151311;transition:.24s}
-    .visual-card:hover{transform:translateY(-5px);box-shadow:0 30px 70px rgba(0,0,0,.22)}
-    .visual-card img{width:100%;height:auto;display:block;background:transparent}
-    .visual-copy{padding:20px 21px 24px;background:#151311}
-    .visual-copy small{color:var(--gold);font:700 9px var(--mono);letter-spacing:.11em;text-transform:uppercase}
-    .visual-copy h3{font-size:30px;margin:9px 0 10px}.visual-copy p{margin:0;color:#d6cbc1;font-size:13px;line-height:1.48}
+    .visual-card{height:640px;display:grid;grid-template-rows:420px 220px}
+    .film{height:860px;display:grid;grid-template-rows:690px 170px}
+    .media-frame{position:relative;overflow:hidden;background:#221e1b;isolation:isolate}
+    .media-frame:before{
+      content:"";position:absolute;inset:-12%;z-index:-2;
+      background-image:var(--media);background-size:cover;background-position:center;
+      filter:blur(28px) saturate(.85);opacity:.52;transform:scale(1.12)
+    }
+    .media-frame:after{
+      content:"";position:absolute;inset:0;z-index:-1;
+      background:linear-gradient(180deg,rgba(12,10,9,.02),rgba(12,10,9,.18))
+    }
+    .media-frame img{width:100%;height:100%;object-fit:contain;display:block;position:relative;z-index:1}
+    .visual-copy{padding:20px 21px 24px}
+    .visual-copy small,.film small{color:var(--gold)}
+    .visual-copy h3{font-size:30px;margin:9px 0 10px}
+    .visual-copy p{margin:0;color:#d6cbc1;font-size:13px;line-height:1.48}
+    .film-copy{padding:24px 28px 27px}
+    .film h3{font-size:clamp(34px,4vw,52px);margin:9px 0 11px}
+    .film p{max-width:580px;margin:0;color:#ddd1c7}
 
-    .film-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;align-items:start}
-    .film{overflow:hidden;border:1px solid var(--line);border-radius:32px;background:#151311}
-    .film img{width:100%;height:auto;display:block;background:transparent;transition:.35s}
-    .film:hover img{transform:scale(1.008)}
-    .film-copy{padding:24px 28px 27px;background:#151311}.film small{color:var(--gold);font:700 9px var(--mono);letter-spacing:.11em}.film h3{font-size:clamp(34px,4vw,52px);margin:9px 0 11px}.film p{max-width:580px;margin:0;color:#ddd1c7}
+    .project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+    .project{min-height:390px;padding:30px;border:1px solid var(--line);border-radius:31px;position:relative;overflow:hidden;transition:.22s}
+    .project:hover{transform:translateY(-4px)}
+    .project:after{content:attr(data-ghost);position:absolute;right:-12px;bottom:-30px;color:rgba(255,255,255,.045);font:800 clamp(90px,12vw,160px)/.8 var(--display);letter-spacing:-.08em}
+    .project>*{position:relative;z-index:1}.project small{font:700 9px var(--mono);letter-spacing:.12em}
+    .project h3{margin:55px 0 15px;font-size:clamp(43px,5vw,68px)}.project p{max-width:600px;color:var(--muted)}
+    .project .action{display:inline-flex;margin-top:20px;font-weight:850}
+    .echo{background:radial-gradient(circle at 85% 10%,rgba(113,229,221,.18),transparent 20rem),linear-gradient(145deg,#13253c,#0d111e)}
+    .echo small,.echo .action{color:var(--cyan)}
+    .tactics{background:linear-gradient(145deg,#40214c,#162037)}.tactics small,.tactics .action{color:#e499ff}
+    .ramen{color:#171412;background:linear-gradient(145deg,#ffce59,#ff795b)}
+    .ramen:after,.atelier:after{color:rgba(23,20,18,.055)}.ramen p,.atelier p{color:#46392f}
+    .atelier{color:#171412;background:linear-gradient(145deg,#e5ddc9,#a8c5a9)}.atelier small,.atelier .action{color:#315f43}
 
-    .project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.project{min-height:390px;padding:30px;border:1px solid var(--line);border-radius:31px;position:relative;overflow:hidden;transition:.22s}.project:hover{transform:translateY(-4px)}.project:after{content:attr(data-ghost);position:absolute;right:-12px;bottom:-30px;color:rgba(255,255,255,.045);font:800 clamp(90px,12vw,160px)/.8 var(--display);letter-spacing:-.08em}.project>*{position:relative;z-index:1}.project small{font:700 9px var(--mono);letter-spacing:.12em}.project h3{margin:55px 0 15px;font-size:clamp(43px,5vw,68px)}.project p{max-width:600px;color:var(--muted)}.project .action{display:inline-flex;margin-top:20px;font-weight:850}.echo{background:radial-gradient(circle at 85% 10%,rgba(113,229,221,.18),transparent 20rem),linear-gradient(145deg,#13253c,#0d111e)}.echo small,.echo .action{color:var(--cyan)}.tactics{background:linear-gradient(145deg,#40214c,#162037)}.tactics small,.tactics .action{color:#e499ff}.ramen{color:#171412;background:linear-gradient(145deg,#ffce59,#ff795b)}.ramen:after,.atelier:after{color:rgba(23,20,18,.055)}.ramen p,.atelier p{color:#46392f}.atelier{color:#171412;background:linear-gradient(145deg,#e5ddc9,#a8c5a9)}.atelier small,.atelier .action{color:#315f43}
-    .ideas{display:grid;grid-template-columns:1.15fr .85fr .85fr;gap:14px}.idea{min-height:350px;padding:28px;border:1px solid var(--line);border-radius:28px;background:rgba(255,255,255,.045);transition:.22s}.idea:hover{transform:translateY(-4px);background:rgba(255,255,255,.065)}.idea small{color:var(--gold);font:700 9px var(--mono);letter-spacing:.11em}.idea h3{margin:45px 0 13px;font-size:43px}.idea p{color:var(--muted);font-size:14px}.idea .action{display:inline-flex;margin-top:16px;color:var(--gold);font-weight:850}.idea.primary{background:linear-gradient(145deg,#25362d,#161a18)}
-    .quote{padding:clamp(32px,6vw,67px);border:1px solid rgba(211,166,75,.42);border-radius:34px;background:linear-gradient(145deg,rgba(211,166,75,.15),rgba(255,255,255,.035))}.quote blockquote{max-width:1040px;color:var(--gold);font-size:clamp(42px,6vw,81px)}.quote p{margin:20px 0 0;color:var(--muted)}
-    .letterboxd{display:grid;grid-template-columns:1.3fr .7fr;gap:30px;align-items:end;padding:clamp(30px,5vw,58px);border-radius:34px;color:#171412;background:linear-gradient(135deg,#f3e6d2,#e2c37d)}.letterboxd p{max-width:740px}.letterboxd .pill{justify-self:end;background:#171412;color:#f8f1e7}
-    footer{padding:46px 0;border-top:1px solid var(--line);color:var(--muted);font-size:12px}.foot{display:flex;justify-content:space-between;gap:18px}.footlinks{display:flex;gap:15px}
-    @media(max-width:1050px){.practice-grid,.visual-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:980px){.section-head,.context,.letterboxd{grid-template-columns:1fr}.ideas{grid-template-columns:1fr}.film-grid,.project-grid{grid-template-columns:1fr}.letterboxd .pill{justify-self:start}.links a:not(.pill){display:none}}
-    @media(max-width:580px){.wrap{width:min(var(--max),calc(100% - 24px))}.hero{padding-top:66px}.visual-grid,.practice-grid{grid-template-columns:1fr}.foot{display:block}.footlinks{margin-top:12px;flex-wrap:wrap}h1{font-size:59px}}
+    .ideas{display:grid;grid-template-columns:1.15fr .85fr .85fr;gap:14px}
+    .idea{min-height:350px;padding:28px;border:1px solid var(--line);border-radius:28px;background:rgba(255,255,255,.045);transition:.22s}
+    .idea:hover{transform:translateY(-4px);background:rgba(255,255,255,.065)}
+    .idea small{color:var(--gold);font:700 9px var(--mono);letter-spacing:.11em}.idea h3{margin:45px 0 13px;font-size:43px}
+    .idea p{color:var(--muted);font-size:14px}.idea .action{display:inline-flex;margin-top:16px;color:var(--gold);font-weight:850}
+    .idea.primary{background:linear-gradient(145deg,#25362d,#161a18)}
+    .quote{padding:clamp(32px,6vw,67px);border:1px solid rgba(211,166,75,.42);border-radius:34px;background:linear-gradient(145deg,rgba(211,166,75,.15),rgba(255,255,255,.035))}
+    .quote blockquote{max-width:1040px;color:var(--gold);font-size:clamp(42px,6vw,81px)}.quote p{margin:20px 0 0;color:var(--muted)}
+    .letterboxd{display:grid;grid-template-columns:1.3fr .7fr;gap:30px;align-items:end;padding:clamp(30px,5vw,58px);border-radius:34px;color:#171412;background:linear-gradient(135deg,#f3e6d2,#e2c37d)}
+    .letterboxd p{max-width:740px}.letterboxd .pill{justify-self:end;background:#171412;color:#f8f1e7}
+    footer{padding:46px 0;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+    .foot{display:flex;justify-content:space-between;gap:18px}.footlinks{display:flex;gap:15px}
+
+    @media(max-width:1050px){
+      .practice-grid,.visual-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media(max-width:980px){
+      .section-head,.context,.letterboxd{grid-template-columns:1fr}
+      .ideas{grid-template-columns:1fr}.film-grid,.project-grid{grid-template-columns:1fr}
+      .film{height:820px;grid-template-rows:650px 170px}
+      .letterboxd .pill{justify-self:start}.links a:not(.pill){display:none}
+    }
+    @media(max-width:580px){
+      .wrap{width:min(var(--max),calc(100% - 24px))}.hero{padding-top:66px}
+      .visual-grid,.practice-grid{grid-template-columns:1fr}
+      .visual-card{height:610px;grid-template-rows:390px 220px}
+      .film{height:700px;grid-template-rows:530px 170px}
+      .foot{display:block}.footlinks{margin-top:12px;flex-wrap:wrap}h1{font-size:59px}
+    }
   </style>
 </head>
 <body>
-<header><nav class="wrap"><a class="brand" href="../">Michael<span>.</span>Ninh</a><div class="links"><a href="#practice">Practice</a><a href="#foundations">Foundations</a><a href="#creation">Creation</a><a href="#ideas">Ideas</a><a href="../vegan/">Plant Table</a><a class="pill hot" href="../">AI portfolio</a></div></nav></header>
+<header>
+  <nav class="wrap">
+    <a class="brand" href="../">Michael<span>.</span>Ninh</a>
+    <div class="links">
+      <a href="#practice">Practice</a><a href="#foundations">Foundations</a><a href="#creation">Creation</a><a href="#ideas">Ideas</a>
+      <a href="../vegan/">Plant Table</a><a class="pill hot" href="../">AI portfolio</a>
+    </div>
+  </nav>
+</header>
 <main>
-  <section class="hero"><div class="wrap"><div class="index">CULTURE / PERSONAL CONTEXT</div><h1>Things I return to <em>when I want to feel alive and see clearly.</em></h1><p class="lead">Movement, films, books, games and projects that genuinely shape how I pay attention. Not credentials and not an algorithmic top ten — just the honest second layer behind the work.</p><div class="chips"><span class="chip">martial arts</span><span class="chip">table tennis</span><span class="chip">volleyball</span><span class="chip">board games</span><span class="chip">cinema</span><span class="chip">compassion</span><span class="chip">creation</span></div><div class="context"><strong>Context, not credentials.</strong><p>My engineering work should stand on its own. This page exists for the curious person who wants to understand the values, energy and aesthetic instincts behind it.</p></div></div></section>
+  <section class="hero">
+    <div class="wrap">
+      <div class="index">CULTURE / PERSONAL CONTEXT</div>
+      <h1>Things I return to <em>when I want to feel alive and see clearly.</em></h1>
+      <p class="lead">Movement, films, books, games and projects that genuinely shape how I pay attention. Not credentials and not an algorithmic top ten — just the honest second layer behind the work.</p>
+      <div class="chips"><span class="chip">martial arts</span><span class="chip">table tennis</span><span class="chip">volleyball</span><span class="chip">board games</span><span class="chip">cinema</span><span class="chip">compassion</span><span class="chip">creation</span></div>
+      <div class="context"><strong>Context, not credentials.</strong><p>My engineering work should stand on its own. This page exists for the curious person who wants to understand the values, energy and aesthetic instincts behind it.</p></div>
+    </div>
+  </section>
 
-  <section id="practice"><div class="wrap"><div class="section-head"><div><div class="index">01 / LIVING PRACTICES</div><h2>Thinking with the body — and with friends.</h2></div><p>Some of the most useful lessons never arrived through a screen: relax without becoming passive, read the other person, adapt quickly, trust the team and stay playful under pressure.</p></div><div class="practice-grid">
-    <article class="practice"><div class="practice-media martial-art"></div><div class="practice-copy"><small>MOVEMENT · DISCIPLINE</small><h3>Martial arts</h3><p>Presence, repetition, humility and the ability to remain soft enough to respond.</p></div></article>
-    <article class="practice"><div class="practice-media table-art"></div><div class="practice-copy"><small>SPEED · FEEDBACK</small><h3>Table tennis</h3><p>Read spin, adjust timing, recover immediately and never confuse one point with the whole game.</p></div></article>
-    <article class="practice"><div class="practice-media volleyball"><img loading="lazy" src="assets/fly-high-volleyball.svg" alt="Fly High volleyball team visual"></div><div class="practice-copy"><small>VOLLEYBALL · TEAM ENERGY</small><h3>Fly High!</h3><p>Trust the call, cover one another and meet the ball at the highest point together.</p></div></article>
-    <article class="practice"><div class="practice-media decrypto"><img loading="lazy" referrerpolicy="no-referrer" src="https://www.hachetteboardgames.com/cdn/shop/files/Web_Decrypto-boxleft.jpg?v=1724880966&width=1946" alt="Decrypto board game box" onerror="this.onerror=null;this.src='assets/decrypto.svg'"></div><div class="practice-copy"><small>BOARD GAME · COMMUNICATION</small><h3>Decrypto</h3><p>Precise clues, shared context and the joy of being understood without being obvious.</p></div></article>
-  </div></div></section>
+  <section id="practice">
+    <div class="wrap">
+      <div class="section-head"><div><div class="index">01 / LIVING PRACTICES</div><h2>Thinking with the body — and with friends.</h2></div><p>Some of the most useful lessons never arrived through a screen: relax without becoming passive, read the other person, adapt quickly, trust the team and stay playful under pressure.</p></div>
+      <div class="practice-grid">
+        <article class="practice"><div class="practice-media"><img loading="lazy" src="assets/martial-arts.svg" alt="Two martial artists training in a warm minimalist dojo"></div><div class="practice-copy"><small>MOVEMENT · DISCIPLINE</small><h3>Martial arts</h3><p>Presence, repetition, humility and the ability to remain soft enough to respond.</p></div></article>
+        <article class="practice"><div class="practice-media"><img loading="lazy" src="assets/table-tennis.svg" alt="Two table tennis players rallying across a clearly visible table and net"></div><div class="practice-copy"><small>SPEED · FEEDBACK</small><h3>Table tennis</h3><p>Read spin, adjust timing, recover immediately and never confuse one point with the whole game.</p></div></article>
+        <article class="practice"><div class="practice-media"><img loading="lazy" src="assets/fly-high-volleyball.svg" alt="Fly High volleyball players jumping together at the net"></div><div class="practice-copy"><small>VOLLEYBALL · TEAM ENERGY</small><h3>Fly High!</h3><p>Trust the call, cover one another and meet the ball at the highest point together.</p></div></article>
+        <article class="practice"><div class="practice-media decrypto"><img loading="lazy" referrerpolicy="no-referrer" src="https://www.hachetteboardgames.com/cdn/shop/files/Web_Decrypto-boxleft.jpg?v=1724880966&width=1946" alt="Decrypto board game box" onerror="this.onerror=null;this.src='assets/decrypto.svg'"></div><div class="practice-copy"><small>BOARD GAME · COMMUNICATION</small><h3>Decrypto</h3><p>Precise clues, shared context and the joy of being understood without being obvious.</p></div></article>
+      </div>
+    </div>
+  </section>
 
-  <section id="foundations"><div class="wrap"><div class="section-head"><div><div class="index">02 / FOUNDATIONS</div><h2>Ideas that changed the direction of my life.</h2></div><p>These are not endorsements of every sentence. They are works that created a durable question in me.</p></div><p class="source-note">FULL COVERS AND PHOTOGRAPHY, WITH CONTEXT BELOW.</p><div class="visual-grid">
-    <a class="visual-card" href="https://www.dominionmovement.com/watch" target="_blank" rel="noopener"><img loading="lazy" referrerpolicy="no-referrer" src="https://www.dominionmovement.com/images/dominion_poster.jpg" alt="Dominion documentary poster" onerror="this.onerror=null;this.src='assets/dominion.svg'"><div class="visual-copy"><small>DOCUMENTARY · CONTENT WARNING</small><h3>Dominion</h3><p>One reason veganism became an ethical responsibility rather than a lifestyle preference.</p></div></a>
-    <article class="visual-card"><img loading="lazy" referrerpolicy="no-referrer" src="https://covers.openlibrary.org/b/isbn/9781577314806-L.jpg" alt="The Power of Now book cover" onerror="this.onerror=null;this.src='assets/power-of-now.svg'"><div class="visual-copy"><small>BOOK · PRESENCE</small><h3>The Power of Now</h3><p>Attention, identification with thought and the possibility of fully meeting this moment.</p></div></article>
-    <article class="visual-card"><img loading="lazy" referrerpolicy="no-referrer" src="https://covers.openlibrary.org/b/isbn/9781586380199-L.jpg" alt="The Bhagavad Gita by Eknath Easwaran book cover" onerror="this.onerror=null;this.src='assets/bhagavad-gita.svg'"><div class="visual-copy"><small>TIMELESS TEXT · ACTION</small><h3>Bhagavad Gita</h3><p>Dharma, action without attachment and how to remain clear in the middle of life.</p></div></article>
-    <article class="visual-card"><img loading="lazy" referrerpolicy="no-referrer" src="https://plumvillage.org/wp-content/uploads/2019/09/2014-Thay-bell-LH.jpeg" alt="Thich Nhat Hanh inviting the bell at Plum Village" onerror="this.onerror=null;this.src='assets/thich-nhat-hanh.svg'"><div class="visual-copy"><small>TEACHER · COMPASSION</small><h3>Thich Nhat Hanh</h3><p>Mindfulness not as escape, but as a way of touching life and reducing suffering.</p></div></article>
-  </div><div class="quote" style="margin-top:16px"><blockquote>“The privilege of a lifetime is to become who you truly are.”</blockquote><p>— Carl Jung</p></div></div></section>
+  <section id="foundations">
+    <div class="wrap">
+      <div class="section-head"><div><div class="index">02 / FOUNDATIONS</div><h2>Ideas that changed the direction of my life.</h2></div><p>These are not endorsements of every sentence. They are works that created a durable question in me.</p></div>
+      <p class="source-note">FULL COVERS, ONE CONSISTENT MEDIA FRAME, CONTEXT BELOW.</p>
+      <div class="visual-grid">
+        <a class="visual-card" href="https://www.dominionmovement.com/watch" target="_blank" rel="noopener">
+          <div class="media-frame" style="--media:url('https://www.dominionmovement.com/images/dominion_poster.jpg')"><img loading="lazy" referrerpolicy="no-referrer" src="https://www.dominionmovement.com/images/dominion_poster.jpg" alt="Dominion documentary poster" onerror="this.onerror=null;this.src='assets/dominion.svg'"></div>
+          <div class="visual-copy"><small>DOCUMENTARY · CONTENT WARNING</small><h3>Dominion</h3><p>One reason veganism became an ethical responsibility rather than a lifestyle preference.</p></div>
+        </a>
+        <article class="visual-card">
+          <div class="media-frame" style="--media:url('https://covers.openlibrary.org/b/isbn/9781577314806-L.jpg')"><img loading="lazy" referrerpolicy="no-referrer" src="https://covers.openlibrary.org/b/isbn/9781577314806-L.jpg" alt="The Power of Now book cover" onerror="this.onerror=null;this.src='assets/power-of-now.svg'"></div>
+          <div class="visual-copy"><small>BOOK · PRESENCE</small><h3>The Power of Now</h3><p>Attention, identification with thought and the possibility of fully meeting this moment.</p></div>
+        </article>
+        <article class="visual-card">
+          <div class="media-frame" style="--media:url('https://covers.openlibrary.org/b/isbn/9781586380199-L.jpg')"><img loading="lazy" referrerpolicy="no-referrer" src="https://covers.openlibrary.org/b/isbn/9781586380199-L.jpg" alt="The Bhagavad Gita by Eknath Easwaran book cover" onerror="this.onerror=null;this.src='assets/bhagavad-gita.svg'"></div>
+          <div class="visual-copy"><small>TIMELESS TEXT · ACTION</small><h3>Bhagavad Gita</h3><p>Dharma, action without attachment and how to remain clear in the middle of life.</p></div>
+        </article>
+        <article class="visual-card">
+          <div class="media-frame" style="--media:url('https://plumvillage.org/wp-content/uploads/2019/09/2014-Thay-bell-LH.jpeg')"><img loading="lazy" referrerpolicy="no-referrer" src="https://plumvillage.org/wp-content/uploads/2019/09/2014-Thay-bell-LH.jpeg" alt="Thich Nhat Hanh inviting the bell at Plum Village" onerror="this.onerror=null;this.src='assets/thich-nhat-hanh.svg'"></div>
+          <div class="visual-copy"><small>TEACHER · COMPASSION</small><h3>Thich Nhat Hanh</h3><p>Mindfulness not as escape, but as a way of touching life and reducing suffering.</p></div>
+        </article>
+      </div>
+      <div class="quote" style="margin-top:16px"><blockquote>“The privilege of a lifetime is to become who you truly are.”</blockquote><p>— Carl Jung</p></div>
+    </div>
+  </section>
 
-  <section><div class="wrap"><div class="section-head"><div><div class="index">03 / CINEMA</div><h2>Two films I return to.</h2></div><p>The full history lives on Letterboxd. These two hold something more personal: restraint, longing, creative ambition and the lives we might have lived.</p></div><p class="source-note">POSTERS ARE SHOWN AT THEIR NATURAL ASPECT RATIO — NO ARTIFICIAL BARS.</p><div class="film-grid">
-    <article class="film"><img loading="lazy" referrerpolicy="no-referrer" src="https://s3.amazonaws.com/criterion-production/release_boxshots/5128-34ca29f6437701da26c0c90fe562aa88/Ig69JxncjZAANhgeJAX0Fhn2sIk75B_original.jpg" alt="In the Mood for Love Criterion cover"><div class="film-copy"><small>WONG KAR-WAI · 2000</small><h3>In the Mood for Love</h3><p>Restraint, colour, repetition and everything that remains unsaid.</p></div></article>
-    <article class="film"><img loading="lazy" referrerpolicy="no-referrer" src="https://image.tmdb.org/t/p/original/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg" alt="La La Land movie poster"><div class="film-copy"><small>DAMIEN CHAZELLE · 2016</small><h3>La La Land</h3><p>Ambition, music, creative devotion and the painful beauty of another possible ending.</p></div></article>
-  </div></div></section>
+  <section>
+    <div class="wrap">
+      <div class="section-head"><div><div class="index">03 / CINEMA</div><h2>Two films I return to.</h2></div><p>The full history lives on Letterboxd. These two hold something more personal: restraint, longing, creative ambition and the lives we might have lived.</p></div>
+      <p class="source-note">SAME POSTER SIZE, FULL IMAGE VISIBLE, NO HARD LETTERBOX BARS.</p>
+      <div class="film-grid">
+        <article class="film">
+          <div class="media-frame" style="--media:url('https://s3.amazonaws.com/criterion-production/release_boxshots/5128-34ca29f6437701da26c0c90fe562aa88/Ig69JxncjZAANhgeJAX0Fhn2sIk75B_original.jpg')"><img loading="lazy" referrerpolicy="no-referrer" src="https://s3.amazonaws.com/criterion-production/release_boxshots/5128-34ca29f6437701da26c0c90fe562aa88/Ig69JxncjZAANhgeJAX0Fhn2sIk75B_original.jpg" alt="In the Mood for Love Criterion cover"></div>
+          <div class="film-copy"><small>WONG KAR-WAI · 2000</small><h3>In the Mood for Love</h3><p>Restraint, colour, repetition and everything that remains unsaid.</p></div>
+        </article>
+        <article class="film">
+          <div class="media-frame" style="--media:url('https://image.tmdb.org/t/p/original/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg')"><img loading="lazy" referrerpolicy="no-referrer" src="https://image.tmdb.org/t/p/original/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg" alt="La La Land movie poster"></div>
+          <div class="film-copy"><small>DAMIEN CHAZELLE · 2016</small><h3>La La Land</h3><p>Ambition, music, creative devotion and the painful beauty of another possible ending.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  <section id="creation"><div class="wrap"><div class="section-head"><div><div class="index">04 / PLAY & CREATION</div><h2>Things I am making, not only consuming.</h2></div><p>The clearest expression of taste is not a list. It is a thing you struggled to bring into the world.</p></div><div class="project-grid">
-    <a class="project echo" data-ghost="ECHO" href="https://mikelninh.github.io/echo-office-1/"><small>LIVING PIXEL WORLD</small><h3>Echo’s Space Station</h3><p>A personal corner of the internet orbiting Earth: Echo, Pixel the Cat, games, gardens, portals and experiments in meaningful play.</p><span class="action">Enter v27 →</span></a>
-    <a class="project tactics" data-ghost="TACTICS" href="https://tiny-tactics-starfall.hyperspacekid.chatgpt.site" target="_blank" rel="noopener"><small>AUTOCHESS-INSPIRED GAME</small><h3>Tiny Tactics: Starfall</h3><p>A formation tactics game with cats, relics, combat decisions and a world improved through repeated playtests.</p><span class="action">Play the current build ↗</span></a>
-    <a class="project ramen" data-ghost="PLANT" href="../vegan/"><small>VEGAN FOOD & PRODUCT LAB</small><h3>Plant Table</h3><p>Compassion, practical staples, honest product tests and a Germany-first Ramen Passport.</p><span class="action">Open Plant Table →</span></a>
-    <a class="project atelier" data-ghost="SPIRIT" href="https://spirit-matter-creator-foundry.hyperspacekid.chatgpt.site" target="_blank" rel="noopener"><small>CREATOR FOOTWEAR OS · ZELLERFELD WORKFLOW</small><h3>Spirit Matter V9</h3><p>Eight concept sneakers, continuous orbit, exploded construction, reversible assembly and a path from idea to made-to-order creator drop.</p><span class="action">Open the spatial concept lab ↗</span></a>
-  </div></div></section>
+  <section id="creation">
+    <div class="wrap">
+      <div class="section-head"><div><div class="index">04 / PLAY & CREATION</div><h2>Things I am making, not only consuming.</h2></div><p>The clearest expression of taste is not a list. It is a thing you struggled to bring into the world.</p></div>
+      <div class="project-grid">
+        <a class="project echo" data-ghost="ECHO" href="https://mikelninh.github.io/echo-office-1/"><small>LIVING PIXEL WORLD</small><h3>Echo’s Space Station</h3><p>A personal corner of the internet orbiting Earth: Echo, Pixel the Cat, games, gardens, portals and experiments in meaningful play.</p><span class="action">Enter v27 →</span></a>
+        <a class="project tactics" data-ghost="TACTICS" href="https://tiny-tactics-starfall.hyperspacekid.chatgpt.site" target="_blank" rel="noopener"><small>AUTOCHESS-INSPIRED GAME</small><h3>Tiny Tactics: Starfall</h3><p>A formation tactics game with cats, relics, combat decisions and a world improved through repeated playtests.</p><span class="action">Play the current build ↗</span></a>
+        <a class="project ramen" data-ghost="PLANT" href="../vegan/"><small>VEGAN FOOD & PRODUCT LAB</small><h3>Plant Table</h3><p>Compassion, practical staples, honest product tests and a Germany-first Ramen Passport.</p><span class="action">Open Plant Table →</span></a>
+        <a class="project atelier" data-ghost="SPIRIT" href="https://spirit-matter-creator-foundry.hyperspacekid.chatgpt.site" target="_blank" rel="noopener"><small>CREATOR FOOTWEAR OS · ZELLERFELD WORKFLOW</small><h3>Spirit Matter V9</h3><p>Eight concept sneakers, continuous orbit, exploded construction, reversible assembly and a path from idea to made-to-order creator drop.</p><span class="action">Open the spatial concept lab ↗</span></a>
+      </div>
+    </div>
+  </section>
 
-  <section id="ideas"><div class="wrap"><div class="section-head"><div><div class="index">05 / IDEAS IN PRACTICE</div><h2>What happens when values become systems?</h2></div><p>These projects turn political and philosophical questions into interfaces people can inspect, challenge and improve.</p></div><div class="ideas"><a class="idea primary" href="https://github.com/mikelninh/human-systems-lab"><small>CIVIC PRODUCT STUDIO</small><h3>Human Systems Lab</h3><p>Small, measurable experiments that reduce friction in public systems — benefit navigation, law evaluation, consent-based reuse and impact gates.</p><span class="action">Explore the lab →</span></a><a class="idea" href="../faireint/"><small>EVIDENCE-BASED REFORM</small><h3>FairEint</h3><p>Policy packages, citizen personas and political simulations for a fairer, healthier and more capable Germany.</p><span class="action">Open FairEint →</span></a><a class="idea" href="../path-to-peace/"><small>PEACE EDUCATION</small><h3>Path to Peace</h3><p>An open educational platform about conflict, root causes, historical lessons and possible paths toward peace.</p><span class="action">Explore the platform →</span></a></div></div></section>
+  <section id="ideas">
+    <div class="wrap">
+      <div class="section-head"><div><div class="index">05 / IDEAS IN PRACTICE</div><h2>What happens when values become systems?</h2></div><p>These projects turn political and philosophical questions into interfaces people can inspect, challenge and improve.</p></div>
+      <div class="ideas">
+        <a class="idea primary" href="https://github.com/mikelninh/human-systems-lab"><small>CIVIC PRODUCT STUDIO</small><h3>Human Systems Lab</h3><p>Small, measurable experiments that reduce friction in public systems — benefit navigation, law evaluation, consent-based reuse and impact gates.</p><span class="action">Explore the lab →</span></a>
+        <a class="idea" href="../faireint/"><small>EVIDENCE-BASED REFORM</small><h3>FairEint</h3><p>Policy packages, citizen personas and political simulations for a fairer, healthier and more capable Germany.</p><span class="action">Open FairEint →</span></a>
+        <a class="idea" href="../path-to-peace/"><small>PEACE EDUCATION</small><h3>Path to Peace</h3><p>An open educational platform about conflict, root causes, historical lessons and possible paths toward peace.</p><span class="action">Explore the platform →</span></a>
+      </div>
+    </div>
+  </section>
 
-  <section><div class="wrap"><div class="letterboxd"><div><div class="index" style="color:#6d4e12">MORE FILMS</div><h2>The rest lives on Letterboxd.</h2><p>This page stays curated on purpose. My broader film history, ratings and changing taste already have a better home.</p></div><a class="pill" href="https://letterboxd.com/Mikel_/" target="_blank" rel="noopener">Open Letterboxd ↗</a></div></div></section>
+  <section>
+    <div class="wrap">
+      <div class="letterboxd">
+        <div><div class="index" style="color:#6d4e12">MORE FILMS</div><h2>The rest lives on Letterboxd.</h2><p>This page stays curated on purpose. My broader film history, ratings and changing taste already have a better home.</p></div>
+        <a class="pill" href="https://letterboxd.com/Mikel_/" target="_blank" rel="noopener">Open Letterboxd ↗</a>
+      </div>
+    </div>
+  </section>
 </main>
 <footer><div class="wrap foot"><span>© Michael Ninh · Movement, attention, play and creation</span><div class="footlinks"><a href="../">AI portfolio</a><a href="../vegan/">Plant Table</a><a href="mailto:mikel_ninh@yahoo.de">Contact</a></div></div></footer>
 </body>
