@@ -37,3 +37,32 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify key public pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          urls=(
+            "https://mikelninh.github.io/"
+            "https://mikelninh.github.io/culture/"
+            "https://mikelninh.github.io/vegan/"
+            "https://mikelninh.github.io/ramen/"
+            "https://mikelninh.github.io/overfly/"
+            "https://mikelninh.github.io/atelier-engine/"
+          )
+
+          for url in "${urls[@]}"; do
+            echo "Checking $url"
+            success=0
+            for attempt in {1..12}; do
+              if curl --fail --silent --show-error --location --max-time 20 "$url" >/dev/null; then
+                success=1
+                break
+              fi
+              sleep 5
+            done
+            if [ "$success" -ne 1 ]; then
+              echo "Public link failed after retries: $url"
+              exit 1
+            fi
+          done
