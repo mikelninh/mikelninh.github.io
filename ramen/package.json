@@ -1,0 +1,16 @@
+{
+  "name": "ramen-passport",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Germany-first, source-visible instant ramen ranking experience.",
+  "scripts": {
+    "check:ui": "node scripts/check-ui.mjs",
+    "check:data": "node scripts/validate-data.mjs",
+    "check:images": "node scripts/resolve-images.mjs",
+    "check": "npm run check:ui && npm run check:data",
+    "serve": "python -m http.server 8000 --directory .."
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
