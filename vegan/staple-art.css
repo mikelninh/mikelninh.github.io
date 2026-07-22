@@ -2,3 +2,44 @@
   background-image: url("assets/staples-sprite.svg") !important;
   background-repeat: no-repeat !important;
 }
+
+/* Hero ramen bowl: one clean rim, visible broth and toppings kept inside it. */
+.hero-bowl {
+  top: 152px;
+  border-top: 0;
+  border-radius: 18px 18px 180px 180px;
+}
+
+.hero-bowl .bowl-rim {
+  left: -12px;
+  right: -12px;
+  top: -14px;
+  height: 38px;
+  z-index: 1;
+  border-width: 5px;
+  background: #fffaf0;
+}
+
+.hero-bowl .broth {
+  left: 15px;
+  right: 15px;
+  top: -2px;
+  height: 66px;
+  z-index: 2;
+}
+
+.hero-bowl .noodles {
+  top: 18px;
+  z-index: 3;
+}
+
+.hero-bowl .tofu,
+.hero-bowl .green {
+  z-index: 4;
+}
+
+.hero-bowl .t1 { top: 24px; }
+.hero-bowl .t2 { top: 35px; }
+.hero-bowl .g1 { top: 18px; }
+.hero-bowl .g2 { top: 39px; }
+.hero-bowl .g3 { top: 18px; }
