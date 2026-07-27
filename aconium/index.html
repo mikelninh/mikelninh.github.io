@@ -1,74 +1,96 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<meta name="description" content="Michael Ninh — Bewerbung als AI Engineer bei aconium. PrüfPilot, Document AI, RAG, Agents, MCP und ehrlicher Production-Next-Plan.">
-<title>Michael Ninh × aconium — AI Engineer</title>
-<link rel="stylesheet" href="../assets/application.css">
+<meta name="description" content="Michael Ninh — AI Engineer für aconium. PrüfPilot, Document AI, RAG, Agents, MCP und Production Readiness.">
+<title>Michael Ninh × aconium · Systems Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="reviewbar">ENTWURF FÜR TUTOR-REVIEW · PRODUKT UND BUILDER WERDEN GEMEINSAM GEPRÜFT</div>
-<header><nav class="wrap"><a class="brand" href="../">Michael Ninh<small>AI Engineer × aconium</small></a>
-<div class="navlinks"><a href="#product">PrüfPilot</a><a href="#builder">Der Builder</a><a href="#production">Production</a><a class="button primary" href="../review/">Review-Fragen</a></div></nav></header>
+<div class="review">PREVIEW / TUTOR REVIEW / UNABHÄNGIGE BEWERBUNGSSEITE</div>
+<header><a class="logo" href="../"><span>MN</span><b>ACONIUM SYSTEMS REVIEW</b></a><nav><a href="#system">System</a><a href="#evidence">Evidence</a><a href="#production">Production</a><a class="review-link" href="../review/">Review ↗</a></nav></header>
 <main>
-<section class="hero"><div class="wrap heroGrid"><div>
-<div class="eyebrow">Document AI · RAG · Agents · MCP · Public Sector</div>
-<h1>Prüfbare AI für <em>reale Verwaltungsarbeit.</em></h1>
-<p class="lead">PrüfPilot ist die sichtbare Arbeitsprobe. Das eigentliche Angebot an aconium ist ein Builder, der sich in komplexe Fachprozesse einarbeitet, einen engen End-to-End-Slice liefert und Produktionsrisiken nicht hinter einer hübschen Demo versteckt.</p>
-<div class="buttons"><a class="button hot" href="https://pruefpilot-aconium.vercel.app">PrüfPilot live öffnen ↗</a><a class="button" href="#production">Production-Check</a><a class="button" href="mailto:mikel_ninh@yahoo.de">Michael kontaktieren</a></div>
-</div>
-<aside class="heroNote"><div class="noteTop"><b>SENDABLE STATUS</b><span>PRÜFPILOT V5.1</span></div>
-<div class="evidenceRows">
-<div class="evidenceRow"><strong>Ja</strong><span>Als Bewerbungsdemo und synthetische Arbeitsprobe versendbar.</span></div>
-<div class="evidenceRow"><strong>Ja</strong><span>Als funktionierender, enger Document-AI- und Case-Engine-Prototyp nutzbar.</span></div>
-<div class="evidenceRow"><strong>Nein</strong><span>Noch kein produktives Behördenfachverfahren für echte personenbezogene Fälle.</span></div>
-</div></aside></div></section>
+<section class="hero" id="top">
+  <div class="grid-glow"></div>
+  <div class="hero-main">
+    <div class="status"><i></i> CANDIDATE SYSTEM ONLINE</div>
+    <p class="kicker">AI ENGINEER · DOCUMENT AI · PUBLIC SECTOR</p>
+    <h1>Prüfbare AI für <span>reale Verwaltungsarbeit.</span></h1>
+    <p class="lead">PrüfPilot ist die sichtbare Arbeitsprobe. Das eigentliche Angebot ist ein Builder, der Fachprozesse präzise modelliert, einen kontrollierten End-to-End-Slice liefert und Produktionsrisiken früh sichtbar macht.</p>
+    <div class="buttons"><a class="btn primary" href="https://pruefpilot-aconium.vercel.app">LIVE SYSTEM ↗</a><a class="btn" href="#production">READINESS CHECK ↓</a></div>
+  </div>
+  <aside class="system-card">
+    <div class="window-head"><span>pruefpilot.health()</span><div><i></i><i></i><i></i></div></div>
+    <div class="terminal" id="terminal">
+      <p><b>01</b><span>frontend</span><strong>200 OK</strong></p>
+      <p><b>02</b><span>case_api</span><strong>3 domains</strong></p>
+      <p><b>03</b><span>tests</span><strong>22 / 22</strong></p>
+      <p><b>04</b><span>retrieval_evals</span><strong>10 / 10</strong></p>
+      <p><b>05</b><span>human_approval</span><strong>required</strong></p>
+      <p class="warn"><b>06</b><span>production</span><strong>pilot-ready next</strong></p>
+    </div>
+    <div class="system-result"><small>SENDABLE STATUS</small><b>Strong application prototype</b><span>Not represented as a finished authority system.</span></div>
+  </aside>
+</section>
 
-<div class="signalStrip"><div class="wrap signals">
-<div class="signal"><small>Scope</small><b>Case Engine + Domain Packs</b><span>Kontrollierter Kern statt Super-Agent.</span></div>
-<div class="signal"><small>Evidence</small><b>22/22 Tests</b><span>10/10 Retrieval-Evaluationen.</span></div>
-<div class="signal"><small>Safety</small><b>Human Approval</b><span>Keine autonome Leistungsentscheidung.</span></div>
-<div class="signal"><small>Honesty</small><b>Production gaps named</b><span>SSO, RBAC, storage, queues, observability.</span></div>
-</div></div>
+<section class="architecture" id="system">
+  <div class="section-head"><span>01 / CONTROLLED CASE ENGINE</span><h2>Ein stabiler Kern.<br>Kontrollierte Fachmodule.</h2><p>Kein universeller Super-Agent. Ein klar begrenztes System, das Dokumente, versionierte Regeln und Beweise in einen menschlich prüfbaren nächsten Schritt verbindet.</p></div>
+  <div class="architecture-map">
+    <div class="node input"><small>INPUT</small><b>PDF / Scan / Metadaten</b><span>Untrusted content</span></div>
+    <div class="connector c1"></div>
+    <div class="node core"><small>CONTROLLED CORE</small><b>Case Engine</b><span>Typed contracts · bounded tools</span><div class="pulse"></div></div>
+    <div class="connector c2"></div>
+    <div class="node rules"><small>VERSIONED KNOWLEDGE</small><b>Rules + GitLaw</b><span>Source · version · section</span></div>
+    <div class="connector c3"></div>
+    <div class="node output"><small>OUTPUT</small><b>Review Memo</b><span>Evidence · uncertainty · action</span></div>
+    <div class="human"><i></i><b>HUMAN APPROVAL</b><span>Decision remains accountable</span></div>
+  </div>
+</section>
 
-<section id="product"><div class="wrap"><div class="sectionHead">
-<div><div class="kicker">01 / DAS PRODUKT</div><h2>Von Regeln und Akten zur überprüfbaren nächsten Aktion.</h2></div>
-<p class="intro">PrüfPilot verbindet versionierte Regeln mit konkreten Fällen, prüft Dokumente und Belege, macht Unsicherheit sichtbar und bereitet einen menschlich überprüfbaren nächsten Schritt vor.</p></div>
-<div class="caseGrid">
-<article class="caseMain"><div class="kicker">PRÜFPILOT V5.1 · CONTROLLED CASE ENGINE</div><h3>Ein Kern. Mehrere Fachdomänen.</h3>
-<p>Drei synthetische Fälle zeigen denselben wiederverwendbaren Workflow: Gigabitförderung, Wohngeld-Vollständigkeit und Impact-Analyse einer neuen Vergaberegel.</p>
-<div class="flow"><span>INTAKE</span><span>RULES</span><span>EVIDENCE</span><span>MEMO</span><span>HUMAN</span></div>
-<a class="projectLink" href="https://github.com/mikelninh/pruefpilot-document-ai">Repository prüfen →</a></article>
-<div class="caseSide">
-<article class="card blue"><div class="num">REAL PDF INTAKE</div><h3>Dokumente sind untrusted.</h3><p>Dateityp, Größe, Hash, Text, Klassifikation, Beträge, Daten und Prompt-Injection-Erkennung werden explizit verarbeitet.</p></article>
-<article class="card orange"><div class="num">GROUNDED OUTPUT</div><h3>Keine Quelle, keine starke Behauptung.</h3><p>Versionierte Regelabschnitte, Seiten- und Abschnittszitate, Grounding Guard, sichtbare Evidence States und Request IDs.</p></article>
-</div></div></div></section>
+<section class="evidence" id="evidence">
+  <div class="section-head compact"><span>02 / OBSERVABLE EVIDENCE</span><h2>Behauptungen werden zu prüfbaren Signalen.</h2></div>
+  <div class="metric-board">
+    <article class="metric huge"><small>DOMAIN RAG</small><strong>5.936</strong><span>deutsche Bundesgesetze in GitLaw</span><div class="bar"><i style="width:94%"></i></div></article>
+    <article class="metric"><small>CITATION EVALS</small><strong>53/53</strong><span>verifizierte Testfälle</span><div class="spark"><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+    <article class="metric"><small>PRÜFPILOT TESTS</small><strong>22/22</strong><span>Unit- und API-Tests</span><div class="check-grid">✓ ✓ ✓ ✓<br>✓ ✓ ✓ ✓</div></article>
+    <article class="metric wide"><small>THREAT MODEL</small><h3>Dokumente bleiben untrusted.</h3><p>Prompt-Injection-Funde werden erkannt, externe Aktionen sind gesperrt, strukturierte Ausgaben und Human Approval bleiben obligatorisch.</p><a href="https://github.com/mikelninh/pruefpilot-document-ai">Threat Model prüfen ↗</a></article>
+    <article class="metric dark"><small>BUILDER MODE</small><h3>Discover → Build → Prove</h3><p>Ein echter Nutzerworkflow, klare Akzeptanzkriterien, der kleinste vertikale Slice und Evaluation der riskanten Teile.</p></article>
+  </div>
+</section>
 
-<section id="builder"><div class="wrap"><div class="sectionHead">
-<div><div class="kicker">02 / DAS EIGENTLICHE PRODUKT</div><h2>Ein wiederholbarer Arbeitsmodus.</h2></div>
-<p class="intro">Ich beginne nicht mit dem Modell. Ich beginne mit der Entscheidung, den beteiligten Menschen, den Dokumenten und dem Preis eines Fehlers.</p></div>
-<div class="grid4">
-<article class="card"><div class="num">01 / DISCOVER</div><h3>Fachprozess verstehen.</h3><p>Nutzer:innen, Dokumenttypen, Entscheidungsgrenzen, Datenschutz und Akzeptanzkriterien gemeinsam klären.</p></article>
-<article class="card green"><div class="num">02 / MODEL</div><h3>Regeln und Evidence strukturieren.</h3><p>Explizite Schemas, Pflichtunterlagen, versionierte Regeln, deterministische Checks und Tool-Berechtigungen.</p></article>
-<article class="card blue"><div class="num">03 / SHIP</div><h3>Vertikalen Slice liefern.</h3><p>Backend, AI-Verhalten, Interface, Evals und Review-Pfad werden als vollständiger Workflow gebaut.</p></article>
-<article class="card orange"><div class="num">04 / HARDEN</div><h3>Fehler systematisch sichtbar machen.</h3><p>Threat Model, Grenzen, Tests, Observability, Feedback-to-Eval und eine konkrete Production Roadmap.</p></article>
-</div></div></section>
+<section class="production" id="production">
+  <div class="prod-title"><span>03 / PRODUCTION READINESS</span><h2>Keine Demo-Magie.<br>Ein ehrlicher Übergang.</h2></div>
+  <div class="readiness-panel">
+    <div class="readiness-head"><span>CAPABILITY MATRIX</span><b>V5.1 → PILOT</b></div>
+    <div class="r-row ready"><span>Grounded retrieval</span><i></i><b>IMPLEMENTED</b></div>
+    <div class="r-row ready"><span>PDF intake + extraction</span><i></i><b>IMPLEMENTED</b></div>
+    <div class="r-row ready"><span>Prompt-injection handling</span><i></i><b>IMPLEMENTED</b></div>
+    <div class="r-row ready"><span>Tests + retrieval evals</span><i></i><b>IMPLEMENTED</b></div>
+    <div class="r-row next"><span>SSO / RBAC / tenant isolation</span><i></i><b>NEXT</b></div>
+    <div class="r-row next"><span>Postgres / object storage / queues</span><i></i><b>NEXT</b></div>
+    <div class="r-row next"><span>Observability / retention / security review</span><i></i><b>NEXT</b></div>
+  </div>
+  <aside class="production-note"><div class="crosshair"></div><small>MEIN VERSPRECHEN</small><h3>Ich verkaufe keinen Prototyp als Produktion.</h3><p>Ich zeige, dass ich den Unterschied verstehe — und einen nachvollziehbaren Weg zwischen beiden bauen kann.</p></aside>
+</section>
 
-<section id="production"><div class="wrap"><div class="sectionHead">
-<div><div class="kicker">03 / PRODUCTION JUDGMENT</div><h2>Nicht fertig behaupten. Fertigdenken beweisen.</h2></div>
-<p class="intro">Ich habe noch keine fünf Jahre Enterprise-Production-Tenure. Ich kann aber zeigen, dass ich die Lücke zwischen Demo und Betrieb erkenne, benenne und in prüfbare Arbeitspakete zerlege.</p></div>
-<div class="truth"><div class="now"><div class="micro">HEUTE BELEGT</div><h3>Ein funktionierender, sicher begrenzter Prototyp.</h3>
-<ul><li>FastAPI und typisierte Verträge</li><li>Realer PDF-Upload und strukturierte Extraktion</li><li>Grounded RAG und versionierte Quellen</li><li>Bounded Agents und Tool Traces</li><li>22/22 Unit- und API-Tests</li><li>10/10 Retrieval-Evaluationen</li><li>Prompt-Injection-Quarantäne</li><li>Human Approval und dokumentierte Grenzen</li></ul></div>
-<div class="next"><div class="micro">FÜR EINEN PRODUKTIVEN PILOTEN</div><h3>Die nächste Engineering-Schicht.</h3>
-<ul><li>SSO, RBAC und Mandantentrennung</li><li>Postgres und Object Storage</li><li>Asynchrone Queue und Idempotenz</li><li>OpenTelemetry, Kosten-, Latenz- und Fehlermetriken</li><li>Retention, Löschung und Audit Policies</li><li>DMS- und Fachverfahrensadapter</li><li>Load Tests und Failure Injection</li><li>Externer Security Review und fachliche Validierung</li></ul></div></div></div></section>
+<section class="role-fit">
+  <div class="section-head compact"><span>04 / THE ACTUAL PRODUCT</span><h2>PrüfPilot beweist ein System.<br>Die Bewerbung bietet den Builder.</h2></div>
+  <div class="fit-columns">
+    <article><small>HEUTE EINSETZBAR</small><h3>Applied AI product slices</h3><ul><li>Python und FastAPI</li><li>RAG, MCP und Agents</li><li>Evaluationen und Guardrails</li><li>React / TypeScript Interfaces</li><li>Fachprozess → Vertical Slice</li></ul></article>
+    <article><small>BEWUSSTES WACHSTUM</small><h3>Production ownership</h3><ul><li>Cloud-Architektur und CI/CD</li><li>Security und Enterprise Integration</li><li>Observability und Betrieb</li><li>Direkte Nutzer- und Kundenarbeit</li><li>Technische Verantwortung unter Last</li></ul></article>
+  </div>
+</section>
 
-<section><div class="wrap"><div class="quote"><blockquote>Die stärkste Behauptung auf dieser Seite ist nicht, dass alles fertig ist.</blockquote>
-<p>Sie lautet: Ich kann bereits sinnvolle Produktslices liefern, Risiken transparent machen und mich durch echte Fachlichkeit, Code Review und Produktionsverantwortung schnell vertiefen.</p></div></div></section>
-
-<section><div class="wrap"><div class="cta"><div class="kicker">04 / WARUM ACONIUM</div><h2>Ein reales GovTech-Produkt ist der richtige nächste Belastungstest.</h2>
-<p>Die Rolle verbindet genau die Themen, an denen ich bereits arbeite, mit dem Umfeld, in dem ich wachsen möchte: Prüfer:innen als Nutzergruppe, domänenspezifisches RAG, Agents, MCP, FastAPI und die Verantwortung, dass technische Versprechen im Betrieb halten.</p>
-<div class="buttons"><a class="button hot" href="https://pruefpilot-aconium.vercel.app">Arbeitsprobe testen</a><a class="button" href="../review/">Tutor-Review öffnen</a><a class="button" href="../">Gesamtportfolio</a></div></div></div></section>
+<section class="closing"><div><span>SYSTEM DECISION</span><h2>Ein Gespräch wäre der nächste sinnvolle Schritt.</h2><p>Berlin · Deutsch / Englisch · Applied AI mit Nähe zu realen Nutzer:innen und öffentlichen Systemen.</p></div><a class="btn primary" href="mailto:mikel_ninh@yahoo.de">CONTACT MICHAEL →</a></section>
 </main>
-<footer><div class="wrap footerRow"><span>Michael Ninh · Berlin · Applied AI / GovTech</span><div class="footerLinks"><a href="https://github.com/mikelninh/pruefpilot-document-ai">Repository</a><a href="https://github.com/mikelninh">GitHub</a><a href="https://www.linkedin.com/in/michael-ninh">LinkedIn</a></div></div></footer>
-</body></html>
+<footer><span>Michael Ninh × aconium</span><span>Independent application system · 2026</span></footer>
+<script>
+const rows=[...document.querySelectorAll('.terminal p')];rows.forEach((r,i)=>{r.style.animationDelay=`${.18+i*.12}s`});
+</script>
+</body>
+</html>
