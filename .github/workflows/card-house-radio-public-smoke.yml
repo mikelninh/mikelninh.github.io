@@ -56,7 +56,7 @@ jobs:
               });
 
               stage = 'public lobby';
-              const url = `https://mikelninh.github.io/tien-len/?v=radio-${Date.now()}`;
+              const url = `https://mikelninh.github.io/tien-len/?v=daddfe9-${Date.now()}`;
               await page.goto(url, { waitUntil: 'networkidle' });
               await page.getByText('THE CARD HOUSE', { exact: true }).waitFor();
               await page.getByRole('button', { name: /Open Card House Radio/i }).waitFor();
