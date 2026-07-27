@@ -1,103 +1,66 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Claim Detective — an open, ongoing AI watcher for refunds, benefits, deadlines and possible claims hiding inside everyday paperwork.">
-<title>Claim Detective — Your Money & Rights Watcher</title>
-<link rel="stylesheet" href="../assets/application.css">
-<style>
-.watchHero{background:radial-gradient(circle at 82% 10%,rgba(220,255,99,.18),transparent 28rem),var(--dark);color:var(--paper2)}
-.watchHero .lead{color:#ccd4cd}.watchHero h1 em{color:var(--lime)}.watchHero .eyebrow{color:var(--lime)}
-.guard{display:inline-flex;gap:8px;align-items:center;color:var(--green);font:800 10px var(--mono)}.guard:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 6px rgba(36,90,67,.12)}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Claim Detective — an ongoing AI watcher for refunds, benefits, deadlines and possible claims hidden in everyday paperwork.">
+<title>Claim Detective · Money & Rights Watcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header><nav class="wrap"><a class="brand" href="../">Claim Detective<small>Money · Rights · Benefits · Deadlines</small></a>
-<div class="navlinks"><a href="#watcher">Watcher</a><a href="#demo">Demo</a><a href="#model">Open model</a><a class="button primary" href="mailto:mikel_ninh@yahoo.de">Join the pilot</a></div></nav></header>
+<header><a class="brand" href="../"><i></i>CLAIM DETECTIVE</a><nav><a href="#watcher">Watcher</a><a href="#case">Case file</a><a href="#model">Open model</a><a class="secure" href="mailto:mikel_ninh@yahoo.de">JOIN PILOT ↗</a></nav></header>
 <main>
-<section class="hero watchHero"><div class="wrap heroGrid"><div>
-<div class="eyebrow">An ongoing AI investigator for everyday financial agency</div>
-<h1>Your money and rights should not disappear inside <em>paperwork.</em></h1>
-<p class="lead">Claim Detective continuously watches the documents, contracts, bills and deadlines you choose to connect. It finds possible refunds, benefits, overcharges and claims — then shows the evidence, uncertainty and safest next action.</p>
-<div class="buttons"><button class="button hot" id="runScan">Run a synthetic scan →</button><a class="button" style="color:var(--paper2);border-color:var(--paper2)" href="#watcher">See the watcher</a><a class="button" style="color:var(--paper2);border-color:var(--paper2)" href="https://github.com/mikelninh/gitlaw">Open-source foundation ↗</a></div>
-</div>
-<aside class="heroNote" style="color:var(--ink)"><div class="noteTop"><b>MONTHLY RIGHTS SCAN</b><span>DEMO ACCOUNT</span></div>
-<div class="evidenceRows">
-<div class="evidenceRow"><strong>€184</strong><span>possible utility overcharge worth checking.</span></div>
-<div class="evidenceRow"><strong>14 days</strong><span>remaining before a flight compensation deadline.</span></div>
-<div class="evidenceRow"><strong>1 benefit</strong><span>potentially relevant after a household change.</span></div>
-</div></aside></div></section>
+<section class="hero">
+  <div class="noise"></div>
+  <div class="hero-copy"><div class="live"><i></i> WATCHER ACTIVE · SYNTHETIC DEMO</div><p class="eyebrow">MONEY · RIGHTS · BENEFITS · DEADLINES</p><h1>Your money and rights should not disappear inside <span>paperwork.</span></h1><p class="lead">Claim Detective continuously watches the documents, contracts, bills and deadlines you choose to connect. It surfaces possible refunds, benefits, overcharges and claims — with evidence, uncertainty and the safest next action.</p><div class="actions"><button class="button acid" id="scanButton">RUN SYNTHETIC SCAN</button><a class="button ghost" href="#watcher">HOW IT WATCHES ↓</a></div></div>
+  <div class="radar-wrap" aria-label="Live watcher visualisation">
+    <div class="radar"><div class="sweep"></div><i class="dot d1"></i><i class="dot d2"></i><i class="dot d3"></i><div class="cross x1"></div><div class="cross x2"></div></div>
+    <div class="radar-caption"><span>CONNECTED SOURCES</span><b>4</b><small>Inbox · contracts · bills · notices</small></div>
+  </div>
+</section>
 
-<div class="signalStrip"><div class="wrap signals">
-<div class="signal"><small>Purpose</small><b>Recover agency</b><span>Money, rights, time and options.</span></div>
-<div class="signal"><small>Trust</small><b>Evidence, not verdicts</b><span>Possible claims remain clearly qualified.</span></div>
-<div class="signal"><small>Privacy</small><b>User-controlled access</b><span>Minimum data, explicit permissions.</span></div>
-<div class="signal"><small>Action</small><b>Human or licensed partner</b><span>No autonomous legal enforcement.</span></div>
-</div></div>
+<section class="watch-feed" id="case">
+  <div class="feed-head"><span>LIVE CASE FEED / CD-DEMO-041</span><b id="scanStatus">WAITING FOR SCAN</b></div>
+  <div class="feed-grid">
+    <aside class="source-list"><div class="source-title">WATCHED SOURCES</div><button class="source active"><i></i><span>Inbox</span><b>12 new</b></button><button class="source"><i></i><span>Contracts</span><b>7 active</b></button><button class="source"><i></i><span>Bills</span><b>4 flagged</b></button><button class="source"><i></i><span>Deadlines</span><b>2 soon</b></button><div class="privacy"><small>PERMISSION BOUNDARY</small><p>Only sources explicitly connected by the user are watched.</p></div></aside>
+    <section class="case-workspace">
+      <div class="case-title"><div><small>CASE FILE</small><h2>Three possible findings</h2></div><span id="confidence">0% SCANNED</span></div>
+      <div class="finding pending" data-step="1"><div class="finding-no">01</div><div><small>POSSIBLE REFUND</small><h3>Duplicate mobility charge</h3><p>Two charges with the same merchant, amount and service date were detected.</p><div class="evidence"><span>Bank statement</span><span>Receipt</span><span class="missing">Merchant response missing</span></div></div><strong>€42</strong></div>
+      <div class="finding pending" data-step="2"><div class="finding-no">02</div><div><small>BENEFIT CHECK</small><h3>Possible housing benefit eligibility</h3><p>A changed household income and rent notice match a rule pack worth checking.</p><div class="evidence"><span>Rent notice</span><span>Income change</span><span class="missing">Household details needed</span></div></div><strong>CHECK</strong></div>
+      <div class="finding pending" data-step="3"><div class="finding-no">03</div><div><small>DEADLINE WATCH</small><h3>Cancellation window closes soon</h3><p>A service price increase may trigger a special cancellation right.</p><div class="evidence"><span>Price notice</span><span>Contract terms</span><span>12 days left</span></div></div><strong>12D</strong></div>
+    </section>
+    <aside class="trace"><div class="trace-head">INVESTIGATION TRACE</div><div id="traceLines"><p>00:00 watcher idle</p><p>--:-- awaiting permission</p><p>--:-- no external action</p></div><div class="human"><i></i><span>HUMAN REVIEW REQUIRED</span><p>No claim is filed and no legal decision is made automatically.</p></div></aside>
+  </div>
+</section>
 
-<section id="watcher"><div class="wrap"><div class="sectionHead">
-<div><div class="kicker">01 / THE ONGOING WATCHER</div><h2>One quiet scan. Repeated value.</h2></div>
-<p class="intro">The product is not a one-off chatbot. It is a recurring, permission-based investigation layer that notices changes, connects evidence and warns before money or rights quietly expire.</p></div>
-<div class="grid4">
-<article class="card"><div class="num">01 / INBOX + LETTERS</div><h3>Notices and decisions.</h3><p>Detect deadlines, missing documents, changed amounts, rejected requests and possible next steps inside selected messages and uploads.</p></article>
-<article class="card green"><div class="num">02 / CONTRACTS + FEES</div><h3>Recurring leakage.</h3><p>Spot duplicate charges, price changes, forgotten subscriptions, unusual clauses and services that no longer match the agreement.</p></article>
-<article class="card blue"><div class="num">03 / BENEFITS + SUPPORT</div><h3>Money left unclaimed.</h3><p>Match household changes and life events to relevant public benefits, rebates and application windows without pretending eligibility is certain.</p></article>
-<article class="card orange"><div class="num">04 / CLAIMS + REFUNDS</div><h3>Cases worth pursuing.</h3><p>Prepare a structured case file with facts, evidence, unknowns, deadlines and a handoff to the right human or regulated partner.</p></article>
-</div></div></section>
+<section class="watcher" id="watcher">
+  <div class="section-head"><span>01 / THE ONGOING WATCHER</span><h2>Not another one-off chatbot.</h2><p>The value returns every month: new bills arrive, rules change, deadlines approach and unused benefits remain hidden.</p></div>
+  <div class="watcher-grid">
+    <article><div class="icon mail"></div><small>INBOX WATCH</small><h3>Notices and decisions</h3><p>Detect price changes, rejections, deadlines and documents that deserve a closer look.</p></article>
+    <article><div class="icon contract"></div><small>CONTRACT WATCH</small><h3>Fees and renewals</h3><p>Track changing terms, overlapping subscriptions and potential cancellation windows.</p></article>
+    <article><div class="icon benefit"></div><small>BENEFIT WATCH</small><h3>Life changes</h3><p>Match opted-in household changes against transparent eligibility rule packs.</p></article>
+    <article><div class="icon shield"></div><small>RIGHTS WATCH</small><h3>Evidence first</h3><p>Show what supports a possible claim, what is missing and which regulated partner can help.</p></article>
+  </div>
+</section>
 
-<section id="demo"><div class="wrap"><div class="sectionHead">
-<div><div class="kicker">02 / SYNTHETIC CASE SCAN</div><h2>See the investigation, not just the answer.</h2></div>
-<p class="intro">This demo uses fictional documents and findings. A real product would never present a legal entitlement as certain without the required facts and qualified review.</p></div>
-<div class="demo">
-<div class="demoHead"><span>claim_detective.scan()</span><span id="demoStatus">READY</span></div>
-<div class="demoBody">
-<div class="scanStages">
-<div class="stage on"><b>1. Intake</b><small>selected documents</small></div>
-<div class="stage"><b>2. Extract</b><small>facts and dates</small></div>
-<div class="stage"><b>3. Match</b><small>rules and patterns</small></div>
-<div class="stage"><b>4. Verify</b><small>evidence and gaps</small></div>
-</div>
-<div class="findings hidden" id="findings">
-<div class="finding"><span class="icon">€</span><div><b>Possible duplicate mobile charge</b><span>Two identical invoice items on the same date. Confirm whether both services were delivered.</span></div><div class="amount">€29.99</div></div>
-<div class="finding"><span class="icon">!</span><div><b>Flight compensation deadline approaching</b><span>Delay appears above the threshold, but extraordinary circumstances and route details still require verification.</span></div><div class="amount">14 days</div></div>
-<div class="finding"><span class="icon">?</span><div><b>Housing benefit may be worth screening</b><span>Household income changed. Rent, household size and local thresholds are still required.</span></div><div class="amount">check</div></div>
-</div>
-<div class="buttons" style="margin-top:20px"><button class="button hot" id="scanAgain">Run scan</button><span class="guard">No claim is filed without human approval</span></div>
-</div></div></div></section>
+<section class="principles">
+  <div class="principle-title"><span>02 / TRUST ARCHITECTURE</span><h2>A detective you can inspect.</h2></div>
+  <div class="principle-list"><div><b>01</b><h3>Permission, not surveillance</h3><p>Users explicitly choose every connected source and can revoke access.</p></div><div><b>02</b><h3>Evidence, not certainty theatre</h3><p>Possible findings include sources, missing proof and confidence boundaries.</p></div><div><b>03</b><h3>Human or regulated handoff</h3><p>Legal enforcement and regulated claims work stay with authorised partners.</p></div><div><b>04</b><h3>Open rules where possible</h3><p>Rule packs, schemas and evaluation sets can be inspected and improved publicly.</p></div></div>
+</section>
 
-<section><div class="wrap"><div class="sectionHead">
-<div><div class="kicker">03 / CASE FILE OUTPUT</div><h2>From “something seems wrong” to a useful dossier.</h2></div>
-<p class="intro">Every finding should be understandable, inspectable and easy to hand over. The system helps organise a case; it does not impersonate a lawyer or hide uncertainty.</p></div>
-<div class="grid3">
-<article class="card"><div class="num">FACTS</div><h3>What appears to have happened?</h3><p>Dates, amounts, parties, documents, communications and the event sequence — each linked back to its source.</p></article>
-<article class="card green"><div class="num">EVIDENCE + GAPS</div><h3>What supports the claim?</h3><p>Confirmed, partial and missing evidence states. Contradictions and ambiguous information remain visible.</p></article>
-<article class="card blue"><div class="num">NEXT ACTION</div><h3>What should happen safely?</h3><p>Collect a document, send a factual request, use an official process or hand the dossier to a licensed enforcement partner.</p></article>
-</div></div></section>
+<section class="model" id="model">
+  <div class="model-copy"><span>03 / OPEN CORE, SUSTAINABLE SERVICE</span><h2>Easy to copy.<br>Worth paying to run.</h2><p>The public-interest core can remain open: rule packs, evidence schemas, MCP tools and evaluation cases. The paid service provides secure hosting, private connections, continuous monitoring, alerts, maintenance and regulated partner handoffs.</p></div>
+  <div class="layers"><div class="layer open"><small>OPEN SOURCE CORE</small><b>Rules · schemas · tools · evals</b></div><div class="layer hosted"><small>HOSTED WATCHER</small><b>Privacy · monitoring · alerts · updates</b></div><div class="layer partner"><small>REGULATED ACTION</small><b>LegalTech · claims · human representation</b></div></div>
+</section>
 
-<section id="model"><div class="wrap"><div class="sectionHead">
-<div><div class="kicker">04 / OPEN + SUSTAINABLE</div><h2>The rules can be open. The service can still be excellent.</h2></div>
-<p class="intro">The core should remain inspectable and copyable. People pay for trusted hosting, privacy, maintenance, integrations, recurring monitoring and professional handoff — not for being trapped inside a black box.</p></div>
-<div class="truth"><div class="now"><div class="micro">OPEN-SOURCE CORE</div><h3>Public infrastructure for financial agency.</h3>
-<ul><li>Claim and benefit rule packs</li><li>Evidence-state schemas</li><li>Document and deadline extractors</li><li>MCP tools and test fixtures</li><li>Evaluation sets and transparent limitations</li><li>Self-hosting for NGOs and public institutions</li></ul></div>
-<div class="next"><div class="micro">PAID HOSTED SERVICE</div><h3>Convenience, vigilance and accountability.</h3>
-<ul><li>Encrypted document vault and permissions</li><li>Monthly or event-triggered scans</li><li>Inbox, contract and account integrations</li><li>Family and small-business plans</li><li>Maintained rules and deadline alerts</li><li>Licensed partner handoff and success-based enforcement where lawful</li></ul></div></div></div></section>
-
-<section><div class="wrap"><div class="quote"><blockquote>A good detective does not create dependency. They make the hidden visible.</blockquote>
-<p>Claim Detective is a spiritual business in the practical sense: value before extraction, transparent uncertainty, no dark patterns, and success measured by how much agency people recover.</p></div></div></section>
-
-<section><div class="wrap"><div class="cta"><div class="kicker">05 / BUILD THE FIRST REAL WATCH</div><h2>Start narrow: one category, one partner, one measurable recovery loop.</h2>
-<p>The strongest first wedge is likely a document-and-deadline watcher for a clearly defined consumer claim, built with a regulated LegalTech or claims partner. The open platform grows only after the first loop reliably finds and resolves real value.</p>
-<div class="buttons"><a class="button hot" href="mailto:mikel_ninh@yahoo.de">Discuss a pilot</a><a class="button" href="../conny/">See the CONNY fit</a><a class="button" href="../">Back to Michael</a></div></div></div></section>
+<section class="closing"><div><span>CASE STATUS</span><h2>Under investigation.</h2><p>A focused first pilot should watch one narrow claim category extremely well — not promise to recover every euro in Europe on day one.</p></div><a class="button acid" href="mailto:mikel_ninh@yahoo.de">JOIN THE FIRST PILOT →</a></section>
 </main>
-<footer><div class="wrap footerRow"><span>Claim Detective · Concept and synthetic product demo by Michael Ninh</span><div class="footerLinks"><a href="../">Portfolio</a><a href="https://github.com/mikelninh/gitlaw">GitLaw</a><a href="https://github.com/mikelninh/pruefpilot-document-ai">PrüfPilot</a></div></div></footer>
+<footer><span>Claim Detective · a Michael Ninh product investigation</span><span>Synthetic demo · not legal advice · 2026</span></footer>
 <script>
-const stages=[...document.querySelectorAll('.stage')], findings=document.getElementById('findings'), status=document.getElementById('demoStatus');
-let busy=false;
-function scan(){
- if(busy)return;busy=true;findings.classList.add('hidden');stages.forEach((s,i)=>s.classList.toggle('on',i===0));status.textContent='SCANNING';
- stages.forEach((stage,i)=>setTimeout(()=>{stages.forEach((s,j)=>s.classList.toggle('on',j<=i));if(i===stages.length-1){findings.classList.remove('hidden');status.textContent='3 FINDINGS · REVIEW REQUIRED';busy=false;}},350+i*550));
-}
-document.getElementById('runScan').addEventListener('click',()=>{document.getElementById('demo').scrollIntoView({behavior:'smooth'});setTimeout(scan,350)});
-document.getElementById('scanAgain').addEventListener('click',scan);
+const button=document.getElementById('scanButton'),findings=[...document.querySelectorAll('.finding')],status=document.getElementById('scanStatus'),confidence=document.getElementById('confidence'),trace=document.getElementById('traceLines');let busy=false;button.addEventListener('click',()=>{if(busy)return;busy=true;findings.forEach(f=>f.classList.add('pending'));status.textContent='SCANNING';confidence.textContent='12% SCANNED';trace.innerHTML='<p>00:00 permissions verified</p><p>00:01 documents indexed</p><p>00:02 rule packs loaded</p>';findings.forEach((f,i)=>setTimeout(()=>{f.classList.remove('pending');f.classList.add('found');confidence.textContent=`${[38,71,100][i]}% SCANNED`;trace.insertAdjacentHTML('beforeend',`<p>00:0${i+3} finding_${i+1} evidence mapped</p>`);if(i===2){status.textContent='3 FINDINGS · REVIEW NEEDED';busy=false;}},700+i*650));});
 </script>
-</body></html>
+</body>
+</html>
