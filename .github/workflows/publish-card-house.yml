@@ -1,0 +1,64 @@
+name: Publish Card House
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-card-house.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-card-house
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout public site
+        uses: actions/checkout@v4
+
+      - name: Checkout Card House source
+        run: git clone --depth 1 https://github.com/mikelninh/tien-len.git /tmp/card-house-source
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: /tmp/card-house-source/package-lock.json
+
+      - name: Install and verify
+        working-directory: /tmp/card-house-source
+        run: |
+          npm install --legacy-peer-deps --silent
+          npm run lint
+          npm run test:engine
+
+      - name: Build public Card House
+        working-directory: /tmp/card-house-source
+        env:
+          GITHUB_PAGES: "true"
+        run: npm run build
+
+      - name: Publish generated site
+        run: |
+          rm -rf tien-len
+          cp -R /tmp/card-house-source/out tien-len
+          touch .nojekyll
+
+      - name: Commit release
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tien-len .nojekyll
+          if git diff --cached --quiet; then
+            echo "No generated changes to publish."
+          else
+            git commit -m "Publish three-game Card House"
+            git push
+          fi
