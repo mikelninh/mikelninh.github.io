@@ -56,7 +56,7 @@ jobs:
               });
 
               stage = 'public lobby';
-              const url = `https://mikelninh.github.io/tien-len/?v=daddfe9-${Date.now()}`;
+              const url = `https://mikelninh.github.io/tien-len/?v=88d54bc-${Date.now()}`;
               await page.goto(url, { waitUntil: 'networkidle' });
               await page.getByText('THE CARD HOUSE', { exact: true }).waitFor();
               await page.getByRole('button', { name: /Open Card House Radio/i }).waitFor();
@@ -85,14 +85,14 @@ jobs:
               const beforeStation = await page.getByText('After Hours', { exact: true }).count();
               if (!beforeStation) throw new Error('Expected Cosy Home station was missing.');
               await page.getByRole('button', { name: /Next radio station/i }).click();
-              await page.getByText('Rainy Records', { exact: true }).waitFor();
+              await page.getByText('Rainy Records', { exact: true }).first().waitFor();
               await page.waitForTimeout(350);
               console.log('PASS station switching works');
 
               stage = 'vibe switch';
               await page.getByRole('button', { name: /Beach Sunset/i }).click();
               await page.getByText('Card House Radio · Beach Sunset', { exact: true }).waitFor();
-              await page.getByText('Coral Hour', { exact: true }).waitFor();
+              await page.getByText('Coral Hour', { exact: true }).first().waitFor();
               await page.waitForTimeout(350);
 
               const roomAudio = await page.evaluate(() => {
