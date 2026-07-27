@@ -35,91 +35,112 @@ jobs:
           if (!chrome) throw new Error('Chrome not found');
 
           (async () => {
-            const browser = await chromium.launch({ executablePath: chrome, headless: true, args: ['--no-sandbox'] });
-            const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
-            page.setDefaultTimeout(25000);
+            let browser;
+            let page;
+            let stage = 'launch';
+            try {
+              browser = await chromium.launch({ executablePath: chrome, headless: true, args: ['--no-sandbox'] });
+              page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+              page.setDefaultTimeout(25000);
 
-            await page.addInitScript(() => {
-              const NativeAudioContext = window.AudioContext;
-              window.__cardHouseAudioContexts = [];
-              class TrackedAudioContext extends NativeAudioContext {
-                constructor(...args) {
-                  super(...args);
-                  window.__cardHouseAudioContexts.push(this);
+              await page.addInitScript(() => {
+                const NativeAudioContext = window.AudioContext;
+                window.__cardHouseAudioContexts = [];
+                class TrackedAudioContext extends NativeAudioContext {
+                  constructor(...args) {
+                    super(...args);
+                    window.__cardHouseAudioContexts.push(this);
+                  }
                 }
-              }
-              Object.defineProperty(window, 'AudioContext', { configurable: true, value: TrackedAudioContext });
-            });
+                Object.defineProperty(window, 'AudioContext', { configurable: true, value: TrackedAudioContext });
+              });
 
-            const url = `https://mikelninh.github.io/tien-len/?v=radio-${Date.now()}`;
-            await page.goto(url, { waitUntil: 'networkidle' });
-            await page.getByText('THE CARD HOUSE', { exact: true }).waitFor();
-            await page.getByRole('button', { name: /Open Card House Radio/i }).waitFor();
-            console.log('PASS public Card House with radio loaded');
+              stage = 'public lobby';
+              const url = `https://mikelninh.github.io/tien-len/?v=radio-${Date.now()}`;
+              await page.goto(url, { waitUntil: 'networkidle' });
+              await page.getByText('THE CARD HOUSE', { exact: true }).waitFor();
+              await page.getByRole('button', { name: /Open Card House Radio/i }).waitFor();
+              console.log('PASS public Card House with radio loaded');
 
-            await page.getByRole('button', { name: /Open Card House Radio/i }).click();
-            await page.getByText('Card House Radio · Cosy Home', { exact: true }).waitFor();
-            await page.getByRole('button', { name: /Play Card House Radio/i }).click();
-            await page.waitForTimeout(650);
+              stage = 'radio start';
+              await page.getByRole('button', { name: /Open Card House Radio/i }).click();
+              await page.getByText('Card House Radio · Cosy Home', { exact: true }).waitFor();
+              await page.getByRole('button', { name: /Play Card House Radio/i }).click();
+              await page.waitForTimeout(650);
 
-            const audioStarted = await page.evaluate(() => {
-              const contexts = window.__cardHouseAudioContexts || [];
-              return {
-                count: contexts.length,
-                states: contexts.map((context) => context.state),
-                liveLabel: document.body.textContent.includes('LIVE'),
-              };
-            });
-            if (audioStarted.count < 1) throw new Error('No AudioContext was created after clicking Play.');
-            if (!audioStarted.states.includes('running')) throw new Error(`AudioContext did not enter running state: ${audioStarted.states.join(', ')}`);
-            if (!audioStarted.liveLabel) throw new Error('Radio UI did not switch to LIVE.');
-            console.log(`PASS radio started with states ${audioStarted.states.join(',')}`);
+              const audioStarted = await page.evaluate(() => {
+                const contexts = window.__cardHouseAudioContexts || [];
+                return {
+                  count: contexts.length,
+                  states: contexts.map((context) => context.state),
+                  liveLabel: document.body.textContent.includes('LIVE'),
+                };
+              });
+              if (audioStarted.count < 1) throw new Error('No AudioContext was created after clicking Play.');
+              if (!audioStarted.states.includes('running')) throw new Error(`AudioContext did not enter running state: ${audioStarted.states.join(', ')}`);
+              if (!audioStarted.liveLabel) throw new Error('Radio UI did not switch to LIVE.');
+              console.log(`PASS radio started with states ${audioStarted.states.join(',')}`);
 
-            const beforeStation = await page.getByText('After Hours', { exact: true }).count();
-            if (!beforeStation) throw new Error('Expected Cosy Home station was missing.');
-            await page.getByRole('button', { name: /Next radio station/i }).click();
-            await page.getByText('Rainy Records', { exact: true }).waitFor();
-            await page.waitForTimeout(350);
-            console.log('PASS station switching works');
+              stage = 'station switch';
+              const beforeStation = await page.getByText('After Hours', { exact: true }).count();
+              if (!beforeStation) throw new Error('Expected Cosy Home station was missing.');
+              await page.getByRole('button', { name: /Next radio station/i }).click();
+              await page.getByText('Rainy Records', { exact: true }).waitFor();
+              await page.waitForTimeout(350);
+              console.log('PASS station switching works');
 
-            await page.getByRole('button', { name: /Beach Sunset/i }).click();
-            await page.getByText('Card House Radio · Beach Sunset', { exact: true }).waitFor();
-            await page.getByText('Coral Hour', { exact: true }).waitFor();
-            await page.waitForTimeout(350);
+              stage = 'vibe switch';
+              await page.getByRole('button', { name: /Beach Sunset/i }).click();
+              await page.getByText('Card House Radio · Beach Sunset', { exact: true }).waitFor();
+              await page.getByText('Coral Hour', { exact: true }).waitFor();
+              await page.waitForTimeout(350);
 
-            const roomAudio = await page.evaluate(() => {
-              const contexts = window.__cardHouseAudioContexts || [];
-              return contexts.map((context) => context.state);
-            });
-            if (!roomAudio.includes('running')) throw new Error(`No running AudioContext after vibe switch: ${roomAudio.join(', ')}`);
-            console.log('PASS room switch replaced the soundscape and kept radio live');
+              const roomAudio = await page.evaluate(() => {
+                const contexts = window.__cardHouseAudioContexts || [];
+                return contexts.map((context) => context.state);
+              });
+              if (!roomAudio.includes('running')) throw new Error(`No running AudioContext after vibe switch: ${roomAudio.join(', ')}`);
+              console.log('PASS room switch replaced the soundscape and kept radio live');
 
-            await page.getByRole('button', { name: /Enter today's showdown/i }).click();
-            await page.getByText('Daily Poker Showdown', { exact: true }).waitFor();
-            await page.getByText('Beach Sunset Radio', { exact: true }).waitFor();
-            const pokerRadio = await page.evaluate(() => {
-              const contexts = window.__cardHouseAudioContexts || [];
-              return contexts.map((context) => context.state);
-            });
-            if (!pokerRadio.includes('running')) throw new Error(`Radio stopped during game navigation: ${pokerRadio.join(', ')}`);
-            console.log('PASS radio persisted into Daily Poker');
+              stage = 'Daily Poker navigation';
+              await page.getByRole('button', { name: /Enter today's showdown/i }).click();
+              await page.getByText('Daily Poker Showdown', { exact: true }).waitFor();
+              await page.getByText('Beach Sunset Radio', { exact: true }).waitFor();
+              const pokerRadio = await page.evaluate(() => {
+                const contexts = window.__cardHouseAudioContexts || [];
+                return contexts.map((context) => context.state);
+              });
+              if (!pokerRadio.includes('running')) throw new Error(`Radio stopped during game navigation: ${pokerRadio.join(', ')}`);
+              console.log('PASS radio persisted into Daily Poker');
 
-            await page.screenshot({ path: '/tmp/card-house-radio-public.png', fullPage: true });
-            await browser.close();
-            console.log('PASS all public Card House radio interactions');
+              await page.screenshot({ path: '/tmp/card-house-radio-public.png', fullPage: true });
+              console.log('PASS all public Card House radio interactions');
+            } catch (error) {
+              console.error(`FAIL stage: ${stage}`);
+              console.error(error);
+              if (page) await page.screenshot({ path: '/tmp/card-house-radio-public.png', fullPage: true }).catch(() => {});
+              throw error;
+            } finally {
+              if (browser) await browser.close();
+            }
           })().catch((error) => {
             console.error(error);
             process.exit(1);
           });
           NODE
 
-          NODE_PATH="$GITHUB_WORKSPACE/node_modules" node /tmp/radio-smoke.cjs
+          set +e
+          NODE_PATH="$GITHUB_WORKSPACE/node_modules" node /tmp/radio-smoke.cjs 2>&1 | tee /tmp/radio-smoke.log
+          status=${PIPESTATUS[0]}
+          exit "$status"
 
       - name: Upload browser evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: card-house-radio-public-evidence
-          path: /tmp/card-house-radio-public.png
+          path: |
+            /tmp/card-house-radio-public.png
+            /tmp/radio-smoke.log
           if-no-files-found: ignore
           retention-days: 1
