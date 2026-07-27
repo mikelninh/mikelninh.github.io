@@ -29,5 +29,8 @@ jobs:
             if grep -q 'THE CARD HOUSE' /tmp/body.html 2>/dev/null; then marker='card-house'; fi
             if grep -qi 'Authentication Required' /tmp/body.html 2>/dev/null; then marker='auth-required'; fi
             if grep -q '404: This page could not be found' /tmp/body.html 2>/dev/null; then marker='404-page'; fi
-            echo "$url | $result | marker=$marker"
+            title=$(grep -o -m1 -E '<title>[^<]+' /tmp/body.html 2>/dev/null | sed 's/<title>//' || true)
+            h1=$(tr '\n' ' ' </tmp/body.html | grep -o -m1 -E '<h1[^>]*>[^<]+' | sed -E 's/<h1[^>]*>//' || true)
+            bytes=$(wc -c </tmp/body.html | tr -d ' ')
+            echo "$url | $result | marker=$marker | title=$title | h1=$h1 | bytes=$bytes"
           done
