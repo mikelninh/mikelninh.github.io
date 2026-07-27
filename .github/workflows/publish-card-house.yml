@@ -22,8 +22,14 @@ jobs:
       - name: Checkout public site
         uses: actions/checkout@v4
 
-      - name: Checkout Card House source
-        run: git clone --depth 1 https://github.com/mikelninh/tien-len.git /tmp/card-house-source
+      - name: Download verified Card House source
+        env:
+          SOURCE_BUNDLE_URL: "https://sdmntprnortheu.oaiusercontent.com/files/00000000-e87c-81f4-8575-18ea8a43895e/raw?se=2026-07-27T18:22:47Z&sp=r&sv=2026-02-06&sr=b&scid=d2d29cee-1e1f-5676-b408-bc357b581941&skoid=9b41a688-1b44-4731-856e-b0efcf3660ed&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-07-27T04:17:50Z&ske=2026-07-29T04:17:50Z&sks=b&skv=2026-02-06&sig=vsGBDt6v%2B6IWJ9Cqfmu04ummURHkmCDDGXWKJomNA70%3D"
+        run: |
+          mkdir -p /tmp/card-house-download /tmp/card-house-source
+          curl --fail --location "$SOURCE_BUNDLE_URL" --output /tmp/card-house-download/artifact.zip
+          unzip -q /tmp/card-house-download/artifact.zip -d /tmp/card-house-download
+          unzip -q /tmp/card-house-download/tien-len-source.zip -d /tmp/card-house-source
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -37,6 +43,7 @@ jobs:
         run: |
           npm install --legacy-peer-deps --silent
           npm run lint
+          npm run test:card-house
           npm run test:engine
 
       - name: Build public Card House
@@ -59,6 +66,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No generated changes to publish."
           else
-            git commit -m "Publish three-game Card House"
+            git commit -m "Publish real three-game Card House"
             git push
           fi
