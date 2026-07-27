@@ -1,0 +1,50 @@
+name: Publish exact Card House Radio artifact
+
+on:
+  push:
+    branches: [agent/publish-card-house-radio]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/publish-card-house-radio
+
+      - name: Download verified playable artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 \
+            'https://sdmntprnortheu.oaiusercontent.com/files/00000000-5e94-81f4-b98c-14caa0619578/raw?se=2026-07-27T19:42:13Z&sp=r&sv=2026-02-06&sr=b&scid=81f8a3cf-9163-543b-a2aa-8a0a12cbe4fe&skoid=e5f84a89-964a-4fd3-92c2-c2cb3a12ea16&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-07-27T19:24:04Z&ske=2026-07-29T19:24:04Z&sks=b&skv=2026-02-06&sig=FpuI9%2BpUY4/LkWwVo05qOqQxDxFsMIlxq3f0uunBDz0%3D' \
+            --output /tmp/card-house-radio.zip
+          rm -rf /tmp/card-house-radio
+          mkdir -p /tmp/card-house-radio
+          unzip -q /tmp/card-house-radio.zip -d /tmp/card-house-radio
+          test -f /tmp/card-house-radio/index.html
+          grep -q 'HouseRadio\|Card House Radio\|After Hours' /tmp/card-house-radio/_next/static/chunks/*.js
+
+      - name: Replace public Card House build
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf tien-len
+          mkdir -p tien-len
+          cp -a /tmp/card-house-radio/. tien-len/
+          touch .nojekyll
+          rm -f .github/workflows/publish-card-house-radio.yml
+
+      - name: Commit exact public build
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A tien-len .nojekyll .github/workflows/publish-card-house-radio.yml
+          git commit -m 'Publish Card House Radio and room soundscapes'
+          git push origin HEAD:agent/publish-card-house-radio
