@@ -1,0 +1,53 @@
+name: Publish corrected Card House Pages build
+
+on:
+  push:
+    branches: [agent/fix-card-house-radio-basepath]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/fix-card-house-radio-basepath
+
+      - name: Download verified /tien-len build
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 \
+            'https://sdmntprdenmarkeast.oaiusercontent.com/files/00000000-7d24-8210-8377-b2226d94546e/raw?se=2026-07-27T19:52:16Z&sp=r&sv=2026-02-06&sr=b&scid=daceef97-cdf8-523b-88e2-4b30145dfb5a&skoid=e5f84a89-964a-4fd3-92c2-c2cb3a12ea16&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-07-27T19:24:03Z&ske=2026-07-29T19:24:03Z&sks=b&skv=2026-02-06&sig=gOWUh1TanuZaG2jaQhLrJLYep1dReRgRzPaujnGDRGo%3D' \
+            --output /tmp/card-house-pages.zip
+          rm -rf /tmp/card-house-pages
+          mkdir -p /tmp/card-house-pages
+          unzip -q /tmp/card-house-pages.zip -d /tmp/card-house-pages
+          test -f /tmp/card-house-pages/index.html
+          grep -q 'href="/tien-len/_next/' /tmp/card-house-pages/index.html
+          grep -q 'src="/tien-len/_next/' /tmp/card-house-pages/index.html
+          grep -R -q 'Card House Radio' /tmp/card-house-pages/_next/static/chunks
+          grep -R -q 'After Hours' /tmp/card-house-pages/_next/static/chunks
+
+      - name: Replace public Card House build
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf tien-len
+          mkdir -p tien-len
+          cp -a /tmp/card-house-pages/. tien-len/
+          touch .nojekyll
+          rm -f .github/workflows/publish-card-house-radio-pages-build.yml
+
+      - name: Commit corrected release
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A tien-len .nojekyll .github/workflows/publish-card-house-radio-pages-build.yml
+          git commit -m 'Fix Card House radio asset base path'
+          git push origin HEAD:agent/fix-card-house-radio-basepath
