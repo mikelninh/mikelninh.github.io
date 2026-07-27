@@ -15,6 +15,7 @@ jobs:
         shell: bash
         run: |
           set -u
+          # Recheck after deploying the current repository through GitHub Pages.
           for url in \
             'https://mikelninh-github-io.vercel.app/tien-len/' \
             'https://mikelninh.github.io/tien-len/'
