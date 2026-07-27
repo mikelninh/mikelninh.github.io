@@ -46,6 +46,7 @@ async function waitUntil(page, check, timeout = 20000) {
     console.log('PASS tien-len-render');
 
     console.log('STAGE tien-len-engine-move');
+    const humanHand = page.locator('div.absolute.bottom-0.left-0.right-0.z-10 .pcard');
     let moved = false;
     for (let attempt = 0; attempt < 12 && !moved; attempt++) {
       const hint = page.getByRole('button', { name: /Hint/i });
@@ -55,20 +56,21 @@ async function waitUntil(page, check, timeout = 20000) {
         continue;
       }
 
-      const beforeHand = await page.locator('.pcard').count();
+      const beforeHand = await humanHand.count();
       await hint.click();
       await page.waitForTimeout(300);
       const hinted = page.locator('.pcard.hintable');
       const count = await hinted.count();
+      const play = page.getByRole('button', { name: /^Play$/i });
 
-      if (count > 0) {
-        for (let i = 0; i < count; i++) await hinted.nth(i).click();
-        const play = page.getByRole('button', { name: /^Play$/i });
-        if (await play.isEnabled().catch(() => false)) {
-          await play.click();
-          moved = await waitUntil(page, async () => (await page.locator('.pcard').count()) < beforeHand, 5000);
-          if (moved) break;
-        }
+      if (count > 0 && !(await play.isEnabled().catch(() => false))) {
+        for (let i = 0; i < count; i++) await hinted.nth(i).click({ force: true });
+      }
+
+      if (count > 0 && await play.isEnabled().catch(() => false)) {
+        await play.click();
+        moved = await waitUntil(page, async () => (await humanHand.count()) < beforeHand, 5000);
+        if (moved) break;
       }
 
       const pass = page.getByRole('button', { name: /^Pass$/i });
@@ -110,7 +112,7 @@ async function waitUntil(page, check, timeout = 20000) {
     if (!actionReady) throw new Error('No valid Durak action became available.');
 
     const enabledCard = page.locator('button.h-28.w-20:not([disabled])').first();
-    if (await enabledCard.count()) await enabledCard.click();
+    if (await enabledCard.count()) await enabledCard.click({ force: true });
     else await page.getByRole('button', { name: /Pick up attack/i }).click();
     await page.waitForTimeout(900);
     console.log('PASS durak');
