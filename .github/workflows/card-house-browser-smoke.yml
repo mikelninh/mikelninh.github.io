@@ -1,0 +1,186 @@
+name: Card House browser smoke
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  browser-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download exact released build
+        uses: actions/download-artifact@v4
+        with:
+          name: card-house-public-build
+          path: /tmp/site/tien-len
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: 30293709685
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install browser driver
+        run: npm install --no-save playwright-core@1.54.1
+
+      - name: Run released-build interaction test
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --directory /tmp/site >/tmp/card-house-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+
+          for _ in {1..20}; do
+            curl -fsS http://127.0.0.1:4173/tien-len/ >/dev/null && break
+            sleep 0.5
+          done
+
+          cat > /tmp/card-house-smoke.cjs <<'NODE'
+          const { chromium } = require('playwright-core');
+          const fs = require('node:fs');
+
+          const chrome = [
+            '/usr/bin/google-chrome',
+            '/usr/bin/google-chrome-stable',
+            '/usr/bin/chromium',
+            '/usr/bin/chromium-browser',
+          ].find(fs.existsSync);
+
+          if (!chrome) throw new Error('No Chrome or Chromium executable found on runner.');
+
+          async function waitForAny(page, checks, timeout = 20000) {
+            const started = Date.now();
+            while (Date.now() - started < timeout) {
+              for (const check of checks) {
+                if (await check()) return true;
+              }
+              await page.waitForTimeout(250);
+            }
+            return false;
+          }
+
+          (async () => {
+            const browser = await chromium.launch({ executablePath: chrome, headless: true, args: ['--no-sandbox'] });
+            const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+            const page = await context.newPage();
+            const errors = [];
+            page.on('pageerror', error => errors.push(`pageerror: ${error.message}`));
+            page.on('console', message => {
+              if (message.type() === 'error') errors.push(`console: ${message.text()}`);
+            });
+
+            await page.goto('http://127.0.0.1:4173/tien-len/', { waitUntil: 'networkidle' });
+            await page.getByText('THE CARD HOUSE', { exact: true }).waitFor();
+            await page.getByText('Full original game', { exact: true }).waitFor();
+            await page.getByText('Shared daily multiplayer', { exact: true }).waitFor();
+            await page.getByText('Prototype · house bot', { exact: true }).waitFor();
+            if (await page.getByText('Tiến Lên Sprint', { exact: false }).count()) throw new Error('Sprint fallback is present.');
+            console.log('PASS lobby: honest three-game status labels');
+
+            await page.getByRole('button', { name: 'Vs 3 bots' }).click();
+            await page.getByText('Vietnamese Thirteen', { exact: true }).waitFor();
+            await page.getByRole('button', { name: 'Rules' }).waitFor();
+            await page.getByRole('button', { name: /Show played|Hide played/ }).waitFor();
+            await page.getByRole('button', { name: 'New game' }).waitFor();
+            if ((await page.locator('.pcard').count()) < 13) throw new Error('Original Tiến Lên hand did not render.');
+            console.log('PASS Tiến Lên: original GameTable rendered');
+
+            let moved = false;
+            for (let turnAttempt = 0; turnAttempt < 10 && !moved; turnAttempt++) {
+              const hintButton = page.getByRole('button', { name: 'Hint' });
+              const humanTurn = await waitForAny(page, [async () => await hintButton.isEnabled().catch(() => false)], 16000);
+              if (!humanTurn) throw new Error('Human turn never arrived in Tiến Lên.');
+
+              const before = await page.locator('.pcard.selectable').count();
+              await hintButton.click();
+              await page.waitForTimeout(250);
+              const hinted = page.locator('.pcard.hintable');
+              const hintCount = await hinted.count();
+
+              if (hintCount > 0) {
+                for (let i = 0; i < hintCount; i++) await hinted.nth(i).click();
+                const playButton = page.getByRole('button', { name: /^Play$/ });
+                if (await playButton.isEnabled()) {
+                  await playButton.click();
+                  const changed = await waitForAny(page, [async () => (await page.locator('.pcard.selectable').count()) < before], 5000);
+                  if (!changed) throw new Error('Tiến Lên Play did not change the human hand.');
+                  moved = true;
+                  break;
+                }
+              }
+
+              const passButton = page.getByRole('button', { name: 'Pass' });
+              if (await passButton.isEnabled()) {
+                await passButton.click();
+                await page.waitForTimeout(900);
+              } else {
+                await page.getByRole('button', { name: 'New game' }).click();
+                await page.waitForTimeout(700);
+              }
+            }
+            if (!moved) throw new Error('Could not complete a legal Tiến Lên engine move.');
+            console.log('PASS Tiến Lên: Hint selected and engine accepted a legal move');
+
+            await page.getByRole('button', { name: 'Menu' }).click();
+            await page.getByText('THE CARD HOUSE', { exact: true }).waitFor();
+
+            await page.getByRole('button', { name: /Enter today's showdown/i }).click();
+            await page.getByText('Daily Poker Showdown', { exact: true }).waitFor();
+            const pokerAnswers = page.locator('button').filter({ hasText: /^[A-D]\./ });
+            if ((await pokerAnswers.count()) < 4) throw new Error('Daily Poker answers did not render.');
+            await pokerAnswers.first().click();
+            console.log('PASS Daily Poker: shared daily decision rendered and accepted a selection');
+            await page.getByRole('button', { name: 'Lobby' }).click();
+            await page.getByText('THE CARD HOUSE', { exact: true }).waitFor();
+
+            await page.getByRole('button', { name: /Play Durak prototype/i }).click();
+            await page.getByText('Durak', { exact: true }).waitFor();
+            await page.getByText('Durak Bot', { exact: true }).waitFor();
+            await page.getByText('Trump', { exact: true }).waitFor();
+            await page.getByText('Stock', { exact: true }).waitFor();
+
+            const durakAction = await waitForAny(page, [
+              async () => await page.locator('button.h-28.w-20:not([disabled])').count() > 0,
+              async () => await page.getByRole('button', { name: /Pick up attack/i }).isVisible().catch(() => false),
+            ], 12000);
+            if (!durakAction) throw new Error('No valid Durak action became available.');
+
+            const enabledCard = page.locator('button.h-28.w-20:not([disabled])').first();
+            if (await enabledCard.count()) await enabledCard.click();
+            else await page.getByRole('button', { name: /Pick up attack/i }).click();
+            await page.waitForTimeout(900);
+            console.log('PASS Durak: prototype accepted a valid attack/defense action');
+
+            if (errors.length) {
+              const meaningful = errors.filter(error => !error.includes('ERR_BLOCKED_BY_CLIENT'));
+              if (meaningful.length) throw new Error(`Browser errors:\n${meaningful.join('\n')}`);
+            }
+
+            await page.screenshot({ path: '/tmp/card-house-smoke.png', fullPage: true });
+            await browser.close();
+            console.log('PASS all released Card House browser interactions');
+          })().catch(error => {
+            console.error(error);
+            process.exit(1);
+          });
+          NODE
+
+          NODE_PATH="$GITHUB_WORKSPACE/node_modules" node /tmp/card-house-smoke.cjs
+
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: card-house-browser-evidence
+          path: /tmp/card-house-smoke.png
+          if-no-files-found: ignore
+          retention-days: 1
