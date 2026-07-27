@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Poker Hand — Tournament Riddles</title>
+<meta name="description" content="One fresh No-Limit Texas Hold’em tournament riddle every day, plus drills for pot odds, preflop play and showdowns." />
+<meta name="theme-color" content="#07110e" />
+<meta property="og:title" content="Daily Poker Hand" />
+<meta property="og:description" content="Solve the same tournament poker spot as your friends each day. Commit first, then unlock the explanation." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="app">
+  <section class="hero">
+    <div class="hero-card">
+      <div class="eyebrow">No-Limit Texas Hold’em • Friend Tournament Mode</div>
+      <h1>Become annoyingly difficult to knock out.</h1>
+      <div class="subtitle">
+        Diagnose your poker knowledge, practise real tournament spots, sharpen pot odds, and learn exactly where your chips are leaking.
+        Default assumptions: 8-handed table, sensible friends, occasional chaos.
+      </div>
+      <div class="badges">
+        <span class="badge">Instant explanations</span>
+        <span class="badge">Tournament strategy</span>
+        <span class="badge">Pot odds</span>
+        <span class="badge">Showdown reading</span>
+        <span class="badge">Local progress saved</span>
+      </div>
+    </div>
+    <div class="stats-card">
+      <div class="stat"><span>Best diagnostic</span><b id="bestScore">—</b></div>
+      <div class="stat"><span>Total answered</span><b id="totalAnswered">0</b></div>
+      <div class="stat"><span>Current streak</span><b id="globalStreak">0</b></div>
+      <div class="stat"><span>Weakest area</span><b id="weakArea" style="font-size:1.08rem">Unknown</b></div>
+    </div>
+  </section>
+
+  <nav class="nav">
+    <button class="active" data-screen="home">Training Room</button>
+    <button data-screen="daily">Daily Hand</button>
+    <button data-screen="quiz">Live Drill</button>
+    <button data-screen="cheat">Cheat Sheet</button>
+  </nav>
+
+  <main class="panel">
+    <section class="screen active" id="home">
+      <div class="daily-banner">
+        <div>
+          <div class="eyebrow">Your daily poker riddle</div>
+          <h3 id="dailyBannerTitle">Today’s hand is waiting</h3>
+          <p>One tournament decision per day. Commit first, then unlock the explanation. Your streak only grows when you actually answer.</p>
+          <div class="daily-status">
+            <span class="daily-pill" id="dailyBannerStreak">🔥 0-day streak</span>
+            <span class="daily-pill" id="dailyBannerState">Unsolved today</span>
+          </div>
+        </div>
+        <button class="btn gold" id="dailyBannerButton" onclick="openDaily()">Play today’s hand</button>
+      </div>
+
+      <div class="section-head">
+        <div>
+          <h2>Choose your training mode</h2>
+          <p>Start with the diagnostic. It is designed to expose the exact spots that cost you chips.</p>
+        </div>
+      </div>
+      <div class="mode-grid">
+        <article class="mode">
+          <div class="eyebrow">Recommended</div>
+          <h3>12-Hand Diagnostic</h3>
+          <p>A balanced test across hand strength, preflop play, pot odds, and tournament judgement.</p>
+          <button class="btn gold" onclick="startQuiz('diagnostic')">Start diagnostic</button>
+        </article>
+        <article class="mode">
+          <div class="eyebrow">Pressure test</div>
+          <h3>60-Second Rapid Fire</h3>
+          <p>Quick decisions under time pressure. Good practice for avoiding paralysis at the table.</p>
+          <button class="btn" onclick="startQuiz('rapid')">Start rapid fire</button>
+        </article>
+        <article class="mode">
+          <div class="eyebrow">Targeted practice</div>
+          <h3>Pick a Weak Spot</h3>
+          <p>Train one category until the answer starts feeling obvious rather than theoretical.</p>
+          <button class="btn" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">Choose category</button>
+        </article>
+      </div>
+
+      <div class="section-head" id="categories" style="margin-top:28px">
+        <div>
+          <h2>Practice categories</h2>
+          <p>Each run contains eight questions sampled from the selected skill.</p>
+        </div>
+      </div>
+      <div class="category-grid">
+        <article class="category"><h3>🂡 Hand Strength</h3><p>Rankings, kickers, board texture, and spotting ties.</p><button class="btn" onclick="startQuiz('category','Hand Reading')">Train hand reading</button></article>
+        <article class="category"><h3>🎯 Preflop Decisions</h3><p>Raise, call, fold, or shove based on position and stack depth.</p><button class="btn" onclick="startQuiz('category','Preflop')">Train preflop</button></article>
+        <article class="category"><h3>🧮 Pot Odds</h3><p>Know when a draw is worth continuing—and when hope is just expensive.</p><button class="btn" onclick="startQuiz('category','Pot Odds')">Train pot odds</button></article>
+        <article class="category"><h3>🏆 Tournament Play</h3><p>Bubble pressure, short-stack survival, value betting, and player types.</p><button class="btn" onclick="startQuiz('category','Tournament')">Train tournament play</button></article>
+        <article class="category"><h3>⚔️ Showdown Battles</h3><p>Read complete boards and decide who wins without squinting for five minutes.</p><button class="btn" onclick="startQuiz('category','Showdown')">Train showdowns</button></article>
+        <article class="category"><h3>🎲 Mixed Chaos</h3><p>Anything can appear. Much like a real game with your mates.</p><button class="btn" onclick="startQuiz('category','Mixed')">Embrace chaos</button></article>
+      </div>
+    </section>
+
+    <section class="screen" id="daily">
+      <div class="section-head">
+        <div>
+          <h2>Daily Hand</h2>
+          <p>A single tournament spot, refreshed each local calendar day. No peeking ahead—your poker brain needs its vegetables.</p>
+        </div>
+      </div>
+      <div id="dailyArea"></div>
+    </section>
+
+    <section class="screen" id="quiz">
+      <div id="quizArea"></div>
+    </section>
+
+    <section class="screen" id="cheat">
+      <div class="section-head">
+        <div>
+          <h2>Five-minute tournament cheat sheet</h2>
+          <p>Read this once before the cards are dealt. Read the bold bits twice.</p>
+        </div>
+      </div>
+      <div class="cheat-grid">
+        <article class="cheat">
+          <h3>Hand rankings</h3>
+          <div class="rank-list">
+            <div class="rank-item"><span class="rank-num">1</span><b>Royal flush</b></div>
+            <div class="rank-item"><span class="rank-num">2</span><b>Straight flush</b></div>
+            <div class="rank-item"><span class="rank-num">3</span><b>Four of a kind</b></div>
+            <div class="rank-item"><span class="rank-num">4</span><b>Full house</b></div>
+            <div class="rank-item"><span class="rank-num">5</span><b>Flush</b></div>
+            <div class="rank-item"><span class="rank-num">6</span><b>Straight</b></div>
+            <div class="rank-item"><span class="rank-num">7</span><b>Three of a kind</b></div>
+            <div class="rank-item"><span class="rank-num">8</span><b>Two pair</b></div>
+            <div class="rank-item"><span class="rank-num">9</span><b>One pair</b></div>
+            <div class="rank-item"><span class="rank-num">10</span><b>High card</b></div>
+          </div>
+        </article>
+
+        <article class="cheat">
+          <h3>The tournament commandments</h3>
+          <div class="tip"><b>Position is power.</b> Play more hands late, fewer hands early.</div>
+          <div class="tip"><b>Enter pots aggressively.</b> Open-raise or fold far more often than you limp.</div>
+          <div class="tip"><b>Bluff fewer people.</b> Multiway pots and calling stations are value territory.</div>
+          <div class="tip"><b>Short stack = first-in aggression.</b> With 10 big blinds, shoving is often cleaner than calling.</div>
+          <div class="tip warning"><b>One pair is not a marriage.</b> You are allowed to fold top pair.</div>
+        </article>
+
+        <article class="cheat">
+          <h3>Pot odds in plain English</h3>
+          <p><b>Required equity = call ÷ final pot after you call.</b></p>
+          <div class="tip">Pot €80, opponent bets €20. You call €20 to play for €120. Required equity = 20/120 = <b>16.7%</b>.</div>
+          <div class="tip"><b>Rule of 2 and 4:</b> outs × 2 with one card to come; outs × 4 with two cards to come.</div>
+          <p>Common draws: flush draw = 9 outs; open-ended straight draw = 8; gutshot = 4; two overcards ≈ 6, though not all outs are always clean.</p>
+        </article>
+
+        <article class="cheat">
+          <h3>Stack-size plan</h3>
+          <p><b>40bb+:</b> manoeuvre, apply pressure, avoid massive pots with medium hands.</p>
+          <p><b>20–40bb:</b> steals and re-shoves become powerful; speculative calls lose value.</p>
+          <p><b>10–20bb:</b> fewer flat calls, more raise/fold and shove decisions.</p>
+          <p><b>Under 10bb:</b> protect fold equity. Do not wait for aces until the blinds eat your soul.</p>
+        </article>
+
+        <article class="cheat">
+          <h3>Exploit your friends lovingly</h3>
+          <p><b>Calls too much:</b> bluff less, value bet bigger.</p>
+          <p><b>Folds too much:</b> steal blinds relentlessly.</p>
+          <p><b>Raises only monsters:</b> believe them.</p>
+          <p><b>Tilting:</b> stay patient and let them donate voluntarily.</p>
+          <p><b>Looks at chips before acting:</b> often indicates interest in betting—but never rely on one tell alone.</p>
+        </article>
+
+        <article class="cheat">
+          <h3>Before the tournament starts</h3>
+          <p>Agree starting stack, blind levels, rebuy rules, breaks, late registration, chip denominations, and whether verbal declarations are binding.</p>
+          <div class="tip warning"><b>Avoid string bets.</b> Say “raise” and the amount before moving chips.</div>
+          <div class="tip"><b>Protect your cards.</b> Keep them visible and use a chip/card protector so they are not accidentally mucked.</div>
+          <div class="tip"><b>Count in big blinds.</b> “I have 14bb” is strategically useful; “I have 7,350 chips” mostly sounds impressive.</div>
+        </article>
+      </div>
+      <div class="footer-note">Strategy answers use solid default tournament play. Close spots can vary with antes, player tendencies, payout structure, and table size.</div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast">Copied!</div>
+
+<script src="questions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
