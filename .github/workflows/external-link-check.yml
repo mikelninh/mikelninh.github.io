@@ -1,0 +1,35 @@
+name: External public link check
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check public endpoints without authentication
+        shell: bash
+        run: |
+          set -u
+          for url in \
+            'https://mikelninh-github-io.vercel.app/tien-len/' \
+            'https://mikelninh.github.io/tien-len/'
+          do
+            echo "===== $url ====="
+            curl --location --silent --show-error \
+              --connect-timeout 15 --max-time 30 \
+              --dump-header /tmp/headers.txt \
+              --output /tmp/body.html \
+              --write-out 'http_code=%{http_code}\nfinal_url=%{url_effective}\ncontent_type=%{content_type}\n' \
+              "$url" || echo "curl_exit=$?"
+            cat /tmp/headers.txt || true
+            echo '--- title markers ---'
+            grep -o -m1 -E '<title>[^<]+' /tmp/body.html || true
+            grep -o -m1 -E 'THE CARD HOUSE|Authentication Required|404: This page could not be found' /tmp/body.html || true
+            echo
+          done
