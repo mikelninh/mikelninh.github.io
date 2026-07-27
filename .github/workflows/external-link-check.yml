@@ -1,4 +1,4 @@
-name: External public link check
+name: External public Card House check
 
 on:
   pull_request:
@@ -11,27 +11,87 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Check public endpoints without authentication
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install browser driver
+        run: npm install --no-save playwright-core@1.54.1
+
+      - name: Test public GitHub Pages app in Chrome
         shell: bash
         run: |
-          set -u
-          # Recheck after deploying the current repository through GitHub Pages.
-          for url in \
-            'https://mikelninh-github-io.vercel.app/tien-len/' \
-            'https://mikelninh.github.io/tien-len/'
-          do
-            rm -f /tmp/body.html
-            result=$(curl --location --silent --show-error \
-              --connect-timeout 15 --max-time 30 \
-              --output /tmp/body.html \
-              --write-out 'status=%{http_code} final=%{url_effective} type=%{content_type}' \
-              "$url" 2>&1)
-            marker='none'
-            if grep -q 'THE CARD HOUSE' /tmp/body.html 2>/dev/null; then marker='card-house'; fi
-            if grep -qi 'Authentication Required' /tmp/body.html 2>/dev/null; then marker='auth-required'; fi
-            if grep -q '404: This page could not be found' /tmp/body.html 2>/dev/null; then marker='404-page'; fi
-            title=$(grep -o -m1 -E '<title>[^<]+' /tmp/body.html 2>/dev/null | sed 's/<title>//' || true)
-            h1=$(tr '\n' ' ' </tmp/body.html | grep -o -m1 -E '<h1[^>]*>[^<]+' | sed -E 's/<h1[^>]*>//' || true)
-            bytes=$(wc -c </tmp/body.html | tr -d ' ')
-            echo "$url | $result | marker=$marker | title=$title | h1=$h1 | bytes=$bytes"
-          done
+          cat > /tmp/public-card-house-smoke.cjs <<'NODE'
+          const { chromium } = require('playwright-core');
+          const fs = require('node:fs');
+
+          const chrome = [
+            '/usr/bin/google-chrome',
+            '/usr/bin/google-chrome-stable',
+            '/usr/bin/chromium',
+            '/usr/bin/chromium-browser',
+          ].find(fs.existsSync);
+          if (!chrome) throw new Error('Chrome not found');
+
+          (async () => {
+            const browser = await chromium.launch({ executablePath: chrome, headless: true, args: ['--no-sandbox'] });
+            const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+            page.setDefaultTimeout(20000);
+            const localFailures = [];
+            const pageErrors = [];
+            page.on('requestfailed', req => {
+              if (req.url().includes('mikelninh.github.io/tien-len')) {
+                localFailures.push(`${req.url()} :: ${req.failure()?.errorText}`);
+              }
+            });
+            page.on('pageerror', err => pageErrors.push(err.message));
+
+            await page.goto('https://mikelninh.github.io/tien-len/', { waitUntil: 'networkidle' });
+            await page.getByText('THE CARD HOUSE', { exact: true }).waitFor();
+            await page.getByText('Full original game', { exact: true }).waitFor();
+            console.log('PASS public lobby loaded');
+
+            await page.getByRole('button', { name: /Vs 3 bots/i }).click();
+            await page.getByText('Vietnamese Thirteen', { exact: true }).waitFor();
+            await page.locator('.pcard').first().waitFor();
+            const cardCount = await page.locator('.pcard').count();
+            if (cardCount < 13) throw new Error(`Original hand rendered only ${cardCount} cards`);
+            console.log(`PASS original Tiến Lên loaded with ${cardCount} cards`);
+
+            await page.getByRole('button', { name: /Menu/i }).click();
+            await page.getByText('THE CARD HOUSE', { exact: true }).waitFor();
+            await page.getByRole('button', { name: /Enter today's showdown/i }).click();
+            await page.getByText('Daily Poker Showdown', { exact: true }).waitFor();
+            const answers = page.locator('button').filter({ hasText: /^[A-D]\./ });
+            if ((await answers.count()) < 4) throw new Error('Poker answers missing');
+            await answers.first().click();
+            console.log('PASS Daily Poker opened and accepted a selection');
+
+            await page.getByRole('button', { name: /Lobby/i }).click();
+            await page.getByText('THE CARD HOUSE', { exact: true }).waitFor();
+            await page.getByRole('button', { name: /Play Durak prototype/i }).click();
+            await page.getByText('Durak Bot', { exact: true }).waitFor();
+            await page.getByText('Trump', { exact: true }).waitFor();
+            console.log('PASS Durak prototype opened');
+
+            if (localFailures.length) throw new Error(`Local asset failures:\n${localFailures.join('\n')}`);
+            if (pageErrors.length) throw new Error(`Page errors:\n${pageErrors.join('\n')}`);
+            await page.screenshot({ path: '/tmp/public-card-house.png', fullPage: true });
+            console.log('PASS public Card House is interactive');
+            await browser.close();
+          })().catch(error => {
+            console.error('FAIL', error);
+            process.exit(1);
+          });
+          NODE
+
+          NODE_PATH="$GITHUB_WORKSPACE/node_modules" node /tmp/public-card-house-smoke.cjs
+
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-card-house-browser-evidence
+          path: /tmp/public-card-house.png
+          if-no-files-found: ignore
+          retention-days: 1
