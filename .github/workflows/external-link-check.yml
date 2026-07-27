@@ -11,7 +11,6 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - name: Check public endpoints without authentication
         shell: bash
         run: |
@@ -20,16 +19,15 @@ jobs:
             'https://mikelninh-github-io.vercel.app/tien-len/' \
             'https://mikelninh.github.io/tien-len/'
           do
-            echo "===== $url ====="
-            curl --location --silent --show-error \
+            rm -f /tmp/body.html
+            result=$(curl --location --silent --show-error \
               --connect-timeout 15 --max-time 30 \
-              --dump-header /tmp/headers.txt \
               --output /tmp/body.html \
-              --write-out 'http_code=%{http_code}\nfinal_url=%{url_effective}\ncontent_type=%{content_type}\n' \
-              "$url" || echo "curl_exit=$?"
-            cat /tmp/headers.txt || true
-            echo '--- title markers ---'
-            grep -o -m1 -E '<title>[^<]+' /tmp/body.html || true
-            grep -o -m1 -E 'THE CARD HOUSE|Authentication Required|404: This page could not be found' /tmp/body.html || true
-            echo
+              --write-out 'status=%{http_code} final=%{url_effective} type=%{content_type}' \
+              "$url" 2>&1)
+            marker='none'
+            if grep -q 'THE CARD HOUSE' /tmp/body.html 2>/dev/null; then marker='card-house'; fi
+            if grep -qi 'Authentication Required' /tmp/body.html 2>/dev/null; then marker='auth-required'; fi
+            if grep -q '404: This page could not be found' /tmp/body.html 2>/dev/null; then marker='404-page'; fi
+            echo "$url | $result | marker=$marker"
           done
