@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: write
 
 concurrency:
@@ -17,38 +18,35 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - name: Checkout public site
         uses: actions/checkout@v4
 
-      - name: Checkout Card House source
-        run: git clone --depth 1 https://github.com/mikelninh/tien-len.git /tmp/card-house-source
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - name: Download verified exact build
+        uses: actions/download-artifact@v4
         with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: /tmp/card-house-source/package-lock.json
+          name: card-house-public-build
+          path: /tmp/card-house-build
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: 30293709685
 
-      - name: Install and verify
-        working-directory: /tmp/card-house-source
+      - name: Verify release artifact
         run: |
-          npm install --legacy-peer-deps --silent
-          npm run lint
-          npm run test:engine
-
-      - name: Build public Card House
-        working-directory: /tmp/card-house-source
-        env:
-          GITHUB_PAGES: "true"
-        run: npm run build
+          test -f /tmp/card-house-build/index.html
+          grep -R -q "Full original game" /tmp/card-house-build
+          grep -R -q "Prototype · house bot" /tmp/card-house-build
+          if grep -R -q "Tiến Lên Sprint" /tmp/card-house-build; then
+            echo "Refusing to publish the Sprint fallback."
+            exit 1
+          fi
 
       - name: Publish generated site
         run: |
           rm -rf tien-len
-          cp -R /tmp/card-house-source/out tien-len
+          mkdir -p tien-len
+          cp -R /tmp/card-house-build/. tien-len/
           touch .nojekyll
 
       - name: Commit release
@@ -59,6 +57,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No generated changes to publish."
           else
-            git commit -m "Publish three-game Card House"
+            git commit -m "Publish real three-game Card House"
             git push
           fi
