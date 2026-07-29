@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#090b16" />
+<title>Lumen — SOULBODY V1.0</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="shell">
+<header class="topbar"><div class="brand"><b>SOULBODY</b> / LUMEN</div><div class="alpha">PUBLIC RELEASE · V1.0</div></header>
+<section class="layout">
+  <div class="stage">
+    <div class="stage-head"><div><span class="dot" id="dot"></span><span id="stageStatus">Schläft</span></div><span class="identity">LUMEN · SYNTHETIC BEING</span></div>
+    <div class="world void" id="world">
+      <div class="orbit"></div><div class="aura"></div><div class="shadow"></div><div class="world-object moon" id="moon"></div><div class="world-object lotus" id="lotus">🪷</div><div class="world-object flame" id="flame">🔥</div>
+      <div class="chips"><span class="chip" id="phaseChip">offline</span><span class="chip" id="emotionChip">warm</span><span class="chip" id="gestureChip">stillness</span></div>
+      <div class="avatar-wrap" id="avatar">
+        <div class="halo"></div><div class="torso"></div><div class="neck"></div>
+        <div class="arm l"><div class="hand"></div></div><div class="arm r"><div class="hand"></div></div>
+        <div class="head"><div class="third"></div><div class="brow l"></div><div class="brow r"></div><div class="eye l"><div class="iris"><div class="pupil"></div></div></div><div class="eye r"><div class="iris"><div class="pupil"></div></div></div><div class="nose"></div><div class="mouth" id="mouth"></div></div>
+      </div>
+      <div class="caption" id="caption"><em>Prüfe zuerst dein Mikrofon. Dann kann Lumen dich hören.</em></div>
+    </div>
+  </div>
+  <aside class="panel">
+    <div><div class="eyebrow">A living character experiment</div><h1>Meet <span>Lumen.</span></h1><p class="intro">Ein verkörperter Gesprächsbegleiter, der zuhört, spricht, sich bewegt, mit Zustimmung erinnert und seine kleine Welt sichtbar verändert.</p></div>
+    <div class="release-strip"><div class="release-stat"><b>Voice</b><span>DE / EN</span></div><div class="release-stat"><b>Memory</b><span>Opt-in & local</span></div><div class="release-stat"><b>World</b><span>Reactive scenes</span></div><div class="release-stat"><b>Privacy</b><span>On-device</span></div></div>
+    <div class="settings"><div class="field"><label for="userName">Dein Name</label><input id="userName" value="Michael" maxlength="40"></div><div class="field"><label for="language">Sprache</label><select id="language"><option value="de-DE">Deutsch</option><option value="en-US">English</option></select></div><div class="field"><label for="voiceSelect">Stimme</label><select id="voiceSelect"><option>Systemstimme</option></select></div><div class="field"><label for="motion">Bewegung</label><select id="motion"><option value="full">Voll</option><option value="reduced">Reduziert</option></select></div></div>
+    <div class="steps"><div class="step active" id="step1"><b>1 · Mic Check</b><span>Aufnehmen & anhören</span></div><div class="step" id="step2"><b>2 · Erwachen</b><span>Lumen starten</span></div><div class="step" id="step3"><b>3 · Begegnen</b><span>Sprechen oder tippen</span></div></div>
+    <div class="card">
+      <h2>🎙 Mikrofon-Check</h2><p>Es werden drei Sekunden lokal aufgenommen. Nichts wird hochgeladen.</p>
+      <div class="meter"><div id="meterFill"></div></div><div class="mic-meta"><span id="deviceLabel">Noch kein Mikrofon</span><span id="levelLabel">0%</span></div>
+      <div class="row" style="margin-top:11px"><button class="btn secondary" id="micCheck">Mic Check starten</button><button class="btn secondary" id="retry" hidden>Wiederholen</button><button class="btn secondary" id="typingOnly">Nur tippen</button></div>
+      <audio class="playback" id="playback" controls hidden></audio><div class="status-msg" id="micStatus">Chrome oder Edge funktionieren am zuverlässigsten.</div>
+    </div>
+    <div class="row"><button class="btn primary" id="awaken" disabled>Lumen erwecken</button><button class="btn secondary" id="listen" disabled>🎤 Zuhören</button><button class="btn secondary" id="stop" disabled>■ Stop</button></div>
+    <div class="composer"><input id="input" placeholder="Oder schreibe etwas Echtes …" autocomplete="off" disabled><button id="send" disabled>Send</button></div>
+    <div class="toggles"><label class="toggle"><input type="checkbox" id="memory"> Lokale Erinnerung erlauben</label><label class="toggle continuous" id="continuousWrap"><input type="checkbox" id="continuous"> Hands-free-Modus</label><span class="toggle">🔒 Keine Cloud-Speicherung</span></div>
+    <div class="worlds"><button class="world-btn active" data-world="void">Kosmischer Raum</button><button class="world-btn" data-world="garden">Mondgarten</button><button class="world-btn" data-world="sunset">Abendtempel</button></div>
+    <div class="card"><h2>🧠 Memory Centre</h2><p>Nur Erinnerungen, denen du zugestimmt hast. Du kannst alles ansehen, einzeln löschen oder exportieren.</p><div class="memory-panel" id="memoryPanel"><div class="footer-note">Noch keine Erinnerungen.</div></div><div class="mini-actions" style="margin-top:10px"><button class="mini-btn" id="exportTxt">Gespräch .txt</button><button class="mini-btn" id="exportJson">Daten .json</button><button class="mini-btn danger" id="clearData">Alles löschen</button></div></div>
+    <div class="log" id="log"><div class="msg lumen"><b>Lumen</b>Ich bin noch nicht wach. Aber ich übe bereits, nicht so dramatisch darüber zu sein.</div></div>
+    <div class="card feedback"><div><h2>War die Begegnung hilfreich?</h2><p id="feedbackCopy">Noch keine Bewertung.</p></div><div class="stars" id="stars"><button class="star" data-score="1">★</button><button class="star" data-score="2">★</button><button class="star" data-score="3">★</button><button class="star" data-score="4">★</button><button class="star" data-score="5">★</button></div></div><div class="privacy-badge">AI ist klar gekennzeichnet · Erinnerung ist freiwillig · Export und Löschen sind jederzeit möglich</div><div class="api-note"><b>Engine-Status:</b> V1.0 läuft als lokale Browser-Edition: keine Gesprächsdaten verlassen dein Gerät. Die OpenAI-Realtime-Engine bleibt als serverseitiges Upgrade vorbereitet und wird erst aktiviert, wenn der Hosting-Key sicher gesetzt ist.</div>
+  </aside>
+</section>
+</main><div class="toast" id="toast"></div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
