@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#090b12">
-  <meta name="description" content="SOULBODY V1.3 — private AI safe rooms, friend circles and shared campaigns.">
-  <title>SOULBODY V1.3 — The Campfire</title>
+  <meta name="description" content="SOULBODY V1.3.1 — a warmer private space for voice, reflection, friends and shared stories.">
+  <title>SOULBODY V1.3.1 — The Campfire</title>
   <link rel="stylesheet" href="/v13-style.css">
 </head>
 <body>
@@ -13,11 +13,9 @@
   <main class="app-shell">
     <header class="hero">
       <div>
-        <div class="eyebrow">SOULBODY · V1.3</div>
-        <h1>The <em>Campfire.</em></h1>
-        <p>A private place to speak, play and return to real life with more clarity.</p>
+        <div class="brand-lockup"><span class="brand-sigil">✦</span><div><div class="eyebrow">SOULBODY · V1.3.1</div><h1>The <em>Campfire.</em></h1><p>A calm place to say the thing you have not found words for yet.</p></div></div>
       </div>
-      <div class="release-pill"><i></i> Animated anime portraits · Realtime voice · scoped memory</div>
+      <div class="hero-trust"><span class="release-pill"><i></i> Realtime ready</span><span class="privacy-pill">Private by default · memory only when chosen</span></div>
     </header>
 
     <nav class="mode-nav" aria-label="Experience mode">
@@ -51,7 +49,7 @@
         <div class="presence-actions">
           <button id="micCheck" class="button secondary">Check microphone</button>
           <button id="textMode" class="button secondary">Use text only</button>
-          <button id="connect" class="button primary" disabled>Meet Nyra</button>
+          <button id="connect" class="button primary" disabled>Start with Nyra</button>
           <button id="interrupt" class="button secondary" disabled>Interrupt</button>
         </div>
         <div class="meter"><div id="meterFill"></div></div>
@@ -61,13 +59,14 @@
 
       <section class="conversation-panel panel">
         <div class="conversation-head">
-          <div>
+          <div class="conversation-title">
             <div class="eyebrow" id="modeEyebrow">PRIVATE SAFE ROOM</div>
             <h2 id="modeTitle">What do you need right now?</h2>
             <p id="modeDescription">Choose how Nyra should meet you. You can change the mode without changing who you are talking to.</p>
           </div>
           <div class="cost-badge"><small>SESSION</small><b id="sessionCost">$0.0000</b><span id="sessionTime">00:00</span></div>
         </div>
+        <div class="privacy-note"><span>◌</span><b>You choose the tone.</b><small>Nothing is remembered unless you explicitly select a memory scope.</small></div>
 
         <div id="safeControls" class="mode-controls">
           <button class="intent active" data-intent="listen"><span>◌</span><b>Listen</b><small>No fixing yet</small></button>
@@ -98,7 +97,7 @@
         </div>
 
         <div id="messages" class="messages" aria-live="polite">
-          <div class="welcome-card"><span>✦</span><div><b id="welcomeTitle">This room begins with your intention.</b><p id="welcomeText">Nyra can listen, help you find clarity, challenge a story gently or turn it into one concrete next step.</p></div></div>
+          <div class="welcome-card"><span>✦</span><div><b id="welcomeTitle">You do not need the perfect words.</b><p id="welcomeText">Start anywhere. Nyra can listen, help you find clarity, challenge a story gently or turn it into one concrete next step.</p></div></div><div class="starter-grid"><button class="quick-prompt starter" data-prompt="I need to get something off my chest. Please listen before trying to solve it.">I need to say something</button><button class="quick-prompt starter" data-prompt="Help me understand what I am feeling and what may be underneath it.">Help me understand this</button><button class="quick-prompt starter" data-prompt="Challenge my interpretation kindly. What might I be missing?">Challenge my thinking</button><button class="quick-prompt starter" data-prompt="Turn this into one small, realistic next step for today.">Give me one next step</button></div>
         </div>
 
         <div class="composer">
@@ -110,40 +109,40 @@
       </section>
 
       <aside class="context-panel panel">
-        <section class="context-block">
-          <div class="eyebrow">CURRENT PRESENCE</div>
-          <div class="status-grid">
-            <div><span>Mind</span><b id="mindStatus">checking</b></div><div><span>Connection</span><b id="connectionStatus">offline</b></div><div><span>Body</span><b>2D live</b></div><div><span>Guardrails</span><b id="guardrailStatus">clear</b></div>
-          </div>
-        </section>
-
-        <section class="context-block">
-          <div class="eyebrow">MEMORY SCOPE</div>
+        <section class="context-block memory-focus">
+          <div class="section-heading"><div><div class="eyebrow">MEMORY</div><b id="memoryScopeTitle">Only when you choose</b></div><span class="privacy-dot">private</span></div>
           <div class="scope-picker"><button class="scope-option active" data-scope="session">This session</button><button class="scope-option" data-scope="private">Private</button><button class="scope-option" data-scope="circle">Circle</button><button class="scope-option" data-scope="campaign">Campaign</button></div>
           <p id="scopeDescription" class="microcopy">Nothing is remembered after you close this session.</p>
           <div id="memoryList" class="memory-list"><span class="empty">No memories in this scope.</span></div>
-          <div class="memory-add"><input id="memoryInput" placeholder="Add an approved memory…" maxlength="220"><button id="addMemory">Add</button></div>
+          <div class="memory-add"><input id="memoryInput" placeholder="Add something worth remembering…" maxlength="220"><button id="addMemory">Add</button></div>
         </section>
 
-        <section class="context-block">
-          <div class="eyebrow">PERSONALITY</div>
-          <div class="trait-line"><b id="archetype">Kuudere · Tsundere-lite</b><span id="intensityValue">65%</span></div>
+        <section class="context-block personality-card">
+          <div class="section-heading"><div><div class="eyebrow">PERSONALITY</div><b id="archetype">Kuudere · Tsundere-lite</b></div><span id="intensityValue">65%</span></div>
           <input id="intensity" type="range" min="20" max="100" value="65">
           <p id="personalityCopy" class="microcopy">Precise and lightly teasing, but never cruel, possessive or jealous of real people.</p>
         </section>
 
-        <section class="context-block constitution">
-          <div class="eyebrow">CAMPFIRE CONSTITUTION</div>
-          <ul><li>AI, never a human or supernatural being.</li><li>No exclusivity, jealousy or emotional coercion.</li><li>Private notes never enter a Circle.</li><li>Support without automatic agreement.</li><li>Every encounter can end with a real-life next step.</li></ul>
-        </section>
+        <details class="context-block details-block">
+          <summary><span>System status</span><small id="connectionSummary">Ready when you are</small></summary>
+          <div class="status-grid">
+            <div><span>Mind</span><b id="mindStatus">checking</b></div><div><span>Connection</span><b id="connectionStatus">offline</b></div><div><span>Body</span><b>Animated portrait</b></div><div><span>Guardrails</span><b id="guardrailStatus">clear</b></div>
+          </div>
+        </details>
 
-        <section class="context-block data-actions">
-          <button id="exportData" class="button secondary">Export current scope</button><button id="clearData" class="button danger">Clear current scope</button>
-        </section>
+        <details class="context-block details-block constitution">
+          <summary><span>Campfire constitution</span><small>How this space behaves</small></summary>
+          <ul><li>AI, never a human or supernatural being.</li><li>No exclusivity, jealousy or emotional coercion.</li><li>Private notes never enter a Circle.</li><li>Support without automatic agreement.</li><li>Every encounter can end with a real-life next step.</li></ul>
+        </details>
+
+        <details class="context-block details-block">
+          <summary><span>Your data</span><small>Export or erase</small></summary>
+          <div class="data-actions"><button id="exportData" class="button secondary">Export current scope</button><button id="clearData" class="button danger">Clear current scope</button></div>
+        </details>
       </aside>
     </section>
 
-    <footer><strong>SOULBODY is an AI experience.</strong> Safe space means room to speak without manufactured dependency. It is not therapy, crisis care or a replacement for real relationships.</footer>
+    <footer><strong>SOULBODY is an AI experience.</strong> A safe space means room to speak without judgement or manufactured dependency. It is not therapy, crisis care or a replacement for real relationships.</footer>
   </main>
 
   <dialog id="adultGate">
