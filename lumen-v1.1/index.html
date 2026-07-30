@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090b15">
+<title>Lumen V1.1 — Living Presence</title>
+<link rel="stylesheet" href="/v11-style.css">
+</head>
+<body>
+<main class="shell">
+<section class="hero">
+<div class="eyebrow">SOULBODY · LUMEN V1.1</div>
+<h1>Living Presence.</h1>
+<p>A more reliable, interruptible encounter: natural turn-taking, visible connection health, consent-based continuity, a voice-reactive body and a world that moves with the conversation.</p>
+<span class="release-note">● Realtime · Reconnect-ready · Same-origin</span>
+</section>
+<section class="grid">
+<div class="card">
+<div class="top"><div class="state"><span id="dot" class="dot"></span><span id="status">Offline</span></div><span>LUMEN · <b id="engine">checking</b></span></div>
+<div id="stage" class="stage">
+<canvas id="presenceCanvas" aria-label="Animated embodied avatar of Lumen"></canvas>
+<div class="chips"><span id="phase" class="chip">offline</span><span id="emotion" class="chip">warm</span><span id="gesture" class="chip">still</span><span id="scene" class="chip">cosmos</span></div>
+<div id="action" class="action">The room is quiet.</div>
+</div>
+<section class="pre"><div><div class="label">MICROPHONE PREFLIGHT</div><h3>Make sure Lumen can hear you.</h3><p id="micMsg">Choose a device and run a three-second check—or use text-only mode.</p><small id="device" class="small">No microphone selected yet.</small></div><div><label class="small">Input device<select id="micSelect" style="width:100%;margin-top:4px;border:1px solid var(--line);border-radius:10px;padding:8px;background:#05071399;color:var(--text)"><option value="">Default microphone</option></select></label><div class="meter"><div id="micMeter"></div></div><div class="row"><button id="micCheck" class="btn">Check microphone</button><button id="textOnly" class="btn">Use text only</button></div><audio id="playback" controls hidden></audio></div></section>
+<div class="controls"><button id="connect" class="btn primary" disabled>Meet Lumen</button><button id="interrupt" class="btn" disabled>Interrupt</button><button id="closeEncounter" class="btn" disabled>Return to life</button><div class="meter"><div id="liveMeter"></div></div></div>
+<div id="stageError" style="padding:0 17px 17px"></div><audio id="remoteAudio" autoplay hidden></audio>
+</div>
+<aside class="card panel">
+<div class="label">CONNECTED SYSTEMS</div>
+<div class="systems">
+<div class="system"><span>Mind</span><b id="mindState">checking</b></div><div class="system"><span>Connection</span><b id="connectionState">offline</b></div><div class="system"><span>Body</span><b>voice-reactive</b></div><div class="system"><span>Memory</span><b id="memoryState">opt-in off</b></div><div class="system"><span>World</span><b id="worldState">cosmos</b></div><div class="system"><span>Safety</span><b id="safetyState">clear</b></div>
+</div>
+<div class="box"><div class="label">CONNECTION HEALTH</div><div class="quality"><span>Quality <strong id="quality">—</strong></span><span>Handshake <strong id="latency">—</strong></span><span>Encounter <strong id="encounterState">#1</strong></span></div></div>
+<div class="settings"><label>Name<input id="userName" value="Michael" maxlength="60"></label><label>Language<select id="language"><option value="de">Deutsch</option><option value="en">English</option></select></label><label>Turn-taking<select id="turnMode"><option value="natural">Natural</option><option value="fast">Fast</option></select></label><label>Motion<select id="motionMode"><option value="full">Full presence</option><option value="reduced">Reduced</option></select></label></div>
+<div class="box"><div class="label">BEGIN SOMEWHERE</div><div class="starters"><button class="btn" data-prompt="Help me arrive in this moment without making it mystical.">Arrive</button><button class="btn" data-prompt="I have a question I want to explore honestly. Start by asking me one clarifying question.">Explore</button><button class="btn" data-prompt="Guide me through a two-minute tea ritual that brings me back to ordinary life.">Tea ritual</button></div></div>
+<div class="composer"><input id="textInput" placeholder="Type to Lumen…" disabled><button id="send" disabled>Send</button></div>
+<div class="box transcript"><div class="label">LIVE TRANSCRIPT</div><p id="userTranscript" class="user">Your words will appear here.</p><p id="assistantTranscript">Lumen’s reply will appear here.</p></div>
+<div class="box"><div class="label">LIVING ROOM</div><div class="worlds"><button class="btn sel" data-scene="cosmos">cosmos</button><button class="btn" data-scene="moon_garden">moon garden</button><button class="btn" data-scene="sunset_temple">sunset temple</button></div></div>
+<div class="box"><label class="toggle"><input id="memoryEnabled" type="checkbox"> <span>Consent memory off</span></label><p class="small">Only approved notes are stored locally and shared with new sessions when enabled.</p><div id="memoryList" class="memory-list"><span class="small">No approved memories yet.</span></div><div class="memory-actions"><button id="exportData" class="btn">Export</button><button id="clearData" class="btn danger">Clear all</button></div></div>
+<div id="alerts"></div><div id="log" class="log"></div>
+</aside>
+</section>
+<p class="footer"><strong>Lumen is AI.</strong> Microphone audio is sent to OpenAI only during a live encounter. Raw recordings from the mic check stay in your browser. Long-term notes remain local unless consent memory is enabled for a session.</p>
+</main>
+<script src="/v11-app.js" defer></script>
+</body></html>
