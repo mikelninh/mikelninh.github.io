@@ -22,7 +22,7 @@ const fallback=$('#presenceCanvas'),ctx=fallback.getContext('2d');
 const isAdult=()=>activePortal==='adult';
 const memories=()=>isAdult()?adultMemories:normalMemories;
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
-const esc=s=>String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function b64(v){const bytes=new TextEncoder().encode(v);let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin)}
 function currentChar(){return CHARACTERS[activeCharacter]}
 function setPhase(p){presence.phase=p;$('#phase').textContent=p;$('#status').textContent={offline:'Offline',connecting:'Connecting',idle:'Present',listening:'Listening',thinking:'Reflecting',speaking:'Speaking',recovering:'Recovering'}[p]||p;$('#dot').classList.toggle('live',['idle','listening','thinking','speaking'].includes(p));$('#dot').classList.toggle('warn',p==='recovering');window.LumenVRM?.setState?.({phase:p,mouth:mouthLevel,emotion:presence.emotion,gesture:presence.gesture})}
