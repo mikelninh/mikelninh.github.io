@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090812">
+<title>SOULBODY V1.2 — Many Faces, Many Minds</title>
+<link rel="stylesheet" href="/v12-style.css">
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/","@pixiv/three-vrm":"https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3.5.3/lib/three-vrm.module.min.js"}}
+</script>
+</head>
+<body>
+<div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+<main class="shell">
+<header class="hero">
+  <div><div class="eyebrow">SOULBODY · V1.2</div><h1>Many Faces.<br><em>Many Minds.</em></h1></div>
+  <div class="hero-copy"><p>Choose a presence, enter a portal and speak naturally. Every character shares the same honest constitution—while moving, speaking and responding in a distinct style.</p><span class="release-note"><i></i> VRM · Realtime · OpenRouter-ready</span></div>
+</header>
+<section class="character-strip" aria-label="Character selection">
+  <button class="character active" data-character="nyra"><span class="portrait nyra">N</span><span><b>Nyra</b><small>Kuudere · Tsundere-lite</small></span></button>
+  <button class="character" data-character="lumen"><span class="portrait lumen">L</span><span><b>Lumen</b><small>Honest mirror</small></span></button>
+  <button class="character" data-character="hikari"><span class="portrait hikari">H</span><span><b>Hikari</b><small>Genki quest spark</small></span></button>
+  <button class="character" data-character="yume"><span class="portrait yume">Y</span><span><b>Yume</b><small>Dandere dream guide</small></span></button>
+  <button class="character" data-character="vexa"><span class="portrait vexa">V</span><span><b>Vexa</b><small>Safe drama-dere</small></span></button>
+</section>
+<section class="layout">
+  <article class="encounter card">
+    <div class="topbar"><div class="state"><span id="dot" class="dot"></span><span id="status">Offline</span></div><div class="model-status"><span id="avatarState">VRM loading</span><span class="divider">·</span><b id="engine">checking</b></div></div>
+    <div id="stage" class="stage theme-nyra">
+      <canvas id="presenceCanvas" aria-label="Fallback animated embodiment"></canvas><canvas id="vrmCanvas" aria-label="Rigged VRM avatar"></canvas><div class="stage-vignette"></div>
+      <div class="identity"><span id="characterName">Nyra</span><small id="characterTagline">The midnight guide</small></div>
+      <div class="chips"><span id="phase" class="chip">offline</span><span id="emotion" class="chip">calm</span><span id="gesture" class="chip">still</span><span id="scene" class="chip">moon garden</span></div>
+      <div id="roleplayBadge" class="roleplay-badge" hidden>ROLEPLAY ACTIVE</div><div id="adultBadge" class="adult-badge" hidden>18+ · FICTIONAL ADULTS</div><div id="action" class="action">The moon garden is quiet.</div>
+      <div id="avatarLoader" class="avatar-loader"><span></span><b>Awakening VRM avatar…</b></div>
+    </div>
+    <section id="preflight" class="preflight"><div><div class="label">MICROPHONE PREFLIGHT</div><h3>Make sure your companion can hear you.</h3><p id="micMsg">Choose a device and run a three-second check—or use text-only mode.</p><small id="device" class="muted">No microphone selected yet.</small></div><div><label class="field">Input device<select id="micSelect"><option value="">Default microphone</option></select></label><div class="meter"><div id="micMeter"></div></div><div class="row"><button id="micCheck" class="btn">Check microphone</button><button id="textOnly" class="btn">Use text only</button></div><audio id="playback" controls hidden></audio></div></section>
+    <section id="adultIntro" class="adult-intro" hidden><div><div class="label">VELVET ROOM · 18+</div><h3>Private, fictional adult roleplay.</h3><p>Text mode uses a separately configured OpenRouter model. Adult history and memory stay isolated from ordinary Lumen encounters. Voice is architected, but not enabled in this release.</p></div><div class="adult-pills"><span>Adults only</span><span>Consent first</span><span>ZDR requested</span><span>Voice-ready</span></div></section>
+    <div class="controls"><button id="connect" class="btn primary" disabled>Meet Nyra</button><button id="interrupt" class="btn" disabled>Interrupt</button><button id="closeEncounter" class="btn" disabled>Return to life</button><div class="meter live"><div id="liveMeter"></div></div></div><div id="stageError" class="stage-error"></div><audio id="remoteAudio" autoplay hidden></audio>
+  </article>
+  <aside class="sidebar card">
+    <section><div class="label">CHOOSE A PORTAL</div><div class="portal-grid"><button class="portal active" data-portal="soul"><span>◌</span><b>Soul Talk</b><small>Reflection and honest clarity</small></button><button class="portal" data-portal="quest"><span>◇</span><b>Quest Mode</b><small>Action, missions and momentum</small></button><button class="portal" data-portal="story"><span>✦</span><b>Anime Story</b><small>Fictional world and choices</small></button><button class="portal adult-portal" data-portal="adult"><span>♥</span><b>Velvet Room</b><small>Separated 18+ roleplay</small></button></div></section>
+    <section class="box personality"><div class="label">PERSONALITY SIGNAL</div><div class="trait-head"><b id="archetypeName">Kuudere + Tsundere-lite</b><span id="intensityLabel">65%</span></div><input id="personalityIntensity" type="range" min="20" max="100" value="65"><p id="personalityDescription" class="muted">Cool, precise and lightly teasing—without cruelty, jealousy or possession.</p></section>
+    <section class="systems"><div class="system"><span>Mind</span><b id="mindState">checking</b></div><div class="system"><span>Connection</span><b id="connectionState">offline</b></div><div class="system"><span>Body</span><b id="bodyState">VRM loading</b></div><div class="system"><span>Memory</span><b id="memoryState">opt-in off</b></div><div class="system"><span>World</span><b id="worldState">moon garden</b></div><div class="system"><span>Guardrails</span><b id="safetyState">clear</b></div></section>
+    <section class="box cost-card"><div class="cost-top"><div><div class="label">LIVE SESSION COST</div><strong id="sessionCost">$0.000</strong></div><span id="modelName">gpt-realtime</span></div><div class="cost-grid"><span>Input <b id="inputCost">$0.000</b></span><span>Output <b id="outputCost">$0.000</b></span><span>Duration <b id="duration">00:00</b></span><span>Turns <b id="turnCount">0</b></span></div><p id="costNote" class="muted">OpenAI voice cost is estimated from returned usage. OpenRouter reports provider cost when available.</p></section>
+    <section class="settings"><label class="field">Name<input id="userName" value="Michael" maxlength="60"></label><label class="field">Language<select id="language"><option value="de">Deutsch</option><option value="en">English</option></select></label><label class="field">Turn-taking<select id="turnMode"><option value="natural">Natural</option><option value="fast">Fast</option></select></label><label class="field">Motion<select id="motionMode"><option value="full">Full presence</option><option value="reduced">Reduced</option></select></label></section>
+    <section class="box continuity"><label class="toggle"><input id="memoryEnabled" type="checkbox"><span>Consent memory off</span></label><p id="memoryCopy" class="muted">Only explicitly approved notes are stored locally and supplied to future encounters.</p><div id="memoryList" class="memory-list"><span class="muted">No approved memories yet.</span></div><div class="row"><button id="exportData" class="btn small-btn">Export</button><button id="clearData" class="btn small-btn danger">Clear current space</button></div></section>
+    <section class="composer"><input id="textInput" placeholder="Type to your companion…" disabled><button id="send" disabled>Send</button></section><section class="box transcript"><div class="label">LIVE TRANSCRIPT</div><p id="userTranscript" class="user">Your words will appear here.</p><p id="assistantTranscript">Their reply will appear here.</p></section><div id="alerts"></div><div id="log" class="log"></div>
+  </aside>
+</section>
+<footer><strong>SOULBODY characters are AI.</strong> Archetypes are theatrical styles, not real relationships. Roleplay never grants authority, consciousness or exclusivity. Adult mode permits only consensual fiction involving clearly adult characters and remains separate from ordinary memory.</footer>
+</main>
+<dialog id="adultGate" class="adult-gate"><form method="dialog"><button class="dialog-close" value="cancel" aria-label="Close">×</button><div class="eyebrow">VELVET ROOM</div><h2>Before entering</h2><p>This optional space is for consensual fictional roleplay between clearly adult characters. It is separate from normal Lumen conversations.</p><label class="gate-check"><input id="adultAge" type="checkbox"> I confirm that I am at least 18 years old.</label><label class="gate-check"><input id="adultConsent" type="checkbox"> I understand this is AI roleplay, not a real relationship.</label><div class="gate-rules"><b>Always blocked</b><span>Minors or age ambiguity · coercion · incest · trafficking · real-person sexualization · emotional isolation</span></div><div class="dialog-actions"><button id="adultCancel" class="btn" value="cancel">Cancel</button><button id="adultEnter" class="btn primary" value="default" disabled>Enter Velvet Room</button></div></form></dialog>
+<script src="/v12-app.js" defer></script><script type="module" src="/v12-vrm.js"></script>
+</body>
+</html>
