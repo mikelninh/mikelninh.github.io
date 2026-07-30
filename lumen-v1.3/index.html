@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090b12">
+  <meta name="description" content="SOULBODY V1.3 — private AI safe rooms, friend circles and shared campaigns.">
+  <title>SOULBODY V1.3 — The Campfire</title>
+  <link rel="stylesheet" href="/v13-style.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <div class="eyebrow">SOULBODY · V1.3</div>
+        <h1>The <em>Campfire.</em></h1>
+        <p>A private place to speak, play and return to real life with more clarity.</p>
+      </div>
+      <div class="release-pill"><i></i> Animated anime portraits · Realtime voice · scoped memory</div>
+    </header>
+
+    <nav class="mode-nav" aria-label="Experience mode">
+      <button class="mode-tab active" data-mode="safe"><span>◌</span><b>Safe Room</b><small>Private reflection</small></button>
+      <button class="mode-tab" data-mode="circle"><span>✦</span><b>Campfire</b><small>Friends · same-device alpha</small></button>
+      <button class="mode-tab" data-mode="campaign"><span>◇</span><b>Campaign</b><small>Shared anime adventure</small></button>
+      <button class="mode-tab velvet" data-mode="adult"><span>♥</span><b>After Dark</b><small>18+ · OpenRouter</small></button>
+    </nav>
+
+    <section class="character-row" aria-label="Character selection">
+      <button class="character-card active" data-character="nyra"><span class="mini-avatar nyra">N</span><span><b>Nyra</b><small>Sharp midnight guide</small></span></button>
+      <button class="character-card" data-character="lumen"><span class="mini-avatar lumen">L</span><span><b>Lumen</b><small>Honest mirror</small></span></button>
+      <button class="character-card" data-character="hikari"><span class="mini-avatar hikari">H</span><span><b>Hikari</b><small>Radiant quest spark</small></span></button>
+      <button class="character-card" data-character="yume"><span class="mini-avatar yume">Y</span><span><b>Yume</b><small>Quiet dream guide</small></span></button>
+      <button class="character-card" data-character="vexa"><span class="mini-avatar vexa">V</span><span><b>Vexa</b><small>Dramatic accountability</small></span></button>
+    </section>
+
+    <section class="workspace">
+      <aside class="presence-panel panel">
+        <div class="presence-top">
+          <span class="connection"><i id="stateDot"></i><b id="stateLabel">Offline</b></span>
+          <span id="engineLabel">checking…</span>
+        </div>
+        <div id="portraitStage" class="portrait-stage theme-nyra">
+          <svg id="avatarSvg" viewBox="0 0 720 820" role="img" aria-label="Animated anime companion portrait"></svg>
+          <div class="stage-glass"></div>
+          <div class="identity"><strong id="characterName">Nyra</strong><span id="characterRole">The midnight guide</span></div>
+          <div class="presence-chips"><span id="phaseChip">offline</span><span id="emotionChip">calm</span><span id="scopeChip">private</span></div>
+          <div id="sceneCaption" class="scene-caption">The moon garden is quiet.</div>
+        </div>
+        <div class="presence-actions">
+          <button id="micCheck" class="button secondary">Check microphone</button>
+          <button id="textMode" class="button secondary">Use text only</button>
+          <button id="connect" class="button primary" disabled>Meet Nyra</button>
+          <button id="interrupt" class="button secondary" disabled>Interrupt</button>
+        </div>
+        <div class="meter"><div id="meterFill"></div></div>
+        <p id="micStatus" class="microcopy">Run a three-second microphone check or select text-only mode.</p>
+        <audio id="remoteAudio" autoplay hidden></audio>
+      </aside>
+
+      <section class="conversation-panel panel">
+        <div class="conversation-head">
+          <div>
+            <div class="eyebrow" id="modeEyebrow">PRIVATE SAFE ROOM</div>
+            <h2 id="modeTitle">What do you need right now?</h2>
+            <p id="modeDescription">Choose how Nyra should meet you. You can change the mode without changing who you are talking to.</p>
+          </div>
+          <div class="cost-badge"><small>SESSION</small><b id="sessionCost">$0.0000</b><span id="sessionTime">00:00</span></div>
+        </div>
+
+        <div id="safeControls" class="mode-controls">
+          <button class="intent active" data-intent="listen"><span>◌</span><b>Listen</b><small>No fixing yet</small></button>
+          <button class="intent" data-intent="clarity"><span>◇</span><b>Clarity</b><small>Untangle the thoughts</small></button>
+          <button class="intent" data-intent="challenge"><span>△</span><b>Challenge</b><small>Kind, honest pushback</small></button>
+          <button class="intent" data-intent="quest"><span>✦</span><b>Next step</b><small>Turn it into action</small></button>
+          <label class="mood-select"><span>How are you arriving?</span><select id="mood"><option value="open">Open</option><option value="overwhelmed">Overwhelmed</option><option value="confused">Confused</option><option value="lonely">Lonely</option><option value="energized">Energized</option><option value="hurt">Hurt</option></select></label>
+        </div>
+
+        <div id="circleControls" class="mode-controls circle-controls" hidden>
+          <div class="circle-header"><div><b>BKC · Four of a Kind</b><span>Pass the mic or type for each person. Real multiplayer comes later.</span></div><span class="alpha-badge">SAME-DEVICE ALPHA</span></div>
+          <div id="seatGrid" class="seat-grid"></div>
+          <label class="field"><span>Current speaker</span><select id="speakerSelect"></select></label>
+          <div class="circle-role-row"><button class="circle-role active" data-circle-role="facilitator">Facilitator</button><button class="circle-role" data-circle-role="crew">Fifth crew member</button><button class="circle-role" data-circle-role="game-master">Game master</button></div>
+        </div>
+
+        <div id="campaignControls" class="mode-controls campaign-controls" hidden>
+          <div class="campaign-grid">
+            <label class="field"><span>Campaign</span><input id="campaignName" value="The Moonlit Archive" maxlength="80"></label>
+            <label class="field"><span>Current quest</span><input id="campaignQuest" value="Find the page that remembers tomorrow" maxlength="140"></label>
+          </div>
+          <label class="field"><span>Lorebook</span><textarea id="lorebook" rows="3" maxlength="1200">Michael, Bao, Dorian and Marcel are four friends entering a living archive beneath a moonlit city. Nyra is their guide, but every player makes meaningful choices.</textarea></label>
+          <div class="prompt-row"><button class="quick-prompt" data-prompt="Begin the next episode with a strong opening scene and give us three meaningful choices.">Begin episode</button><button class="quick-prompt" data-prompt="Recap our current lore in five concise bullet points, then ask what we want to change.">Recap lore</button><button class="quick-prompt" data-prompt="Introduce a mystery that connects to every member of the party without deciding our actions for us.">Create mystery</button></div>
+        </div>
+
+        <div id="adultControls" class="mode-controls adult-controls" hidden>
+          <div class="adult-lock"><span>♥</span><div><b>After Dark is isolated</b><p>Adults-only fictional text roleplay through a separately configured OpenRouter model. It never reads Safe Room or Circle memories.</p></div></div>
+        </div>
+
+        <div id="messages" class="messages" aria-live="polite">
+          <div class="welcome-card"><span>✦</span><div><b id="welcomeTitle">This room begins with your intention.</b><p id="welcomeText">Nyra can listen, help you find clarity, challenge a story gently or turn it into one concrete next step.</p></div></div>
+        </div>
+
+        <div class="composer">
+          <label id="speakerPill" class="speaker-pill">Michael</label>
+          <textarea id="textInput" rows="2" placeholder="Say what is here…" disabled></textarea>
+          <button id="send" class="send" disabled>Send</button>
+        </div>
+        <div class="composer-meta"><span id="composerHint">Nothing is shared outside this private scope.</span><button id="closeEncounter" disabled>Return to life</button></div>
+      </section>
+
+      <aside class="context-panel panel">
+        <section class="context-block">
+          <div class="eyebrow">CURRENT PRESENCE</div>
+          <div class="status-grid">
+            <div><span>Mind</span><b id="mindStatus">checking</b></div><div><span>Connection</span><b id="connectionStatus">offline</b></div><div><span>Body</span><b>2D live</b></div><div><span>Guardrails</span><b id="guardrailStatus">clear</b></div>
+          </div>
+        </section>
+
+        <section class="context-block">
+          <div class="eyebrow">MEMORY SCOPE</div>
+          <div class="scope-picker"><button class="scope-option active" data-scope="session">This session</button><button class="scope-option" data-scope="private">Private</button><button class="scope-option" data-scope="circle">Circle</button><button class="scope-option" data-scope="campaign">Campaign</button></div>
+          <p id="scopeDescription" class="microcopy">Nothing is remembered after you close this session.</p>
+          <div id="memoryList" class="memory-list"><span class="empty">No memories in this scope.</span></div>
+          <div class="memory-add"><input id="memoryInput" placeholder="Add an approved memory…" maxlength="220"><button id="addMemory">Add</button></div>
+        </section>
+
+        <section class="context-block">
+          <div class="eyebrow">PERSONALITY</div>
+          <div class="trait-line"><b id="archetype">Kuudere · Tsundere-lite</b><span id="intensityValue">65%</span></div>
+          <input id="intensity" type="range" min="20" max="100" value="65">
+          <p id="personalityCopy" class="microcopy">Precise and lightly teasing, but never cruel, possessive or jealous of real people.</p>
+        </section>
+
+        <section class="context-block constitution">
+          <div class="eyebrow">CAMPFIRE CONSTITUTION</div>
+          <ul><li>AI, never a human or supernatural being.</li><li>No exclusivity, jealousy or emotional coercion.</li><li>Private notes never enter a Circle.</li><li>Support without automatic agreement.</li><li>Every encounter can end with a real-life next step.</li></ul>
+        </section>
+
+        <section class="context-block data-actions">
+          <button id="exportData" class="button secondary">Export current scope</button><button id="clearData" class="button danger">Clear current scope</button>
+        </section>
+      </aside>
+    </section>
+
+    <footer><strong>SOULBODY is an AI experience.</strong> Safe space means room to speak without manufactured dependency. It is not therapy, crisis care or a replacement for real relationships.</footer>
+  </main>
+
+  <dialog id="adultGate">
+    <form method="dialog">
+      <button class="dialog-close" value="cancel">×</button>
+      <div class="eyebrow">AFTER DARK</div><h2>Adults and consent only.</h2>
+      <p>This optional space is isolated from ordinary memories and allows only consensual fictional roleplay involving clearly adult characters.</p>
+      <label><input id="adultAge" type="checkbox"> I confirm that I am at least 18 years old.</label>
+      <label><input id="adultConsent" type="checkbox"> I understand this is fictional AI roleplay, not a real relationship.</label>
+      <div class="blocked">Always blocked: minors or age ambiguity, coercion, incest, trafficking, real-person sexualization and emotional isolation.</div>
+      <button id="adultEnter" class="button primary" value="default" disabled>Enter isolated space</button>
+    </form>
+  </dialog>
+
+  <script src="/v13-avatar.js" defer></script>
+  <script src="/v13-app.js" defer></script>
+</body>
+</html>
