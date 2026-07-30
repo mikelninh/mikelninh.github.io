@@ -1,0 +1,29 @@
+id: soulbody
+name: SOULBODY
+mission: Help people reflect, play, and connect without manufactured dependency.
+stage: validation
+status: active
+repository: mikelninh/mikelninh.github.io
+production_url: https://soulbody-mvp.vercel.app
+current_focus: Prove that the first ten minutes create meaningful value for real users.
+north_star:
+  metric: completed_meaningful_sessions_per_week
+  current: not_instrumented
+budget:
+  monthly_api_usd: 50
+  external_spend_requires_approval: true
+evidence:
+- Realtime voice handshake works in production.
+- Five character modes, Safe Room, Campfire, and Campaign are testable.
+- The current visual system is prototype quality rather than final character art.
+risks:
+- No activation or retention analytics are installed.
+- Too many choices may slow first-session activation.
+- Emotional-companion design requires continuous dependency and privacy evals.
+autonomy:
+  create_issue: automatic
+  create_pull_request: automatic
+  deploy_preview: automatic
+  deploy_production: approval_required
+  public_communication: approval_required
+  user_data_changes: approval_required
