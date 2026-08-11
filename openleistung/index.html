@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="OpenLeistung ist eine offene, synthetische End-to-End-Referenz für digitale Verwaltungsleistungen.">
+  <title>OpenLeistung · End-to-End-Verwaltung als Open Source</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="prototype-banner"><b>OPEN-SOURCE-REFERENZ · SYNTHETISCHE DATEN</b><span>Kein Behördenangebot und keine Rechtsberatung</span></div>
+  <header>
+    <a class="brand" href="#top"><span class="mark">OL</span><span>OpenLeistung<small>Public services, end to end.</small></span></a>
+    <nav aria-label="Hauptnavigation">
+      <button class="nav-button active" data-view="citizen">Antrag</button>
+      <button class="nav-button" data-view="status">Status</button>
+      <button class="nav-button" data-view="caseworker">Sachbearbeitung</button>
+      <button class="nav-button" data-view="architecture">Architektur</button>
+      <a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/openleistung">Quellcode ↗</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="intro" id="intro">
+      <div>
+        <p class="eyebrow">OPENLEISTUNG V0.1 · BERLIN-PILOT</p>
+        <h1>Ein Antrag.<br><em>Eine verständliche Reise.</em></h1>
+        <p class="lead">Ein vollständiger, synthetischer Referenzprozess für die Übernahme von Schulmittagessen: vom Anspruchscheck über Once-Only-Nachweise bis zu menschlicher Prüfung, Bescheid und nachvollziehbarem Status.</p>
+        <div class="intro-actions"><button class="primary" id="start-demo">Demo mit Beispieldaten starten</button><a class="secondary" href="#why">Warum dieses Projekt?</a></div>
+      </div>
+      <aside class="promise-card">
+        <div class="promise-top"><span>DER SERVICEVERTRAG</span><b>V0.1.0</b></div>
+        <h2>Was Menschen erwarten dürfen</h2>
+        <ul>
+          <li><i>01</i><span><b>Nichts doppelt angeben</b>Vorhandene Nachweise nur mit Einwilligung abrufen.</span></li>
+          <li><i>02</i><span><b>Jeden Schritt verstehen</b>Regel, Quelle, Unsicherheit und Zuständigkeit zeigen.</span></li>
+          <li><i>03</i><span><b>Menschen entscheiden lassen</b>Kein automatischer negativer oder rechtswirksamer Bescheid.</span></li>
+          <li><i>04</i><span><b>Nie im Funkloch verschwinden</b>Status, Rückfragen und Fristen bleiben sichtbar.</span></li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="workspace" id="workspace" hidden>
+      <div class="workspace-head">
+        <div><p class="eyebrow">DIGITALE LEISTUNG</p><h2>Schulmittagessen ermöglichen</h2><p>Demonstrationsfall für ein Kind der 8. Klasse in Berlin.</p></div>
+        <div class="service-meta"><span><b>⏱</b> etwa 5 Minuten</span><span><b>◉</b> Speichert nur lokal</span><span><b>♿</b> Tastaturbedienbar</span></div>
+      </div>
+      <div class="progress-shell">
+        <ol class="progress" id="progress" aria-label="Antragsfortschritt"></ol>
+        <div class="application-card" id="application-card" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="panel-view" id="status-view" hidden></section>
+    <section class="panel-view" id="caseworker-view" hidden></section>
+
+    <section class="architecture panel-view" id="architecture-view" hidden>
+      <div class="section-head"><div><p class="eyebrow">OFFENE REFERENZARCHITEKTUR</p><h2>Nicht neu erfinden.<br>Sauber verbinden.</h2></div><p>OpenLeistung ersetzt keine staatliche Infrastruktur. Es zeigt, wie ein verständlicher Service bestehende Basiskomponenten zu einer durchgängigen Prozesskette verbinden kann.</p></div>
+      <div class="architecture-flow">
+        <article class="human"><span>01 · ZUGANG</span><h3>Bürgerdienst</h3><p>Barrierefreie Fragen, Mehrsprachigkeit, Einwilligung und verständlicher Status.</p><b>KERN / Servicestandard</b></article>
+        <div class="connector">↓</div>
+        <article><span>02 · ORCHESTRIERUNG</span><h3>OpenLeistung Core</h3><p>Service-Schema, Regelversionen, langlebiger Workflow, Fristen und Human Gates.</p><b>Open Source</b></article>
+        <div class="connector">↓</div>
+        <div class="stack-grid">
+          <article><span>IDENTITÄT</span><h3>eID / EUDI</h3><p>Wer handelt?</p></article>
+          <article><span>DATENABRUF</span><h3>NOOTS</h3><p>Welche Nachweise existieren?</p></article>
+          <article><span>TRANSPORT</span><h3>FIT-Connect</h3><p>Wie erreicht der Fall die Stelle?</p></article>
+          <article><span>ZAHLUNG</span><h3>ZBDS</h3><p>Wie wird sicher gezahlt?</p></article>
+          <article><span>KOMMUNIKATION</span><h3>ZaPuk</h3><p>Wie bleiben Menschen informiert?</p></article>
+        </div>
+        <div class="connector">↓</div>
+        <article class="human"><span>03 · VERANTWORTUNG</span><h3>Fachverfahren &amp; Sachbearbeitung</h3><p>Ausnahmen prüfen, Rückfragen stellen, entscheiden und Verantwortung dokumentieren.</p><b>Behördliche Hoheit</b></article>
+      </div>
+      <div class="repo-map">
+        <h3>Was dieses Repository bereits liefert</h3>
+        <div><span><b>service.json</b>Maschinenlesbarer Servicevertrag</span><span><b>rules.js</b>Versionierte, testbare Demonstrationsregeln</span><span><b>app.js</b>Bürger- und Sachbearbeitungsfluss</span><span><b>tests/</b>Regressionsszenarien</span></div>
+      </div>
+    </section>
+
+    <section class="why" id="why">
+      <p class="eyebrow">WARUM WIR DAS BAUEN</p>
+      <blockquote>Digitalisierung ist nicht das PDF am Ende des alten Prozesses. Sie ist ein besserer Prozess.</blockquote>
+      <div class="why-grid"><p><b>Für Familien</b>Weniger Nachweise, weniger Unsicherheit, ein sichtbarer nächster Schritt.</p><p><b>Für Verwaltungen</b>Vollständige Fälle, strukturierte Rückfragen und nachvollziehbare Entscheidungen.</p><p><b>Für Deutschland</b>Wiederverwendbare Standards statt tausender isolierter Formulare.</p></div>
+    </section>
+  </main>
+
+  <footer><span>OpenLeistung v0.1 · Michael Ninh · Berlin · 2026</span><span>Public prototype · Public code · Human responsibility</span></footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
