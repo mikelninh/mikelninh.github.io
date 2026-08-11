@@ -1,0 +1,30 @@
+{
+  "$schema": "https://openleistung.example/schemas/service-v0.1.json",
+  "id": "de.be.but.school-lunch.demo",
+  "name": "Schulmittagessen ermöglichen",
+  "version": "0.1.0",
+  "ruleset_version": "but-lunch-demo-2026.08",
+  "status": "synthetic-reference",
+  "jurisdiction": "DE-BE",
+  "outcome": "Ein berechtigtes Kind kann am gemeinschaftlichen Schulmittagessen teilnehmen, ohne dass die Familie Nachweise mehrfach einreichen muss.",
+  "legal_references": [
+    {"citation": "§ 28 Abs. 6 SGB II", "url": "https://www.gesetze-im-internet.de/sgb_2/__28.html"},
+    {"citation": "§ 34 Abs. 6 SGB XII", "url": "https://www.gesetze-im-internet.de/sgb_12/__34.html"}
+  ],
+  "actors": ["guardian", "child", "school", "benefits-authority", "caseworker"],
+  "stages": ["eligibility-check", "consent", "evidence", "review", "human-decision", "notification"],
+  "evidence": ["identity", "school-attendance", "benefit-status", "meal-participation"],
+  "d_stack_adapters": ["eID/EUDI", "NOOTS", "FIT-Connect", "ZBDS", "ZaPuk"],
+  "human_gates": ["negative-outcome", "ambiguous-income", "final-decision", "external-action"],
+  "quality": {
+    "accessibility_target": "WCAG 2.2 AA",
+    "languages_target": ["de", "en", "vi", "tr", "ar"],
+    "metrics": ["completion-rate", "time-to-submit", "missing-evidence-rate", "review-time", "user-confidence"]
+  },
+  "privacy": {
+    "demo_data_only": true,
+    "storage": "browser-local",
+    "registry_access": "simulated",
+    "consent_required": true
+  }
+}
