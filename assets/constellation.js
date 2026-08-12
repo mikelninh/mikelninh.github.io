@@ -1,4 +1,13 @@
 (() => {
+  const currentScript = document.currentScript;
+  if (currentScript?.src && !document.querySelector('link[data-constellation-elegant]')) {
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = new URL('constellation-elegant.css', currentScript.src).href;
+    stylesheet.dataset.constellationElegant = 'true';
+    document.head.appendChild(stylesheet);
+  }
+
   const maps = document.querySelectorAll('[data-constellation]');
 
   maps.forEach((map) => {
@@ -14,14 +23,6 @@
           node.dataset.dimmed = String(filter !== 'all' && !categories.includes(filter));
         });
       });
-    });
-
-    map.addEventListener('pointermove', (event) => {
-      const rect = map.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * 100;
-      const y = ((event.clientY - rect.top) / rect.height) * 100;
-      map.style.setProperty('--constellation-x', `${x}%`);
-      map.style.setProperty('--constellation-y', `${y}%`);
     });
   });
 
