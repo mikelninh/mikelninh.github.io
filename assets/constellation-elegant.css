@@ -1,0 +1,122 @@
+/* Elegant, restrained treatment for the project constellation.
+   Loaded by constellation.js on the homepage and deep-dive page. */
+
+.constellationSection{overflow:visible}
+.constellationSection:before{display:none}
+.constellationStage{
+  --constellation-x:50%;--constellation-y:45%;
+  padding:clamp(28px,4.3vw,52px);
+  border:1px solid rgba(16,19,15,.92);
+  border-radius:34px;
+  background:
+    radial-gradient(circle at 72% 12%,rgba(220,255,104,.07),transparent 26rem),
+    linear-gradient(145deg,#111713 0%,#151d18 58%,#101511 100%);
+  box-shadow:0 24px 70px rgba(16,19,15,.12);
+}
+.constellationStage:before{
+  background:none;
+  opacity:0;
+}
+.constellationStage:after{
+  content:"";position:absolute;inset:20px;border:1px solid rgba(255,255,255,.045);border-radius:24px;pointer-events:none
+}
+.constellationTop{gap:52px;align-items:end}
+.constellationTop h3{max-width:720px;font-size:clamp(34px,3.6vw,48px);line-height:1.02;letter-spacing:-.05em}
+.constellationStats{border:0;border-left:1px solid rgba(255,255,255,.14);border-radius:0;background:transparent}
+.constellationStat{min-width:108px;padding:9px 18px;border-left:0}
+.constellationStat b{font-size:27px;font-weight:700;color:#f5f4ed}
+.constellationStat span{margin-top:5px;color:#929c94;letter-spacing:.1em}
+
+.constellationFilters{gap:7px;margin:30px 0 26px}
+.constellationFilter{
+  padding:8px 11px;border-color:rgba(255,255,255,.14);background:transparent;color:#aeb6b0;
+  transition:background .18s ease,border-color .18s ease,color .18s ease,opacity .18s ease
+}
+.constellationFilter:hover{border-color:rgba(255,255,255,.3);color:#f2f4f0}
+.constellationFilter[aria-pressed="true"]{
+  background:#f3f0e8;color:#121713;border-color:#f3f0e8;box-shadow:none
+}
+
+.constellationMap{gap:12px}
+.constellationMap:before{
+  content:"";position:absolute;left:50%;top:49%;width:52%;height:1px;transform:translate(-50%,-50%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);pointer-events:none
+}
+.constellationNode{
+  min-height:242px;padding:25px;border:1px solid rgba(255,255,255,.12);border-radius:20px;
+  background:rgba(255,255,255,.035);box-shadow:none;backdrop-filter:none;
+  transition:opacity .22s ease,transform .22s ease,border-color .22s ease,background .22s ease
+}
+.constellationNode:before{display:none}
+.constellationNode:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.24);background:rgba(255,255,255,.055)}
+.constellationNode h3{margin:16px 0 12px;font-size:clamp(27px,2.7vw,37px)}
+.constellationNode p{max-width:34rem;color:#b8c0b9;line-height:1.62}
+.constellationNode[data-dimmed="true"]{opacity:.22;transform:none;filter:none}
+.nodeEyebrow{color:#9ca69e;letter-spacing:.12em}
+.nodeDot{width:7px;height:7px;box-shadow:none;background:#d8ddda}
+.nodeCivic,.nodeAgents,.nodeHuman,.nodePlay,.nodeProduct{color:#b8c0b9}
+.nodeProjects{gap:6px;margin-top:19px}
+.nodeProjects a,.nodeProjects span{
+  padding:6px 8px;border-color:rgba(255,255,255,.12);background:transparent;color:#e4e8e4;
+  transition:border-color .18s ease,color .18s ease,background .18s ease
+}
+.nodeProjects a:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.28);color:#fff}
+.nodeProjects .private{color:#89928b}
+
+.constellationCore{min-height:310px}
+.constellationCoreInner{
+  width:196px;height:196px;border:1px solid rgba(220,255,104,.34);
+  background:radial-gradient(circle at 50% 42%,rgba(220,255,104,.075),transparent 58%);
+  box-shadow:0 0 0 16px rgba(220,255,104,.018)
+}
+.constellationCoreInner:before{
+  content:"";position:absolute;width:226px;height:226px;border-radius:50%;border:1px solid rgba(255,255,255,.055);pointer-events:none
+}
+.constellationCoreInner small{color:#909a92}
+.constellationCoreInner strong{font-size:29px;color:#e1ff85}
+.constellationCoreInner span{color:#818b83}
+
+.focusGraph{
+  margin-top:18px;padding:34px;border:1px solid rgba(16,19,15,.88);border-radius:0;
+  background:rgba(255,253,248,.66);box-shadow:none
+}
+.focusGraphHead{gap:64px}
+.focusGraphHead h3{font-size:clamp(31px,3.2vw,43px)}
+.focusGraphHead p{line-height:1.7}
+.focusRows{margin-top:26px;border-top:1px solid var(--line)}
+.focusRow{padding:15px 0;border-bottom:1px solid var(--line)}
+.focusTrack{height:5px;background:rgba(16,19,15,.08)}
+.focusFill{background:#315f4a;box-shadow:none}
+.focusFill.hot{background:#b95e47}
+.focusFill.lime{background:#76902f}
+.focusName{font-weight:700}
+.focusState{letter-spacing:.1em}
+.constellationActions{
+  margin-top:14px;padding:25px 0;border:0;border-top:1px solid var(--line);background:transparent
+}
+
+/* Dedicated page */
+.constellationPage .constellationPageHero{padding-bottom:86px}
+.constellationPage .constellationPageHero h1{max-width:1080px}
+.constellationPage .constellationPageHero p{max-width:820px;line-height:1.72}
+.constellationPrinciple{border:0;border-left:1px solid var(--ink);padding:8px 0 8px 34px;background:transparent}
+.constellationPrinciple blockquote{font-size:clamp(38px,5vw,64px)}
+.lensPanel{border:1px solid var(--ink);background:rgba(255,253,248,.5);box-shadow:none}
+.lensControls{gap:7px}
+.lensButton{background:transparent;border-color:rgba(16,19,15,.18)}
+.lensButton[aria-pressed="true"]{background:var(--ink);color:var(--paper2);border-color:var(--ink);box-shadow:none}
+.lensSummary{max-width:900px;color:var(--muted);line-height:1.65}
+.lensCards{gap:10px}
+.lensCard{border:1px solid rgba(16,19,15,.16);background:rgba(255,255,255,.46);box-shadow:none;transition:transform .18s ease,border-color .18s ease}
+.lensCard:hover{transform:translateY(-2px);border-color:rgba(16,19,15,.36)}
+
+@media(max-width:1000px){
+  .constellationTop{gap:28px}.constellationStats{border-left:0;border-top:1px solid rgba(255,255,255,.14);padding-top:15px}
+  .constellationMap:before{display:none}.constellationCore{min-height:245px}
+}
+@media(max-width:700px){
+  .constellationStage{padding:22px;border-radius:24px}.constellationStage:after{inset:10px;border-radius:17px}
+  .constellationStats{width:100%;display:grid;grid-template-columns:repeat(3,1fr)}
+  .constellationStat{min-width:0;padding:10px 6px}.constellationStat b{font-size:22px}
+  .constellationNode{border-radius:16px;min-height:auto}.focusGraph{padding:22px}
+}
