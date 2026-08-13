@@ -42,6 +42,15 @@
 .portfolioV2 .startMeta span{background:rgba(255,255,255,.72);color:#53685a}
 .portfolioV2 .startLinks{border-top-color:#cbd9cc}
 
+/* Narrative spine: brief, human and deliberately quieter than the work section. */
+.portfolioV2 .storySection{padding-top:58px;padding-bottom:58px;background:linear-gradient(135deg,#f8f1e9 0%,#f1f5ef 100%);border-top:1px solid rgba(66,87,70,.09);border-bottom:1px solid rgba(66,87,70,.09)}
+.portfolioV2 .storyGrid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(42px,7vw,96px);align-items:start}
+.portfolioV2 .storyLead h2{font-size:clamp(34px,4.6vw,58px);line-height:1.02;letter-spacing:-.045em;margin:10px 0 0;max-width:650px}
+.portfolioV2 .storyCopy{max-width:680px}
+.portfolioV2 .storyCopy p{font-size:clamp(16px,1.45vw,19px);line-height:1.7;margin:0 0 15px;color:#4d554e}
+.portfolioV2 .storyCopy p:last-child{margin-bottom:0}
+.portfolioV2 .storyCopy strong{color:#26372b;font-weight:650}
+
 /* Flagship project palette. */
 .portfolioV2 .projectCard{position:relative;overflow:hidden}
 .portfolioV2 .projectCard:before{content:"";position:absolute;left:0;right:0;top:0;height:4px}
@@ -58,6 +67,11 @@
 .portfolioV2 .projectCard:nth-child(4):before{background:var(--accent-amber)}
 .portfolioV2 .projectCard:nth-child(4) .projectTopline b{color:var(--accent-amber-deep)}
 .portfolioV2 .projectCard .projectEvidence span{background:rgba(255,255,255,.68);border:1px solid rgba(70,70,60,.055)}
+.portfolioV2 .projectWhy{margin:9px 0 17px;padding:11px 13px;border-left:3px solid rgba(66,87,70,.28);border-radius:0 9px 9px 0;background:rgba(255,255,255,.42);font-size:12px;line-height:1.55;color:#59605a}
+.portfolioV2 .projectWhy strong{display:block;margin-bottom:3px;font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:#38483b}
+.portfolioV2 .projectCard:nth-child(2) .projectWhy{border-left-color:rgba(125,78,62,.35)}
+.portfolioV2 .projectCard:nth-child(3) .projectWhy{border-left-color:rgba(70,94,115,.35)}
+.portfolioV2 .projectCard:nth-child(4) .projectWhy{border-left-color:rgba(111,85,39,.35)}
 
 /* Focus: enough colour to scan, still very quiet. */
 .portfolioV2 .focusV2{background:#f7f4ed}
@@ -91,6 +105,22 @@
 .portfolioV2 .routeList a:nth-child(2) strong{color:var(--accent-amber-deep)}
 .portfolioV2 .routeList a:nth-child(3) strong{color:var(--accent-blue-deep)}
 .portfolioV2 .routeList a:nth-child(4) strong{color:var(--accent-clay-deep)}
+
+/* North star: one emotional beat before recruiter routing. */
+.portfolioV2 .northStarSection{padding:78px 0;background:#252a26;color:#f7f2e9}
+.portfolioV2 .northStarInner{max-width:1000px}
+.portfolioV2 .northStarSection .sectionLabelV2{color:#a9bea9}
+.portfolioV2 .northStarSection blockquote{font-family:"Newsreader",Georgia,serif;font-size:clamp(38px,5.3vw,70px);line-height:.99;letter-spacing:-.035em;margin:18px 0 24px;max-width:980px;font-weight:400}
+.portfolioV2 .northStarSection p{max-width:760px;color:#c6cbc6;font-size:15px;line-height:1.7;margin:0}
+.portfolioV2 .northStarSection:after{content:"";display:block;width:min(220px,26vw);height:5px;margin:46px auto 0;border-radius:999px;background:linear-gradient(90deg,var(--accent-sage),var(--accent-clay),var(--accent-blue),var(--accent-amber),var(--accent-lilac))}
+
 .portfolioV2 .aboutStatement blockquote{color:#343a34}
 .portfolioV2 .aboutStatement blockquote:after{content:"";display:block;width:72px;height:5px;margin-top:24px;border-radius:999px;background:linear-gradient(90deg,var(--accent-sage),var(--accent-clay),var(--accent-blue))}
 .portfolioV2 .contactV2{background:linear-gradient(180deg,transparent,#f8f1e9 100%)}
+
+@media(max-width:760px){
+  .portfolioV2 .storyGrid{grid-template-columns:1fr;gap:24px}
+  .portfolioV2 .storySection{padding-top:44px;padding-bottom:44px}
+  .portfolioV2 .projectWhy{font-size:11.5px}
+  .portfolioV2 .northStarSection{padding:62px 0}
+}
