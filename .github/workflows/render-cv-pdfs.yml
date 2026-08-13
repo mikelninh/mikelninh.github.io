@@ -1,0 +1,52 @@
+name: Render final CV PDFs
+
+on:
+  push:
+    branches:
+      - agent/final-application-release
+    paths:
+      - 'assets/cv-print-en.html'
+      - 'assets/cv-print-de.html'
+      - '.github/workflows/render-cv-pdfs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/final-application-release
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install PDF renderer
+        run: pip install --disable-pip-version-check weasyprint pypdf
+      - name: Render and verify two-page PDFs
+        run: |
+          weasyprint assets/cv-print-en.html Michael_Ninh_CV_EN.pdf
+          weasyprint assets/cv-print-de.html Michael_Ninh_CV_DE.pdf
+          python - <<'PY'
+          from pypdf import PdfReader
+          for path in ('Michael_Ninh_CV_EN.pdf', 'Michael_Ninh_CV_DE.pdf'):
+              pages = len(PdfReader(path).pages)
+              print(f'{path}: {pages} pages')
+              if pages != 2:
+                  raise SystemExit(f'{path} should be exactly 2 pages, got {pages}')
+          PY
+      - name: Commit rendered PDFs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Michael_Ninh_CV_EN.pdf Michael_Ninh_CV_DE.pdf
+          if git diff --cached --quiet; then
+            echo 'PDFs already up to date.'
+          else
+            git commit -m 'Render final bilingual CV PDFs'
+            git push origin HEAD:agent/final-application-release
+          fi
