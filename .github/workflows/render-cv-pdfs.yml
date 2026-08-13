@@ -58,6 +58,15 @@ jobs:
                   raise SystemExit(f'{path} should be exactly 2 pages, got {pages}')
           PY
 
+      - name: Upload rendered PDFs for visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdfs-${{ github.run_id }}
+          path: |
+            Michael_Ninh_CV_EN.pdf
+            Michael_Ninh_CV_DE.pdf
+          retention-days: 2
+
       - name: Commit rendered PDFs
         run: |
           git config user.name 'github-actions[bot]'
