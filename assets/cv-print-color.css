@@ -1,41 +1,41 @@
 /* Colour-only override for the two-page A4 CVs. Keep geometry and font sizes stable. */
 html,body{background:#fffdf9;color:#22241f}
-a{color:#536b58}
+a{color:#425746}
 .top{background:linear-gradient(90deg,#e5eee5 0%,#f8f4ec 57%,#e7eef4 100%)}
-.role,.contact b,.jobtitle,.links{color:#536b58}
+.role,.contact b,.jobtitle,.links{color:#425746}
 .loc,.contact,.date,.eduMeta,.footer{color:#686d66}
 .rule{background:linear-gradient(90deg,#6f8c74 0%,#6f8c74 35%,#c9876f 35%,#c9876f 60%,#879fb3 60%,#879fb3 82%,#c7a15b 82%,#c7a15b 100%)}
 .profileGrid{border-color:#ddd8cf;background:#fffdf9}
 .profileGrid>div+div{border-left-color:#ddd8cf;background:#eef3f7}
-.kicker,.sectionKicker,.toolkit strong{color:#536b58}
-.bestfit{color:#5e788e}
+.kicker,.sectionKicker,.toolkit strong{color:#425746}
+.bestfit{color:#465e73}
 
 .cards{border-color:#ddd8cf;background:#fffdf9}
 .card{position:relative;color:#22241f;border-color:#ddd8cf;background:#fffdf9}
 .card:nth-child(odd){border-right-color:#ddd8cf}
 .card:before{content:"";position:absolute;left:0;right:0;top:0;height:1.2mm}
 .card:nth-child(1),.card:nth-child(1).dark{background:linear-gradient(145deg,#e5eee5,#fffdf9 78%);color:#22241f}
-.card:nth-child(1):before{background:#6f8c74}.card:nth-child(1) .status{color:#536b58}
+.card:nth-child(1):before{background:#6f8c74}.card:nth-child(1) .status{color:#425746}
 .card:nth-child(2),.card:nth-child(2).dark{background:linear-gradient(145deg,#f5e4dc,#fffdf9 78%);color:#22241f}
-.card:nth-child(2):before{background:#c9876f}.card:nth-child(2) .status{color:#9d644f}
+.card:nth-child(2):before{background:#c9876f}.card:nth-child(2) .status{color:#7d4e3e}
 .card:nth-child(3),.card:nth-child(3).dark{background:linear-gradient(145deg,#e7eef4,#fffdf9 78%);color:#22241f}
-.card:nth-child(3):before{background:#879fb3}.card:nth-child(3) .status{color:#5e788e}
+.card:nth-child(3):before{background:#879fb3}.card:nth-child(3) .status{color:#465e73}
 .card:nth-child(4),.card:nth-child(4).dark{background:linear-gradient(145deg,#f5ecd9,#fffdf9 78%);color:#22241f}
-.card:nth-child(4):before{background:#c7a15b}.card:nth-child(4) .status{color:#8d7039}
+.card:nth-child(4):before{background:#c7a15b}.card:nth-child(4) .status{color:#6f5527}
 .card .desc,.card.dark .desc{color:#626761}
 .card .note,.card.dark .note{color:#6d716b}
-.card .links,.card.dark .links{color:#536b58}
+.card .links,.card.dark .links{color:#425746}
 .status,.dark .status{color:#686d66}
 
 .toolkit{border-color:#ddd8cf;background:#f9f6ef}
 .toolkit>div+div{border-left-color:#ddd8cf}
-.toolkit>div:nth-child(1) strong{color:#536b58}
-.toolkit>div:nth-child(2) strong{color:#5e788e}
-.toolkit>div:nth-child(3) strong{color:#9d644f}
+.toolkit>div:nth-child(1) strong{color:#425746}
+.toolkit>div:nth-child(2) strong{color:#465e73}
+.toolkit>div:nth-child(3) strong{color:#7d4e3e}
 .expRow,.eduGrid{border-color:#ddd8cf}
 .expLeft{border-right-color:#ddd8cf}
 .eduGrid>div+div{border-left-color:#ddd8cf}
 
 .next{background:linear-gradient(100deg,#e5eee5 0%,#f5ecd9 48%,#f5e4dc 100%);color:#22241f;border-top:1px solid #d8d4cb}
-.next .kicker{color:#536b58}
+.next .kicker{color:#425746}
 .nextText{color:#343a34}
