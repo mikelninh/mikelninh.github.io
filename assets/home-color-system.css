@@ -1,18 +1,18 @@
 :root{
   --accent-sage:#6f8c74;
-  --accent-sage-deep:#536b58;
+  --accent-sage-deep:#425746;
   --accent-sage-soft:#e5eee5;
   --accent-clay:#c9876f;
-  --accent-clay-deep:#9d644f;
+  --accent-clay-deep:#7d4e3e;
   --accent-clay-soft:#f5e4dc;
   --accent-blue:#879fb3;
-  --accent-blue-deep:#5e788e;
+  --accent-blue-deep:#465e73;
   --accent-blue-soft:#e7eef4;
   --accent-amber:#c7a15b;
-  --accent-amber-deep:#8d7039;
+  --accent-amber-deep:#6f5527;
   --accent-amber-soft:#f5ecd9;
   --accent-lilac:#a697bc;
-  --accent-lilac-deep:#74658c;
+  --accent-lilac-deep:#6a557f;
   --accent-lilac-soft:#eee9f3;
 }
 
@@ -22,7 +22,7 @@
 .portfolioV2 .brandDot{background:var(--accent-clay);box-shadow:0 0 0 5px var(--accent-clay-soft)}
 .portfolioV2 .eyebrow,.portfolioV2 .sectionLabelV2{color:var(--accent-sage-deep)}
 .portfolioV2 .primaryBtn,.portfolioV2 .navContact{background:var(--accent-sage-deep);border-color:var(--accent-sage-deep)}
-.portfolioV2 .primaryBtn:hover,.portfolioV2 .navContact:hover{background:#435947;border-color:#435947}
+.portfolioV2 .primaryBtn:hover,.portfolioV2 .navContact:hover{background:#35473a;border-color:#35473a}
 .portfolioV2 .textBtn{border-color:#b5c4b7;color:#4d6252}
 .portfolioV2 .textBtn:hover{border-color:var(--accent-sage-deep);color:var(--accent-sage-deep)}
 
