@@ -1,0 +1,15 @@
+.focusRow{grid-template-columns:220px 1fr 110px;gap:22px;align-items:center}
+.focusDescription{color:var(--muted);font-size:12px;line-height:1.55}
+.focusState{text-align:right}
+.proofCard.heroProof,.proofCard.sideProof{min-height:360px}
+@media(max-width:1000px){
+  .focusRow{grid-template-columns:1fr auto;gap:8px 18px}
+  .focusDescription{grid-column:1/2}
+  .focusState{grid-column:2;grid-row:1/3;align-self:center;text-align:right}
+}
+@media(max-width:700px){
+  .focusRow{grid-template-columns:1fr}
+  .focusDescription,.focusState{grid-column:1;grid-row:auto}
+  .focusState{text-align:left}
+  .proofCard.heroProof,.proofCard.sideProof{min-height:0}
+}
