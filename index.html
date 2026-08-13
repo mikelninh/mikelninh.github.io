@@ -3,201 +3,204 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Michael Ninh builds AI products that make complicated systems easier to understand, safer to use and more helpful to people.">
+<meta name="description" content="Michael Ninh builds AI tools that make complex things clearer, calmer and more useful — across legal research, public services, agent workflows and product experiments.">
 <title>Michael Ninh — AI Engineer · Product Builder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/home-editorial.css">
 <link rel="stylesheet" href="assets/home-final.css">
 </head>
-<body>
+<body class="portfolioV2">
 <header>
   <nav class="wrap homeNav">
-    <a class="homeBrand" href="#top"><span class="brandMark">✦</span><span>Michael Ninh<small>AI Engineer · Product Builder · Berlin / remote</small></span></a>
+    <a class="homeBrand" href="#top">
+      <span class="brandDot" aria-hidden="true"></span>
+      <span>Michael Ninh<small>AI Engineer · Product Builder · Berlin / remote</small></span>
+    </a>
     <div class="homeLinks">
       <a href="#work">Work</a>
-      <a href="#method">How I work</a>
+      <a href="#approach">Approach</a>
+      <a href="#about">About</a>
       <a href="https://github.com/mikelninh">GitHub ↗</a>
-      <a href="https://www.linkedin.com/in/michael-ninh/">LinkedIn ↗</a>
       <a href="Michael_Ninh_CV_EN.pdf" download>CV ↓</a>
-      <a class="pillBtn dark" href="mailto:mikel_ninh@yahoo.de">Get in touch <span>✦</span></a>
+      <a class="navContact" href="mailto:mikel_ninh@yahoo.de">Get in touch</a>
     </div>
   </nav>
 </header>
 
 <main id="top">
-  <section class="homeHero">
-    <div class="wrap heroGrid">
-      <div>
+  <section class="heroV2">
+    <div class="wrap heroV2Grid">
+      <div class="heroV2Copy">
         <div class="eyebrow">AI Engineer · Product Builder · Berlin / remote</div>
-        <h1>One body of work.<br><em>Several expressions</em></h1>
-        <div class="heroActions">
-          <a class="pillBtn ghost" href="#work">See my work ↓</a>
-          <a class="pillBtn ghost" href="https://mikelninh.github.io/gitlaw/#/mietrecht">Try GitLaw ↗</a>
+        <h1>I build tools that make complex things <span>clearer, calmer, and more useful.</span></h1>
+        <p class="heroLead">Across legal research, public services and agent workflows, I turn complicated problems into practical products people can understand, test and use.</p>
+        <div class="heroActionsV2">
+          <a class="primaryBtn" href="https://mikelninh.github.io/gitlaw/#/mietrecht">Try GitLaw ↗</a>
+          <a class="textBtn" href="#work">See selected work ↓</a>
+          <a class="textBtn" href="Michael_Ninh_CV_EN.pdf" download>Download CV ↓</a>
         </div>
       </div>
-      <aside class="heroSide">
-        <p>I build AI products, public-interest tools and games. They look different, but I keep coming back to the same question: <strong>can we make complicated systems easier to understand, safer to use and more helpful to people?</strong></p>
-        <div class="coreIntent"><small>Core intent</small><span>Build useful things. Make them trustworthy.</span></div>
+
+      <aside class="startCard" aria-label="Start with GitLaw">
+        <div class="startCardTop">
+          <span class="statusDot"></span>
+          <span>Start here · live pilot</span>
+        </div>
+        <h2>GitLaw</h2>
+        <p>Ask a real Mietrecht question. GitLaw finds the relevant BGB sources first, shows exactly what it used, and makes its limits visible.</p>
+        <div class="startMeta">
+          <span>5,936 federal laws</span>
+          <span>source-first</span>
+          <span>real failures → tests</span>
+        </div>
+        <div class="startLinks">
+          <a href="https://mikelninh.github.io/gitlaw/#/mietrecht">Try the research desk ↗</a>
+          <a href="https://github.com/mikelninh/gitlaw">GitHub ↗</a>
+        </div>
       </aside>
     </div>
   </section>
 
-  <section id="map" class="constellationSection">
+  <section id="work" class="sectionV2 featuredSection">
     <div class="wrap">
-      <div class="constellationPanel">
-        <div class="constellationHead">
-          <div>
-            <div class="micro darkMicro">How the work connects</div>
-            <h2>Five kinds of problems I keep coming back to.</h2>
-          </div>
-          <div class="stats" aria-label="Portfolio overview">
-            <div class="stat"><b>5</b><span>areas</span></div>
-            <div class="stat"><b>4</b><span>featured projects</span></div>
-            <div class="stat"><b>1</b><span>shared goal</span></div>
-          </div>
+      <div class="sectionIntroV2">
+        <div>
+          <div class="sectionLabelV2">Selected work</div>
+          <h2>Four projects that best show how I think and build.</h2>
         </div>
-
-        <div class="constellationMap">
-          <article class="cNode nodeCivic">
-            <span class="n">01 · RIGHTS & INSTITUTIONS</span>
-            <h3>Civic & legal AI</h3>
-            <p>Make laws, benefits, budgets and public services easier for ordinary people to understand and use.</p>
-            <div class="tags"><a href="https://github.com/mikelninh/citizen-agents">Citizen Agents</a><a href="https://github.com/mikelninh/gitlaw">GitLaw</a><a href="https://github.com/mikelninh/safevoice">SafeVoice</a><a href="openleistung/">OpenLeistung</a></div>
-          </article>
-
-          <article class="cNode nodeAgents">
-            <span class="n">02 · RELIABLE AI</span>
-            <h3>Agent systems</h3>
-            <p>Build AI tools that can handle repeatable work, show when they are unsure and ask a human before important decisions.</p>
-            <div class="tags"><a href="https://github.com/mikelninh/digital-worker-factory">Worker Factory</a><a href="https://github.com/mikelninh/agent-loop-lab">Agent Loop Lab</a><a href="https://github.com/mikelninh/judge-mcp">Judge MCP</a></div>
-          </article>
-
-          <div class="core">
-            <div class="coreCircle"><small>COMPLEX SYSTEMS</small><strong>→ useful tools<br>for people</strong><span>build · test · learn</span></div>
-          </div>
-
-          <article class="cNode nodeHuman">
-            <span class="n">03 · MEANING & WELLBEING</span>
-            <h3>Human systems</h3>
-            <p>Explore emotion, peace, health and self-knowledge — tools that help people understand themselves as well as the world around them.</p>
-            <div class="tags"><a href="https://github.com/mikelninh/human-systems-lab">Human Systems Lab</a><a href="https://github.com/mikelninh/Empathly">Empathly</a><a href="https://github.com/mikelninh/path-to-peace">Path to Peace</a></div>
-          </article>
-
-          <article class="cNode nodePlay">
-            <span class="n">04 · CRAFT & DELIGHT</span>
-            <h3>Play & worlds</h3>
-            <p>Build games, PvP systems and interactive worlds that feel good to use — and are simply fun to spend time in.</p>
-            <div class="tags"><span class="private">BlaKeks World · private</span><span class="private">Tiny Tactics · private</span><a href="tien-len/">Tiến Lên</a></div>
-          </article>
-
-          <article class="cNode nodeProduct">
-            <span class="n">05 · PRODUCTS & EXPERIMENTS</span>
-            <h3>Product experiments</h3>
-            <p>Try small product ideas, learn what people value and turn the strongest ones into something worth returning to.</p>
-            <div class="tags"><a href="https://github.com/mikelninh/atelier-engine">Atelier Engine</a><a href="https://github.com/mikelninh/lucklab">LuckLab</a><a href="https://github.com/mikelninh/grailsense">GrailSense</a></div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="focusSection">
-    <div class="wrap">
-      <div class="focusPanel">
-        <div class="focusHead">
-          <div><div class="sectionLabel">What I’m building now · August 2026</div><h2>Where my energy is going.</h2></div>
-          <p>These are the projects I am actively trying to make more useful — especially by moving from my own tests toward real people, real corrections and measurable outcomes.</p>
-        </div>
-        <div class="focusRows">
-          <div class="focusRow"><span class="focusName">GitLaw</span><span class="focusDescription">Testing Mietrecht with real questions; user-found failures become permanent regression cases.</span><span class="focusState">live pilot</span></div>
-          <div class="focusRow"><span class="focusName">Digital Worker Factory</span><span class="focusDescription">Moving from synthetic reliability scenarios toward one real workflow running in shadow mode.</span><span class="focusState">next proof</span></div>
-          <div class="focusRow"><span class="focusName">BlaKeks World · PvP</span><span class="focusDescription">Iterating combat, timing and counterplay with friends — where the only useful metric is whether it is actually fun.</span><span class="focusState">private</span></div>
-        </div>
-        <div class="focusFoot">
-          <p><strong>I build a lot of things.</strong> This portfolio highlights the projects that best show how I think, what I care about and what I want to build next.</p>
-          <a class="pillBtn ghost" href="constellation/">See more projects →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="work" class="section">
-    <div class="wrap">
-      <div class="sectionHead">
-        <div><div class="sectionLabel">02 · Featured work</div><h2>Useful first.<br>Proof second.</h2></div>
-        <p>Four projects, four different evidence states. Try the working ones yourself; open GitHub when you want the architecture, tests and technical details.</p>
+        <p>Each has a different maturity level. I would rather show the real state than make a prototype sound like a finished company.</p>
       </div>
 
-      <div class="proofGrid">
-        <article class="proofCard heroProof">
-          <div class="case">Legal research · flagship</div><div class="proofStatus">live research pilot</div>
+      <div class="featuredGrid">
+        <article class="projectCard projectCardFlagship">
+          <div class="projectTopline"><span>Legal research</span><b>Live pilot</b></div>
           <h3>GitLaw</h3>
-          <p>Find the German law behind a real-life problem. Ask in plain language, inspect the exact sources GitLaw found, and see where the answer still needs human judgement.</p>
-          <div class="proofMeta"><span>5,936 federal laws</span><span>source-first research</span><span>real failures → tests</span><span>Mietrecht pilot</span></div>
-          <div class="proofLinks"><a href="https://mikelninh.github.io/gitlaw/#/mietrecht">Try Mietrecht Research Desk ↗</a><a href="https://github.com/mikelninh/gitlaw">GitHub ↗</a></div>
+          <p class="projectValue">Find the law behind a real-life problem without hiding the source trail.</p>
+          <p class="projectDetail">Plain-language questions → relevant German federal law → inspectable source passages → visible uncertainty. Real user-found retrieval failures are turned into regression tests.</p>
+          <div class="projectEvidence"><span>5,936 laws</span><span>Mietrecht pilot</span><span>real-user testing underway</span></div>
+          <div class="projectLinks"><a class="primaryBtn small" href="https://mikelninh.github.io/gitlaw/#/mietrecht">Try it ↗</a><a class="textBtn" href="https://github.com/mikelninh/gitlaw">GitHub ↗</a></div>
         </article>
 
-        <article class="proofCard sideProof">
-          <div class="case">Safety</div><div class="proofStatus">working closed beta</div>
+        <article class="projectCard">
+          <div class="projectTopline"><span>Safety</span><b>Working closed beta</b></div>
           <h3>SafeVoice</h3>
-          <p>Helps people document online harassment, understand their options and turn screenshots or text into a structured evidence package for human review.</p>
-          <div class="proofMeta"><span>DE / EN</span><span>evidence package</span><span>human review</span><span>real-user validation next</span></div>
-          <div class="proofLinks"><a href="https://safevoice-vert.vercel.app">Open beta ↗</a><a href="https://github.com/mikelninh/safevoice">GitHub ↗</a></div>
+          <p class="projectValue">Turn online harassment into a clearer, reviewable evidence package.</p>
+          <p class="projectDetail">Screenshots or text become structured evidence, legal context and a human-reviewable report instead of an opaque AI answer.</p>
+          <div class="projectEvidence"><span>DE / EN</span><span>evidence integrity</span><span>human review</span></div>
+          <div class="projectLinks"><a class="textBtn" href="https://safevoice-vert.vercel.app">Open beta ↗</a><a class="textBtn" href="https://github.com/mikelninh/safevoice">GitHub ↗</a></div>
         </article>
 
-        <article class="proofCard heroProof">
-          <div class="case">Reliable AI work</div><div class="proofStatus">engineering prototype</div>
+        <article class="projectCard">
+          <div class="projectTopline"><span>Reliable AI work</span><b>Engineering prototype</b></div>
           <h3>Digital Worker Factory</h3>
-          <p>A reusable pattern for AI workers that must show evidence, expose failure and ask a human before consequential actions. The public reliability scenarios are synthetic; a real shadow workflow is the next proof.</p>
-          <div class="proofMeta"><span>synthetic reliability suite</span><span>approval gates</span><span>audit & replay</span><span>real workflow next</span></div>
-          <div class="proofLinks"><a href="https://github.com/mikelninh/digital-worker-factory">GitHub ↗</a></div>
+          <p class="projectValue">Make AI workers show evidence, expose failure and ask before consequential actions.</p>
+          <p class="projectDetail">The current reliability suite is synthetic. The next meaningful proof is one real office workflow running in shadow mode with human corrections measured.</p>
+          <div class="projectEvidence"><span>approval gates</span><span>audit & replay</span><span>real workflow next</span></div>
+          <div class="projectLinks"><a class="textBtn" href="https://github.com/mikelninh/digital-worker-factory">Inspect project ↗</a></div>
         </article>
 
-        <article class="proofCard sideProof">
-          <div class="case">Public administration</div><div class="proofStatus">GovTech prototype</div>
+        <article class="projectCard">
+          <div class="projectTopline"><span>Public administration</span><b>GovTech prototype</b></div>
           <h3>PrüfPilot</h3>
-          <p>Helps reviewers inspect documents against versioned rules, see what evidence is missing and prepare the next human-reviewable step. The demo cases are synthetic; the document-intake core is working.</p>
-          <div class="proofMeta"><span>3 synthetic domains</span><span>document intake core</span><span>human review</span><span>institution pilot next</span></div>
-          <div class="proofLinks"><a href="aconium/pruefpilot/">Open prototype ↗</a><a href="https://github.com/mikelninh/pruefpilot-document-ai">GitHub ↗</a></div>
+          <p class="projectValue">Help reviewers see what a document proves, what is missing and what needs a human decision.</p>
+          <p class="projectDetail">Synthetic cases demonstrate the workflow; the document-intake core is working. The next proof is an institution or domain expert using their own documents.</p>
+          <div class="projectEvidence"><span>document intake</span><span>versioned rules</span><span>human review</span></div>
+          <div class="projectLinks"><a class="textBtn" href="aconium/pruefpilot/">Open prototype ↗</a><a class="textBtn" href="https://github.com/mikelninh/pruefpilot-document-ai">GitHub ↗</a></div>
         </article>
       </div>
     </div>
   </section>
 
-  <section id="method" class="section">
+  <section class="sectionV2 focusV2">
     <div class="wrap">
-      <div class="sectionHead">
-        <div><div class="sectionLabel">03 · How I work</div><h2>Understand.<br>Build. Test.</h2></div>
+      <div class="sectionIntroV2 compact">
+        <div><div class="sectionLabelV2">What I focus on</div><h2>Useful systems, not AI for its own sake.</h2></div>
+      </div>
+      <div class="focusTiles">
+        <article><span>01</span><h3>Make complexity understandable.</h3><p>Turn rules, documents and messy workflows into something a person can actually reason about.</p></article>
+        <article><span>02</span><h3>Build the smallest useful version.</h3><p>Enough product to let someone complete the real task — not just watch a polished demo.</p></article>
+        <article><span>03</span><h3>Keep humans in control.</h3><p>Especially when a wrong answer could affect rights, money, safety or consequential decisions.</p></article>
+        <article><span>04</span><h3>Improve from real use.</h3><p>User-found failures should become tests, product changes and measurable evidence.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sectionV2 areasSection">
+    <div class="wrap">
+      <div class="sectionIntroV2">
+        <div><div class="sectionLabelV2">Areas I work across</div><h2>Different surfaces. A consistent way of thinking.</h2></div>
+        <p>I like moving between public systems, AI infrastructure and playful products. The common thread is making complicated things easier to understand and use.</p>
+      </div>
+
+      <div class="areasGrid">
+        <article class="areaCard"><span>01</span><h3>Civic & legal AI</h3><p>Laws, benefits, budgets and public services made easier to navigate.</p><div class="areaLinks"><a href="https://github.com/mikelninh/gitlaw">GitLaw</a><a href="https://github.com/mikelninh/citizen-agents">Citizen Agents</a><a href="openleistung/">OpenLeistung</a></div></article>
+        <article class="areaCard"><span>02</span><h3>Reliable AI systems</h3><p>Agents and workflows that make uncertainty, evidence and human approval explicit.</p><div class="areaLinks"><a href="https://github.com/mikelninh/digital-worker-factory">Worker Factory</a><a href="https://github.com/mikelninh/agent-loop-lab">Agent Loop Lab</a></div></article>
+        <article class="areaCard"><span>03</span><h3>Human systems</h3><p>Emotion, peace, health and self-knowledge — technology that supports the person using it.</p><div class="areaLinks"><a href="https://github.com/mikelninh/Empathly">Empathly</a><a href="https://github.com/mikelninh/path-to-peace">Path to Peace</a></div></article>
+        <article class="areaCard"><span>04</span><h3>Play & worlds</h3><p>PvP systems, social games and interactive worlds built around delight and feel.</p><div class="areaLinks"><span>BlaKeks World · private</span><span>Tiny Tactics · private</span><a href="tien-len/">Tiến Lên</a></div></article>
+        <article class="areaCard"><span>05</span><h3>Product experiments</h3><p>Small bets that test usefulness, desire, pricing and whether people want to return.</p><div class="areaLinks"><a href="https://github.com/mikelninh/atelier-engine">Atelier Engine</a><a href="https://github.com/mikelninh/lucklab">LuckLab</a></div></article>
+      </div>
+      <div class="areasFoot"><a class="textBtn" href="constellation/">See the broader project archive →</a></div>
+    </div>
+  </section>
+
+  <section id="approach" class="sectionV2 approachSection">
+    <div class="wrap">
+      <div class="sectionIntroV2">
+        <div><div class="sectionLabelV2">How I work</div><h2>Understand. Build. Test. Learn.</h2></div>
         <p>I do not start with the model. I start with the person, the problem and what a good outcome should feel like.</p>
       </div>
-      <div class="methodGrid">
-        <article class="methodStep"><small>01 / UNDERSTAND</small><h3>Start with the real problem.</h3><p>Who is this for? What is hard today? What would make the experience genuinely better?</p></article>
-        <article class="methodStep"><small>02 / CLARIFY</small><h3>Make the decisions clear.</h3><p>What do we know? What is missing? Which rules matter? What should a human decide?</p></article>
-        <article class="methodStep"><small>03 / BUILD</small><h3>Ship the smallest useful version.</h3><p>Connect the data, AI and interface so someone can actually complete the task.</p></article>
-        <article class="methodStep"><small>04 / TEST</small><h3>Find what can go wrong.</h3><p>Use real and simulated cases, clear limits and human checkpoints. Improve from evidence, not confidence.</p></article>
+      <div class="approachGrid">
+        <article><span>01</span><h3>Understand</h3><p>Who is this for? What is hard today? What would make the experience genuinely better?</p></article>
+        <article><span>02</span><h3>Clarify</h3><p>What do we know, what is missing, which rules matter and what should remain a human decision?</p></article>
+        <article><span>03</span><h3>Build</h3><p>Connect data, AI and interface into the smallest version someone can actually use.</p></article>
+        <article><span>04</span><h3>Test</h3><p>Put it in front of real and simulated cases, capture failures and turn corrections into better behaviour.</p></article>
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap northStar">
-      <div class="northQuote"><small>04 · North star</small><blockquote>Build environments where people can understand, act and thrive.</blockquote></div>
-      <div class="northCopy"><p>Rights, institutions, safety, money, food, culture, relationships and inner development all shape how much room a person has to live well. I want my work to make those systems more humane — while being clear about what technology can and cannot do.</p><div class="heroActions"><a class="pillBtn ghost" href="culture/">Culture & inspirations</a><a class="pillBtn ghost" href="constellation/">More projects →</a></div></div>
+  <section class="sectionV2 hiringSection">
+    <div class="wrap hiringPanel">
+      <div class="hiringCopy">
+        <div class="sectionLabelV2">If you’re hiring</div>
+        <h2>Start with the proof closest to your problem.</h2>
+        <p>I’m looking for AI Engineer / Applied AI roles where product judgement matters as much as making the system work.</p>
+      </div>
+      <div class="routeList">
+        <a href="https://mikelninh.github.io/gitlaw/#/mietrecht"><span>LegalTech</span><strong>GitLaw</strong><em>research + source grounding ↗</em></a>
+        <a href="aconium/pruefpilot/"><span>GovTech / administration</span><strong>PrüfPilot</strong><em>documents + review workflow ↗</em></a>
+        <a href="https://github.com/mikelninh/digital-worker-factory"><span>Agent systems</span><strong>Digital Worker Factory</strong><em>reliability + human approval ↗</em></a>
+        <a href="openleistung/"><span>Digital public services</span><strong>OpenLeistung</strong><em>eligibility + human-readable flow ↗</em></a>
+      </div>
     </div>
   </section>
 
-  <section class="contactSection">
-    <div class="wrap contactCard">
-      <div><div class="sectionLabel">05 · Next team</div><h2>Bring me the messy problem.</h2><p>I’m looking for AI Engineer / Applied AI work where I can own meaningful product work, learn from strong engineers and designers, and build things that genuinely help people — with real users in the loop.</p></div>
-      <div class="heroActions"><a class="pillBtn dark" href="mailto:mikel_ninh@yahoo.de">Email Michael ✦</a><a class="pillBtn ghost" href="https://www.linkedin.com/in/michael-ninh/">LinkedIn ↗</a><a class="pillBtn ghost" href="Michael_Ninh_CV_EN.pdf" download>CV ↓</a></div>
+  <section id="about" class="sectionV2 aboutSection">
+    <div class="wrap aboutGrid">
+      <div class="aboutStatement">
+        <div class="sectionLabelV2">About</div>
+        <blockquote>Build environments where people can understand, act and thrive.</blockquote>
+      </div>
+      <div class="aboutCopy">
+        <p>I’m an AI engineer with a founder and operations background. I like turning messy systems into clear tools, shipping quickly, and then finding out where reality disagrees with the demo.</p>
+        <p>I care most about work that reduces friction, increases understanding and gives people more room to make good decisions. I also build games and small product experiments because usefulness is not the only thing that matters — delight matters too.</p>
+        <div class="aboutLinks"><a class="textBtn" href="culture/">Culture & inspirations →</a><a class="textBtn" href="cv.html">Read web CV →</a><a class="textBtn" href="https://www.linkedin.com/in/michael-ninh/">LinkedIn ↗</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contactV2">
+    <div class="wrap contactV2Inner">
+      <div><div class="sectionLabelV2">Next team</div><h2>Bring me the messy problem.</h2></div>
+      <p>If you’re building something difficult, useful and genuinely meant for people, I’d like to hear about it.</p>
+      <div class="contactActions"><a class="primaryBtn" href="mailto:mikel_ninh@yahoo.de">Email Michael</a><a class="textBtn" href="Michael_Ninh_CV_EN.pdf" download>CV EN ↓</a><a class="textBtn" href="Michael_Ninh_CV_DE.pdf" download>CV DE ↓</a></div>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap footerRow"><span>© Michael Ninh · Berlin / remote · AI Engineer & Product Builder</span><div class="footerLinks"><a href="#top">Top ↑</a><a href="constellation/">More projects</a><a href="https://github.com/mikelninh">GitHub ↗</a><a href="https://www.linkedin.com/in/michael-ninh/">LinkedIn ↗</a><a href="Michael_Ninh_CV_EN.pdf" download>CV EN ↓</a><a href="Michael_Ninh_CV_DE.pdf" download>CV DE ↓</a></div></div>
+  <div class="wrap footerRow"><span>© Michael Ninh · Berlin / remote · AI Engineer & Product Builder</span><div class="footerLinks"><a href="#top">Top ↑</a><a href="https://github.com/mikelninh">GitHub ↗</a><a href="https://www.linkedin.com/in/michael-ninh/">LinkedIn ↗</a><a href="cv.html">CV</a></div></div>
 </footer>
 </body>
 </html>
