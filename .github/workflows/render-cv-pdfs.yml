@@ -3,10 +3,12 @@ name: Render final CV PDFs
 on:
   push:
     branches:
-      - agent/final-application-release
+      - main
+      - agent/color-system-cv-sync
     paths:
       - 'assets/cv-print-en.html'
       - 'assets/cv-print-de.html'
+      - 'assets/cv-print-color.css'
       - '.github/workflows/render-cv-pdfs.yml'
   workflow_dispatch:
 
@@ -20,17 +22,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: agent/final-application-release
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - name: Install PDF renderer
         run: pip install --disable-pip-version-check weasyprint pypdf
-      - name: Render and verify two-page PDFs
+
+      - name: Apply shared colour theme and render
         run: |
-          weasyprint assets/cv-print-en.html Michael_Ninh_CV_EN.pdf
-          weasyprint assets/cv-print-de.html Michael_Ninh_CV_DE.pdf
+          python - <<'PY'
+          from pathlib import Path
+
+          theme = Path('assets/cv-print-color.css').read_text(encoding='utf-8')
+          for lang in ('en', 'de'):
+              src = Path(f'assets/cv-print-{lang}.html').read_text(encoding='utf-8')
+              if '</style>' not in src:
+                  raise SystemExit(f'Missing style block in cv-print-{lang}.html')
+              themed = src.replace('</style>', '\n' + theme + '\n</style>', 1)
+              Path(f'/tmp/cv-print-{lang}.html').write_text(themed, encoding='utf-8')
+          PY
+
+          weasyprint /tmp/cv-print-en.html Michael_Ninh_CV_EN.pdf
+          weasyprint /tmp/cv-print-de.html Michael_Ninh_CV_DE.pdf
+
           python - <<'PY'
           from pypdf import PdfReader
           for path in ('Michael_Ninh_CV_EN.pdf', 'Michael_Ninh_CV_DE.pdf'):
@@ -39,6 +57,16 @@ jobs:
               if pages != 2:
                   raise SystemExit(f'{path} should be exactly 2 pages, got {pages}')
           PY
+
+      - name: Upload rendered PDFs for visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdfs-${{ github.run_id }}
+          path: |
+            Michael_Ninh_CV_EN.pdf
+            Michael_Ninh_CV_DE.pdf
+          retention-days: 2
+
       - name: Commit rendered PDFs
         run: |
           git config user.name 'github-actions[bot]'
@@ -47,6 +75,6 @@ jobs:
           if git diff --cached --quiet; then
             echo 'PDFs already up to date.'
           else
-            git commit -m 'Render final bilingual CV PDFs'
-            git push origin HEAD:agent/final-application-release
+            git commit -m 'Render CV PDFs with unified colour system'
+            git push origin HEAD:${GITHUB_REF_NAME}
           fi
