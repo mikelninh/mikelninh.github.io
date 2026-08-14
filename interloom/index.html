@@ -14,7 +14,7 @@
 <body>
   <header>
     <a class="brand" href="../">MICHAEL NINH <span>× INTERLOOM</span></a>
-    <nav><a href="#workbench">Workbench</a><a href="#evidence">Evidence</a><a href="../">Portfolio ↗</a><a class="contact" href="mailto:mikel_ninh@yahoo.de?subject=Interloom%20AI%20Engineer">Start a conversation ↗</a></nav>
+    <nav><a href="#workbench">Demo</a><a href="#evidence">Evidence</a><a href="../">Portfolio ↗</a><a class="contact" href="mailto:mikel_ninh@yahoo.de?subject=Interloom%20AI%20Engineer">Start a conversation ↗</a></nav>
   </header>
 
   <main>
@@ -22,8 +22,8 @@
       <div class="hero-copy">
         <p class="kicker">AI ENGINEER · BERLIN · ROLE-SPECIFIC WORK SAMPLE</p>
         <h1>Agents should fail <em>visibly</em>, recover <em>deliberately</em>, and learn from every case.</h1>
-        <p class="lead">I build bounded agent systems around clear tool contracts, useful traces, reproducible evaluations, and human handoffs. Years in real operations taught me that the awkward exception is usually where the product begins.</p>
-        <div class="actions"><a class="button primary" href="#workbench">Stress-test the runtime ↓</a><a class="button" href="https://digital-worker-factory-hallochupi-7378s-projects.vercel.app/proof/interloom" target="_blank" rel="noreferrer">Run CasePilot proof ↗</a><a class="button" href="https://github.com/mikelninh/digital-worker-factory" target="_blank" rel="noreferrer">Inspect code ↗</a></div>
+        <p class="lead">Interloom turns expert work into context agents can actually use. I want to work on the next hard part: what happens when a tool fails, context conflicts, evidence is missing, or the agent tries to finish too early.</p>
+        <div class="actions"><a class="button primary" href="#workbench">Run the 90-second reliability demo ↓</a><a class="button" href="https://github.com/mikelninh/digital-worker-factory" target="_blank" rel="noreferrer">Inspect code ↗</a></div>
       </div>
       <aside class="signal-card">
         <div class="card-top"><span>FIT SIGNAL</span><b>AUG 2026</b></div>
@@ -35,20 +35,21 @@
 
     <section class="why">
       <p class="section-label">01 / WHY INTERLOOM</p>
-      <div><h2>Context should compound. So should reliability.</h2><p>Interloom turns operational history into a living context graph: cases, decisions, procedures, agents, experts, and outcomes. The engineering question I want to help answer is what happens when context is incomplete, a tool times out, policy is ambiguous, or the correct action is to stop and ask.</p></div>
+      <div><h2>Context should compound. So should reliability.</h2><p>Interloom captures cases, decisions, procedures and outcomes so agents can work from the way experts actually resolve problems. The engineering challenge that excites me is making that execution observable and safe when reality refuses to follow the happy path.</p></div>
     </section>
 
     <section class="workbench" id="workbench">
-      <div class="section-heading"><div><p class="section-label">02 / RELIABILITY WORKBENCH</p><h2>A tiny failure lab.</h2></div><p>Choose a scenario. The trace shows the behaviour I would want from a production agent runtime.</p></div>
+      <div class="section-heading"><div><p class="section-label">02 / RELIABILITY WORKBENCH</p><h2>A tiny failure lab.</h2></div><p>Start with premature completion, then stress the same runtime with dependency, policy and unsafe-context failures.</p></div>
       <div class="lab">
         <div class="scenario-list" role="tablist" aria-label="Failure scenarios">
-          <button class="scenario active" data-scenario="healthy"><span>01</span><b>Routine case</b><small>All tools healthy</small></button>
+          <button class="scenario active" data-scenario="completion"><span>01</span><b>Premature completion</b><small>Missing work, agent says done</small></button>
           <button class="scenario" data-scenario="timeout"><span>02</span><b>Tool timeout</b><small>Retryable dependency</small></button>
           <button class="scenario" data-scenario="policy"><span>03</span><b>Policy ambiguity</b><small>Conflicting precedents</small></button>
           <button class="scenario" data-scenario="injection"><span>04</span><b>Unsafe context</b><small>Instruction in attachment</small></button>
+          <button class="scenario" data-scenario="healthy"><span>05</span><b>Routine case</b><small>All checks satisfied</small></button>
         </div>
         <div class="trace-panel" aria-live="polite">
-          <div class="trace-head"><span>TRACE / <b id="trace-id">IL-2048-A</b></span><span class="status" id="trace-status">RESOLVED</span></div>
+          <div class="trace-head"><span>TRACE / <b id="trace-id">IL-1842-A</b></span><span class="status" id="trace-status">BLOCKED</span></div>
           <ol id="trace-steps"></ol>
           <div class="decision"><span>RUNTIME DECISION</span><strong id="decision-title"></strong><p id="decision-copy"></p></div>
         </div>
@@ -59,18 +60,18 @@
     <section class="evidence" id="evidence">
       <div class="section-heading"><div><p class="section-label">03 / OBSERVABLE EVIDENCE</p><h2>Built, tested, inspectable.</h2></div></div>
       <div class="evidence-grid">
-        <article class="featured"><p>AGENT RELIABILITY</p><h3>Digital Worker Factory</h3><p>Reusable worker contracts with evidence requirements, policy gates, human approval and a clearly-labelled synthetic regression suite.</p><a href="https://digital-worker-factory-hallochupi-7378s-projects.vercel.app/" target="_blank" rel="noreferrer">Open technical demo ↗</a></article>
-        <article><p>DURABLE EXECUTION</p><h3>Agent Loop Lab</h3><p>Checkpointed workflows, bounded retries, recovery paths and visible execution — a small lab for agents that should survive failure instead of merely retrying prompts.</p><a href="https://github.com/mikelninh/agent-loop-lab">Repository ↗</a></article>
-        <article><p>REAL FAILURE → TEST</p><h3>GitLaw</h3><p>A live legal-research pilot where user-found retrieval failures are diagnosed, fixed and converted into regression cases instead of being hidden behind aggregate scores.</p><a href="https://mikelninh.github.io/gitlaw/#/mietrecht">Try the pilot ↗</a></article>
+        <article class="featured"><p>AGENT RELIABILITY</p><h3>Digital Worker Factory</h3><p>Reusable worker contracts with evidence requirements, policy gates and human approval. Includes 50 deterministic synthetic eval cases across five workflow domains; failures are explicit rather than hidden behind an agent completion claim.</p><a href="https://github.com/mikelninh/digital-worker-factory" target="_blank" rel="noreferrer">Inspect runtime + evals ↗</a></article>
+        <article><p>DURABLE EXECUTION</p><h3>Agent Loop Lab</h3><p>Checkpointed workflows, bounded retries, recovery paths and visible execution — a small lab for agents that should survive failure instead of merely retrying prompts.</p><a href="https://github.com/mikelninh/agent-loop-lab" target="_blank" rel="noreferrer">Repository ↗</a></article>
+        <article><p>GROUNDED RETRIEVAL</p><h3>GitLaw</h3><p>Search across 5,936 German federal laws with explicit sources, citation resolution checks, API/MCP tooling and regression tests around retrieval reliability.</p><a href="https://mikelninh.github.io/gitlaw/#/mietrecht" target="_blank" rel="noreferrer">Try the pilot ↗</a></article>
       </div>
     </section>
 
     <section class="fit">
       <p class="section-label">04 / THE HONEST FIT</p>
       <div class="fit-grid">
-        <div><h2>What I bring now.</h2><p>Python APIs, RAG, MCP, tool calling, structured outputs, evaluations, guardrails, observable traces, and the operator's instinct for edge cases.</p></div>
-        <div><h2>What I want to deepen.</h2><p>Large-scale Postgres systems, durable workflow engines such as Temporal, and production runtime ownership inside an experienced engineering team.</p></div>
-        <div><h2>My first useful loop.</h2><p>Turn one recurring failure trace into a reproducible scenario, tighten the tool contract or recovery path, and measure whether the fix generalises.</p></div>
+        <div><h2>What I bring now.</h2><p>Python APIs, RAG, MCP, tool calling, structured outputs, evaluations, guardrails, observable traces, and an operator's instinct for awkward edge cases.</p></div>
+        <div><h2>What I want to deepen.</h2><p>Large-scale Postgres systems, Temporal-style durable workflows, and production runtime ownership inside an experienced engineering team.</p></div>
+        <div><h2>My first useful loop.</h2><p>Take one recurring failure trace, turn it into a reproducible scenario, tighten the tool contract or recovery path, and measure whether the fix generalises.</p></div>
       </div>
     </section>
 
@@ -80,7 +81,7 @@
       <div class="actions"><a class="button primary" href="mailto:jobs@interloom.com?subject=Application%20%E2%80%93%20AI%20Engineer%20%E2%80%93%20Michael%20Ninh">Email Interloom ↗</a><a class="button" href="../">Main portfolio ↗</a></div>
     </section>
   </main>
-  <footer><span>Michael Ninh · AI Engineer · Berlin</span><span>Independent application work sample · 2026</span></footer>
+  <footer><span>Michael Ninh · AI Engineer · Berlin</span><span>Independent application work sample · synthetic demo · 2026</span></footer>
   <script src="app.js"></script>
 </body>
 </html>
