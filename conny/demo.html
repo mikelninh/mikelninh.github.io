@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="CONNY CaseFlow Konzeptdemo von Michael Ninh: synthetischer Mietfall von Intake über Extraktion und Validierung bis Human Review und Dokumentautomation.">
+  <title>CONNY CaseFlow · Konzeptdemo · Michael Ninh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+  <header>
+    <a class="brand" href="./">MICHAEL <b>× CONNY</b></a>
+    <div class="header-links">
+      <a href="#caseflow">Demo</a>
+      <a href="#proof">Was sie zeigt</a>
+      <a href="./">← Bewerbungsseite</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="demo-hero">
+      <div class="hero-copy">
+        <span class="kicker">CASEFLOW · 60–90 SEKUNDEN · SYNTHETISCHER FALL</span>
+        <h1>Vom Mietfall zum <em>prüfbaren nächsten Schritt.</em></h1>
+        <p>Eine kleine Konzeptdemo dafür, wie ich Legal Engineering denke: Dokumente strukturieren, Informationen mit Quellen extrahieren, Lücken früh erkennen, Fachlogik begrenzen und sensible Aktionen erst nach menschlicher Freigabe auslösen.</p>
+      </div>
+      <aside class="hero-note">
+        <span class="mini-label">WICHTIG</span>
+        <strong>Kein Nachbau interner CONNY-Prozesse.</strong>
+        <p>Der Fall, die Daten und die Fachlogik sind synthetisch. Die Demo zeigt mein Workflow- und Produktdenken — nicht Rechtsberatung und nicht CONNYs tatsächliche Entscheidungslogik.</p>
+      </aside>
+    </section>
+
+    <section class="demo-shell" id="caseflow">
+      <div class="demo-toolbar">
+        <p><strong>Fall CF-1842</strong> · Lea Hoffmann · Mietrecht · Konzeptdemo</p>
+        <div class="toolbar-actions">
+          <button class="btn dark" id="autoBtn">▶ 60-Sekunden-Modus</button>
+          <button class="btn" id="resetBtn">↺ Zurücksetzen</button>
+        </div>
+      </div>
+
+      <div class="app">
+        <div class="app-head">
+          <span class="case-id">CASEFLOW / CF-1842</span>
+          <span>Human-supervised workflow · local demo</span>
+        </div>
+
+        <div class="stepper" aria-label="Workflow-Schritte">
+          <button class="step-tab" type="button"><span class="step-no">01</span><b>Intake</b></button>
+          <button class="step-tab" type="button"><span class="step-no">02</span><b>Extraktion</b></button>
+          <button class="step-tab" type="button"><span class="step-no">03</span><b>Validierung</b></button>
+          <button class="step-tab" type="button"><span class="step-no">04</span><b>Fachlogik</b></button>
+          <button class="step-tab" type="button"><span class="step-no">05</span><b>Legal Review</b></button>
+          <button class="step-tab" type="button"><span class="step-no">06</span><b>Dokument</b></button>
+        </div>
+
+        <div class="stage">
+          <div class="stage-main" id="stageMain"></div>
+          <aside class="stage-side" id="stageSide"></aside>
+        </div>
+
+        <div class="stage-footer">
+          <p class="hint" id="stageHint">Intake · 1 von 6</p>
+          <div class="footer-actions">
+            <button class="btn" id="prevBtn">← Zurück</button>
+            <button class="btn primary" id="nextBtn">Weiter →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-strip" id="proof">
+      <span class="kicker">WAS DIE DEMO BEWEISEN SOLL</span>
+      <h2>Nicht „ich kann AI“. Sondern: Ich kann einen juristischen Arbeitsablauf in ein kontrollierbares Produkt übersetzen.</h2>
+      <div class="proof-grid">
+        <article><span>01 / LEGAL ↔ TECH</span><h3>Fachlogik wird explizit</h3><p>Inputs, Regeln, Ausnahmen, Review-Punkte und Outputs sind getrennte, testbare Zustände.</p></article>
+        <article><span>02 / DOKUMENTE & DATEN</span><h3>Quelle bleibt sichtbar</h3><p>Extrahierte Informationen behalten Herkunft und Konfidenz; Lücken verschwinden nicht in einem Modelloutput.</p></article>
+        <article><span>03 / AUTOMATION</span><h3>Happy Path + Ausnahme</h3><p>Wiederholbares läuft weiter. Unsicherheit erzeugt eine Rückfrage oder landet in einer Review-Queue.</p></article>
+        <article><span>04 / PRODUKT</span><h3>Messbar verbessern</h3><p>Durchlaufzeit, Fehler, Nacharbeit und Review-Gründe lassen sich erfassen und gegen neue Versionen testen.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Michael Ninh · Bewerbung Legal Engineer · Berlin · 2026</span>
+    <span><a href="./">CONNY-Bewerbungsseite</a> · <a href="https://mikelninh.github.io/gitlaw/#/mietrecht">GitLaw</a></span>
+  </footer>
+
+  <script src="demo.js"></script>
+</body>
+</html>
