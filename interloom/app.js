@@ -1,22 +1,44 @@
-const scenarios={
-intake:{id:"FM-6340",status:"TRIAGE",tone:"warn",decision:"A messy message becomes a case that cannot disappear",copy:"This is the first promise of Interloom as I understand it: work from email, chat or systems enters one operational surface and starts moving instead of living in someone’s inbox.",steps:[["08:12","Inbound message","Tenant reports water in the basement through a shared facilities inbox.",""],["08:13","Case created","The message is classified as Facilities Operations and becomes case FM-6340.",""],["08:13","Urgency detected","Basement water risk is marked for same-day handling.","warn"],["08:14","Owner needed","The case is ready for routing to the right worker.",""]]},
-memory:{id:"FM-6340",status:"PRECEDENT FOUND",tone:"",decision:"MemoryRank turns past resolutions into a starting route",copy:"Instead of asking an agent to improvise from scratch, the system can surface similar successful cases, the people involved, documents used, and decisions that worked.",steps:[["08:15","MemoryRank search","Closest cases: FM-4112, FM-5088 and FM-5901.",""],["08:15","Relevant context surfaced","Same building type, previous contractor, water shutoff access note.",""],["08:16","Useful difference detected","Current case is after-hours and may need emergency approval.","warn"],["08:16","Route proposed","Use precedent, but add an escalation check before dispatch.",""]]},
-procedure:{id:"FM-6340",status:"PROCEDURE",tone:"",decision:"Expert knowledge becomes a clear procedure",copy:"This is why the natural-language angle matters: teams can describe the work the way they would brief a colleague, then adapt it as the workstream evolves.",steps:[["08:17","Procedure drafted","Verify severity → check access → identify contractor → dispatch → follow up.",""],["08:17","Evidence requirements added","Photos, access confirmation and contractor ETA are required.",""],["08:18","Human boundary set","Emergency spend above threshold requires review.","warn"],["08:18","Procedure ready","The case can now be routed without hiding the rules.",""]]},
-route:{id:"FM-6340",status:"ASSIGNED",tone:"",decision:"The right worker handles the right part of the case",copy:"The interesting product idea is not ‘one agent does everything’. It is orchestration across agents, experts, integrations and handoffs based on context and load.",steps:[["08:19","Agent assigned","Routine intake, contractor lookup and follow-up reminders go to the FM agent.",""],["08:19","Expert assigned","Emergency approval goes to the facilities manager.",""],["08:20","Integration selected","Approved contractor contact is prepared from the system of record.",""],["08:20","Next step clear","The workstream keeps moving with a visible owner.",""]]},
-gate:{id:"FM-6340",status:"BLOCKED",tone:"block",decision:"Reliability matters because cases should not conclude without proof",copy:"Here is where my technical work fits inside the product loop: an agent should not be able to mark a case resolved until the required evidence and outcome checks exist.",steps:[["10:02","Contractor dispatched","ETA confirmed and work order created.",""],["11:31","Agent attempts conclusion","The agent says the leak is resolved.","warn"],["11:31","Completion gate checks evidence","No resolution photo and no tenant confirmation are attached.","block"],["11:32","Completion blocked","The case stays in Review instead of silently concluding.","block"]]},
-learn:{id:"FM-6340",status:"LEARNED",tone:"",decision:"The resolved route improves the next similar case",copy:"After the missing evidence is added and the outcome is graded, the case becomes better precedent. That is the ‘Google Maps for operations’ idea I find genuinely strong.",steps:[["12:04","Resolution verified","Photo, contractor note and tenant confirmation are attached.",""],["12:05","Outcome graded","The route worked; emergency dispatch was justified.",""],["12:06","Context graph updated","Case, documents, people, decisions and outcome are linked.",""],["12:06","Future route improved","The next basement leak starts with a better precedent.",""]]}}
-;
-const order=["intake","memory","procedure","route","gate","learn"];
-const buttons=[...document.querySelectorAll(".scenario")],list=document.querySelector("#trace-steps"),id=document.querySelector("#trace-id"),status=document.querySelector("#trace-status"),title=document.querySelector("#decision-title"),copy=document.querySelector("#decision-copy"),next=document.querySelector("#next-step");
-let current="intake";
-function render(key){
-  current=key;
-  const s=scenarios[key];
-  buttons.forEach(b=>b.classList.toggle("active",b.dataset.scenario===key));
-  id.textContent=s.id;status.textContent=s.status;status.className=`status ${s.tone}`;title.textContent=s.decision;copy.textContent=s.copy;
-  list.innerHTML=s.steps.map(([time,head,body,tone])=>`<li class="${tone}"><time>${time}</time><i></i><div><b>${head}</b>${body}</div></li>`).join("");
-  const i=order.indexOf(key);next.textContent=i===order.length-1?"Replay case ↺":"Next step →";
+const levels=["case","trace","relevant","space","external"];
+const levelCopy={
+  case:["CASE LAYER","Immediate case context first.","The thread, actors and attached evidence are enough to classify the issue before broader organisational memory is pulled in."],
+  trace:["TRACE LAYER","See what already happened.","Actions, inputs and outputs make the current state inspectable — useful for recovery, handoff and later evaluation."],
+  relevant:["RELEVANT LAYER","Bring in precedent, not noise.","Similar resolved cases surface the decisions and artifacts that mattered before. Here, FM-5088 is a 94% match but the after-hours condition changes the route."],
+  space:["SPACE LAYER","Add the team’s operating knowledge.","The Reactive Repair procedure and building access notes constrain what the next worker should do without loading the whole workspace."],
+  external:["EXTERNAL LAYER","Use live systems only when action needs them.","The contractor panel enters when availability and dispatch become relevant. Context stays scoped to the decision instead of becoming an indiscriminate data dump."]
+};
+const layers=[...document.querySelectorAll('.layer')];
+const nodes=[...document.querySelectorAll('.node')];
+const edges=[...document.querySelectorAll('.edge')];
+function renderLayer(level){
+  const idx=levels.indexOf(level);
+  layers.forEach(b=>b.classList.toggle('active',b.dataset.layer===level));
+  nodes.forEach(n=>n.classList.toggle('visible',levels.indexOf(n.dataset.level)<=idx));
+  edges.forEach(e=>{
+    const type=levels.find(l=>e.classList.contains(`${l}-edge`))||'case';
+    e.classList.toggle('on',levels.indexOf(type)<=idx);
+  });
+  const [status,title,copy]=levelCopy[level];
+  document.querySelector('#layer-status').textContent=status;
+  document.querySelector('#context-title').textContent=title;
+  document.querySelector('#context-copy').textContent=copy;
 }
-buttons.forEach(button=>button.addEventListener("click",()=>render(button.dataset.scenario)));
-next.addEventListener("click",()=>{const i=order.indexOf(current);render(order[(i+1)%order.length])});
-render("intake");
+layers.forEach(b=>b.addEventListener('click',()=>renderLayer(b.dataset.layer)));
+renderLayer('case');
+
+const flow={
+  precedent:["MEMORYRANK","Start from a path that already worked.","FM-5088 is the closest successful precedent: same building type, same fault family, same access constraints. The current case differs because it is after hours, so the route adds an escalation check."],
+  procedure:["PROCEDURE","Turn precedent into an explicit path.","Verify severity → confirm access → select approved contractor → dispatch → verify repair → reconcile the case. Evidence requirements and the emergency-spend boundary stay visible."],
+  route:["ORCHESTRATION","Use the cheapest competent worker for each step.","An agent handles intake and follow-up, the contractor system performs deterministic dispatch, and a facilities manager enters only if the spend threshold or ambiguity requires judgment."],
+  verify:["RELIABILITY GATE","Do not confuse activity with resolution.","A contractor visit is not enough. The case cannot conclude until repair evidence, contractor notes and tenant confirmation support the outcome."],
+  learn:["OUTCOME SIGNAL","Completed cases strengthen future routing.","Once the outcome is graded, the successful relationships — precedent, procedure, contractor, human decision and evidence — become stronger context for the next similar case."]
+};
+const flowButtons=[...document.querySelectorAll('.flow-step')];
+function renderFlow(key){
+  flowButtons.forEach(b=>b.classList.toggle('active',b.dataset.step===key));
+  const [k,t,c]=flow[key];
+  document.querySelector('#flow-kicker').textContent=k;
+  document.querySelector('#flow-title').textContent=t;
+  document.querySelector('#flow-copy').textContent=c;
+}
+flowButtons.forEach(b=>b.addEventListener('click',()=>renderFlow(b.dataset.step)));
+renderFlow('precedent');
