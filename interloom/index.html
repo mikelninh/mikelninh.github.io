@@ -4,85 +4,135 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="description" content="Michael Ninh — role-specific work sample for Interloom's AI Engineer position: operations orchestration, MemoryRank, context graph, agents, and reliability.">
-  <title>Michael Ninh × Interloom · Operations AI Work Sample</title>
+  <meta name="description" content="Michael Ninh — role-specific work sample for Interloom's AI Engineer position: context graph, MemoryRank, case resolution, agent reliability and evaluation.">
+  <title>Michael Ninh × Interloom · Context to Resolution</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@1,6..72,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
+  <header class="topbar">
     <a class="brand" href="../">MICHAEL NINH <span>× INTERLOOM</span></a>
-    <nav><a href="#workbench">Demo</a><a href="#evidence">Evidence</a><a href="../">Portfolio ↗</a><a class="contact" href="mailto:mikel_ninh@yahoo.de?subject=Interloom%20AI%20Engineer">Contact ↗</a></nav>
+    <nav><a href="#context">Context</a><a href="#resolution">Resolution</a><a href="#evidence">Evidence</a><a class="contact" href="mailto:mikel_ninh@yahoo.de?subject=Interloom%20AI%20Engineer">Contact ↗</a></nav>
   </header>
 
   <main>
     <section class="hero">
       <div class="hero-copy">
-        <p class="kicker">AI ENGINEER · BERLIN · ROLE-SPECIFIC WORK SAMPLE</p>
-        <h1>A case should keep moving until it is <em>resolved</em>.</h1>
-        <p class="lead">This 90-second walkthrough follows Interloom’s public product loop: a facilities case enters, MemoryRank finds precedent, the context graph assembles what matters, the right worker is routed, the outcome is graded, and the next similar case gets easier.</p>
-        <div class="actions"><a class="button primary" href="#workbench">Walk through the 90-second case ↓</a><a class="button" href="https://github.com/mikelninh/digital-worker-factory" target="_blank" rel="noreferrer">See what I built ↗</a></div>
+        <p class="eyebrow">AI ENGINEER · BERLIN · ROLE-SPECIFIC WORK SAMPLE</p>
+        <h1>Find the best path to <em>resolve</em> the case.</h1>
+        <p class="lead">A small, synthetic facilities case built around Interloom’s public product model: scope the right context, surface precedent, route work across agents, experts and integrations, verify the outcome, then strengthen the next route.</p>
+        <div class="actions"><a class="button primary" href="#context">Explore the 90-second case ↓</a><a class="button" href="https://github.com/mikelninh/digital-worker-factory" target="_blank" rel="noreferrer">Technical proof ↗</a></div>
       </div>
-      <aside class="signal-card">
-        <div class="card-top"><span>INTERLOOM LOOP</span><b>90-SECOND WALKTHROUGH</b></div>
-        <div class="orb"><span></span><i></i><b>CASE<br>→ ROUTE<br>→ LEARN</b></div>
-        <p>Every resolved case should make the next route better.</p>
-        <div class="signals"><span>MemoryRank</span><span>context graph</span><span>worker routing</span><span>outcome grading</span></div>
+
+      <aside class="decision-card">
+        <div class="card-head"><span>NEXT DECISION · FM-6340</span><span class="live-dot">LIVE</span></div>
+        <div class="case-title"><small>REACTIVE REPAIR</small><strong>Basement leak · Block C</strong><p>Water ingress reported after hours. Access is available; emergency spend may require approval.</p></div>
+        <div class="context-strip">
+          <span><b>94%</b> precedent match</span><span><b>6</b> stage procedure</span><span><b>1</b> human gate</span>
+        </div>
+        <div class="route-choice">
+          <p>BEST NEXT WORKER</p>
+          <div class="worker selected"><span class="worker-icon">A</span><div><b>Facilities agent</b><small>Fast triage + contractor lookup</small></div><em>ROUTE</em></div>
+          <div class="worker"><span class="worker-icon">↗</span><div><b>Contractor system</b><small>Availability + work order</small></div></div>
+          <div class="worker"><span class="worker-icon">H</span><div><b>Facilities manager</b><small>Only if spend threshold is crossed</small></div></div>
+        </div>
+        <div class="tradeoff"><span>Cost <b>low</b></span><span>Speed <b>high</b></span><span>Accuracy <b>guarded</b></span></div>
       </aside>
     </section>
 
-    <section class="why">
+    <section class="thesis">
       <p class="section-label">01 / WHY INTERLOOM</p>
-      <div><h2>It is not just about agents. It is about the route through work.</h2><p>Interloom feels interesting because it treats operational work like navigation: find the best precedent, assemble the relevant context, choose the right expert, agent or integration, keep the case moving, and remember what actually worked.</p></div>
+      <div><h2>Not another agent fleet. A system for choosing the right path through messy work.</h2><p>The part that clicks for me is the middle layer: every case gets the context, worker, tool and human judgment it actually needs — informed by what resolved similar work before.</p></div>
     </section>
 
-    <section class="workbench" id="workbench">
-      <div class="section-heading"><div><p class="section-label">02 / ONE CASE JOURNEY</p><h2>Water leak · Basement · FM-6340</h2></div><p>A small, synthetic facilities case that shows how I understand Interloom: orchestration first, reliability underneath, learning throughout.</p></div>
-      <div class="lab">
-        <div class="scenario-list" role="tablist" aria-label="Interloom case journey">
-          <button class="scenario active" data-scenario="intake"><span>01</span><b>Case enters</b><small>Shared inbox → workstream</small></button>
-          <button class="scenario" data-scenario="memory"><span>02</span><b>Find precedent</b><small>MemoryRank surfaces routes</small></button>
-          <button class="scenario" data-scenario="procedure"><span>03</span><b>Build procedure</b><small>Plain-language steps</small></button>
-          <button class="scenario" data-scenario="route"><span>04</span><b>Match worker</b><small>Agent, expert, integration</small></button>
-          <button class="scenario" data-scenario="gate"><span>05</span><b>Don’t drop the ball</b><small>Completion blocked if proof is missing</small></button>
-          <button class="scenario" data-scenario="learn"><span>06</span><b>Remember outcome</b><small>Grade → context graph</small></button>
-        </div>
-        <div class="trace-panel" aria-live="polite">
-          <div class="trace-head"><span>CASE / <b id="trace-id">FM-6340</b></span><span class="status" id="trace-status">TRIAGE</span></div>
-          <ol id="trace-steps"></ol>
-          <div class="decision"><span>WHY THIS MATTERS</span><strong id="decision-title"></strong><p id="decision-copy"></p><button class="journey-next" id="next-step">Next step →</button></div>
+    <section class="context-section" id="context">
+      <div class="section-heading">
+        <div><p class="section-label">02 / CONTEXT GRAPH</p><h2>What should this decision know?</h2></div>
+        <p>Start narrow. Expand context only when it improves the next action.</p>
+      </div>
+
+      <div class="context-shell">
+        <aside class="layer-controls" aria-label="Context layers">
+          <button class="layer active" data-layer="case"><span>01</span><div><b>Case</b><small>thread · actors · artifacts</small></div></button>
+          <button class="layer" data-layer="trace"><span>02</span><div><b>Trace</b><small>actions · inputs · outputs</small></div></button>
+          <button class="layer" data-layer="relevant"><span>03</span><div><b>Relevant</b><small>precedent · policy · citations</small></div></button>
+          <button class="layer" data-layer="space"><span>04</span><div><b>Space</b><small>procedures · files · notes</small></div></button>
+          <button class="layer" data-layer="external"><span>05</span><div><b>External</b><small>systems of record</small></div></button>
+        </aside>
+
+        <div class="graph-panel">
+          <div class="graph-head"><span>CONTEXT / FM-6340</span><span id="layer-status">CASE LAYER</span></div>
+          <div class="graph-canvas" id="graph-canvas">
+            <svg class="edges" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true">
+              <line class="edge case-edge" x1="500" y1="280" x2="210" y2="150"/><line class="edge case-edge" x1="500" y1="280" x2="790" y2="155"/>
+              <line class="edge trace-edge" x1="500" y1="280" x2="220" y2="390"/>
+              <line class="edge relevant-edge" x1="500" y1="280" x2="775" y2="390"/>
+              <line class="edge relevant-edge" x1="220" y1="390" x2="365" y2="482"/>
+              <line class="edge space-edge" x1="790" y1="155" x2="875" y2="72"/>
+              <line class="edge space-edge" x1="775" y1="390" x2="875" y2="488"/>
+              <line class="edge external-edge" x1="210" y1="150" x2="345" y2="68"/>
+            </svg>
+            <div class="node central" data-level="case"><span>CASE</span><b>FM-6340</b><small>Reactive repair · Basement leak</small></div>
+            <div class="node n1" data-level="case"><span>ACTOR</span><b>Tenant</b><small>reported 08:12</small></div>
+            <div class="node n2" data-level="case"><span>ARTIFACT</span><b>Leak photos</b><small>2 attachments</small></div>
+            <div class="node n3" data-level="trace"><span>TRACE</span><b>Agent triage</b><small>P2 · after-hours</small></div>
+            <div class="node n4" data-level="relevant"><span>PRECEDENT</span><b>FM-5088</b><small>94% match · resolved</small></div>
+            <div class="node n5" data-level="relevant"><span>PRECEDENT</span><b>FM-5901</b><small>89% match · resolved</small></div>
+            <div class="node n6" data-level="space"><span>PROCEDURE</span><b>Reactive Repair</b><small>6 stages</small></div>
+            <div class="node n7" data-level="space"><span>DOCUMENT</span><b>Access notes</b><small>Block C basement</small></div>
+            <div class="node n8" data-level="external"><span>SYSTEM</span><b>Contractor panel</b><small>live availability</small></div>
+          </div>
+          <div class="graph-insight"><span>WHY THIS MATTERS</span><strong id="context-title">Immediate case context first.</strong><p id="context-copy">The thread, actors and attached evidence are enough to classify the issue before broader organisational memory is pulled in.</p></div>
         </div>
       </div>
-      <div class="principles"><span><b>Find the path</b> Similar resolved cases become useful precedent.</span><span><b>Keep moving</b> Work is routed to agents, experts or integrations.</span><span><b>Fail safely</b> Agents cannot quietly conclude unsupported work.</span><span><b>Learn the route</b> Outcome grading improves the next case.</span></div>
+    </section>
+
+    <section class="resolution-section" id="resolution">
+      <div class="section-heading">
+        <div><p class="section-label">03 / CASE RESOLUTION</p><h2>One case. Different workers where they add value.</h2></div>
+        <p>Agent for speed. Integration for deterministic action. Expert where mistakes get expensive.</p>
+      </div>
+
+      <div class="ops-board">
+        <div class="board-head"><div><b>Facilities Operations</b><small><i></i> Resolution path active</small></div><div class="board-metrics"><span><b>1</b><small>CASE</small></span><span><b>3</b><small>PRECEDENTS</small></span><span><b>1</b><small>HUMAN GATE</small></span></div></div>
+        <div class="board-body">
+          <div class="stage current"><span>TRIAGE</span><article><div><b>Reactive repair · Basement</b><small>FM-6340</small></div><em>AGENT</em></article></div>
+          <div class="stage"><span>IN PROGRESS</span><article><div><b>Contractor dispatch</b><small>availability + work order</small></div><em>INTEGRATION</em></article></div>
+          <div class="stage"><span>REVIEW</span><article class="review"><div><b>Emergency spend approval</b><small>threshold exceeded</small></div><em>EXPERT</em></article></div>
+          <div class="stage"><span>CONCLUDED</span><article class="done"><div><b>Resolution verified</b><small>photo + note + tenant sign-off</small></div><em>✓</em></article></div>
+        </div>
+      </div>
+
+      <div class="decision-flow">
+        <button class="flow-step active" data-step="precedent"><span>01</span><b>Find precedent</b><small>MemoryRank</small></button>
+        <button class="flow-step" data-step="procedure"><span>02</span><b>Adapt procedure</b><small>6 stages</small></button>
+        <button class="flow-step" data-step="route"><span>03</span><b>Route workers</b><small>agent · system · expert</small></button>
+        <button class="flow-step" data-step="verify"><span>04</span><b>Verify outcome</b><small>proof required</small></button>
+        <button class="flow-step" data-step="learn"><span>05</span><b>Strengthen memory</b><small>completed route</small></button>
+      </div>
+      <div class="flow-detail"><div><span id="flow-kicker">MEMORYRANK</span><h3 id="flow-title">Start from a path that already worked.</h3><p id="flow-copy">FM-5088 is the closest successful precedent: same building type, same fault family, same access constraints. The current case differs because it is after hours, so the route adds an escalation check.</p></div><div class="arbitrage"><p>PER-CASE ARBITRAGE</p><div class="bars"><label>Cost <i><b style="width:34%"></b></i><em>34</em></label><label>Speed <i><b style="width:88%"></b></i><em>88</em></label><label>Accuracy <i><b style="width:79%"></b></i><em>79</em></label></div><small>Routine steps stay cheap and fast; expert review enters only where the risk justifies it.</small></div></div>
     </section>
 
     <section class="evidence" id="evidence">
-      <div class="section-heading"><div><p class="section-label">03 / UNDER THE HOOD</p><h2>The systems behind the walkthrough.</h2></div></div>
+      <div class="section-heading"><div><p class="section-label">04 / ENGINEERING EVIDENCE</p><h2>Why I think I can contribute to this layer.</h2></div><p>Independent projects, not claims about Interloom’s internals.</p></div>
       <div class="evidence-grid">
-        <article class="featured"><p>AGENT RELIABILITY</p><h3>Digital Worker Factory</h3><p>Reusable worker contracts with evidence requirements, policy gates and human approval. Includes 50 deterministic synthetic eval cases across five workflow domains; failures are explicit rather than hidden behind an agent completion claim.</p><a href="https://github.com/mikelninh/digital-worker-factory" target="_blank" rel="noreferrer">Inspect runtime + evals ↗</a></article>
-        <article><p>DURABLE EXECUTION</p><h3>Agent Loop Lab</h3><p>Checkpointed workflows, bounded retries, recovery paths and visible execution — a small lab for agents that should survive failure instead of merely retrying prompts.</p><a href="https://github.com/mikelninh/agent-loop-lab" target="_blank" rel="noreferrer">Repository ↗</a></article>
-        <article><p>GROUNDED RETRIEVAL</p><h3>GitLaw</h3><p>Search across 5,936 German federal laws with explicit sources, citation resolution checks, API/MCP tooling and regression tests around retrieval reliability.</p><a href="https://mikelninh.github.io/gitlaw/#/mietrecht" target="_blank" rel="noreferrer">Try the pilot ↗</a></article>
+        <article class="featured"><p>AGENT RELIABILITY</p><h3>Digital Worker Factory</h3><p>Worker contracts with evidence requirements, policy gates, human approval and deterministic failure cases.</p><div class="proof-line"><span>50 synthetic eval cases</span><span>5 workflow domains</span><span>6 failure classes</span></div><a href="https://github.com/mikelninh/digital-worker-factory" target="_blank" rel="noreferrer">Inspect runtime + evals ↗</a></article>
+        <article><p>DURABLE EXECUTION</p><h3>Agent Loop Lab</h3><p>Checkpointed workflows, bounded retries, recovery paths and visible execution for agents that need to survive failure.</p><a href="https://github.com/mikelninh/agent-loop-lab" target="_blank" rel="noreferrer">Repository ↗</a></article>
+        <article><p>GROUNDED CONTEXT</p><h3>GitLaw</h3><p>Hybrid retrieval across 5,936 German federal laws with explicit sources, citation checks, API/MCP tooling and regression tests.</p><a href="https://mikelninh.github.io/gitlaw/#/mietrecht" target="_blank" rel="noreferrer">Try the pilot ↗</a></article>
       </div>
     </section>
 
     <section class="fit">
-      <p class="section-label">04 / WHY THIS ROLE CLICKS</p>
-      <div class="fit-grid">
-        <div><h2>What clicked.</h2><p>Interloom connects two things I know well: messy operational work and the engineering discipline needed to make AI systems useful inside that mess.</p></div>
-        <div><h2>What I bring.</h2><p>Python APIs, RAG, MCP, tool calling, structured outputs, evaluations, guardrails, observable traces, and an operator’s instinct for edge cases.</p></div>
-        <div><h2>How I’d contribute.</h2><p>Stay close to real operator problems, turn failure traces into better tools and evals, and help agents become more reliable case by case.</p></div>
-      </div>
+      <p class="section-label">05 / WHY THIS ROLE CLICKS</p>
+      <div class="fit-grid"><div><h3>Operations intuition</h3><p>I know what messy handoffs, hidden knowledge and exception-heavy workflows feel like from the operator side.</p></div><div><h3>AI systems</h3><p>Python APIs, RAG, MCP, tool calling, structured outputs, evals, guardrails and observable traces.</p></div><div><h3>What I want to build</h3><p>Tools, context and runtime behavior that make agents useful inside real operational work — not only impressive on a happy path.</p></div></div>
     </section>
 
-    <section class="closing">
-      <p>ONE-LINE THESIS</p>
-      <h2>Great agents do not just answer. They help the work reach resolution — and make the next case smarter.</h2>
-      <div class="actions"><a class="button primary" href="mailto:mikel_ninh@yahoo.de?subject=Interloom%20AI%20Engineer">Contact Michael ↗</a><a class="button" href="../">Main portfolio ↗</a></div>
-    </section>
+    <section class="closing"><p>ONE-LINE THESIS</p><h2>Intelligence is abundant. The hard part is giving it the right context, worker and path to resolution.</h2><div class="actions"><a class="button primary" href="mailto:mikel_ninh@yahoo.de?subject=Interloom%20AI%20Engineer">Contact Michael ↗</a><a class="button" href="../">Main portfolio ↗</a></div></section>
   </main>
-  <footer><span>Michael Ninh · AI Engineer · Berlin</span><span>Independent application work sample · synthetic case · based on public product information · 2026</span></footer>
+
+  <footer><span>Michael Ninh · AI Engineer · Berlin</span><span>Independent application work sample · synthetic case · based on public Interloom product information · 2026</span></footer>
   <script src="app.js"></script>
 </body>
 </html>
