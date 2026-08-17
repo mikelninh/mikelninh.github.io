@@ -3,17 +3,17 @@
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
 const normLoss=a=>{const x=avg(a);return x==null?null:clamp(Math.round(100-x/3.2),5,100)};
-function rowsFromGames(games=[]){return games.flatMap(g=>g?.review?.moves||[]).filter(r=>r&&r.side==='w')}
+function rowsFromGames(games=[],deepReviews={}){return games.flatMap(g=>{const external=g?.id?deepReviews?.[g.id]?.rows:null,embedded=g?.review?.deepRows;return external?.length?external:embedded?.length?embedded:(g?.review?.moves||[])}).filter(r=>r&&r.side==='w')}
 function keyword(s,re){return re.test(String(s||'').toLowerCase())}
 function skillScores(input={}){
- const rows=rowsFromGames(input.games),opening=[],calc=[],tactics=[],development=[],king=[],endgame=[];
+ const rows=rowsFromGames(input.games,input.deepReviews),opening=[],calc=[],tactics=[],development=[],king=[],endgame=[];
  for(const r of rows){
-  const loss=Number(r.loss)||0;calc.push(loss);
+  const loss=Number(r.loss)||0,theme=String(r.theme||'');calc.push(loss);
   if((r.moveNo||0)<=10)opening.push(loss);
-  if((r.moveNo||0)>=24)endgame.push(loss);
-  if(keyword(r.explain,/capture|forcing|tactic|threat|check|fork|pin|hanging/))tactics.push(loss);
-  if(keyword(r.explain,/develop|queen moved early|minor piece|activity|piece/)&&(r.moveNo||0)<=15)development.push(loss);
-  if(keyword(r.explain,/king|castle|back rank|mate/))king.push(loss);
+  if((r.moveNo||0)>=24||theme==='endgame-technique')endgame.push(loss);
+  if(['missed-mate','missed-check','missed-tactic','bad-capture','calculation'].includes(theme)||keyword(r.explain,/capture|forcing|tactic|threat|check|fork|pin|hanging/))tactics.push(loss);
+  if(['development','early-queen'].includes(theme)||(keyword(r.explain,/develop|queen moved early|minor piece|activity|piece/)&&(r.moveNo||0)<=15))development.push(loss);
+  if(theme==='king-safety'||keyword(r.explain,/king|castle|back rank|mate/))king.push(loss);
  }
  const puzzle=input.puzzleStats||{};
  const openingStats=input.openingStats||{};
@@ -61,6 +61,6 @@ function opponentSummary(games=[]){
 function streak(days={},today=new Date()){
  let n=0,d=new Date(today);for(;;){const k=d.toISOString().slice(0,10),x=days[k];if(!x||!((x.games||0)+(x.puzzles||0)+(x.openings||0)+(x.study||0)))break;n++;d.setUTCDate(d.getUTCDate()-1)}return n;
 }
-const API={clamp,skillScores,weakest,prettySkill,recommendation,opponentSummary,streak};
+const API={clamp,rowsFromGames,skillScores,weakest,prettySkill,recommendation,opponentSummary,streak};
 if(typeof module!=='undefined'&&module.exports)module.exports=API;else global.ChessCoachCore=API;
 })(typeof window!=='undefined'?window:globalThis);

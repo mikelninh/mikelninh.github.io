@@ -1,10 +1,10 @@
 (function(){
   'use strict';
 
-  for(const href of ['./piece-skin.css','./learning-v5.css','./coach-v10.css','./mobile.css']){
+  for(const href of ['./piece-skin.css','./learning-v5.css','./review-v11.css','./coach-v10.css','./mobile.css']){
     const link=document.createElement('link');link.rel='stylesheet';link.href=href;document.head.appendChild(link);
   }
-  for(const src of ['./piece-skin.js','./mobile-ui.js','./learning-v5.js','./coach-core.js','./coach-v10.js']){
+  for(const src of ['./piece-skin.js','./mobile-ui.js','./learning-v5.js','./review-core-v11.js','./review-v11.js','./coach-core.js','./coach-v10.js']){
     const script=document.createElement('script');script.src=src;script.async=false;document.head.appendChild(script);
   }
 
