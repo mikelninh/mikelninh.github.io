@@ -1,14 +1,228 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tri-D Command // Opening Deck</title><link rel="stylesheet" href="styles.css"></head><body>
-<div class="starfield"></div><div class="app-shell">
-<header class="lcars-header"><div class="cap"><span class="insignia">⌁</span><div><div class="eyebrow">STARFLEET CHESS LAB // CADET BUILD</div><h1>TRI-D COMMAND</h1></div></div><div class="statusbar"><span>RULESET <b>FRS 5.0 BETA</b></span><span>TURN <b id="turnTop">WHITE</b></span><span>CORE <b id="coreState">ONLINE</b></span></div></header>
-<nav class="tabs"><button class="active" data-tab="trid">TRI-D GAME</button><button data-tab="academy">OPENING ACADEMY</button><button data-tab="rules">RULES / SYSTEM</button></nav>
-<main>
-<section id="tridTab" class="tab active">
-<div class="hero-grid"><aside class="lcars-panel left-panel"><div class="block-title">MISSION</div><h2>Real multi-level chess.</h2><p>Three fixed 4×4 main boards. Four movable 2×2 attack boards. Pieces travel by projected chess geometry and the highest available path through the stack.</p><div class="metric-grid"><div><small>Squares</small><strong>64</strong></div><div><small>Main decks</small><strong>3</strong></div><div><small>Attack boards</small><strong>4</strong></div></div><div class="switchline"><label><input id="rookPawn" type="checkbox" checked> Rook-pawn side option</label></div><button id="reset" class="primary">RESET MATCH</button><button id="undo">UNDO</button><div class="disclaimer">Unofficial fan prototype. Rules based on Federation Revised Standard 5.0, itself a clarification of Andrew Bartmess' fan rules.</div></aside>
-<section class="scene-card"><div class="scene-toolbar"><div><span class="eyebrow">TACTICAL VOLUME</span><strong id="gameStatus">White to move.</strong></div><div class="view-actions"><button id="topView">TOP</button><button id="heroView">BRIDGE</button></div></div><div class="scene" id="scene"><div class="world" id="world"></div></div><div class="hintline" id="hintline">Drag empty space to rotate. Click a piece to reveal legal vectors.</div></section>
-<aside class="lcars-panel command"><div class="block-title violet">COMMAND</div><div class="selected-card"><small>SELECTED</small><strong id="selectedText">None</strong><span id="selectedSub">Choose a piece or attack board.</span></div><div id="moveInfo" class="move-info"></div><div class="block-title cyan">ATTACK BOARDS</div><div id="abList" class="ab-list"></div><div id="abActions" class="ab-actions"></div><div class="block-title amber">LAST EVENT</div><div id="lastEvent" class="event">Opening position loaded.</div></aside></div>
-</section>
-<section id="academyTab" class="tab"><div class="academy-layout"><aside class="lcars-panel"><div class="block-title">OPENING ATLAS</div><div id="openingList" class="opening-list"></div></aside><section class="academy-main"><div class="academy-copy"><span class="eyebrow">STANDARD CHESS // PATTERN TRAINER</span><h2 id="openingName">Italian Game</h2><p id="openingWhy"></p><div id="openingMoves" class="opening-moves"></div><div class="academy-actions"><button id="prevOpening">← PREV MOVE</button><button id="nextOpening" class="primary">NEXT MOVE →</button><button id="resetOpening">RESET LINE</button></div></div><div id="academyBoard" class="academy-board"></div></section></div></section>
-<section id="rulesTab" class="tab"><div class="rules-grid"><article><span>01</span><h3>Board geometry</h3><p>Three fixed 4×4 boards sit at elevations 2, 4 and 6. Four 2×2 attack boards can move between corner posts, giving 64 playable squares in total.</p></article><article><span>02</span><h3>Piece movement</h3><p>Pieces retain ordinary chess movement in the top-down projection, but may finish on another elevation. Sliding pieces follow the highest available path between start and target.</p></article><article><span>03</span><h3>Attack boards</h3><p>Moving an owned attack board replaces a piece move. It must be empty or carry only one of your pawns, and it may translate one or two ranks along its file and/or invert.</p></article><article><span>04</span><h3>Ownership</h3><p>If you capture the final opposing piece on an enemy attack board, ownership transfers to you. Empty boards retain their previous owner.</p></article><article><span>05</span><h3>Pawns</h3><p>Pawns promote on ranks 8/9 for White and 1/0 for Black. The optional rook-pawn rule lets pawns stranded on the a/f files move inward.</p></article><article><span>06</span><h3>Engine coverage</h3><p><b>Implemented:</b> main/attack geometry, projected movement, Path A/Path B, captures, king-safety validation, promotion, attack-board movement/inversion/ownership and rook-pawn option. <b>Not yet:</b> the rare Tri-D castling and en-passant edge cases.</p></article></div></section>
-</main><footer><span>Built because a job ad made me curious.</span><span>C#/.NET companion API · deterministic JS rules engine · no LLM required for legality</span></footer></div>
-<script src="engine.js"></script><script src="openings.js"></script><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#05070d">
+  <title>Tri-D Command // Opening Academy</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="starfield" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <header class="lcars-header">
+      <div class="lcars-rail rail-a"></div>
+      <div class="lcars-rail rail-b"></div>
+      <div class="cap">
+        <div class="insignia" aria-hidden="true">⌁</div>
+        <div>
+          <div class="eyebrow">STARFLEET CHESS LAB // CADET BUILD</div>
+          <h1>TRI-D COMMAND</h1>
+          <p>Learn classic openings. Then leave the flat board behind.</p>
+        </div>
+      </div>
+      <div class="statusbar">
+        <span>RULESET <b>FRS 5.0 BETA</b></span>
+        <span>TURN <b id="turnTop">WHITE</b></span>
+        <span>ENGINE <b>DETERMINISTIC</b></span>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Application modes">
+      <button class="active" data-tab="trid"><span>01</span> TRI-D GAME</button>
+      <button data-tab="academy"><span>02</span> OPENING ACADEMY</button>
+      <button data-tab="rules"><span>03</span> RULES / SYSTEM</button>
+    </nav>
+
+    <main>
+      <section id="tridTab" class="tab active">
+        <div class="hero-grid">
+          <aside class="lcars-panel left-panel">
+            <div class="block-title amber">MISSION</div>
+            <h2>Chess, with altitude.</h2>
+            <p class="lead">Three fixed decks. Four movable attack boards. Sixty-four squares — but no longer on one plane.</p>
+
+            <div class="metric-grid">
+              <div><small>Squares</small><strong>64</strong></div>
+              <div><small>Main decks</small><strong>3</strong></div>
+              <div><small>Attack boards</small><strong>4</strong></div>
+            </div>
+
+            <div class="mission-card">
+              <small>CADET GUIDANCE</small>
+              <p id="missionText">Free play. Select a piece to reveal legal vectors.</p>
+            </div>
+
+            <div class="mission-actions">
+              <button id="warpMission" class="primary">▶ 60-SEC WARP-PAWN MISSION</button>
+              <button id="freePlay">FREE PLAY / RESET</button>
+              <button id="undo">↶ UNDO LAST TURN</button>
+            </div>
+
+            <div class="switchline">
+              <label><input id="rookPawn" type="checkbox" checked> Optional rook-pawn side movement</label>
+            </div>
+
+            <div class="coverage">
+              <div class="coverage-head"><span>RULE COVERAGE</span><b>CORE PLAYABLE</b></div>
+              <div class="coverage-bar"><i></i></div>
+              <small>Movement · Path A/B · attack boards · ownership · promotion · castling · standard en passant · king safety</small>
+            </div>
+
+            <div class="disclaimer">
+              Unofficial fan prototype. FRS = Federation Revised Standard 5.0, a community clarification of Andrew Bartmess' earlier fan rules.
+            </div>
+          </aside>
+
+          <section class="scene-card">
+            <div class="scene-toolbar">
+              <div>
+                <span class="eyebrow">TACTICAL VOLUME // LIVE BOARD</span>
+                <strong id="gameStatus">White to move.</strong>
+              </div>
+              <div class="view-actions">
+                <button id="topView">TOP</button>
+                <button id="heroView" class="active-view">BRIDGE</button>
+                <button id="sideView">SIDE</button>
+              </div>
+            </div>
+
+            <div class="scene-frame">
+              <div class="axis axis-z">Z ↑</div>
+              <div class="axis axis-file">FILES →</div>
+              <div class="scene" id="scene">
+                <div class="world" id="world"></div>
+              </div>
+              <div class="scene-glow" aria-hidden="true"></div>
+            </div>
+
+            <div class="hintline">
+              <span>DRAG EMPTY SPACE TO ROTATE</span>
+              <span>CLICK A PIECE FOR LEGAL VECTORS</span>
+              <span>TOP VIEW = EASIEST TO LEARN</span>
+            </div>
+          </section>
+
+          <aside class="lcars-panel command">
+            <div class="block-title violet">COMMAND</div>
+            <div class="selected-card">
+              <small>SELECTED OBJECT</small>
+              <strong id="selectedText">Nothing selected</strong>
+              <span id="selectedSub">Choose a piece or attack board.</span>
+            </div>
+
+            <div id="moveInfo" class="move-info"></div>
+
+            <div class="block-title cyan">ATTACK BOARDS</div>
+            <div id="abList" class="ab-list"></div>
+            <div id="abActions" class="ab-actions"></div>
+
+            <div class="block-title amber">LAST EVENT</div>
+            <div id="lastEvent" class="event">Opening position loaded.</div>
+          </aside>
+        </div>
+
+        <section class="how-it-feels">
+          <article>
+            <b>LOOK DOWN</b>
+            <p>Piece movement still follows familiar chess geometry in the top-down projection.</p>
+          </article>
+          <article>
+            <b>CHANGE LEVEL</b>
+            <p>Your destination may sit above or below the square you would expect on a flat board.</p>
+          </article>
+          <article>
+            <b>MOVE THE BOARD</b>
+            <p>An eligible 2×2 attack board can reposition instead of moving a piece — even carrying a pawn with it.</p>
+          </article>
+        </section>
+      </section>
+
+      <section id="academyTab" class="tab">
+        <div class="academy-layout">
+          <aside class="lcars-panel academy-atlas">
+            <div class="block-title amber">OPENING ATLAS</div>
+            <p class="atlas-copy">The goal is not to memorise twenty moves. Recognise the position, understand the idea, then find the next move yourself.</p>
+            <div id="openingList" class="opening-list"></div>
+          </aside>
+
+          <section class="academy-main">
+            <div class="academy-copy">
+              <div class="academy-topline">
+                <span class="eyebrow">STANDARD CHESS // PATTERN TRAINER</span>
+                <span class="turn-chip" id="academyTurn">WHITE TO MOVE</span>
+              </div>
+
+              <h2 id="openingName">Italian Game</h2>
+              <p id="openingWhy"></p>
+
+              <div id="openingMoves" class="opening-moves"></div>
+              <div class="academy-progress"><i id="academyProgress"></i></div>
+
+              <div class="insight-card">
+                <small>WHY THE NEXT MOVE EXISTS</small>
+                <p id="academyInsight"></p>
+              </div>
+
+              <div class="academy-status" id="academyStatus">Find the next move directly on the board.</div>
+
+              <div class="academy-actions">
+                <button id="prevOpening">← REWIND</button>
+                <button id="hintOpening">VECTOR HINT</button>
+                <button id="revealOpening" class="primary">REVEAL MOVE →</button>
+                <button id="resetOpening">RESET LINE</button>
+              </div>
+
+              <div class="academy-principles">
+                <span><b>01</b> Control the centre</span>
+                <span><b>02</b> Develop with purpose</span>
+                <span><b>03</b> Protect the king</span>
+              </div>
+            </div>
+
+            <div class="academy-board-wrap">
+              <div class="board-caption">
+                <span>TACTICAL BOARD // 8×8</span>
+                <small>Click a piece, then its destination.</small>
+              </div>
+              <div id="academyBoard" class="academy-board" aria-label="Interactive standard chess board"></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="rulesTab" class="tab">
+        <div class="rules-hero">
+          <div>
+            <span class="eyebrow">SYSTEM REFERENCE</span>
+            <h2>What makes Tri-D chess actually different?</h2>
+          </div>
+          <p>Star Trek showed the prop, not a canonical rules document. This prototype follows the community Federation Revised Standard 5.0 interpretation and labels its remaining limitations rather than pretending the fiction supplied an official rulebook.</p>
+        </div>
+
+        <div class="rules-grid">
+          <article><span>01</span><h3>Board geometry</h3><p>Three fixed 4×4 boards sit at elevations 2, 4 and 6. Four 2×2 attack boards add the remaining 16 squares.</p></article>
+          <article><span>02</span><h3>Projected movement</h3><p>Look down through the stack. Rooks, bishops, queens, kings, knights and pawns keep their familiar top-down movement shape.</p></article>
+          <article><span>03</span><h3>Highest path</h3><p>Sliding pieces travel over the highest available squares between start and target. A nearby attack board may create one alternate Path B.</p></article>
+          <article><span>04</span><h3>Attack-board turns</h3><p>Instead of moving a piece, move an owned attack board if it is empty or contains only one of your pawns — and you still have a pawn somewhere in play.</p></article>
+          <article><span>05</span><h3>Warp-speed pawns</h3><p>A pawn can ride an attack board toward promotion. Moving the board counts as moving the pawn.</p></article>
+          <article><span>06</span><h3>King safety</h3><p>Piece and attack-board actions are filtered if they expose your king. Kings are checkmated, not captured.</p></article>
+          <article><span>07</span><h3>Special moves</h3><p>Tri-D king-side/queen-side castling and standard en passant are implemented. The optional sideways rook-pawn rule can be toggled.</p></article>
+          <article><span>08</span><h3>Current beta edge</h3><p>Rare rook-pawn en-passant edge cases and exhaustive conformance against every published sample position still need dedicated tests.</p></article>
+          <article><span>09</span><h3>Why deterministic?</h3><p>The legality engine contains no LLM. Rules are explicit and testable; AI can explain a move later, but it should not invent whether a move is legal.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Built because a job ad made me curious.</span>
+      <span>Vanilla JS rules engine · C#/.NET companion API · SQLite · no LLM required for legality</span>
+    </footer>
+  </div>
+
+  <script src="engine.js"></script>
+  <script src="openings.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
