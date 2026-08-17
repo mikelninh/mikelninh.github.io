@@ -27,7 +27,7 @@ jobs:
           ref: main
           path: source
 
-      - name: Copy tested Chess Command web app
+      - name: Copy tested Chess Command V10 web app
         run: |
           rm -rf site/chess-command
           mkdir -p site/chess-command
