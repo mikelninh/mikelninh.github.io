@@ -1,0 +1,58 @@
+name: Sync Chess Command demo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-chess-command.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout portfolio site
+        uses: actions/checkout@v4
+        with:
+          path: site
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout Chess Command
+        uses: actions/checkout@v4
+        with:
+          repository: mikelninh/chess-command
+          ref: main
+          path: source
+
+      - name: Copy tested V1 web app
+        run: |
+          rm -rf site/chess-command
+          mkdir -p site/chess-command
+          cp source/index.html site/chess-command/
+          cp source/chess-styles.css site/chess-command/
+          cp source/mobile.css site/chess-command/
+          cp source/chess-core.js site/chess-command/
+          cp source/data.js site/chess-command/
+          cp source/stockfish-bridge.js site/chess-command/
+          cp source/chess-app.js site/chess-command/
+          cp source/pwa-init.js site/chess-command/
+          cp source/sw.js site/chess-command/
+          cp source/manifest.webmanifest site/chess-command/
+          cp source/chess-command-icon.svg site/chess-command/
+          touch site/chess-command/.nojekyll
+
+      - name: Commit synced demo
+        working-directory: site
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add chess-command
+          if git diff --cached --quiet; then
+            echo 'Chess Command demo already current.'
+            exit 0
+          fi
+          git commit -m 'Sync Chess Command V1 demo'
+          git push
