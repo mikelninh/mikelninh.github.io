@@ -1,4 +1,4 @@
-# Resync trigger for the bug-fixed V18 core loop.
+# Sync tested Chess Command mobile build.
 name: Sync Chess Command demo
 
 on:
@@ -40,6 +40,7 @@ jobs:
           cp source/coach-v10.css site/chess-command/
           cp source/puzzle-v12.css site/chess-command/
           cp source/puzzle-modes-v18.css site/chess-command/
+          cp source/puzzle-mobile-v19.css site/chess-command/
           cp source/opening-v14.css site/chess-command/
           cp source/gamefeel-v17.css site/chess-command/
           cp source/progress-v18.css site/chess-command/
@@ -82,5 +83,5 @@ jobs:
             echo 'Chess Command demo already current.'
             exit 0
           fi
-          git commit -m 'Sync Chess Command V18 core loop'
+          git commit -m 'Sync tested Chess Command mobile puzzle build'
           git push
