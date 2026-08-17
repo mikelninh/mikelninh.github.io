@@ -1,7 +1,7 @@
-const CACHE='chess-command-v11';
+const CACHE='chess-command-v12';
 const CORE=[
-  './','./index.html','./chess-styles.css','./piece-skin.css','./learning-v5.css','./review-v11.css','./coach-v10.css','./mobile.css',
-  './chess-core.js','./coach-core.js','./review-core-v11.js','./data.js','./stockfish-bridge.js','./chess-app.js','./learning-v5.js','./review-v11.js','./coach-v10.js',
+  './','./index.html','./chess-styles.css','./piece-skin.css','./learning-v5.css','./review-v11.css','./coach-v10.css','./puzzle-v12.css','./mobile.css',
+  './chess-core.js','./coach-core.js','./review-core-v11.js','./puzzle-core-v12.js','./data.js','./stockfish-bridge.js','./chess-app.js','./learning-v5.js','./review-v11.js','./coach-v10.js','./puzzle-v12.js','./puzzle-mobile-v12.js',
   './piece-skin.js','./mobile-ui.js','./pwa-init.js','./pieces.svg','./manifest.webmanifest','./chess-command-icon.svg'
 ];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()))});
