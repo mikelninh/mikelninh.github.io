@@ -1,0 +1,23 @@
+(function(){
+'use strict';
+const D=window.CHESS_DATA,CC=window.ChessCommand;if(!D||!CC)return;
+const KEY='chess-command-opening-v14',LEARN='chess-command-learning-v5',$=id=>document.getElementById(id);
+const base={version:14,stats:{},focus:0,memory:false};
+function load(k,d={}){try{return Object.assign({},d,JSON.parse(localStorage.getItem(k)||'{}'))}catch{return JSON.parse(JSON.stringify(d))}}
+let S=load(KEY,base);
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch{}render()}
+function stat(i){return S.stats[i]||(S.stats[i]={attempts:0,correct:0,reps:0,streak:0,best:0})}
+function mastery(i){const s=stat(i);if(!s.attempts)return 0;const acc=s.correct/s.attempts,volume=Math.min(1,s.attempts/10);return Math.round((acc*.8+volume*.2)*100)}
+function due(){const L=load(LEARN,{srs:{}}),now=Date.now();return Object.values(L.srs||{}).filter(x=>x&&x.due&&x.due<=now).length}
+function launch(i){S.focus=i;persist();CC.setScreen('learn');setTimeout(()=>{const items=document.querySelectorAll('.opening-item');items[i]?.click();document.querySelector('.trainer-card')?.scrollIntoView({behavior:'smooth',block:'center'})},30)}
+function weakest(){let idx=0,best=101;D.openings.forEach((o,i)=>{const m=mastery(i),s=stat(i);const score=s.attempts?m:35;if(score<best){best=score;idx=i}});return idx}
+function ensure(){const learn=$('learn');if(!learn||$('openingLabV14'))return;const lab=document.createElement('section');lab.id='openingLabV14';lab.className='opening-lab-v14';lab.innerHTML=`
+<div class="opening-lab-head"><div><span class="eyebrow">OPENING LAB / V14</span><h2>Know what you are trying to achieve.</h2><p>Build a small repertoire, drill weak positions, and let spaced repetition decide what comes back.</p></div><div class="opening-lab-actions"><button id="openingWeak" class="primary">Drill weakest line</button><button id="openingMemory">Memory mode</button></div></div>
+<div class="opening-lab-meta"><article><small>REPERTOIRE</small><b id="openingCount">0</b><span>core families</span></article><article><small>DUE NOW</small><b id="openingDue">0</b><span>SRS positions</span></article><article><small>BEST LINE</small><b id="openingBest">—</b><span id="openingBestPct">No reps yet</span></article><article><small>FOCUS</small><b id="openingFocus">Italian</b><span>tap a card to train</span></article></div>
+<div id="openingCardsV14" class="opening-cards-v14"></div>
+<div class="opening-map-v14"><div><small>BEGINNER REPERTOIRE</small><h3>One clear answer to the positions you see most.</h3></div><div class="opening-map-lines"><span><b>White</b> Italian · Ruy López · Scotch · Queen's Gambit</span><span><b>Black vs e4</b> Caro–Kann · Sicilian · French</span><span><b>Black vs d4</b> King's Indian</span></div></div>`;
+ const grid=learn.querySelector('.learn-grid');learn.insertBefore(lab,grid||learn.firstChild);$('openingWeak').onclick=()=>launch(weakest());$('openingMemory').onclick=()=>{S.memory=!S.memory;document.body.classList.toggle('opening-memory-mode',S.memory);persist()};render()}
+function render(){if(!$('openingLabV14'))return;const cards=$('openingCardsV14');cards.innerHTML=D.openings.map((o,i)=>{const s=stat(i),m=mastery(i);return`<button data-opening="${i}" class="opening-card-v14 ${i===S.focus?'active':''}"><div><span>${String(i+1).padStart(2,'0')}</span><em>${o.tag}</em></div><b>${o.name}</b><p>${o.why}</p><div class="opening-card-track"><i style="width:${m}%"></i></div><small>${s.attempts?`${m}% mastery · ${s.correct}/${s.attempts} correct`:'New line · start here'}</small></button>`}).join('');cards.querySelectorAll('[data-opening]').forEach(b=>b.onclick=()=>launch(+b.dataset.opening));$('openingCount').textContent=D.openings.length;$('openingDue').textContent=due();let best={i:-1,m:-1};D.openings.forEach((o,i)=>{const m=mastery(i);if(stat(i).attempts&&m>best.m)best={i,m}});$('openingBest').textContent=best.i>=0?D.openings[best.i].name:'—';$('openingBestPct').textContent=best.i>=0?`${best.m}% mastery`:'No reps yet';$('openingFocus').textContent=D.openings[S.focus]?.name||D.openings[0]?.name||'—';$('openingMemory').textContent=S.memory?'Memory mode: ON':'Memory mode';document.body.classList.toggle('opening-memory-mode',S.memory)}
+document.addEventListener('cc:opening',e=>{const i=Number(e.detail.openingIndex)||0,s=stat(i);s.attempts++;if(e.detail.correct){s.correct++;s.reps++;s.streak++;s.best=Math.max(s.best,s.streak)}else s.streak=0;S.focus=i;persist()});
+const obs=new MutationObserver(()=>{ensure();if($('openingLabV14'))obs.disconnect()});obs.observe(document.querySelector('main')||document.body,{childList:true,subtree:true});ensure();
+})();

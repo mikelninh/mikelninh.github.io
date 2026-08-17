@@ -1,7 +1,7 @@
-const CACHE='chess-command-v12';
+const CACHE='chess-command-v15';
 const CORE=[
-  './','./index.html','./chess-styles.css','./piece-skin.css','./learning-v5.css','./review-v11.css','./coach-v10.css','./puzzle-v12.css','./mobile.css',
-  './chess-core.js','./coach-core.js','./review-core-v11.js','./puzzle-core-v12.js','./data.js','./stockfish-bridge.js','./chess-app.js','./learning-v5.js','./review-v11.js','./coach-v10.js','./puzzle-v12.js','./puzzle-mobile-v12.js',
+  './','./index.html','./chess-styles.css','./piece-skin.css','./learning-v5.css','./review-v11.css','./coach-v10.css','./puzzle-v12.css','./puzzle-modes-v15.css','./opening-v14.css','./gamefeel-v13.css','./progress-v15.css','./mobile.css',
+  './chess-core.js','./coach-core.js','./review-core-v11.js','./puzzle-core-v12.js','./puzzle-pack-v15.js','./data.js','./stockfish-bridge.js','./chess-app.js','./learning-v5.js','./review-v11.js','./coach-v10.js','./puzzle-v12.js','./puzzle-modes-v15.js','./puzzle-mobile-v12.js','./opening-v14.js','./gamefeel-v13.js','./progress-v15.js',
   './piece-skin.js','./mobile-ui.js','./pwa-init.js','./pieces.svg','./manifest.webmanifest','./chess-command-icon.svg'
 ];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()))});
