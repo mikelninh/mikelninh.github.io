@@ -1,4 +1,4 @@
-# Sync tested Chess Command V21 Premium Clarity build.
+# Sync tested Chess Command V22 Board Integrity build.
 name: Sync Chess Command demo
 
 on:
@@ -66,6 +66,7 @@ jobs:
           cp source/progress-v18.js site/chess-command/
           cp source/layout-v20.js site/chess-command/
           cp source/clarity-v21.js site/chess-command/
+          cp source/board-integrity-v22.js site/chess-command/
           cp source/piece-skin.js site/chess-command/
           cp source/mobile-ui.js site/chess-command/
           cp source/pwa-init.js site/chess-command/
@@ -78,11 +79,11 @@ jobs:
         working-directory: site
         run: |
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.email '4189828+github-actions[bot]@users.noreply.github.com'
           git add chess-command
           if git diff --cached --quiet; then
             echo 'Chess Command demo already current.'
             exit 0
           fi
-          git commit -m 'Sync premium clarity Chess Command build'
+          git commit -m 'Sync V22 canonical chessboard build'
           git push
