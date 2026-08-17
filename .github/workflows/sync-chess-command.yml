@@ -20,14 +20,12 @@ jobs:
         with:
           path: site
           token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Checkout Chess Command
         uses: actions/checkout@v4
         with:
           repository: mikelninh/chess-command
           ref: main
           path: source
-
       - name: Copy tested Chess Command web app
         run: |
           rm -rf site/chess-command
@@ -42,6 +40,7 @@ jobs:
           cp source/puzzle-modes-v18.css site/chess-command/
           cp source/puzzle-mobile-v19.css site/chess-command/
           cp source/viewport-v20.css site/chess-command/
+          cp source/clarity-v21.css site/chess-command/
           cp source/opening-v14.css site/chess-command/
           cp source/gamefeel-v17.css site/chess-command/
           cp source/progress-v18.css site/chess-command/
@@ -66,6 +65,7 @@ jobs:
           cp source/gamefeel-v17.js site/chess-command/
           cp source/progress-v18.js site/chess-command/
           cp source/layout-v20.js site/chess-command/
+          cp source/clarity-v21.js site/chess-command/
           cp source/piece-skin.js site/chess-command/
           cp source/mobile-ui.js site/chess-command/
           cp source/pwa-init.js site/chess-command/
@@ -74,7 +74,6 @@ jobs:
           cp source/manifest.webmanifest site/chess-command/
           cp source/chess-command-icon.svg site/chess-command/
           touch site/chess-command/.nojekyll
-
       - name: Commit synced demo
         working-directory: site
         run: |
@@ -85,5 +84,5 @@ jobs:
             echo 'Chess Command demo already current.'
             exit 0
           fi
-          git commit -m 'Sync viewport-safe Chess Command build'
+          git commit -m 'Sync premium clarity Chess Command build'
           git push
