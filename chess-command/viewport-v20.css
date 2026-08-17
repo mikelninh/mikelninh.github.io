@@ -1,0 +1,47 @@
+/* V20 layout guard: Play and Puzzles are viewport apps, not long documents. */
+.v12-actions button{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;font-weight:800}
+.v12-actions button:disabled{background:var(--panel2);color:var(--muted);opacity:.55}
+@media (min-width:761px){
+  /* Mobile-only runtime controls must never leak into desktop. */
+  .mobile-gamebar,.sheet-close,.sheet-backdrop{display:none!important}
+
+  body.viewport-play-active,body.viewport-puzzle-active{height:100dvh;min-height:0;overflow:hidden}
+  body.viewport-play-active .app,body.viewport-puzzle-active .app{height:100dvh;min-height:0;display:grid;grid-template-rows:68px minmax(0,1fr);padding-top:0;padding-bottom:0}
+  body.viewport-play-active .topbar,body.viewport-puzzle-active .topbar{position:relative;top:auto;height:68px;min-height:68px}
+  body.viewport-play-active main,body.viewport-puzzle-active main{min-height:0;overflow:hidden}
+  body.viewport-play-active footer,body.viewport-puzzle-active footer{display:none}
+
+  /* PLAY */
+  body.viewport-play-active #play{height:100%;min-height:0;padding:7px 0 0;overflow:hidden}
+  body.viewport-play-active #play>.hero-strip{display:none!important}
+  body.viewport-play-active #play .play-grid{height:100%;min-height:0;max-width:1180px;margin:0 auto;grid-template-columns:minmax(0,1fr) minmax(320px,390px);gap:20px;align-items:center}
+  body.viewport-play-active #play .board-column{height:100%;min-height:0;display:grid;grid-template-rows:42px minmax(0,1fr) 42px;align-items:center;justify-items:center}
+  body.viewport-play-active #play .board-shell{width:min(100%,calc(100dvh - 176px));max-width:700px;min-width:0;padding:6px}
+  body.viewport-play-active #play .chess-board{width:100%;max-width:none}
+  body.viewport-play-active #play .player-row{width:min(100%,calc(100dvh - 176px));max-width:700px;min-height:42px;height:42px;padding:2px 4px}
+  body.viewport-play-active #play .player-row .avatar{width:34px;height:34px;border-radius:10px}
+  body.viewport-play-active #play .side-panel{position:static;top:auto;align-self:center;max-height:calc(100dvh - 92px);overflow:auto;padding:12px}
+  body.viewport-play-active #play .level-grid{max-height:min(330px,calc(100dvh - 350px))}
+
+  /* PUZZLES */
+  body.viewport-puzzle-active #puzzles{height:100%;min-height:0;padding:7px 0 0;overflow:hidden}
+  body.viewport-puzzle-active #puzzles>.hero-strip{display:none!important}
+  body.viewport-puzzle-active #puzzles .v12-shell{height:100%;min-height:0;display:flex;flex-direction:column;gap:7px;overflow:hidden}
+  body.viewport-puzzle-active #puzzles .v12-top{flex:0 0 auto}
+  body.viewport-puzzle-active #puzzles .v12-top h1{font-size:26px}
+  body.viewport-puzzle-active #puzzles .v12-quest{flex:0 0 auto;padding:7px 11px}
+  body.viewport-puzzle-active #puzzles .v12-themes{flex:0 0 auto;padding-bottom:2px}
+  body.viewport-puzzle-active #puzzles .v18-modes{flex:0 0 auto}
+  body.viewport-puzzle-active #puzzles .v12-main{flex:1 1 auto;min-height:0;height:auto;grid-template-columns:minmax(0,1fr) minmax(280px,350px);gap:18px;align-items:center;overflow:hidden}
+  body.viewport-puzzle-active #puzzles .v12-board-card{width:min(62dvh,620px,100%);max-width:100%;justify-self:end;padding:6px}
+  body.viewport-puzzle-active #puzzles .v12-board{width:100%;max-width:none}
+  body.viewport-puzzle-active #puzzles .v12-coach{align-self:center;max-height:100%;overflow:auto;padding:14px}
+  body.viewport-puzzle-active #puzzles .v12-feedback{min-height:70px}
+}
+
+@media (min-width:761px) and (max-height:800px){
+  body.viewport-puzzle-active #puzzles .v12-top h1{font-size:22px}
+  body.viewport-puzzle-active #puzzles .v12-quest{display:none}
+  body.viewport-puzzle-active #puzzles .v12-board-card{width:min(63dvh,520px,100%)}
+  body.viewport-play-active #play .side-panel{font-size:12px}
+}
