@@ -27,7 +27,7 @@ jobs:
           ref: main
           path: source
 
-      - name: Copy tested Chess Command V10 web app
+      - name: Copy tested Chess Command V11 web app
         run: |
           rm -rf site/chess-command
           mkdir -p site/chess-command
@@ -35,14 +35,17 @@ jobs:
           cp source/chess-styles.css site/chess-command/
           cp source/piece-skin.css site/chess-command/
           cp source/learning-v5.css site/chess-command/
+          cp source/review-v11.css site/chess-command/
           cp source/coach-v10.css site/chess-command/
           cp source/mobile.css site/chess-command/
           cp source/chess-core.js site/chess-command/
           cp source/coach-core.js site/chess-command/
+          cp source/review-core-v11.js site/chess-command/
           cp source/data.js site/chess-command/
           cp source/stockfish-bridge.js site/chess-command/
           cp source/chess-app.js site/chess-command/
           cp source/learning-v5.js site/chess-command/
+          cp source/review-v11.js site/chess-command/
           cp source/coach-v10.js site/chess-command/
           cp source/piece-skin.js site/chess-command/
           cp source/mobile-ui.js site/chess-command/
@@ -63,5 +66,5 @@ jobs:
             echo 'Chess Command demo already current.'
             exit 0
           fi
-          git commit -m 'Sync Chess Command V10 intelligence build'
+          git commit -m 'Sync Chess Command V11 deep review build'
           git push
