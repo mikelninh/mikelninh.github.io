@@ -7,7 +7,7 @@ function load(){try{return Object.assign({},base,JSON.parse(localStorage.getItem
 let S=load(),mode='adaptive',score=0,misses=0,lives=3,endsAt=0,timer=null,locked=false,startedAt=0,puzzleStarted=0,totalSolveMs=0,combo=0,bestCombo=0;
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch{}}
 function ensure(){
- const shell=section.querySelector('.v12-shell');if(!shell||$('v18Modes'))return false;
+ const shell=section.querySelector('.v12-shell');if(!shell)return false;if($('v18Modes'))return true;
  const el=document.createElement('div');el.id='v18Modes';el.className='v18-modes';el.innerHTML=`
  <div class="v18-mode-scroll">
   <button class="active" data-mode="adaptive"><b>∞</b><span>Adaptive</span><small>your level</small></button>
@@ -18,6 +18,7 @@ function ensure(){
  </div>
  <div class="v18-session" id="v18Session"><div><small>ADAPTIVE</small><b>Find the move.</b></div><div class="v18-combo"><span id="v18Combo">×0</span><small>FLOW</small></div></div>`;
  const themes=section.querySelector('.v12-themes');themes?.insertAdjacentElement('beforebegin',el);
+ const gymLabel=section.querySelector('.v12-top .eyebrow'),count=window.ChessPuzzleProviderV16?.total;if(gymLabel&&count)gymLabel.textContent=`TACTICAL GYM · ${count.toLocaleString()} POSITIONS`;
  el.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>start(b.dataset.mode));
  const recap=document.createElement('div');recap.id='v18Recap';recap.className='v18-recap';recap.hidden=true;recap.innerHTML=`<button class="v18-recap-backdrop" data-v18-close></button><section><div class="v18-recap-mark">♟</div><small id="v18RecapMode">SESSION COMPLETE</small><h2 id="v18RecapTitle">Nice run.</h2><div class="v18-recap-grid"><div><b id="v18RecapScore">0</b><span>SOLVED</span></div><div><b id="v18RecapAccuracy">100%</b><span>ACCURACY</span></div><div><b id="v18RecapSpeed">—</b><span>AVG / PUZZLE</span></div><div><b id="v18RecapCombo">0</b><span>BEST FLOW</span></div></div><p id="v18RecapPb"></p><div class="v18-recap-actions"><button data-v18-close>Back</button><button id="v18Again" class="primary">Run it again</button></div></section>`;document.body.appendChild(recap);
  recap.querySelectorAll('[data-v18-close]').forEach(b=>b.onclick=()=>recap.hidden=true);$('v18Again').onclick=()=>{recap.hidden=true;start(mode==='adaptive'?'rush':mode)};
@@ -53,5 +54,5 @@ document.addEventListener('cc:puzzle',e=>{
  else{misses++;combo=0;if(mode==='rush'){endsAt-=5000;session('RUSH',`−5 seconds · ${fmt(endsAt-Date.now())} left`)}else if(mode==='survival'){lives--;if(lives<=0)finish('Three misses. Run over.','Survival');else session('SURVIVAL',`${lives} ${lives===1?'life':'lives'} left`)}else session(mode.toUpperCase(),'Reset. Find the pattern, not the guess.');}
  updateButtons();if($('v18Combo'))$('v18Combo').textContent=`×${combo}`;
 });
-const obs=new MutationObserver(()=>{if(ensure()){obs.disconnect();start('adaptive')}});obs.observe(section,{childList:true,subtree:true});if(ensure())start('adaptive');
+const obs=new MutationObserver(()=>{if(!document.getElementById('v18Modes')&&ensure()){obs.disconnect();start('adaptive')}});obs.observe(section,{childList:true,subtree:true});if(ensure()){obs.disconnect();start('adaptive')}
 })();
