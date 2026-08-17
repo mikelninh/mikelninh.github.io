@@ -27,19 +27,23 @@ jobs:
           ref: main
           path: source
 
-      - name: Copy tested V1 web app
+      - name: Copy tested Chess Command web app
         run: |
           rm -rf site/chess-command
           mkdir -p site/chess-command
           cp source/index.html site/chess-command/
           cp source/chess-styles.css site/chess-command/
+          cp source/piece-skin.css site/chess-command/
           cp source/mobile.css site/chess-command/
           cp source/chess-core.js site/chess-command/
           cp source/data.js site/chess-command/
           cp source/stockfish-bridge.js site/chess-command/
           cp source/chess-app.js site/chess-command/
+          cp source/piece-skin.js site/chess-command/
+          cp source/mobile-ui.js site/chess-command/
           cp source/pwa-init.js site/chess-command/
           cp source/sw.js site/chess-command/
+          cp source/pieces.svg site/chess-command/
           cp source/manifest.webmanifest site/chess-command/
           cp source/chess-command-icon.svg site/chess-command/
           touch site/chess-command/.nojekyll
@@ -54,5 +58,5 @@ jobs:
             echo 'Chess Command demo already current.'
             exit 0
           fi
-          git commit -m 'Sync Chess Command V1 demo'
+          git commit -m 'Sync Chess Command polished mobile board'
           git push
