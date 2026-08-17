@@ -1,10 +1,12 @@
 (function(){
   'use strict';
 
-  const mobile=document.createElement('link');
-  mobile.rel='stylesheet';
-  mobile.href='./mobile.css';
-  document.head.appendChild(mobile);
+  for(const href of ['./piece-skin.css','./mobile.css']){
+    const link=document.createElement('link');link.rel='stylesheet';link.href=href;document.head.appendChild(link);
+  }
+  for(const src of ['./piece-skin.js','./mobile-ui.js']){
+    const script=document.createElement('script');script.src=src;script.defer=true;document.head.appendChild(script);
+  }
 
   let deferredInstall=null;
   const installBtn=document.getElementById('installBtn');
@@ -16,9 +18,7 @@
   }
 
   window.addEventListener('beforeinstallprompt',event=>{
-    event.preventDefault();
-    deferredInstall=event;
-    if(installBtn) installBtn.hidden=false;
+    event.preventDefault();deferredInstall=event;if(installBtn)installBtn.hidden=false;
   });
 
   if(installBtn){
@@ -26,20 +26,11 @@
       if(!deferredInstall){
         const isiOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
         const msg=isiOS?'On iPhone: Share → Add to Home Screen.':'Use your browser menu → Install app / Add to Home screen.';
-        if(window.navigator.share){
-          try{await navigator.share({title:'Chess Command',text:msg,url:location.href});}catch{}
-        }else alert(msg);
-        return;
+        if(window.navigator.share){try{await navigator.share({title:'Chess Command',text:msg,url:location.href});}catch{}}else alert(msg);return;
       }
-      deferredInstall.prompt();
-      await deferredInstall.userChoice;
-      deferredInstall=null;
-      installBtn.hidden=true;
+      deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=null;installBtn.hidden=true;
     });
   }
 
-  window.addEventListener('appinstalled',()=>{
-    deferredInstall=null;
-    if(installBtn) installBtn.hidden=true;
-  });
+  window.addEventListener('appinstalled',()=>{deferredInstall=null;if(installBtn)installBtn.hidden=true});
 })();

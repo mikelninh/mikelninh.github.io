@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <symbol id="P" viewBox="0 0 100 100">
+      <circle cx="50" cy="25" r="13" fill="currentColor"/>
+      <path d="M40 41h20c1 11 5 20 10 29H30c5-9 9-18 10-29Z" fill="currentColor"/>
+      <path d="M28 68h44l7 12H21l7-12Zm-10 14h64v8H18z" fill="currentColor"/>
+    </symbol>
+    <symbol id="R" viewBox="0 0 100 100">
+      <path d="M24 19h13v11h9V19h9v11h9V19h13v24H24V19Z" fill="currentColor"/>
+      <path d="M31 41h38l-5 31H36l-5-31Z" fill="currentColor"/>
+      <path d="M27 69h46l7 12H20l7-12Zm-10 14h66v8H17z" fill="currentColor"/>
+    </symbol>
+    <symbol id="N" viewBox="0 0 100 100">
+      <path d="M25 78c3-18 12-31 27-39-8-1-14-6-17-14 8 4 15 4 21-1l11-9 12 19c4 7 2 15-5 21l-13 10c5 4 9 8 11 13H25Z" fill="currentColor"/>
+      <circle cx="65" cy="35" r="2.8" fill="var(--piece-detail,#8d6a43)"/>
+      <path d="M20 78h58l6 12H16l4-12Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="B" viewBox="0 0 100 100">
+      <path d="M50 14 64 30 53 43c8 7 12 16 13 27H34c1-11 5-20 13-27L36 30 50 14Z" fill="currentColor"/>
+      <path d="m49 20 5 8-11 11-4-4 10-15Z" fill="var(--piece-detail,#8d6a43)"/>
+      <path d="M29 68h42l8 13H21l8-13Zm-12 15h66v8H17z" fill="currentColor"/>
+    </symbol>
+    <symbol id="Q" viewBox="0 0 100 100">
+      <circle cx="25" cy="24" r="5" fill="currentColor"/><circle cx="38" cy="18" r="5" fill="currentColor"/><circle cx="50" cy="14" r="5" fill="currentColor"/><circle cx="62" cy="18" r="5" fill="currentColor"/><circle cx="75" cy="24" r="5" fill="currentColor"/>
+      <path d="m25 29 11 11 14-21 14 21 11-11-9 42H34l-9-42Z" fill="currentColor"/>
+      <path d="M28 68h44l8 13H20l8-13Zm-11 15h66v8H17z" fill="currentColor"/>
+    </symbol>
+    <symbol id="K" viewBox="0 0 100 100">
+      <path d="M46 9h8v11h11v8H54v10c10 3 16 13 16 25v8H30v-8c0-12 6-22 16-25V28H35v-8h11V9Z" fill="currentColor"/>
+      <path d="M27 69h46l8 12H19l8-12Zm-10 14h66v8H17z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
