@@ -2,7 +2,7 @@
 'use strict';
 const C=window.ChessCore,CC=window.ChessCommand,KEY='chess-command-gamefeel-v17',PROFILE='chess-command-profile-v1';
 function load(){try{return Object.assign({sound:true,haptics:true,motion:true},JSON.parse(localStorage.getItem(KEY)||'{}'))}catch{return{sound:true,haptics:true,motion:true}}}
-let S=load(),ctx=null,drag=null,suppressUntil=0,lastPieces=32;
+let S=load(),ctx=null,drag=null,suppressUntil=0,syntheticMove=false,lastPieces=32;
 const reduced=()=>matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch{}}
 function audio(){if(!S.sound)return null;try{ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();return ctx}catch{return null}}
@@ -24,53 +24,25 @@ function resultCard(detail){
  let el=document.getElementById('gameResultV17');if(!el){el=document.createElement('div');el.id='gameResultV17';el.className='game-result-v17';el.hidden=true;el.innerHTML=`<button class="game-result-backdrop" data-result-close></button><section><div class="game-result-crown">♟</div><small id="resultKicker">GAME COMPLETE</small><h2 id="resultTitle">Game over</h2><p id="resultRating"></p><div class="game-result-actions"><button id="resultReview">Review game</button><button id="resultRematch" class="primary">Rematch</button></div><button class="game-result-close" data-result-close>×</button></section>`;document.body.appendChild(el);el.querySelectorAll('[data-result-close]').forEach(x=>x.onclick=()=>el.hidden=true);document.getElementById('resultReview').onclick=()=>{el.hidden=true;CC?.setScreen('review')};document.getElementById('resultRematch').onclick=()=>{el.hidden=true;document.getElementById('newGameBtn')?.click()}}
  const profile=(()=>{try{return JSON.parse(localStorage.getItem(PROFILE)||'{}')}catch{return{}}})(),h=profile.history||[],last=h[h.length-1],score=detail.score;document.getElementById('resultKicker').textContent=score===1?'VICTORY':score===.5?'DRAW':'GAME COMPLETE';document.getElementById('resultTitle').textContent=score===1?'Beautiful. Bank the win.':score===.5?'Hold the draw. Learn the edge.':'Good. Now turn the loss into training.';document.getElementById('resultRating').textContent=last?`Rating ${last.before} → ${last.after} · ${last.after-last.before>=0?'+':''}${last.after-last.before}`:'Open Review and find the turning point.';el.hidden=false;
 }
-// Capture geometry synchronously: Chess Command emits before it rerenders the board.
 document.addEventListener('cc:move',e=>{const stages=stageUci(e.detail.uci);requestAnimationFrame(()=>stages.forEach(runStage));const n=piecesInFen(e.detail.fen),capture=n<lastPieces;lastPieces=n;let st=null;try{st=C?.status(C.fromFEN(e.detail.fen))}catch{}if(st?.check){tone(760,.055,.045,'triangle');tone(520,.05,.03,'triangle',.065);buzz([15,18,24]);pulse('cc-check-flash-v17',500)}else if(capture){tone(215,.045,.045,'square');buzz(13);pulse('cc-capture-pulse-v17',260)}else{tone(e.detail.side==='w'?475:405,.028,.023);buzz(6)}});
 document.addEventListener('cc:newgame',()=>{lastPieces=32;cancelDrag();const r=document.getElementById('gameResultV17');if(r)r.hidden=true});
 document.addEventListener('cc:gameover',e=>{if(e.detail.score===1){tone(523,.07,.045);tone(659,.07,.04,'sine',.075);tone(784,.12,.045,'sine',.15);buzz([22,28,45]);pulse('cc-win-glow-v17',1100)}else if(e.detail.score===.5){tone(420,.06,.03);tone(520,.08,.03,'sine',.07);buzz(18)}else{tone(245,.11,.034,'triangle');buzz(20)};setTimeout(()=>resultCard(e.detail),260)});
 document.addEventListener('cc:puzzle',e=>{if(e.detail.correct){tone(650,.045,.03);tone(870,.055,.028,'sine',.05);buzz(8)}else{tone(175,.045,.022,'square');buzz(14)}});
-
-// Native-feeling pointer drag, while preserving tap-to-move.
-// Mobile rule: a tap never creates a floating piece; the visual ghost only exists after a real drag threshold.
 function purgeDragArtifacts(){document.querySelectorAll('.cc-drag-ghost-v17').forEach(n=>n.remove());document.querySelectorAll('.cc-drag-source').forEach(n=>n.classList.remove('cc-drag-source'))}
 function cancelDrag(){if(drag?.ghost)drag.ghost.remove();drag?.from?.classList.remove('cc-drag-source');drag=null;purgeDragArtifacts()}
 function makeDragGhost(d,x,y){if(d.ghost)return;purgeDragArtifacts();const piece=d.from.querySelector('.piece');if(!piece)return;d.ghost=piece.cloneNode(true);d.ghost.classList.add('cc-drag-ghost-v17');document.body.appendChild(d.ghost);d.from.classList.add('cc-drag-source');placeDrag(d,x,y)}
 function placeDrag(d,x,y){if(!d?.ghost)return;const s=d.size;Object.assign(d.ghost.style,{width:s+'px',height:s+'px',left:(x-s/2)+'px',top:(y-s/2)+'px'})}
-function dragStart(e){
- if(e.button!==undefined&&e.button!==0)return;
- const square=e.target.closest('.square'),board=e.target.closest('#play .chess-board, #puzzles .chess-board');
- if(!square||!board||!square.querySelector('.piece'))return;
- cancelDrag();
- const r=square.getBoundingClientRect();
- drag={board,from:square,ghost:null,x:e.clientX,y:e.clientY,moved:false,pid:e.pointerId,size:r.width};
- try{square.setPointerCapture?.(e.pointerId)}catch{}
-}
-function dragMove(e){
- if(!drag||e.pointerId!==drag.pid)return;
- const distance=Math.hypot(e.clientX-drag.x,e.clientY-drag.y);
- if(!drag.moved&&distance>8){drag.moved=true;makeDragGhost(drag,e.clientX,e.clientY)}
- if(drag.moved)placeDrag(drag,e.clientX,e.clientY);
-}
-function dragEnd(e){
- if(!drag||e.pointerId!==drag.pid)return;
- const d=drag;drag=null;
- d.from.classList.remove('cc-drag-source');d.ghost?.remove();purgeDragArtifacts();
- if(!d.moved)return;
- const hit=document.elementFromPoint(e.clientX,e.clientY)?.closest('.square');
- if(!hit||hit.closest('.chess-board')!==d.board)return;
- suppressUntil=Date.now()+420;d.from.click();hit.click();
-}
+function dragStart(e){if(e.button!==undefined&&e.button!==0)return;const square=e.target.closest('.square'),board=e.target.closest('#play .chess-board, #puzzles .chess-board');if(!square||!board||!square.querySelector('.piece'))return;cancelDrag();const r=square.getBoundingClientRect();drag={board,from:square,ghost:null,x:e.clientX,y:e.clientY,moved:false,pid:e.pointerId,size:r.width};try{square.setPointerCapture?.(e.pointerId)}catch{}}
+function dragMove(e){if(!drag||e.pointerId!==drag.pid)return;const distance=Math.hypot(e.clientX-drag.x,e.clientY-drag.y);if(!drag.moved&&distance>8){drag.moved=true;makeDragGhost(drag,e.clientX,e.clientY)}if(drag.moved)placeDrag(drag,e.clientX,e.clientY)}
+function dragEnd(e){if(!drag||e.pointerId!==drag.pid)return;const d=drag;drag=null;d.from.classList.remove('cc-drag-source');d.ghost?.remove();purgeDragArtifacts();if(!d.moved)return;const hit=document.elementFromPoint(e.clientX,e.clientY)?.closest('.square');if(!hit||hit.closest('.chess-board')!==d.board)return;suppressUntil=Date.now()+420;syntheticMove=true;try{d.from.click();hit.click()}finally{syntheticMove=false}}
 function dragCancel(e){if(!drag)return;if(e?.pointerId!==undefined&&e.pointerId!==drag.pid)return;cancelDrag()}
 document.addEventListener('pointerdown',dragStart,{passive:true});
 document.addEventListener('pointermove',dragMove,{passive:true});
 document.addEventListener('pointerup',dragEnd,{passive:true});
 document.addEventListener('pointercancel',dragCancel,{passive:true});
 document.addEventListener('lostpointercapture',dragCancel,true);
-document.addEventListener('click',e=>{if(Date.now()<suppressUntil){e.preventDefault();e.stopImmediatePropagation()}},true);
+document.addEventListener('click',e=>{if(!syntheticMove&&Date.now()<suppressUntil){e.preventDefault();e.stopImmediatePropagation()}},true);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelDrag()});
 document.addEventListener('click',e=>{if(e.target.closest('[data-go]'))cancelDrag()},true);
-window.addEventListener('blur',cancelDrag);
-window.addEventListener('pagehide',cancelDrag);
-purgeDragArtifacts();
-settings();new MutationObserver(settings).observe(document.body,{childList:true,subtree:true});
+window.addEventListener('blur',cancelDrag);window.addEventListener('pagehide',cancelDrag);purgeDragArtifacts();settings();new MutationObserver(settings).observe(document.body,{childList:true,subtree:true});
 })();
