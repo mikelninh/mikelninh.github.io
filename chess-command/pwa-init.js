@@ -1,10 +1,10 @@
 (function(){
   'use strict';
 
-  for(const href of ['./piece-skin.css','./mobile.css']){
+  for(const href of ['./piece-skin.css','./learning-v5.css','./mobile.css']){
     const link=document.createElement('link');link.rel='stylesheet';link.href=href;document.head.appendChild(link);
   }
-  for(const src of ['./piece-skin.js','./mobile-ui.js']){
+  for(const src of ['./piece-skin.js','./mobile-ui.js','./learning-v5.js']){
     const script=document.createElement('script');script.src=src;script.defer=true;document.head.appendChild(script);
   }
 

@@ -1,14 +1,16 @@
-const CACHE='chess-command-v3';
+const CACHE='chess-command-v5';
 const CORE=[
   './',
   './index.html',
   './chess-styles.css',
   './piece-skin.css',
+  './learning-v5.css',
   './mobile.css',
   './chess-core.js',
   './data.js',
   './stockfish-bridge.js',
   './chess-app.js',
+  './learning-v5.js',
   './piece-skin.js',
   './mobile-ui.js',
   './pwa-init.js',
