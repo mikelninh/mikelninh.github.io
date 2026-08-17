@@ -5,13 +5,16 @@
     const link=document.createElement('link');link.rel='stylesheet';link.href=href;document.head.appendChild(link);
   }
   for(const src of ['./piece-skin.js','./mobile-ui.js','./learning-v5.js']){
-    const script=document.createElement('script');script.src=src;script.defer=true;document.head.appendChild(script);
+    const script=document.createElement('script');script.src=src;script.async=false;document.head.appendChild(script);
   }
 
-  let deferredInstall=null;
+  let deferredInstall=null,refreshing=false;
   const installBtn=document.getElementById('installBtn');
 
   if('serviceWorker' in navigator){
+    navigator.serviceWorker.addEventListener('controllerchange',()=>{
+      if(refreshing)return;refreshing=true;location.reload();
+    });
     window.addEventListener('load',()=>{
       navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(err=>console.warn('Offline mode unavailable',err));
     });
