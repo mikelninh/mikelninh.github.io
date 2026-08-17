@@ -27,7 +27,7 @@ jobs:
           ref: main
           path: source
 
-      - name: Copy tested Chess Command V15 web app
+      - name: Copy tested Chess Command V18 web app
         run: |
           rm -rf site/chess-command
           mkdir -p site/chess-command
@@ -38,16 +38,18 @@ jobs:
           cp source/review-v11.css site/chess-command/
           cp source/coach-v10.css site/chess-command/
           cp source/puzzle-v12.css site/chess-command/
-          cp source/puzzle-modes-v15.css site/chess-command/
+          cp source/puzzle-modes-v18.css site/chess-command/
           cp source/opening-v14.css site/chess-command/
-          cp source/gamefeel-v13.css site/chess-command/
-          cp source/progress-v15.css site/chess-command/
+          cp source/gamefeel-v17.css site/chess-command/
+          cp source/progress-v18.css site/chess-command/
           cp source/mobile.css site/chess-command/
           cp source/chess-core.js site/chess-command/
           cp source/coach-core.js site/chess-command/
           cp source/review-core-v11.js site/chess-command/
           cp source/puzzle-core-v12.js site/chess-command/
           cp source/puzzle-pack-v15.js site/chess-command/
+          cp source/puzzle-pack-lichess-v16.js site/chess-command/
+          cp source/puzzle-provider-v16.js site/chess-command/
           cp source/data.js site/chess-command/
           cp source/stockfish-bridge.js site/chess-command/
           cp source/chess-app.js site/chess-command/
@@ -55,11 +57,11 @@ jobs:
           cp source/review-v11.js site/chess-command/
           cp source/coach-v10.js site/chess-command/
           cp source/puzzle-v12.js site/chess-command/
-          cp source/puzzle-modes-v15.js site/chess-command/
+          cp source/puzzle-modes-v18.js site/chess-command/
           cp source/puzzle-mobile-v12.js site/chess-command/
           cp source/opening-v14.js site/chess-command/
-          cp source/gamefeel-v13.js site/chess-command/
-          cp source/progress-v15.js site/chess-command/
+          cp source/gamefeel-v17.js site/chess-command/
+          cp source/progress-v18.js site/chess-command/
           cp source/piece-skin.js site/chess-command/
           cp source/mobile-ui.js site/chess-command/
           cp source/pwa-init.js site/chess-command/
@@ -79,7 +81,5 @@ jobs:
             echo 'Chess Command demo already current.'
             exit 0
           fi
-          git commit -m 'Sync Chess Command V15 solo training build'
+          git commit -m 'Sync Chess Command V18 core loop'
           git push
-
-# V15 mobile drag-fix sync bump
