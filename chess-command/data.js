@@ -1,0 +1,21 @@
+window.CHESS_DATA={
+levels:[
+ {elo:400,name:'First Steps',note:'Friendly mistakes. Learn the rules.'},{elo:600,name:'Beginner',note:'Sees obvious threats, misses plenty.'},{elo:800,name:'Improver',note:'Develops pieces and spots simple tactics.'},{elo:1000,name:'Club Starter',note:'Punishes loose pieces more often.'},{elo:1200,name:'Club Player',note:'Solid fundamentals and basic tactics.'},{elo:1400,name:'Challenger',note:'Stockfish strength limiting starts here.'},{elo:1600,name:'Strong Club',note:'Fewer gifts. Plans matter.'},{elo:1800,name:'Expert Track',note:'Tactics get sharp.'},{elo:2000,name:'Expert',note:'Serious resistance.'},{elo:2200,name:'Master Track',note:'Tiny mistakes become expensive.'},{elo:2400,name:'Master',note:'Human-master territory.'},{elo:2600,name:'Grandmaster Track',note:'Extremely strong.'},{elo:2800,name:'Elite',note:'World-class calibrated target.'},{elo:3000,name:'Engine Territory',note:'Past human practicality.'},{elo:3190,name:'Limit Strength Max',note:'Top of current UCI_Elo range.'},{elo:9999,name:'Maximum Engine',note:'No strength limit. Good luck.'}
+],
+openings:[
+ {name:'Italian Game',tag:'Start here',why:'Develop quickly, control the centre and aim at f7.',moves:['e2e4','e7e5','g1f3','b8c6','f1c4'],notes:['Take central space and open the bishop.','Black mirrors the centre.','Develop with tempo: the knight attacks e5.','Defend e5 while developing.','Develop the bishop toward f7 and prepare to castle.']},
+ {name:'Ruy López',tag:'Classical',why:'Build long-term pressure on the knight defending e5.',moves:['e2e4','e7e5','g1f3','b8c6','f1b5'],notes:['Claim e4.','Meet White in the centre.','Attack e5.','Defend e5.','Pin the defender and create pressure rather than grabbing material.']},
+ {name:'Scotch Game',tag:'Open',why:'Challenge Black’s centre before it settles.',moves:['e2e4','e7e5','g1f3','b8c6','d2d4'],notes:['Claim the centre.','Fight back immediately.','Develop with tempo.','Defend and develop.','Open the centre while your pieces are ready to come out.']},
+ {name:'Queen’s Gambit',tag:'1.d4',why:'Use the c-pawn to undermine Black’s d5 pawn.',moves:['d2d4','d7d5','c2c4','e7e6','b1c3'],notes:['Claim d4.','Black matches the centre.','Pressure d5 from the flank.','Support d5.','Develop and increase central pressure.']},
+ {name:'Caro–Kann',tag:'Black vs e4',why:'A resilient defence that keeps the light bishop flexible.',moves:['e2e4','c7c6','d2d4','d7d5','b1c3'],notes:['White takes space.','Prepare a supported …d5.','Build the centre.','Challenge it.','Develop and protect e4.']},
+ {name:'Sicilian Defence',tag:'Black vs e4',why:'Create asymmetry immediately and fight d4 with the c-pawn.',moves:['e2e4','c7c5','g1f3','d7d6','d2d4'],notes:['White claims e4.','Black refuses symmetry.','Prepare d4.','Control e5 and support development.','Open the centre.']},
+ {name:'French Defence',tag:'Black vs e4',why:'Build a durable pawn chain and counterattack the centre.',moves:['e2e4','e7e6','d2d4','d7d5','b1c3'],notes:['Claim e4.','Prepare …d5.','Build the centre.','Challenge it.','Develop and support e4.']},
+ {name:'King’s Indian',tag:'Black vs d4',why:'Let White build a centre, then attack it.',moves:['d2d4','g8f6','c2c4','g7g6','b1c3','f8g7'],notes:['White takes space.','Develop and control e4.','Build central influence.','Prepare the fianchetto.','Support the centre.','Pressure the centre from long range.']}
+],
+puzzles:[
+ {title:'Mate in one',theme:'Checkmate',rating:450,fen:'7k/6pp/8/8/8/8/6PP/5RK1 w - - 0 1',solution:'f1f8',hint:'The rook wants the eighth rank.',explain:'Rf8# seals every king escape square.'},
+ {title:'Knight fork',theme:'Fork',rating:650,fen:'1r1q2k1/8/8/4N3/8/8/8/6K1 w - - 0 1',solution:'e5c6',hint:'Can the knight attack both heavy pieces?',explain:'Nc6 attacks the queen on d8 and rook on b8 at once.'},
+ {title:'Back-rank mate',theme:'Checkmate',rating:750,fen:'6k1/5ppp/8/8/8/8/8/4R1K1 w - - 0 1',solution:'e1e8',hint:'The pawns around the king are also a cage.',explain:'Re8# uses the trapped back rank.'},
+ {title:'Take the free queen',theme:'Hanging piece',rating:400,fen:'6k1/8/8/8/3q4/2B5/8/6K1 w - - 0 1',solution:'c3d4',hint:'Before calculating fancy tactics: what is simply undefended?',explain:'Bxd4 wins the queen. Beginner superpower: notice loose pieces.'}
+]
+};

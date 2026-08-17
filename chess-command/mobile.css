@@ -1,0 +1,48 @@
+@media (max-width: 760px){
+  :root{--board-radius:12px;--tap:48px}
+  html,body{overscroll-behavior-y:none}
+  body{padding-bottom:calc(74px + env(safe-area-inset-bottom,0px))}
+  .app{padding:8px 8px 0;max-width:100%}
+  .topbar{position:relative;top:auto;min-height:52px;grid-template-columns:1fr auto;gap:8px;padding:3px 1px 8px;background:var(--bg);backdrop-filter:none;-webkit-backdrop-filter:none}
+  .brandmark{width:36px;height:36px;border-radius:11px;font-size:21px}
+  .brand b{font-size:12px}.brand small{font-size:9px}
+  .topbar nav{position:fixed;left:0;right:0;bottom:0;z-index:60;display:grid;grid-template-columns:repeat(6,1fr);gap:0;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--bg) 96%,transparent);border-top:1px solid var(--line);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+  .nav{padding:7px 2px;min-width:0;min-height:48px;border-radius:9px;font-size:10px;overflow:hidden;text-overflow:ellipsis}
+  .top-actions{gap:4px}.rating-pill{display:none}.icon-btn{width:40px;height:40px}
+  .screen{padding-top:8px}
+  .hero-strip,.hero-strip.compact{display:block;padding:5px 2px 10px}
+  .hero-strip h1{font-size:24px;line-height:1.06;margin:4px 0 5px}.hero-strip p{font-size:12px}
+  .engine-state{margin-top:8px;padding:7px 9px;min-width:0;width:max-content;max-width:100%}
+  .play-grid,.learn-grid,.puzzle-grid,.theme-layout{display:block}
+  .board-column{width:100%}.player-row{min-height:46px;padding:2px 4px}.player-row .avatar{width:34px;height:34px;border-radius:10px}.player-row small{font-size:9px}.material{font-size:9px}
+  .board-shell{width:100%;padding:4px;border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.25)}
+  .chess-board{width:100%;max-width:calc(100vw - 24px);margin:auto;border-radius:9px}
+  .piece{font-size:clamp(31px,10.2vw,52px)}
+  .coord{font-size:7px}.coord.file{right:2px;bottom:2px}.coord.rank{left:2px;top:2px}
+  .side-panel{position:static;margin-top:8px;padding:9px;border-radius:13px;box-shadow:none}
+  .panel-tabs{position:sticky;top:0;z-index:5;margin-bottom:8px;padding:3px}.panel-tabs button{min-height:42px;padding:6px 4px;font-size:11px}
+  .section-head h2,.side-view h2{font-size:17px;margin:3px 0 8px}
+  .level-grid{display:flex;overflow-x:auto;overflow-y:hidden;max-height:none;gap:6px;padding:1px 1px 8px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+  .level{min-width:76px;min-height:55px;scroll-snap-align:start;flex:0 0 auto}.level b{font-size:14px}
+  .engine-note{margin-top:4px;padding:8px}.engine-note span{font-size:9px}
+  .coach-card{min-height:86px;padding:10px}.mini-rule{margin-top:8px;padding-top:8px}
+  .game-actions{grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px}.game-actions button{padding:8px 3px;font-size:10px;min-height:44px}
+  .move-list{max-height:180px}
+  .road{display:none}
+  .curriculum{display:flex;gap:6px;overflow-x:auto;margin-bottom:8px;padding-bottom:4px}.curriculum-card{min-width:215px;flex:0 0 auto;padding:8px}.opening-list{display:flex;overflow-x:auto;margin:0 0 8px;gap:5px}.opening-item{min-width:150px;flex:0 0 auto;padding:7px}
+  .trainer-card{display:flex;flex-direction:column;border-radius:13px;padding:9px;gap:10px;box-shadow:none}.trainer-copy{width:100%;order:2}.trainer-card .board-shell{order:1}.trainer-copy h2{font-size:21px;margin:3px 0 5px}.trainer-copy>p{font-size:11px}.lesson-prompt{margin:8px 0;padding:9px}.lesson-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.lesson-controls button{padding:7px 4px;font-size:10px}
+  .puzzle-grid .puzzle-shell{margin-bottom:8px}.puzzle-panel{padding:11px;border-radius:13px;box-shadow:none}.puzzle-rating{width:46px;height:46px;font-size:14px;margin-bottom:7px}.puzzle-panel h2{font-size:21px;margin:3px 0 4px}.puzzle-panel>p{font-size:11px}.puzzle-feedback{min-height:60px;margin:8px 0;padding:9px}.puzzle-actions{display:grid;grid-template-columns:1fr 1fr}
+  .progress-grid{grid-template-columns:1fr 1fr;gap:7px}.progress-grid article{padding:11px;border-radius:12px}.progress-grid .progress-hero{grid-column:1/-1}.progress-grid article b{font-size:24px}.milestones span{font-size:8px}
+  .next-plan{padding:11px;margin-top:8px}.next-plan h2{font-size:19px;margin-bottom:8px}.plan-steps{grid-template-columns:1fr;gap:5px}.plan-steps>div{padding:8px}
+  .theme-grid{grid-template-columns:1fr 1fr;gap:7px}.piece-theme-grid{grid-template-columns:repeat(3,1fr)}
+  .lab-hero{min-height:auto;padding:18px 13px;display:block}.lab-copy h1{font-size:29px}.lab-orbit{height:245px;margin-top:8px;transform:scale(.82)}.lab-features{gap:4px}.lab-features span{font-size:9px}
+  footer{display:none}
+}
+
+@media (max-width: 390px){
+  .app{padding-left:5px;padding-right:5px}.chess-board{max-width:calc(100vw - 18px)}.piece{font-size:clamp(28px,10vw,44px)}.nav{font-size:9px}.game-actions button{font-size:9px}.hero-strip h1{font-size:21px}
+}
+
+@media (max-height: 520px) and (orientation: landscape){
+  body{padding-bottom:0}.topbar nav{position:static;display:flex;padding:0;border:0;background:none}.play-grid{display:grid;grid-template-columns:minmax(330px,56vh) 1fr;gap:8px}.hero-strip{display:none}.board-shell{max-width:56vh}.side-panel{margin-top:0;max-height:92vh;overflow:auto}.topbar{display:none}.screen{padding-top:2px}
+}

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#11100e">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Chess Command">
+<title>Chess Command — Play. Learn. Improve.</title>
+<meta name="description" content="A mobile-first personal chess gym: play computer opponents, learn openings, solve puzzles and track your progress.">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./chess-command-icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="./chess-command-icon.svg">
+<link rel="stylesheet" href="chess-styles.css">
+</head>
+<body class="theme-walnut pieces-classic">
+<div class="app">
+<header class="topbar">
+  <button class="brand" data-go="play"><span class="brandmark">♞</span><span><b>CHESS COMMAND</b><small>your personal chess gym</small></span></button>
+  <nav>
+    <button class="nav active" data-go="play">Play</button>
+    <button class="nav" data-go="learn">Learn</button>
+    <button class="nav" data-go="puzzles">Puzzles</button>
+    <button class="nav" data-go="progress">Progress</button>
+    <button class="nav" data-go="themes">Themes</button>
+    <button class="nav lab-nav" data-go="lab">Lab <span>✦</span></button>
+  </nav>
+  <div class="top-actions"><span class="rating-pill">Rating <b id="ratingTop">600</b></span><button id="installBtn" class="icon-btn" title="Install Chess Command" hidden>↓</button><button id="shareBtn" class="icon-btn" title="Share Chess Command">↗</button></div>
+</header>
+
+<main>
+<section id="play" class="screen active">
+  <div class="hero-strip"><div><span class="eyebrow">PLAY / PRACTISE</span><h1>Play a game. Learn from the game.</h1><p>Pick a level. The board is legal chess; stronger levels use Stockfish when available.</p></div><div class="engine-state"><span id="engineDot"></span><div><small>OPPONENT ENGINE</small><b id="engineState">Practice bot ready</b></div></div></div>
+  <div class="play-grid">
+    <section class="board-column">
+      <div class="player-row opponent"><div class="avatar bot">♜</div><div><b id="opponentName">Beginner · 600</b><small id="opponentNote">Sees obvious threats, misses plenty.</small></div><div class="thinking" id="thinking"></div></div>
+      <div class="board-shell"><div id="gameBoard" class="chess-board" aria-label="Chess board"></div></div>
+      <div class="player-row"><div class="avatar you">M</div><div><b>Michael</b><small id="gameStatus">White to move.</small></div><div class="material" id="material"></div></div>
+    </section>
+    <aside class="side-panel">
+      <div class="panel-tabs"><button class="active" data-side="opponent">Opponent</button><button data-side="coach">Coach</button><button data-side="moves">Moves</button></div>
+      <div id="side-opponent" class="side-view active">
+        <div class="section-head"><div><span class="eyebrow">SELECT STRENGTH</span><h2>Who are you playing?</h2></div><span class="tiny">400 → MAX</span></div>
+        <div id="levelGrid" class="level-grid"></div>
+        <div class="engine-note"><b>Stockfish 18</b><span>At 1400+ the app attempts Stockfish strength limiting. If the engine cannot load, a local practice bot takes over automatically.</span></div>
+      </div>
+      <div id="side-coach" class="side-view">
+        <span class="eyebrow">LIVE COACH</span><h2 id="coachTitle">Before every move</h2>
+        <div class="coach-card" id="coachText">1. Is anything hanging?<br>2. What is my opponent threatening?<br>3. Can I improve my worst piece?</div>
+        <button class="primary full" id="hintBtn">Give me a hint</button>
+        <div class="mini-rule"><b>Beginner rule</b><span>Develop pieces before launching an attack. Your queen does not need to be the main character on move 3.</span></div>
+      </div>
+      <div id="side-moves" class="side-view"><span class="eyebrow">GAME LOG</span><h2>Moves</h2><div id="moveList" class="move-list empty">No moves yet.</div></div>
+      <div class="game-actions"><button id="newGameBtn" class="primary">New game</button><button id="undoBtn">Undo pair</button><button id="flipBtn">Flip</button><button id="resignBtn">Resign</button></div>
+    </aside>
+  </div>
+</section>
+
+<section id="learn" class="screen">
+  <div class="hero-strip compact"><div><span class="eyebrow">LEARN / ROAD TO 1000</span><h1>Build the game in layers.</h1><p>Start with openings. Middlegame and endgame modules are already mapped into the curriculum.</p></div><div class="road"><span>600</span><i></i><span>800</span><i></i><span>1000</span></div></div>
+  <div class="learn-grid">
+    <aside class="curriculum">
+      <div class="curriculum-card done"><span>01</span><div><b>Fundamentals</b><small>Legal moves · checks · castling</small></div><em>CORE</em></div>
+      <div class="curriculum-card current"><span>02</span><div><b>Openings</b><small>Centre · development · king safety</small></div><em>NOW</em></div>
+      <div class="curriculum-card"><span>03</span><div><b>Middlegame</b><small>Forks · pins · plans · pawn structures</small></div><em>SOON</em></div>
+      <div class="curriculum-card"><span>04</span><div><b>Endgame</b><small>Basic mates · opposition · rook endings</small></div><em>SOON</em></div>
+      <div class="opening-list" id="openingList"></div>
+    </aside>
+    <section class="trainer-card">
+      <div class="trainer-copy"><span class="eyebrow">OPENING ACADEMY</span><h2 id="openingName">Italian Game</h2><p id="openingWhy"></p><div class="lesson-prompt"><small>YOUR TASK</small><b id="openingPrompt">Find move 1.</b><span id="openingNote">Control the centre.</span></div><div class="lesson-controls"><button id="openingHint">Hint</button><button id="openingReveal">Reveal move</button><button id="openingReset">Restart</button></div><div class="opening-progress"><div id="openingProgress"></div></div></div>
+      <div class="board-shell learning"><div id="learnBoard" class="chess-board"></div></div>
+    </section>
+  </div>
+</section>
+
+<section id="puzzles" class="screen">
+  <div class="hero-strip compact"><div><span class="eyebrow">PUZZLES / PATTERN RECOGNITION</span><h1>See it once. Spot it forever.</h1><p>Short tactical positions. Personal puzzles from your own games come next.</p></div><div class="stat-big"><small>PUZZLES SOLVED</small><b id="puzzleSolvedTop">0</b></div></div>
+  <div class="puzzle-grid"><section class="board-shell puzzle-shell"><div id="puzzleBoard" class="chess-board"></div></section><aside class="puzzle-panel"><div class="puzzle-rating" id="puzzleRating">450</div><span class="eyebrow" id="puzzleTheme">CHECKMATE</span><h2 id="puzzleTitle">Mate in one</h2><p id="puzzlePrompt">White to move. Find the best move.</p><div id="puzzleFeedback" class="puzzle-feedback">Look for checks, captures and threats — in that order.</div><div class="puzzle-actions"><button id="puzzleHint">Hint</button><button id="nextPuzzle" class="primary">Next puzzle</button></div></aside></div>
+</section>
+
+<section id="progress" class="screen">
+  <div class="hero-strip compact"><div><span class="eyebrow">PROGRESS / LOCAL PROFILE</span><h1>Make improvement visible.</h1><p>Your first profile lives in this browser. Accounts and cloud sync can come later.</p></div><button id="resetProgress" class="text-btn">Reset local progress</button></div>
+  <div class="progress-grid"><article class="progress-hero"><small>ESTIMATED RATING</small><b id="ratingBig">600</b><span id="ratingDelta">Start playing rated computer games.</span><div class="rating-track"><i id="ratingTrack"></i></div><div class="milestones"><span>400</span><span>800</span><span>1200</span><span>1600</span><span>2000</span></div></article><article><small>GAMES</small><b id="gamesStat">0</b><span id="recordStat">0W · 0D · 0L</span></article><article><small>OPENING REPS</small><b id="openingStat">0</b><span>Correct guided moves</span></article><article><small>PUZZLES</small><b id="puzzleStat">0</b><span>Solved positions</span></article></div>
+  <div class="next-plan"><span class="eyebrow">TODAY’S PLAN</span><h2>20 minutes is enough to start.</h2><div class="plan-steps"><div><b>1</b><span>Play one game at 600</span><em>8–12 min</em></div><div><b>2</b><span>Repeat the Italian opening</span><em>4 min</em></div><div><b>3</b><span>Solve four puzzles</span><em>4 min</em></div></div></div>
+</section>
+
+<section id="themes" class="screen">
+  <div class="hero-strip compact"><div><span class="eyebrow">THEMES / SKINS</span><h1>Make the board yours.</h1><p>The theme system is deliberately separated from chess logic so community and artist packs can live on top of the open core later.</p></div></div>
+  <div class="theme-layout"><div><h2>Board skins</h2><div class="theme-grid" id="themeGrid"><button data-theme="walnut" class="theme-card walnut active"><i></i><b>Walnut</b><span>Warm physical board</span></button><button data-theme="midnight" class="theme-card midnight"><i></i><b>Midnight</b><span>Deep blue tournament</span></button><button data-theme="jade" class="theme-card jade"><i></i><b>Jade</b><span>Calm green study</span></button><button data-theme="paper" class="theme-card paper"><i></i><b>Paper</b><span>Quiet editorial</span></button></div></div><div><h2>Piece skins</h2><div class="piece-theme-grid"><button data-pieces="classic" class="piece-skin active"><span>♞</span><b>Classic</b></button><button data-pieces="sharp" class="piece-skin"><span>♞</span><b>Sharp</b></button><button data-pieces="soft" class="piece-skin"><span>♞</span><b>Soft</b></button></div><div class="market-card"><span>COMING LATER</span><h3>Community Skin Studio</h3><p>Open theme schema + creator packs + optional paid art packs. The chess core stays independent from cosmetics.</p></div></div></div>
+</section>
+
+<section id="lab" class="screen">
+  <div class="lab-hero"><div class="lab-copy"><span class="eyebrow">LAB / EXPERIMENTAL CHESS</span><h1>Leave the flat board behind.</h1><p>Tri-D started as a curiosity from a Star Trek reference. It now lives where it belongs: the experimental wing of Chess Command.</p><div class="lab-features"><span>3 main decks</span><span>4 movable attack boards</span><span>64 squares</span><span>FRS 5.0 beta</span></div><a class="launch" href="https://mikelninh.github.io/trid-chess/" target="_blank" rel="noopener">Launch Tri-D Lab <b>↗</b></a></div><div class="lab-orbit"><div class="deck d1"></div><div class="deck d2"></div><div class="deck d3"></div><div class="orbit-piece">♞</div></div></div>
+  <div class="lab-note"><b>Why keep it?</b><span>Because it is genuinely fun, technically unusual, and a perfect place for future variants, board editors and weird-chess experiments without making the main learning app harder to use.</span></div>
+</section>
+</main>
+<footer><span>Chess Command · built to get better at chess, one game at a time.</span><span>Open core · local-first progress · Stockfish-ready · Tri-D Lab</span></footer>
+</div>
+<div id="toast" class="toast"></div>
+<script src="chess-core.js"></script><script src="data.js"></script><script src="stockfish-bridge.js"></script><script src="chess-app.js"></script><script src="pwa-init.js"></script>
+</body></html>

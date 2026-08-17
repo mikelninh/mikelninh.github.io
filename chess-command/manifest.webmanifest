@@ -1,0 +1,21 @@
+{
+  "name": "Chess Command",
+  "short_name": "Chess",
+  "description": "A mobile-first personal chess gym: play, learn openings, solve puzzles and track your progress.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0e0d0b",
+  "theme_color": "#11100e",
+  "categories": ["games", "education"],
+  "icons": [
+    {
+      "src": "./chess-command-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
