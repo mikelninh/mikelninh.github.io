@@ -1,22 +1,8 @@
-const CACHE='chess-command-v5';
+const CACHE='chess-command-v10';
 const CORE=[
-  './',
-  './index.html',
-  './chess-styles.css',
-  './piece-skin.css',
-  './learning-v5.css',
-  './mobile.css',
-  './chess-core.js',
-  './data.js',
-  './stockfish-bridge.js',
-  './chess-app.js',
-  './learning-v5.js',
-  './piece-skin.js',
-  './mobile-ui.js',
-  './pwa-init.js',
-  './pieces.svg',
-  './manifest.webmanifest',
-  './chess-command-icon.svg'
+  './','./index.html','./chess-styles.css','./piece-skin.css','./learning-v5.css','./coach-v10.css','./mobile.css',
+  './chess-core.js','./coach-core.js','./data.js','./stockfish-bridge.js','./chess-app.js','./learning-v5.js','./coach-v10.js',
+  './piece-skin.js','./mobile-ui.js','./pwa-init.js','./pieces.svg','./manifest.webmanifest','./chess-command-icon.svg'
 ];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
