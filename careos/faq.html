@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f6f8f7">
+  <title>CareOS — The hard questions</title>
+  <meta name="description" content="CareOS ground truth: stakeholders, daily use, patient access, agents, hospital rollout, safety, interoperability, critical service and the path from synthetic research to healthcare infrastructure.">
+  <style>
+    :root{--bg:#f6f8f7;--surface:#fff;--ink:#10201a;--muted:#68756f;--line:#dfe7e3;--green:#126b55;--green2:#e9f4f0;--amber:#9b6a16;--red:#8d4141;--shadow:0 20px 60px rgba(29,53,43,.08);--radius:24px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% 0,#e8f2ee 0,transparent 31rem),var(--bg);color:var(--ink);font:15px/1.58 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:inherit}.wrap{width:min(1140px,calc(100% - 32px));margin:auto}.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0}.brand{font-size:18px;font-weight:850;letter-spacing:-.04em;text-decoration:none}.brand i{display:inline-grid;place-items:center;width:34px;height:34px;margin-right:9px;border-radius:11px;background:var(--ink);color:#fff;font-style:normal}.nav{display:flex;gap:18px;align-items:center}.nav a{font-size:13px;color:var(--muted);text-decoration:none}.nav .cta{padding:9px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.8);color:var(--ink);font-weight:750}
+    .hero{padding:76px 0 52px;max-width:930px}.eyebrow{display:flex;gap:8px;align-items:center;font-size:12px;font-weight:850;letter-spacing:.07em;text-transform:uppercase;color:var(--green)}.dot{width:7px;height:7px;border-radius:50%;background:var(--green)}h1{font-size:clamp(48px,8vw,86px);line-height:.98;letter-spacing:-.065em;margin:17px 0 24px}.lead{font-size:clamp(18px,2.2vw,24px);line-height:1.45;color:#46544e;max-width:840px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;padding:13px 17px;border-radius:15px;border:1px solid var(--line);background:var(--surface)}.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}.boundary{margin-top:28px;color:var(--muted);font-size:12px}.boundary b{color:var(--ink)}
+    .anchor{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 75px}.anchor a{font-size:12px;font-weight:750;text-decoration:none;padding:9px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.72)}
+    section{margin-bottom:88px}.head{display:grid;grid-template-columns:.65fr 1.35fr;gap:28px;margin-bottom:26px}.head h2{font-size:clamp(31px,4vw,49px);line-height:1.05;letter-spacing:-.048em;margin:0}.head p{color:var(--muted);margin:3px 0 0;max-width:650px}.card{background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.pad{padding:26px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.role h3,.question h3{font-size:22px;letter-spacing:-.035em;margin:4px 0 9px}.role p,.question p{color:var(--muted);margin:0}.num{font:800 11px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--green);text-transform:uppercase}.flow{padding:29px;overflow:auto}.flow pre{margin:0;font:650 14px/1.85 ui-monospace,SFMono-Regular,Menlo,monospace;color:#31453d;white-space:pre}.target{display:flex;justify-content:space-between;gap:14px;padding:18px 0;border-top:1px solid #e8eeeb}.target:first-child{border-top:0}.target b{font-size:15px}.target span{color:var(--green);font-weight:850;white-space:nowrap}.warn{background:#fffaf0;border-color:#eadcc0}.bad{background:#fff8f8;border-color:#ecdada}.good{background:#f5fbf8;border-color:#d8ebe3}.quote{font-size:25px;line-height:1.3;letter-spacing:-.035em;margin:0}.small{font-size:12px;color:var(--muted)}
+    .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.step{padding:21px}.step strong{display:block;font-size:16px;margin:8px 0}.step p{color:var(--muted);margin:0}.faq{display:grid;gap:9px}.faq details{background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:17px;padding:0 19px}.faq summary{cursor:pointer;list-style:none;font-weight:800;padding:18px 28px 18px 0;position:relative}.faq summary::-webkit-details-marker{display:none}.faq summary:after{content:"+";position:absolute;right:0;font-size:21px;color:var(--green)}.faq details[open] summary:after{content:"–"}.faq details div{color:var(--muted);padding:0 0 19px;max-width:850px}.faq code{font-size:12px;color:#31453d}.sources{font-size:12px;color:var(--muted)}.sources a{color:var(--green)}
+    .dark{background:var(--ink);color:#fff;border:0;padding:36px}.dark h2{font-size:clamp(31px,4vw,50px);line-height:1.05;letter-spacing:-.048em;margin:5px 0 18px}.dark p{color:#cbd8d2;font-size:18px;max-width:830px}.dark .btn{background:#fff;border:0;color:var(--ink)}.dark .ghost{background:transparent;color:#fff;border:1px solid #53645d}
+    footer{border-top:1px solid var(--line);padding:30px 0 48px;display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:12px}
+    a:focus-visible,summary:focus-visible{outline:3px solid #7bb3a3;outline-offset:3px}
+    @media(max-width:840px){.nav a:not(.cta){display:none}.head,.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr}.timeline{grid-template-columns:1fr 1fr}.hero{padding-top:48px}}
+    @media(max-width:500px){.wrap{width:min(100% - 22px,1140px)}h1{font-size:48px}.timeline{grid-template-columns:1fr}.dark{padding:26px}.target{display:block}.target span{display:block;margin-top:5px}footer{flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/careos/"><i>C</i>CareOS</a>
+    <nav class="nav" aria-label="Primary"><a href="#people">People</a><a href="#safety">Safety</a><a href="#roadmap">Roadmap</a><a class="cta" href="https://github.com/mikelninh/care-os">Engineering ↗</a></nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span class="dot"></span>Ground truth · open for criticism</div>
+      <h1>What should healthcare feel like if we designed it now?</h1>
+      <p class="lead">Our target is not “more AI.” It is a healthcare environment where the right information is already there, uncertainty is visible, routine work almost disappears, patients understand what is happening, and humans stay in control.</p>
+      <div class="actions"><a class="btn primary" href="#day">See a hospital’s first week →</a><a class="btn" href="#questions">Challenge the plan →</a><a class="btn" href="/recare/">See the Recare work sample →</a></div>
+      <div class="boundary"><b>Boundary:</b> CareOS remains synthetic / pre-hospital research. This page describes the target system and the proof needed to earn each step.</div>
+    </section>
+
+    <nav class="anchor" aria-label="On this page"><a href="#people">Stakeholders</a><a href="#devices">Devices</a><a href="#time">Time</a><a href="#agents">Agents</a><a href="#patients">Patients</a><a href="#day">First week</a><a href="#safety">Worst cases</a><a href="#service">24/7 service</a><a href="#roadmap">Roadmap</a><a href="#questions">Hard questions</a></nav>
+
+    <section id="people">
+      <div class="head"><h2>One foundation. Different superpowers.</h2><p>A doctor, nurse, patient and integration engineer should never see the same generic dashboard. They consume the same source-linked truth through interfaces shaped around their responsibility.</p></div>
+      <div class="grid3">
+        <article class="card pad role"><span class="num">Physician</span><h3>What changed? What matters?</h3><p>Changed since last review, current context, pending results, contradictions, work that needs a decision and one-click sources. The agent prepares; the physician decides.</p></article>
+        <article class="card pad role"><span class="num">Nursing</span><h3>What changed this shift?</h3><p>Care-relevant deltas, unresolved tasks, isolation changes and handover context—not another full-chart reread.</p></article>
+        <article class="card pad role"><span class="num">Patient</span><h3>What is happening to me?</h3><p>Plain-language current state, pending items, next steps, medicines, sources and a way to flag something that looks wrong.</p></article>
+        <article class="card pad role"><span class="num">Social / discharge</span><h3>Stop chasing information.</h3><p>Structured aftercare need, reusable patient context, digital status and prepared referral packages instead of repeated calls, fax and copy-paste.</p></article>
+        <article class="card pad role"><span class="num">Hospital IT</span><h3>Operate a product, not glue.</h3><p>Adapter/version compatibility, source health, identity, conformance, upgrades, rollback and machine-readable blockers.</p></article>
+        <article class="card pad role"><span class="num">CISO / DPO / leadership</span><h3>Evidence, not promises.</h3><p>Data flows, permissions, versions, audit, incidents, Time Returned to Care and safety stops—without reverse-engineering a sales deck.</p></article>
+      </div>
+    </section>
+
+    <section id="devices">
+      <div class="head"><h2>It should live where the work already lives.</h2><p>New hardware must not be required for core value. The product adapts to clinical environments instead of asking the hospital to adapt to the product.</p></div>
+      <article class="card flow"><pre>PC / managed Windows / Citrix
+  → PRIMARY clinical surface
+  → KIS patient context launches CareOS
+
+Tablet
+  → rounds / bedside / source review / voice capture
+
+Phone
+  → lightweight secure tasks / capture / carefully bounded alerts
+  → not a miniature KIS
+
+Offline
+  → NOT offline-first clinical care
+  → approved last-known cache may be READ-ONLY + visibly stale
+  → no absence claims · no generic write · no agent tools
+  → existing KIS/local workflow remains fallback</pre></article>
+    </section>
+
+    <section id="time">
+      <div class="head"><h2>We measure minutes returned to care.</h2><p>German hospital evidence makes the opportunity concrete: documentation and evidence obligations consume close to three hours daily for physicians and nurses in a 2025 DKI survey. Our targets below are ambitions to prove—not current CareOS outcomes.</p></div>
+      <div class="card pad">
+        <div class="target"><b>Physician · targeted workflows</b><span>pilot ≥20 min / shift → mature 45–60</span></div>
+        <div class="target"><b>Nurse · handover/documentation</b><span>pilot ≥15 min / shift → mature 30–45</span></div>
+        <div class="target"><b>Discharge / social service</b><span>pilot ≥20 min / eligible case</span></div>
+        <div class="target"><b>Hospital IT · supported integrations</b><span>hours, not repeated weeks</span></div>
+      </div>
+      <div class="grid3" style="margin-top:14px">
+        <article class="card pad good"><span class="num">Synthetic inspiration</span><h3>Physician review</h3><p>75 minutes of complex pre-round information work in a shift → 48 minutes. <b>27 minutes returned</b>. Must still pass verification and safety gates.</p></article>
+        <article class="card pad good"><span class="num">Synthetic inspiration</span><h3>Nursing handover</h3><p>55 minutes across targeted handover work → 35 minutes. <b>20 minutes returned</b>. No increase in missed items or alerts.</p></article>
+        <article class="card pad good"><span class="num">Synthetic inspiration</span><h3>Aftercare case</h3><p>60 minutes of search / re-entry / coordination → 30 minutes. <b>30 minutes returned</b>. Real workflow evidence required.</p></article>
+      </div>
+      <p class="sources">Evidence context: <a href="https://www.dki.de/forschungsprojekt/dki-blitzumfrage-aktuelle-burokratiebelastung-in-den-krankenhausern-2025">DKI 2025 bureaucracy survey</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34937102/">German EHR time-motion study</a> · <a href="https://recareai.com/loesungen/loesungen-fuer-krankenhaeuser">Recare’s public Discharge time-savings example</a>.</p>
+    </section>
+
+    <section id="agents">
+      <div class="head"><h2>The agent is inside the workflow—not the workflow.</h2><p>The default product is not a chatbot. Agents are narrow helpers with visible identity, explicit tools and revocable authority.</p></div>
+      <div class="grid2">
+        <article class="card pad good"><span class="num">Good agent jobs</span><h3>Prepare, find, draft, route.</h3><p>Pre-round synthesis, change detection, source-linked timelines, note/discharge drafts, missing-field checks, aftercare packages, patient explanations, result-finalisation routing and product guidance.</p></article>
+        <article class="card pad bad"><span class="num">Much higher bar</span><h3>Diagnose, prescribe, write, send.</h3><p>Diagnosis/treatment recommendations, medication changes, order entry and consequential external communication require separate evidence, governance and often regulatory assessment. There is no generic autonomous shortcut.</p></article>
+      </div>
+      <article class="card flow" style="margin-top:14px"><pre>untrusted model proposal
+        ↓
+deterministic patient · task · tool · data · budget policy
+        ↓
+trusted tool proxy / source-linked context
+        ↓
+reviewable draft
+        ↓
+human authority</pre></article>
+    </section>
+
+    <section id="patients">
+      <div class="head"><h2>The patient is not an afterthought.</h2><p>Germany’s ePA already provides patient access/control and access logging. CareOS should make authorised information easier to understand without creating a parallel shadow record.</p></div>
+      <div class="grid2">
+        <article class="card pad role"><span class="num">Patient home</span><h3>Know what is happening.</h3><p>What we know · what changed · what is pending · what happens next · medicines · documents/sources · access transparency · flag a possible error.</p></article>
+        <article class="card pad role"><span class="num">Patient agent</span><h3>Understand, don’t impersonate.</h3><p>Explain jargon, translate presentation, prepare questions and locate information. The interface always distinguishes source record, clinician plan and AI explanation.</p></article>
+      </div>
+      <p class="sources">Official context: <a href="https://www.gematik.de/anwendungen/epa-fuer-alle/faq">gematik ePA FAQ</a> · <a href="https://www.gematik.de/newsroom/news-detail/das-sind-die-neuen-funktionen-der-epa">ePA transparency updates, July 2026</a>.</p>
+    </section>
+
+    <section id="day">
+      <div class="head"><h2>A hospital’s first week should be boring.</h2><p>No “big go-live weekend.” The new path earns dependency while the legacy workflow remains available.</p></div>
+      <div class="timeline">
+        <article class="card step"><span class="num">Day 0</span><strong>IT only.</strong><p>Manifest, preflight, source discovery, conformance, identity, network, rollback. No clinician dependency.</p></article>
+        <article class="card step"><span class="num">Day 1</span><strong>Synthetic team test.</strong><p>10–15 minute orientation. Learn changed, pending, review and source—nothing else.</p></article>
+        <article class="card step"><span class="num">Days 2–5</span><strong>Shadow.</strong><p>Approved deidentified/source sandbox. Measure time, searches, source checks, corrections and failures.</p></article>
+        <article class="card step"><span class="num">Week 2+</span><strong>Earn live read-only.</strong><p>One workflow, one ward, accountable owners, legacy fallback. Expand only when evidence says yes.</p></article>
+      </div>
+    </section>
+
+    <section id="safety">
+      <div class="head"><h2>Design the worst day before the best day.</h2><p>Critical infrastructure cannot hide behind “AI can make mistakes.” The platform must define what happens when identity, sources, models, networks or people fail.</p></div>
+      <div class="grid3">
+        <article class="card pad bad"><span class="num">Wrong patient</span><h3>Never guess identity.</h3><p>Authoritative patient/encounter binding outside the model. Explicit cross-source ID strategy. Ambiguity blocks.</p></article>
+        <article class="card pad warn"><span class="num">Source outage</span><h3>Unavailable ≠ absent.</h3><p>Other facts may remain visible, but completeness is false and absence/negative inference is disabled.</p></article>
+        <article class="card pad warn"><span class="num">Stale cache</span><h3>Age cannot hide.</h3><p>Offline cache is optional, approved, time-bounded and read-only. When too old, it disappears.</p></article>
+        <article class="card pad bad"><span class="num">Compromised model</span><h3>No self-escalation.</h3><p>The model cannot choose a new patient, grant tools, widen egress, invoke break-glass or silently write.</p></article>
+        <article class="card pad warn"><span class="num">KIS upgrade</span><h3>Test before clinicians discover it.</h3><p>Capability diff → conformance → canary/shadow → promote or rollback.</p></article>
+        <article class="card pad warn"><span class="num">CareOS outage</span><h3>The hospital still works.</h3><p>CareOS is not the system of record. Existing hospital workflows remain fallback; model outage does not remove core context.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="head"><h2>A clinical graph underneath—not another pile of PDFs.</h2><p>Healthcare is a relationship over time. The graph is a logical contract; hospitals do not need to buy a specific graph database.</p></div>
+      <article class="card flow"><pre>Patient
+ ├─ Encounter
+ │   ├─ Fact ── asserted by ── Source
+ │   ├─ Result ── derived from ── Specimen
+ │   ├─ Fact ── supersedes / contradicts ── Fact
+ │   ├─ Task ── assigned to ── Team
+ │   ├─ Decision ── supported by ── Evidence
+ │   └─ Agent draft ── reviewed by ── Human
+ └─ Access event ── actor / treatment context / time</pre></article>
+    </section>
+
+    <section id="service">
+      <div class="head"><h2>If people depend on it, we operate it like critical software.</h2><p>24/7 support is not a marketing badge. It needs named owners, explicit severity response, release rings, recovery exercises and a real fallback story.</p></div>
+      <div class="grid2">
+        <article class="card pad role"><span class="num">Future service target</span><h3>24/7 Sev-0 / Sev-1 path.</h3><p>Proposed acknowledgement targets: ≤5 minutes for patient-safety/broad outage, ≤15 minutes for major degradation. Monthly ops review, quarterly clinical-value review, annual resilience exercises.</p></article>
+        <article class="card pad role"><span class="num">Release discipline</span><h3>No silent clinical changes.</h3><p>Models, prompts, mappings, policy, adapters and write authority are versioned, tested, canaried and rollbackable. A published container is not automatically a clinical release.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="head"><h2>Communication: use the rails, improve the context.</h2><p>Germany already has ePA/TI/KIM; Europe is moving toward EHDS/MyHealth@EU. CareOS should make information trustworthy and usable across those rails, not invent another universal inbox.</p></div>
+      <article class="card flow"><pre>within hospital
+  → provider-local canonical context
+
+hospital ↔ practice
+  → national ePA / TI / KIM / structured interfaces where applicable
+
+hospital ↔ post-acute / rehab / nursing
+  → structured networks such as Recare + national rails
+
+EU
+  → EHDS / MyHealth@EU priority datasets
+
+global
+  → FHIR / IPS-shaped minimum context + issuer trust + receiving policy</pre></article>
+      <p class="sources">Official context: <a href="https://fachportal.gematik.de/anwendungen/kommunikation-im-medizinwesen">gematik KIM</a> · <a href="https://www.gematik.de/anwendungen/epa-fuer-alle/krankenhaeuser">ePA for hospitals</a> · <a href="https://health.ec.europa.eu/ehealth-digital-health-and-care/european-health-data-space-regulation-ehds_en">European Health Data Space</a>.</p>
+    </section>
+
+    <section id="roadmap">
+      <div class="head"><h2>We are early. The foundation is the work.</h2><p>The synthetic architecture is far ahead of the real-world evidence. That is exactly why the next move is contact with real clinicians, hospital systems and production integration teams—not another speculative AI feature.</p></div>
+      <div class="card pad">
+        <div class="target"><b>Vision / architecture</b><span>~70%</span></div>
+        <div class="target"><b>Synthetic engineering foundation</b><span>~55%</span></div>
+        <div class="target"><b>Self-install / integration product</b><span>~35%</span></div>
+        <div class="target"><b>Clinician-facing evidence</b><span>~25%</span></div>
+        <div class="target"><b>Patient-facing product</b><span>~15%</span></div>
+        <div class="target"><b>Real hospital integration evidence</b><span>~5%</span></div>
+        <div class="target"><b>Multi-hospital repeatability</b><span>~2%</span></div>
+      </div>
+      <p class="small">Weighted against the full endgame, roughly 10–15%. Against what can responsibly be done before real hospital access, roughly 70–80%.</p>
+    </section>
+
+    <section id="questions">
+      <div class="head"><h2>The difficult questions are part of the product.</h2><p>This page is meant to be challenged. If one of these answers is weak, that is a roadmap item—not something to smooth over.</p></div>
+      <div class="faq">
+        <details open><summary>Are we actually saving the time we claim to care about?</summary><div>We do not claim current savings. Every pilot needs a before/after baseline: task time, searches, calls, source opens, corrections, missed pending work and abandonment. In CareOS evaluation logic, speed cannot override a safety-stop or verification-decay event.</div></details>
+        <details><summary>What if the UI becomes so good that clinicians stop checking sources?</summary><div>Then the rollout fails. Verification behavior is a first-class metric. We want fewer unnecessary searches—not automation bias.</div></details>
+        <details><summary>What happens when the Wi-Fi dies?</summary><div>The existing local source workflow remains fallback. A hospital-approved recent cache may be shown read-only with unavoidable age; no general writes, sends, agent tools or absence claims are permitted offline.</div></details>
+        <details><summary>Can the agent make a treatment decision?</summary><div>Not by default. The current architecture treats models as untrusted proposers. Diagnostic/treatment recommendation or consequential action is a separate evidence/regulatory product with a much higher bar.</div></details>
+        <details><summary>What can patients see?</summary><div>CareOS should align with official access/legal policy and the ePA, then add a usable projection: current state, changes, pending items, next steps, sources and correction/question flows. It should not create a secret parallel patient record.</div></details>
+        <details><summary>Are we replacing the KIS?</summary><div>No. CareOS sits beside systems of record. The endgame is stable context/interoperability seams so applications can improve without a dangerous big-bang replacement.</div></details>
+        <details><summary>Why a graph?</summary><div>Because clinical meaning depends on relationships, time, provenance and supersession. The graph is logical: <code>fact → source</code>, <code>fact → supersedes → fact</code>, <code>decision → evidence</code>, <code>draft → agent → human review</code>. It does not require one database vendor.</div></details>
+        <details><summary>How do we know Hospital #100 is easier than Hospital #1?</summary><div>We measure integration engineer hours, adapter reuse, configuration-only rate, custom code/site, conformance failures and upgrade regressions. If marginal integration cost does not fall, we have consultancy—not infrastructure.</div></details>
+        <details><summary>What is the biggest current gap?</summary><div>Reality. Real clinician behavior, real KIS/LIS interfaces, real hospital identity/network/security constraints and a second independent site. We have pushed synthetic architecture far enough that external reality should now become the project manager.</div></details>
+      </div>
+    </section>
+
+    <section class="card dark">
+      <span class="num" style="color:#9ed0c0">Open invitation</span>
+      <h2>Tell us where this breaks in the real world.</h2>
+      <p>We are deliberately building this as a ground truth for discussion—not a polished claim that healthcare has been solved. If you run hospital integrations, clinical workflows, security, nursing, medicine or patient advocacy, the most useful contribution is the assumption we got wrong.</p>
+      <div class="actions"><a class="btn" href="https://github.com/mikelninh/care-os/blob/main/docs/FUTURE_HEALTHCARE_MASTER_PLAN.md">Read the full master plan →</a><a class="btn ghost" href="https://github.com/mikelninh/care-os">Inspect the repo →</a></div>
+    </section>
+  </main>
+
+  <footer><span>CareOS · Michael Ninh · Berlin</span><span>Models may interpret and propose. Evidence, authority and safety boundaries remain outside the model.</span></footer>
+</div>
+</body>
+</html>
