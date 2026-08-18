@@ -3,7 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Independent Recare application work sample by Michael Ninh: trustworthy agentic clinical documentation with provenance, review gates and failure tests.">
+  <meta name="theme-color" content="#f4f6f3">
+  <meta name="description" content="Independent Recare AI/ML Engineer work sample by Michael Ninh: a synthetic clinical agent workflow built around provenance, uncertainty, bounded tools, human approval and measurable time returned to care.">
+  <meta property="og:title" content="Clinical Time-Back Challenge — Michael Ninh">
+  <meta property="og:description" content="Can an AI agent give clinicians time back without making clinical information less trustworthy?">
   <title>Clinical Time-Back Challenge — Michael Ninh</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,252 +14,296 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="topline">Independent application work sample · synthetic data · not affiliated with Recare · not for clinical use</div>
+  <a class="skip-link" href="#main">Skip to work sample</a>
 
-  <header class="nav shell">
-    <a class="brand" href="../">Michael Ninh <span>AI Engineer · Berlin</span></a>
-    <nav>
-      <a href="#challenge">Challenge</a>
-      <a href="#stress">Stress test</a>
-      <a href="#evaluation">Evaluation</a>
-      <a href="https://github.com/mikelninh/care-os" target="_blank" rel="noreferrer">CareOS ↗</a>
-    </nav>
+  <div class="notice">
+    <span class="notice-dot" aria-hidden="true"></span>
+    Independent application work sample · synthetic data only · not affiliated with Recare · not for clinical use
+  </div>
+
+  <header class="site-header">
+    <div class="shell nav">
+      <a class="brand" href="../" aria-label="Michael Ninh portfolio">
+        <span class="brand-mark">MN</span>
+        <span class="brand-copy"><strong>Michael Ninh</strong><small>AI Engineer · Berlin</small></span>
+      </a>
+      <nav class="nav-links" aria-label="Work sample navigation">
+        <a href="#challenge">Demo</a>
+        <a href="#stress">Failure tests</a>
+        <a href="#proof">Engineering</a>
+        <a class="nav-cta" href="https://github.com/mikelninh/care-os" target="_blank" rel="noreferrer">CareOS ↗</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <section class="hero shell">
+  <main id="main">
+    <section class="hero shell reveal">
       <div class="hero-copy">
-        <div class="eyebrow">Work sample · AI / ML Engineer</div>
-        <h1>Give clinicians <em>time back</em> — without making clinical information less trustworthy.</h1>
-        <p class="lede">A small, synthetic exploration of the engineering boundary I care about: AI may retrieve, structure and draft. Sources, uncertainty, permissions and consequential decisions stay explicit.</p>
+        <div class="eyebrow"><span>Recare work sample</span><i></i><span>AI / ML Engineer</span></div>
+        <h1>Give clinicians <em>time back</em> without weakening trust.</h1>
+        <p class="lede">A focused synthetic proof of the engineering boundary I care about: AI can retrieve, reconcile and draft. <strong>Sources, uncertainty, permissions and consequential decisions stay explicit.</strong></p>
         <div class="hero-actions">
-          <a class="button primary" href="#challenge">Run the 90-second case ↓</a>
-          <a class="button ghost" href="#why">Why I built this</a>
+          <a class="button primary" href="#challenge">Run the 90-second case <span aria-hidden="true">↓</span></a>
+          <a class="button quiet" href="#why">Why I built it</a>
         </div>
-        <div class="hero-signals">
-          <span>FHIR / KIS / LIS context</span><span>source-linked draft</span><span>bounded agent tools</span><span>human approval</span><span>failure replay</span>
+        <div class="trust-row" aria-label="Core design principles">
+          <span>Source-linked</span>
+          <span>FHIR-aware</span>
+          <span>Bounded agents</span>
+          <span>Human approval</span>
+          <span>Failure replay</span>
         </div>
       </div>
-      <aside class="hero-card">
-        <div class="case-label">SUCCESS METRIC</div>
-        <div class="big-metric">time returned to care</div>
-        <p>Not “number of AI features”. Not “confidence score”. The useful outcome is fewer minutes spent hunting, copying and documenting — while safety signals remain visible.</p>
+
+      <aside class="hero-card" aria-label="Success metric">
+        <div class="card-overline">North-star outcome</div>
+        <div class="metric-title">Time returned<br>to care.</div>
+        <p>Not model confidence. Not feature count. Fewer minutes spent hunting, copying and documenting — while safety signals remain visible.</p>
         <div class="metric-grid">
-          <div><b id="heroTimer">00:00</b><span>your demo session</span></div>
+          <div><b id="heroTimer">00:00</b><span>demo session</span></div>
           <div><b>0</b><span>unsupported claims allowed</span></div>
         </div>
+        <div class="metric-rule"><span></span>Speed never overrides a safety stop.</div>
       </aside>
     </section>
 
-    <section id="why" class="why shell section">
-      <div class="section-kicker">Why this problem</div>
-      <div class="why-grid">
-        <h2>I see the cost of bad clinical software after work, not just in architecture diagrams.</h2>
-        <div class="why-copy">
-          <p>My partner is a hospital physician in Berlin. When fragmented systems and documentation eat her evening, the product metric becomes painfully concrete: <strong>good software should return that time to patients — and to her life.</strong></p>
-          <p>That motivated CareOS: an independent reference architecture for trustworthy clinical context. This page narrows it to one hiring-relevant question: <strong>can an agent prepare useful documentation while preserving provenance, missingness, contradictions and human control?</strong></p>
+    <section class="principle-strip reveal" aria-label="Clinical safety principles">
+      <div class="shell principle-grid">
+        <div><span>01</span><strong>Pending ≠ negative</strong></div>
+        <div><span>02</span><strong>Unavailable ≠ absent</strong></div>
+        <div><span>03</span><strong>Documented therapy ≠ recommendation</strong></div>
+        <div><span>04</span><strong>Agent draft ≠ source truth</strong></div>
+      </div>
+    </section>
+
+    <section id="why" class="section shell reveal">
+      <div class="section-label">Why this problem</div>
+      <div class="story-grid">
+        <h2>The cost of bad clinical software shows up after the shift ends.</h2>
+        <div class="story-copy">
+          <p>My partner works as a physician in a Berlin hospital. When fragmented systems and documentation consume her evening, the product metric becomes concrete: <strong>good software should return that time to patients — and to her life.</strong></p>
+          <p>CareOS started as an independent attempt to understand that problem deeply. This work sample narrows the question to one testable challenge: <strong>can an agent prepare useful clinical documentation while preserving provenance, missingness, contradictions and human control?</strong></p>
         </div>
       </div>
     </section>
 
-    <section id="challenge" class="section challenge-wrap">
-      <div class="shell section-head">
-        <div>
-          <div class="section-kicker">01 · Clinical Time-Back Challenge</div>
-          <h2>Dr. H. has minutes before the next patient.</h2>
+    <section id="challenge" class="challenge section">
+      <div class="shell reveal">
+        <div class="section-head">
+          <div>
+            <div class="section-label light">01 · Clinical Time-Back Challenge</div>
+            <h2>One patient. Five sources. Minutes before the next task.</h2>
+          </div>
+          <p>Synthetic infectiology discharge-prep. The point is not medical recommendation — it is trustworthy information handling under time pressure.</p>
         </div>
-        <p class="section-note">Synthetic infectiology discharge-prep case. The point is not medical recommendation; it is trustworthy information handling.</p>
-      </div>
 
-      <div class="workspace shell">
-        <aside class="patient-rail">
-          <div class="patient-head">
-            <div class="avatar">MS</div>
-            <div><b>Mara Stein</b><span>Synthetic patient · ID DEMO-1842</span></div>
-          </div>
-          <div class="rail-item"><span>Encounter</span><b>Station 21 · Day 4</b></div>
-          <div class="rail-item"><span>Reason</span><b>Pyelonephritis + bacteremia</b></div>
-          <div class="rail-item"><span>Sources</span><b>5 connected</b></div>
-          <div class="source-stack">
-            <div><i class="ok"></i>KIS medication</div>
-            <div><i class="ok"></i>LIS microbiology</div>
-            <div><i class="ok"></i>FHIR observations</div>
-            <div><i class="warn-dot"></i>PDF discharge draft</div>
-            <div><i class="pending-dot"></i>Pending orders</div>
-          </div>
-          <button id="startCase" class="button primary full">Start case</button>
-          <button id="resetCase" class="button ghost full">Reset</button>
-          <div class="timer-box"><span>session</span><b id="caseTimer">00:00</b></div>
-        </aside>
-
-        <div class="clinical-pane">
-          <div class="pane-toolbar">
-            <div class="tabs">
-              <button class="tab active" data-tab="context">Context</button>
-              <button class="tab" data-tab="draft">Draft</button>
-              <button class="tab" data-tab="trace">Agent trace</button>
+        <div class="workspace" aria-label="Synthetic clinician workspace">
+          <aside class="patient-rail">
+            <div class="patient-head">
+              <div class="avatar" aria-hidden="true">MS</div>
+              <div><b>Mara Stein</b><span>Synthetic patient · DEMO-1842</span></div>
             </div>
-            <div class="status-chip idle" id="caseStatus">ready</div>
-          </div>
+            <dl class="patient-meta">
+              <div><dt>Encounter</dt><dd>Station 21 · Day 4</dd></div>
+              <div><dt>Reason</dt><dd>Pyelonephritis + bacteremia</dd></div>
+              <div><dt>Connected</dt><dd>5 sources</dd></div>
+            </dl>
+            <div class="source-stack" aria-label="Connected sources">
+              <div><i class="ok"></i>KIS medication</div>
+              <div><i class="ok"></i>LIS microbiology</div>
+              <div><i class="ok"></i>FHIR observations</div>
+              <div><i class="warn-dot"></i>PDF discharge draft</div>
+              <div><i class="pending-dot"></i>Pending orders</div>
+            </div>
+            <button id="startCase" class="button primary full">Start synthetic case</button>
+            <button id="resetCase" class="button rail-reset full">Reset</button>
+            <div class="timer-box"><span>session</span><b id="caseTimer">00:00</b></div>
+          </aside>
 
-          <div id="contextPanel" class="tab-panel active">
-            <div class="empty-state" id="emptyState">
-              <div class="pulse-icon">✦</div>
-              <h3>One task. Five sources. Several ways to be dangerously wrong.</h3>
-              <p>Start the case to reconcile structured data, documents and pending results into a reviewable discharge-prep context.</p>
+          <div class="clinical-pane">
+            <div class="pane-toolbar">
+              <div class="tabs" role="tablist" aria-label="Case workspace">
+                <button class="tab active" data-tab="context" role="tab" aria-selected="true">Context</button>
+                <button class="tab" data-tab="draft" role="tab" aria-selected="false">Draft</button>
+                <button class="tab" data-tab="trace" role="tab" aria-selected="false">Agent trace</button>
+              </div>
+              <div class="status-chip idle" id="caseStatus" aria-live="polite">ready</div>
             </div>
 
-            <div class="facts hidden" id="facts">
-              <article class="fact-card good">
-                <div class="fact-top"><span class="fact-type">Microbiology</span><span class="evidence-state">SOURCE VERIFIED</span></div>
-                <h3>E. coli · blood culture 2/2</h3>
-                <p>Identification final. Ceftriaxone susceptible in current preliminary panel. <strong>Final susceptibility panel still pending.</strong></p>
-                <button class="source-link" data-source="microSource">View source</button>
-                <div class="source-drawer" id="microSource"><b>LIS · BC-1842</b><span>18 Aug 2026 · 07:05 · final identification / preliminary susceptibility</span><code>final_antibiogram_status = pending</code></div>
-              </article>
+            <div id="contextPanel" class="tab-panel active" role="tabpanel">
+              <div class="empty-state" id="emptyState">
+                <div class="pulse-icon" aria-hidden="true">✦</div>
+                <h3>Several ways to be confidently wrong.</h3>
+                <p>Start the case to reconcile structured data, documents and pending results into a reviewable context.</p>
+              </div>
 
-              <article class="fact-card good">
-                <div class="fact-top"><span class="fact-type">Documented therapy</span><span class="evidence-state">SOURCE VERIFIED</span></div>
-                <h3>Ceftriaxone 2 g i.v.</h3>
-                <p>Documented in the KIS medication record since 17 Aug · 19:10. <strong>This is documentation, not an AI treatment recommendation.</strong></p>
-                <button class="source-link" data-source="medSource">View source</button>
-                <div class="source-drawer" id="medSource"><b>KIS medication · MED-922</b><span>17 Aug 2026 · 19:10 · active medication entry</span></div>
-              </article>
+              <div class="facts hidden" id="facts">
+                <article class="fact-card good">
+                  <div class="fact-top"><span class="fact-type">Microbiology</span><span class="evidence-state">verified source</span></div>
+                  <h3>E. coli · blood culture 2/2</h3>
+                  <p>Identification final. Ceftriaxone susceptible in current preliminary panel. <strong>Final susceptibility panel still pending.</strong></p>
+                  <button class="source-link" data-source="microSource">Inspect source →</button>
+                  <div class="source-drawer" id="microSource"><b>LIS · BC-1842</b><span>18 Aug 2026 · 07:05 · final identification / preliminary susceptibility</span><code>final_antibiogram_status = pending</code></div>
+                </article>
 
-              <article class="fact-card danger">
-                <div class="fact-top"><span class="fact-type">Conflict</span><span class="evidence-state danger-state">HUMAN REVIEW</span></div>
-                <h3>Allergy conflict: “none known” vs penicillin allergy</h3>
-                <p>An older PDF says “keine Allergien bekannt”. The current structured KIS allergy list contains <strong>Penicillin · urticaria · recorded 2025.</strong></p>
-                <div class="compare">
-                  <div><span>Older PDF</span><b>No known allergies</b><small>12 Feb 2024</small></div>
-                  <div class="preferred"><span>Current KIS</span><b>Penicillin · urticaria</b><small>03 Nov 2025</small></div>
-                </div>
-                <button class="review-button" id="resolveConflict">Mark reviewed</button>
-              </article>
+                <article class="fact-card good">
+                  <div class="fact-top"><span class="fact-type">Documented therapy</span><span class="evidence-state">verified source</span></div>
+                  <h3>Ceftriaxone 2 g i.v.</h3>
+                  <p>Documented in the KIS medication record since 17 Aug · 19:10. <strong>This is documentation, not an AI treatment recommendation.</strong></p>
+                  <button class="source-link" data-source="medSource">Inspect source →</button>
+                  <div class="source-drawer" id="medSource"><b>KIS medication · MED-922</b><span>17 Aug 2026 · 19:10 · active medication entry</span></div>
+                </article>
 
-              <article class="fact-card warning">
-                <div class="fact-top"><span class="fact-type">Open work</span><span class="evidence-state warning-state">PENDING ≠ NEGATIVE</span></div>
-                <h3>Three items must survive handover</h3>
-                <ul>
-                  <li>final susceptibility panel</li>
-                  <li>control blood culture</li>
-                  <li>renal-function repeat after contrast</li>
-                </ul>
-              </article>
+                <article class="fact-card danger">
+                  <div class="fact-top"><span class="fact-type">Contradiction</span><span class="evidence-state danger-state">human review</span></div>
+                  <h3>Allergy conflict across sources</h3>
+                  <p>An older PDF says “keine Allergien bekannt”. The current structured KIS allergy list contains <strong>Penicillin · urticaria · recorded 2025.</strong></p>
+                  <div class="compare">
+                    <div><span>Older PDF</span><b>No known allergies</b><small>12 Feb 2024</small></div>
+                    <div class="preferred"><span>Current KIS</span><b>Penicillin · urticaria</b><small>03 Nov 2025</small></div>
+                  </div>
+                  <button class="review-button" id="resolveConflict">Mark reviewed</button>
+                </article>
+
+                <article class="fact-card warning">
+                  <div class="fact-top"><span class="fact-type">Open work</span><span class="evidence-state warning-state">pending ≠ negative</span></div>
+                  <h3>Three items must survive handover</h3>
+                  <ul>
+                    <li>final susceptibility panel</li>
+                    <li>control blood culture</li>
+                    <li>renal-function repeat after contrast</li>
+                  </ul>
+                </article>
+              </div>
             </div>
-          </div>
 
-          <div id="draftPanel" class="tab-panel">
-            <div class="draft-header"><div><span class="case-label">UNTRUSTED AGENT DRAFT</span><h3>Discharge-prep summary</h3></div><span class="human-badge">human approval required</span></div>
-            <div class="draft-doc">
-              <p><mark data-cite="microSource">Blood cultures grew E. coli in 2/2 bottles.</mark> The current susceptibility panel is preliminary; the final panel remains pending.</p>
-              <p><mark data-cite="medSource">Ceftriaxone 2 g i.v. is documented as active therapy since 17 Aug 2026 at 19:10.</mark></p>
-              <p class="draft-alert"><strong>Review required:</strong> allergy information conflicts across sources. Current KIS lists penicillin-associated urticaria; an older PDF reports no known allergies.</p>
-              <p><strong>Open before handover:</strong> final susceptibility, control blood culture, repeat renal-function result.</p>
+            <div id="draftPanel" class="tab-panel" role="tabpanel">
+              <div class="draft-header">
+                <div><span class="card-overline">Untrusted agent draft</span><h3>Discharge-prep summary</h3></div>
+                <span class="human-badge">human approval required</span>
+              </div>
+              <div class="draft-doc">
+                <p><mark data-cite="microSource">Blood cultures grew E. coli in 2/2 bottles.</mark> The current susceptibility panel is preliminary; the final panel remains pending.</p>
+                <p><mark data-cite="medSource">Ceftriaxone 2 g i.v. is documented as active therapy since 17 Aug 2026 at 19:10.</mark></p>
+                <p class="draft-alert"><strong>Review required:</strong> allergy information conflicts across sources. Current KIS lists penicillin-associated urticaria; an older PDF reports no known allergies.</p>
+                <p><strong>Open before handover:</strong> final susceptibility, control blood culture, repeat renal-function result.</p>
+              </div>
+              <div class="draft-controls">
+                <button class="button quiet" id="returnSource">Open supporting sources</button>
+                <button class="button primary disabled" id="approveDraft" disabled>Resolve conflict to approve</button>
+              </div>
+              <p class="microcopy">Synthetic UI state only. No clinical action or write-back exists.</p>
             </div>
-            <div class="draft-controls">
-              <button class="button ghost" id="returnSource">Open supporting sources</button>
-              <button class="button primary disabled" id="approveDraft" disabled>Resolve conflict to approve</button>
-            </div>
-            <p class="microcopy">Approval in this synthetic demo only changes local UI state. No clinical action or write-back exists.</p>
-          </div>
 
-          <div id="tracePanel" class="tab-panel">
-            <div class="trace-head"><span>observable tool trace</span><span id="traceCount">0 events</span></div>
-            <div class="trace-log" id="traceLog">
-              <div class="trace-placeholder">Start the case or trigger a stress test to populate the trace.</div>
+            <div id="tracePanel" class="tab-panel" role="tabpanel">
+              <div class="trace-head"><span>Observable execution trace</span><span id="traceCount">0 events</span></div>
+              <div class="trace-log" id="traceLog" aria-live="polite"><div class="trace-placeholder">Start the case or run a failure test to populate the trace.</div></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="stress" class="section stress shell">
-      <div class="section-head compact">
-        <div><div class="section-kicker">02 · Break the agent</div><h2>A trustworthy demo should show what happens when things go wrong.</h2></div>
-        <p class="section-note">Each button runs a deterministic synthetic failure scenario. The desired behaviour is not eloquence — it is containment.</p>
+    <section id="stress" class="section shell reveal">
+      <div class="section-head dark-text">
+        <div><div class="section-label">02 · Break the agent</div><h2>Trust is easiest to judge when something goes wrong.</h2></div>
+        <p>Each scenario is synthetic and deterministic. The desired behaviour is not eloquence. It is containment, visible degradation and an audit trail.</p>
       </div>
 
       <div class="stress-grid">
-        <div class="stress-controls">
-          <button class="stress-button" data-test="wrong-patient"><span>01</span><b>Wrong-patient FHIR resource</b><small>Resource patient ID does not match encounter context.</small></button>
-          <button class="stress-button" data-test="injection"><span>02</span><b>Prompt injection inside PDF</b><small>Untrusted document tries to override system policy.</small></button>
+        <div class="stress-controls" role="list">
+          <button class="stress-button" data-test="wrong-patient"><span>01</span><b>Wrong-patient FHIR resource</b><small>Patient ID does not match encounter context.</small></button>
+          <button class="stress-button" data-test="injection"><span>02</span><b>Prompt injection inside PDF</b><small>Untrusted document tries to override policy.</small></button>
           <button class="stress-button" data-test="unavailable"><span>03</span><b>LIS source unavailable</b><small>Microbiology cannot be fetched right now.</small></button>
-          <button class="stress-button" data-test="stale"><span>04</span><b>Stale renal result</b><small>Old value exists, current requested result is pending.</small></button>
-          <button class="stress-button" data-test="tool"><span>05</span><b>Unauthorised write-back</b><small>Agent requests a capability outside its delegation.</small></button>
+          <button class="stress-button" data-test="stale"><span>04</span><b>Stale renal result</b><small>Old value exists; current requested result is pending.</small></button>
+          <button class="stress-button" data-test="tool"><span>05</span><b>Unauthorised write-back</b><small>Agent requests capability outside its delegation.</small></button>
         </div>
-        <div class="stress-result" id="stressResult">
-          <div class="shield">◇</div>
-          <div class="case-label">READY</div>
+        <div class="stress-result" id="stressResult" aria-live="polite">
+          <div class="shield" aria-hidden="true">◇</div>
+          <div class="card-overline">Ready</div>
           <h3>Select a failure mode.</h3>
-          <p>The result will show the policy decision, visible user state and audit event.</p>
+          <p>You’ll see the policy decision, user-visible state and audit consequence.</p>
         </div>
       </div>
     </section>
 
-    <section id="evaluation" class="section evaluation">
-      <div class="shell section-head">
-        <div><div class="section-kicker">03 · Evaluation, not theatre</div><h2>I would measure whether this actually gives clinicians time back.</h2></div>
-        <p class="section-note">No fabricated “18 minutes saved” claim here. The public work sample defines the protocol; results belong here only after real synthetic-case sessions are run.</p>
-      </div>
-      <div class="shell eval-grid">
-        <article class="eval-card featured">
-          <span class="eval-num">A</span>
-          <h3>Paired workflow test</h3>
-          <p>Same clinician, matched synthetic cases: source-linked context alone vs source-linked context + draft agent.</p>
-          <div class="mini-flow"><span>case A</span><i>→</i><span>case B</span><i>→</i><span>counterbalance</span></div>
-        </article>
-        <article class="eval-card"><span class="eval-num">01</span><h3>Task time</h3><p>Seconds from case open to clinically usable handover/document review.</p></article>
-        <article class="eval-card"><span class="eval-num">02</span><h3>Safety errors</h3><p>Unsupported claims, wrong-source claims, pending→negative mistakes and wrong-patient events.</p></article>
-        <article class="eval-card"><span class="eval-num">03</span><h3>Verification behaviour</h3><p>Sources opened, corrections after source review and whether drafts reduce healthy checking.</p></article>
-        <article class="eval-card"><span class="eval-num">04</span><h3>Open-work retention</h3><p>How often pending results and follow-up actions survive the handover.</p></article>
-        <article class="eval-card"><span class="eval-num">05</span><h3>Clinician usefulness</h3><p>Would you use this tomorrow? Cognitive effort, corrections and free-text friction notes.</p></article>
-      </div>
-      <div class="shell eval-status">
-        <div><span>Current public result</span><b>Protocol ready · measurements pending</b></div>
-        <a href="../careos/sjk/agent.html" target="_blank" rel="noreferrer">Open existing paired test ↗</a>
-      </div>
-    </section>
-
-    <section class="section architecture shell">
-      <div class="section-kicker">04 · Engineering boundary</div>
-      <div class="arch-grid">
-        <div>
-          <h2>The model is a proposer, not the authority.</h2>
-          <p>The transferable pattern behind CareOS and my other agent projects is simple: keep identity, permissions, source truth, evidence requirements and consequential actions outside model discretion.</p>
-          <div class="arch-links"><a href="https://github.com/mikelninh/care-os" target="_blank" rel="noreferrer">CareOS repository ↗</a><a href="https://github.com/mikelninh/digital-worker-factory" target="_blank" rel="noreferrer">Digital Worker Factory ↗</a></div>
+    <section id="evaluation" class="section evaluation reveal">
+      <div class="shell">
+        <div class="section-head dark-text">
+          <div><div class="section-label">03 · Evaluation, not theatre</div><h2>Measure whether the workflow actually returns time to care.</h2></div>
+          <p>No fabricated “minutes saved” claim. The protocol is ready; results belong here only after real clinicians complete synthetic paired sessions.</p>
         </div>
-        <div class="arch-diagram" aria-label="Architecture diagram">
-          <div class="arch-node sources">KIS · LIS · FHIR · documents</div>
-          <div class="arrow">↓</div>
-          <div class="arch-node">source verification + reconciliation</div>
-          <div class="arrow">↓</div>
-          <div class="arch-node strong">trusted context envelope</div>
-          <div class="split"><span>↙</span><span>↘</span></div>
-          <div class="arch-cols"><div class="arch-node">human UI</div><div class="arch-node agent-node">bounded agent</div></div>
-          <div class="arrow">↓</div>
-          <div class="arch-node gate">policy gate · approval · audit</div>
+
+        <div class="eval-grid">
+          <article class="eval-card featured">
+            <span class="eval-num">A/B</span>
+            <h3>Paired, counterbalanced workflow test</h3>
+            <p>Same clinician. Matched synthetic cases. Source-linked context alone vs context + source-linked agent draft.</p>
+            <div class="mini-flow"><span>control</span><i>→</i><span>agent</span><i>→</i><span>safety gate</span></div>
+          </article>
+          <article class="eval-card"><span class="eval-num">01</span><h3>Task time</h3><p>Seconds to clinically usable review.</p></article>
+          <article class="eval-card"><span class="eval-num">02</span><h3>Safety errors</h3><p>Wrong source, unsupported claims, pending→negative.</p></article>
+          <article class="eval-card"><span class="eval-num">03</span><h3>Verification</h3><p>Source opens, corrections and healthy checking.</p></article>
+          <article class="eval-card"><span class="eval-num">04</span><h3>Open-work retention</h3><p>Whether pending work survives handover.</p></article>
+        </div>
+
+        <div class="eval-status">
+          <div><span>Current evidence state</span><b>Protocol ready · measurements pending</b></div>
+          <a href="../careos/sjk/ab.html" target="_blank" rel="noreferrer">Open paired clinician study ↗</a>
         </div>
       </div>
     </section>
 
-    <section class="closing section">
+    <section id="proof" class="section shell reveal">
+      <div class="section-label">04 · Engineering proof</div>
+      <div class="proof-head">
+        <h2>The model proposes. Authority lives outside the model.</h2>
+        <p>The public browser experience is intentionally credential-free. The linked CareOS repository contains the runnable FastAPI capstone that composes the actual gateway, trusted tool proxy, draft firewall, traces and evals.</p>
+      </div>
+
+      <div class="architecture-card">
+        <div class="arch-row sources-row"><span>KIS / LIS / FHIR / documents</span></div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-row context-row"><span>Source-linked clinical context</span><small>identity · provenance · time · state · contradiction</small></div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-row gate-row"><span>Deterministic policy boundary</span><small>patient scope · tools · budgets · egress · audit</small></div>
+        <div class="arch-split"><div>↙<span>Clinician UX</span></div><div>↘<span>Bounded agent</span></div></div>
+      </div>
+
+      <div class="proof-grid">
+        <article><code>POST /api/run</code><h3>Real execution path</h3><p>Worker/model identity, tool proposals, policy decisions, evidence IDs, draft, latency and eval results.</p></article>
+        <article><code>/api/eval-suite</code><h3>Replayable containment</h3><p>Happy path, wrong patient, prompt injection, outage, stale result and unauthorised write.</p></article>
+        <article><code>FHIR / ISiK</code><h3>Interoperability-first</h3><p>Patient/encounter binding, source-state semantics and provider-side integration boundaries.</p></article>
+        <article><code>HUMAN CONTROL</code><h3>Earned autonomy</h3><p>Read and write are separate capabilities. Consequential actions remain reviewable and revocable.</p></article>
+      </div>
+
+      <div class="proof-actions">
+        <a class="button primary" href="https://github.com/mikelninh/care-os/blob/main/docs/RECARE_CAPSTONE.md" target="_blank" rel="noreferrer">Run the engineering proof ↗</a>
+        <a class="button quiet" href="https://github.com/mikelninh/care-os" target="_blank" rel="noreferrer">Explore CareOS</a>
+      </div>
+    </section>
+
+    <section class="section closing reveal">
       <div class="shell closing-card">
-        <div class="closing-copy">
-          <div class="section-kicker">Why Recare</div>
-          <h2>I want the next version of this thinking to meet real hospital constraints.</h2>
-          <p>I have built the synthetic architecture. What I have not yet earned is years of production healthcare scale. That is exactly why I am interested in a team already shipping AI and integrations into hospitals: I want my next learning loop to be driven by real clinicians, real systems and real reliability requirements.</p>
+        <div>
+          <div class="section-label light">Where I deliberately stopped</div>
+          <h2>I took the synthetic problem as far as I responsibly could from outside a hospital.</h2>
+          <p>I have not operated this against Recare-scale production traffic, live KIS/LIS infrastructure or identifiable patient data — and I don’t pretend otherwise. The next learning comes from real integrations, clinicians, implementation teams and hospital constraints.</p>
         </div>
-        <div class="closing-actions">
-          <a class="button primary" href="mailto:mikel_ninh@yahoo.de">mikel_ninh@yahoo.de</a>
-          <a class="button ghost" href="../Michael_Ninh_CV_EN.pdf">CV</a>
-          <a class="button ghost" href="https://github.com/mikelninh">GitHub</a>
+        <div class="closing-side">
+          <p class="quote">“Which of these ideas survive contact with the real hospital?”</p>
+          <a class="button light-button" href="https://github.com/mikelninh/care-os/blob/main/docs/RECARE_COLLABORATION_MAP.md" target="_blank" rel="noreferrer">See collaboration map ↗</a>
+          <a class="text-link" href="../">Michael Ninh · portfolio ↗</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="shell footer"><span>Built by Michael Ninh · Berlin · August 2026</span><span>Synthetic product exploration only.</span></footer>
+  <footer class="footer shell">
+    <span>Michael Ninh · independent work sample · Berlin · 2026</span>
+    <span>Synthetic data only · not clinical software</span>
+  </footer>
+
   <script src="app.js"></script>
 </body>
 </html>
