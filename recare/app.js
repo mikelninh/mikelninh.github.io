@@ -2,156 +2,28 @@
   'use strict';
   const $=(s,r=document)=>r.querySelector(s);
   const $$=(s,r=document)=>[...r.querySelectorAll(s)];
-  let started=null,timer=null,elapsed=0,trace=[],reviewed=false;
+  let started=null,timer=null,elapsed=0,trace=[],reviewed=false,runToken=0;
   const pad=n=>String(n).padStart(2,'0');
   const fmt=s=>`${pad(Math.floor(s/60))}:${pad(s%60)}`;
   const stamp=()=>{const d=new Date();return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`};
-
-  function renderTimer(){
-    const c=$('#caseTimer'),h=$('#heroTimer');
-    if(c)c.textContent=fmt(elapsed);
-    if(h)h.textContent=fmt(elapsed);
-  }
+  function renderTimer(){const c=$('#caseTimer'),h=$('#heroTimer');if(c)c.textContent=fmt(elapsed);if(h)h.textContent=fmt(elapsed)}
   function tick(){if(!started)return;elapsed=Math.floor((Date.now()-started)/1000);renderTimer()}
-  function setStatus(text,cls){
-    const s=$('#caseStatus');
-    if(!s)return;
-    s.textContent=text;s.className=`status-chip ${cls}`;
-  }
-  function addTrace(action,detail,kind='ok'){
-    trace.push({time:stamp(),action,detail,kind});
-    const log=$('#traceLog');
-    if(!log)return;
-    log.innerHTML='';
-    trace.forEach(e=>{
-      const row=document.createElement('div');
-      row.className=`trace-event ${e.kind==='block'?'block':e.kind==='warn'?'warn':''}`;
-      const t=document.createElement('span');t.className='trace-time';t.textContent=e.time;
-      const a=document.createElement('span');a.className='trace-action';a.textContent=e.action;
-      const d=document.createElement('span');d.className='trace-detail';d.textContent=e.detail;
-      row.append(t,a,d);log.appendChild(row);
-    });
-    const count=$('#traceCount');if(count)count.textContent=`${trace.length} event${trace.length===1?'':'s'}`;
-    log.scrollTop=log.scrollHeight;
-  }
-  function tab(name){
-    $$('.tab').forEach(b=>{const active=b.dataset.tab===name;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active))});
-    $$('.tab-panel').forEach(p=>p.classList.remove('active'));
-    const panel=$(`#${name}Panel`);if(panel)panel.classList.add('active');
-  }
-
+  function setStatus(text,cls){const s=$('#caseStatus');if(!s)return;s.textContent=text;s.className=`status-chip ${cls}`}
+  function addTrace(action,detail,kind='ok'){trace.push({time:stamp(),action,detail,kind});const log=$('#traceLog');if(!log)return;log.innerHTML='';trace.forEach(e=>{const row=document.createElement('div');row.className=`trace-event ${e.kind==='block'?'block':e.kind==='warn'?'warn':''}`;const t=document.createElement('span');t.className='trace-time';t.textContent=e.time;const a=document.createElement('span');a.className='trace-action';a.textContent=e.action;const d=document.createElement('span');d.className='trace-detail';d.textContent=e.detail;row.append(t,a,d);log.appendChild(row)});const count=$('#traceCount');if(count)count.textContent=`${trace.length} event${trace.length===1?'':'s'}`;log.scrollTop=log.scrollHeight}
+  function tab(name){$$('.tab').forEach(b=>{const active=b.dataset.tab===name;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active))});$$('.tab-panel').forEach(p=>p.classList.remove('active'));const panel=$(`#${name}Panel`);if(panel)panel.classList.add('active')}
   $$('.tab').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.tab)));
-
-  $('#startCase')?.addEventListener('click',()=>{
-    if(started)return;
-    elapsed=0;renderTimer();started=Date.now();timer=setInterval(tick,250);reviewed=false;trace=[];
-    $('#traceLog').innerHTML='';
-    $('#emptyState')?.classList.add('hidden');
-    $('#facts')?.classList.remove('hidden');
-    const approve=$('#approveDraft');
-    if(approve){approve.disabled=true;approve.classList.add('disabled');approve.textContent='Resolve conflict to approve'}
-    const resolve=$('#resolveConflict');if(resolve)resolve.textContent='Mark reviewed';
-    setStatus('reconciling','running');
-    addTrace('CONTEXT','Encounter bound to synthetic patient DEMO-1842');
-    const events=[
-      [130,'ROUTE','Task routed to bounded discharge-prep workflow','ok'],
-      [300,'READ','FHIR observations · patient binding verified','ok'],
-      [470,'READ','LIS microbiology · status semantics preserved','ok'],
-      [640,'READ','KIS medication · documented therapy only','ok'],
-      [810,'EXTRACT','PDF parsed as untrusted evidence','ok'],
-      [980,'RECONCILE','Allergy contradiction requires human review','warn'],
-      [1160,'DRAFT','Source-linked discharge-prep draft prepared','ok']
-    ];
-    events.forEach(([delay,action,detail,kind])=>setTimeout(()=>{
-      if(!started && action!=='DRAFT')return;
-      addTrace(action,detail,kind);
-      if(action==='RECONCILE')setStatus('review required','review');
-    },delay));
-  });
-
-  $('#resetCase')?.addEventListener('click',()=>{
-    clearInterval(timer);timer=null;started=null;elapsed=0;reviewed=false;trace=[];renderTimer();
-    $('#emptyState')?.classList.remove('hidden');$('#facts')?.classList.add('hidden');
-    const log=$('#traceLog');if(log)log.innerHTML='<div class="trace-placeholder">Start the case or run a failure test to populate the trace.</div>';
-    const count=$('#traceCount');if(count)count.textContent='0 events';
-    $$('.source-drawer').forEach(x=>x.classList.remove('show'));
-    $$('.stress-button').forEach(x=>x.classList.remove('active'));
-    setStatus('ready','idle');tab('context');
-  });
-
-  $$('.source-link').forEach(b=>b.addEventListener('click',()=>{
-    const x=$(`#${b.dataset.source}`);if(!x)return;
-    x.classList.toggle('show');
-    b.textContent=x.classList.contains('show')?'Close source ×':'Inspect source →';
-    if(x.classList.contains('show'))addTrace('SOURCE',`Reviewer opened ${b.dataset.source}`);
-  }));
-
-  $('#resolveConflict')?.addEventListener('click',()=>{
-    reviewed=true;
-    $('#resolveConflict').textContent='✓ Reviewed · current KIS preserved';
-    const approve=$('#approveDraft');approve.disabled=false;approve.classList.remove('disabled');approve.textContent='Approve synthetic draft';
-    setStatus('reviewed','done');
-    addTrace('HUMAN','Allergy conflict explicitly reviewed; source lineage retained');
-  });
-
-  $('#returnSource')?.addEventListener('click',()=>{
-    tab('context');
-    $$('.source-drawer').forEach(x=>x.classList.add('show'));
-    $$('.source-link').forEach(x=>x.textContent='Close source ×');
-    addTrace('VERIFY','Supporting sources opened from draft');
-  });
-
-  $('#approveDraft')?.addEventListener('click',()=>{
-    if(!reviewed)return;
-    clearInterval(timer);timer=null;started=null;
-    setStatus('approved locally','done');
-    const approve=$('#approveDraft');approve.textContent='✓ Approved locally';approve.disabled=true;approve.classList.add('disabled');
-    addTrace('APPROVAL','Human approved synthetic draft; no write-back capability exists');
-    tab('trace');
-  });
-
-  $$('mark[data-cite]').forEach(m=>m.addEventListener('click',()=>{
-    tab('context');
-    const source=$(`#${m.dataset.cite}`);if(source)source.classList.add('show');
-    addTrace('VERIFY',`Citation jump → ${m.dataset.cite}`);
-  }));
-
-  const tests={
-    'wrong-patient':{state:'BLOCKED',title:'Wrong-patient resource rejected before use.',cls:'blocked',policy:'patient_id must equal encounter-bound identity',user:'No foreign clinical fact is surfaced.',audit:'FHIR resource quarantined · patient mismatch',kind:'block'},
-    injection:{state:'QUARANTINED',title:'Document instruction treated as data, not authority.',cls:'blocked',policy:'document text cannot modify agent policy or tool scope',user:'PDF remains viewable; malicious span is isolated.',audit:'prompt-injection pattern separated from authority context',kind:'block'},
-    unavailable:{state:'DEGRADED',title:'Unavailable stays unavailable — never negative.',cls:'warned',policy:'source failure must fail visibly',user:'Microbiology shows “source unavailable”; dependent draft claims are suppressed.',audit:'LIS timeout · dependent claims suppressed',kind:'warn'},
-    stale:{state:'REVIEW',title:'Old renal value cannot satisfy a current pending order.',cls:'warned',policy:'clinical time and freshness are part of correctness',user:'Historical value remains visible and labelled stale; current result stays pending.',audit:'freshness gate prevented silent substitution',kind:'warn'},
-    tool:{state:'DENIED',title:'The agent cannot promote itself into a writer.',cls:'blocked',policy:'write-back is outside the delegated capability set',user:'No medication, order or document write occurs.',audit:'tool request denied · clinical.write absent',kind:'block'}
-  };
-
-  $$('.stress-button').forEach(b=>b.addEventListener('click',()=>{
-    $$('.stress-button').forEach(x=>x.classList.toggle('active',x===b));
-    const t=tests[b.dataset.test],r=$('#stressResult');if(!t||!r)return;
-    r.className=`stress-result ${t.cls}`;
-    r.innerHTML=`<div class="shield" aria-hidden="true">◇</div><div class="card-overline">${t.state}</div><h3>${t.title}</h3><div class="result-list"><div><span>Policy</span><b>${t.policy}</b></div><div><span>User-visible state</span><b>${t.user}</b></div><div><span>Audit</span><b>${t.audit}</b></div></div>`;
-    addTrace(t.state,b.querySelector('b')?.textContent||b.dataset.test,t.kind);
-  }));
-
-  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const reveals=$$('.reveal');
-  if(reduced||!('IntersectionObserver'in window))reveals.forEach(x=>x.classList.add('visible'));
-  else{
-    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
-      if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}
-    }),{threshold:.08,rootMargin:'0px 0px -40px 0px'});
-    reveals.forEach(x=>observer.observe(x));
-  }
-
-  const anchors=$$('.nav-links a[href^="#"]');
-  const sections=anchors.map(a=>$(a.getAttribute('href'))).filter(Boolean);
-  if('IntersectionObserver'in window&&sections.length){
-    const navObserver=new IntersectionObserver(entries=>{
-      const active=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
-      if(!active)return;
-      anchors.forEach(a=>a.toggleAttribute('data-current',a.getAttribute('href')===`#${active.target.id}`));
-    },{rootMargin:'-25% 0px -65% 0px',threshold:[0,.1,.5]});
-    sections.forEach(s=>navObserver.observe(s));
-  }
-
+  $('#startCase')?.addEventListener('click',()=>{if(started)return;const token=++runToken;elapsed=0;renderTimer();started=Date.now();timer=setInterval(tick,250);reviewed=false;trace=[];$('#traceLog').innerHTML='';$('#emptyState')?.classList.add('hidden');$('#facts')?.classList.remove('hidden');const approve=$('#approveDraft');if(approve){approve.disabled=true;approve.classList.add('disabled');approve.textContent='Resolve conflict to approve'}const resolve=$('#resolveConflict');if(resolve)resolve.textContent='Mark reviewed';setStatus('reconciling','running');addTrace('CONTEXT','Encounter bound to synthetic patient DEMO-1842');[
+    [130,'ROUTE','Task routed to bounded discharge-prep workflow','ok'],[300,'READ','FHIR observations · patient binding verified','ok'],[470,'READ','LIS microbiology · status semantics preserved','ok'],[640,'READ','KIS medication · documented therapy only','ok'],[810,'EXTRACT','PDF parsed as untrusted evidence','ok'],[980,'RECONCILE','Allergy contradiction requires human review','warn'],[1160,'DRAFT','Source-linked discharge-prep draft prepared','ok']
+  ].forEach(([delay,action,detail,kind])=>setTimeout(()=>{if(token!==runToken||!started)return;addTrace(action,detail,kind);if(action==='RECONCILE')setStatus('review required','review')},delay))});
+  $('#resetCase')?.addEventListener('click',()=>{runToken++;clearInterval(timer);timer=null;started=null;elapsed=0;reviewed=false;trace=[];renderTimer();$('#emptyState')?.classList.remove('hidden');$('#facts')?.classList.add('hidden');const log=$('#traceLog');if(log)log.innerHTML='<div class="trace-placeholder">Start the case or run a failure test to populate the trace.</div>';const count=$('#traceCount');if(count)count.textContent='0 events';$$('.source-drawer').forEach(x=>x.classList.remove('show'));$$('.source-link').forEach(x=>x.textContent='Inspect source →');$$('.stress-button').forEach(x=>x.classList.remove('active'));setStatus('ready','idle');tab('context')});
+  $$('.source-link').forEach(b=>b.addEventListener('click',()=>{const x=$(`#${b.dataset.source}`);if(!x)return;x.classList.toggle('show');b.textContent=x.classList.contains('show')?'Close source ×':'Inspect source →';if(x.classList.contains('show'))addTrace('SOURCE',`Reviewer opened ${b.dataset.source}`)}));
+  $('#resolveConflict')?.addEventListener('click',()=>{reviewed=true;$('#resolveConflict').textContent='✓ Reviewed · current KIS preserved';const approve=$('#approveDraft');approve.disabled=false;approve.classList.remove('disabled');approve.textContent='Approve synthetic draft';setStatus('reviewed','done');addTrace('HUMAN','Allergy conflict explicitly reviewed; source lineage retained')});
+  $('#returnSource')?.addEventListener('click',()=>{tab('context');$$('.source-drawer').forEach(x=>x.classList.add('show'));$$('.source-link').forEach(x=>x.textContent='Close source ×');addTrace('VERIFY','Supporting sources opened from draft')});
+  $('#approveDraft')?.addEventListener('click',()=>{if(!reviewed)return;runToken++;clearInterval(timer);timer=null;started=null;setStatus('approved locally','done');const approve=$('#approveDraft');approve.textContent='✓ Approved locally';approve.disabled=true;approve.classList.add('disabled');addTrace('APPROVAL','Human approved synthetic draft; no write-back capability exists');tab('trace')});
+  $$('mark[data-cite]').forEach(m=>m.addEventListener('click',()=>{tab('context');const source=$(`#${m.dataset.cite}`);if(source)source.classList.add('show');addTrace('VERIFY',`Citation jump → ${m.dataset.cite}`)}));
+  const tests={'wrong-patient':{state:'BLOCKED',title:'Wrong-patient resource rejected before use.',cls:'blocked',policy:'patient_id must equal encounter-bound identity',user:'No foreign clinical fact is surfaced.',audit:'FHIR resource quarantined · patient mismatch',kind:'block'},injection:{state:'QUARANTINED',title:'Document instruction treated as data, not authority.',cls:'blocked',policy:'document text cannot modify agent policy or tool scope',user:'PDF remains viewable; malicious span is isolated.',audit:'prompt-injection pattern separated from authority context',kind:'block'},unavailable:{state:'DEGRADED',title:'Unavailable stays unavailable — never negative.',cls:'warned',policy:'source failure must fail visibly',user:'Microbiology shows “source unavailable”; dependent draft claims are suppressed.',audit:'LIS timeout · dependent claims suppressed',kind:'warn'},stale:{state:'REVIEW',title:'Old renal value cannot satisfy a current pending order.',cls:'warned',policy:'clinical time and freshness are part of correctness',user:'Historical value remains visible and labelled stale; current result stays pending.',audit:'freshness gate prevented silent substitution',kind:'warn'},tool:{state:'DENIED',title:'The agent cannot promote itself into a writer.',cls:'blocked',policy:'write-back is outside the delegated capability set',user:'No medication, order or document write occurs.',audit:'tool request denied · clinical.write absent',kind:'block'}};
+  $$('.stress-button').forEach(b=>b.addEventListener('click',()=>{$$('.stress-button').forEach(x=>x.classList.toggle('active',x===b));const t=tests[b.dataset.test],r=$('#stressResult');if(!t||!r)return;r.className=`stress-result ${t.cls}`;r.innerHTML=`<div class="shield" aria-hidden="true">◇</div><div class="card-overline">${t.state}</div><h3>${t.title}</h3><div class="result-list"><div><span>Policy</span><b>${t.policy}</b></div><div><span>User-visible state</span><b>${t.user}</b></div><div><span>Audit</span><b>${t.audit}</b></div></div>`;addTrace(t.state,b.querySelector('b')?.textContent||b.dataset.test,t.kind)}));
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches,reveals=$$('.reveal');if(reduced||!('IntersectionObserver'in window))reveals.forEach(x=>x.classList.add('visible'));else{const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.08,rootMargin:'0px 0px -40px 0px'});reveals.forEach(x=>observer.observe(x))}
+  const anchors=$$('.nav-links a[href^="#"]'),sections=anchors.map(a=>$(a.getAttribute('href'))).filter(Boolean);if('IntersectionObserver'in window&&sections.length){const navObserver=new IntersectionObserver(entries=>{const active=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(!active)return;anchors.forEach(a=>a.toggleAttribute('data-current',a.getAttribute('href')===`#${active.target.id}`))},{rootMargin:'-25% 0px -65% 0px',threshold:[0,.1,.5]});sections.forEach(s=>navObserver.observe(s))}
   renderTimer();
 })();
