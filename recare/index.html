@@ -30,6 +30,7 @@
       <nav class="nav-links" aria-label="Work sample navigation">
         <a href="#challenge">Demo</a>
         <a href="#stress">Failure tests</a>
+        <a href="#evaluation">Evaluation</a>
         <a href="#proof">Engineering</a>
         <a class="nav-cta" href="https://github.com/mikelninh/care-os" target="_blank" rel="noreferrer">CareOS ↗</a>
       </nav>
@@ -43,7 +44,7 @@
         <h1>Give clinicians <em>time back</em> without weakening trust.</h1>
         <p class="lede">A focused synthetic proof of the engineering boundary I care about: AI can retrieve, reconcile and draft. <strong>Sources, uncertainty, permissions and consequential decisions stay explicit.</strong></p>
         <div class="hero-actions">
-          <a class="button primary" href="#challenge">Run the 90-second case <span aria-hidden="true">↓</span></a>
+          <a class="button primary" href="#challenge">Run the case · ~90 sec <span aria-hidden="true">↓</span></a>
           <a class="button quiet" href="#why">Why I built it</a>
         </div>
         <div class="trust-row" aria-label="Core design principles">
@@ -60,7 +61,7 @@
         <div class="metric-title">Time returned<br>to care.</div>
         <p>Not model confidence. Not feature count. Fewer minutes spent hunting, copying and documenting — while safety signals remain visible.</p>
         <div class="metric-grid">
-          <div><b id="heroTimer">00:00</b><span>demo session</span></div>
+          <div><b>5</b><span>source types in the case</span></div>
           <div><b>0</b><span>unsupported claims allowed</span></div>
         </div>
         <div class="metric-rule"><span></span>Speed never overrides a safety stop.</div>
@@ -92,9 +93,9 @@
         <div class="section-head">
           <div>
             <div class="section-label light">01 · Clinical Time-Back Challenge</div>
-            <h2>One patient. Five sources. Minutes before the next task.</h2>
+            <h2>One patient. Five sources. One reviewable next step.</h2>
           </div>
-          <p>Synthetic infectiology discharge-prep. The point is not medical recommendation — it is trustworthy information handling under time pressure.</p>
+          <p>Start the case, inspect the source-linked context, resolve one contradiction, review the draft, then inspect exactly what the agent did.</p>
         </div>
 
         <div class="workspace" aria-label="Synthetic clinician workspace">
@@ -117,7 +118,7 @@
             </div>
             <button id="startCase" class="button primary full">Start synthetic case</button>
             <button id="resetCase" class="button rail-reset full">Reset</button>
-            <div class="timer-box"><span>session</span><b id="caseTimer">00:00</b></div>
+            <div class="timer-box"><span>live demo timer</span><b id="caseTimer">00:00</b></div>
           </aside>
 
           <div class="clinical-pane">
@@ -134,7 +135,7 @@
               <div class="empty-state" id="emptyState">
                 <div class="pulse-icon" aria-hidden="true">✦</div>
                 <h3>Several ways to be confidently wrong.</h3>
-                <p>Start the case to reconcile structured data, documents and pending results into a reviewable context.</p>
+                <p>Start the case. CareOS will reconcile structured data, documents and pending results into a reviewable context — without pretending uncertainty disappeared.</p>
               </div>
 
               <div class="facts hidden" id="facts">
@@ -231,25 +232,25 @@
       <div class="shell">
         <div class="section-head dark-text">
           <div><div class="section-label">03 · Evaluation, not theatre</div><h2>Measure whether the workflow actually returns time to care.</h2></div>
-          <p>No fabricated “minutes saved” claim. The protocol is ready; results belong here only after real clinicians complete synthetic paired sessions.</p>
+          <p>No fabricated “minutes saved” claim. The measurement path is ready; participant evidence comes next.</p>
         </div>
 
         <div class="eval-grid">
           <article class="eval-card featured">
             <span class="eval-num">A/B</span>
-            <h3>Paired, counterbalanced workflow test</h3>
-            <p>Same clinician. Matched synthetic cases. Source-linked context alone vs context + source-linked agent draft.</p>
-            <div class="mini-flow"><span>control</span><i>→</i><span>agent</span><i>→</i><span>safety gate</span></div>
+            <h3>Fragmented systems vs CareOS</h3>
+            <p>Same clinician. Matched synthetic cases. Counterbalanced order. Today’s fragmented KIS/LIS/document workflow versus one source-linked CareOS context.</p>
+            <div class="mini-flow"><span>baseline</span><i>→</i><span>CareOS</span><i>→</i><span>safety gate</span></div>
           </article>
           <article class="eval-card"><span class="eval-num">01</span><h3>Task time</h3><p>Seconds to clinically usable review.</p></article>
-          <article class="eval-card"><span class="eval-num">02</span><h3>Safety errors</h3><p>Wrong source, unsupported claims, pending→negative.</p></article>
+          <article class="eval-card"><span class="eval-num">02</span><h3>Workflow friction</h3><p>Systems opened, context switches and repeated searching.</p></article>
           <article class="eval-card"><span class="eval-num">03</span><h3>Verification</h3><p>Source opens, corrections and healthy checking.</p></article>
-          <article class="eval-card"><span class="eval-num">04</span><h3>Open-work retention</h3><p>Whether pending work survives handover.</p></article>
+          <article class="eval-card"><span class="eval-num">04</span><h3>Safety</h3><p>Wrong answers, missed pending work and explicit stop conditions.</p></article>
         </div>
 
         <div class="eval-status">
-          <div><span>Current evidence state</span><b>Protocol ready · measurements pending</b></div>
-          <a href="../careos/sjk/ab.html" target="_blank" rel="noreferrer">Open paired clinician study ↗</a>
+          <div><span>Current evidence state</span><b>Study runner ready · participant evidence pending</b></div>
+          <a href="../careos/physician-study.html" target="_blank" rel="noreferrer">Open baseline-vs-CareOS study ↗</a>
         </div>
       </div>
     </section>
