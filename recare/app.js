@@ -20,32 +20,24 @@
   $('#startCase')?.addEventListener('click',()=>{
     if(started)return;started=true;const token=++runToken;reviewed=false;trace=[];
     $('#demoComplete')?.classList.add('hidden');$('#traceLog').innerHTML='';$('#emptyState')?.classList.add('hidden');$('#facts')?.classList.remove('hidden');
+    const start=$('#startCase');if(start){start.disabled=true;start.classList.add('disabled');start.textContent='Walkthrough started'}
     const approve=$('#approveDraft');if(approve){approve.disabled=true;approve.classList.add('disabled');approve.textContent='Review conflict first'}
-    const resolve=$('#resolveConflict');if(resolve)resolve.textContent='2 · I reviewed this conflict';
+    const resolve=$('#resolveConflict');if(resolve)resolve.textContent='I reviewed this conflict';
     setStep(2,1);setStatus('review needed','review');
     addTrace('CONTEXT','Encounter bound to synthetic patient DEMO-1842');
     [[130,'ROUTE','Task routed to bounded discharge-prep workflow','ok'],[300,'READ','FHIR observations · patient binding verified','ok'],[470,'READ','LIS microbiology · pending/final state preserved','ok'],[640,'READ','KIS medication · documented medication only','ok'],[810,'EXTRACT','PDF parsed as untrusted evidence','ok'],[980,'RECONCILE','Allergy contradiction requires human review','warn'],[1160,'DRAFT','Source-linked discharge-prep draft prepared','ok']].forEach(([delay,action,detail,kind])=>setTimeout(()=>{if(token!==runToken||!started)return;addTrace(action,detail,kind)},delay));
   });
 
-  $('#resetCase')?.addEventListener('click',()=>{
-    runToken++;started=false;reviewed=false;trace=[];setStep(1,0);setStatus('ready','idle');tab('context');
-    $('#emptyState')?.classList.remove('hidden');$('#facts')?.classList.add('hidden');$('#demoComplete')?.classList.add('hidden');
-    const log=$('#traceLog');if(log)log.innerHTML='<div class="trace-placeholder">Start the case to populate the trace.</div>';const count=$('#traceCount');if(count)count.textContent='0 events';
-    $$('.source-drawer').forEach(x=>x.classList.remove('show'));$$('.source-link').forEach(x=>x.textContent='See original source →');$$('.stress-button').forEach(x=>x.classList.remove('active'));
-    const approve=$('#approveDraft');if(approve){approve.disabled=true;approve.classList.add('disabled');approve.textContent='Review conflict first'}
-    const resolve=$('#resolveConflict');if(resolve)resolve.textContent='2 · I reviewed this conflict';
-  });
-
   $$('.source-link').forEach(b=>b.addEventListener('click',()=>{const x=$(`#${b.dataset.source}`);if(!x)return;x.classList.toggle('show');b.textContent=x.classList.contains('show')?'Close source ×':'See original source →';if(x.classList.contains('show'))addTrace('SOURCE',`Reviewer opened ${b.dataset.source}`)}));
 
   $('#resolveConflict')?.addEventListener('click',()=>{
-    if(!started)return;reviewed=true;$('#resolveConflict').textContent='✓ Conflict reviewed';const approve=$('#approveDraft');approve.disabled=false;approve.classList.remove('disabled');approve.textContent='3 · Approve reviewed draft';setStatus('ready for review','done');setStep(3,2);addTrace('HUMAN','Allergy conflict explicitly reviewed; source lineage retained');tab('draft');
+    if(!started)return;reviewed=true;$('#resolveConflict').textContent='✓ Conflict reviewed';const approve=$('#approveDraft');approve.disabled=false;approve.classList.remove('disabled');approve.textContent='Approve reviewed draft';setStatus('ready for review','done');setStep(3,2);addTrace('HUMAN','Allergy conflict explicitly reviewed; source lineage retained');tab('draft');
   });
 
   $('#returnSource')?.addEventListener('click',()=>{tab('context');$$('.source-drawer').forEach(x=>x.classList.add('show'));$$('.source-link').forEach(x=>x.textContent='Close source ×');addTrace('VERIFY','Supporting sources opened from the draft')});
 
   $('#approveDraft')?.addEventListener('click',()=>{
-    if(!reviewed)return;setStatus('approved locally','done');const approve=$('#approveDraft');approve.textContent='✓ Approved locally';approve.disabled=true;approve.classList.add('disabled');addTrace('APPROVAL','Human approved synthetic draft; no clinical write-back capability exists');setStep(4,3);tab('trace');$('#demoComplete')?.classList.remove('hidden');setTimeout(()=>setStep(5,4),450);
+    if(!reviewed)return;setStatus('review complete','done');const approve=$('#approveDraft');approve.textContent='✓ Reviewed and approved';approve.disabled=true;approve.classList.add('disabled');addTrace('APPROVAL','Human approved synthetic draft; no clinical write-back capability exists');setStep(4,3);tab('trace');$('#demoComplete')?.classList.remove('hidden');setTimeout(()=>setStep(5,4),450);
   });
 
   $$('mark[data-cite]').forEach(m=>m.addEventListener('click',()=>{tab('context');const source=$(`#${m.dataset.cite}`);if(source)source.classList.add('show');addTrace('VERIFY',`Citation jump → ${m.dataset.cite}`)}));
