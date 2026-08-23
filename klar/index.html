@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f7f5ef" />
+  <meta name="description" content="Klar verwandelt Briefe, Rechnungen, PDFs und Nachrichten in verständliche nächste Schritte — mit Belegen, Kontrolle und messbarer Wirkung." />
+  <title>Klar — Was bedeutet das für mich?</title>
+  <script src="https://js.puter.com/v2/"></script>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="brand">Klar<span>.</span></div>
+      <a class="source" href="https://github.com/mikelninh/mikelninh.github.io/tree/main/klar" target="_blank" rel="noreferrer">Open Source ↗</a>
+    </header>
+
+    <section class="hero">
+      <h1>Was bedeutet das für mich?</h1>
+      <p class="lead">Brief, Rechnung, Screenshot, PDF oder Text rein. Klar zeigt dir, was wichtig ist, bis wann — und was du als Nächstes tun kannst.</p>
+      <div class="impact" aria-label="Dein Klar Impact">
+        <div class="pill"><strong id="topCases">0</strong> geklärt</div>
+        <div class="pill"><strong id="topMinutes">0</strong> Min zurück</div>
+        <div class="pill"><strong id="topDeadlines">0</strong> Fristen erkannt</div>
+        <div class="pill"><strong id="topMoney">€0</strong> sichtbar</div>
+      </div>
+    </section>
+
+    <section class="card" id="inputCard">
+      <div class="tabs" role="tablist" aria-label="Eingabeart">
+        <button class="tab active" id="textTab" type="button" role="tab" aria-selected="true">Text einfügen</button>
+        <button class="tab" id="fileTab" type="button" role="tab" aria-selected="false">Datei / Foto</button>
+      </div>
+      <div class="modebar" aria-label="Analysemodus">
+        <button class="mode active" id="aiMode" type="button">✦ Mit AI verstehen</button>
+        <button class="mode" id="localMode" type="button">🔒 Nur lokal prüfen</button>
+      </div>
+
+      <div id="textPanel">
+        <textarea id="sourceText" placeholder="Zum Beispiel: Kopiere hier einen Behördenbrief, eine Rechnung oder eine E-Mail hinein …" aria-label="Text zum Klären"></textarea>
+      </div>
+
+      <div id="filePanel" class="hidden">
+        <label class="drop" id="dropZone" for="fileInput">
+          <div class="drop-icon">↥</div>
+          <div class="drop-title">Foto, Screenshot oder PDF auswählen</div>
+          <div class="drop-sub">Bei AI-Analyse kann Klar den Text daraus auslesen.</div>
+          <span class="btn secondary">Datei auswählen</span>
+          <div class="file-name" id="fileName"></div>
+        </label>
+        <input id="fileInput" type="file" accept="image/*,.pdf,.txt,.md,text/plain,application/pdf" />
+      </div>
+
+      <button class="btn primary" id="analyzeBtn" type="button">Klar machen →</button>
+      <div class="privacy">
+        <span>◉</span>
+        <span><b>Kontrolle bleibt bei dir.</b> Text wird erst beim Klick analysiert. Für die AI-Version nutzt Klar Puter.ai; dabei können Inhalte an einen AI-Anbieter übertragen werden. Keine Aktion wird ohne dich ausgeführt.</span>
+      </div>
+      <div class="samples" aria-label="Beispiele ausprobieren">
+        <button class="sample" data-sample="invoice" type="button">Rechnung testen</button>
+        <button class="sample" data-sample="authority" type="button">Behördenbrief testen</button>
+        <button class="sample" data-sample="appointment" type="button">Termin testen</button>
+      </div>
+      <div class="status">Beta · Deutschland zuerst · Datenexport statt Lock-in · AGPL-3.0-or-later</div>
+    </section>
+
+    <section class="card hidden" id="loadingCard" aria-live="polite">
+      <div class="loading">
+        <div class="orb"></div>
+        <strong id="loadingTitle">Ich sortiere das Wesentliche …</strong>
+        <p id="loadingSub">Frist · Geld · nächste Aktion · Belege</p>
+      </div>
+    </section>
+
+    <section class="card hidden" id="resultCard" aria-live="polite">
+      <p class="section-title">Klarheit</p>
+      <div class="result-top">
+        <div>
+          <h2 class="result-title" id="resultTitle">—</h2>
+        </div>
+        <span class="badge" id="urgencyBadge">Normal</span>
+      </div>
+      <p class="summary" id="resultSummary"></p>
+
+      <div class="facts">
+        <div class="fact"><small>Frist</small><strong id="deadlineValue">Keine klare Frist</strong></div>
+        <div class="fact"><small>Geld</small><strong id="moneyValue">Kein Betrag erkannt</strong></div>
+      </div>
+
+      <div class="next">
+        <small>Nächster sinnvoller Schritt</small>
+        <h3 id="nextAction">—</h3>
+      </div>
+
+      <p class="section-title">So gehst du vor</p>
+      <div class="steps" id="steps"></div>
+
+      <details>
+        <summary>Warum sagt Klar das?</summary>
+        <ul class="evidence" id="evidenceList"></ul>
+        <div class="confidence"><span>Vertrauen in die Extraktion</span><div class="bar"><span id="confidenceBar" style="width:0%"></span></div><strong id="confidenceLabel">—</strong></div>
+      </details>
+
+      <div class="disclaimer hidden" id="disclaimer"></div>
+
+      <div class="action-row">
+        <button class="btn secondary hidden" id="draftBtn" type="button">Antwort vorbereiten</button>
+        <button class="btn ghost" id="copyBtn" type="button">Nächsten Schritt kopieren</button>
+        <button class="btn primary" id="doneBtn" type="button">✓ Erledigt / geklärt</button>
+        <button class="btn ghost" id="exportBtn" type="button">OpenAction JSON</button>
+      </div>
+
+      <div class="feedback">
+        <span>War das hilfreich und korrekt?</span>
+        <div class="feedback-btns"><button id="upBtn" type="button" aria-label="Hilfreich">👍</button><button id="downBtn" type="button" aria-label="Nicht hilfreich">👎</button></div>
+      </div>
+    </section>
+
+    <section class="card impact-card" id="impactCard">
+      <p class="section-title">Dein messbarer Impact</p>
+      <p class="impact-big" id="impactHeadline">0 Dinge weniger im Kopf.</p>
+      <p class="impact-sub">Nicht „AI benutzt“. Sondern echte Last reduziert.</p>
+      <div class="metrics">
+        <div class="metric"><small>Zeit zurück</small><strong id="mMinutes">0 min</strong></div>
+        <div class="metric"><small>Geklärt</small><strong id="mCases">0</strong></div>
+        <div class="metric"><small>Fristen</small><strong id="mDeadlines">0</strong></div>
+      </div>
+    </section>
+
+    <section class="card manifesto">
+      <p class="section-title">Warum das fundamental ist</p>
+      <p><strong>Information ist nicht das Ziel. Handlungsfähigkeit ist das Ziel.</strong> OpenAction ist ein offenes Format für: <em>Input → Bedeutung → Beleg → nächste Aktion → menschliche Freigabe → Ergebnis.</em></p>
+      <p>Klar ist nur die erste Oberfläche. Dieselbe Schicht kann später Bürgerleistungen, Arbeit, Verträge, Gesundheit, Pflege und Verwaltung verbinden — ohne dass eine Firma dein Leben besitzen muss.</p>
+    </section>
+  </main>
+
+  <dialog id="doneDialog">
+    <form method="dialog" class="modal" id="doneForm">
+      <h3>Was hat Klar dir gebracht?</h3>
+      <p>Eine grobe Schätzung reicht. Wir zählen nur Wirkung, die du selbst bestätigst.</p>
+      <label for="minutesSaved"><strong>Geschätzte Minuten gespart</strong></label>
+      <input id="minutesSaved" type="range" min="0" max="60" step="1" value="10" style="width:100%;margin:12px 0 4px" />
+      <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:12px"><span>0</span><strong id="minutesSavedLabel">10 Minuten</strong><span>60</span></div>
+      <div class="modal-actions"><button class="btn ghost" value="cancel">Abbrechen</button><button class="btn secondary" id="confirmDone" value="default">Impact speichern</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="draftDialog">
+    <div class="modal">
+      <h3>Antwort vorbereitet</h3>
+      <p>Prüfe Namen, Daten und Ton, bevor du etwas verschickst.</p>
+      <textarea id="draftText" aria-label="Vorbereitete Antwort"></textarea>
+      <div class="modal-actions"><button class="btn ghost" id="closeDraft" type="button">Schließen</button><button class="btn secondary" id="copyDraft" type="button">Kopieren</button></div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+
+<script src="./app.js"></script>
+</body>
+</html>
