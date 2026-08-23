@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mikelninh.github.io/klar/openaction.schema.json",
+  "title": "OpenAction 0.1",
+  "description": "A provider-neutral contract for turning untrusted real-world information into evidence-linked, human-approved next actions.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "version",
+    "mode",
+    "category",
+    "title",
+    "plain_summary",
+    "urgency",
+    "next_action",
+    "actions",
+    "evidence",
+    "confidence"
+  ],
+  "properties": {
+    "version": {"const": "openaction/0.1"},
+    "mode": {"enum": ["ai", "local"]},
+    "category": {
+      "enum": ["invoice", "authority", "contract", "appointment", "work", "health", "legal", "benefit", "other"]
+    },
+    "title": {"type": "string", "minLength": 1, "maxLength": 120},
+    "plain_summary": {"type": "string", "minLength": 1, "maxLength": 1200},
+    "urgency": {"enum": ["now", "soon", "normal", "none"]},
+    "deadline": {
+      "anyOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["date", "label", "evidence"],
+          "properties": {
+            "date": {"type": "string"},
+            "label": {"type": "string"},
+            "evidence": {"type": "string"}
+          }
+        }
+      ]
+    },
+    "money": {
+      "anyOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["amount", "currency", "label", "evidence"],
+          "properties": {
+            "amount": {"type": "number"},
+            "currency": {"type": "string", "minLength": 3, "maxLength": 3},
+            "label": {"type": "string"},
+            "evidence": {"type": "string"}
+          }
+        }
+      ]
+    },
+    "next_action": {"type": "string", "minLength": 1, "maxLength": 500},
+    "actions": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["label", "why", "action_type"],
+        "properties": {
+          "label": {"type": "string"},
+          "why": {"type": "string"},
+          "action_type": {
+            "enum": ["reply", "calendar", "pay_review", "gather_docs", "contact", "review", "none"]
+          }
+        }
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "risks": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "evidence": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {"type": "string", "maxLength": 320}
+    },
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "disclaimer": {"type": ["string", "null"]}
+  }
+}
