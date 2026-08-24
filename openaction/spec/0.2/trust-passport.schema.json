@@ -1,0 +1,29 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://mikelninh.github.io/openaction/spec/0.2/trust-passport.schema.json",
+  "title":"OpenAction Trust Passport 0.2",
+  "description":"Reusable evidence packet for organisational AI/adoption reviews. It does not itself constitute legal, regulatory, security or clinical approval.",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["version","product","intended_use","owner","architecture","data","models","licenses","security","evaluations","approval_path"],
+  "properties":{
+    "version":{"const":"openaction-trust/0.2"},
+    "product":{"type":"object","required":["name","version"],"properties":{"name":{"type":"string"},"version":{"type":"string"},"repository":{"type":"string"},"deployment":{"type":"string"}}},
+    "intended_use":{"type":"string"},
+    "explicit_non_goals":{"type":"array","items":{"type":"string"}},
+    "owner":{"type":"object","required":["role"],"properties":{"role":{"type":"string"},"contact":{"type":"string"}}},
+    "architecture":{"type":"object","properties":{"summary":{"type":"string"},"diagram_uri":{"type":"string"},"dependencies":{"type":"array","items":{"type":"string"}},"hosting_region":{"type":"string"}}},
+    "data":{"type":"object","properties":{"categories":{"type":"array","items":{"type":"string"}},"personal_data":{"type":"boolean"},"special_category_data":{"type":"boolean"},"retention":{"type":"string"},"data_locations":{"type":"array","items":{"type":"string"}},"subprocessors":{"type":"array","items":{"type":"string"}},"dpa_status":{"enum":["unknown","not_applicable","todo","signed"]},"dpia_status":{"enum":["unknown","not_applicable","screening","required","in_review","approved"]}}},
+    "models":{"type":"array","items":{"type":"object","required":["name","provider","purpose"],"properties":{"name":{"type":"string"},"provider":{"type":"string"},"purpose":{"type":"string"},"version":{"type":"string"},"region":{"type":"string"},"training_on_customer_data":{"type":["boolean","null"]}}}},
+    "licenses":{"type":"array","items":{"type":"object","required":["component","license","status"],"properties":{"component":{"type":"string"},"license":{"type":"string"},"status":{"enum":["unknown","review","compatible","incompatible"]},"evidence_uri":{"type":"string"}}}},
+    "security":{"type":"object","properties":{"authn":{"type":"string"},"authz":{"type":"string"},"encryption":{"type":"string"},"logging":{"type":"string"},"incident_contact":{"type":"string"},"security_review_status":{"enum":["unknown","todo","in_review","approved"]}}},
+    "ai_act":{"type":"object","properties":{"role_assessment":{"type":"string"},"risk_assessment":{"type":"string"},"transparency_controls":{"type":"array","items":{"type":"string"}},"literacy_plan":{"type":"string"},"review_status":{"enum":["unknown","todo","in_review","approved"]}}},
+    "domain_regulation":{"type":"array","items":{"type":"object","properties":{"framework":{"type":"string"},"assessment":{"type":"string"},"status":{"enum":["unknown","not_applicable","todo","in_review","approved"]}}}},
+    "workforce":{"type":"object","properties":{"employees_affected":{"type":"boolean"},"works_council_exists":{"type":["boolean","null"]},"consultation_status":{"enum":["unknown","not_applicable","todo","in_review","complete"]},"training_plan":{"type":"string"}}},
+    "procurement":{"type":"object","properties":{"route":{"type":"string"},"vendor_review_status":{"enum":["unknown","not_applicable","todo","in_review","approved"]},"commercial_terms_uri":{"type":"string"}}},
+    "evaluations":{"type":"array","items":{"type":"object","required":["name","status"],"properties":{"name":{"type":"string"},"status":{"enum":["planned","running","passed","failed"]},"result":{"type":"string"},"evidence_uri":{"type":"string"}}}},
+    "rollback":{"type":"object","properties":{"kill_switch":{"type":"boolean"},"procedure":{"type":"string"},"owner_role":{"type":"string"}}},
+    "approval_path":{"type":"string","description":"URI or identifier of the corresponding Approval Path object"},
+    "last_updated":{"type":"string","format":"date-time"}
+  }
+}

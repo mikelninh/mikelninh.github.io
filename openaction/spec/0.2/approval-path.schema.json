@@ -1,0 +1,42 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://mikelninh.github.io/openaction/spec/0.2/approval-path.schema.json",
+  "title":"OpenAction Approval Path 0.2",
+  "description":"A transparent, non-authoritative map of human, legal, organisational and technical gates required before an action or AI system may be used.",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["version","product","intended_use","gates"],
+  "properties":{
+    "version":{"const":"openaction-approval/0.2"},
+    "product":{"type":"string","minLength":1},
+    "intended_use":{"type":"string","minLength":1},
+    "environment":{"enum":["sandbox","pilot","production"]},
+    "gates":{"type":"array","items":{"$ref":"#/$defs/gate"}},
+    "ready_when":{"type":"array","items":{"type":"string"}},
+    "notes":{"type":"array","items":{"type":"string"}}
+  },
+  "$defs":{
+    "gate":{
+      "type":"object",
+      "additionalProperties":false,
+      "required":["id","category","question","status","blocking","owner_role","evidence_required"],
+      "properties":{
+        "id":{"type":"string","pattern":"^gate_[A-Za-z0-9._-]+$"},
+        "category":{"enum":["purpose","ai_act","privacy","data","security","licensing","procurement","workforce","domain_regulation","clinical_safety","quality","operations","governance"]},
+        "question":{"type":"string","minLength":1},
+        "status":{"enum":["unknown","not_applicable","todo","in_review","approved","rejected","expired"]},
+        "blocking":{"type":"boolean"},
+        "owner_role":{"type":"string","minLength":1},
+        "reviewer_role":{"type":"string"},
+        "basis":{"type":"array","items":{"type":"object","required":["label"],"properties":{"label":{"type":"string"},"uri":{"type":"string","format":"uri"}}}},
+        "evidence_required":{"type":"array","items":{"type":"string"}},
+        "artifacts":{"type":"array","items":{"type":"string"}},
+        "depends_on":{"type":"array","items":{"type":"string"}},
+        "can_run_in_parallel":{"type":"boolean"},
+        "suggested_next_step":{"type":"string"},
+        "decision":{"type":"object","properties":{"by":{"type":"string"},"at":{"type":"string","format":"date-time"},"reason":{"type":"string"}}},
+        "automation":{"enum":["manual","assist","auto_prepare_never_approve"]}
+      }
+    }
+  }
+}

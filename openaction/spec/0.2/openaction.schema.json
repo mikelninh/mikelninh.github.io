@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mikelninh.github.io/openaction/spec/0.2/openaction.schema.json",
+  "title": "OpenAction Core 0.2",
+  "description": "Provider-neutral action contract: evidence in, permission-aware action out, measurable outcome back.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["openaction", "id", "kind", "label", "status", "reason", "actor", "evidence", "risk", "permissions", "approval"],
+  "properties": {
+    "openaction": {"const": "0.2"},
+    "id": {"type": "string", "pattern": "^oa_[A-Za-z0-9._-]+$"},
+    "case_id": {"type": "string", "maxLength": 200},
+    "kind": {"type": "string", "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)+$"},
+    "label": {"type": "string", "minLength": 1, "maxLength": 240},
+    "status": {"enum": ["proposed", "ready", "approved", "executing", "succeeded", "failed", "cancelled"]},
+    "reason": {"type": "string", "minLength": 1, "maxLength": 1200},
+    "actor": {"$ref": "#/$defs/actor"},
+    "target": {"$ref": "#/$defs/actor"},
+    "inputs": {"type": "object"},
+    "deadline": {"type": "string", "format": "date-time"},
+    "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}},
+    "risk": {"enum": ["low", "medium", "high", "critical"]},
+    "permissions": {"type": "array", "items": {"$ref": "#/$defs/permission"}},
+    "approval": {"$ref": "#/$defs/approval"},
+    "reversible": {"type": "boolean"},
+    "idempotency_key": {"type": "string", "maxLength": 200},
+    "outcome": {"$ref": "#/$defs/outcome"},
+    "extensions": {"type": "object"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"risk": {"enum": ["high", "critical"]}}, "required": ["risk"]},
+      "then": {
+        "properties": {
+          "approval": {
+            "properties": {
+              "required": {"const": true},
+              "mode": {"enum": ["human", "qualified_human"]}
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id"],
+      "properties": {
+        "type": {"enum": ["human", "qualified_human", "agent", "service", "institution"]},
+        "id": {"type": "string", "minLength": 1, "maxLength": 200},
+        "display_name": {"type": "string", "maxLength": 200}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "source"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^ev_[A-Za-z0-9._-]+$"},
+        "kind": {"enum": ["document", "message", "database", "observation", "policy", "person", "system", "other"]},
+        "source": {"type": "string", "minLength": 1, "maxLength": 300},
+        "excerpt": {"type": "string", "maxLength": 500},
+        "uri": {"type": "string", "format": "uri"},
+        "locator": {"type": "string", "maxLength": 300},
+        "observed_at": {"type": "string", "format": "date-time"},
+        "sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"}
+      }
+    },
+    "permission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capability", "resource", "purpose"],
+      "properties": {
+        "capability": {"type": "string", "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)+$"},
+        "resource": {"type": "string", "minLength": 1, "maxLength": 300},
+        "purpose": {"type": "string", "minLength": 1, "maxLength": 300},
+        "sensitivity": {"enum": ["public", "internal", "personal", "sensitive", "highly_sensitive"]}
+      }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "mode", "status"],
+      "properties": {
+        "required": {"type": "boolean"},
+        "mode": {"enum": ["none", "policy", "human", "qualified_human"]},
+        "status": {"enum": ["not_required", "pending", "approved", "rejected"]},
+        "by": {"$ref": "#/$defs/actor"},
+        "at": {"type": "string", "format": "date-time"},
+        "expires_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "summary"],
+      "properties": {
+        "status": {"enum": ["succeeded", "failed", "partial", "unknown"]},
+        "summary": {"type": "string", "minLength": 1, "maxLength": 1000},
+        "completed_at": {"type": "string", "format": "date-time"},
+        "receipt": {"type": "string", "maxLength": 500},
+        "metrics": {"type": "object", "additionalProperties": {"type": ["number", "integer", "string", "boolean", "null"]}}
+      }
+    }
+  }
+}
