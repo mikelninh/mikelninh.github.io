@@ -1,0 +1,16 @@
+{
+  "version":"openaction-approval/0.2",
+  "product":"Hospital discharge follow-up assistant",
+  "intended_use":"Prepare and route post-discharge follow-up tasks; no autonomous diagnosis or treatment decision.",
+  "environment":"pilot",
+  "gates":[
+    {"id":"gate_purpose","category":"purpose","question":"Is the intended use narrow, documented and accepted by the clinical owner?","status":"approved","blocking":true,"owner_role":"clinical product owner","evidence_required":["intended-use statement","explicit non-goals"],"can_run_in_parallel":true,"automation":"assist"},
+    {"id":"gate_privacy","category":"privacy","question":"Are legal basis, data minimisation, processor terms and DPIA screening documented?","status":"todo","blocking":true,"owner_role":"data protection","evidence_required":["data-flow map","data inventory","DPA/subprocessor list","DPIA screening"],"can_run_in_parallel":true,"suggested_next_step":"Generate the reusable privacy evidence pack from the Trust Passport.","automation":"auto_prepare_never_approve"},
+    {"id":"gate_security","category":"security","question":"Has hospital IT/security reviewed identity, access, logging, encryption and rollback?","status":"todo","blocking":true,"owner_role":"information security","evidence_required":["architecture diagram","authN/authZ design","logging plan","incident and rollback procedure"],"can_run_in_parallel":true,"automation":"auto_prepare_never_approve"},
+    {"id":"gate_workforce","category":"workforce","question":"Have affected staff and, where applicable, employee representatives been involved early?","status":"todo","blocking":false,"owner_role":"change lead / workforce representative","evidence_required":["workflow impact summary","training plan","human-override design"],"can_run_in_parallel":true,"automation":"assist"},
+    {"id":"gate_domain","category":"domain_regulation","question":"Has the intended purpose been assessed for medical-device / other health-sector regulatory implications?","status":"todo","blocking":true,"owner_role":"regulatory / clinical safety","evidence_required":["intended purpose","clinical claims","MDR/MDCG qualification assessment"],"can_run_in_parallel":true,"automation":"auto_prepare_never_approve"},
+    {"id":"gate_pilot","category":"governance","question":"Are pilot boundaries, accountable humans, stop conditions and success metrics approved?","status":"todo","blocking":true,"owner_role":"pilot sponsor","evidence_required":["pilot protocol","approval matrix","evaluation plan","kill switch"],"depends_on":["gate_privacy","gate_security","gate_domain"],"can_run_in_parallel":false,"automation":"assist"}
+  ],
+  "ready_when":["all blocking gates are approved or explicitly not applicable","pilot owner is named","rollback path is tested"],
+  "notes":["AI prepares evidence; authorised humans make approvals.","This example is an integration template, not a legal or clinical determination."]
+}
