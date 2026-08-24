@@ -1,0 +1,72 @@
+{
+  "examples": [
+    {
+      "name": "Hospital → care follow-up",
+      "source_system": "FHIR server",
+      "input_standard": "HL7 FHIR Task",
+      "openaction": {
+        "openaction": "0.2",
+        "id": "oa_health_followup_001",
+        "case_id": "case_discharge_001",
+        "kind": "health.follow_up.coordinate",
+        "label": "Coordinate post-discharge follow-up",
+        "status": "proposed",
+        "reason": "The discharge workflow contains an explicit follow-up task. Clinical meaning remains in the FHIR record.",
+        "actor": {"type": "service", "id": "hospital-fhir-adapter", "display_name": "Hospital FHIR Adapter"},
+        "target": {"type": "institution", "id": "care-coordination-service"},
+        "evidence": [{"id": "ev_fhir_task_001", "kind": "system", "source": "FHIR", "locator": "Task/example-followup", "excerpt": "Follow-up after discharge"}],
+        "risk": "high",
+        "permissions": [{"capability": "care.follow_up.request", "resource": "case_discharge_001", "purpose": "Coordinate explicitly requested follow-up care", "sensitivity": "highly_sensitive"}],
+        "approval": {"required": true, "mode": "qualified_human", "status": "pending"},
+        "reversible": true,
+        "extensions": {"fhir": {"resourceType": "Task", "id": "example-followup"}}
+      },
+      "consumer_examples": ["patient app", "care coordinator", "authorised care service"]
+    },
+    {
+      "name": "SME inbox → invoice review",
+      "source_system": "email / ERP",
+      "input_standard": "email or vendor webhook",
+      "openaction": {
+        "openaction": "0.2",
+        "id": "oa_invoice_review_001",
+        "case_id": "invoice_2026_1187",
+        "kind": "finance.invoice.review",
+        "label": "Review vendor invoice before payment",
+        "status": "proposed",
+        "reason": "A vendor invoice was received and should be checked before any payment instruction is created.",
+        "actor": {"type": "agent", "id": "sme-inbox-agent"},
+        "target": {"type": "human", "id": "accounts-payable-owner"},
+        "evidence": [{"id": "ev_invoice_mail_001", "kind": "message", "source": "inbox", "excerpt": "Invoice 2026-1187 · 84,50 EUR · due 05.09.2026"}],
+        "risk": "medium",
+        "permissions": [{"capability": "finance.invoice.read", "resource": "invoice_2026_1187", "purpose": "Prepare invoice review", "sensitivity": "internal"}],
+        "approval": {"required": true, "mode": "human", "status": "pending"},
+        "reversible": true
+      },
+      "consumer_examples": ["ERP", "bookkeeper", "owner dashboard"]
+    },
+    {
+      "name": "Authority → citizen document request",
+      "source_system": "public administration case system",
+      "input_standard": "case-management event",
+      "openaction": {
+        "openaction": "0.2",
+        "id": "oa_public_docs_001",
+        "case_id": "benefit_case_001",
+        "kind": "public_service.document.submit",
+        "label": "Submit missing income proof",
+        "status": "proposed",
+        "reason": "The authority explicitly requested an income document before the case can be completed.",
+        "actor": {"type": "institution", "id": "example-authority"},
+        "target": {"type": "human", "id": "citizen"},
+        "deadline": "2026-09-10T23:59:59+02:00",
+        "evidence": [{"id": "ev_authority_letter_001", "kind": "document", "source": "authority-letter", "excerpt": "Please submit the July income proof by 10 September 2026."}],
+        "risk": "medium",
+        "permissions": [{"capability": "public_service.document.prepare", "resource": "benefit_case_001", "purpose": "Prepare the requested document submission", "sensitivity": "personal"}],
+        "approval": {"required": true, "mode": "human", "status": "pending"},
+        "reversible": true
+      },
+      "consumer_examples": ["Klar", "citizen wallet", "case-management frontend"]
+    }
+  ]
+}
