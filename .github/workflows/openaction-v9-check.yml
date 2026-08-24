@@ -23,5 +23,8 @@ jobs:
       - run: grep -q 'Trust, Änderungen & Konflikte' openaction/workspace/index.html
       - run: grep -q 'Proof' openaction/workspace/index.html
       - run: grep -q 'Audit / Rechnungshof' openaction/workspace/v10-data.js
+      - run: grep -q "Evidence geschützt" openaction/workspace/v10-app.js
+      - run: grep -q "t.receipt&&t.ownerRole===currentRole&&s==='submitted'" openaction/workspace/v10-app.js
       - run: grep -q 'submitted' openaction/workspace/v10-app.js
       - run: grep -q 'rejected' openaction/workspace/v10-app.js
+      - run: grep -q 's-reopened' openaction/workspace/v10-polish.css
