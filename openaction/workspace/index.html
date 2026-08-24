@@ -4,40 +4,50 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f5f5f3">
-<meta name="description" content="OpenAction V9 — shared state, verified completion, visual journey and evidence-backed money flow.">
-<title>OpenAction — Verified Project State</title>
-<link rel="stylesheet" href="./v9.css?v=20260824-1">
+<meta name="description" content="OpenAction V10 — one shared project state with verified completion, evidence, permissions and traceable money flow.">
+<title>OpenAction — Trust & Control V10</title>
+<link rel="stylesheet" href="./v10.css?v=20260824-4">
+<link rel="stylesheet" href="./v10-polish.css?v=20260824-4">
 </head>
 <body>
 <main class="shell">
-  <header class="top"><a class="brand" href="../">OpenAction<i>.</i></a><div class="version">Verified State · V9</div></header>
+  <header class="top"><a class="brand" href="../">OpenAction<i>.</i></a><div class="version">Trust & Control · V10</div></header>
   <section class="demo" aria-label="Demo-Steuerung">
     <select id="caseSelect" aria-label="Beispiel wählen"></select>
     <select id="roleSelect" aria-label="Perspektive wählen"></select>
     <button id="resetBtn">Demo zurücksetzen</button>
   </section>
   <section class="case">
-    <header class="case-head"><small>Ziel dieses Cases</small><h1 id="caseTitle"></h1><p id="caseGoal"></p></header>
+    <header class="case-head">
+      <div><div class="eyebrow">Ziel dieses Cases</div><h1 id="caseTitle"></h1><p id="caseGoal"></p></div>
+      <div class="mode" aria-label="Ansicht"><button id="simpleMode" class="active">Einfach</button><button id="proofMode">Proof</button></div>
+    </header>
     <section class="shared">
-      <div class="shared-top"><div><div class="kicker">Shared Now · für alle identisch</div><h2 id="nowTitle"></h2><p id="nowText"></p></div><div class="eta-card"><small>Erwartet</small><b id="etaText"></b><span id="etaNote"></span></div></div>
-      <div class="shared-list" id="sharedList"></div><div class="shared-foot"><span id="sharedCount"></span><span>Grün = verifiziert, nicht nur eingereicht</span></div>
+      <div class="shared-grid"><div><div class="eyebrow">Shared Now · für alle identisch</div><h2 id="nowTitle"></h2><p id="nowText"></p></div><div class="eta-card"><small>Erwartet</small><b id="etaText"></b><span id="etaNote"></span></div></div>
+      <div class="now-list" id="nowList"></div>
+      <div class="shared-foot"><span id="sharedCount"></span><span id="sharedTruth"></span></div>
     </section>
-    <section class="body">
+    <section class="main">
       <div class="identity"><div class="avatar" id="avatar"></div><div><small>Deine Perspektive</small><b id="roleName"></b></div></div>
-      <section class="action" id="action"><div class="kicker" id="actionKicker"></div><h3 id="taskTitle"></h3><p id="taskText"></p><div class="contract"><div><small>Fertig wenn</small><b id="dodText"></b></div><div><small>Prüft / bestätigt</small><b id="verifierText"></b></div><div><small>Nachweis</small><b id="evidenceText"></b></div><div><small>Planwert</small><b id="taskEta"></b></div></div><button class="primary" id="actionBtn"></button><button class="secondary" id="rejectBtn">Zurückweisen / erneut öffnen</button></section>
-      <section class="impact"><small>Danach</small><b id="impactTitle"></b><p id="impactText"></p></section>
-      <section class="more">
-        <details id="journeyDetails"><summary>Gesamten Weg ansehen</summary><div class="inside"><div class="journey-wrap"><div class="journey-head"><div><small>Projekt-Route</small><h4>Von hier bis wirklich fertig.</h4></div><span>Meilenstein ist erst grün, wenn seine Definition of Done verifiziert ist.</span></div><div class="route" id="journey"></div><div class="completion-note"><i>✓</i><div><b>„Komplett“ ist ein eigener Zustand.</b><span id="completionDefinition"></span></div></div></div></div></details>
-        <details id="moneyDetails"><summary>Geld & Mittel verfolgen</summary><div class="inside"><section class="money"><div class="money-head"><div><small>Money Trail</small><h4>Woher kommt das Geld — und wo ist es wirklich?</h4><p>Dieselbe Wahrheit, je nach Berechtigung unterschiedlich detailliert.</p></div><span class="access" id="accessBadge"></span></div><div class="money-kpis" id="moneyKpis"></div><div class="money-flow" id="moneyFlow"></div><div class="money-note"><b>One source of truth</b><span id="moneyNote"></span></div></section></div></details>
+      <section class="action" id="action">
+        <div class="eyebrow" id="actionKicker"></div><h3 id="taskTitle"></h3><p id="taskText"></p>
+        <div class="summary"><div class="mini"><small>Fertig wenn</small><b id="dodText"></b></div><div class="mini"><small>Prüft / bestätigt</small><b id="verifyText"></b></div><div class="mini"><small>Planwert</small><b id="taskEta"></b></div></div>
+        <div id="proof" class="proof"></div>
+        <button class="cta" id="actionBtn"></button><button class="cta secondary" id="rejectBtn">Zurückweisen · neu öffnen</button>
+      </section>
+      <section class="impact"><small>Was verändert sich danach?</small><b id="impactTitle"></b><p id="impactText"></p></section>
+      <section class="accordion">
+        <details open><summary>Gesamten Weg ansehen</summary><div class="inside"><div class="route" id="journey"></div></div></details>
+        <details><summary>Geld & Mittel verfolgen</summary><div class="inside" id="moneyInfo"></div></details>
         <details><summary>Was wurde konkret gemacht?</summary><div class="inside" id="historyInfo"></div></details>
-        <details><summary>Evidence & Audit</summary><div class="inside" id="evidenceInfo"></div></details>
+        <details><summary>Trust, Änderungen & Konflikte</summary><div class="inside" id="trustInfo"></div></details>
         <details><summary>Hinweis zum Beispiel</summary><div class="inside" id="caseNote"></div></details>
       </section>
     </section>
   </section>
-  <footer class="footer">OpenAction · One case · verified completion · traceable money · linked evidence</footer>
+  <footer class="footer">OpenAction · one case · one shared truth · permissioned proof</footer>
 </main><div class="toast" id="toast"></div>
-<script src="./v9.js?v=20260824-1"></script>
-<script src="./v9-fixes.js?v=20260824-1"></script>
+<script src="./v10-data.js?v=20260824-4"></script>
+<script src="./v10-app.js?v=20260824-4"></script>
 </body>
 </html>

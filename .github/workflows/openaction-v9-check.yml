@@ -1,4 +1,4 @@
-name: OpenAction V9 UI checks
+name: OpenAction V10 UI checks
 on:
   push:
     branches: [main, 'feat/openaction-**']
@@ -12,9 +12,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: {node-version: 22}
-      - run: node --check openaction/workspace/v9.js
-      - run: node --check openaction/workspace/v9-fixes.js
-      - run: grep -q 'Verified State · V9' openaction/workspace/index.html
+      - run: node --check openaction/workspace/v10-data.js
+      - run: node --check openaction/workspace/v10-app.js
+      - run: grep -q 'Trust & Control · V10' openaction/workspace/index.html
+      - run: grep -q 'Shared Now · für alle identisch' openaction/workspace/index.html
+      - run: grep -q 'Fertig wenn' openaction/workspace/index.html
+      - run: grep -q 'Prüft / bestätigt' openaction/workspace/index.html
       - run: grep -q 'Gesamten Weg ansehen' openaction/workspace/index.html
       - run: grep -q 'Geld & Mittel verfolgen' openaction/workspace/index.html
-      - run: grep -q 'Evidence & Audit' openaction/workspace/index.html
+      - run: grep -q 'Trust, Änderungen & Konflikte' openaction/workspace/index.html
+      - run: grep -q 'Proof' openaction/workspace/index.html
+      - run: grep -q 'Audit / Rechnungshof' openaction/workspace/v10-data.js
+      - run: grep -q "Evidence geschützt" openaction/workspace/v10-app.js
+      - run: grep -q "t.receipt&&t.ownerRole===currentRole&&s==='submitted'" openaction/workspace/v10-app.js
+      - run: grep -q 'submitted' openaction/workspace/v10-app.js
+      - run: grep -q 'rejected' openaction/workspace/v10-app.js
+      - run: grep -q 's-reopened' openaction/workspace/v10-polish.css
