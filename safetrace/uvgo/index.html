@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="description" content="SafeTrace Live-Tracker zur Reform der Unterschwellenvergabeordnung (UVgO) 2026: Entwurf, Stellungnahmen, Änderungen und offene Evidenz." />
+  <title>SafeTrace · UVgO Reform Tracker 2026</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="SafeTrace Startseite">SAFE<span>TRACE</span></a>
+  <nav aria-label="Hauptnavigation">
+    <a href="#changes">Änderungen</a><a href="#evidence">Evidence Log</a><a href="#stakeholders">Stellungnahmen</a><a href="#outcomes">Outcomes</a><a href="#method">Methodik</a>
+  </nav>
+  <button id="theme" class="icon-btn" aria-label="Darstellung wechseln">◐</button>
+</header>
+
+<main id="top">
+  <section class="hero shell">
+    <div class="hero-copy">
+      <div class="eyebrow">Deutschland · Öffentliche Beschaffung · Live Case</div>
+      <h1>Wie verändert sich die <em>UVgO</em> — und was bedeutet das für Transparenz?</h1>
+      <p class="lede">SafeTrace dokumentiert den Reformprozess von Entwurf über Stellungnahmen bis zur finalen Regel. Wir zeigen belegte Änderungen, Quellenqualität und offene Fragen — ohne aus Reformen, Lobbying oder zeitlicher Nähe Fehlverhalten abzuleiten.</p>
+      <div class="actions"><a class="primary" href="#changes">Änderungen prüfen</a><a class="secondary" href="https://www.bundeswirtschaftsministerium.de/Redaktion/DE/Artikel/Service/unterschwellenvergabeordnung-uvgo.html" target="_blank" rel="noreferrer">BMWE Primärquelle ↗</a></div>
+    </div>
+    <aside class="deadline-card" aria-label="Konsultationsfrist">
+      <span class="label">Öffentliche Konsultation</span>
+      <strong>28. Aug. 2026</strong>
+      <div id="countdown" class="countdown">–</div>
+      <p>Stellungnahmen zum BMWE-Entwurf können bis zu diesem Datum eingereicht werden.</p>
+      <span class="pill draft">Entwurf · noch nicht final</span>
+    </aside>
+  </section>
+
+  <section class="metrics shell" aria-label="Kernzahlen">
+    <article><strong>54 → 24</strong><span>Paragrafen laut BMWE</span></article>
+    <article><strong>30.06.</strong><span>Entwurf veröffentlicht</span></article>
+    <article><strong>28.08.</strong><span>Konsultationsfrist</span></article>
+    <article><strong id="evidenceCount">0</strong><span>Evidence Events erfasst</span></article>
+  </section>
+
+  <section class="truth-banner shell">
+    <div><b>SafeTrace Truth Layer</b><span>Geltendes Recht</span><span>Offizieller Entwurf</span><span>Stakeholder-Position</span><span>Analyse</span><span>Offene Evidenz</span></div>
+    <p><strong>Wichtig:</strong> Eine Stellungnahme oder Interessenvertretung beweist keinen unzulässigen Einfluss. Eine geplante Änderung ist kein geltendes Recht.</p>
+  </section>
+
+  <section id="changes" class="section shell">
+    <div class="section-head">
+      <div><div class="eyebrow">Change Ledger</div><h2>Was soll sich ändern?</h2><p>Nur Aussagen, deren Status und Quelle sichtbar sind.</p></div>
+      <div class="filters" role="group" aria-label="Änderungen filtern">
+        <button class="active" data-filter="all">Alle</button><button data-filter="official">Offiziell</button><button data-filter="analysis">Analyse</button><button data-filter="gap">Offene Frage</button>
+      </div>
+    </div>
+    <div id="changeCards" class="cards"></div>
+  </section>
+
+  <section id="evidence" class="section alt">
+    <div class="shell">
+      <div class="section-head"><div><div class="eyebrow">Audit trail</div><h2>Evidence Log</h2><p>Versionierte Ereignisse statt nachträglich erzählter Geschichte.</p></div><div class="actions compact"><button id="exportJson" class="secondary button">JSON exportieren</button><button id="exportCsv" class="secondary button">CSV exportieren</button></div></div>
+      <div id="timeline" class="timeline"></div>
+    </div>
+  </section>
+
+  <section id="stakeholders" class="section shell">
+    <div class="section-head"><div><div class="eyebrow">Consultation Watch</div><h2>Stellungnahmen & Interessen</h2><p>Positionen werden als Positionen dargestellt — nicht als Beweis für Einfluss.</p></div><input id="stakeholderSearch" class="search" type="search" placeholder="Suche nach Organisation oder Thema …" aria-label="Stellungnahmen durchsuchen" /></div>
+    <div id="stakeholderCards" class="stakeholder-grid"></div>
+    <div class="gap-box"><b>Aktuelle Evidenzlücke</b><p>SafeTrace hat noch keine vollständige amtliche Liste aller zur UVgO-Neufassung 2026 eingereichten Stellungnahmen. Der Tracker zeigt deshalb nur öffentlich auffindbare, belegte Beiträge und markiert die Abdeckung ausdrücklich als unvollständig.</p></div>
+  </section>
+
+  <section id="outcomes" class="section outcome-section">
+    <div class="shell">
+      <div class="eyebrow">Outcome Layer</div><h2>Nach Inkrafttreten zählt Wirkung.</h2><p class="lede small">Der Tracker soll nicht bei Gesetzestexten enden. Diese Kennzahlen machen später überprüfbar, ob Beschaffung tatsächlich schneller und einfacher wird — und ob Wettbewerb oder Transparenz darunter leiden.</p>
+      <div class="outcome-grid">
+        <article><span>01</span><h3>Vergabedauer</h3><p>Median von Veröffentlichung bis Zuschlag, vor/nach Reform.</p><b>Baseline fehlt</b></article>
+        <article><span>02</span><h3>Wettbewerb</h3><p>Durchschnittliche Zahl gültiger Angebote je Verfahren.</p><b>Baseline fehlt</b></article>
+        <article><span>03</span><h3>Direktvergaben</h3><p>Anteil und Volumen von Aufträgen ohne Wettbewerb.</p><b>Datenzugang prüfen</b></article>
+        <article><span>04</span><h3>Transparenz-Lag</h3><p>Zeit zwischen Zuschlag und öffentlicher Bekanntmachung.</p><b>Messmodell bereit</b></article>
+        <article><span>05</span><h3>Kostenabweichung</h3><p>Vertragswert gegenüber finalen Kosten, soweit öffentlich.</p><b>Projektbezogen</b></article>
+        <article><span>06</span><h3>KMU-Zugang</h3><p>Anteil kleiner und mittlerer Unternehmen an Zuschlägen.</p><b>Quelle offen</b></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="method" class="section shell method">
+    <div class="eyebrow">Methodik</div><h2>Eine Beweiskette, keine Verdächtigenliste.</h2>
+    <div class="method-grid">
+      <article><b>01</b><h3>Quelle zuerst</h3><p>Primärquellen erhalten Vorrang. Sekundäranalysen werden separat gekennzeichnet.</p></article>
+      <article><b>02</b><h3>Rechtsstatus</h3><p>Entwurf, geltendes Recht, Stellungnahme und Analyse bleiben technisch getrennte Typen.</p></article>
+      <article><b>03</b><h3>Keine Kausalität erfinden</h3><p>Kontakt, Spende, Stellungnahme oder zeitliche Nähe beweisen keine Gegenleistung.</p></article>
+      <article><b>04</b><h3>Offene Evidenz sichtbar</h3><p>Nicht auffindbar bedeutet nicht nicht-existent. Lücken werden als Lücken markiert.</p></article>
+    </div>
+  </section>
+
+  <section class="section sources-section">
+    <div class="shell"><div class="eyebrow">Source registry</div><h2>Quellenregister</h2><div id="sources" class="sources"></div></div>
+  </section>
+</main>
+
+<footer><div class="brand">SAFE<span>TRACE</span></div><p>Öffentliche Rechenschaft, ohne öffentliche Vorverurteilung.</p><small>Datenstand: 24. August 2026 · UVgO Case v1.0</small></footer>
+<script src="data.js"></script><script src="app.js"></script>
+</body></html>
