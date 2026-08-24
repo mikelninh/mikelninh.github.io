@@ -1,0 +1,21 @@
+{
+  "version":"openaction-trust/0.2",
+  "synthetic":true,
+  "product":{"name":"CareOS","version":"0.1-pilot","repository":"synthetic example","deployment":"Hospital-controlled pilot environment"},
+  "intended_use":"Prepare evidence-linked summaries and follow-up tasks for clinical staff. No autonomous diagnosis, prescribing or treatment decision.",
+  "explicit_non_goals":["No autonomous diagnosis","No autonomous treatment recommendation","No medication ordering","No unsupervised patient communication","No silent writes to source clinical records"],
+  "owner":{"role":"Clinical Product Owner","contact":"TBD by pilot hospital"},
+  "architecture":{"summary":"Read-only clinical context enters a bounded processing layer; CareOS creates evidence-linked draft summaries/tasks; qualified staff review before downstream action.","diagram_uri":"./architecture-placeholder","dependencies":["Hospital identity provider","Existing FHIR/ISiK interfaces where available","Model runtime selected by deployment"],"hosting_region":"TBD by deployment"},
+  "data":{"categories":["clinical workflow context","patient identifiers only if required by deployment","audit metadata"],"personal_data":true,"special_category_data":true,"retention":"TBD; minimise and prefer references over duplicate storage","data_locations":["TBD by deployment"],"subprocessors":["TBD by selected runtime"],"dpa_status":"todo","dpia_status":"screening"},
+  "models":[{"name":"TBD deployment model","provider":"TBD","purpose":"evidence-linked extraction and summarisation","version":"pinned before pilot","region":"TBD","training_on_customer_data":null}],
+  "licenses":[{"component":"OpenAction reference layer","license":"AGPL-3.0-or-later","status":"compatible"},{"component":"CareOS application dependencies","license":"inventory required","status":"review"},{"component":"Selected model/runtime terms","license":"provider terms","status":"review"}],
+  "security":{"authn":"Hospital identity integration planned","authz":"Role-scoped access; least privilege","encryption":"In transit and at rest for deployment-controlled data","logging":"Append-only audit intent; no sensitive prompt logging by default","incident_contact":"Hospital security owner TBD","security_review_status":"in_review"},
+  "ai_act":{"role_assessment":"Requires deployment-specific assessment","risk_assessment":"Requires intended-use and deployment-context review; this synthetic passport makes no legal classification","transparency_controls":["AI-generated content visibly marked","Evidence links retained","Human reviewer required before consequential action","Known limitations visible"],"literacy_plan":"Short role-based onboarding before pilot","review_status":"todo"},
+  "domain_regulation":[{"framework":"Medical-device / clinical software qualification","assessment":"Qualification depends on intended purpose and claims; human review required","status":"in_review"},{"framework":"FHIR / ISiK / TI / gematik scope","assessment":"Classify the deployed system role before assuming a specific confirmation procedure is required","status":"todo"}],
+  "workforce":{"employees_affected":true,"works_council_exists":null,"consultation_status":"todo","training_plan":"30-minute workflow review + pilot onboarding + feedback channel"},
+  "procurement":{"route":"Hospital-specific","vendor_review_status":"todo","commercial_terms_uri":"TBD"},
+  "evaluations":[{"name":"Evidence-grounding eval","status":"planned","result":"Target and corpus to be agreed with clinical owner"},{"name":"Critical omission / contradiction eval","status":"planned","result":"Target and corpus to be agreed with clinical safety"},{"name":"Workflow usability test","status":"planned","result":"Test with real end users before production claim"}],
+  "rollback":{"kill_switch":true,"procedure":"Disable CareOS integration and revert to existing workflow; demonstrate before bounded pilot","owner_role":"Hospital IT / Pilot Sponsor"},
+  "approval_path":"careos-pilot-synthetic-001",
+  "last_updated":"2026-08-24T08:15:00Z"
+}
