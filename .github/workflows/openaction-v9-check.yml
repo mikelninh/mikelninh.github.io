@@ -31,7 +31,7 @@ jobs:
           grep -q 'Shared Now' openaction/index.html
           grep -q 'My Action' openaction/index.html
           grep -q 'CURRENT CONSTRAINT SET' openaction/workspace/v11-enhance.js
-          grep -q 'One mission' openaction/workspace/v11-enhance.js
+          grep -q 'mission + shared truth + current constraint set + one next action' openaction/workspace/v11-enhance.js
           grep -q 'cases.building' openaction/workspace/v11-enhance.js
           grep -q "label:'Baugenehmigung'" openaction/workspace/v11-enhance.js
           grep -q 'Required legal, safety and authority checks stay' openaction/workspace/v11-enhance.js
