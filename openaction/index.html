@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f6f7f9">
-<meta name="description" content="OpenAction — one shared project state, one next action per person, evidence-backed completion.">
+<meta name="description" content="OpenAction — one mission, one shared truth, current constraints and one next action per person.">
 <title>OpenAction — One system, many projects</title>
 <link rel="stylesheet" href="./ui-v11.css?v=20260825-1">
-<link rel="stylesheet" href="./readability-v11.css?v=20260825-1">
+<link rel="stylesheet" href="./readability-v11.css?v=20260825-3">
 </head>
 <body>
 <div class="oa-wrap">
@@ -16,6 +16,7 @@
   <nav class="oa-nav" aria-label="Navigation">
     <a href="#projects">Examples</a>
     <a href="./workspace/">Case Room</a>
+    <a href="./ground-truth/g07819/">Ground truth</a>
     <a href="../careos/proof.html">CareOS proof</a>
     <a class="oa-pill" href="https://github.com/mikelninh/openaction">GitHub ↗</a>
   </nav>
@@ -23,19 +24,19 @@
 
 <main>
 <section class="oa-hero">
-  <div class="oa-kicker">OpenAction · visual system V11</div>
+  <div class="oa-kicker">OpenAction · Mission Control V12</div>
   <h1>One system, many projects.</h1>
-  <p><strong>Shared Now stays the same.</strong> My Action changes by role. Everyone can see where the project stands without everyone having to understand the whole process.</p>
+  <p><strong>One mission. One shared truth. One current constraint set.</strong> My Action changes by role. Everyone can see what blocks the next unlock without everyone having to understand the whole process.</p>
   <div class="oa-actions">
     <a class="oa-button primary" href="./workspace/?case=careos&role=clinical">Open CareOS Case Room →</a>
-    <a class="oa-button" href="../careos/proof.html">See the real-world proof path</a>
+    <a class="oa-button" href="./ground-truth/g07819/">See a real German case</a>
   </div>
 </section>
 
 <section class="oa-section" id="projects">
   <div class="oa-section-head">
     <div><div class="oa-kicker">Same grammar, different domains</div><h2>Understand the case in seconds.</h2></div>
-    <p>Every example answers the same two things first: <strong>where are we together?</strong> and <strong>what do I need to do?</strong></p>
+    <p>Every example answers the same things first: <strong>where are we together?</strong>, <strong>what blocks the next step?</strong> and <strong>what do I need to do?</strong></p>
   </div>
 
   <div class="oa-project-grid">
@@ -74,10 +75,14 @@
 
   <div class="oa-legend oa-card" aria-label="Status legend">
     <div class="oa-legend-item"><span class="oa-legend-dot"></span><div><b>Waiting</b><span>Someone else is needed</span></div></div>
-    <div class="oa-legend-item"><span class="oa-legend-dot green"></span><div><b>In progress</b><span>Work has actually started</span></div></div>
-    <div class="oa-legend-item"><span class="oa-legend-dot blue"></span><div><b>Submitted</b><span>Evidence waits for review</span></div></div>
+    <div class="oa-legend-item"><span class="oa-legend-dot blue"></span><div><b>In progress</b><span>Work has actually started</span></div></div>
+    <div class="oa-legend-item"><span class="oa-legend-dot violet"></span><div><b>Submitted</b><span>Evidence waits for review</span></div></div>
     <div class="oa-legend-item"><span class="oa-legend-dot ring"></span><div><b>Verified</b><span>DoD + Evidence + Verifier</span></div></div>
   </div>
+
+  <a class="oa-feature-link oa-card" href="./ground-truth/g07819/">
+    <div><h3>Real Ground Truth · G07819</h3><p>805 observed days in a completed German industrial approval case. See what is proven, what is unknown, and where agents can remove coordination work without pretending required review is waste.</p></div><strong>Open real case →</strong>
+  </a>
 
   <a class="oa-feature-link oa-card" href="./workspace/?case=gov&role=public">
     <div><h3>Public project transparency</h3><p>Follow budget → commitment → invoice → payment → reconciliation without exposing protected details.</p></div><strong>Open Government example →</strong>

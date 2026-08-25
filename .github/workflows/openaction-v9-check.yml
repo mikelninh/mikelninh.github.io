@@ -28,8 +28,7 @@ jobs:
       - name: V12 mission-control contract
         run: |
           grep -q 'One system, many projects' openaction/index.html
-          grep -q 'Shared Now' openaction/index.html
-          grep -q 'My Action' openaction/index.html
+          grep -q 'One current constraint set' openaction/index.html
           grep -q 'CURRENT CONSTRAINT SET' openaction/workspace/v11-enhance.js
           grep -q 'mission + shared truth + current constraint set + one next action' openaction/workspace/v11-enhance.js
           grep -q 'cases.building' openaction/workspace/v11-enhance.js
@@ -40,6 +39,15 @@ jobs:
           grep -q 'Synthetic interactive demo' openaction/workspace/v11-enhance.js
           grep -q 'Demo proof only' openaction/workspace/v11-enhance.js
           grep -q 'localStorage' openaction/workspace/v11-enhance.js
+      - name: Real ground-truth contract
+        run: |
+          grep -q 'REAL GROUND TRUTH' openaction/ground-truth/g07819/index.html
+          grep -q '805 Tage beobachtet' openaction/ground-truth/g07819/index.html
+          grep -q 'Wie viele vermeidbar waren, wissen wir noch nicht' openaction/ground-truth/g07819/index.html
+          grep -q 'Automatisiere Koordination, nicht Hoheitsgewalt' openaction/ground-truth/g07819/index.html
+          grep -q 'ready_for_review_at' openaction/ground-truth/g07819/index.html
+          grep -q 'Keine gemessene Einsparung behauptet' openaction/ground-truth/g07819/index.html
+          grep -q './ground-truth/g07819/' openaction/index.html
       - name: Existing visual contract
         run: |
           grep -q 'Public project transparency' openaction/index.html
@@ -56,6 +64,7 @@ jobs:
         run: |
           grep -q 'readability-v11.css' openaction/index.html
           grep -q 'readability-v11.css' openaction/workspace/index.html
+          grep -q 'readability-v11.css' openaction/ground-truth/g07819/index.html
           grep -q 'readability-v11.css' careos/proof.html
           grep -q 'body{font-size:16px' openaction/readability-v11.css
           grep -q '.now-row b{font-size:14px' openaction/readability-v11.css
@@ -85,3 +94,4 @@ jobs:
           grep -q 'prefers-reduced-motion' openaction/ui-v11.css
           grep -q 'focus-visible' openaction/ui-v11.css
           grep -q '@media(max-width:700px)' openaction/workspace/v11-semantics.css
+          grep -q '@media(max-width:580px)' openaction/ground-truth/g07819/ground-truth.css
