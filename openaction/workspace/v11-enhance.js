@@ -32,7 +32,7 @@
       document.querySelector('#moneyTruth').textContent='evidence still traceable';
     }else{
       el.innerHTML=STEPS.map(([label,key],i)=>`<div class="money-step ${Number(f[key])>0?'has':''}"><div class="money-node">${i+1}</div><b>${label}</b><span>${fmt(f[key])}</span></div>`).join('');
-      document.querySelector('#moneyTruth').textContent=f.forecast>f.budget?'forecast above budget':'authoritative references';
+      document.querySelector('#moneyTruth').textContent=f.forecast>f.budget?'forecast above budget · amounts ≠ completion':'amounts ≠ completion';
     }
     const latest=latestEvidenceFor(c);
     document.querySelector('#latestEvidence').textContent=latest?`${latest.label} · ${latest.task}`:'Noch kein Evidence-Receipt';
