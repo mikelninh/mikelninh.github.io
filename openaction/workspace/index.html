@@ -7,7 +7,7 @@
 <meta name="description" content="OpenAction V11 — one shared project state, one next action, verified completion and permissioned proof.">
 <title>OpenAction — Visual Case Room V11</title>
 <link rel="stylesheet" href="../ui-v11.css?v=20260825-1">
-<link rel="stylesheet" href="./v11.css?v=20260825-1">
+<link rel="stylesheet" href="./v11.css?v=20260825-2">
 </head>
 <body>
 <div class="app">
@@ -45,7 +45,7 @@
 
       <section class="action-wrap" aria-labelledby="myActionTitle">
         <div class="identity">
-          <div class="identity-person"><div class="avatar" id="avatar"></div><div><small>My Action</small><b id="roleName"></b></div></div>
+          <div class="identity-person"><div class="avatar" id="avatar"></div><div><small id="myActionTitle">My Action</small><b id="roleName"></b></div></div>
           <span class="role-chip" id="roleChip">Current role</span>
         </div>
         <section class="action" id="action">
@@ -59,9 +59,9 @@
     </section>
 
     <section class="info-strip" id="moneyStrip">
-      <div class="strip-head"><div class="strip-title"><span class="strip-icon">€</span>Money & Evidence</div><span class="strip-sub">same graph · permissioned detail</span></div>
+      <div class="strip-head"><div class="strip-title"><span class="strip-icon">€</span>Money & Evidence</div><span class="strip-sub">same graph · permissioned detail · amounts ≠ completion</span></div>
       <div class="money-visual" id="moneyVisual"></div>
-      <div class="evidence-latest"><div><small>Latest evidence</small><b id="latestEvidence">—</b></div><span class="oa-pill" id="moneyTruth">authoritative references</span></div>
+      <div class="evidence-latest"><div><small>Latest evidence</small><b id="latestEvidence">—</b></div><span class="oa-pill" id="moneyTruth">amounts ≠ completion</span></div>
     </section>
 
     <section class="info-strip">
@@ -82,6 +82,6 @@
 <div class="toast" id="toast"></div>
 <script src="./v10-data.js?v=20260824-4"></script>
 <script src="./v10-app.js?v=20260824-4"></script>
-<script src="./v11-enhance.js?v=20260825-1"></script>
+<script src="./v11-enhance.js?v=20260825-2"></script>
 </body>
 </html>
