@@ -1,10 +1,18 @@
-name: OpenAction V10 UI checks
+name: OpenAction V11 UI checks
 on:
   push:
     branches: [main, 'feat/openaction-**']
-    paths: ['openaction/workspace/**', '.github/workflows/openaction-v9-check.yml']
+    paths:
+      - 'openaction/**'
+      - 'careos/proof.html'
+      - 'careos/proof.css'
+      - '.github/workflows/openaction-v9-check.yml'
   pull_request:
-    paths: ['openaction/workspace/**', '.github/workflows/openaction-v9-check.yml']
+    paths:
+      - 'openaction/**'
+      - 'careos/proof.html'
+      - 'careos/proof.css'
+      - '.github/workflows/openaction-v9-check.yml'
 jobs:
   ui:
     runs-on: ubuntu-latest
@@ -12,19 +20,44 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: {node-version: 22}
-      - run: node --check openaction/workspace/v10-data.js
-      - run: node --check openaction/workspace/v10-app.js
-      - run: grep -q 'Trust & Control · V10' openaction/workspace/index.html
-      - run: grep -q 'Shared Now · für alle identisch' openaction/workspace/index.html
-      - run: grep -q 'Fertig wenn' openaction/workspace/index.html
-      - run: grep -q 'Prüft / bestätigt' openaction/workspace/index.html
-      - run: grep -q 'Gesamten Weg ansehen' openaction/workspace/index.html
-      - run: grep -q 'Geld & Mittel verfolgen' openaction/workspace/index.html
-      - run: grep -q 'Trust, Änderungen & Konflikte' openaction/workspace/index.html
-      - run: grep -q 'Proof' openaction/workspace/index.html
-      - run: grep -q 'Audit / Rechnungshof' openaction/workspace/v10-data.js
-      - run: grep -q "Evidence geschützt" openaction/workspace/v10-app.js
-      - run: grep -q "t.receipt&&t.ownerRole===currentRole&&s==='submitted'" openaction/workspace/v10-app.js
-      - run: grep -q 'submitted' openaction/workspace/v10-app.js
-      - run: grep -q 'rejected' openaction/workspace/v10-app.js
-      - run: grep -q 's-reopened' openaction/workspace/v10-polish.css
+      - name: JavaScript syntax
+        run: |
+          node --check openaction/workspace/v10-data.js
+          node --check openaction/workspace/v10-app.js
+          node --check openaction/workspace/v11-enhance.js
+      - name: V11 visual contract
+        run: |
+          grep -q 'One system, many projects' openaction/index.html
+          grep -q 'Shared Now' openaction/index.html
+          grep -q 'My Action' openaction/index.html
+          grep -q 'Public project transparency' openaction/index.html
+          grep -q 'Visual Case Room V11' openaction/workspace/index.html
+          grep -q 'Money & Evidence' openaction/workspace/index.html
+          grep -q 'Project Route' openaction/workspace/index.html
+          grep -q 'Definition of Done' openaction/workspace/index.html
+          grep -q 'Proof' openaction/workspace/index.html
+          grep -q 'amounts ≠ completion' openaction/workspace/index.html
+          grep -q 'v11-semantics.css' openaction/workspace/index.html
+          grep -q 'From prototype to real-world proof' careos/proof.html
+          grep -q 'Real clinicians' careos/proof.html
+          grep -q 'Responsible real-world use' careos/proof.html
+      - name: Verified-state semantics stay intact
+        run: |
+          grep -q 'Audit / Rechnungshof' openaction/workspace/v10-data.js
+          grep -q "Evidence geschützt" openaction/workspace/v10-app.js
+          grep -q "t.receipt&&t.ownerRole===currentRole&&s==='submitted'" openaction/workspace/v10-app.js
+          grep -q 'submitted' openaction/workspace/v10-app.js
+          grep -q 'rejected' openaction/workspace/v10-app.js
+          grep -q 'expired' openaction/workspace/v10-app.js
+          grep -q 'reopened' openaction/workspace/v10-app.js
+          grep -q 'green is reserved for verified completion' openaction/workspace/v11-semantics.css
+          grep -q 'background:var(--oa-line)' openaction/workspace/v11-semantics.css
+      - name: Accessibility and responsive basics
+        run: |
+          grep -q 'aria-label="Ansicht"' openaction/workspace/index.html
+          grep -q 'aria-labelledby="sharedTitle"' openaction/workspace/index.html
+          grep -q 'aria-labelledby="myActionTitle"' openaction/workspace/index.html
+          grep -q 'id="myActionTitle"' openaction/workspace/index.html
+          grep -q 'prefers-reduced-motion' openaction/ui-v11.css
+          grep -q 'focus-visible' openaction/ui-v11.css
+          grep -q '@media(max-width:580px)' openaction/workspace/v11.css

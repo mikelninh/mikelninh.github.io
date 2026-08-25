@@ -3,51 +3,86 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5f5f3">
-<meta name="description" content="OpenAction V10 — one shared project state with verified completion, evidence, permissions and traceable money flow.">
-<title>OpenAction — Trust & Control V10</title>
-<link rel="stylesheet" href="./v10.css?v=20260824-4">
-<link rel="stylesheet" href="./v10-polish.css?v=20260824-4">
+<meta name="theme-color" content="#f5f6f8">
+<meta name="description" content="OpenAction V11 — one shared project state, one next action, verified completion and permissioned proof.">
+<title>OpenAction — Visual Case Room V11</title>
+<link rel="stylesheet" href="../ui-v11.css?v=20260825-1">
+<link rel="stylesheet" href="./v11.css?v=20260825-2">
+<link rel="stylesheet" href="./v11-semantics.css?v=20260825-1">
 </head>
 <body>
-<main class="shell">
-  <header class="top"><a class="brand" href="../">OpenAction<i>.</i></a><div class="version">Trust & Control · V10</div></header>
-  <section class="demo" aria-label="Demo-Steuerung">
-    <select id="caseSelect" aria-label="Beispiel wählen"></select>
-    <select id="roleSelect" aria-label="Perspektive wählen"></select>
-    <button id="resetBtn">Demo zurücksetzen</button>
-  </section>
-  <section class="case">
+<div class="app">
+  <header class="app-top">
+    <a class="oa-brand" href="../"><span class="oa-mark" aria-hidden="true"></span>OpenAction</a>
+    <div class="top-right">
+      <div class="mode" aria-label="Ansicht"><button id="simpleMode" class="active">Simple</button><button id="proofMode">Proof</button></div>
+      <details class="demo-menu">
+        <summary>Demo · <span id="demoLabel">CareOS · Clinical</span></summary>
+        <div class="demo-panel">
+          <label for="caseSelect">Beispiel</label><select id="caseSelect"></select>
+          <label for="roleSelect">Perspektive</label><select id="roleSelect"></select>
+          <button id="resetBtn">Demo zurücksetzen</button>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main class="case-shell">
     <header class="case-head">
-      <div><div class="eyebrow">Ziel dieses Cases</div><h1 id="caseTitle"></h1><p id="caseGoal"></p></div>
-      <div class="mode" aria-label="Ansicht"><button id="simpleMode" class="active">Einfach</button><button id="proofMode">Proof</button></div>
+      <div class="case-icon" id="caseIcon">✚</div>
+      <div><div class="eyebrow" id="caseSub">Hospital AI · bounded pilot</div><h1 id="caseTitle"></h1><p id="caseGoal"></p></div>
     </header>
-    <section class="shared">
-      <div class="shared-grid"><div><div class="eyebrow">Shared Now · für alle identisch</div><h2 id="nowTitle"></h2><p id="nowText"></p></div><div class="eta-card"><small>Erwartet</small><b id="etaText"></b><span id="etaNote"></span></div></div>
-      <div class="now-list" id="nowList"></div>
-      <div class="shared-foot"><span id="sharedCount"></span><span id="sharedTruth"></span></div>
-    </section>
-    <section class="main">
-      <div class="identity"><div class="avatar" id="avatar"></div><div><small>Deine Perspektive</small><b id="roleName"></b></div></div>
-      <section class="action" id="action">
-        <div class="eyebrow" id="actionKicker"></div><h3 id="taskTitle"></h3><p id="taskText"></p>
-        <div class="summary"><div class="mini"><small>Fertig wenn</small><b id="dodText"></b></div><div class="mini"><small>Prüft / bestätigt</small><b id="verifyText"></b></div><div class="mini"><small>Planwert</small><b id="taskEta"></b></div></div>
-        <div id="proof" class="proof"></div>
-        <button class="cta" id="actionBtn"></button><button class="cta secondary" id="rejectBtn">Zurückweisen · neu öffnen</button>
+
+    <section class="primary-grid">
+      <section class="shared" aria-labelledby="sharedTitle">
+        <div class="panel-title" id="sharedTitle"><span class="panel-icon">SN</span>Shared Now</div>
+        <div class="shared-top">
+          <div class="metric"><div class="eyebrow">Current phase</div><h2 id="nowTitle"></h2><p id="nowText"></p></div>
+          <div class="metric"><div class="eyebrow">Expected</div><div class="eta-card"><b id="etaText"></b><span id="etaNote"></span></div></div>
+        </div>
+        <div class="now-list" id="nowList"></div>
+        <div class="shared-foot"><span id="sharedCount"></span><span id="sharedTruth"></span></div>
       </section>
-      <section class="impact"><small>Was verändert sich danach?</small><b id="impactTitle"></b><p id="impactText"></p></section>
-      <section class="accordion">
-        <details open><summary>Gesamten Weg ansehen</summary><div class="inside"><div class="route" id="journey"></div></div></details>
-        <details><summary>Geld & Mittel verfolgen</summary><div class="inside" id="moneyInfo"></div></details>
-        <details><summary>Was wurde konkret gemacht?</summary><div class="inside" id="historyInfo"></div></details>
-        <details><summary>Trust, Änderungen & Konflikte</summary><div class="inside" id="trustInfo"></div></details>
-        <details><summary>Hinweis zum Beispiel</summary><div class="inside" id="caseNote"></div></details>
+
+      <section class="action-wrap" aria-labelledby="myActionTitle">
+        <div class="identity">
+          <div class="identity-person"><div class="avatar" id="avatar"></div><div><small id="myActionTitle">My Action</small><b id="roleName"></b></div></div>
+          <span class="role-chip" id="roleChip">Current role</span>
+        </div>
+        <section class="action" id="action">
+          <div class="eyebrow" id="actionKicker"></div><h3 id="taskTitle"></h3><p id="taskText"></p>
+          <div class="summary"><div class="mini"><small>Definition of Done</small><b id="dodText"></b></div><div class="mini"><small>Evidence / verifier</small><b id="verifyText"></b></div><div class="mini"><small>Planwert</small><b id="taskEta"></b></div></div>
+          <div id="proof" class="proof"></div>
+          <button class="cta" id="actionBtn"></button><button class="cta secondary" id="rejectBtn">Zurückweisen · neu öffnen</button>
+        </section>
+        <section class="impact"><small>What changes next?</small><b id="impactTitle"></b><p id="impactText"></p></section>
       </section>
     </section>
-  </section>
-  <footer class="footer">OpenAction · one case · one shared truth · permissioned proof</footer>
-</main><div class="toast" id="toast"></div>
+
+    <section class="info-strip" id="moneyStrip">
+      <div class="strip-head"><div class="strip-title"><span class="strip-icon">€</span>Money & Evidence</div><span class="strip-sub">same graph · permissioned detail · amounts ≠ completion</span></div>
+      <div class="money-visual" id="moneyVisual"></div>
+      <div class="evidence-latest"><div><small>Latest evidence</small><b id="latestEvidence">—</b></div><span class="oa-pill" id="moneyTruth">amounts ≠ completion</span></div>
+    </section>
+
+    <section class="info-strip">
+      <div class="strip-head"><div class="strip-title"><span class="strip-icon" style="background:var(--oa-blue-soft);color:var(--oa-blue)">↗</span>Project Route</div><span class="strip-sub">completed · now · next · outcome</span></div>
+      <div class="route-wrap"><div class="route" id="journey"></div></div>
+    </section>
+
+    <section class="details" aria-label="Weitere Details">
+      <details><summary>Geldfluss im Detail</summary><div class="inside" id="moneyInfo"></div></details>
+      <details><summary>Was wurde konkret gemacht?</summary><div class="inside" id="historyInfo"></div></details>
+      <details><summary>Trust, Änderungen & Konflikte</summary><div class="inside" id="trustInfo"></div></details>
+      <details><summary>Hinweis zum Beispiel</summary><div class="inside" id="caseNote"></div></details>
+    </section>
+
+    <footer class="footer">OpenAction · one case · one shared truth · different next actions · permissioned proof</footer>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
 <script src="./v10-data.js?v=20260824-4"></script>
 <script src="./v10-app.js?v=20260824-4"></script>
+<script src="./v11-enhance.js?v=20260825-2"></script>
 </body>
 </html>

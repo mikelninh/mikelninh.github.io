@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f7f9">
+<meta name="description" content="CareOS real-world proof roadmap — from synthetic engineering to responsible real-world evidence.">
+<title>CareOS — From prototype to real-world proof</title>
+<link rel="stylesheet" href="../openaction/ui-v11.css?v=20260825-1">
+<link rel="stylesheet" href="./proof.css?v=20260825-1">
+</head>
+<body>
+<div class="proof-shell">
+  <header class="proof-top">
+    <a class="oa-brand" href="../openaction/"><span class="oa-mark" aria-hidden="true"></span>OpenAction</a>
+    <div class="right"><a class="oa-button" href="./">CareOS</a><a class="oa-pill" href="https://github.com/mikelninh/care-os/tree/main/proof">Proof repo ↗</a></div>
+  </header>
+
+  <main class="proof-main">
+    <section class="proof-hero">
+      <div class="oa-kicker">CareOS · real-world evidence ladder</div>
+      <h1>From prototype to real-world proof.</h1>
+      <p>A disciplined path from strong synthetic engineering to trustworthy real-world evidence — with a stop condition at every step.</p>
+      <div class="truth-callout"><strong>Current truth:</strong> CareOS has substantial synthetic/runnable engineering, but clinical usefulness and hospital integration are not yet proven. The frozen clinical-truth holdout still blocks production G1; external evidence is now more valuable than broad new features.</div>
+    </section>
+
+    <section class="proof-route" aria-label="CareOS proof ladder">
+      <article class="proof-milestone done"><div class="proof-num">1</div><div class="proof-icon">△</div><div><h3>Synthetic tests</h3><small>Outcome</small><p>Core workflows, failure modes and safety boundaries simulated.</p><span class="proof-state">demonstrated</span></div></article>
+      <article class="proof-milestone now"><div class="proof-num">2</div><div class="proof-icon">CL</div><div><h3>Real clinicians</h3><small>Outcome</small><p>Time, errors, source checks and cognitive effort measured on matched synthetic cases.</p><span class="proof-state">next proof</span></div></article>
+      <article class="proof-milestone"><div class="proof-num">3</div><div class="proof-icon">◇</div><div><h3>Independent reviewers</h3><small>Outcome</small><p>Clinical, privacy, security and integration assumptions challenged.</p><span class="proof-state">planned</span></div></article>
+      <article class="proof-milestone"><div class="proof-num">4</div><div class="proof-icon">✚</div><div><h3>Hospital discovery</h3><small>Outcome</small><p>Real systems, vendor versions, owners and interfaces mapped without PHI.</p><span class="proof-state">planned</span></div></article>
+      <article class="proof-milestone"><div class="proof-num">5</div><div class="proof-icon">DB</div><div><h3>Approved sandbox</h3><small>Outcome</small><p>Read-only FHIR / ISiK / HL7 assumptions tested against real environment behavior.</p><span class="proof-state">future gate</span></div></article>
+      <article class="proof-milestone"><div class="proof-num">6</div><div class="proof-icon">◉</div><div><h3>Shadow Mode</h3><small>Outcome</small><p>CareOS observes real workflow without affecting clinical care.</p><span class="proof-state">future gate</span></div></article>
+      <article class="proof-milestone"><div class="proof-num">7</div><div class="proof-icon">3–5</div><div><h3>Bounded pilot</h3><small>Outcome</small><p>3–5 users, read-only scope, human authority, stop and rollback rules.</p><span class="proof-state">future gate</span></div></article>
+      <article class="proof-milestone"><div class="proof-num">8</div><div class="proof-icon">↗</div><div><h3>Multi-site proof</h3><small>Outcome</small><p>Repeatability measured across another hospital or vendor without core-contract fork.</p><span class="proof-state">future gate</span></div></article>
+    </section>
+
+    <section class="goal">
+      <div><h2>Responsible real-world use</h2><p>Not a date on a roadmap. A state earned only when safety, workflow, interoperability and trust evidence all justify it.</p></div><div class="goal-icon">⚑</div>
+    </section>
+
+    <section class="pillars oa-card">
+      <strong>Our proof pillars</strong>
+      <div class="pillar"><span class="pillar-icon">◇</span><div><b>Safety</b><span>Protect patients and stop on uncertainty.</span></div></div>
+      <div class="pillar"><span class="pillar-icon">◎</span><div><b>Workflow</b><span>Fit real work without verification collapse.</span></div></div>
+      <div class="pillar"><span class="pillar-icon">↔</span><div><b>Interoperability</b><span>Survive actual systems, versions and source behavior.</span></div></div>
+      <div class="pillar"><span class="pillar-icon">▣</span><div><b>Trust</b><span>Claims upgrade only when inspectable evidence exists.</span></div></div>
+    </section>
+
+    <div class="proof-foot"><span>Every step is deliberate. Every outcome is evidence. Every decision can stop.</span><div class="oa-actions" style="margin:0"><a class="oa-button primary" href="https://github.com/mikelninh/care-os/tree/main/proof">Inspect Proof Sprint 1 →</a><a class="oa-button" href="../openaction/workspace/?case=careos&role=clinical">Open CareOS pilot case</a></div></div>
+  </main>
+</div>
+</body>
+</html>
