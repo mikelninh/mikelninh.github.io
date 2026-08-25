@@ -1,4 +1,4 @@
-name: OpenAction V11 UI checks
+name: OpenAction V12 UI checks
 on:
   push:
     branches: [main, 'feat/openaction-**']
@@ -25,13 +25,24 @@ jobs:
           node --check openaction/workspace/v10-data.js
           node --check openaction/workspace/v10-app.js
           node --check openaction/workspace/v11-enhance.js
-      - name: V11 visual contract
+      - name: V12 mission-control contract
         run: |
           grep -q 'One system, many projects' openaction/index.html
           grep -q 'Shared Now' openaction/index.html
           grep -q 'My Action' openaction/index.html
+          grep -q 'CURRENT CONSTRAINT SET' openaction/workspace/v11-enhance.js
+          grep -q 'One mission' openaction/workspace/v11-enhance.js
+          grep -q 'cases.building' openaction/workspace/v11-enhance.js
+          grep -q "label:'Baugenehmigung'" openaction/workspace/v11-enhance.js
+          grep -q 'Required legal, safety and authority checks stay' openaction/workspace/v11-enhance.js
+          grep -q 'can move in parallel' openaction/workspace/v11-enhance.js
+          grep -q 'Mission Control V12' openaction/workspace/v11-enhance.js
+          grep -q 'Synthetic interactive demo' openaction/workspace/v11-enhance.js
+          grep -q 'Demo proof only' openaction/workspace/v11-enhance.js
+          grep -q 'localStorage' openaction/workspace/v11-enhance.js
+      - name: Existing visual contract
+        run: |
           grep -q 'Public project transparency' openaction/index.html
-          grep -q 'Visual Case Room V11' openaction/workspace/index.html
           grep -q 'Money & Evidence' openaction/workspace/index.html
           grep -q 'Project Route' openaction/workspace/index.html
           grep -q 'Definition of Done' openaction/workspace/index.html
@@ -50,7 +61,6 @@ jobs:
           grep -q '.now-row b{font-size:14px' openaction/readability-v11.css
           grep -q '.action>p{font-size:15px' openaction/readability-v11.css
           grep -q '.mini b{font-size:13px' openaction/readability-v11.css
-          grep -q '.proof-milestone p{font-size:12px' openaction/readability-v11.css
           grep -q '@media(max-width:580px)' openaction/readability-v11.css
       - name: Verified-state semantics stay intact
         run: |
@@ -62,6 +72,8 @@ jobs:
           grep -q 'expired' openaction/workspace/v10-app.js
           grep -q 'reopened' openaction/workspace/v10-app.js
           grep -q 'green is reserved for verified completion' openaction/workspace/v11-semantics.css
+          grep -q '.s-in_progress .dot' openaction/workspace/v11-semantics.css
+          grep -q '.constraint-panel' openaction/workspace/v11-semantics.css
           grep -q 'background:var(--oa-line)' openaction/workspace/v11-semantics.css
       - name: Accessibility and responsive basics
         run: |
@@ -69,6 +81,7 @@ jobs:
           grep -q 'aria-labelledby="sharedTitle"' openaction/workspace/index.html
           grep -q 'aria-labelledby="myActionTitle"' openaction/workspace/index.html
           grep -q 'id="myActionTitle"' openaction/workspace/index.html
+          grep -q "setAttribute('aria-label','Current constraint set')" openaction/workspace/v11-enhance.js
           grep -q 'prefers-reduced-motion' openaction/ui-v11.css
           grep -q 'focus-visible' openaction/ui-v11.css
-          grep -q '@media(max-width:580px)' openaction/workspace/v11.css
+          grep -q '@media(max-width:700px)' openaction/workspace/v11-semantics.css
