@@ -41,6 +41,17 @@ jobs:
           grep -q 'From prototype to real-world proof' careos/proof.html
           grep -q 'Real clinicians' careos/proof.html
           grep -q 'Responsible real-world use' careos/proof.html
+      - name: Readability contract
+        run: |
+          grep -q 'readability-v11.css' openaction/index.html
+          grep -q 'readability-v11.css' openaction/workspace/index.html
+          grep -q 'readability-v11.css' careos/proof.html
+          grep -q 'body{font-size:16px' openaction/readability-v11.css
+          grep -q '.now-row b{font-size:14px' openaction/readability-v11.css
+          grep -q '.action>p{font-size:15px' openaction/readability-v11.css
+          grep -q '.mini b{font-size:13px' openaction/readability-v11.css
+          grep -q '.proof-milestone p{font-size:12px' openaction/readability-v11.css
+          grep -q '@media(max-width:580px)' openaction/readability-v11.css
       - name: Verified-state semantics stay intact
         run: |
           grep -q 'Audit / Rechnungshof' openaction/workspace/v10-data.js
