@@ -36,6 +36,8 @@ jobs:
           grep -q 'Project Route' openaction/workspace/index.html
           grep -q 'Definition of Done' openaction/workspace/index.html
           grep -q 'Proof' openaction/workspace/index.html
+          grep -q 'amounts ≠ completion' openaction/workspace/index.html
+          grep -q 'v11-semantics.css' openaction/workspace/index.html
           grep -q 'From prototype to real-world proof' careos/proof.html
           grep -q 'Real clinicians' careos/proof.html
           grep -q 'Responsible real-world use' careos/proof.html
@@ -48,10 +50,14 @@ jobs:
           grep -q 'rejected' openaction/workspace/v10-app.js
           grep -q 'expired' openaction/workspace/v10-app.js
           grep -q 'reopened' openaction/workspace/v10-app.js
+          grep -q 'green is reserved for verified completion' openaction/workspace/v11-semantics.css
+          grep -q 'background:var(--oa-line)' openaction/workspace/v11-semantics.css
       - name: Accessibility and responsive basics
         run: |
           grep -q 'aria-label="Ansicht"' openaction/workspace/index.html
           grep -q 'aria-labelledby="sharedTitle"' openaction/workspace/index.html
+          grep -q 'aria-labelledby="myActionTitle"' openaction/workspace/index.html
+          grep -q 'id="myActionTitle"' openaction/workspace/index.html
           grep -q 'prefers-reduced-motion' openaction/ui-v11.css
           grep -q 'focus-visible' openaction/ui-v11.css
           grep -q '@media(max-width:580px)' openaction/workspace/v11.css
