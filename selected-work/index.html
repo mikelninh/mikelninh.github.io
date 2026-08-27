@@ -6,100 +6,76 @@
   <meta name="description" content="Selected work by Michael Ninh — AI product engineering across legal, clinical and public-service workflows.">
   <title>Selected Work — Michael Ninh</title>
   <style>
-    :root{--bg:#f5f5f1;--ink:#111;--muted:#6f716d;--line:#dedfd9;--card:#fff;--blue:#3159f5;--blue-soft:#eef1ff;--green:#146b52;--green-soft:#edf7f2}
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
-    a{color:inherit}
-    .wrap{width:min(1120px,calc(100% - 36px));margin:auto;padding:28px 0 74px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 0 64px}
-    .name{font-weight:850;letter-spacing:-.02em}.meta{font-size:12px;color:var(--muted)}
-    .hero{max-width:930px;padding:0 0 68px}
-    .eyebrow{font-size:11px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
-    h1{font-size:clamp(58px,9.2vw,108px);line-height:.88;letter-spacing:-.075em;margin:12px 0 26px;font-weight:900}
-    .lead{font-size:clamp(19px,2.5vw,28px);line-height:1.28;letter-spacing:-.025em;color:#474946;max-width:760px;margin:0}
-    .lead b{color:var(--ink)}
-    .projects{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .card{position:relative;display:flex;flex-direction:column;min-height:365px;padding:26px;border:1px solid var(--line);border-radius:28px;background:var(--card);text-decoration:none;overflow:hidden;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
-    .card:hover{transform:translateY(-3px);border-color:#c7c9c1;box-shadow:0 18px 42px rgba(20,24,18,.06)}
-    .top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.num{font-size:11px;color:var(--muted);font-weight:800}.tag{font-size:10px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
-    h2{font-size:clamp(34px,4.2vw,52px);line-height:.95;letter-spacing:-.055em;margin:38px 0 10px}
-    .promise{font-size:18px;line-height:1.3;font-weight:760;max-width:430px;margin:0}
-    .mini{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto;padding-top:34px}
-    .fact{padding-top:11px;border-top:1px solid #ecece7}.fact b{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}.fact span{font-size:13px;color:#484b47}
-    .signal{display:inline-flex;align-items:center;gap:7px;margin-top:18px;font-size:12px;font-weight:800;color:var(--green)}.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
-    .arrow{position:absolute;right:24px;bottom:22px;font-size:22px;opacity:.28;transition:opacity .18s ease,transform .18s ease}.card:hover .arrow{opacity:1;transform:translate(2px,-2px)}
-    .pro{background:linear-gradient(145deg,#111 0,#181a18 100%);color:#fff;border-color:#111}.pro .tag{color:#aebcff}.pro .num,.pro .fact b{color:#929892}.pro .fact{border-color:#343734}.pro .fact span{color:#d8dcd7}.pro .signal{color:#9fdac6}.pro .arrow{color:#fff}
-    .cta{margin-top:14px;border-radius:30px;background:var(--blue);color:#fff;padding:38px;display:grid;grid-template-columns:1.4fr .6fr;gap:22px;align-items:end}
-    .cta h3{font-size:clamp(38px,5.5vw,64px);line-height:.95;letter-spacing:-.055em;margin:0 0 12px}.cta p{font-size:17px;line-height:1.45;max-width:640px;margin:0;color:#e0e6ff}.cta .side{text-align:right;font-size:13px;line-height:1.8;color:#d7dfff}.cta .side b{color:#fff}
-    footer{display:flex;justify-content:space-between;gap:18px;padding:28px 4px 0;color:var(--muted);font-size:11px}footer a{text-decoration:none;font-weight:800;color:#3d403d}
-    @media(max-width:800px){header{padding-bottom:46px}.hero{padding-bottom:48px}.projects{grid-template-columns:1fr}.card{min-height:330px}.cta{grid-template-columns:1fr}.cta .side{text-align:left}}
-    @media(max-width:520px){.wrap{width:min(100% - 22px,1120px);padding-top:16px}header{padding-bottom:38px}h1{font-size:58px}.lead{font-size:19px}.card{padding:22px;border-radius:23px}.mini{grid-template-columns:1fr}.cta{padding:25px;border-radius:23px}}
-    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+    :root{
+      --paper:#f3f0e8;--ink:#0c0d0d;--muted:#77766f;--line:rgba(12,13,13,.14);
+      --blue:#3347ff;--lime:#d9ff62;--mint:#bcebd7;--peach:#ffb899;--white:#fffdf7;
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:inherit}.shell{width:min(1240px,calc(100% - 42px));margin:auto}.micro{font-size:11px;line-height:1.2;font-weight:850;letter-spacing:.11em;text-transform:uppercase}.serif{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-style:italic;letter-spacing:-.045em}
+    header{height:84px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{font-weight:900;letter-spacing:-.035em;text-decoration:none}.nav{display:flex;gap:22px;align-items:center}.nav a{font-size:12px;text-decoration:none;color:#55564f}.status{display:inline-flex;align-items:center;gap:7px}.status:before{content:"";width:7px;height:7px;border-radius:50%;background:#42a76e;box-shadow:0 0 0 4px rgba(66,167,110,.1)}
+    .hero{min-height:calc(100svh - 84px);padding:62px 0 42px;display:grid;grid-template-rows:1fr auto}.hero-copy{align-self:center}.hero .micro{color:var(--blue)}h1{font-size:clamp(66px,10.7vw,148px);line-height:.78;letter-spacing:-.085em;margin:18px 0 34px;max-width:1180px;font-weight:920}.hero .serif{font-size:1.03em}.hero-bottom{display:grid;grid-template-columns:1.2fr .8fr;gap:36px;align-items:end;padding-bottom:10px}.lead{font-size:clamp(20px,2.25vw,31px);line-height:1.2;letter-spacing:-.03em;max-width:780px;margin:0}.side-note{justify-self:end;max-width:270px;color:var(--muted);font-size:13px}.scroll{display:inline-flex;align-items:center;gap:9px;margin-top:18px;color:var(--ink);font-weight:800}.scroll:before{content:"↓";display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--line);border-radius:50%}
+    .marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;background:#ebe7dc}.marquee-track{display:flex;width:max-content;gap:28px;animation:marquee 28s linear infinite}.marquee span{font-size:13px;font-weight:850;letter-spacing:.01em}.marquee i{color:var(--blue)}@keyframes marquee{to{transform:translateX(-50%)}}
+    .project{min-height:780px;padding:92px 0;border-bottom:1px solid var(--line);overflow:hidden}.project-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:64px;align-items:center}.project:nth-of-type(even) .project-grid{grid-template-columns:1.22fr .78fr}.project:nth-of-type(even) .copy{order:2}.project:nth-of-type(even) .visual{order:1}.kicker{display:flex;align-items:center;gap:10px;color:var(--muted);margin-bottom:22px}.kicker .n{display:grid;place-items:center;width:28px;height:28px;border:1px solid var(--line);border-radius:50%;font-weight:900;font-size:10px}.copy h2{font-size:clamp(56px,7vw,96px);line-height:.88;letter-spacing:-.075em;margin:0 0 24px}.promise{font-size:clamp(21px,2.1vw,29px);line-height:1.18;letter-spacing:-.03em;max-width:580px;margin:0 0 30px}.proof{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px}.pill{border:1px solid var(--line);border-radius:999px;padding:8px 11px;font-size:11px;font-weight:750;background:rgba(255,255,255,.28)}.project-link{display:inline-flex;align-items:center;gap:12px;font-weight:900;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:4px}.project-link span{transition:transform .2s ease}.project-link:hover span{transform:translate(4px,-4px)}
+    .visual{position:relative;min-height:570px;border-radius:38px;overflow:hidden;box-shadow:0 35px 80px rgba(13,18,12,.11);transform:rotate(.4deg)}.visual:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.22),transparent 40%)}
+    .browser{position:absolute;inset:48px 42px;border-radius:24px;background:var(--white);box-shadow:0 22px 70px rgba(0,0,0,.18);overflow:hidden;transform:rotate(-2deg);transition:transform .35s ease}.project:hover .browser{transform:rotate(-.5deg) translateY(-4px)}.browserbar{height:40px;border-bottom:1px solid #e7e5de;display:flex;align-items:center;gap:6px;padding:0 14px}.browserbar i{width:8px;height:8px;border-radius:50%;background:#d8d6ce}.address{margin-left:8px;font-size:9px;color:#9a9993;background:#f2f1ec;border-radius:8px;padding:5px 9px;flex:1}.app{height:calc(100% - 40px);display:grid}
+    .gitlaw .visual{background:var(--lime)}.gitlaw .app{grid-template-columns:1fr .92fr}.question{padding:30px;border-right:1px solid #eceae3}.question small,.answer small,.workspace small,.care-head small,.benefit small{font-size:9px;text-transform:uppercase;font-weight:900;color:#8a8982;letter-spacing:.08em}.qbox{font-size:25px;line-height:1.08;letter-spacing:-.045em;font-weight:860;margin:12px 0 24px}.lawchips{display:flex;gap:6px;flex-wrap:wrap}.lawchips b{font-size:9px;padding:6px 8px;border:1px solid #d9d7cf;border-radius:999px}.answer{padding:30px;background:#faf9f5}.answer h4{font-size:18px;line-height:1.15;margin:12px 0}.answer p{font-size:11px;line-height:1.55;color:#55564f}.source{border-top:1px solid #e7e5df;padding-top:10px;margin-top:12px;font-size:10px;font-weight:800;color:#3347ff}
+    .pro .visual{background:#171918}.pro .browser{background:#1f2220;color:white}.pro .browserbar{border-color:#353934}.pro .browserbar i{background:#555b55}.pro .address{background:#2b2f2b;color:#828882}.pro .app{grid-template-columns:150px 1fr}.sidebar{padding:20px;background:#191b19;border-right:1px solid #353935}.sidebar b{display:block;font-size:12px;margin-bottom:20px}.menu{font-size:9px;color:#858c86;line-height:2.3}.menu strong{color:white}.workspace{padding:25px}.matter{display:flex;justify-content:space-between;align-items:start}.matter h4{font-size:24px;margin:5px 0}.badge{font-size:8px;background:#d9ff62;color:#111;border-radius:999px;padding:5px 7px;font-weight:900}.result{margin-top:20px;border:1px solid #3a3e3a;border-radius:14px;padding:16px}.result strong{font-size:12px}.result p{font-size:10px;color:#a9afa9}.cite{font-size:9px;color:#aebcff}
+    .care .visual{background:var(--mint)}.care .browser{transform:rotate(1.7deg)}.care:hover .browser{transform:rotate(.5deg) translateY(-4px)}.care .app{display:block;background:#f8fbf9}.care-head{padding:21px 25px;border-bottom:1px solid #e1e9e5;display:flex;justify-content:space-between}.patient{font-size:18px;font-weight:900;margin-top:3px}.care-body{padding:22px 25px;display:grid;grid-template-columns:1fr .8fr;gap:14px}.care-card{background:white;border:1px solid #e2e9e5;border-radius:15px;padding:14px}.care-card b{font-size:10px}.state{margin-top:9px;font-size:10px;padding:8px;border-radius:9px;background:#eef7f2}.pending{background:#fff4dc}.src{margin-top:8px;color:#26745b;font-size:8px;font-weight:850}
+    .public .visual{background:var(--peach)}.public .browser{transform:rotate(-1deg)}.public:hover .browser{transform:rotate(.2deg) translateY(-4px)}.public .app{display:block;padding:28px;background:#fbfaf7}.public h4{font-size:24px;line-height:1;margin:8px 0 20px}.benefits{display:grid;grid-template-columns:1fr 1fr;gap:8px}.benefit{border:1px solid #dedbd4;background:white;border-radius:13px;padding:12px}.benefit b{display:block;font-size:11px;margin-top:5px}.go{color:#14724f;font-size:8px;font-weight:900;margin-top:6px}.public .next{margin-top:12px;background:#111;color:white;padding:12px;border-radius:12px;font-size:9px;font-weight:800}
+    .manifesto{background:#0c0d0d;color:white;padding:110px 0}.manifesto-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:80px;align-items:end}.manifesto h3{font-size:clamp(60px,8vw,112px);line-height:.82;letter-spacing:-.08em;margin:0}.manifesto .serif{color:var(--lime)}.manifesto p{font-size:20px;line-height:1.3;color:#c8c8c2;max-width:470px}.offer{margin-top:24px;display:flex;gap:8px;flex-wrap:wrap}.offer span{border:1px solid #3b3d3a;border-radius:999px;padding:8px 11px;font-size:11px}.contact{display:inline-flex;margin-top:28px;background:var(--lime);color:#111;text-decoration:none;font-weight:900;padding:14px 17px;border-radius:999px}
+    footer{background:#0c0d0d;color:#777b76;border-top:1px solid #292b29}.foot{height:80px;display:flex;align-items:center;justify-content:space-between;font-size:11px}.foot a{text-decoration:none;color:#c7cbc5}
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}.reveal.in{opacity:1;transform:none}
+    @media(max-width:900px){.nav{display:none}.hero-bottom,.project-grid,.project:nth-of-type(even) .project-grid,.manifesto-grid{grid-template-columns:1fr}.side-note{justify-self:start}.project:nth-of-type(even) .copy,.project:nth-of-type(even) .visual{order:initial}.project{padding:72px 0}.visual{min-height:520px}.project-grid{gap:38px}.manifesto-grid{gap:40px}}
+    @media(max-width:600px){.shell{width:min(100% - 24px,1240px)}header{height:68px}.hero{min-height:auto;padding:70px 0 56px}.hero h1{font-size:64px}.hero-bottom{gap:20px}.lead{font-size:20px}.project{min-height:0;padding:60px 0}.copy h2{font-size:56px}.promise{font-size:20px}.visual{min-height:410px;border-radius:25px}.browser{inset:30px 18px;border-radius:18px}.gitlaw .app{grid-template-columns:1fr}.answer{display:none}.pro .app{grid-template-columns:92px 1fr}.sidebar{padding:12px}.care-body{grid-template-columns:1fr}.benefits{grid-template-columns:1fr 1fr}.manifesto{padding:80px 0}.manifesto h3{font-size:64px}.foot{height:auto;padding:24px 0;gap:18px;align-items:flex-start;flex-direction:column}.marquee{display:none}}
+    @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <header><div class="name">Michael Ninh</div><div class="meta">AI Product Engineer · Berlin</div></header>
+  <header class="shell"><a class="brand" href="https://mikelninh.github.io/">MICHAEL NINH</a><nav class="nav"><a href="#work">Selected work</a><a href="#together">Work together</a><span class="status">Berlin · available</span></nav></header>
 
-    <section class="hero">
-      <div class="eyebrow">Selected work</div>
-      <h1>I make hard systems feel simple.</h1>
-      <p class="lead"><b>AI engineering × product × UX.</b><br>Legal. Healthcare. Public services. Start with the human problem. Build the smallest useful proof. Test it with real people.</p>
+  <main>
+    <section class="hero shell">
+      <div class="hero-copy reveal">
+        <div class="micro">AI Product Engineering · Product · UX</div>
+        <h1>Hard systems.<br><span class="serif">Human experiences.</span></h1>
+      </div>
+      <div class="hero-bottom reveal">
+        <p class="lead">I turn complex, high-trust workflows into products people can <strong>understand, inspect and actually use.</strong></p>
+        <div class="side-note">Legal. Healthcare. Public services.<br><span class="scroll">Four selected projects</span></div>
+      </div>
     </section>
 
-    <section class="projects" aria-label="Selected projects">
-      <a class="card" href="https://mikelninh.github.io/gitlaw/">
-        <div class="top"><span class="tag">Legal AI · Citizen</span><span class="num">01</span></div>
-        <h2>GitLaw</h2>
-        <p class="promise">Legal answers you can inspect — down to the paragraph and source.</p>
-        <div class="mini">
-          <div class="fact"><b>Problem</b><span>Law is hard to navigate and harder to trust through a black box.</span></div>
-          <div class="fact"><b>Proof</b><span>5,936 federal laws · 94k nodes · citation checks.</span></div>
-        </div>
-        <div class="signal"><span class="dot"></span>Make access to law clearer</div><span class="arrow">↗</span>
-      </a>
+    <div class="marquee" aria-hidden="true"><div class="marquee-track"><span>START WITH THE HUMAN PROBLEM</span><i>✦</i><span>BUILD THE SMALLEST HARD PROOF</span><i>✦</i><span>MAKE TRUST VISIBLE</span><i>✦</i><span>TEST WITH REAL PEOPLE</span><i>✦</i><span>START WITH THE HUMAN PROBLEM</span><i>✦</i><span>BUILD THE SMALLEST HARD PROOF</span><i>✦</i><span>MAKE TRUST VISIBLE</span><i>✦</i><span>TEST WITH REAL PEOPLE</span><i>✦</i></div></div>
 
-      <a class="card pro" href="https://mikelninh.github.io/gitlaw/#/research">
-        <div class="top"><span class="tag">Legal AI · Professional</span><span class="num">02</span></div>
-        <h2>GitLaw Pro</h2>
-        <p class="promise">Less time searching. More time using legal judgment.</p>
-        <div class="mini">
-          <div class="fact"><b>Product</b><span>Research workspace + traceable sources + reusable legal-AI tools.</span></div>
-          <div class="fact"><b>Next</b><span>First practitioner pilot with a lawyer; measure time saved, then expand.</span></div>
-        </div>
-        <div class="signal"><span class="dot"></span>Proof → practitioner → law firms</div><span class="arrow">↗</span>
-      </a>
+    <div id="work">
+      <section class="project gitlaw"><div class="shell project-grid">
+        <div class="copy reveal"><div class="kicker"><span class="n">01</span><span class="micro">Legal AI · Citizen</span></div><h2>GitLaw</h2><p class="promise">Legal answers you can inspect — down to the paragraph and source.</p><div class="proof"><span class="pill">5,936 federal laws</span><span class="pill">94k graph nodes</span><span class="pill">citation checks</span></div><a class="project-link" href="https://mikelninh.github.io/gitlaw/">Explore GitLaw <span>↗</span></a></div>
+        <div class="visual reveal"><div class="browser"><div class="browserbar"><i></i><i></i><i></i><div class="address">gitlaw / legal orientation</div></div><div class="app"><div class="question"><small>Your question</small><div class="qbox">Can my landlord raise the rent like this?</div><div class="lawchips"><b>§ 558 BGB</b><b>Mietspiegel</b><b>Frist</b></div></div><div class="answer"><small>Source-grounded orientation</small><h4>What matters first</h4><p>The increase depends on the legal basis, timing and local comparative rent. GitLaw separates what is known from what still needs checking.</p><div class="source">↗ Open § 558 BGB · source verified</div></div></div></div></div>
+      </div></section>
 
-      <a class="card" href="https://mikelninh.github.io/careos/">
-        <div class="top"><span class="tag">Clinical AI</span><span class="num">03</span></div>
-        <h2>CareOS</h2>
-        <p class="promise">Give clinicians the context they need — without hiding where it came from.</p>
-        <div class="mini">
-          <div class="fact"><b>Problem</b><span>Critical context is fragmented across hospital systems.</span></div>
-          <div class="fact"><b>Proof</b><span>Synthetic infectiology workflow + bounded agents + safety cases.</span></div>
-        </div>
-        <div class="signal"><span class="dot"></span>Return time to care</div><span class="arrow">↗</span>
-      </a>
+      <section class="project pro"><div class="shell project-grid">
+        <div class="copy reveal"><div class="kicker"><span class="n">02</span><span class="micro">Legal AI · Professional</span></div><h2>GitLaw Pro</h2><p class="promise">Less time searching. More time using legal judgment.</p><div class="proof"><span class="pill">research workspace</span><span class="pill">traceable sources</span><span class="pill">practitioner pilot next</span></div><a class="project-link" href="https://mikelninh.github.io/gitlaw/#/research">Open the workspace <span>↗</span></a></div>
+        <div class="visual reveal"><div class="browser"><div class="browserbar"><i></i><i></i><i></i><div class="address">gitlaw pro / matter workspace</div></div><div class="app"><div class="sidebar"><b>GL / PRO</b><div class="menu"><strong>Matter</strong><br>Research<br>Sources<br>Timeline<br>Review queue</div></div><div class="workspace"><small>Active matter</small><div class="matter"><div><h4>Mietrecht · M-024</h4><div style="font-size:9px;color:#8a918a">11 sources · 4 open questions</div></div><span class="badge">REVIEW</span></div><div class="result"><strong>Potential issue: formal justification</strong><p>Relevant provisions and source chain assembled for lawyer review. No autonomous legal decision.</p><div class="cite">§ 558a BGB → source → related references</div></div><div class="result"><strong>Next question</strong><p>Was the local rent index referenced correctly in the notice?</p></div></div></div></div></div>
+      </div></section>
 
-      <a class="card" href="https://mikelninh.github.io/proof/digitalservice/">
-        <div class="top"><span class="tag">Public Tech</span><span class="num">04</span></div>
-        <h2>Income-Loss Router</h2>
-        <p class="promise">“My income is gone.” That should be enough to start.</p>
-        <div class="mini">
-          <div class="fact"><b>Product</b><span>One life event → ALG I, KiZ, Wohngeld + Grundsicherung.</span></div>
-          <div class="fact"><b>Proof</b><span>48 households · 192 projections · fail-closed tests.</span></div>
-        </div>
-        <div class="signal"><span class="dot"></span>Life events, not bureaucracy</div><span class="arrow">↗</span>
-      </a>
-    </section>
+      <section class="project care"><div class="shell project-grid">
+        <div class="copy reveal"><div class="kicker"><span class="n">03</span><span class="micro">Clinical AI</span></div><h2>CareOS</h2><p class="promise">Give clinicians the context they need — without hiding where it came from.</p><div class="proof"><span class="pill">source-linked context</span><span class="pill">bounded agents</span><span class="pill">safety cases</span></div><a class="project-link" href="https://mikelninh.github.io/careos/">Explore CareOS <span>↗</span></a></div>
+        <div class="visual reveal"><div class="browser"><div class="browserbar"><i></i><i></i><i></i><div class="address">careos / infectiology context</div></div><div class="app"><div class="care-head"><div><small>Patient context · synthetic</small><div class="patient">Infectiology · Case 024</div></div><div style="font-size:9px;font-weight:900;color:#27745b">SOURCE-LINKED</div></div><div class="care-body"><div class="care-card"><b>Microbiology</b><div class="state">Blood culture: positive · organism identified</div><div class="state pending">Resistance panel: pending</div><div class="src">LIS · 10:42 · open source</div></div><div class="care-card"><b>Current therapy</b><div class="state">Documented: Ceftriaxone</div><div class="src">Medication record · 09:18</div></div><div class="care-card"><b>Contradiction</b><div class="state pending">Discharge note conflicts with active order</div><div class="src">Needs human review</div></div><div class="care-card"><b>Agent boundary</b><div class="state">May summarize. May not prescribe.</div><div class="src">Policy enforced</div></div></div></div></div></div>
+      </div></section>
 
-    <section class="cta">
-      <div><div class="eyebrow" style="color:#c8d3ff">What I want next</div><h3>Give me one painful workflow.</h3><p>I want to turn real friction into a small, testable product — then iterate with the people who actually use it.</p></div>
-      <div class="side"><b>Pilot</b><br>1–3 days / week<br>Part-time collaboration<br>Permanent product role</div>
-    </section>
+      <section class="project public"><div class="shell project-grid">
+        <div class="copy reveal"><div class="kicker"><span class="n">04</span><span class="micro">Public Tech</span></div><h2>Income-Loss Router</h2><p class="promise">“My income is gone.” That should be enough to start.</p><div class="proof"><span class="pill">4 benefit routes</span><span class="pill">48 households</span><span class="pill">192 projections</span></div><a class="project-link" href="https://mikelninh.github.io/proof/digitalservice/">Try the flow <span>↗</span></a></div>
+        <div class="visual reveal"><div class="browser"><div class="browserbar"><i></i><i></i><i></i><div class="address">public service / income loss</div></div><div class="app"><small>Life event</small><h4>“My income is gone.”</h4><div class="benefits"><div class="benefit"><small>Route 01</small><b>Arbeitslosengeld I</b><div class="go">CHECK NOW →</div></div><div class="benefit"><small>Route 02</small><b>Kinderzuschlag</b><div class="go">CHECK PARALLEL →</div></div><div class="benefit"><small>Route 03</small><b>Wohngeld</b><div class="go">CHECK PARALLEL →</div></div><div class="benefit"><small>Route 04</small><b>Grundsicherung</b><div class="go">SAFETY NET →</div></div></div><div class="next">One evidence packet · only ask for what is actually missing</div></div></div></div>
+      </div></section>
+    </div>
 
-    <footer><span>Selected work · 2026</span><span><a href="https://mikelninh.github.io/">Full portfolio →</a></span></footer>
+    <section id="together" class="manifesto"><div class="shell manifesto-grid reveal"><h3>Give me one<br><span class="serif">painful workflow.</span></h3><div><p>I’ll map the friction, build the smallest useful proof and put it in front of the people who actually do the work.</p><div class="offer"><span>Pilot</span><span>1–3 days / week</span><span>Part-time</span><span>Permanent role</span></div><a class="contact" href="mailto:michael@mikelninh.de">Let’s build something useful ↗</a></div></div></section>
   </main>
+
+  <footer><div class="shell foot"><span>Michael Ninh · AI Product Engineer · Berlin</span><a href="https://mikelninh.github.io/">Full portfolio ↗</a></div></footer>
+  <script>
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
 </body>
 </html>
