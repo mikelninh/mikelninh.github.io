@@ -1,0 +1,22 @@
+name: CareOS portfolio demo smoke
+
+on:
+  pull_request:
+    paths:
+      - 'careos/clinical.html'
+      - 'careos/clinical.smoke.mjs'
+      - '.github/workflows/careos-demo-smoke.yml'
+  workflow_dispatch:
+
+jobs:
+  clinical-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install DOM test dependency
+        run: npm install --no-save --no-package-lock jsdom@26
+      - name: Exercise human-review workflow
+        run: node careos/clinical.smoke.mjs
