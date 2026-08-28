@@ -1,0 +1,29 @@
+name: Income-loss portfolio demo smoke
+
+on:
+  pull_request:
+    paths:
+      - 'proof/digitalservice/life-event.html'
+      - 'proof/digitalservice/life-event.smoke.mjs'
+      - '.github/workflows/life-event-demo-smoke.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'proof/digitalservice/life-event.html'
+      - 'proof/digitalservice/life-event.smoke.mjs'
+      - '.github/workflows/life-event-demo-smoke.yml'
+  workflow_dispatch:
+
+jobs:
+  life-event-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install DOM test dependency
+        run: npm install --no-save --no-package-lock jsdom@26
+      - name: Exercise missing-data and reset workflow
+        run: node proof/digitalservice/life-event.smoke.mjs
