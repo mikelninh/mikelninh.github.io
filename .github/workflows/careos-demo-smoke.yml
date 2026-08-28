@@ -20,10 +20,3 @@ jobs:
         run: npm install --no-save --no-package-lock jsdom@26
       - name: Exercise human-review workflow
         run: node careos/clinical.smoke.mjs
-      - name: Upload CareOS preview for visual QA
-        uses: actions/upload-artifact@v4
-        with:
-          name: careos-clinical-preview
-          path: careos/clinical.html
-          if-no-files-found: error
-          retention-days: 1
