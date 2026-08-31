@@ -1,182 +1,84 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#030305" />
-  <meta name="description" content="Hyperspace Kids — objects that remember who you become." />
-  <title>Hyperspace Kids — SIGNAL//NOIR</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles/tokens.css" />
-  <link rel="stylesheet" href="./styles/app.css" />
-  <link rel="stylesheet" href="./styles/opening.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="theme-color" content="#030305">
+<meta name="color-scheme" content="dark">
+<title>Hyperspace Kids — THE FIRST SIGNAL</title>
+<meta name="description" content="Hyperspace Kids — living collectibles. The First Signal.">
+<style>html,body{margin:0;width:100%;height:100%;background:#030305;color:#f7f5ef;overflow:hidden}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}</style>
+<link rel="stylesheet" href="./v06-1.css">
+<link rel="stylesheet" href="./v06-2.css">
+<link rel="stylesheet" href="./v06-3.css">
+<link rel="stylesheet" href="./v06-4.css">
 </head>
 <body>
-  <div class="boot" id="boot" aria-hidden="true"><div class="boot-mark"><span>HK</span><i></i></div><p>SIGNAL//NOIR · 0.5</p></div>
-  <div class="scroll-rail" aria-hidden="true"><i id="scrollProgress"></i></div>
-  <div class="cursor-halo" id="cursorHalo" aria-hidden="true"></div>
-  <canvas id="stars" aria-hidden="true"></canvas>
-  <div class="ambient-field" aria-hidden="true"><i class="ambient-a"></i><i class="ambient-b"></i></div>
-  <div class="grain" aria-hidden="true"></div>
+<canvas id="fx"></canvas><div class="vignette"></div><div class="noise"></div>
+<div class="app">
+ <div class="progress"><i id="globalProgress"></i></div>
+ <div class="hud"><div class="brand"><span class="brand-mark"></span>HYPERSPACE KIDS</div><div class="build"><b>THE FIRST SIGNAL</b>SIGNAL//ULTRA · 0.6</div></div>
 
-  <header class="topbar">
-    <a class="brand" href="#top" aria-label="Hyperspace Kids home"><span class="brand-mark"><i></i></span><span>HYPERSPACE KIDS</span></a>
-    <div class="top-status"><span class="pulse"></span><span id="signalStatus">SIGNAL // DORMANT</span></div>
-    <button class="id-button magnetic" id="idButton"><span>HYPERSPACE ID</span><b>#4821</b><i>↘</i></button>
-  </header>
-
-  <main id="top">
-    <section class="hero section-pad">
-      <div class="hero-index"><span>GENESIS / 0001</span><span>BERLIN · THE NEXUS</span></div>
-      <div class="hero-copy" data-reveal>
-        <div class="kicker"><i></i> LIVING OBJECT SYSTEM</div>
-        <h1>Objects that<br><em>remember you.</em></h1>
-        <p>Collect something once. Let it change forever. Every signal binds objects, memories and access to one persistent traveller.</p>
-        <div class="hero-actions">
-          <button class="cta magnetic" id="heroOpen"><span>OPEN FIRST SIGNAL</span><i>↗</i></button>
-          <a class="quiet-link" href="#collection">Enter the system <span>↓</span></a>
-        </div>
-        <div class="micro-proof">
-          <span><b id="ownedCount">1</b> OBJECTS BOUND</span>
-          <span><b id="packCount">0</b> SIGNALS OPENED</span>
-          <span><b id="stardustCount">0</b> STARDUST</span>
-        </div>
-      </div>
-
-      <div class="character-stage" id="characterStage" data-depth-stage data-reveal>
-        <div class="stage-number">4821</div>
-        <div class="portrait-frame"><i></i><i></i><i></i><i></i></div>
-        <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orbit orbit-c"></div>
-        <div class="character-aura"></div>
-        <div class="kid-art" id="kidArt" data-depth="1" aria-label="Hyperspace Kid 4821">
-          <svg viewBox="0 0 540 680" role="img" aria-label="The First Traveller">
-            <defs>
-              <linearGradient id="suit" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#292a31"/><stop offset=".28" stop-color="#15161b"/><stop offset=".72" stop-color="#08090c"/><stop offset="1" stop-color="#020204"/></linearGradient>
-              <linearGradient id="capMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#35363e"/><stop offset=".25" stop-color="#111217"/><stop offset=".7" stop-color="#24252c"/><stop offset="1" stop-color="#08090c"/></linearGradient>
-              <linearGradient id="visor" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8ea5ff"/><stop offset=".26" stop-color="#d8fff7"/><stop offset=".5" stop-color="#fff7dc"/><stop offset=".72" stop-color="#e8c8ff"/><stop offset="1" stop-color="#82e7ff"/></linearGradient>
-              <linearGradient id="visorGlass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff18"/><stop offset=".5" stop-color="#ffffff02"/><stop offset="1" stop-color="#00000070"/></linearGradient>
-              <radialGradient id="core"><stop offset="0" stop-color="#fffdf2"/><stop offset=".15" stop-color="#d8fff8"/><stop offset=".4" stop-color="#748cff" stop-opacity=".72"/><stop offset="1" stop-color="#566cff" stop-opacity="0"/></radialGradient>
-              <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-              <filter id="soft"><feGaussianBlur stdDeviation="16"/></filter>
-            </defs>
-            <ellipse cx="270" cy="645" rx="155" ry="26" fill="#000" opacity=".72" filter="url(#soft)"/>
-            <path d="M128 637c17-142 50-214 142-230 94 16 128 88 143 230H128Z" fill="url(#suit)" stroke="#ffffff17" stroke-width="2"/>
-            <path d="M189 445c23 38 139 39 162-2l29 42c-60 52-164 52-221 0l30-40Z" fill="#08090c" stroke="#ffffff18"/>
-            <path d="M165 224c8-98 53-151 124-151 82 0 129 59 128 162-1 115-51 197-132 197-83 0-130-91-120-208Z" fill="#08090c" stroke="#ffffff24" stroke-width="2"/>
-            <path d="M174 207c22-88 65-126 124-126 56 0 91 22 118 77-35-11-76-17-127-13-52 4-85 23-115 62Z" fill="#131419"/>
-            <path d="M160 160c38-65 91-93 159-88 47 3 78 18 108 44-50 1-90 8-128 23-53 20-96 31-139 21Z" fill="url(#capMetal)" stroke="#ffffff1c" stroke-width="2"/>
-            <path d="M302 71c51-3 103 8 142 34-4 11-11 20-21 27-50-14-91-18-132-12l11-49Z" fill="#090a0d" stroke="#ffffff0e"/>
-            <path d="M182 224c64-33 148-35 220-2l-7 92c-69 35-142 38-215 1l2-91Z" fill="#040507" stroke="#ffffff2c" stroke-width="2"/>
-            <path d="M194 249c59-21 127-21 188-1l-3 34c-61 24-123 24-183 1l-2-34Z" fill="url(#visorGlass)" stroke="url(#visor)" stroke-width="3" filter="url(#glow)"/>
-            <path d="M210 267c32-7 57-8 82-4M314 263c20-1 35 1 49 5" stroke="url(#visor)" stroke-width="6" stroke-linecap="round" filter="url(#glow)"/>
-            <path d="M235 353c33 15 66 15 100-1" stroke="#ffffff29" stroke-width="2" stroke-linecap="round"/>
-            <path d="M185 474c52 30 116 33 171 0" stroke="#ffffff0f" fill="none"/>
-            <circle class="core-light" cx="271" cy="527" r="84" fill="url(#core)" opacity=".28"/>
-            <circle cx="271" cy="527" r="18" fill="#050609" stroke="#d7fff7" stroke-width="1.5"/>
-            <circle cx="271" cy="527" r="11" fill="none" stroke="#ffffff20"/>
-            <circle class="core-dot" cx="271" cy="527" r="4" fill="#f1fff9" filter="url(#glow)"/>
-            <path d="M194 506 150 572M347 505l45 67" stroke="#ffffff12" stroke-width="2"/>
-          </svg>
-        </div>
-        <div class="specimen-copy"><span>SPECIMEN</span><strong>#4821</strong><small>THE FIRST TRAVELLER</small></div>
-        <div class="state-pill"><i></i><span id="kidState">LVL 01 · DORMANT</span></div>
-        <div class="stage-note">01 — PERSISTENT IDENTITY</div>
-      </div>
-      <div class="hero-scroll"><i></i><span>SCROLL TO DESCEND</span></div>
-    </section>
-
-    <section class="manifesto section-pad">
-      <div class="manifesto-index" data-reveal>01 / THE PREMISE</div>
-      <div class="manifesto-copy" data-reveal>
-        <p>NOT A JPEG. NOT A SKIN. NOT A SAVE FILE.</p>
-        <h2>A possession with<br><em>a biography.</em></h2>
-        <div class="manifesto-grid">
-          <p>Wearables, companions, relics and memories become permanent chapters in your traveller’s history.</p>
-          <p>The most valuable state cannot simply be bought. It emerges from where your traveller has been and what it has done.</p>
-        </div>
-      </div>
-      <div class="manifesto-word" aria-hidden="true">REMEMBER</div>
-    </section>
-
-    <section class="pack-showcase section-pad" id="collection">
-      <div class="section-heading" data-reveal><div><span>02 / GENESIS OBJECT</span><h2>The pack is<br><em>the threshold.</em></h2></div><p>Five discoveries. One authored first encounter. Tear the seal and the interface disappears into ritual.</p></div>
-      <div class="pack-layout">
-        <button class="pack-object magnetic" id="packObject" data-depth-stage aria-label="Open Genesis 001 signal pack" data-reveal>
-          <span class="pack-plinth"></span><span class="pack-shadow"></span>
-          <span class="foil-card" data-depth="1">
-            <span class="foil-spectrum"></span><span class="foil-noise"></span><span class="foil-sweep"></span>
-            <span class="pack-cut top"></span><span class="pack-cut bottom"></span>
-            <span class="pack-topline"><b>HK</b><i>GENESIS SIGNAL / OBJECT 001</i></span>
-            <span class="pack-symbol"><i></i><b>01</b></span>
-            <span class="pack-name"><small>THE FIRST SIGNAL</small><b>GENESIS</b><strong>// 001</strong></span>
-            <span class="pack-serial">SEALED IN THE NEXUS · 00004821</span>
-            <span class="pack-auth">AUTHENTICATED OBJECT · SIGNAL//NOIR</span>
-          </span>
-        </button>
-        <div class="pack-copy" data-reveal>
-          <div class="product-label">OBJECT SPECIFICATION</div>
-          <div class="detail-row"><span>FORMAT</span><b>5 SIGNAL OBJECTS</b></div>
-          <div class="detail-row"><span>GUARANTEE</span><b>1 RARE OR BETTER</b></div>
-          <div class="detail-row"><span>FIRST OPEN</span><b>AUTHORED SEQUENCE</b></div>
-          <div class="detail-row"><span>MEMORY</span><b>PERSISTENT AFTER BIND</b></div>
-          <p class="pack-philosophy">The opening is not a loading state. It is the moment an anonymous object becomes part of somebody’s history.</p>
-          <button class="text-cta magnetic" id="openPack"><span>BREAK THE SEAL</span><i>↗</i></button>
-        </div>
-      </div>
-    </section>
-
-    <section class="vault section-pad" id="vault">
-      <div class="section-heading compact" data-reveal><div><span>03 / PRIVATE ARCHIVE</span><h2>Your vault.</h2></div><p>Not inventory. Evidence of a life lived across worlds.</p></div>
-      <div class="vault-shell" data-reveal><div class="vault-topline"><span>HYPERSPACE ARCHIVE // #4821</span><span>LOCAL PROTOTYPE</span></div><div class="vault-grid" id="vaultGrid"></div></div>
-    </section>
-
-    <section class="world section-pad" id="nexus">
-      <div class="world-visual" data-reveal>
-        <div class="world-haze"></div><div class="world-ring a"></div><div class="world-ring b"></div><div class="world-ring c"></div><div class="world-core"></div><div class="world-line"></div><span class="world-coordinate">00 / NEXUS GATE</span>
-      </div>
-      <div class="world-copy" data-reveal><span>04 / WORLD ACCESS</span><h2>THE<br>NEXUS</h2><div class="world-status"><i></i><b id="nexusStatus">NO STABLE SIGNAL</b></div><p id="nexusCopy">Some objects are more than collectibles. They change what your traveller can perceive — and where it can go.</p><button class="cta secondary magnetic" id="enterNexus"><span>ENTER WHEN READY</span><i>↗</i></button></div>
-    </section>
-
-    <section class="identity section-pad">
-      <div class="identity-card-wrap" data-depth-stage data-reveal>
-        <div class="identity-card" data-depth="1"><div class="id-spectrum"></div><div class="id-glow"></div><div class="identity-top"><span>HYPERSPACE ID</span><span>4821 / GENESIS</span></div><div class="identity-main"><div class="mini-mask"><i></i></div><div><span>TRAVELLER</span><strong>#4821</strong><p>First signal bearer</p></div></div><div class="identity-chip"><i></i><span>HK</span></div><div class="identity-stats"><div><span>STATE</span><b id="idState">DORMANT</b></div><div><span>OBJECTS</span><b id="idObjects">01</b></div><div><span>WORLD</span><b id="idWorld">—</b></div></div></div>
-      </div>
-      <div class="identity-copy" data-reveal><span>05 / CONTINUITY</span><h2>One identity.<br><em>Every world.</em></h2><p>The traveller survives the interface. Sign in normally, carry history everywhere, and add verifiable ownership only when it creates real value.</p><div class="phase-list"><span>HUMAN-FIRST LOGIN</span><span>CLOUD VAULT</span><span>DEVICE SYNC</span><span>OPTIONAL OWNERSHIP</span></div></div>
-    </section>
-
-    <section class="closing section-pad">
-      <div class="closing-mark" aria-hidden="true"><i></i><span>HK</span></div>
-      <div data-reveal><span>THE FIRST SIGNAL IS WAITING.</span><h2>Carry something<br><em>worth remembering.</em></h2><button class="cta magnetic" id="closingOpen"><span>OPEN GENESIS // 001</span><i>↗</i></button></div>
-    </section>
-  </main>
-
-  <footer><div class="brand"><span class="brand-mark"><i></i></span><span>HYPERSPACE KIDS</span></div><p>SIGNAL//NOIR · BUILD 0.5 · EXPERIMENTAL OBJECT SYSTEM</p><span class="footer-coordinate">52.5200° N · 13.4050° E</span></footer>
-
-  <div class="opening" id="opening" aria-hidden="true">
-    <div class="opening-ambient"></div><div class="opening-vignette"></div><div class="opening-flash" id="openingFlash"></div><div class="mythic-corona"></div>
-    <div class="opening-top"><div><span>GENESIS // 001</span><b id="openingStep">SEALED OBJECT</b></div><div class="opening-center">HYPERSPACE KIDS / SIGNAL RITUAL</div><button id="closeOpening" aria-label="Close">×</button></div>
-    <div class="ritual-stage" id="ritualStage">
-      <div class="opening-pack" id="openingPack">
-        <div class="opening-pack-face"><div class="foil-spectrum"></div><div class="foil-noise"></div><div class="foil-sweep"></div><div class="pack-cut top"></div><div class="pack-cut bottom"></div><div class="pack-topline"><b>HK</b><i>GENESIS SIGNAL / OBJECT 001</i></div><div class="pack-symbol"><i></i><b>01</b></div><div class="pack-name"><small>THE FIRST SIGNAL</small><b>GENESIS</b><strong>// 001</strong></div><div class="pack-serial">SEALED IN THE NEXUS · 00004821</div><div class="pack-auth">AUTHENTICATED OBJECT · SIGNAL//NOIR</div></div>
-        <div class="tear-strip" id="tearStrip"><span>DRAG TO BREAK THE SEAL</span><i></i></div><div class="pack-mouth"></div>
-      </div>
-
-      <div class="card-stack" id="cardStack" tabindex="0" role="button" aria-label="Reveal next card">
-        <div class="stack-shadow"></div><div class="stack-card ghost g3"></div><div class="stack-card ghost g2"></div><div class="stack-card ghost g1"></div>
-        <div class="collectible-card" id="collectibleCard">
-          <div class="card-back"><div class="card-back-grid"></div><div class="back-orbit"></div><div class="back-mark"><i></i></div><span>HYPERSPACE KIDS</span><small>GENESIS SIGNAL / 00004821</small></div>
-          <div class="card-front"><div class="card-material"></div><div class="card-refraction"></div><div class="card-edge"></div><div class="card-head"><span id="cardSlot">SIGNAL</span><span id="cardCode">HK-0000</span></div><div class="card-art" id="cardArt"><div class="art-grid"></div><div class="art-orbit a"></div><div class="art-orbit b"></div><div class="art-glyph" id="cardGlyph">◇</div></div><div class="card-body"><span class="rarity" id="cardRarity">RARE</span><h3 id="cardName">UNKNOWN SIGNAL</h3><p id="cardLore">A signal is waiting behind the foil.</p><div class="card-origin"><span>ORIGIN</span><b id="cardOrigin">THE NEXUS</b></div></div><div class="card-serial"><span>GENESIS SIGNAL</span><b id="cardSerial">01 / 05</b></div></div>
-        </div><div class="pull-hint" id="pullHint">TAP TO TURN THE FIRST CARD</div>
-      </div>
-
-      <div class="opening-summary" id="openingSummary"><span>FIVE SIGNALS RECOVERED</span><h2>Make them part of<br><em>#4821.</em></h2><div class="summary-cards" id="summaryCards"></div><button class="cta magnetic" id="bindPack"><span>BIND THIS HISTORY</span><i>↗</i></button></div>
-    </div>
-    <div class="opening-footer"><span>LOCAL AUDIO / OPTIONAL HAPTICS</span><span>ESC TO EXIT</span></div><div class="opening-progress"><i id="openingProgress"></i></div>
+ <section class="scene active" id="arrival" data-step="0">
+  <div class="arrival-grid">
+   <div class="arrival-copy">
+    <div class="eyebrow"><i></i> SIGNAL DETECTED · 00:00:01</div>
+    <h1 class="title">The first<br><em>traveller.</em></h1>
+    <p class="copy">One character. One sealed object. One memory that will never happen twice. <strong>This is where Hyperspace begins.</strong></p>
+    <div class="scene-actions"><button class="cta" id="begin"><span>APPROACH #4821</span><i>↗</i></button></div>
+    <div class="micro"><span>NO WALLET</span><span>NO DOWNLOAD</span><span>YOUR HISTORY STAYS</span></div>
+   </div>
+   <div class="stage" id="arrivalStage">
+    <div class="specimen-frame"></div>
+    <div class="kid" id="kidArrival"><svg viewBox="0 0 540 680" aria-hidden="true"><defs><linearGradient id="s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#292a31"/><stop offset=".33" stop-color="#131419"/><stop offset="1" stop-color="#030407"/></linearGradient><linearGradient id="v" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8ea5ff"/><stop offset=".3" stop-color="#d8fff8"/><stop offset=".5" stop-color="#fff4d8"/><stop offset=".73" stop-color="#e8c8ff"/><stop offset="1" stop-color="#82e7ff"/></linearGradient><radialGradient id="c"><stop offset="0" stop-color="#fff"/><stop offset=".18" stop-color="#d8fff8"/><stop offset=".45" stop-color="#758cff" stop-opacity=".7"/><stop offset="1" stop-color="#566cff" stop-opacity="0"/></radialGradient><filter id="g"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="270" cy="646" rx="155" ry="24" fill="#000" opacity=".75"/><path d="M128 637c17-142 50-214 142-230 94 16 128 88 143 230H128Z" fill="url(#s)" stroke="#ffffff17"/><path d="M165 224c8-98 53-151 124-151 82 0 129 59 128 162-1 115-51 197-132 197-83 0-130-91-120-208Z" fill="#08090c" stroke="#ffffff24" stroke-width="2"/><path d="M160 160c38-65 91-93 159-88 47 3 78 18 108 44-50 1-90 8-128 23-53 20-96 31-139 21Z" fill="url(#s)" stroke="#ffffff1c"/><path d="M302 71c51-3 103 8 142 34-4 11-11 20-21 27-50-14-91-18-132-12l11-49Z" fill="#090a0d"/><path d="M182 224c64-33 148-35 220-2l-7 92c-69 35-142 38-215 1l2-91Z" fill="#040507" stroke="#ffffff2c" stroke-width="2"/><path d="M194 249c59-21 127-21 188-1l-3 34c-61 24-123 24-183 1l-2-34Z" fill="#0c0d12" stroke="url(#v)" stroke-width="3" filter="url(#g)"/><path d="M210 267c32-7 57-8 82-4M314 263c20-1 35 1 49 5" stroke="url(#v)" stroke-width="6" stroke-linecap="round" filter="url(#g)"/><path d="M235 353c33 15 66 15 100-1" stroke="#ffffff29" stroke-width="2" stroke-linecap="round"/><circle class="coreglow" cx="271" cy="527" r="84" fill="url(#c)" opacity=".28"/><circle cx="271" cy="527" r="17" fill="#050609" stroke="#d7fff7" stroke-width="1.5"/><circle class="coredot" cx="271" cy="527" r="4" fill="#f1fff9" filter="url(#g)"/></svg></div>
+    <div class="specimen-tag"><span>SPECIMEN</span><strong>#4821</strong><span>THE FIRST TRAVELLER</span></div>
+    <div class="state" id="arrivalState">LVL 01 · DORMANT</div>
+   </div>
   </div>
+ </section>
 
-  <div class="toast" id="toast"><i></i><div><b></b><span></span></div></div>
-  <script type="module" src="./src/app.js"></script>
+ <section class="scene" id="object" data-step="1">
+  <div class="object-grid">
+   <div class="pack-plinth" id="plinth"><div class="pack" id="heroPack"><div class="pack-top"><b>HK</b><span>GENESIS SIGNAL / OBJECT 001</span></div><div class="pack-sigil"><i></i><b>01</b></div><div class="pack-name"><small>THE FIRST SIGNAL</small><strong>GENESIS</strong></div><div class="pack-foot"><span>00004821</span><span>THE NEXUS</span></div></div></div>
+   <div class="object-copy">
+    <div class="eyebrow"><i></i> OBJECT 001 · AUTHENTICATED</div>
+    <h2>GENESIS<br>// 001</h2>
+    <p>Five discoveries sealed in vacuum foil. One will permanently alter what #4821 can perceive.</p>
+    <div class="specs"><div class="spec"><span>CONTENTS</span><b>5 SIGNAL OBJECTS</b></div><div class="spec"><span>GUARANTEE</span><b>1 RARE OR BETTER</b></div><div class="spec"><span>FIRST OPEN</span><b>AUTHORED ONCE</b></div><div class="spec"><span>PROVENANCE</span><b>MEMORY-BEARING</b></div></div>
+    <div class="scene-actions"><button class="cta" id="startRitual"><span>BREAK THE SEAL</span><i>↗</i></button><button class="cta subtle" id="skipToOpened"><span>VIEW AWAKENED STATE</span><i>→</i></button></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="scene ritual" id="ritual" data-step="2">
+  <div class="mythic-field"></div><div class="flash" id="flash"></div>
+  <div class="ritual-top"><span id="ritualLabel">GENESIS // 001 · SEALED</span><button class="close" id="ritualClose">×</button></div>
+  <div class="ritual-shell">
+   <div class="ritual-pack" id="ritualPack"><div class="pack" id="ritualPackFace"><div class="pack-top"><b>HK</b><span>GENESIS SIGNAL / OBJECT 001</span></div><div class="pack-sigil"><i></i><b>01</b></div><div class="pack-name"><small>THE FIRST SIGNAL</small><strong>GENESIS</strong></div><div class="pack-foot"><span>00004821</span><span>THE NEXUS</span></div></div><div class="tear" id="tear"><span>DRAG TO BREAK THE SEAL · OR HOLD</span></div></div>
+   <div class="stack" id="stack"><div class="ghost g2"></div><div class="ghost g1"></div><div class="card" id="card"><div class="face back"><div class="back-line"></div><div class="back-dot"></div><label>HYPERSPACE KIDS</label></div><div class="face front"><div class="laminate"></div><div class="card-head"><span id="cardSlot">SIGNAL</span><span id="cardCode">HK-0046</span></div><div class="card-art"><div class="glyph" id="glyph"><svg viewBox="0 0 180 180" aria-hidden="true"><circle class="thin spinart" cx="90" cy="90" r="58"/><path class="thin" d="M24 122 62 72l34 20 56-58M33 42l41 39 44-22 31 66"/><circle class="fill" cx="62" cy="72" r="3"/><circle class="fill pulseart" cx="118" cy="59" r="4"/><circle class="fill" cx="96" cy="92" r="2.5"/><path class="st" d="M35 126c35-12 59-36 78-72"/><path class="st" d="M109 52l10 7-3-12"/></svg></div></div><div class="card-body"><div class="rarity" id="rarity">UNCOMMON</div><div class="card-name" id="cardName">UNMAPPED MERIDIAN</div><p class="lore" id="lore">Coordinates written by a place that does not exist.</p><div class="origin"><span>ORIGIN</span><b id="origin">ORBITAL-3</b></div></div></div></div><div class="hint" id="hint">BREAK THE SEAL TO BEGIN</div></div>
+   <div class="summary" id="summary"><div class="eyebrow" style="justify-content:center"><i></i> FIVE SIGNALS RECOVERED</div><h2>Bind this history<br>to <em>#4821.</em></h2><p>The objects become part of the traveller. The Rift Seed will change what the world allows you to see.</p><div class="mini-cards" id="miniCards"></div><button class="cta" id="bind"><span>BIND TO #4821</span><i>↗</i></button></div>
+  </div><div class="ritual-progress"><i id="ritualProgress"></i></div>
+ </section>
+
+ <section class="scene" id="consequence" data-step="3">
+  <div class="consequence-grid">
+   <div class="awakening"><div class="rift"></div><div class="kid awake" id="kidAwake"><svg viewBox="0 0 540 680" aria-hidden="true"><defs><linearGradient id="as" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#292a31"/><stop offset=".33" stop-color="#131419"/><stop offset="1" stop-color="#030407"/></linearGradient><linearGradient id="av" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8ea5ff"/><stop offset=".3" stop-color="#d8fff8"/><stop offset=".5" stop-color="#fff4d8"/><stop offset=".73" stop-color="#e8c8ff"/><stop offset="1" stop-color="#82e7ff"/></linearGradient><radialGradient id="ac"><stop offset="0" stop-color="#fff"/><stop offset=".18" stop-color="#d8fff8"/><stop offset=".45" stop-color="#758cff" stop-opacity=".7"/><stop offset="1" stop-color="#566cff" stop-opacity="0"/></radialGradient><filter id="ag"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="270" cy="646" rx="155" ry="24" fill="#000" opacity=".75"/><path d="M128 637c17-142 50-214 142-230 94 16 128 88 143 230H128Z" fill="url(#as)" stroke="#ffffff17"/><path d="M165 224c8-98 53-151 124-151 82 0 129 59 128 162-1 115-51 197-132 197-83 0-130-91-120-208Z" fill="#08090c" stroke="#ffffff24" stroke-width="2"/><path d="M160 160c38-65 91-93 159-88 47 3 78 18 108 44-50 1-90 8-128 23-53 20-96 31-139 21Z" fill="url(#as)" stroke="#ffffff1c"/><path d="M302 71c51-3 103 8 142 34-4 11-11 20-21 27-50-14-91-18-132-12l11-49Z" fill="#090a0d"/><path d="M182 224c64-33 148-35 220-2l-7 92c-69 35-142 38-215 1l2-91Z" fill="#040507" stroke="#ffffff2c" stroke-width="2"/><path d="M194 249c59-21 127-21 188-1l-3 34c-61 24-123 24-183 1l-2-34Z" fill="#0c0d12" stroke="url(#av)" stroke-width="3" filter="url(#ag)"/><path d="M210 267c32-7 57-8 82-4M314 263c20-1 35 1 49 5" stroke="url(#av)" stroke-width="6" stroke-linecap="round" filter="url(#ag)"/><path d="M235 353c33 15 66 15 100-1" stroke="#ffffff29" stroke-width="2" stroke-linecap="round"/><circle class="coreglow" cx="271" cy="527" r="84" fill="url(#ac)" opacity=".28"/><circle cx="271" cy="527" r="17" fill="#050609" stroke="#d7fff7" stroke-width="1.5"/><circle class="coredot" cx="271" cy="527" r="4" fill="#f1fff9" filter="url(#ag)"/></svg></div></div>
+   <div class="consequence-copy"><div class="eyebrow live"><i></i> STATE CHANGE CONFIRMED</div><h2>#4821<br><em>is awake.</em></h2><p>The Rift Seed has bound to the traveller. A new sense has appeared: <strong>RIFT SENSE</strong>.</p><div class="signal-line"><span>NEW SIGNAL RECEIVED</span><b>WORLD 00 · THE NEXUS</b></div><div class="scene-actions"><button class="cta" id="enterNexus"><span>FOLLOW THE SIGNAL</span><i>↗</i></button></div></div>
+  </div>
+ </section>
+
+ <section class="scene nexus-scene" id="nexus" data-step="4">
+  <div class="nexus-world"><div class="horizon"></div><div class="gate"><i></i><i></i><i></i><div class="gate-core"></div></div></div>
+  <div class="first-words"><span>FIRST CONTACT · #4821</span><blockquote>“I remember the sound of the seal breaking.”</blockquote></div>
+  <div class="nexus-copy"><div class="eyebrow live"><i></i> WORLD 00 · STABLE</div><h2>THE<br>NEXUS</h2><p>The first room is listening. This is no longer a collection page. It is the beginning of a place.</p><div class="scene-actions"><button class="cta" id="recordMemory"><span>RECORD MEMORY 0001</span><i>↗</i></button></div></div>
+ </section>
+
+ <section class="scene" id="memory" data-step="5">
+  <div class="memory-card"><div class="memory-index">HYPERSPACE MEMORY // 0001</div><h2>The day<br><em>the silence replied.</em></h2><p class="copy">Your first opening is now part of #4821's biography. Future objects, worlds and encounters can reference this exact moment.</p><div class="memory-grid"><div class="memory-stat"><span>TRAVELLER</span><b>#4821</b></div><div class="memory-stat"><span>SIGNAL</span><b>GENESIS // 001</b></div><div class="memory-stat"><span>STATE</span><b>AWAKENED</b></div><div class="memory-stat"><span>WORLD</span><b>THE NEXUS</b></div></div><div class="memory-end"><p><strong>Vertical slice complete.</strong> Pack → discovery → binding → evolution → world access → memory. One loop, end to end.</p><button class="cta" id="again"><span>EXPERIENCE AGAIN</span><i>↻</i></button></div></div>
+ </section>
+ <div class="safe-badge">RUNTIME <b id="tier">SAFE</b> · MOBILE-FIRST · ZERO CRITICAL EXTERNAL ASSETS</div>
+</div>
+<noscript><div style="position:fixed;left:18px;right:18px;bottom:18px;z-index:99;padding:12px 14px;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:#090a0e;color:#d8fff8;font:10px/1.5 ui-monospace,monospace;letter-spacing:.08em">SAFE MODE · Enable JavaScript to approach #4821. The core visual remains available.</div></noscript>
+<script src="./v06.js" defer></script>
 </body>
 </html>
