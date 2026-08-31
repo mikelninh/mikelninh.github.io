@@ -15,10 +15,22 @@ jobs:
     steps:
       - name: Checkout pages repo
         uses: actions/checkout@v4
-      - name: Fetch standalone Hyperspace Kids
+
+      - name: Fetch standalone web build
+        shell: bash
         run: |
-          rm -rf /tmp/hyperspace-kids
-          git -c http.https://github.com/.extraheader= clone --depth 1 https://github.com/mikelninh/hyperspace-kids.git /tmp/hyperspace-kids
+          set -euo pipefail
+          base="https://raw.githubusercontent.com/mikelninh/hyperspace-kids/main"
+          mkdir -p /tmp/hyperspace-kids/styles /tmp/hyperspace-kids/src
+          curl -fsSL "$base/index.html" -o /tmp/hyperspace-kids/index.html
+          curl -fsSL "$base/styles/tokens.css" -o /tmp/hyperspace-kids/styles/tokens.css
+          curl -fsSL "$base/styles/app.css" -o /tmp/hyperspace-kids/styles/app.css
+          curl -fsSL "$base/styles/opening.css" -o /tmp/hyperspace-kids/styles/opening.css
+          curl -fsSL "$base/src/app.js" -o /tmp/hyperspace-kids/src/app.js
+          curl -fsSL "$base/src/audio.js" -o /tmp/hyperspace-kids/src/audio.js
+          curl -fsSL "$base/src/collection.js" -o /tmp/hyperspace-kids/src/collection.js
+          curl -fsSL "$base/src/state.js" -o /tmp/hyperspace-kids/src/state.js
+
       - name: Mirror web build
         run: |
           mkdir -p hyperspace-kids
@@ -26,6 +38,7 @@ jobs:
           cp /tmp/hyperspace-kids/index.html hyperspace-kids/index.html
           cp -R /tmp/hyperspace-kids/src hyperspace-kids/src
           cp -R /tmp/hyperspace-kids/styles hyperspace-kids/styles
+
       - name: Commit mirror if changed
         run: |
           git config user.name 'github-actions[bot]'
