@@ -18,7 +18,7 @@ jobs:
       - name: Fetch standalone Hyperspace Kids
         run: |
           rm -rf /tmp/hyperspace-kids
-          git clone --depth 1 https://github.com/mikelninh/hyperspace-kids.git /tmp/hyperspace-kids
+          git -c http.https://github.com/.extraheader= clone --depth 1 https://github.com/mikelninh/hyperspace-kids.git /tmp/hyperspace-kids
       - name: Mirror web build
         run: |
           mkdir -p hyperspace-kids
