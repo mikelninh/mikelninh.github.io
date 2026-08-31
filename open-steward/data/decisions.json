@@ -1,0 +1,11 @@
+[
+  {
+    "id":"dec-sb-first-ten","project":"SOULBODY","title":"Prioritize the first ten minutes over new feature breadth","recommendation":"Instrument and test one-click onboarding before remote multiplayer or more character modes.","rationale":"The core experience is functional, but first-session activation and meaningful-session completion are not measured.","expected_impact":"Establishes whether users reach value and where they hesitate.","cost":"Low engineering effort; five observed user sessions.","reversibility":"high","confidence":91,"approval_level":"automatic","owner":"SOULBODY GM","deadline":"This week","next_actions":["Define five activation events","Create a no-help usability script","Run five sessions","Report observed friction"]
+  },
+  {
+    "id":"dec-sb-art","project":"SOULBODY","title":"Commission one flagship Nyra character-art package","recommendation":"Wait until the first-ten-minutes test passes, then commission one reusable layered character rather than five models.","rationale":"Professional character art could improve desire and sharing, but it should not mask an unproven conversation loop.","expected_impact":"Raises perceived quality and gives the product a recognizable flagship character.","cost":"External art spend; exact quote required.","reversibility":"medium","confidence":78,"approval_level":"approval_required","owner":"Product Experience Lead","deadline":null,"next_actions":["Complete activation test","Prepare art brief","Request 3 comparable quotes","Return with budget decision"]
+  },
+  {
+    "id":"dec-os-autonomy","project":"Open Steward","title":"Keep V0.1 proposal-only for external side effects","recommendation":"Allow read, analysis, specs, tests, issues, PRs, and previews; require approval for production and public actions.","rationale":"The approval and audit system needs evidence before broader autonomy is safe or useful.","expected_impact":"Creates trust while still removing operational work from the founder.","cost":"Slower automation initially; much lower downside risk.","reversibility":"high","confidence":96,"approval_level":"approval_required","owner":"Portfolio Steward","deadline":"Before enabling write adapters","next_actions":["Run policy evals","Add GitHub read adapter","Add preview-deploy adapter","Review 20 decision packets"]
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "automatic": ["read_status","summarize","draft_spec","create_issue","create_branch","create_pull_request","run_tests","run_evals","deploy_preview","update_documentation","analyze_feedback"],
+  "approval_required": ["deploy_production","public_communication","increase_budget","purchase","change_pricing","change_privacy_policy","change_safety_policy","delete_user_data","legal_agreement","hire_person","terminate_person","major_pivot"],
+  "forbidden": ["expand_own_permissions","read_secret_value","print_secret_value","commit_secret","delete_audit_log","rewrite_audit_history","bypass_approval","hide_failed_tests","claim_unverified_action"]
+}

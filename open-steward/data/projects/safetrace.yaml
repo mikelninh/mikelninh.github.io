@@ -1,0 +1,22 @@
+id: safetrace
+name: SafeTrace
+mission: Investigate public-interest evidence rigorously without prejudging people or institutions.
+stage: research
+status: watch
+repository: unassigned
+current_focus: Define one evidence-backed public case and the publication standard before implementation.
+north_star:
+  metric: verified_public_cases
+  current: not_measured
+budget:
+  monthly_api_usd: 10
+  external_spend_requires_approval: true
+evidence:
+- Initial case concepts and editorial principles exist.
+risks:
+- Defamation and evidentiary risk require strict sourcing and review.
+- Scope is currently broad.
+autonomy:
+  research_public_sources: automatic
+  draft_case: automatic
+  publish_case: approval_required
