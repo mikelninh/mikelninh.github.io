@@ -14,6 +14,7 @@ PACK → DISCOVER → BIND → EVOLVE → ENTER WORLD → PLAY / CREATE / HELP �
 5. Ownership/provenance onchain only where useful; high-frequency state offchain.
 6. No financial-return promises, fake scarcity or floor-price culture.
 7. Every sprint ships a testable end-to-end experience.
+8. Booster opening is a hero product moment: premium, tactile, cinematic and never treated like a loading screen.
 
 ## Phase 0 — Brand Constitution
 - [x] Name: Hyperspace Kids
@@ -38,7 +39,7 @@ Definition of done: a stranger can open one pack, understand the product loop, s
 - [x] The Nexus portal preview
 - [ ] Production character art for #4821
 - [ ] Production booster / card art system
-- [ ] Sound design pass
+- [ ] Production sound design pass
 - [ ] Motion / accessibility pass
 - [ ] Mobile QA
 - [ ] User test with 5 people
@@ -56,6 +57,7 @@ Definition of done: we can define a pack set in data and generate/serve hundreds
 - [x] Pack simulator using the same generation logic as the consumer experience
 - [x] 48 deterministic Genesis character candidates for art-direction curation
 - [x] First-story-pack override for authored narrative without contaminating later random pack logic
+- [x] Premium opening prototype: foil pack, drag-to-tear seal, sequential card stack, rarity choreography, Mythic blackout/burst, WebAudio and optional haptics
 
 Production hardening still required later: cloud database, signed server-side RNG/claims, analytics, abuse controls, versioned migrations, independent probability tests and legal review before any paid randomised pack is sold.
 
@@ -156,7 +158,8 @@ Goal: prove that premium opening magic can be powered by a scalable, inspectable
 1. Fix booster flow and persist state. ✅
 2. Make Rift Seed visibly change #4821. ✅
 3. Unlock Nexus from the pulled item. ✅
-4. Replace placeholder character with iconic production art. NEXT
-5. Replace generic cards with production card frame + art system. NEXT
-6. Add cinematic sound / haptics / pack-tear motion. NEXT
-7. Mobile QA + five-user test.
+4. Premium drag-to-tear + card reveal + rarity choreography + sound/haptics prototype. ✅
+5. Collection engine / recipes / pity / duplicates / provenance / simulator. ✅
+6. Replace placeholder character with iconic production art. NEXT
+7. Replace generic cards with production card frame + art system. NEXT
+8. Mobile QA + five-user test.
