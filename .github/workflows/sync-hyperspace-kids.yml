@@ -1,0 +1,39 @@
+name: Sync Hyperspace Kids
+
+on:
+  push:
+    paths:
+      - '.github/workflows/sync-hyperspace-kids.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pages repo
+        uses: actions/checkout@v4
+      - name: Fetch standalone Hyperspace Kids
+        run: |
+          rm -rf /tmp/hyperspace-kids
+          git clone --depth 1 https://github.com/mikelninh/hyperspace-kids.git /tmp/hyperspace-kids
+      - name: Mirror web build
+        run: |
+          mkdir -p hyperspace-kids
+          rm -rf hyperspace-kids/src hyperspace-kids/styles
+          cp /tmp/hyperspace-kids/index.html hyperspace-kids/index.html
+          cp -R /tmp/hyperspace-kids/src hyperspace-kids/src
+          cp -R /tmp/hyperspace-kids/styles hyperspace-kids/styles
+      - name: Commit mirror if changed
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add hyperspace-kids/index.html hyperspace-kids/src hyperspace-kids/styles
+          if git diff --cached --quiet; then
+            echo 'Mirror already current.'
+          else
+            git commit -m 'Sync Hyperspace Kids standalone build'
+            git push
+          fi
