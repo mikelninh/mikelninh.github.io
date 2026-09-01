@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#020306">
+<title>Hyperspace Kids — SIGNAL//ULTRA v0.27</title>
+<link rel="stylesheet" href="./v026.css?v=1">
+<link rel="stylesheet" href="./v027.css?v=1">
+</head>
+<body>
+<div class="noise"></div>
+<header class="top"><div class="brand"><i></i>HYPERSPACE KIDS</div><div class="build"><b>OBJECTS HAVE CONSEQUENCES</b>SIGNAL//ULTRA · 0.27.0</div></header>
+
+<section class="sec">
+  <div class="wrap grid">
+    <div>
+      <div class="k">SIGNAL DETECTED · 00:00:01</div>
+      <h1 class="display">The first<br><em>traveller.</em></h1>
+      <p class="lede">Not an avatar. Not a profile picture. <strong>A living collectible whose history changes with what you discover.</strong></p>
+      <button class="cta" onclick="document.querySelector('#genesis').scrollIntoView({behavior:'smooth'})"><span>APPROACH #4821</span><span class="orb">↓</span></button>
+    </div>
+    <div class="heroFrame">
+      <img src="https://v3b.fal.media/files/b/0aa8b199/XcqTK-k9_Dna6XUggn9AZ_result.png" alt="#4821">
+      <div class="tag">SPECIMEN<b>#4821</b>THE FIRST TRAVELLER</div>
+      <div class="pill">LVL 01 · DORMANT</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="genesis">
+  <div class="wrap grid">
+    <div class="packStage">
+      <div class="packHero" id="heroPack" tabindex="0"><div class="packGlow"></div><img src="https://v3b.fal.media/files/b/0aa8b17c/T_2s4d-j-IC3JsMcd4mL8_result.png" alt="GENESIS // 001"></div>
+    </div>
+    <div>
+      <div class="k">OBJECT 001 · AUTHENTICATED</div>
+      <h2 class="display">GENESIS<br><em>//001</em></h2>
+      <p class="lede">Five discoveries sealed in spectral foil. Every one can change what #4821 can do, carry, remember or perceive.</p>
+      <div class="specs">
+        <div class="spec"><span>CONTENTS</span><b>5 USABLE SIGNAL OBJECTS</b></div>
+        <div class="spec"><span>OUTCOME</span><b>CHARACTER + WORLD CHANGE</b></div>
+        <div class="spec"><span>PROVENANCE</span><b>MEMORY-BEARING</b></div>
+        <div class="spec"><span>FIRST OPEN</span><b>HAPPENS ONCE</b></div>
+      </div>
+      <button class="cta" id="openPack"><span>OPEN GENESIS // 001</span><span class="orb">↗</span></button>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="awakening">
+  <div class="wrap grid">
+    <div class="heroFrame">
+      <img id="awakeKid" src="https://v3b.fal.media/files/b/0aa8b199/XcqTK-k9_Dna6XUggn9AZ_result.png" alt="#4821 awakened">
+      <div class="pill" id="awakePill">LVL 01 · DORMANT</div>
+    </div>
+    <div>
+      <div class="k">STATE CHANGE</div>
+      <h2 class="display">#4821<br><em id="awakeWord">is dormant.</em></h2>
+      <p class="lede" id="awakeText">The traveller is waiting for the signal hidden inside GENESIS // 001.</p>
+      <div class="loadout" id="loadout">
+        <div><span>VISION</span><b id="slotVision">EMPTY</b></div>
+        <div><span>COMPANION</span><b id="slotCompanion">NONE</b></div>
+        <div><span>WORLD KEY</span><b id="slotWorld">LOCKED</b></div>
+        <div><span>MEMORY</span><b id="slotMemory">NONE</b></div>
+        <div><span>CORE</span><b id="slotCore">DORMANT</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec nexus" id="nexus">
+  <div class="wrap">
+    <div class="nexusStage">
+      <img class="bg" src="https://v3b.fal.media/files/b/0aa8b180/MRg1-5J-hWX1PhV-6jwtq_v284d34C.webp" alt="The Nexus">
+      <img class="nexusKid" src="https://v3b.fal.media/files/b/0aa8b199/XcqTK-k9_Dna6XUggn9AZ_result.png" alt="#4821 in the Nexus">
+      <div class="quote" id="quote">“There is nothing here yet.”</div>
+      <div class="nexusCopy">
+        <div class="k">WORLD 00</div>
+        <h2>The<br>Nexus.</h2>
+        <p class="lede" id="nexusText">A locked threshold. The first room will stabilise when #4821 wakes.</p>
+        <button class="cta" id="memoryBtn" disabled><span>MEMORY LOCKED</span><span class="orb">·</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec memory" id="memory">
+  <div class="wrap">
+    <div class="memoryArtifact" id="memoryArtifact">
+      <div class="memoryHead">
+        <div><div class="k">MEMORY // 0001</div><h2>The First <em>Signal.</em></h2></div>
+        <div class="memoryStamp" id="memoryStamp">UNRECORDED</div>
+      </div>
+      <div class="memoryGrid">
+        <div class="memoryStory">
+          <span>SESSION RECORD</span>
+          <p id="memoryText">This memory has not happened yet.</p>
+          <blockquote id="memoryQuote">“...”</blockquote>
+        </div>
+        <div class="memoryObjects">
+          <span>RECOVERED OBJECTS</span>
+          <div id="memoryObjectList"><div class="emptyState">OPEN GENESIS // 001 TO CREATE THIS MEMORY</div></div>
+        </div>
+      </div>
+      <div class="memoryFooter">
+        <div><span>TRAVELLER STATE</span><b id="memoryState">LVL 01 · DORMANT</b></div>
+        <div><span>WORLD STATE</span><b id="memoryWorld">WORLD 00 · LOCKED</b></div>
+        <button class="cta" id="nextMission" disabled><span>NEXT SIGNAL LOCKED</span><span class="orb">→</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ov" id="ritual">
+  <div class="shell">
+    <div class="ohead"><span>GENESIS // 001 · SINGLE-PACK RITUAL</span><button class="close" id="closeRitual">×</button></div>
+    <div class="ritualCenter">
+      <div>
+        <div class="truth" id="truth" style="--p:0">
+          <img class="sealed" src="https://v3b.fal.media/files/b/0aa8b17c/T_2s4d-j-IC3JsMcd4mL8_result.png">
+          <img class="opened" src="https://v3b.fal.media/files/b/0aa8b17f/r4ntJ7PJ4hizlEzLrb0v__result.png">
+          <div class="dynamicTear" aria-hidden="true">
+            <div class="tearCavity"></div>
+            <div class="tearStrip"></div>
+          </div>
+          <div class="sheen"></div>
+          <div class="ripTrack">
+            <div class="line"></div><div class="prog" id="prog"></div><div class="tab">RIP</div>
+            <input id="range" type="range" min="0" max="100" value="0">
+          </div>
+        </div>
+        <div class="ripcopy" id="ripcopy"><strong>TAKE THE LEFT TAB.</strong> PULL ACROSS THE SEAL.</div>
+        <div style="text-align:center"><button class="fallback" id="autoOpen">OPEN FOR ME</button></div>
+      </div>
+    </div>
+    <div class="ritualActions" id="ritualActions"><button class="cta" id="draw"><span>DRAW FIRST CARD</span><span class="orb">↗</span></button></div>
+  </div>
+</div>
+
+<div class="ov" id="reveal">
+  <div class="revealShell">
+    <div class="ohead"><span id="rmeta">SIGNAL 01 / 05</span><button class="close" id="closeReveal">×</button></div>
+    <div class="revealMain" id="revealMain">
+      <div class="cardStage">
+        <div class="mythicAura" id="mythicAura" aria-hidden="true"></div>
+        <div class="card" id="card">
+          <div class="cardInner">
+            <div class="face back"><img src="https://v3b.fal.media/files/b/0aa8ae94/agbnm-0Y6-w0SAY1dATVq_LuK5HT1D.webp"></div>
+            <div class="face front"><img id="front" src=""></div>
+          </div>
+        </div>
+        <div class="finalLabel" id="finalLabel">FINAL SIGNAL // 05</div>
+      </div>
+      <div class="copy" id="copy">
+        <div class="k" id="rk">SIGNAL RECOVERED</div>
+        <h3 id="rh">The first<br><em>signal.</em></h3>
+        <p class="lede" id="ro"></p>
+        <div class="itemFunction" id="itemFunction">
+          <div><span>CLASS</span><b id="itemClass">WORLD KEY</b></div>
+          <div><span>EFFECT</span><b id="itemEffect">REVEALS HIDDEN COORDINATES</b></div>
+        </div>
+        <div class="meta" id="rc">01 / 05</div><div class="bars" id="bars"></div>
+      </div>
+    </div>
+    <div class="revealDock" id="revealDock">
+      <button class="utilityAction" id="useItem"><span>USE SIGNAL</span><small>OPTIONAL</small></button>
+      <button class="cta" id="next"><span>DRAW NEXT CARD</span><span class="orb">↗</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="consequence"><div class="conseq"><img src="https://v3b.fal.media/files/b/0aa8b199/XcqTK-k9_Dna6XUggn9AZ_result.png"><div class="seed"></div><div class="conseqCopy">RIFT SEED<br><b>BINDING TO #4821</b></div></div></div>
+
+<script src="./v027.js?v=1" defer></script>
+</body></html>
