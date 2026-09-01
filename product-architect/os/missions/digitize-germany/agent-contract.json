@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "1.0",
+  "missionId": "digitize-germany",
+  "purpose": "Machine-readable operating contract for agents working on the Digitize Germany mission.",
+  "humanAuthority": {
+    "mustApprove": [
+      "changes to mission outcome or north star",
+      "new personal-data categories or retention",
+      "new identity or authorization model",
+      "adverse or legally consequential automated action",
+      "public claims that imply production, legal or government validation",
+      "architecture changes that centralize source-of-truth data"
+    ],
+    "mayDelegate": [
+      "research public sources",
+      "map current journeys",
+      "generate adapters and test fixtures",
+      "run golden cases",
+      "compare expected vs actual outcomes",
+      "prepare implementation proposals",
+      "update evidence-backed documentation",
+      "open a review request when a gate is reached"
+    ]
+  },
+  "agentRoles": [
+    {"id":"research","can":["collect current official process evidence","benchmark other digital governments","flag stale or conflicting sources"],"cannot":["treat unofficial interpretation as law","make unsourced readiness claims"]},
+    {"id":"journey","can":["decompose a life event into actors, evidence, rules, actions and exceptions","identify duplicate citizen asks"],"cannot":["delete legally required steps without evidence"]},
+    {"id":"architecture","can":["map needs to existing German rails","propose adapters and service contracts","surface irreversible decisions"],"cannot":["change RED decisions"]},
+    {"id":"builder","can":["implement reversible prototypes, adapters, fixtures and UI","add observability and audit fields"],"cannot":["enable production writes or real personal data by default"]},
+    {"id":"eval","can":["run golden cases","calculate modeled benchmark deltas","record failures and regressions"],"cannot":["convert modeled results into real-world impact claims"]},
+    {"id":"trust","can":["check evidence provenance, authority, minimisation, consent and fail-closed behavior","block a case when contract invariants fail"],"cannot":["declare legal compliance or certification"]},
+    {"id":"release","can":["prepare proof packs, changelogs and next-step recommendations","mark reference tests passed when evidence is present"],"cannot":["mark national or production readiness from prototype evidence"]}
+  ],
+  "workflow": [
+    "read mission.json",
+    "choose the current nextMove",
+    "load relevant golden case",
+    "collect or verify evidence",
+    "propose the smallest reversible change",
+    "stop if a humanAuthority.mustApprove condition is hit",
+    "implement within capability boundaries",
+    "run golden case",
+    "write result with source/evidence references",
+    "update nextMove or open human decision"
+  ],
+  "invariants": [
+    "Unknown is not false.",
+    "Missing evidence is not ineligibility.",
+    "Model confidence is not legal authority.",
+    "A citizen should not be asked to re-submit retrievable authoritative evidence without a documented reason.",
+    "Source-of-truth data remains with authoritative systems unless a justified bounded workflow copy is required.",
+    "Every automated external action identifies its authority and approval state.",
+    "Modeled proof must be labeled modeled until measured in a real service."
+  ],
+  "writeProtocol": {
+    "preferred": "Agents propose changes through version-controlled mission/evidence files and reviewable commits or pull requests.",
+    "files": {
+      "mission":"mission.json",
+      "agentContract":"agent-contract.json",
+      "architecture":"architecture.md",
+      "proof":"proof.json"
+    },
+    "note": "The public GitHub Pages UI is a read surface. Repository commits are the durable write surface, making agent changes reviewable and auditable."
+  }
+}
