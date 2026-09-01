@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "1.0",
+  "lastReviewed": "2026-09-01",
+  "scope": "Germany-wide post-birth companion with Berlin-specific registration guidance. Official-source routing only; no authority submission performed by this app.",
+  "services": [
+    {
+      "id": "birth-registration",
+      "title": "Geburt beurkunden / Standesamt",
+      "category": "registration",
+      "officialSource": "https://familienportal.de/familienportal/lebenslagen/schwangerschaft-geburt/checklisten/checkliste-nach-der-geburt-197882",
+      "berlinSource": "https://service.berlin.de/dienstleistung/318957/",
+      "facts": [
+        "The federal family portal says the child should be registered with the registry office within 7 working days.",
+        "In Berlin, hospitals and birth centres transmit the birth notification to the competent registry office; for a home birth, parents must present the birth certificate within one week.",
+        "Berlin issues three free purpose-specific certificates for Elterngeld, Kindergeld and health insurance."
+      ]
+    },
+    {
+      "id": "health-insurance",
+      "title": "Krankenkasse informieren",
+      "category": "insurance",
+      "officialSource": "https://familienportal.de/familienportal/lebenslagen/schwangerschaft-geburt/checklisten/checkliste-nach-der-geburt-197882",
+      "facts": ["The federal post-birth checklist says parents should inform their health insurer about the birth."]
+    },
+    {
+      "id": "kindergeld",
+      "title": "Kindergeld",
+      "category": "benefit",
+      "officialSource": "https://www.arbeitsagentur.de/familie-und-kinder/infos-rund-um-kindergeld/kindergeld-anspruch-hoehe-dauer",
+      "applicationSource": "https://www.arbeitsagentur.de/familie-und-kinder/downloads-familie-und-kinder/formulare-kindergeld",
+      "facts": [
+        "Kindergeld applications are free and are decided by the Familienkasse.",
+        "The 2026 amount is 259 EUR per month per eligible child.",
+        "A BundID allows the online application to be transmitted without printing and signing."
+      ]
+    },
+    {
+      "id": "elterngeld",
+      "title": "Elterngeld",
+      "category": "benefit",
+      "officialSource": "https://familienportal.de/familienportal/familienleistungen/elterngeld/faq/wie-kann-ich-elterngeld-beantragen--124762",
+      "applicationSource": "https://familienportal.de/familienportal/rechner-antraege/antragsformulare",
+      "currentPortal": "https://www.mein-elterngeldantrag.de/",
+      "facts": [
+        "Elterngeld can only be applied for after birth.",
+        "The federal family portal recommends applying directly after birth and within the first three life months because Elterngeld is paid at most three life months retroactively.",
+        "As of August 2026 the former ElterngeldDigital service routes new applications to mein-elterngeldantrag.de; all federal states offer a digital application route."
+      ]
+    },
+    {
+      "id": "maternity-benefit",
+      "title": "Mutterschaftsleistungen",
+      "category": "benefit",
+      "officialSource": "https://familienportal.de/familienportal/familienleistungen/mutterschaftsleistungen/wie-kann-ich-mutterschaftsgeld-der-gesetzlichen-krankenkasse-berechnen-und-beantragen--125038",
+      "facts": [
+        "Employed members of a statutory health insurer may receive maternity benefit from their insurer.",
+        "After birth, the birth certificate is needed for continued payment.",
+        "People who are privately insured or family-insured may under conditions qualify for maternity benefit from the Federal Office for Social Security."
+      ]
+    },
+    {
+      "id": "paternity",
+      "title": "Vaterschaft anerkennen",
+      "category": "family-law",
+      "officialSource": "https://familienportal.de/familienportal/lebenslagen/schwangerschaft-geburt/vaterschaftanerkennung",
+      "facts": [
+        "If the parents are married at birth, a separate paternity acknowledgement is generally not necessary.",
+        "If the parents are not married, paternity acknowledgement is needed for the father to be legally recognized and requires the mother's consent.",
+        "It can be done before birth at, for example, a Jugendamt, Standesamt, court or notary."
+      ]
+    },
+    {
+      "id": "custody",
+      "title": "Gemeinsame Sorge erklären",
+      "category": "family-law",
+      "officialSource": "https://familienportal.de/familienportal/lebenslagen/schwangerschaft-geburt/namensrecht-sorgerecht",
+      "facts": [
+        "For unmarried parents, paternity acknowledgement does not automatically create joint custody.",
+        "Joint custody can be established by custody declarations, for example at the Jugendamt or a notary, or by a court decision."
+      ]
+    },
+    {
+      "id": "parental-leave",
+      "title": "Elternzeit beim Arbeitgeber anmelden",
+      "category": "employment",
+      "officialSource": "https://familienportal.de/familienportal/familienleistungen/elternzeit/faq/wann-und-wie-muss-ich-elternzeit-beantragen--124810",
+      "facts": [
+        "Elternzeit is notified to the employer rather than applied for with an authority.",
+        "It generally must be declared in text form at least seven weeks before the intended start.",
+        "For the mother, post-birth maternity protection normally lasts eight weeks, so notification after birth can still be timely for leave starting afterwards; the other parent wanting leave from birth generally needs to notify seven weeks before the expected birth date."
+      ]
+    }
+  ]
+}
