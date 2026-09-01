@@ -1,0 +1,48 @@
+[
+  {
+    "id":"G1",
+    "name":"Standard birth",
+    "input":{
+      "birthEventId":"birth-ref-001",
+      "evidence":{"birthRecord":true,"parentIdentity":true,"residency":true,"income":true},
+      "incomeRequired":true,
+      "authority":{"basis":"reference-policy","consequentialAction":false}
+    },
+    "assert":[
+      {"path":"status","equals":"ready-for-confirmation"},
+      {"path":"citizenInteractions","equals":1},
+      {"path":"citizenCarriedBirthCertificates","equals":0},
+      {"path":"plannedActions.length","equals":4}
+    ]
+  },
+  {
+    "id":"G2",
+    "name":"Ambiguous family situation",
+    "input":{
+      "birthEventId":"birth-ref-002",
+      "evidence":{"birthRecord":true,"parentIdentity":true,"residency":true},
+      "custodyRequired":true,
+      "incomeRequired":false,
+      "authority":{"basis":"reference-policy","consequentialAction":false}
+    },
+    "assert":[
+      {"path":"status","equals":"needs-citizen-input"},
+      {"path":"questions","equals":["custody"]},
+      {"path":"citizenInteractions","equals":1}
+    ]
+  },
+  {
+    "id":"G3",
+    "name":"Dangerous mismatch / authority gate",
+    "input":{
+      "birthEventId":"birth-ref-003",
+      "evidence":{"birthRecord":true,"parentIdentity":true,"residency":true},
+      "authority":{"basis":"reference-policy","consequentialAction":true,"approved":false,"action":"adverse-or-binding-decision"}
+    },
+    "assert":[
+      {"path":"status","equals":"human-approval-required"},
+      {"path":"plannedActions.length","equals":0},
+      {"path":"audit.includes","equals":"gate.human_authority"}
+    ]
+  }
+]
