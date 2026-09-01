@@ -11,7 +11,7 @@
     },
     {
       title: 'The First Reply', titleCaps: 'THE FIRST REPLY', rarity: 'legendary', rarityLabel: 'LEGENDARY', serial: '007 / 025', id: 'HK-0044',
-      image: './assets/v036/first-reply-art-v1.webp', alt: 'A delicate ivory-gold signal blooming in an infinite dark space',
+      image: './assets/v036/first-reply-art-v2.webp', alt: 'A lone child reaching toward the first ivory-gold reply from the universe',
       origin: 'THE NEXUS', cardClass: 'LEGENDARY · MEMORY', accent: '#e5c47c',
       thesis: 'The beauty benchmark. No character, no spectacle—just an image strong enough to deserve a wall, a frame and a memory.',
       test: 'BEAUTY / EMOTIONAL HOLD', material: 'SOFT-TOUCH BLACK · CHAMPAGNE FOIL', state: 'COLLECTOR STUDY 02'
