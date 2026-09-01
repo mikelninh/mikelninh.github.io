@@ -30,9 +30,9 @@ export function buildPlan(p,now=new Date()){
   const items=[];
 
   if(p.birthSetting==='home') items.push(task({
-    id:'birth-registration',title:'Geburt beim Standesamt melden',priority:'now',deadline:addDays(birth,7),badge:'Zuerst',
+    id:'birth-registration',title:'Geburt beim Standesamt melden',priority:'now',deadline:isBerlin?addDays(birth,7):null,badge:'Zuerst',
     why:isBerlin?'Bei einer Hausgeburt müssen die Eltern die Geburtsbescheinigung beim zuständigen Standesamt vorlegen. Berlin nennt dafür eine Frist von einer Woche.':'Die Bundes-Checkliste sieht die Anmeldung des Kindes beim Standesamt innerhalb von 7 Werktagen vor.',
-    next:'Geburtsbescheinigung bereithalten und die Meldung beim Standesamt des Geburtsortes erledigen.',
+    next:isBerlin?'Geburtsbescheinigung bereithalten und die Meldung beim Standesamt des Geburtsortes innerhalb einer Woche erledigen.':'Geburtsbescheinigung bereithalten und die Meldung beim Standesamt des Geburtsortes innerhalb von 7 Werktagen erledigen. Der Lotse zeigt außerhalb Berlins bewusst kein scheinpräzises Kalenderdatum.',
     source:isBerlin?sources.berlinBirth:sources.checklist,apply:isBerlin?sources.berlinBirth:sources.checklist,
     details:['Zuständig ist grundsätzlich das Standesamt des Geburtsortes.','Bei einer Hausgeburt ist dieser Schritt nicht automatisch durch ein Krankenhaus erledigt.']
   }));
