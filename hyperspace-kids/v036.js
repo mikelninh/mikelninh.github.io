@@ -4,7 +4,7 @@
   const cards = [
     {
       title: 'Void Fox', titleCaps: 'VOID FOX', rarity: 'epic', rarityLabel: 'EPIC', serial: '023 / 100', id: 'HK-0043',
-      image: './assets/v036/void-fox-art-v1.webp', alt: 'Void Fox emerging through a violet dimensional fracture',
+      image: './assets/v036/void-fox-art-v2.webp', alt: 'Void Fox emerging through a violet dimensional fracture',
       origin: 'THE VOID', cardClass: 'EPIC · COMPANION', accent: '#a873ff',
       thesis: 'The frame-break benchmark. One iconic companion, rendered as a complete collectible before any digital material is applied.',
       test: 'FRAME-BREAK / SILHOUETTE', material: 'MATTE BLACK · VIOLET SPOT FOIL', state: 'COLLECTOR STUDY 01'
@@ -18,7 +18,7 @@
     },
     {
       title: 'Rift Seed', titleCaps: 'RIFT SEED', rarity: 'mythic', rarityLabel: 'MYTHIC', serial: '001 / 010', id: 'HK-0045',
-      image: './assets/v036/rift-seed-art-v1.webp', alt: 'An obsidian Rift Seed containing a compressed spiral universe',
+      image: './assets/v036/rift-seed-art-v2.webp', alt: 'An obsidian Rift Seed cracked open around a compressed universe',
       origin: 'THE NEXUS', cardClass: 'MYTHIC · WORLD OBJECT', accent: '#b9dfff',
       thesis: 'The Mythic benchmark. A single grail object, serialised into the lore. The card stays pristine while reality changes around it.',
       test: 'GRAIL / SERIAL DESIRE', material: 'OBSIDIAN STOCK · OPAL SELECTIVE HOLO', state: 'COLLECTOR STUDY 03'
