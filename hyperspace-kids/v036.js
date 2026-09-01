@@ -4,7 +4,7 @@
   const cards = [
     {
       title: 'Void Fox', titleCaps: 'VOID FOX', rarity: 'epic', rarityLabel: 'EPIC', serial: '023 / 100', id: 'HK-0043',
-      image: './assets/v036/void-fox-art-v2.webp', alt: 'Void Fox emerging through a violet dimensional fracture',
+      image: './assets/v036/void-fox-art-v4.webp', alt: 'Void Fox crossing through a torn violet rift',
       origin: 'THE VOID', cardClass: 'EPIC · COMPANION', accent: '#a873ff',
       thesis: 'The frame-break benchmark. One iconic companion, rendered as a complete collectible before any digital material is applied.',
       test: 'FRAME-BREAK / SILHOUETTE', material: 'MATTE BLACK · VIOLET SPOT FOIL', state: 'COLLECTOR STUDY 01'
