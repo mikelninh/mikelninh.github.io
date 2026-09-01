@@ -8,7 +8,10 @@ async function derive(passphrase,salt){
   const material=await crypto.subtle.importKey('raw',enc.encode(passphrase),'PBKDF2',false,['deriveKey']);
   return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
 }
-
+function validateBlob(blob){
+  if(!blob||blob.v!==1||blob.kdf!=='PBKDF2-SHA256'||blob.cipher!=='AES-GCM-256'||!blob.salt||!blob.iv||!blob.data)throw new Error('Invalid Geburtslotse vault backup.');
+  return blob;
+}
 export function vaultExists(){return !!localStorage.getItem(VAULT_KEY)}
 
 export async function saveVault(passphrase,data){
@@ -23,7 +26,7 @@ export async function saveVault(passphrase,data){
 
 export async function loadVault(passphrase){
   const raw=localStorage.getItem(VAULT_KEY);if(!raw)throw new Error('No vault exists.');
-  const blob=JSON.parse(raw);
+  const blob=validateBlob(JSON.parse(raw));
   try{
     const key=await derive(passphrase,unb64(blob.salt));
     const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(blob.iv)},key,unb64(blob.data));
@@ -31,8 +34,18 @@ export async function loadVault(passphrase){
   }catch{throw new Error('Could not unlock vault. Check your passphrase.')}
 }
 
+export function exportVaultBlob(){
+  const raw=localStorage.getItem(VAULT_KEY);if(!raw)throw new Error('No vault exists.');
+  validateBlob(JSON.parse(raw));
+  return raw;
+}
+export function importVaultBlob(text){
+  const blob=validateBlob(JSON.parse(text));
+  localStorage.setItem(VAULT_KEY,JSON.stringify(blob));
+  return vaultInfo();
+}
 export function clearVault(){localStorage.removeItem(VAULT_KEY)}
 export function vaultInfo(){
   const raw=localStorage.getItem(VAULT_KEY);if(!raw)return null;
-  try{const b=JSON.parse(raw);return {v:b.v,kdf:b.kdf,cipher:b.cipher,iterations:b.iterations}}catch{return null}
+  try{const b=validateBlob(JSON.parse(raw));return {v:b.v,kdf:b.kdf,cipher:b.cipher,iterations:b.iterations}}catch{return null}
 }
