@@ -1,0 +1,22 @@
+{
+  "schemaVersion":"1.0",
+  "product":"Geburtslotse",
+  "updatedAt":"2026-09-01",
+  "principle":"Prepare and reuse everything locally; execute only through an authorized official channel.",
+  "capabilities":[
+    {"service":"birth-registration","guide":true,"reuse":true,"packet":true,"generate":false,"authorizedSubmit":false,"statusRead":false,"currentBoundary":"Local registry-office rules differ; no generic public write API is connected.","futureRail":"authoritative civil-register interface / NOOTS-compatible evidence exchange"},
+    {"service":"health-insurance","guide":true,"reuse":true,"packet":true,"generate":false,"authorizedSubmit":false,"statusRead":false,"currentBoundary":"Insurer-specific channels and authentication.","futureRail":"insurer APIs / EUDI verified attributes where supported"},
+    {"service":"kindergeld","guide":true,"reuse":true,"packet":true,"generate":false,"authorizedSubmit":false,"statusRead":false,"currentBoundary":"Official Familienkasse eService performs identity and submission; BundID can be used there.","futureRail":"authorized Familienkasse integration or standardized public-service transaction API"},
+    {"service":"elterngeld","guide":true,"reuse":true,"packet":true,"generate":false,"authorizedSubmit":false,"statusRead":false,"currentBoundary":"New applications use mein-elterngeldantrag.de; decision and submission remain with the official service.","futureRail":"authorized state/federal Elterngeld service integration"},
+    {"service":"maternity-benefit","guide":true,"reuse":true,"packet":true,"generate":false,"authorizedSubmit":false,"statusRead":false,"currentBoundary":"Path varies between statutory insurer and BAS.","futureRail":"insurer/BAS service connectors"},
+    {"service":"paternity","guide":true,"reuse":true,"packet":true,"generate":false,"authorizedSubmit":false,"statusRead":false,"currentBoundary":"Requires legally effective declarations at an authorized office/notary/court.","futureRail":"qualified digital declaration flow with verified identity and signatures if law/process permits"},
+    {"service":"custody","guide":true,"reuse":true,"packet":true,"generate":false,"authorizedSubmit":false,"statusRead":false,"currentBoundary":"Legally effective custody declaration cannot be created by the companion.","futureRail":"authorized digital declaration flow if available"},
+    {"service":"parental-leave","guide":true,"reuse":true,"packet":true,"generate":true,"authorizedSubmit":false,"statusRead":false,"currentBoundary":"The companion can generate the complete text-form notice; the user still sends it to the employer.","futureRail":"user-authorized email/workplace connector"}
+  ],
+  "nationalRails":{
+    "BundID":"Already useful for official service authentication such as Familienkasse eServices.",
+    "EUDIWallet":"German sandbox is open in 2026; first public state wallet stage is planned for early 2027.",
+    "NOOTS":"First functional version entered live operation in January 2026; broad technical rollout is planned toward end of 2026.",
+    "target":"Replace packet handoff with verified attributes, once-only evidence retrieval, authorized submit and one status timeline as public interfaces become usable."
+  }
+}
