@@ -1,32 +1,47 @@
 {
-  "schemaVersion":"1.1",
+  "schemaVersion":"1.2",
   "missionId":"digitize-germany",
   "generatedAt":"2026-09-01",
-  "stage":"usable public beta + reference architecture proof",
+  "stage":"end-to-end public workspace within current authorization boundary",
   "publicProduct":"https://mikelninh.github.io/product-architect/os/missions/digitize-germany/birth-companion/",
-  "scope":"A privacy-first post-birth bureaucracy companion that real people can use for personalized prioritization and official handoffs, plus a deterministic reference architecture proof. No German production-register access, authority submission, or server-side storage of family data.",
+  "scope":"A privacy-first post-birth bureaucracy workspace that real people can use today for personalized prioritization, reusable encrypted local data, application preparation, evidence tracking, generated text-form actions and official handoffs. It does not impersonate an authority or claim submission rights that are not available.",
   "referenceArchitecture":{"goldenCases":3,"passed":3,"failed":0,"results":[
     {"id":"G1","name":"Standard birth","pass":true,"observed":{"status":"ready-for-confirmation","citizenInteractions":1,"plannedActions":4,"citizenCarriedBirthCertificates":0}},
     {"id":"G2","name":"Ambiguous family situation","pass":true,"observed":{"status":"needs-citizen-input","questions":["custody"],"plannedActions":0}},
     {"id":"G3","name":"Dangerous mismatch / authority gate","pass":true,"observed":{"status":"human-approval-required","plannedActions":0,"gate":"gate.human_authority"}}
   ]},
-  "usableProduct":{"status":"public beta","capabilities":[
-    "one intake for factors that materially change the plan",
-    "Germany-wide core post-birth journey with Berlin-specific birth-registration guidance",
-    "personalized task selection for Kindergeld, Elterngeld, health insurance, maternity benefit, paternity, joint custody and parental leave",
-    "date-aware urgency for home-birth registration and Elterngeld",
+  "usableProduct":{"status":"shareable public beta","capabilities":[
+    "one guide intake for factors that materially change the post-birth plan",
+    "Germany-wide core journey with Berlin-specific birth-registration guidance",
+    "personalized next-action ordering for Kindergeld, Elterngeld, health insurance, maternity benefit, paternity, joint custody and parental leave",
+    "date-aware urgency without inventing false precision where the official rule is expressed in working days",
     "current official-source routing including the August 2026 Elterngeld service transition",
-    "local browser persistence for profile and completion state",
-    "no account and no server-side storage of family answers",
-    "printable personal plan"
-  ],"automatedProof":{"scenarioSuites":5,"officialSourceInvariant":true,"ciWorkflow":"Birth Companion proof","latestKnownRun":"33512916722","conclusion":"success"}},
-  "modeledBenchmark":{"standardCaseParentTaskModel":{"before":4,"targetAfter":1,"modeledReduction":"75%"},"citizenCarriedPurposeSpecificBirthCertificates":{"before":3,"futureIntegratedTargetAfter":0,"modeledReduction":"100%"},"warning":"The public beta does not yet remove the official handoff itself, so these remain architecture targets rather than measured citizen outcomes."},
+    "local progress and evidence checklist",
+    "optional encrypted local family-data vault using PBKDF2-SHA256 and AES-GCM",
+    "reusable canonical data mapped into multiple service-specific application packets",
+    "copy-ready prepared fields before opening an official service",
+    "deduplicated evidence checklist across all relevant services",
+    "complete generated Elternzeit text-form notice when required inputs are present",
+    "clean public share link that does not include family data",
+    "no project account and no project backend receiving family answers"
+  ],"automationBoundary":{"guide":true,"reuse":true,"prepare":true,"generateWhereLegallyControllable":true,"authorizedGovernmentSubmit":false,"governmentStatusRead":false,"reason":"Those final actions require official identity/authority and interfaces that this independent public site does not possess."}},
+  "automatedProof":{"journeyScenarioSuites":5,"officialSourceInvariant":true,"crossServiceReuse":true,"generatedParentalLeaveNotice":true,"evidenceDeduplication":true,"encryptedVaultRoundTrip":true,"plaintextSensitiveValueAbsentFromStoredCiphertext":true,"ciWorkflow":"Birth Companion proof","latestVerifiedJob":"99877704233","conclusion":"success"},
+  "modeledBenchmark":{"standardCaseParentTaskModel":{"before":4,"targetIntegratedAfter":1,"modeledReduction":"75%"},"citizenCarriedPurposeSpecificBirthCertificates":{"before":3,"targetIntegratedAfter":0,"modeledReduction":"100%"},"warning":"The companion now removes search, coordination and repeated preparation work, but authoritative submissions remain external. National outcome reductions are therefore still architecture targets, not measured production impact."},
   "whatIsActuallySolvedNow":[
-    "A real parent no longer needs to start from an undifferentiated federal checklist: the companion creates a smaller personal action set.",
-    "The companion keeps the current next action and progress in one place and routes each action to an official source.",
-    "Family answers used for personalization are not sent to a project backend.",
-    "Regression tests protect important branches such as unmarried parents, private/family insurance and urgent home-birth registration."
+    "A real parent can turn one situation intake into a smaller, ordered personal action plan instead of coordinating an undifferentiated checklist.",
+    "The same optional family data can be entered once and reused across several application-preparation packets instead of being retyped from scratch inside the companion.",
+    "The workspace keeps next action, progress and required evidence in one place.",
+    "For a text-form process the product controls, Elternzeit, the workspace can generate the finished notice rather than stopping at advice.",
+    "Official submissions are handed off transparently rather than simulated.",
+    "Sensitive optional data is encrypted locally and not sent to a project backend."
+  ],
+  "remainingExternalBoundary":[
+    "verified identity/attributes through authorized BundID/EUDI integrations",
+    "once-only evidence retrieval through NOOTS/register interfaces",
+    "authorized submission APIs for benefits and registrations",
+    "official status callbacks/read APIs",
+    "qualified production privacy/security/legal review and public-sector partnership"
   ],
   "doesNotProve":["completed government applications","government-system integration","national production readiness","legal compliance or legal advice","real-world time or cost savings","coverage of every German family configuration","government adoption"],
-  "nextEvidence":"Run the public beta with real parents. Measure time-to-personal-plan, number of external sites needed, missing/incorrect tasks, task completion, confidence/usefulness and repeated data entry. Fix any harmful miss before expanding service coverage. Only then prioritize the first authorized/sandbox integration that removes a real remaining handoff."
+  "nextEvidence":"Use this version with real parents and measure task-finding time, repeat entry avoided, incorrect/missing tasks, successful official handoffs, confidence and completion. In parallel, connect the first authorized sandbox/public interface that removes a measured remaining handoff rather than adding another mock integration."
 }
