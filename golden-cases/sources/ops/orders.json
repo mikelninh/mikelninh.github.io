@@ -1,0 +1,16 @@
+{
+  "source": "Orders API snapshot",
+  "captured_at": "2026-09-01T08:00:00+02:00",
+  "case": "Monday Ops Brief",
+  "weekend_orders": 184,
+  "delayed_orders": [
+    {"order_id":"ORD-1842","status":"delayed","hours_since_order":31},
+    {"order_id":"ORD-1848","status":"delayed","hours_since_order":29},
+    {"order_id":"ORD-1853","status":"delayed","hours_since_order":28},
+    {"order_id":"ORD-1861","status":"delayed","hours_since_order":27},
+    {"order_id":"ORD-1874","status":"delayed","hours_since_order":25},
+    {"order_id":"ORD-1889","status":"delayed","hours_since_order":24},
+    {"order_id":"ORD-1901","status":"delayed","hours_since_order":24}
+  ],
+  "note": "Synthetic source artifact used by the Golden Case portfolio demo."
+}
