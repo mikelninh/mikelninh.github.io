@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.0",
+  "missionId": "digitize-germany",
+  "title": "Digitize Germany",
+  "subtitle": "Make government feel like one coherent service.",
+  "status": "reference-journey proof",
+  "outcome": "Every interaction with the German state should be digital where appropriate, once-only, understandable, traceable and safely completable without making citizens coordinate the administration themselves.",
+  "northStar": "Citizen outcomes completed with the fewest necessary citizen actions, while preserving legal authority, consent, provenance and a human path for exceptions.",
+  "currentJourney": {
+    "id": "birth",
+    "title": "A child is born",
+    "why": "A birth crosses civil registration, family benefits, health insurance and other authorities. If one verified event cannot become one coherent journey, the architecture is not reusable enough.",
+    "nextMove": "Turn one verified birth event into a consented, once-only service plan and prove the standard, ambiguous and dangerous cases end to end.",
+    "definitionOfDone": "For the reference standard case, the parent confirms one service plan, does not transport a birth certificate between authorities, sees one status thread, and every automated step has a source, authority and audit record. Exceptions stop safely and explain what is missing."
+  },
+  "principles": [
+    "Life event, not form, is the unit of experience.",
+    "Reuse Germany's existing rails before inventing replacements.",
+    "Data stays with authoritative sources; orchestration moves verified claims and evidence.",
+    "Once-only means do not ask again for data the state may lawfully retrieve with the required authority or consent.",
+    "Agents may prepare, retrieve, reconcile and route; they do not invent legal authority.",
+    "Consequential or ambiguous cases stop for a qualified human.",
+    "Every public claim must point to evidence and state what is still unproven."
+  ],
+  "architecture": [
+    {"layer": "Experience", "name": "Life-event workspace", "purpose": "One citizen-facing journey, status thread, explanation and exception path."},
+    {"layer": "Identity", "name": "BundID / EUDI Wallet", "purpose": "Identify the person and present verified attributes without creating another identity silo."},
+    {"layer": "Authority", "name": "Consent & legal-basis policy", "purpose": "Machine-readable purpose, authority, consent, retention and human-approval requirements for each action."},
+    {"layer": "Events", "name": "Verified life-event envelope", "purpose": "A signed event such as birth, move, job loss or company formation starts an outcome workflow."},
+    {"layer": "Exchange", "name": "NOOTS + existing interfaces", "purpose": "Retrieve evidence from authoritative registers instead of asking citizens to upload it again."},
+    {"layer": "Rules", "name": "Eligibility & obligation services", "purpose": "Versioned deterministic rules decide what is known, missing, eligible, ineligible or review-required."},
+    {"layer": "Workflow", "name": "Outcome orchestrator", "purpose": "Coordinates cross-authority steps, retries and deadlines without centralising source-of-truth data."},
+    {"layer": "Agents", "name": "Bounded service agents", "purpose": "Research, retrieve, prepare, reconcile, explain and propose next actions inside explicit capabilities."},
+    {"layer": "Authority gate", "name": "Human decision points", "purpose": "Identity conflicts, missing legal authority, adverse decisions and other consequential exceptions stop here."},
+    {"layer": "Proof", "name": "Evidence & audit ledger", "purpose": "Store hashes, source references, rule versions, approvals, outcomes and user-facing status."}
+  ],
+  "decisions": [
+    {"id":"D1","risk":"RED","question":"Should a life event automatically trigger every related public service?","recommendation":"No. Discovery may be proactive; consequential applications/actions require the legal basis and, where needed, explicit citizen confirmation or consent.","owner":"human"},
+    {"id":"D2","risk":"RED","question":"Should the platform copy all registry data into a central citizen database?","recommendation":"No. Prefer references, signed claims and purpose-bound retrieval from authoritative sources. Cache only what a workflow genuinely requires, with retention rules.","owner":"human"},
+    {"id":"D3","risk":"AMBER","question":"Do we need a new German data-exchange backbone?","recommendation":"Not for V1. Design adapters around NOOTS and existing public interfaces; only add infrastructure where a measured gap cannot be solved by the existing rails.","owner":"human"}
+  ],
+  "goldenCases": [
+    {"id":"G1","name":"Standard birth","type":"happy path","input":"Hospital birth; parent identities resolve; required registry evidence is available; ordinary employment/residency case.","expected":"System creates one service plan, reuses registry evidence, prepares relevant workflows, asks the parent only for genuinely missing choices, and presents one status thread.","pass":"No duplicate request for already retrievable birth evidence; no citizen-carried birth certificate; every action has evidence + authority + status."},
+    {"id":"G2","name":"Ambiguous family situation","type":"missing/conflicting evidence","input":"Parent relationship, residency, income or custody data is incomplete or contradictory.","expected":"System preserves the conflict, requests only the missing evidence, explains why it is needed and does not convert uncertainty into a false fact.","pass":"No unsupported eligibility claim; minimum necessary follow-up; conflict and source provenance remain visible."},
+    {"id":"G3","name":"Dangerous mismatch","type":"authority boundary","input":"Identity/register mismatch or an action would create an adverse or legally consequential outcome without sufficient authority.","expected":"Automation stops. A human review packet contains the evidence, rule version, conflict and proposed next action.","pass":"No external consequential action occurs before the required human/legal authority gate; decision is audited."}
+  ],
+  "referenceBenchmark": {
+    "label": "Modeled standard-case benchmark — not a national production measurement",
+    "basis": "Official German post-birth guidance plus Berlin birth-registration service descriptions.",
+    "before": [
+      {"metric":"Distinct post-birth parent administrative tasks in federal checklist used for this reference model","value":4,"note":"Inform health insurer; apply for Kindergeld; apply for Elterngeld; apply for maternity benefits. Birth registration is excluded from this count because a hospital/birth centre can transmit the birth notification."},
+      {"metric":"Purpose-specific free birth certificates issued in Berlin","value":3,"note":"For Elterngeld, Kindergeld and health insurance."},
+      {"metric":"Citizen-facing service plan","value":"fragmented","note":"The federal guidance is a checklist across separate responsibilities and services."}
+    ],
+    "target": [
+      {"metric":"Standard-case parent orchestration interactions","value":1,"note":"One review/confirmation of the generated service plan; exception questions are outside this standard-case target."},
+      {"metric":"Citizen-carried birth certificates between participating services","value":0,"note":"Birth evidence is retrieved from the authoritative register through approved once-only exchange when legally permitted."},
+      {"metric":"Citizen-facing status thread","value":1,"note":"One coherent view over the participating workflows."}
+    ],
+    "derived": [
+      {"metric":"Modeled reduction in standard-case parent administrative task handling","value":"75%","calculation":"4 reference tasks → 1 orchestration interaction"},
+      {"metric":"Modeled reduction in citizen-carried purpose-specific birth certificates","value":"100%","calculation":"3 certificates → 0 citizen-carried certificates"}
+    ]
+  },
+  "adoption": {
+    "reuseGermany": ["BundID", "EUDI Wallet / verified attributes", "NOOTS", "existing source registers", "existing specialist procedures", "federal status / communication capabilities where available"],
+    "borrowPatterns": [
+      {"country":"Estonia","pattern":"Distributed secure exchange, owner-controlled source data, strong auditability."},
+      {"country":"Denmark","pattern":"Shared cross-government digital infrastructure, national eID, Digital Post and long-running joint government strategy."},
+      {"country":"Finland","pattern":"National Data Exchange Layer with explicit development, test and production environments and an API catalogue."}
+    ]
+  },
+  "sources": [
+    {"label":"BMDS — NOOTS","url":"https://bmds.bund.de/themen/digitaler-staat/noots","supports":"NOOTS purpose, once-only model and 2026 live/rollout status"},
+    {"label":"BMDS — BundID","url":"https://bmds.bund.de/themen/digitaler-staat/digitale-identitaeten/bundid","supports":"central citizen account, postbox, status monitor and identity functions"},
+    {"label":"BMDS — EUDI Wallet","url":"https://bmds.bund.de/themen/digitaler-staat/digitale-identitaeten/eudi-wallet","supports":"2026 sandbox and verified-attribute direction"},
+    {"label":"Federal Family Portal — after-birth checklist","url":"https://familienportal.de/familienportal/lebenslagen/schwangerschaft-geburt/checklisten/checkliste-nach-der-geburt-197882","supports":"reference journey tasks"},
+    {"label":"Berlin Service — report a birth","url":"https://service.berlin.de/dienstleistung/318957/","supports":"hospital notification and three purpose-specific birth certificates"},
+    {"label":"Estonian Information System Authority — X-tee","url":"https://www.ria.ee/en/state-information-system/data-exchange-platforms/data-exchange-layer-x-tee","supports":"distributed secure data exchange and data-owner control"},
+    {"label":"Danish Agency for Digital Government — joint strategy","url":"https://en.digst.dk/strategy/the-joint-government-digital-strategy/","supports":"shared infrastructure and cross-government governance"},
+    {"label":"Suomi.fi — Data Exchange Layer","url":"https://kehittajille.suomi.fi/services/data-exchange-layer","supports":"national exchange layer and deployment environments"}
+  ]
+}
