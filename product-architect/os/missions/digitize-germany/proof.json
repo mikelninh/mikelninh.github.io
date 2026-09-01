@@ -1,0 +1,15 @@
+{
+  "schemaVersion":"1.0",
+  "missionId":"digitize-germany",
+  "generatedAt":"2026-09-01",
+  "scope":"deterministic reference engine with synthetic fixtures; no German production systems or personal data",
+  "summary":{"goldenCases":3,"passed":3,"failed":0},
+  "results":[
+    {"id":"G1","name":"Standard birth","pass":true,"observed":{"status":"ready-for-confirmation","citizenInteractions":1,"plannedActions":4,"citizenCarriedBirthCertificates":0},"proves":"The reference engine can turn complete authoritative evidence into one service plan without asking the citizen to carry birth certificates between participating services."},
+    {"id":"G2","name":"Ambiguous family situation","pass":true,"observed":{"status":"needs-citizen-input","questions":["custody"],"plannedActions":0},"proves":"The reference engine asks only for the modeled missing evidence and does not proceed as though uncertainty were resolved."},
+    {"id":"G3","name":"Dangerous mismatch / authority gate","pass":true,"observed":{"status":"human-approval-required","plannedActions":0,"gate":"gate.human_authority"},"proves":"A modeled consequential action is blocked when required human approval is absent."}
+  ],
+  "benchmark":{"standardCaseParentTaskModel":{"before":4,"after":1,"modeledReduction":"75%"},"citizenCarriedPurposeSpecificBirthCertificates":{"before":3,"after":0,"modeledReduction":"100%"}},
+  "doesNotProve":["national production readiness","legal compliance","real authority integrations","real-world time or cost savings","coverage of all German family situations","government adoption"],
+  "nextEvidence":"Connect one real sandbox/test interface or realistic adapter contract, rerun the same golden cases at integration level, then measure completion time, correction rate, duplicate asks and exception burden with users or qualified public-service reviewers."
+}
