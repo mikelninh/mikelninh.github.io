@@ -1,0 +1,29 @@
+@media(max-width:380px){.section{padding-left:16px;padding-right:16px}.brand{letter-spacing:.15em}.build{letter-spacing:.13em}.cta-label{font-size:9px}.pack{width:82vw}.signal-card{width:90vw}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.foil:before,.horizon-glow,.core-glow,.rift-ring,.nexus-door,.signal-card:before{animation:none!important}[data-reveal]{opacity:1;transform:none}.cta,.pack{transition:none}}
+
+/* v0.8 release — temporary production assets */
+.traveller-art img.candidate-character{width:82%;height:94%;object-fit:contain;object-position:center bottom;display:block;filter:drop-shadow(0 48px 70px #000) saturate(.82) contrast(1.08) brightness(.88);transform:translateY(1.5%);transition:filter .8s var(--ease),transform .8s var(--ease)}
+.awake-kid img.candidate-character{width:min(500px,84vw);height:min(73vh,760px);object-fit:contain;display:block;filter:drop-shadow(0 0 42px #aef7ff38) drop-shadow(0 55px 90px #000) saturate(.9) contrast(1.12) brightness(1.08)}
+.prototype-chip{position:absolute;right:2%;bottom:11%;width:min(190px,35vw);padding:9px;border:1px solid #ffffff16;border-radius:16px;background:#06070bdd;backdrop-filter:blur(15px);box-shadow:0 20px 60px #000b;z-index:12}
+.prototype-chip img{width:100%;aspect-ratio:1.55;object-fit:contain;display:block;border-radius:10px;background:#000}
+.prototype-chip span{display:block;margin-top:7px;font:700 7px/1.5 var(--mono);letter-spacing:.13em;color:#777b86}
+.prototype-chip b{color:#d6d7de;font-weight:700}
+.signal-card{isolation:isolate}
+.signal-card::after{content:"";position:absolute;inset:0;z-index:8;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 0 1px #ffffff08,inset 0 -70px 100px #0005}
+.signal-card[data-rarity="rare"]{box-shadow:0 80px 140px #000c,0 0 55px #a6edff12,inset 0 1px 0 #fff3}
+.signal-card[data-rarity="epic"]{box-shadow:0 90px 160px #000c,0 0 78px #c1a9ff20,inset 0 1px 0 #fff3;transform:perspective(900px) rotateY(-1.2deg)}
+.signal-card[data-rarity="legendary"]{border-color:#ffe4ad66;box-shadow:0 90px 170px #000c,0 0 100px #ffe4ad22,inset 0 1px 0 #fff4}
+.signal-card[data-rarity="mythic"]{border-color:#ffd0ec88;box-shadow:0 100px 190px #000d,0 0 130px #ffd0ec32,0 0 50px #aaf6ff1a,inset 0 1px 0 #fff5;animation:mythicFloat 3.6s ease-in-out infinite}
+.signal-card[data-rarity="mythic"] .card-art{transform:scale(1.08);filter:drop-shadow(0 0 35px #ffd0ec66)}
+@keyframes mythicFloat{50%{transform:translateY(-6px) rotateZ(.3deg)}}
+.card-art{border-radius:22px;background:radial-gradient(circle at 50% 45%,var(--cardGlow,#9bf7ff22),transparent 52%);filter:drop-shadow(0 20px 40px #0008)}
+.card-art::before{content:"";position:absolute;inset:7%;border:1px solid color-mix(in srgb,var(--cardColor,#bffcff) 24%,transparent);border-radius:50%;opacity:.42}
+.rip-pack.ripped{filter:drop-shadow(0 80px 120px #000c) brightness(.88)}
+#ritual.ready .stack{box-shadow:0 0 90px #bffcff0e,0 60px 110px #000b}
+.release-mark{font:700 7px var(--mono);letter-spacing:.14em;color:#666a75;margin-top:12px}
+@media(max-width:720px){
+ .prototype-chip{right:0;bottom:7%;width:128px;padding:6px;border-radius:12px;opacity:.8}
+ .prototype-chip span{font-size:6px}
+ .traveller-art img.candidate-character{width:94%;height:92%}
+ .awake-kid img.candidate-character{width:92vw;height:auto;max-height:68vh}
+}
