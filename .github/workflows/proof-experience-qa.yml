@@ -54,16 +54,32 @@ jobs:
                   assert not errors, errors
 
                   page.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
-                  assert 'Choose a worker' in page.locator('h1').inner_text()
-                  assert page.locator('.role').count()==3
-                  page.screenshot(path='artifacts/proof-experience/agents-start.png',full_page=True)
-                  page.locator('.role').nth(1).click()
+                  assert 'A case just landed' in page.locator('h1').inner_text()
+                  assert page.locator('.caseTab').count()==2
+                  assert page.locator('.doc').count()==4
+                  assert 'Weserstr. 18' in page.locator('#preview').inner_text()
+                  page.screenshot(path='artifacts/proof-experience/agents-case.png',full_page=True)
+
                   page.locator('#run').click()
-                  page.locator('#result.show').wait_for(state='visible',timeout=5000)
-                  assert 'Cited draft' in page.locator('#resultTitle').inner_text()
+                  page.locator('#output.show').wait_for(state='visible',timeout=5000)
+                  assert 'Repair case ready' in page.locator('#outputTitle').inner_text()
+                  body=page.locator('#output').inner_text()
+                  assert 'Heating failure' in body and 'OBJ-001' in body
+                  page.screenshot(path='artifacts/proof-experience/agents-output.png',full_page=True)
+
                   page.locator('#break').click()
-                  assert 'Stopped safely' in page.locator('#resultTitle').inner_text()
+                  assert 'Stopped' in page.locator('#outputTitle').inner_text()
+                  assert 'property record' in page.locator('#approval').inner_text().lower()
                   page.screenshot(path='artifacts/proof-experience/agents-broken.png',full_page=True)
+
+                  page.locator('[data-case="invoice"]').click()
+                  assert '€1,248.50' in page.locator('#caseTitle').inner_text()
+                  assert 'R-2026-881' in page.locator('#preview').inner_text()
+                  page.locator('#run').click()
+                  page.locator('#output.show').wait_for(state='visible',timeout=5000)
+                  assert 'Duplicate-invoice' in page.locator('#outputTitle').inner_text()
+                  assert 'DUPLICATE INVOICE' in page.locator('#output').inner_text()
+                  page.screenshot(path='artifacts/proof-experience/agents-invoice.png',full_page=True)
                   assert not errors, errors
 
                   mobile=browser.new_page(viewport={'width':390,'height':844})
