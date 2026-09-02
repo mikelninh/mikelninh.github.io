@@ -43,7 +43,7 @@ jobs:
               page=b.new_page(viewport={'width':1440,'height':1000})
               errors=[]; page.on('pageerror',lambda e:errors.append(str(e)))
 
-              # Almedia: real synthetic self-service data flow.
+              # Almedia: self-service data flow -> reusable governed check -> fail closed.
               page.goto('http://127.0.0.1:8765/almedia/',wait_until='networkidle')
               assert 'Turn repeated data requests into self-service' in page.locator('h1').inner_text()
               for path in ['campaign_spend.json','verified_outcomes.json','revenue.json']:
@@ -58,7 +58,13 @@ jobs:
               assert '0.86×' in result
               assert '€9.88' in result
               assert 'campaign_id' in result
-              page.screenshot(path='artifacts/proof-experience/almedia-result.png',full_page=True)
+              assert page.locator('#saveWrap.show').is_visible()
+              page.locator('#save').click()
+              assert page.locator('#saved.show').is_visible()
+              saved=page.locator('#saved').inner_text()
+              assert 'Campaign health check' in saved
+              assert 'Block if source missing' in saved
+              page.screenshot(path='artifacts/proof-experience/almedia-saved-check.png',full_page=True)
               page.locator('#break').click()
               assert page.locator('#sRevenue').inner_text().lower()=='removed'
               assert page.locator('#fail.show').is_visible()
@@ -67,7 +73,7 @@ jobs:
               assert page.locator('#result.show').count()==0
               page.screenshot(path='artifacts/proof-experience/almedia-blocked.png',full_page=True)
 
-              # HausPilot: bounded workflow + fail-closed proof.
+              # HausPilot: prepare -> explicit human release gate -> fail closed.
               page.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
               assert 'Turn a tenant request' in page.locator('h1').inner_text()
               assert page.locator('#preview.show').count()==0
@@ -76,13 +82,21 @@ jobs:
               page.locator('#run').click()
               page.locator('#output.show').wait_for(state='visible',timeout=5000)
               txt=page.locator('#output').inner_text().lower()
-              assert 'ready for review' in txt and 'nothing sent' in txt
+              assert 'ready for review' in txt and 'not released' in txt
+              assert page.locator('#approval.show').is_visible()
               assert 'handling time' in page.locator('#measure').inner_text().lower()
+              page.locator('#approve').click()
+              assert page.locator('#released.show').is_visible()
+              assert 'simulated' in page.locator('#released').inner_text().lower()
+              assert 'release approved' in page.locator('#notSent').inner_text().lower()
+              page.screenshot(path='artifacts/proof-experience/agents-approved.png',full_page=True)
               page.locator('#break').click()
               assert "can't continue" in page.locator('#outTitle').inner_text().lower()
               assert page.locator('.record.removed').count()==1
               assert 'property cannot be verified' in page.locator('#output').inner_text().lower()
+              assert page.locator('#approval.show').count()==0
               assert page.locator('#nextCase').is_visible()
+              assert '100+ reviewed cases' in page.locator('.criteria').inner_text()
               page.screenshot(path='artifacts/proof-experience/agents-broken.png',full_page=True)
               page.locator('#nextCase').click()
               assert '€1,248.50' in page.locator('#caseTitle').inner_text()
@@ -108,15 +122,10 @@ jobs:
               page.screenshot(path='artifacts/proof-experience/pruefpilot-result.png',full_page=True)
 
               mobile=b.new_page(viewport={'width':390,'height':844})
-              mobile.goto('http://127.0.0.1:8765/almedia/',wait_until='networkidle')
-              assert mobile.locator('#run').is_visible()
-              mobile.screenshot(path='artifacts/proof-experience/mobile-almedia.png',full_page=True)
-              mobile.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
-              assert mobile.locator('#run').is_visible()
-              mobile.screenshot(path='artifacts/proof-experience/mobile-agents.png',full_page=True)
-              mobile.goto('http://127.0.0.1:8765/pruefpilot/',wait_until='networkidle')
-              assert mobile.locator('#run').is_visible()
-              mobile.screenshot(path='artifacts/proof-experience/mobile-pruefpilot.png',full_page=True)
+              for path in ['almedia/','agents/','pruefpilot/']:
+                mobile.goto(f'http://127.0.0.1:8765/{path}',wait_until='networkidle')
+                assert mobile.locator('#run').is_visible()
+              mobile.screenshot(path='artifacts/proof-experience/mobile-final.png',full_page=True)
               assert not errors,errors
               b.close()
           finally:
