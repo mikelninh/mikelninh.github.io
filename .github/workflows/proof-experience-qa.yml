@@ -42,6 +42,7 @@ jobs:
                   errors=[]
                   page.on('pageerror',lambda e: errors.append(str(e)))
 
+                  # Almedia entry proof
                   page.goto('http://127.0.0.1:8765/almedia/',wait_until='networkidle')
                   assert 'Find the boring work' in page.locator('h1').inner_text()
                   assert page.locator('.pick').count()==3
@@ -53,28 +54,40 @@ jobs:
                   page.screenshot(path='artifacts/proof-experience/almedia-result.png',full_page=True)
                   assert not errors, errors
 
+                  # HausPilot: first-time-user guidance + traceable workflow
                   page.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
-                  assert 'A case just landed' in page.locator('h1').inner_text()
+                  assert 'From messy inbox' in page.locator('h1').inner_text()
+                  assert 'Test the whole idea' in page.locator('.heroNote').inner_text()
                   assert page.locator('.caseTab').count()==2
+                  assert page.locator('.workspace').count()==1
                   assert page.locator('.doc').count()==4
                   assert 'Weserstr. 18' in page.locator('#preview').inner_text()
+                  assert 'Manual classification' in page.locator('#workerList').inner_text()
+                  assert 'Approve / send externally' in page.locator('#humanList').inner_text()
+                  assert '5–10 min' in page.locator('#savedTime').inner_text()
                   page.screenshot(path='artifacts/proof-experience/agents-case.png',full_page=True)
 
+                  # Run the realistic heating workflow
                   page.locator('#run').click()
                   page.locator('#output.show').wait_for(state='visible',timeout=5000)
                   assert 'Repair case ready' in page.locator('#outputTitle').inner_text()
                   body=page.locator('#output').inner_text()
-                  assert 'Heating failure' in body and 'OBJ-001' in body
+                  assert 'Heating failure' in body and 'OBJ-001' in body and 'Human review required' in body
+                  assert 'no contractor contacted' in body.lower()
                   page.screenshot(path='artifacts/proof-experience/agents-output.png',full_page=True)
 
+                  # Remove required evidence and ensure boundary becomes legible
                   page.locator('#break').click()
                   assert 'Stopped' in page.locator('#outputTitle').inner_text()
                   assert 'property record' in page.locator('#approval').inner_text().lower()
+                  assert 'Do not proceed' in page.locator('#output').inner_text()
                   page.screenshot(path='artifacts/proof-experience/agents-broken.png',full_page=True)
 
+                  # Duplicate-invoice workflow is independently understandable
                   page.locator('[data-case="invoice"]').click()
                   assert '€1,248.50' in page.locator('#caseTitle').inner_text()
                   assert 'R-2026-881' in page.locator('#preview').inner_text()
+                  assert '4–8 min' in page.locator('#savedTime').inner_text()
                   page.locator('#run').click()
                   page.locator('#output.show').wait_for(state='visible',timeout=5000)
                   assert 'Duplicate-invoice' in page.locator('#outputTitle').inner_text()
@@ -82,12 +95,14 @@ jobs:
                   page.screenshot(path='artifacts/proof-experience/agents-invoice.png',full_page=True)
                   assert not errors, errors
 
+                  # Mobile: guidance, workspace and primary action remain visible/readable
                   mobile=browser.new_page(viewport={'width':390,'height':844})
                   for path in ('almedia/','agents/'):
                       mobile.goto('http://127.0.0.1:8765/'+path,wait_until='networkidle')
                       assert mobile.locator('h1').is_visible()
                       assert float(mobile.locator('body').evaluate("el=>parseFloat(getComputedStyle(el).fontSize)")) >= 16
                       mobile.screenshot(path=f'artifacts/proof-experience/mobile-{path[:-1]}.png',full_page=True)
+                  assert mobile.locator('#run').is_visible()
                   mobile.close(); browser.close()
           finally:
               server.terminate(); server.wait(timeout=5)
