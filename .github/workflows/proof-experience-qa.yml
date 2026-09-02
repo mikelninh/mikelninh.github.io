@@ -1,0 +1,73 @@
+name: Interactive hiring proof QA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'almedia/**'
+      - 'agents/**'
+      - '.github/workflows/proof-experience-qa.yml'
+  pull_request:
+    paths:
+      - 'almedia/**'
+      - 'agents/**'
+      - '.github/workflows/proof-experience-qa.yml'
+  workflow_dispatch:
+
+jobs:
+  proof-browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Chromium
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install chromium
+      - name: Click through proof experiences
+        run: |
+          python - <<'PY'
+          import subprocess, time
+          from playwright.sync_api import sync_playwright
+          server=subprocess.Popen(['python','-m','http.server','8765'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+          try:
+              time.sleep(.5)
+              with sync_playwright() as p:
+                  browser=p.chromium.launch(headless=True)
+                  page=browser.new_page(viewport={'width':1440,'height':1000})
+                  errors=[]
+                  page.on('pageerror',lambda e: errors.append(str(e)))
+
+                  page.goto('http://127.0.0.1:8765/almedia/',wait_until='networkidle')
+                  assert 'Find the boring work' in page.locator('h1').inner_text()
+                  assert page.locator('.pick').count()==3
+                  page.locator('.pick').nth(2).click()
+                  page.locator('#run').click()
+                  page.locator('#output.show').wait_for(state='visible',timeout=5000)
+                  assert 'Failures should become assets' in page.locator('#outTitle').inner_text()
+                  assert not errors, errors
+
+                  page.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
+                  assert 'Choose a worker' in page.locator('h1').inner_text()
+                  assert page.locator('.role').count()==3
+                  page.locator('.role').nth(1).click()
+                  page.locator('#run').click()
+                  page.locator('#result.show').wait_for(state='visible',timeout=5000)
+                  assert 'Cited draft' in page.locator('#resultTitle').inner_text()
+                  page.locator('#break').click()
+                  assert 'Stopped safely' in page.locator('#resultTitle').inner_text()
+                  assert not errors, errors
+
+                  mobile=browser.new_page(viewport={'width':390,'height':844})
+                  for path in ('almedia/','agents/'):
+                      mobile.goto('http://127.0.0.1:8765/'+path,wait_until='networkidle')
+                      assert mobile.locator('h1').is_visible()
+                      assert float(mobile.locator('body').evaluate("el=>parseFloat(getComputedStyle(el).fontSize)")) >= 16
+                  mobile.close(); browser.close()
+          finally:
+              server.terminate(); server.wait(timeout=5)
+          print('Interactive proof QA: OK')
+          PY
