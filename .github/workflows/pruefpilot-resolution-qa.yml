@@ -1,0 +1,96 @@
+name: PrüfPilot resolution QA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pruefpilot/**'
+      - '.github/workflows/pruefpilot-resolution-qa.yml'
+  pull_request:
+    paths:
+      - 'pruefpilot/**'
+      - '.github/workflows/pruefpilot-resolution-qa.yml'
+  workflow_dispatch:
+
+jobs:
+  resolution-browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Chromium
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install chromium
+      - name: Test detection to resolution
+        run: |
+          mkdir -p artifacts/pruefpilot-resolution
+          python - <<'PY'
+          import subprocess,time
+          from playwright.sync_api import sync_playwright
+          server=subprocess.Popen(['python','-m','http.server','8765'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+          try:
+            time.sleep(1)
+            with sync_playwright() as p:
+              b=p.chromium.launch(headless=True)
+              page=b.new_page(viewport={'width':1440,'height':1000})
+              errors=[]
+              page.on('pageerror',lambda e: errors.append(str(e)))
+              page.goto('http://127.0.0.1:8765/pruefpilot/',wait_until='networkidle')
+
+              # Case 01: missing evidence -> precise request -> waiting state.
+              page.locator('#run').click()
+              page.locator('#result.show').wait_for(state='visible',timeout=5000)
+              text=page.locator('#result').inner_text()
+              assert 'delivery confirmation' in text.lower()
+              assert 'bank account confirmation' in text.lower()
+              assert '€300' in text
+              assert page.locator('#resolveWrap.show').is_visible()
+              page.locator('#resolve').click()
+              assert page.locator('#handoff.show').is_visible()
+              draft=page.locator('#handoff').inner_text()
+              assert 'Two missing proofs + €300 clarification required' in draft
+              assert 'Waiting for applicant' in draft
+              page.locator('#queue').click()
+              assert page.locator('#queueState.show').is_visible()
+              assert 'Waiting for applicant' in page.locator('#queueState').inner_text()
+
+              # Case 02: policy mismatch -> correction OR exception path.
+              page.locator('[data-case="travel"]').click()
+              page.locator('#run').click()
+              page.locator('#result.show').wait_for(state='visible',timeout=5000)
+              text=page.locator('#result').inner_text()
+              assert '€144' in text
+              assert 'correct' in text.lower() and 'exception' in text.lower()
+              page.locator('#resolve').click()
+              draft=page.locator('#handoff').inner_text().lower()
+              assert '€540' in draft and 'documented justification' in draft
+              assert 'waiting for correction / justification' in draft
+              page.locator('#queue').click()
+              assert 'Waiting for correction / justification' in page.locator('#queueState').inner_text()
+
+              # Case 03: clean pack -> explicit release gate.
+              page.locator('[data-case="clean"]').click()
+              page.locator('#run').click()
+              page.locator('#result.show').wait_for(state='visible',timeout=5000)
+              assert page.locator('#resolveWrap.show').count()==0
+              assert page.locator('#approveWrap.show').is_visible()
+              page.locator('#approve').click()
+              assert page.locator('#released.show').is_visible()
+              assert 'Released · simulated' in page.locator('#released').inner_text()
+
+              assert not errors,errors
+              page.screenshot(path='artifacts/pruefpilot-resolution/final.png',full_page=True)
+              b.close()
+          finally:
+            server.terminate();server.wait(timeout=5)
+          print('PrüfPilot resolution QA: OK')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pruefpilot-resolution-visual
+          path: artifacts/pruefpilot-resolution/
+          if-no-files-found: error
