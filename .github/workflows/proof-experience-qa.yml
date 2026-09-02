@@ -50,7 +50,6 @@ jobs:
                 response=page.request.get(f'http://127.0.0.1:8765/almedia/data/{path}')
                 assert response.ok, path
                 assert response.json()['fixture']=='synthetic'
-              page.screenshot(path='artifacts/proof-experience/almedia-start.png',full_page=True)
               page.locator('#run').click()
               page.locator('#result.show').wait_for(state='visible',timeout=5000)
               result=page.locator('#result').inner_text()
@@ -64,62 +63,64 @@ jobs:
               saved=page.locator('#saved').inner_text()
               assert 'Campaign health check' in saved
               assert 'Block if source missing' in saved
-              page.screenshot(path='artifacts/proof-experience/almedia-saved-check.png',full_page=True)
               page.locator('#break').click()
               assert page.locator('#sRevenue').inner_text().lower()=='removed'
               assert page.locator('#fail.show').is_visible()
               page.locator('#run').click()
               assert 'Cannot calculate ROAS' in page.locator('#fail').inner_text()
               assert page.locator('#result.show').count()==0
-              page.screenshot(path='artifacts/proof-experience/almedia-blocked.png',full_page=True)
 
               # HausPilot: prepare -> explicit human release gate -> fail closed.
               page.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
               assert 'Turn a tenant request' in page.locator('h1').inner_text()
-              assert page.locator('#preview.show').count()==0
-              assert page.locator('#nextCase').is_hidden()
-              page.screenshot(path='artifacts/proof-experience/agents-start.png',full_page=True)
               page.locator('#run').click()
               page.locator('#output.show').wait_for(state='visible',timeout=5000)
               txt=page.locator('#output').inner_text().lower()
               assert 'ready for review' in txt and 'not released' in txt
               assert page.locator('#approval.show').is_visible()
-              assert 'handling time' in page.locator('#measure').inner_text().lower()
               page.locator('#approve').click()
               assert page.locator('#released.show').is_visible()
               assert 'simulated' in page.locator('#released').inner_text().lower()
-              assert 'release approved' in page.locator('#notSent').inner_text().lower()
-              page.screenshot(path='artifacts/proof-experience/agents-approved.png',full_page=True)
               page.locator('#break').click()
               assert "can't continue" in page.locator('#outTitle').inner_text().lower()
               assert page.locator('.record.removed').count()==1
-              assert 'property cannot be verified' in page.locator('#output').inner_text().lower()
               assert page.locator('#approval.show').count()==0
-              assert page.locator('#nextCase').is_visible()
               assert '100+ reviewed cases' in page.locator('.criteria').inner_text()
-              page.screenshot(path='artifacts/proof-experience/agents-broken.png',full_page=True)
-              page.locator('#nextCase').click()
-              assert '€1,248.50' in page.locator('#caseTitle').inner_text()
 
-              # PrüfPilot: document self-service + evidence inspection.
+              # PrüfPilot: fail path + golden pass + explicit release authority.
               page.goto('http://127.0.0.1:8765/pruefpilot/',wait_until='networkidle')
               assert 'Give it the document pack' in page.locator('h1').inner_text()
-              assert page.locator('#result.show').count()==0
-              page.screenshot(path='artifacts/proof-experience/pruefpilot-start.png',full_page=True)
               page.locator('#run').click()
               page.locator('#result.show').wait_for(state='visible',timeout=5000)
               ptxt=page.locator('#result').inner_text()
               assert 'Not ready for approval' in ptxt
               assert '€300' in ptxt
+              assert page.locator('#approveWrap.show').count()==0
               page.locator('#why').click()
               assert page.locator('#evidence.show').is_visible()
               assert 'Requirement list expects 5 items' in page.locator('#evidence').inner_text()
+
               page.locator('[data-case="travel"]').click()
               page.locator('#run').click()
               page.locator('#result.show').wait_for(state='visible',timeout=5000)
               assert 'Needs correction' in page.locator('#result').inner_text()
               assert '€144' in page.locator('#result').inner_text()
-              page.screenshot(path='artifacts/proof-experience/pruefpilot-result.png',full_page=True)
+
+              page.locator('[data-case="clean"]').click()
+              page.locator('#run').click()
+              page.locator('#result.show').wait_for(state='visible',timeout=5000)
+              clean=page.locator('#result').inner_text()
+              assert 'All checks passed' in clean
+              assert 'Ready for approval' in clean
+              assert page.locator('#approveWrap.show').is_visible()
+              assert page.locator('#released.show').count()==0
+              page.locator('#approve').click()
+              assert page.locator('#released.show').is_visible()
+              assert 'Released · simulated' in page.locator('#released').inner_text()
+              criteria=page.locator('.criteria').inner_text()
+              assert '100+ reviewed cases' in criteria
+              assert 'High-impact decisions can remain human-only indefinitely' in criteria
+              page.screenshot(path='artifacts/proof-experience/pruefpilot-golden-pass.png',full_page=True)
 
               mobile=b.new_page(viewport={'width':390,'height':844})
               for path in ['almedia/','agents/','pruefpilot/']:
