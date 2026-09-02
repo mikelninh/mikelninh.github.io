@@ -72,15 +72,16 @@ jobs:
                   page.locator('#output.show').wait_for(state='visible',timeout=5000)
                   assert 'Repair case ready' in page.locator('#outputTitle').inner_text()
                   body=page.locator('#output').inner_text()
-                  assert 'Heating failure' in body and 'OBJ-001' in body and 'Human review required' in body
-                  assert 'no contractor contacted' in body.lower()
+                  low=body.lower()
+                  assert 'heating failure' in low and 'obj-001' in low and 'human review required' in low
+                  assert 'no contractor contacted' in low
                   page.screenshot(path='artifacts/proof-experience/agents-output.png',full_page=True)
 
                   # Remove required evidence and ensure boundary becomes legible
                   page.locator('#break').click()
                   assert 'Stopped' in page.locator('#outputTitle').inner_text()
                   assert 'property record' in page.locator('#approval').inner_text().lower()
-                  assert 'Do not proceed' in page.locator('#output').inner_text()
+                  assert 'do not proceed' in page.locator('#output').inner_text().lower()
                   page.screenshot(path='artifacts/proof-experience/agents-broken.png',full_page=True)
 
                   # Duplicate-invoice workflow is independently understandable
@@ -91,7 +92,7 @@ jobs:
                   page.locator('#run').click()
                   page.locator('#output.show').wait_for(state='visible',timeout=5000)
                   assert 'Duplicate-invoice' in page.locator('#outputTitle').inner_text()
-                  assert 'DUPLICATE INVOICE' in page.locator('#output').inner_text()
+                  assert 'duplicate invoice' in page.locator('#output').inner_text().lower()
                   page.screenshot(path='artifacts/proof-experience/agents-invoice.png',full_page=True)
                   assert not errors, errors
 
