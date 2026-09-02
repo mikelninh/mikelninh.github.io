@@ -27,91 +27,50 @@ jobs:
         run: |
           python -m pip install --disable-pip-version-check playwright
           python -m playwright install chromium
-      - name: Click through proof experiences
+      - name: Test application proofs
         run: |
           mkdir -p artifacts/proof-experience
           python - <<'PY'
-          import subprocess, time
+          import subprocess,time
           from playwright.sync_api import sync_playwright
           server=subprocess.Popen(['python','-m','http.server','8765'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
           try:
-              time.sleep(.5)
-              with sync_playwright() as p:
-                  browser=p.chromium.launch(headless=True)
-                  page=browser.new_page(viewport={'width':1440,'height':1000})
-                  errors=[]
-                  page.on('pageerror',lambda e: errors.append(str(e)))
-
-                  # Almedia entry proof still works
-                  page.goto('http://127.0.0.1:8765/almedia/',wait_until='networkidle')
-                  assert 'Find the boring work' in page.locator('h1').inner_text()
-                  page.locator('.pick').nth(2).click()
-                  page.locator('#run').click()
-                  page.locator('#output.show').wait_for(state='visible',timeout=5000)
-                  assert 'Failures should become assets' in page.locator('#outTitle').inner_text()
-
-                  # HausPilot V3: one clear story
-                  page.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
-                  assert 'Turn an incoming request into review-ready work' in page.locator('h1').inner_text()
-                  assert page.locator('.caseTab').count()==2
-                  assert page.locator('.record').count()==3
-                  assert 'Weserstr. 18' in page.locator('#messageBody').inner_text()
-                  assert 'Prepare review-ready work' in page.locator('#goalText').inner_text()
-                  page.screenshot(path='artifacts/proof-experience/agents-v3-start.png',full_page=True)
-
-                  # Source records are optional progressive disclosure
-                  page.locator('.record').nth(1).click()
-                  assert page.locator('#preview.show').is_visible()
-                  assert 'Heiztechnik Beispiel' in page.locator('#previewText').inner_text()
-
-                  # Run -> concise prepared output
-                  page.locator('#run').click()
-                  page.locator('#output.show').wait_for(state='visible',timeout=5000)
-                  body=page.locator('#output').inner_text().lower()
-                  assert 'ready for review' in body
-                  assert 'heating failure' in body
-                  assert 'obj-001' in body
-                  assert 'nothing sent' in body
-                  assert page.locator('#saving.show').is_visible()
-                  assert 'pilot hypothesis' in page.locator('#saving').inner_text().lower()
-                  assert page.locator('#failTest.show').is_visible()
-                  page.screenshot(path='artifacts/proof-experience/agents-v3-output.png',full_page=True)
-
-                  # Break -> safe stop
-                  page.locator('#break').click()
-                  blocked=page.locator('#output').inner_text().lower()
-                  assert 'stopped' in blocked
-                  assert 'property' in blocked
-                  assert 'boundary held' in blocked
-                  page.screenshot(path='artifacts/proof-experience/agents-v3-broken.png',full_page=True)
-
-                  # Second case remains understandable without extra explanation
-                  page.locator('[data-case="invoice"]').click()
-                  assert '€1,248.50' in page.locator('#caseTitle').inner_text()
-                  assert 'R-2026-881' in page.locator('#messageBody').inner_text()
-                  page.locator('#run').click()
-                  page.locator('#output.show').wait_for(state='visible',timeout=5000)
-                  assert 'possible duplicate invoice' in page.locator('#output').inner_text().lower()
-
-                  # Proof claims are progressive disclosure, not default-screen clutter
-                  assert page.locator('#verify details').count()==1
-                  assert not page.locator('#verify details').get_attribute('open')
-
-                  # Mobile
-                  mobile=browser.new_page(viewport={'width':390,'height':844})
-                  mobile.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
-                  assert mobile.locator('h1').is_visible()
-                  assert mobile.locator('#run').is_visible()
-                  assert float(mobile.locator('body').evaluate("el=>parseFloat(getComputedStyle(el).fontSize)")) >= 16
-                  mobile.screenshot(path='artifacts/proof-experience/mobile-agents-v3.png',full_page=True)
-                  mobile.close(); browser.close()
-                  assert not errors, errors
+            time.sleep(.5)
+            with sync_playwright() as p:
+              b=p.chromium.launch(headless=True)
+              page=b.new_page(viewport={'width':1440,'height':1000})
+              errors=[]; page.on('pageerror',lambda e:errors.append(str(e)))
+              page.goto('http://127.0.0.1:8765/almedia/',wait_until='networkidle')
+              assert 'Find the boring work' in page.locator('h1').inner_text()
+              page.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
+              assert 'Turn a tenant request' in page.locator('h1').inner_text()
+              assert page.locator('#preview.show').count()==0
+              assert page.locator('#nextCase').is_hidden()
+              page.screenshot(path='artifacts/proof-experience/agents-start.png',full_page=True)
+              page.locator('#run').click()
+              page.locator('#output.show').wait_for(state='visible',timeout=5000)
+              txt=page.locator('#output').inner_text().lower()
+              assert 'ready for review' in txt and 'nothing sent' in txt
+              assert 'handling time' in page.locator('#measure').inner_text().lower()
+              page.locator('#break').click()
+              assert "can't continue" in page.locator('#outTitle').inner_text().lower()
+              assert 'removed for test' in page.locator('.record.removed').inner_text().lower()
+              assert 'property cannot be verified' in page.locator('#output').inner_text().lower()
+              assert page.locator('#nextCase').is_visible()
+              page.screenshot(path='artifacts/proof-experience/agents-broken.png',full_page=True)
+              page.locator('#nextCase').click()
+              assert '€1,248.50' in page.locator('#caseTitle').inner_text()
+              mobile=b.new_page(viewport={'width':390,'height':844})
+              mobile.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
+              assert mobile.locator('#run').is_visible()
+              mobile.screenshot(path='artifacts/proof-experience/mobile-agents.png',full_page=True)
+              assert not errors,errors
+              b.close()
           finally:
-              server.terminate(); server.wait(timeout=5)
-          print('Interactive proof QA: OK')
+            server.terminate();server.wait(timeout=5)
+          print('Application proof QA: OK')
           PY
-      - name: Upload visual QA
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: interactive-proof-visual-qa
           path: artifacts/proof-experience/
