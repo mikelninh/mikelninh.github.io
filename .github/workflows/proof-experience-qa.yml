@@ -40,8 +40,32 @@ jobs:
               b=p.chromium.launch(headless=True)
               page=b.new_page(viewport={'width':1440,'height':1000})
               errors=[]; page.on('pageerror',lambda e:errors.append(str(e)))
+
+              # Almedia: real synthetic self-service data flow.
               page.goto('http://127.0.0.1:8765/almedia/',wait_until='networkidle')
-              assert 'Find the boring work' in page.locator('h1').inner_text()
+              assert 'Turn repeated data requests into self-service' in page.locator('h1').inner_text()
+              for path in ['campaign_spend.json','verified_outcomes.json','revenue.json']:
+                response=page.request.get(f'http://127.0.0.1:8765/almedia/data/{path}')
+                assert response.ok, path
+                assert response.json()['fixture']=='synthetic'
+              page.screenshot(path='artifacts/proof-experience/almedia-start.png',full_page=True)
+              page.locator('#run').click()
+              page.locator('#result.show').wait_for(state='visible',timeout=5000)
+              result=page.locator('#result').inner_text()
+              assert 'Pocket Arena needs attention' in result
+              assert '0.86×' in result
+              assert '€9.88' in result
+              assert 'campaign_id' in result
+              page.screenshot(path='artifacts/proof-experience/almedia-result.png',full_page=True)
+              page.locator('#break').click()
+              assert page.locator('#sRevenue').inner_text().lower()=='removed'
+              assert page.locator('#fail.show').is_visible()
+              page.locator('#run').click()
+              assert 'Cannot calculate ROAS' in page.locator('#fail').inner_text()
+              assert page.locator('#result.show').count()==0
+              page.screenshot(path='artifacts/proof-experience/almedia-blocked.png',full_page=True)
+
+              # HausPilot: bounded workflow + fail-closed proof.
               page.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
               assert 'Turn a tenant request' in page.locator('h1').inner_text()
               assert page.locator('#preview.show').count()==0
@@ -60,7 +84,11 @@ jobs:
               page.screenshot(path='artifacts/proof-experience/agents-broken.png',full_page=True)
               page.locator('#nextCase').click()
               assert '€1,248.50' in page.locator('#caseTitle').inner_text()
+
               mobile=b.new_page(viewport={'width':390,'height':844})
+              mobile.goto('http://127.0.0.1:8765/almedia/',wait_until='networkidle')
+              assert mobile.locator('#run').is_visible()
+              mobile.screenshot(path='artifacts/proof-experience/mobile-almedia.png',full_page=True)
               mobile.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
               assert mobile.locator('#run').is_visible()
               mobile.screenshot(path='artifacts/proof-experience/mobile-agents.png',full_page=True)
