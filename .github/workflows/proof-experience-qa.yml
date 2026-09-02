@@ -42,69 +42,70 @@ jobs:
                   errors=[]
                   page.on('pageerror',lambda e: errors.append(str(e)))
 
-                  # Almedia entry proof
+                  # Almedia entry proof still works
                   page.goto('http://127.0.0.1:8765/almedia/',wait_until='networkidle')
                   assert 'Find the boring work' in page.locator('h1').inner_text()
-                  assert page.locator('.pick').count()==3
-                  page.screenshot(path='artifacts/proof-experience/almedia-start.png',full_page=True)
                   page.locator('.pick').nth(2).click()
                   page.locator('#run').click()
                   page.locator('#output.show').wait_for(state='visible',timeout=5000)
                   assert 'Failures should become assets' in page.locator('#outTitle').inner_text()
-                  page.screenshot(path='artifacts/proof-experience/almedia-result.png',full_page=True)
-                  assert not errors, errors
 
-                  # HausPilot: first-time-user guidance + traceable workflow
+                  # HausPilot V3: one clear story
                   page.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
-                  assert 'From messy inbox' in page.locator('h1').inner_text()
-                  assert 'Test the whole idea' in page.locator('.heroNote').inner_text()
+                  assert 'Turn an incoming request into review-ready work' in page.locator('h1').inner_text()
                   assert page.locator('.caseTab').count()==2
-                  assert page.locator('.workspace').count()==1
-                  assert page.locator('.doc').count()==4
-                  assert 'Weserstr. 18' in page.locator('#preview').inner_text()
-                  assert 'Manual classification' in page.locator('#workerList').inner_text()
-                  assert 'Approve / send externally' in page.locator('#humanList').inner_text()
-                  assert '5–10 min' in page.locator('#savedTime').inner_text()
-                  page.screenshot(path='artifacts/proof-experience/agents-case.png',full_page=True)
+                  assert page.locator('.record').count()==3
+                  assert 'Weserstr. 18' in page.locator('#messageBody').inner_text()
+                  assert 'Prepare review-ready work' in page.locator('#goalText').inner_text()
+                  page.screenshot(path='artifacts/proof-experience/agents-v3-start.png',full_page=True)
 
-                  # Run the realistic heating workflow
+                  # Source records are optional progressive disclosure
+                  page.locator('.record').nth(1).click()
+                  assert page.locator('#preview.show').is_visible()
+                  assert 'Heiztechnik Beispiel' in page.locator('#previewText').inner_text()
+
+                  # Run -> concise prepared output
                   page.locator('#run').click()
                   page.locator('#output.show').wait_for(state='visible',timeout=5000)
-                  assert 'Repair case ready' in page.locator('#outputTitle').inner_text()
-                  body=page.locator('#output').inner_text()
-                  low=body.lower()
-                  assert 'heating failure' in low and 'obj-001' in low and 'human review required' in low
-                  assert 'no contractor contacted' in low
-                  page.screenshot(path='artifacts/proof-experience/agents-output.png',full_page=True)
+                  body=page.locator('#output').inner_text().lower()
+                  assert 'ready for review' in body
+                  assert 'heating failure' in body
+                  assert 'obj-001' in body
+                  assert 'nothing sent' in body
+                  assert page.locator('#saving.show').is_visible()
+                  assert 'pilot hypothesis' in page.locator('#saving').inner_text().lower()
+                  assert page.locator('#failTest.show').is_visible()
+                  page.screenshot(path='artifacts/proof-experience/agents-v3-output.png',full_page=True)
 
-                  # Remove required evidence and ensure boundary becomes legible
+                  # Break -> safe stop
                   page.locator('#break').click()
-                  assert 'Stopped' in page.locator('#outputTitle').inner_text()
-                  assert 'property record' in page.locator('#approval').inner_text().lower()
-                  assert 'do not proceed' in page.locator('#output').inner_text().lower()
-                  page.screenshot(path='artifacts/proof-experience/agents-broken.png',full_page=True)
+                  blocked=page.locator('#output').inner_text().lower()
+                  assert 'stopped' in blocked
+                  assert 'property' in blocked
+                  assert 'boundary held' in blocked
+                  page.screenshot(path='artifacts/proof-experience/agents-v3-broken.png',full_page=True)
 
-                  # Duplicate-invoice workflow is independently understandable
+                  # Second case remains understandable without extra explanation
                   page.locator('[data-case="invoice"]').click()
                   assert '€1,248.50' in page.locator('#caseTitle').inner_text()
-                  assert 'R-2026-881' in page.locator('#preview').inner_text()
-                  assert '4–8 min' in page.locator('#savedTime').inner_text()
+                  assert 'R-2026-881' in page.locator('#messageBody').inner_text()
                   page.locator('#run').click()
                   page.locator('#output.show').wait_for(state='visible',timeout=5000)
-                  assert 'Duplicate-invoice' in page.locator('#outputTitle').inner_text()
-                  assert 'duplicate invoice' in page.locator('#output').inner_text().lower()
-                  page.screenshot(path='artifacts/proof-experience/agents-invoice.png',full_page=True)
-                  assert not errors, errors
+                  assert 'possible duplicate invoice' in page.locator('#output').inner_text().lower()
 
-                  # Mobile: guidance, workspace and primary action remain visible/readable
+                  # Proof claims are progressive disclosure, not default-screen clutter
+                  assert page.locator('#verify details').count()==1
+                  assert not page.locator('#verify details').get_attribute('open')
+
+                  # Mobile
                   mobile=browser.new_page(viewport={'width':390,'height':844})
-                  for path in ('almedia/','agents/'):
-                      mobile.goto('http://127.0.0.1:8765/'+path,wait_until='networkidle')
-                      assert mobile.locator('h1').is_visible()
-                      assert float(mobile.locator('body').evaluate("el=>parseFloat(getComputedStyle(el).fontSize)")) >= 16
-                      mobile.screenshot(path=f'artifacts/proof-experience/mobile-{path[:-1]}.png',full_page=True)
+                  mobile.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
+                  assert mobile.locator('h1').is_visible()
                   assert mobile.locator('#run').is_visible()
+                  assert float(mobile.locator('body').evaluate("el=>parseFloat(getComputedStyle(el).fontSize)")) >= 16
+                  mobile.screenshot(path='artifacts/proof-experience/mobile-agents-v3.png',full_page=True)
                   mobile.close(); browser.close()
+                  assert not errors, errors
           finally:
               server.terminate(); server.wait(timeout=5)
           print('Interactive proof QA: OK')
