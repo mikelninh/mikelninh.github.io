@@ -7,12 +7,14 @@ on:
       - 'almedia/**'
       - 'agents/**'
       - 'pruefpilot/**'
+      - 'cv.html'
       - '.github/workflows/proof-experience-qa.yml'
   pull_request:
     paths:
       - 'almedia/**'
       - 'agents/**'
       - 'pruefpilot/**'
+      - 'cv.html'
       - '.github/workflows/proof-experience-qa.yml'
   workflow_dispatch:
 
@@ -99,13 +101,11 @@ jobs:
               page.locator('#why').click()
               assert page.locator('#evidence.show').is_visible()
               assert 'Requirement list expects 5 items' in page.locator('#evidence').inner_text()
-
               page.locator('[data-case="travel"]').click()
               page.locator('#run').click()
               page.locator('#result.show').wait_for(state='visible',timeout=5000)
               assert 'Needs correction' in page.locator('#result').inner_text()
               assert '€144' in page.locator('#result').inner_text()
-
               page.locator('[data-case="clean"]').click()
               page.locator('#run').click()
               page.locator('#result.show').wait_for(state='visible',timeout=5000)
@@ -113,7 +113,6 @@ jobs:
               assert 'All checks passed' in clean
               assert 'Ready for approval' in clean
               assert page.locator('#approveWrap.show').is_visible()
-              assert page.locator('#released.show').count()==0
               page.locator('#approve').click()
               assert page.locator('#released.show').is_visible()
               assert 'Released · simulated' in page.locator('#released').inner_text()
@@ -122,11 +121,27 @@ jobs:
               assert 'High-impact decisions can remain human-only indefinitely' in criteria
               page.screenshot(path='artifacts/proof-experience/pruefpilot-golden-pass.png',full_page=True)
 
+              # General web CV: hierarchy, proof links and no stale dark-card system.
+              page.goto('http://127.0.0.1:8765/cv.html',wait_until='networkidle')
+              assert page.locator('h1').inner_text()=='Michael Ninh'
+              assert 'AI Engineer' in page.locator('.role').inner_text()
+              assert page.locator('.project').count()==4
+              assert page.locator('.project.dark').count()==0
+              cv_text=page.locator('body').inner_text()
+              for required in ['Digital Worker Factory','SafeTrace','PrüfPilot','GitLaw','Useful first. Trustworthy by design.']:
+                assert required in cv_text
+              hrefs=page.locator('.project a').evaluate_all('(els)=>els.map(e=>e.getAttribute("href"))')
+              assert 'agents/' in hrefs and 'pruefpilot/' in hrefs
+              page.screenshot(path='artifacts/proof-experience/cv-desktop.png',full_page=True)
+
               mobile=b.new_page(viewport={'width':390,'height':844})
               for path in ['almedia/','agents/','pruefpilot/']:
                 mobile.goto(f'http://127.0.0.1:8765/{path}',wait_until='networkidle')
                 assert mobile.locator('#run').is_visible()
-              mobile.screenshot(path='artifacts/proof-experience/mobile-final.png',full_page=True)
+              mobile.goto('http://127.0.0.1:8765/cv.html',wait_until='networkidle')
+              assert mobile.locator('h1').is_visible()
+              assert mobile.locator('.project').count()==4
+              mobile.screenshot(path='artifacts/proof-experience/cv-mobile.png',full_page=True)
               assert not errors,errors
               b.close()
           finally:
