@@ -29,6 +29,7 @@ jobs:
           python -m playwright install chromium
       - name: Click through proof experiences
         run: |
+          mkdir -p artifacts/proof-experience
           python - <<'PY'
           import subprocess, time
           from playwright.sync_api import sync_playwright
@@ -44,21 +45,25 @@ jobs:
                   page.goto('http://127.0.0.1:8765/almedia/',wait_until='networkidle')
                   assert 'Find the boring work' in page.locator('h1').inner_text()
                   assert page.locator('.pick').count()==3
+                  page.screenshot(path='artifacts/proof-experience/almedia-start.png',full_page=True)
                   page.locator('.pick').nth(2).click()
                   page.locator('#run').click()
                   page.locator('#output.show').wait_for(state='visible',timeout=5000)
                   assert 'Failures should become assets' in page.locator('#outTitle').inner_text()
+                  page.screenshot(path='artifacts/proof-experience/almedia-result.png',full_page=True)
                   assert not errors, errors
 
                   page.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
                   assert 'Choose a worker' in page.locator('h1').inner_text()
                   assert page.locator('.role').count()==3
+                  page.screenshot(path='artifacts/proof-experience/agents-start.png',full_page=True)
                   page.locator('.role').nth(1).click()
                   page.locator('#run').click()
                   page.locator('#result.show').wait_for(state='visible',timeout=5000)
                   assert 'Cited draft' in page.locator('#resultTitle').inner_text()
                   page.locator('#break').click()
                   assert 'Stopped safely' in page.locator('#resultTitle').inner_text()
+                  page.screenshot(path='artifacts/proof-experience/agents-broken.png',full_page=True)
                   assert not errors, errors
 
                   mobile=browser.new_page(viewport={'width':390,'height':844})
@@ -66,8 +71,15 @@ jobs:
                       mobile.goto('http://127.0.0.1:8765/'+path,wait_until='networkidle')
                       assert mobile.locator('h1').is_visible()
                       assert float(mobile.locator('body').evaluate("el=>parseFloat(getComputedStyle(el).fontSize)")) >= 16
+                      mobile.screenshot(path=f'artifacts/proof-experience/mobile-{path[:-1]}.png',full_page=True)
                   mobile.close(); browser.close()
           finally:
               server.terminate(); server.wait(timeout=5)
           print('Interactive proof QA: OK')
           PY
+      - name: Upload visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: interactive-proof-visual-qa
+          path: artifacts/proof-experience/
+          if-no-files-found: error
