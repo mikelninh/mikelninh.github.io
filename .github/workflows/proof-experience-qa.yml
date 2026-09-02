@@ -6,11 +6,13 @@ on:
     paths:
       - 'almedia/**'
       - 'agents/**'
+      - 'pruefpilot/**'
       - '.github/workflows/proof-experience-qa.yml'
   pull_request:
     paths:
       - 'almedia/**'
       - 'agents/**'
+      - 'pruefpilot/**'
       - '.github/workflows/proof-experience-qa.yml'
   workflow_dispatch:
 
@@ -85,6 +87,26 @@ jobs:
               page.locator('#nextCase').click()
               assert '€1,248.50' in page.locator('#caseTitle').inner_text()
 
+              # PrüfPilot: document self-service + evidence inspection.
+              page.goto('http://127.0.0.1:8765/pruefpilot/',wait_until='networkidle')
+              assert 'Give it the document pack' in page.locator('h1').inner_text()
+              assert page.locator('#result.show').count()==0
+              page.screenshot(path='artifacts/proof-experience/pruefpilot-start.png',full_page=True)
+              page.locator('#run').click()
+              page.locator('#result.show').wait_for(state='visible',timeout=5000)
+              ptxt=page.locator('#result').inner_text()
+              assert 'Not ready for approval' in ptxt
+              assert '€300' in ptxt
+              page.locator('#why').click()
+              assert page.locator('#evidence.show').is_visible()
+              assert 'Requirement list expects 5 items' in page.locator('#evidence').inner_text()
+              page.locator('[data-case="travel"]').click()
+              page.locator('#run').click()
+              page.locator('#result.show').wait_for(state='visible',timeout=5000)
+              assert 'Needs correction' in page.locator('#result').inner_text()
+              assert '€144' in page.locator('#result').inner_text()
+              page.screenshot(path='artifacts/proof-experience/pruefpilot-result.png',full_page=True)
+
               mobile=b.new_page(viewport={'width':390,'height':844})
               mobile.goto('http://127.0.0.1:8765/almedia/',wait_until='networkidle')
               assert mobile.locator('#run').is_visible()
@@ -92,6 +114,9 @@ jobs:
               mobile.goto('http://127.0.0.1:8765/agents/',wait_until='networkidle')
               assert mobile.locator('#run').is_visible()
               mobile.screenshot(path='artifacts/proof-experience/mobile-agents.png',full_page=True)
+              mobile.goto('http://127.0.0.1:8765/pruefpilot/',wait_until='networkidle')
+              assert mobile.locator('#run').is_visible()
+              mobile.screenshot(path='artifacts/proof-experience/mobile-pruefpilot.png',full_page=True)
               assert not errors,errors
               b.close()
           finally:
