@@ -11,17 +11,17 @@
     },
     {
       title: 'The First Reply', titleCaps: 'THE FIRST REPLY', rarity: 'legendary', rarityLabel: 'LEGENDARY', serial: '007 / 025', id: 'HK-0044',
-      image: './assets/v036/first-reply-art-v2.webp', alt: 'A lone child reaching toward the first ivory-gold reply from the universe',
+      image: './assets/v036/first-reply-art-v3.webp', alt: 'A cool-white signal receiving a warm champagne-gold reply',
       origin: 'THE NEXUS', cardClass: 'LEGENDARY · MEMORY', accent: '#e5c47c',
-      thesis: 'The beauty benchmark. No character, no spectacle—just an image strong enough to deserve a wall, a frame and a memory.',
-      test: 'BEAUTY / EMOTIONAL HOLD', material: 'SOFT-TOUCH BLACK · CHAMPAGNE FOIL', state: 'COLLECTOR STUDY 02'
+      thesis: 'The signal benchmark. One call travels into the dark; one unmistakable answer returns. Nothing else is required.',
+      test: 'SIGNAL / RESPONSE CLARITY', material: 'SOFT-TOUCH BLACK · CHAMPAGNE FOIL', state: 'CLARITY LOCK 06'
     },
     {
       title: 'Rift Seed', titleCaps: 'RIFT SEED', rarity: 'mythic', rarityLabel: 'MYTHIC', serial: '001 / 010', id: 'HK-0045',
-      image: './assets/v036/rift-seed-art-v2.webp', alt: 'An obsidian Rift Seed cracked open around a compressed universe',
+      image: './assets/v036/rift-seed-art-v3.webp', alt: 'An obsidian seed shell containing a complete world and sunrise',
       origin: 'THE NEXUS', cardClass: 'MYTHIC · WORLD OBJECT', accent: '#b9dfff',
-      thesis: 'The Mythic benchmark. A single grail object, serialised into the lore. The card stays pristine while reality changes around it.',
-      test: 'GRAIL / SERIAL DESIRE', material: 'OBSIDIAN STOCK · OPAL SELECTIVE HOLO', state: 'COLLECTOR STUDY 03'
+      thesis: 'The Mythic benchmark made literal: a dormant black seed containing an entire living world, waiting to open.',
+      test: 'ONE-SECOND CONCEPT / GRAIL', material: 'OBSIDIAN STOCK · OPAL SELECTIVE HOLO', state: 'CLARITY LOCK 06'
     }
   ];
 
