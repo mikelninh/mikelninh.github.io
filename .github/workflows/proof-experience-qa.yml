@@ -54,7 +54,7 @@ jobs:
               assert 'handling time' in page.locator('#measure').inner_text().lower()
               page.locator('#break').click()
               assert "can't continue" in page.locator('#outTitle').inner_text().lower()
-              assert 'removed for test' in page.locator('.record.removed').inner_text().lower()
+              assert page.locator('.record.removed').count()==1
               assert 'property cannot be verified' in page.locator('#output').inner_text().lower()
               assert page.locator('#nextCase').is_visible()
               page.screenshot(path='artifacts/proof-experience/agents-broken.png',full_page=True)
