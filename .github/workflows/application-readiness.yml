@@ -1,0 +1,127 @@
+name: Application portfolio readiness
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'agents/**'
+      - 'pruefpilot/**'
+      - '.github/workflows/application-readiness.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'agents/**'
+      - 'pruefpilot/**'
+      - '.github/workflows/application-readiness.yml'
+  workflow_dispatch:
+
+jobs:
+  application-ready:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Chromium
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install chromium
+
+      - name: Test portfolio problem-to-proof paths
+        run: |
+          mkdir -p artifacts/application-readiness
+          python - <<'PY'
+          import subprocess, time
+          from playwright.sync_api import sync_playwright
+
+          server=subprocess.Popen(['python','-m','http.server','8765'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+          try:
+              time.sleep(.5)
+              with sync_playwright() as p:
+                  browser=p.chromium.launch(headless=True)
+                  page=browser.new_page(viewport={'width':1440,'height':1000})
+                  errors=[]
+                  page.on('pageerror',lambda e:errors.append(str(e)))
+                  base='http://127.0.0.1:8765/'
+                  page.goto(base,wait_until='networkidle')
+
+                  assert 'messy work' in page.locator('h1').inner_text().lower()
+                  assert page.locator('.choice').count()==3
+                  assert page.locator('#tryLink').is_visible()
+                  assert page.locator('#codeLink').is_visible()
+
+                  expected={
+                    'automation':('agents/','digital-worker-factory','synthetic'),
+                    'intelligence':('digital-democracy-studio/safetrace/venatic_application/','digital-democracy-studio','source-backed'),
+                    'documents':('pruefpilot/','mikelninh/pruefpilot','synthetic'),
+                  }
+                  for key,(try_fragment,code_fragment,boundary_word) in expected.items():
+                      page.locator(f'[data-focus="{key}"]').click()
+                      assert try_fragment in page.locator('#tryLink').get_attribute('href')
+                      assert code_fragment in page.locator('#codeLink').get_attribute('href')
+                      assert boundary_word in page.locator('#boundaryText').inner_text().lower()
+
+                  page.goto(base+'agents/',wait_until='networkidle')
+                  assert 'tenant request' in page.locator('h1').inner_text().lower()
+                  page.locator('#run').click()
+                  page.locator('#output.show').wait_for(state='visible',timeout=5000)
+                  assert 'nothing sent' in page.locator('#output').inner_text().lower()
+                  page.locator('#break').click()
+                  assert "can't continue" in page.locator('#outTitle').inner_text().lower()
+
+                  page.goto(base+'pruefpilot/',wait_until='networkidle')
+                  assert 'documents' in page.locator('h1').inner_text().lower()
+                  page.locator('#sourceBtn').click()
+                  assert page.locator('#sources.show').is_visible()
+                  assert 'human decision' in page.locator('#sources').inner_text().lower()
+
+                  mobile=browser.new_page(viewport={'width':390,'height':844})
+                  mobile.goto(base,wait_until='networkidle')
+                  assert mobile.locator('h1').is_visible()
+                  assert mobile.locator('.choice').count()==3
+                  mobile.screenshot(path='artifacts/application-readiness/mobile-home.png',full_page=True)
+                  page.screenshot(path='artifacts/application-readiness/pruefpilot.png',full_page=True)
+                  assert not errors,errors
+                  browser.close()
+          finally:
+              server.terminate(); server.wait(timeout=5)
+          print('Application portfolio browser paths: OK')
+          PY
+
+      - name: Smoke public proof and repository links
+        run: |
+          python - <<'PY'
+          import urllib.request, urllib.error, time
+          urls=[
+            'https://mikelninh.github.io/',
+            'https://mikelninh.github.io/agents/',
+            'https://mikelninh.github.io/pruefpilot/',
+            'https://mikelninh.github.io/digital-democracy-studio/safetrace/venatic_application/',
+            'https://github.com/mikelninh/digital-worker-factory',
+            'https://github.com/mikelninh/pruefpilot',
+            'https://github.com/mikelninh/digital-democracy-studio',
+          ]
+          for url in urls:
+              ok=False
+              for attempt in range(3):
+                  try:
+                      req=urllib.request.Request(url,headers={'User-Agent':'application-readiness-ci'})
+                      with urllib.request.urlopen(req,timeout=15) as r:
+                          if 200 <= r.status < 400:
+                              ok=True; break
+                  except Exception:
+                      time.sleep(2)
+              assert ok, f'Public link failed: {url}'
+              print('OK',url)
+          PY
+
+      - name: Upload visual readiness proof
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-portfolio-readiness
+          path: artifacts/application-readiness/
+          if-no-files-found: error
