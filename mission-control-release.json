@@ -1,7 +1,7 @@
 {
-  "mission_control_version":"1.0.1",
-  "council_commit":"fc80d3e613f58c76c661d9c787b348f0fc1043e4",
-  "release":"chief-priority-rank-and-first-runner",
-  "requested_at":"2026-09-03T15:23:30Z",
-  "note":"Refreshes Mission Control after the first bounded PrüfPilot runner: replaces the misleading leverage denominator with priority rank and pulls the updated human-review gate from PrüfPilot main."
+  "mission_control_version":"1.1",
+  "council_commit":"b362573ae012616e714806474ccff84842122fb4",
+  "release":"automatic-bounded-runner",
+  "requested_at":"2026-09-03T17:39:00Z",
+  "note":"Refreshes Mission Control after v1.1 release-state verification: owner-only A0-A2 automatic dispatcher, runner reconciliation, compact runner status and successful no-agent production preflight."
 }
