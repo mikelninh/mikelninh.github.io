@@ -23,6 +23,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Stage pinned TrustReady Bao rehearsal
+        env:
+          TRUSTREADY_SHA: 6f45e3ee5019e93e65c214f1669843743af26d9d
+        run: |
+          set -euo pipefail
+          mkdir -p trustready/pilot
+          base="https://raw.githubusercontent.com/mikelninh/trustready/${TRUSTREADY_SHA}"
+          curl --fail --silent --show-error --location "$base/bao-cockpit.html" --output trustready/pilot/index.html
+          curl --fail --silent --show-error --location "$base/bao-cockpit.js" --output trustready/pilot/bao-cockpit.js
+          curl --fail --silent --show-error --location "$base/golden-cases.js" --output trustready/pilot/golden-cases.js
+          grep -q "Golden Pilot Rehearsal" trustready/pilot/index.html
+          grep -q "TR-GOLD-012" trustready/pilot/golden-cases.js
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site
