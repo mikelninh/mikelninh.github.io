@@ -50,8 +50,9 @@ jobs:
               # Main portfolio: positioning -> three proofs -> measurable evidence -> explicit boundary.
               page.goto('http://127.0.0.1:8765/',wait_until='networkidle')
               assert page.locator('h1').inner_text()=='AI Engineer'
+              assert page.locator('.brand').inner_text()=='Michael Ninh'
               hero=page.locator('.hero').inner_text()
-              for required in ['Michael Ninh','Agentic Systems · AI Operations','tested, observable software','Spec','Evaluate','Verify','Monitor']:
+              for required in ['Agentic Systems · AI Operations','tested, observable software','Spec','Evaluate','Verify','Monitor']:
                 assert required in hero,required
               assert page.locator('.choice').count()==3
               assert 'A0–A4' in page.locator('#evidenceGrid').inner_text()
