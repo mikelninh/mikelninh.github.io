@@ -80,9 +80,12 @@ jobs:
 
                   page.goto(base+'pruefpilot/',wait_until='networkidle')
                   assert 'Give it the document pack' in page.locator('h1').inner_text()
-                  page.locator('#sourceBtn').click()
-                  assert page.locator('#sources.show').is_visible()
-                  assert 'human decision' in page.locator('#sources').inner_text().lower()
+                  page.locator('#run').click()
+                  page.locator('#result.show').wait_for(state='visible',timeout=5000)
+                  page.locator('#why').click()
+                  assert page.locator('#evidence.show').is_visible()
+                  assert 'Requirement list expects 5 items' in page.locator('#evidence').inner_text()
+                  assert 'High-impact decisions can remain human-only indefinitely' in page.locator('.criteria').inner_text()
 
                   mobile=browser.new_page(viewport={'width':390,'height':844})
                   mobile.goto(base,wait_until='networkidle')
