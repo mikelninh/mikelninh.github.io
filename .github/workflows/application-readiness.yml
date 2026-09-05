@@ -79,7 +79,7 @@ jobs:
                   assert "can't continue" in page.locator('#outTitle').inner_text().lower()
 
                   page.goto(base+'pruefpilot/',wait_until='networkidle')
-                  assert 'documents' in page.locator('h1').inner_text().lower()
+                  assert 'Give it the document pack' in page.locator('h1').inner_text()
                   page.locator('#sourceBtn').click()
                   assert page.locator('#sources.show').is_visible()
                   assert 'human decision' in page.locator('#sources').inner_text().lower()
