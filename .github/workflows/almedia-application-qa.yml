@@ -1,0 +1,86 @@
+name: Almedia application package QA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'almedia/**'
+      - '.github/workflows/almedia-application-qa.yml'
+  pull_request:
+    paths:
+      - 'almedia/**'
+      - '.github/workflows/almedia-application-qa.yml'
+  workflow_dispatch:
+
+jobs:
+  application-package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Chromium
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install chromium
+      - name: Verify targeted Almedia CV and proof path
+        run: |
+          mkdir -p artifacts/almedia-application
+          python - <<'PY'
+          import subprocess,time
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+
+          package=Path('almedia/APPLICATION_PACKAGE.md').read_text(encoding='utf-8')
+          for required in [
+              'Junior Engineer (AI)',
+              'Almedia Self-Service Data Proof',
+              'Digital Worker Factory',
+              'DRV SignalLab',
+              'SafeTrace Entity Resolution',
+              'fails closed',
+              'https://mikelninh.github.io/almedia/'
+          ]:
+              assert required in package, required
+
+          server=subprocess.Popen(['python','-m','http.server','8765'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+          try:
+              time.sleep(.5)
+              with sync_playwright() as p:
+                  browser=p.chromium.launch(headless=True)
+                  page=browser.new_page(viewport={'width':1440,'height':1000})
+                  errors=[]
+                  page.on('pageerror',lambda e:errors.append(str(e)))
+                  page.goto('http://127.0.0.1:8765/almedia/cv.html',wait_until='networkidle')
+                  assert page.title()=='Michael Ninh · Junior Engineer (AI) · Almedia'
+                  assert page.locator('h1').inner_text()=='Michael Ninh'
+                  assert 'Agentic Systems' in page.locator('.role').inner_text()
+                  assert page.locator('.proof').count()==5
+                  text=page.locator('body').inner_text()
+                  for required in ['Almedia Self-Service Data Proof','100 cases','50,000 synthetic','40 cases','Python','Node.js','SQL']:
+                      assert required in text,required
+                  hrefs=page.locator('a').evaluate_all('(els)=>els.map(e=>e.getAttribute("href"))')
+                  assert 'https://mikelninh.github.io/almedia/' in hrefs
+                  assert 'https://github.com/mikelninh/digital-worker-factory' in hrefs
+                  assert not errors,errors
+                  page.screenshot(path='artifacts/almedia-application/cv-desktop.png',full_page=True)
+
+                  mobile=browser.new_page(viewport={'width':390,'height':844})
+                  mobile.goto('http://127.0.0.1:8765/almedia/cv.html',wait_until='networkidle')
+                  assert mobile.locator('h1').is_visible()
+                  assert mobile.locator('.proof').count()==5
+                  overflow=mobile.evaluate('document.documentElement.scrollWidth - window.innerWidth')
+                  assert overflow <= 2,overflow
+                  mobile.screenshot(path='artifacts/almedia-application/cv-mobile.png',full_page=True)
+                  browser.close()
+          finally:
+              server.terminate();server.wait(timeout=5)
+          print('Almedia application package QA: OK')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: almedia-application-visual-qa
+          path: artifacts/almedia-application/
+          if-no-files-found: error
