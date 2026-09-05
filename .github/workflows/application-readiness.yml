@@ -73,7 +73,8 @@ jobs:
                   assert 'tenant request' in page.locator('h1').inner_text().lower()
                   page.locator('#run').click()
                   page.locator('#output.show').wait_for(state='visible',timeout=5000)
-                  assert 'nothing sent' in page.locator('#output').inner_text().lower()
+                  output=page.locator('#output').inner_text().lower()
+                  assert 'ready for review' in output and 'not released' in output
                   page.locator('#break').click()
                   assert "can't continue" in page.locator('#outTitle').inner_text().lower()
 
