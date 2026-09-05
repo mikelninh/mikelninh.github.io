@@ -1,10 +1,11 @@
 # Agent instructions — Michael Ninh portfolio
 
-Before changing any portfolio, CV-supporting or application-proof page, read:
+Before changing any portfolio, CV-supporting, LinkedIn or application-proof page, read:
 
 1. `PORTFOLIO_STANDARD.md` — experience and hiring-path rules.
 2. `POSITIONING.md` — role line, Build OS, proof trio and claim discipline.
 3. `MASTER_CV.md` — canonical CV facts, proof bank and claim-safe project selection when CV content is involved.
+4. `LINKEDIN_PROFILE.md` — canonical LinkedIn headline/about/featured/experience copy when profile content is involved.
 
 ## Non-negotiable
 
