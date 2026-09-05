@@ -154,7 +154,7 @@ jobs:
               assert page.locator('.project').count()==4
               assert page.locator('.project.dark').count()==0
               cv_text=page.locator('body').inner_text()
-              for required in ['TrustReady','SafeTrace','DRV SignalLab','Digital Worker Factory','explicit autonomy boundaries','50,000 synthetic cases','40 cases','100 cases','developer-authored benchmark']:
+              for required in ['TrustReady','SafeTrace','DRV SignalLab','Digital Worker Factory','explicit autonomy boundaries','50,000 synthetic cases','40 cases','100 cases','Developer-authored benchmark']:
                 assert required in cv_text,required
               hrefs=page.locator('.project a').evaluate_all('(els)=>els.map(e=>e.getAttribute("href"))')
               assert 'trustready/legal/' in hrefs and 'agents/' in hrefs
