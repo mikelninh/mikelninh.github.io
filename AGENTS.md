@@ -1,6 +1,9 @@
 # Agent instructions — Michael Ninh portfolio
 
-Before changing any portfolio, CV-supporting or application-proof page, read `PORTFOLIO_STANDARD.md`.
+Before changing any portfolio, CV-supporting or application-proof page, read:
+
+1. `PORTFOLIO_STANDARD.md` — experience and hiring-path rules.
+2. `POSITIONING.md` — role line, Build OS, proof trio and claim discipline.
 
 ## Non-negotiable
 
@@ -11,6 +14,16 @@ Default to:
 **identity → question/problem → interaction/proof → evidence/result → boundary → next action**
 
 Do not add sections merely because more information exists. Technical depth belongs behind progressive disclosure.
+
+## Positioning guardrail
+
+The main professional identity is:
+
+**AI Engineer · Agentic Systems · AI Operations**
+
+The portfolio should demonstrate that Michael shapes systems, sets autonomy boundaries, defines evals and verification gates, and monitors outcomes while coding agents perform much of the implementation.
+
+Do not reduce this positioning to a generic list of AI tools. Do not overclaim autonomy, production readiness or benchmark validity.
 
 ### Hard limits
 

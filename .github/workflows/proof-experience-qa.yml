@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'index.html'
       - 'almedia/**'
       - 'agents/**'
       - 'pruefpilot/**'
@@ -11,6 +12,7 @@ on:
       - '.github/workflows/proof-experience-qa.yml'
   pull_request:
     paths:
+      - 'index.html'
       - 'almedia/**'
       - 'agents/**'
       - 'pruefpilot/**'
@@ -44,6 +46,30 @@ jobs:
               b=p.chromium.launch(headless=True)
               page=b.new_page(viewport={'width':1440,'height':1000})
               errors=[]; page.on('pageerror',lambda e:errors.append(str(e)))
+
+              # Main portfolio: positioning -> three proofs -> measurable evidence -> explicit boundary.
+              page.goto('http://127.0.0.1:8765/',wait_until='networkidle')
+              assert page.locator('h1').inner_text()=='AI Engineer'
+              assert page.locator('.brand').inner_text()=='Michael Ninh'
+              hero=page.locator('.hero').inner_text()
+              for required in ['Agentic Systems · AI Operations','tested, observable software','Spec','Evaluate','Verify','Monitor']:
+                assert required in hero,required
+              assert page.locator('.choice').count()==3
+              assert 'A0–A4' in page.locator('#evidenceGrid').inner_text()
+              page.locator('[data-focus="evidence"]').click()
+              assert 'Resolve messy organisations' in page.locator('#proofTitle').inner_text()
+              er=page.locator('#evidenceGrid').inner_text()
+              for required in ['40','34','6','0']:
+                assert required in er,required
+              assert 'developer-authored' in page.locator('#boundaryText').inner_text()
+              page.locator('[data-focus="monitoring"]').click()
+              assert '50,000 synthetic administrative cases' in page.locator('#proofTitle').inner_text()
+              assert '95% CI' in page.locator('#evidenceGrid').inner_text()
+              assert page.locator('.methodCard').count()==6
+              method=page.locator('#method').inner_text()
+              for required in ['SHAPE','SPECIFY','DELEGATE','PROVE','SHIP','WATCH','Agents build. Evidence earns trust. Humans retain judgement.']:
+                assert required in method,required
+              page.screenshot(path='artifacts/proof-experience/portfolio-desktop.png',full_page=True)
 
               # Almedia: self-service data flow -> reusable governed check -> fail closed.
               page.goto('http://127.0.0.1:8765/almedia/',wait_until='networkidle')
@@ -135,6 +161,12 @@ jobs:
               page.screenshot(path='artifacts/proof-experience/cv-desktop.png',full_page=True)
 
               mobile=b.new_page(viewport={'width':390,'height':844})
+              mobile.goto('http://127.0.0.1:8765/',wait_until='networkidle')
+              assert mobile.locator('h1').is_visible()
+              assert mobile.locator('.choice').count()==3
+              mobile.locator('[data-focus="evidence"]').click()
+              assert '40' in mobile.locator('#evidenceGrid').inner_text()
+              mobile.screenshot(path='artifacts/proof-experience/portfolio-mobile.png',full_page=True)
               for path in ['almedia/','agents/','pruefpilot/']:
                 mobile.goto(f'http://127.0.0.1:8765/{path}',wait_until='networkidle')
                 assert mobile.locator('#run').is_visible()
