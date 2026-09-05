@@ -40,7 +40,7 @@ jobs:
               'Digital Worker Factory',
               'DRV SignalLab',
               'SafeTrace Entity Resolution',
-              'fail closed',
+              'fails closed',
               'https://mikelninh.github.io/almedia/'
           ]:
               assert required in package, required
