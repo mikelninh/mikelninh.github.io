@@ -4,6 +4,7 @@ Before changing any portfolio, CV-supporting or application-proof page, read:
 
 1. `PORTFOLIO_STANDARD.md` — experience and hiring-path rules.
 2. `POSITIONING.md` — role line, Build OS, proof trio and claim discipline.
+3. `MASTER_CV.md` — canonical CV facts, proof bank and claim-safe project selection when CV content is involved.
 
 ## Non-negotiable
 
@@ -28,6 +29,7 @@ Do not reduce this positioning to a generic list of AI tools. Do not overclaim a
 ### Hard limits
 
 - Main portfolio: 3 featured proofs maximum.
+- General/master CV: 4 selected proofs maximum; use `MASTER_CV.md` as the claim source.
 - Targeted application page: 1 primary proof, at most 1 supporting proof.
 - A recruiter should not need to read an architecture essay before trying the product.
 - Prefer a clickable/testable experience over descriptive case-study prose.
