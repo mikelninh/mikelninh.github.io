@@ -147,17 +147,19 @@ jobs:
               assert 'High-impact decisions can remain human-only indefinitely' in criteria
               page.screenshot(path='artifacts/proof-experience/pruefpilot-golden-pass.png',full_page=True)
 
-              # General web CV: hierarchy, proof links and no stale dark-card system.
+              # Master web CV: new positioning, four strongest proofs and explicit claim boundaries.
               page.goto('http://127.0.0.1:8765/cv.html',wait_until='networkidle')
               assert page.locator('h1').inner_text()=='Michael Ninh'
-              assert 'AI Engineer' in page.locator('.role').inner_text()
+              assert page.locator('.role').inner_text()=='AI Engineer · Agentic Systems · AI Operations'
               assert page.locator('.project').count()==4
               assert page.locator('.project.dark').count()==0
               cv_text=page.locator('body').inner_text()
-              for required in ['Digital Worker Factory','SafeTrace','PrüfPilot','GitLaw','Useful first. Trustworthy by design.']:
-                assert required in cv_text
+              for required in ['TrustReady','SafeTrace','DRV SignalLab','Digital Worker Factory','explicit autonomy boundaries','50,000 synthetic cases','40 cases','100 cases','Developer-authored benchmark']:
+                assert required in cv_text,required
               hrefs=page.locator('.project a').evaluate_all('(els)=>els.map(e=>e.getAttribute("href"))')
-              assert 'agents/' in hrefs and 'pruefpilot/' in hrefs
+              assert 'trustready/legal/' in hrefs and 'agents/' in hrefs
+              assert 'PrüfPilot' not in page.locator('.projectGrid').inner_text()
+              assert 'GitLaw' not in page.locator('.projectGrid').inner_text()
               page.screenshot(path='artifacts/proof-experience/cv-desktop.png',full_page=True)
 
               mobile=b.new_page(viewport={'width':390,'height':844})
@@ -173,6 +175,7 @@ jobs:
               mobile.goto('http://127.0.0.1:8765/cv.html',wait_until='networkidle')
               assert mobile.locator('h1').is_visible()
               assert mobile.locator('.project').count()==4
+              assert 'Agentic Systems' in mobile.locator('.role').inner_text()
               mobile.screenshot(path='artifacts/proof-experience/cv-mobile.png',full_page=True)
               assert not errors,errors
               b.close()
