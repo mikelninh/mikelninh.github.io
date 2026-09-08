@@ -1,0 +1,49 @@
+name: Public Pages watch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'trustready/**'
+      - 'index.html'
+      - '.github/workflows/pages.yml'
+      - '.github/workflows/public-pages-watch.yml'
+  schedule:
+    - cron: '37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live-http:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Verify public TrustReady routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          check() {
+            local url="$1"
+            local marker="$2"
+            local body
+            body="$(mktemp)"
+            for attempt in $(seq 1 24); do
+              code="$(curl --location --silent --show-error --max-time 20 --output "$body" --write-out '%{http_code}' "$url" || true)"
+              if [ "$code" = "200" ] && grep -Fq "$marker" "$body"; then
+                echo "PUBLIC PASS: $url"
+                rm -f "$body"
+                return 0
+              fi
+              echo "PUBLIC WAIT ($attempt/24): $url -> $code"
+              sleep 5
+            done
+            echo "PUBLIC FAIL: $url"
+            head -80 "$body" || true
+            rm -f "$body"
+            return 1
+          }
+
+          check 'https://mikelninh.github.io/trustready/demo/' "Can this AI run a command it wasn’t allowed to run?"
+          check 'https://mikelninh.github.io/trustready/' 'url=./demo/'
