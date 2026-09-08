@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Broker Signup Lab — eine synthetische Tech-Analyst-Arbeitsprobe zu Funnel-Analyse, Ursachen, Priorisierung und Flow-Spezifikation." />
+  <title>Broker Signup Lab — Michael Ninh</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="https://mikelninh.github.io/">
+        <i class="brand-mark" aria-hidden="true"></i>
+        <span><strong>Broker Signup Lab</strong><span>Independent work sample · Michael Ninh</span></span>
+      </a>
+      <nav class="topnav">
+        <a href="#analyse">Analyse</a>
+        <a href="#entscheidung">Entscheidung</a>
+        <a href="#spezifikation">Spezifikation</a>
+        <a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/broker-signup-lab" target="_blank" rel="noreferrer">Source ↗</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Tech Analyst · Signup Flows · Data over opinions</div>
+        <h1>Wo verlieren wir Nutzer — <span>und warum?</span></h1>
+        <p class="lede">Eine kleine, vollständig synthetische Case Study: Funnel analysieren, den größten beeinflussbaren Drop-off finden und daraus eine konkrete Verbesserung mit User Story und Akzeptanzkriterien ableiten.</p>
+      </div>
+      <aside class="hero-note">
+        <strong>Der Punkt ist nicht das Dashboard.</strong>
+        <p>Ich will zeigen, wie ich zwischen Daten, Prozess und technischer Umsetzung arbeite: Signal → Diagnose → Priorität → spezifizierter Flow.</p>
+      </aside>
+    </section>
+
+    <section class="filters" aria-label="Analyse filtern">
+      <div class="filter-group" data-filter-group="device"><span class="filter-label">Device</span><button data-value="All" class="active">Alle</button><button data-value="Mobile">Mobile</button><button data-value="Desktop">Desktop</button></div>
+      <div class="filter-group" data-filter-group="provider"><span class="filter-label">Provider</span><button data-value="All" class="active">Alle</button><button data-value="NovaID">NovaID</button><button data-value="VerifyNow">VerifyNow</button><button data-value="IDentix">IDentix</button></div>
+      <span id="cohortLabel" class="filter-label" style="margin-left:auto;align-self:center"></span>
+    </section>
+
+    <section class="metrics" aria-label="Kernmetriken">
+      <article class="metric"><span>Completion</span><strong id="completionMetric">—</strong><small id="completionSub">—</small></article>
+      <article class="metric"><span>Größter Stage-Drop</span><strong id="largestDropMetric">—</strong><small id="largestDropSub">—</small></article>
+      <article class="metric"><span>Recoverable signal</span><strong id="timeoutMetric">—</strong><small id="timeoutSub">—</small></article>
+    </section>
+
+    <section class="section" id="analyse">
+      <header class="section-head">
+        <div><div class="eyebrow">01 · Funnel</div><h2>Erst sehen, wo es weh tut.</h2></div>
+        <p class="section-copy">Die Übersicht bleibt bewusst einfach: Wie viele Bewerbungen erreichen die nächste Stufe? Erst danach zoome ich in Ursachen und Segmente. Alle Daten werden deterministisch aus 10.000 synthetischen Fällen erzeugt.</p>
+      </header>
+      <div class="funnel-card" id="funnel"></div>
+    </section>
+
+    <section class="section">
+      <header class="section-head">
+        <div><div class="eyebrow">02 · Diagnose</div><h2>Der Drop-off ist nur das Symptom.</h2></div>
+        <p class="section-copy">Die größte Chance ist nicht automatisch der größte Balken. Ich trenne beeinflussbare technische Fehler von fachlichen Prüfungen und freiwilligem Abbruch — und suche danach das auffällige Segment.</p>
+      </header>
+      <div class="analysis-grid">
+        <article class="analysis-card"><div class="card-kicker">Root causes</div><h3>Warum Signups abbrechen</h3><div id="issues"></div></article>
+        <article class="analysis-card"><div class="card-kicker">Timeout hotspot</div><h3>Wo Provider-Timeouts auffallen</h3><div id="segments"></div></article>
+      </div>
+      <div class="diagnosis" id="diagnosisSentence"></div>
+    </section>
+
+    <section class="section" id="entscheidung">
+      <header class="section-head">
+        <div><div class="eyebrow">03 · Entscheidung</div><h2>Nicht „mehr Conversion“. Ein konkreter Hebel.</h2></div>
+        <p class="section-copy">Priorität: temporäre Identitätsprovider-Timeouts recoverable machen. Fachliche Mismatches und KYC-Reviews bleiben bewusst außerhalb dieser Optimierung — Sicherheit vor Funnel-Kosmetik.</p>
+      </header>
+      <div class="decision-grid">
+        <article class="decision-card">
+          <div class="card-kicker">Heute</div><h3>Timeout → Neustart-Risiko</h3>
+          <div class="flow-line"><div class="flow-step">Identity starten</div><div class="flow-step warn">Provider Timeout</div><div class="flow-step">Nutzer bricht ab / startet neu</div></div>
+          <p class="section-copy">Der technische Fehler erzeugt Reibung, obwohl die fachliche Prüfung noch gar nicht negativ war.</p>
+        </article>
+        <article class="decision-card">
+          <div class="card-kicker">Vorschlag</div><h3>Fortsetzen statt neu anfangen</h3>
+          <div class="flow-line"><div class="flow-step">State speichern</div><div class="flow-step good">Retry</div><div class="flow-step good">Identity bestätigt</div><div class="flow-step">Prüfung → Eröffnung</div></div>
+          <div class="opportunity"><strong id="upliftMetric">—</strong><span id="upliftText">—</span></div>
+          <p class="model-note" id="modelNote"></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="spezifikation">
+      <header class="section-head">
+        <div><div class="eyebrow">04 · Spezifikation</div><h2>Aus Analyse wird umsetzbare Arbeit.</h2></div>
+        <p class="section-copy">Die Empfehlung endet nicht bei „Retry bauen“. Sie wird so konkret, dass Product, UX und Engineering über denselben Zielzustand sprechen können.</p>
+      </header>
+      <div class="spec-grid">
+        <article class="spec-card"><div class="card-kicker">User story</div><h3>Resumable identity check</h3><p class="user-story">Als Nutzer möchte ich nach einem temporären Fehler bei der Identitätsprüfung dort fortsetzen können, wo ich aufgehört habe, statt meinen Antrag erneut zu starten.</p></article>
+        <article class="spec-card"><div class="card-kicker">Acceptance criteria</div><h3>Wann ist die Verbesserung fertig?</h3><div class="checks"><div class="check"><i>1</i><span>Der bestehende Antrag bleibt nach einem Provider-Timeout erhalten.</span></div><div class="check"><i>2</i><span>Ein Retry setzt an der Identitätsprüfung fort — ohne doppelte Bewerbung.</span></div><div class="check"><i>3</i><span>Eine Eröffnung bleibt blockiert, bis Identity und fachliche Prüfung erfolgreich sind.</span></div><div class="check"><i>4</i><span>Timeout, Retry, Erfolg und Abbruch sind separat messbar.</span></div></div></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <header class="section-head">
+        <div><div class="eyebrow">05 · Grenzen</div><h2>Was diese Demo nicht behauptet.</h2></div>
+        <p class="section-copy">Die Arbeitsprobe soll Denk- und Arbeitsweise zeigen, nicht eine reale Bankarchitektur oder echte Kundenkennzahlen vortäuschen.</p>
+      </header>
+      <div class="limits"><div class="limit"><strong>Synthetische Daten</strong><p>Keine DKB-, Broker- oder Kundendaten. 10.000 Fälle werden reproduzierbar aus einem festen Seed erzeugt.</p></div><div class="limit"><strong>Hypothese statt Kausalität</strong><p>Der modellierte Uplift ist eine transparente Annahme für Priorisierung, kein gemessenes Experiment-Ergebnis.</p></div><div class="limit"><strong>Keine Compliance-Abkürzung</strong><p>Identity-Mismatch und KYC-Review bleiben harte Review-/Sicherheitsgrenzen; die Optimierung betrifft nur technische Timeouts.</p></div></div>
+      <div class="cta"><a class="primary" href="https://github.com/mikelninh/mikelninh.github.io/tree/main/broker-signup-lab" target="_blank" rel="noreferrer">Source & Tests ↗</a><a href="https://mikelninh.github.io/" target="_blank" rel="noreferrer">Portfolio ↗</a></div>
+    </section>
+
+    <footer class="footer"><span>Broker Signup Lab · unabhängige Arbeitsprobe</span><span>Vanilla JS · deterministic synthetic cohort · tests · GitHub Pages</span></footer>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

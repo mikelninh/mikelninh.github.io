@@ -1,0 +1,33 @@
+name: Broker Signup Lab QA
+
+on:
+  pull_request:
+    paths:
+      - 'broker-signup-lab/**'
+      - '.github/workflows/broker-signup-lab.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'broker-signup-lab/**'
+      - '.github/workflows/broker-signup-lab.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Golden cases
+        run: node broker-signup-lab/test.mjs
+      - name: Static artifact contract
+        run: |
+          test -f broker-signup-lab/index.html
+          test -f broker-signup-lab/styles.css
+          test -f broker-signup-lab/app.js
+          grep -q "Wo verlieren wir Nutzer" broker-signup-lab/index.html
+          grep -q "Synthetische Daten" broker-signup-lab/index.html
