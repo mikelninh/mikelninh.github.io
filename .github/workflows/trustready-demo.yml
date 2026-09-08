@@ -39,9 +39,11 @@ jobs:
           const home = fs.readFileSync('index.html', 'utf8')
 
           const must = [
-            'Can this AI do something it shouldn’t?',
-            'POST /jobs/{id}/bids',
-            'Per-job human confirmation',
+            'Can this AI run a command it wasn’t allowed to run?',
+            '--allow-exec',
+            'subprocess.run',
+            'Deny-by-default execution guard',
+            'command execution disabled by policy',
             'TECHNICAL_GO',
             'NO_GO',
             'trustReadyDemoContract',
@@ -50,16 +52,27 @@ jobs:
             '../benchmark/'
           ]
           for (const token of must) assert(demo.includes(token), `demo contract missing: ${token}`)
+
+          const forbidden = [
+            'POST /jobs/{id}/bids',
+            'Per-job human confirmation',
+            'cannot authorize it alone'
+          ]
+          for (const token of forbidden) assert(!demo.includes(token), `stale/overstated claim returned: ${token}`)
+
           assert(root.includes('url=./demo/'), 'trustready root must open the comprehension demo')
           assert(home.includes('trustready/demo/'), 'main portfolio must link to the TrustReady comprehension demo')
-          assert(home.includes('Can this AI take a real-world action without your approval?'), 'main portfolio TrustReady question is not recruiter-first')
+          assert(home.includes('Can this AI run a command when execution is supposed to be off?'), 'main portfolio TrustReady question is not recruiter-first')
+          assert(home.includes('--allow-exec'), 'main portfolio must expose the execution authority control')
+          assert(home.includes('subprocess.run'), 'main portfolio must expose the process effect')
 
           const ids = [...demo.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1])
           const duplicates = ids.filter((id, i) => ids.indexOf(id) !== i)
           assert(duplicates.length === 0, `duplicate demo ids: ${[...new Set(duplicates)].join(', ')}`)
 
           const declared = demo.match(/window\.trustReadyDemoContract=\{([^}]+)\}/)?.[1] || ''
+          assert(declared.includes("safeControl:'deny-by-default --allow-exec'"), 'safe control contract missing')
           assert(declared.includes("safeDecision:'TECHNICAL_GO'"), 'safe decision contract missing')
           assert(declared.includes("unsafeDecision:'NO_GO'"), 'unsafe decision contract missing')
-          console.log('TrustReady demo contract PASS: recruiter path, safe/unsafe decisions, truth boundary, accessibility ids')
+          console.log('TrustReady demo contract PASS: execution authority, safe/unsafe decisions, claim regression, truth boundary, accessibility ids')
           NODE
