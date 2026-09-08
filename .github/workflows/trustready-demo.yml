@@ -1,0 +1,65 @@
+name: TrustReady demo contract
+
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'trustready/index.html'
+      - 'trustready/demo/**'
+      - 'trustready/benchmark/**'
+      - '.github/workflows/trustready-demo.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'trustready/index.html'
+      - 'trustready/demo/**'
+      - 'trustready/benchmark/**'
+      - '.github/workflows/trustready-demo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  demo-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Verify 30-second TrustReady hiring path
+        run: |
+          node <<'NODE'
+          const fs = require('fs')
+          const assert = (ok, msg) => { if (!ok) throw new Error(msg) }
+          const demo = fs.readFileSync('trustready/demo/index.html', 'utf8')
+          const root = fs.readFileSync('trustready/index.html', 'utf8')
+          const home = fs.readFileSync('index.html', 'utf8')
+
+          const must = [
+            'Can this AI do something it shouldn’t?',
+            'POST /jobs/{id}/bids',
+            'Per-job human confirmation',
+            'TECHNICAL_GO',
+            'NO_GO',
+            'trustReadyDemoContract',
+            "browserIsFullScanner:false",
+            'This page is an interactive explainer',
+            '../benchmark/'
+          ]
+          for (const token of must) assert(demo.includes(token), `demo contract missing: ${token}`)
+          assert(root.includes('url=./demo/'), 'trustready root must open the comprehension demo')
+          assert(home.includes('trustready/demo/'), 'main portfolio must link to the TrustReady comprehension demo')
+          assert(home.includes('Can this AI take a real-world action without your approval?'), 'main portfolio TrustReady question is not recruiter-first')
+
+          const ids = [...demo.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1])
+          const duplicates = ids.filter((id, i) => ids.indexOf(id) !== i)
+          assert(duplicates.length === 0, `duplicate demo ids: ${[...new Set(duplicates)].join(', ')}`)
+
+          const declared = demo.match(/window\.trustReadyDemoContract=\{([^}]+)\}/)?.[1] || ''
+          assert(declared.includes("safeDecision:'TECHNICAL_GO'"), 'safe decision contract missing')
+          assert(declared.includes("unsafeDecision:'NO_GO'"), 'unsafe decision contract missing')
+          console.log('TrustReady demo contract PASS: recruiter path, safe/unsafe decisions, truth boundary, accessibility ids')
+          NODE
