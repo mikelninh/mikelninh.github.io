@@ -133,14 +133,13 @@ jobs:
           print('Application portfolio browser paths: OK')
           PY
 
-      - name: Smoke public proof and repository links
+      - name: Smoke already-published proof and repository links
         run: |
           python - <<'PY'
           import urllib.request, time
           urls=[
             'https://mikelninh.github.io/',
             'https://mikelninh.github.io/trustready/legal/',
-            'https://mikelninh.github.io/trustready/benchmark/',
             'https://mikelninh.github.io/digital-democracy-studio/safetrace/venatic_application/',
             'https://github.com/mikelninh/digital-worker-factory',
             'https://github.com/mikelninh/digital-democracy-studio/tree/main/zero-suffering-intelligence/entity-resolution',
@@ -164,6 +163,7 @@ jobs:
           PY
 
       - name: Upload visual readiness proof
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: application-portfolio-readiness
