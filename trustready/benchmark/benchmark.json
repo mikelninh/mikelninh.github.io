@@ -1,0 +1,126 @@
+{
+  "version": "trustready-benchmark-result/v1",
+  "benchmark": "TrustReady Benchmark v1",
+  "thesis": "Can TrustReady resolve who has authority, what can execute, what effect can happen, and what evidence supports the release decision across structurally different real repositories?",
+  "generatedAt": "2026-09-08T12:18:19.704Z",
+  "engine": {
+    "repository": "mikelninh/digital-worker-factory",
+    "commit": "ee3d4cd4903789d7e565b2b53990e1aab45925dc"
+  },
+  "summary": {
+    "repositories": 3,
+    "architectureFamilies": 3,
+    "assuranceModes": 3,
+    "technicalGo": 3,
+    "technicalNoGo": 0,
+    "controlSuites": 3,
+    "verdict": "PASS"
+  },
+  "targets": [
+    {
+      "id": "safevoice",
+      "repository": "mikelninh/safevoice",
+      "trackingRef": "main",
+      "targetCommit": "68f9227c88e06f451424fd2cd4a9d69552e98e12",
+      "language": "Python",
+      "architecture": "Single scoped LLM agent runtime",
+      "assuranceMode": "repository_reachability_attack_patch_plan",
+      "proofShape": "request authority → agent → tools → deterministic boundary → effect sink → native adversarial evidence",
+      "decision": "TECHNICAL_GO",
+      "reason": "scoped_runtime_evidence_proves_reachable_effect_boundary",
+      "scope": {
+        "entrypoints": 1,
+        "authorityInputs": ["case_id", "user_id"],
+        "reachableSurfaces": 8,
+        "consequentialEffectPaths": 1,
+        "isolatedSurfaces": ["safevoice_mcp/server.py"]
+      },
+      "evidence": {
+        "level": "static reachability + repository-native adversarial runtime evidence",
+        "path": "security/agent-boundary-report.json",
+        "adversarialCases": 2,
+        "passed": 2,
+        "criticalEscapesAfterBoundary": 0,
+        "exploitBeforeFix": true
+      }
+    },
+    {
+      "id": "gitlaw",
+      "repository": "mikelninh/gitlaw",
+      "trackingRef": "main",
+      "targetCommit": "7586428a025b74e5d5fa7231706541f0a634476d",
+      "language": "TypeScript",
+      "architecture": "Multi-entrypoint agent system",
+      "assuranceMode": "repository_multi_entrypoint_scoped_assurance",
+      "proofShape": "multiple agent entrypoints → scoped tool ownership → deterministic non-agent surfaces → declarative authority contracts",
+      "decision": "TECHNICAL_GO",
+      "reason": "all_entrypoint_and_non_agent_surfaces_resolved",
+      "scope": {
+        "entrypoints": 4,
+        "authorityInputs": [],
+        "reachableSurfaces": 23,
+        "consequentialEffectPaths": 0,
+        "resolvedNonAgentSurfaces": 14,
+        "unassignedSurfaces": 0
+      },
+      "evidence": {
+        "level": "static scoped ownership + deterministic runtime/declarative authority resolution",
+        "entrypoints": [
+          {"entrypoint":"api/agent/behoerden.ts","decision":"TECHNICAL_GO","reason":"scoped_non_consequential_surface_resolved","reachableTools":7},
+          {"entrypoint":"api/agent/document-review.ts","decision":"TECHNICAL_GO","reason":"scoped_non_consequential_surface_resolved","reachableTools":6},
+          {"entrypoint":"api/agent/lebenslagen.ts","decision":"TECHNICAL_GO","reason":"scoped_non_consequential_surface_resolved","reachableTools":6},
+          {"entrypoint":"api/cron/mandant-update.ts","decision":"TECHNICAL_GO","reason":"scoped_non_consequential_surface_resolved","reachableTools":4}
+        ],
+        "resolvedNonAgentSurfaces": 14,
+        "notableAuthorityContract": {
+          "name": "gitlaw.case.update",
+          "risk": "write",
+          "authority": "outside_model",
+          "executionMode": "approval_gated",
+          "requiresHumanApproval": true,
+          "caveat": "This resolves model execution authority only; it does not independently prove downstream transport approval enforcement."
+        }
+      }
+    },
+    {
+      "id": "proofworker",
+      "repository": "mikelninh/proofworker",
+      "trackingRef": "main",
+      "targetCommit": "d95542fabcafdbde61e2adff354d8ff63b490998",
+      "language": "Python",
+      "architecture": "Bounded CLI/operator runtime",
+      "assuranceMode": "repository_bounded_operator_assurance",
+      "proofShape": "CLI authority → guarded action → process/network effect → human release gate",
+      "decision": "TECHNICAL_GO",
+      "reason": "bounded_operator_effect_authority_resolved",
+      "scope": {
+        "entrypoints": 4,
+        "authorityInputs": ["--allow-exec", "--publish-listing", "--execute"],
+        "reachableSurfaces": 3,
+        "consequentialEffectPaths": 3
+      },
+      "evidence": {
+        "level": "static CLI authority + guarded process/network effects + human release gates",
+        "actions": [
+          {"source":"proofworker/cli.py","flag":"--allow-exec","decision":"TECHNICAL_GO","effect":{"kind":"process_execution","dynamicTarget":true,"guarded":true,"propagatedFailClosed":true}},
+          {"source":"scripts/dealwork_connect.py","flag":"--publish-listing","decision":"TECHNICAL_GO","effect":{"kind":"network_write","method":"POST","dynamicTarget":false,"guarded":true,"humanConfirmation":true}},
+          {"source":"scripts/revenue_operator.py","flag":"--execute","decision":"TECHNICAL_GO","effect":{"kind":"network_write","method":"POST","dynamicTarget":true,"guarded":true,"humanConfirmation":true}}
+        ]
+      }
+    }
+  ],
+  "controls": {
+    "singleAgentAndAutofix": "pass",
+    "multiEntrypoint": "pass",
+    "boundedOperator": "pass"
+  },
+  "methodology": [
+    "Checkout each public target independently at its tracked ref and record the exact commit.",
+    "Run the same TrustReady repository security CLI against every untouched target checkout.",
+    "Run generic negative/regression suites for single-agent, multi-entrypoint and bounded-operator assurance.",
+    "Normalise architecture-specific evidence into one machine-readable benchmark schema.",
+    "Fail when expected authority, effect, evidence or release claims drift.",
+    "Verify target worktrees remain clean after scanning."
+  ],
+  "truthBoundary": "Benchmark GO means the named target and scoped surfaces satisfy the benchmark assertions at the scanned commit. It is not a repository-wide security certification, does not prove dynamic completeness, and does not certify business correctness or remote-service enforcement."
+}
