@@ -72,19 +72,23 @@ jobs:
                       assert code_fragment in page.locator('#codeLink').get_attribute('href')
                       assert boundary_word in page.locator('#boundaryText').inner_text().lower()
 
-                  # TrustReady must create the recruiter aha moment: real effect -> remove authority gate -> NO_GO.
+                  # TrustReady recruiter aha moment: process sink -> deny-by-default guard -> remove guard -> NO_GO.
                   page.goto(base+'trustready/demo/',wait_until='networkidle')
-                  assert page.locator('h1').inner_text()=='Can this AI do something it shouldn’t?'
+                  assert page.locator('h1').inner_text()=='Can this AI run a command it wasn’t allowed to run?'
                   assert page.locator('#verdict').inner_text()=='TECHNICAL_GO'
                   assert page.locator('#gateSwitch').get_attribute('aria-checked')=='true'
-                  assert 'POST /jobs/{id}/bids' in page.locator('.scenario').inner_text()
+                  scenario=page.locator('.scenario').inner_text()
+                  assert '--allow-exec' in scenario
+                  assert 'subprocess.run' in scenario
+                  assert 'disabled by policy' in scenario
                   page.locator('#gateSwitch').click()
                   assert page.locator('#verdict').inner_text()=='CHANGED'
                   assert page.locator('#gateSwitch').get_attribute('aria-checked')=='false'
                   page.locator('#runBtn').click()
                   assert page.locator('#verdict').inner_text()=='NO_GO'
                   assert page.locator('#gateStatus').inner_text()=='FAIL'
-                  assert 'human gate is gone' in page.locator('#decisionTitle').inner_text().lower()
+                  assert 'deny-by-default guard is gone' in page.locator('#decisionTitle').inner_text().lower()
+                  assert 'without proven enforcement' in page.locator('#decisionBody').inner_text().lower()
                   page.locator('#resetBtn').click()
                   assert page.locator('#verdict').inner_text()=='TECHNICAL_GO'
                   page.screenshot(path='artifacts/application-readiness/desktop-trustready-demo.png',full_page=True)
@@ -118,6 +122,7 @@ jobs:
 
                   mobile.goto(base+'trustready/demo/',wait_until='networkidle')
                   assert mobile.locator('#gateSwitch').is_visible()
+                  assert 'subprocess.run' in mobile.locator('.scenario').inner_text()
                   mobile.locator('#gateSwitch').click()
                   mobile.locator('#runBtn').click()
                   assert mobile.locator('#verdict').inner_text()=='NO_GO'
