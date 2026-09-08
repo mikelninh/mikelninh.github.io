@@ -47,3 +47,5 @@ jobs:
 
           check 'https://mikelninh.github.io/trustready/demo/' "Can this AI run a command it wasn’t allowed to run?"
           check 'https://mikelninh.github.io/trustready/' 'url=./demo/'
+          check 'https://mikelninh.github.io/trustready/security-delta/' 'Does the boundary actually make the system safer?'
+          check 'https://mikelninh.github.io/trustready/security-delta/benchmark.json' '"attackCases":14'
