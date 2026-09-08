@@ -70,7 +70,7 @@ function renderAnalysis() {
 
   const high = diagnosis.highestTimeoutSegment;
   document.querySelector('#diagnosisSentence').innerHTML = high
-    ? `Der größte vermeidbare Verlust liegt in der Identitätsprüfung. Besonders auffällig: <strong>${high.device} + ${high.provider}</strong> mit <strong>${pct(high.timeoutRate)}</strong> Timeout-Rate.`
+    ? `Der größte Verlust im Funnel liegt in der Identitätsprüfung. Der größte technisch beeinflussbare Anteil sind Provider-Timeouts; besonders auffällig: <strong>${high.device} + ${high.provider}</strong> mit <strong>${pct(high.timeoutRate)}</strong> Timeout-Rate.`
     : 'Für diese Filterkombination liegt kein Identitäts-Timeout vor.';
 
   const opportunity = analysis.opportunity;
