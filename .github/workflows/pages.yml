@@ -57,33 +57,8 @@ jobs:
           cp -R /tmp/council-mission-control/dist-pages/mission-control ./mission-control
           node -e "const fs=require('fs');const d=JSON.parse(fs.readFileSync('mission-control/mission-control.json','utf8'));if(d.schema!=='council-mission-control-v0.3'||!d.safety?.publicSafe||d.safety?.privateDetailsPublished!==false||d.projects.some(p=>p.private))process.exit(1);console.log('MISSION CONTROL DEPLOYMENT CONTRACT PASS:',d.projects.length,'public projects');"
 
-      - name: Ensure Pages uses Actions workflow source
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          body="$(mktemp)"
-          code="$(curl --silent --show-error --location \
-            --request PUT \
-            --header 'Accept: application/vnd.github+json' \
-            --header "Authorization: Bearer ${GH_TOKEN}" \
-            --header 'X-GitHub-Api-Version: 2022-11-28' \
-            --output "$body" \
-            --write-out '%{http_code}' \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/pages" \
-            --data '{"build_type":"workflow"}')"
-          if [ "$code" != "200" ] && [ "$code" != "204" ]; then
-            echo "Unable to switch Pages build_type to workflow (HTTP $code)"
-            cat "$body"
-            exit 1
-          fi
-          echo "Pages source contract: build_type=workflow"
-          rm -f "$body"
-
       - name: Configure Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - name: Upload static site
         uses: actions/upload-pages-artifact@v4
         with:
