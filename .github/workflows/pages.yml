@@ -66,3 +66,36 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Smoke public TrustReady URLs
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          base="${PAGE_URL%/}"
+          demo="$base/trustready/demo/"
+          root="$base/trustready/"
+
+          fetch_until_ready() {
+            local url="$1"
+            local marker="$2"
+            local body
+            body="$(mktemp)"
+            for attempt in $(seq 1 18); do
+              code="$(curl --location --silent --show-error --output "$body" --write-out '%{http_code}' "$url" || true)"
+              if [ "$code" = "200" ] && grep -Fq "$marker" "$body"; then
+                echo "LIVE PASS: $url"
+                rm -f "$body"
+                return 0
+              fi
+              echo "Waiting for Pages propagation ($attempt/18): $url returned $code"
+              sleep 5
+            done
+            echo "LIVE FAIL: $url"
+            cat "$body"
+            rm -f "$body"
+            return 1
+          }
+
+          fetch_until_ready "$demo" "Can this AI run a command it wasn’t allowed to run?"
+          fetch_until_ready "$root" "url=./demo/"
