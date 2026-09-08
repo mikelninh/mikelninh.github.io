@@ -8,6 +8,8 @@ on:
       - 'almedia/**'
       - 'agents/**'
       - 'pruefpilot/**'
+      - 'trustready/index.html'
+      - 'trustready/demo/**'
       - 'cv.html'
       - '.github/workflows/proof-experience-qa.yml'
   pull_request:
@@ -16,6 +18,8 @@ on:
       - 'almedia/**'
       - 'agents/**'
       - 'pruefpilot/**'
+      - 'trustready/index.html'
+      - 'trustready/demo/**'
       - 'cv.html'
       - '.github/workflows/proof-experience-qa.yml'
   workflow_dispatch:
@@ -55,7 +59,38 @@ jobs:
               for required in ['Agentic Systems · AI Operations','tested, observable software','Spec','Evaluate','Verify','Monitor']:
                 assert required in hero,required
               assert page.locator('.choice').count()==3
-              assert 'A0–A4' in page.locator('#evidenceGrid').inner_text()
+              trust_title=page.locator('#problemTitle').inner_text()
+              assert trust_title=='Can this AI run a command when execution is supposed to be off?'
+              trust_evidence=page.locator('#evidenceGrid').inner_text()
+              for required in ['3','3/3','Fail closed']:
+                assert required in trust_evidence,required
+              assert '--allow-exec' in page.locator('.stage').inner_text()
+              assert 'subprocess.run' in page.locator('.stage').inner_text()
+              assert 'trustready/demo/' in page.locator('#tryLink').get_attribute('href')
+              assert 'scoped technical assurance' in page.locator('#boundaryText').inner_text().lower()
+
+              # TrustReady: explicit execution authority -> deny-by-default guard -> remove guard -> fail closed.
+              page.goto('http://127.0.0.1:8765/trustready/demo/',wait_until='networkidle')
+              assert page.locator('h1').inner_text()=='Can this AI run a command it wasn’t allowed to run?'
+              assert page.locator('#verdict').inner_text()=='TECHNICAL_GO'
+              scenario=page.locator('.scenario').inner_text()
+              assert '--allow-exec' in scenario
+              assert 'subprocess.run' in scenario
+              assert 'disabled by policy' in scenario
+              assert page.locator('#gateSwitch').get_attribute('aria-checked')=='true'
+              page.locator('#gateSwitch').click()
+              assert page.locator('#verdict').inner_text()=='CHANGED'
+              page.locator('#runBtn').click()
+              assert page.locator('#verdict').inner_text()=='NO_GO'
+              assert page.locator('#gateStatus').inner_text()=='FAIL'
+              assert 'deny-by-default guard is gone' in page.locator('#decisionTitle').inner_text().lower()
+              assert 'browser page is not itself the repository scanner' in page.locator('.scanFoot').inner_text().lower()
+              page.locator('#resetBtn').click()
+              assert page.locator('#verdict').inner_text()=='TECHNICAL_GO'
+              page.screenshot(path='artifacts/proof-experience/trustready-demo-desktop.png',full_page=True)
+
+              # Remaining homepage proof families retain measurable evidence and explicit boundaries.
+              page.goto('http://127.0.0.1:8765/',wait_until='networkidle')
               page.locator('[data-focus="evidence"]').click()
               assert 'Resolve messy organisations' in page.locator('#proofTitle').inner_text()
               er=page.locator('#evidenceGrid').inner_text()
@@ -147,7 +182,7 @@ jobs:
               assert 'High-impact decisions can remain human-only indefinitely' in criteria
               page.screenshot(path='artifacts/proof-experience/pruefpilot-golden-pass.png',full_page=True)
 
-              # Master web CV: new positioning, four strongest proofs and explicit claim boundaries.
+              # Master web CV: positioning, four strongest proofs and explicit claim boundaries.
               page.goto('http://127.0.0.1:8765/cv.html',wait_until='networkidle')
               assert page.locator('h1').inner_text()=='Michael Ninh'
               assert page.locator('.role').inner_text()=='AI Engineer · Agentic Systems · AI Operations'
@@ -169,6 +204,14 @@ jobs:
               mobile.locator('[data-focus="evidence"]').click()
               assert '40' in mobile.locator('#evidenceGrid').inner_text()
               mobile.screenshot(path='artifacts/proof-experience/portfolio-mobile.png',full_page=True)
+              mobile.goto('http://127.0.0.1:8765/trustready/demo/',wait_until='networkidle')
+              assert mobile.locator('#gateSwitch').is_visible()
+              assert 'subprocess.run' in mobile.locator('.scenario').inner_text()
+              mobile.locator('#gateSwitch').click()
+              mobile.locator('#runBtn').click()
+              assert mobile.locator('#verdict').inner_text()=='NO_GO'
+              assert mobile.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1')
+              mobile.screenshot(path='artifacts/proof-experience/trustready-demo-mobile.png',full_page=True)
               for path in ['almedia/','agents/','pruefpilot/']:
                 mobile.goto(f'http://127.0.0.1:8765/{path}',wait_until='networkidle')
                 assert mobile.locator('#run').is_visible()

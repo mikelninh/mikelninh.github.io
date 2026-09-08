@@ -7,12 +7,16 @@ on:
       - 'index.html'
       - 'agents/**'
       - 'pruefpilot/**'
+      - 'trustready/index.html'
+      - 'trustready/demo/**'
       - '.github/workflows/application-readiness.yml'
   pull_request:
     paths:
       - 'index.html'
       - 'agents/**'
       - 'pruefpilot/**'
+      - 'trustready/index.html'
+      - 'trustready/demo/**'
       - '.github/workflows/application-readiness.yml'
   workflow_dispatch:
 
@@ -58,7 +62,7 @@ jobs:
                   assert page.locator('#codeLink').is_visible()
 
                   expected={
-                    'trust':('trustready/legal/','mikelninh/trustready','synthetic'),
+                    'trust':('trustready/demo/','digital-worker-factory','scoped'),
                     'evidence':('digital-democracy-studio/safetrace/venatic_application/','entity-resolution','developer-authored'),
                     'monitoring':('drv-signallab/blob/main/docs/REVIEW_GUIDE.md','mikelninh/drv-signallab','synthetic'),
                   }
@@ -67,6 +71,27 @@ jobs:
                       assert try_fragment in page.locator('#tryLink').get_attribute('href')
                       assert code_fragment in page.locator('#codeLink').get_attribute('href')
                       assert boundary_word in page.locator('#boundaryText').inner_text().lower()
+
+                  # TrustReady recruiter aha moment: process sink -> deny-by-default guard -> remove guard -> NO_GO.
+                  page.goto(base+'trustready/demo/',wait_until='networkidle')
+                  assert page.locator('h1').inner_text()=='Can this AI run a command it wasn’t allowed to run?'
+                  assert page.locator('#verdict').inner_text()=='TECHNICAL_GO'
+                  assert page.locator('#gateSwitch').get_attribute('aria-checked')=='true'
+                  scenario=page.locator('.scenario').inner_text()
+                  assert '--allow-exec' in scenario
+                  assert 'subprocess.run' in scenario
+                  assert 'disabled by policy' in scenario
+                  page.locator('#gateSwitch').click()
+                  assert page.locator('#verdict').inner_text()=='CHANGED'
+                  assert page.locator('#gateSwitch').get_attribute('aria-checked')=='false'
+                  page.locator('#runBtn').click()
+                  assert page.locator('#verdict').inner_text()=='NO_GO'
+                  assert page.locator('#gateStatus').inner_text()=='FAIL'
+                  assert 'deny-by-default guard is gone' in page.locator('#decisionTitle').inner_text().lower()
+                  assert 'without proven enforcement' in page.locator('#decisionBody').inner_text().lower()
+                  page.locator('#resetBtn').click()
+                  assert page.locator('#verdict').inner_text()=='TECHNICAL_GO'
+                  page.screenshot(path='artifacts/application-readiness/desktop-trustready-demo.png',full_page=True)
 
                   # Targeted application proofs remain available even though they are no longer homepage heroes.
                   page.goto(base+'agents/',wait_until='networkidle')
@@ -94,6 +119,16 @@ jobs:
                   mobile.locator('[data-focus="evidence"]').click()
                   assert '40' in mobile.locator('#evidenceGrid').inner_text()
                   mobile.screenshot(path='artifacts/application-readiness/mobile-home.png',full_page=True)
+
+                  mobile.goto(base+'trustready/demo/',wait_until='networkidle')
+                  assert mobile.locator('#gateSwitch').is_visible()
+                  assert 'subprocess.run' in mobile.locator('.scenario').inner_text()
+                  mobile.locator('#gateSwitch').click()
+                  mobile.locator('#runBtn').click()
+                  assert mobile.locator('#verdict').inner_text()=='NO_GO'
+                  assert mobile.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1')
+                  mobile.screenshot(path='artifacts/application-readiness/mobile-trustready-demo.png',full_page=True)
+
                   page.goto(base,wait_until='networkidle')
                   page.screenshot(path='artifacts/application-readiness/desktop-home.png',full_page=True)
                   assert not errors,errors
@@ -103,7 +138,7 @@ jobs:
           print('Application portfolio browser paths: OK')
           PY
 
-      - name: Smoke public proof and repository links
+      - name: Smoke already-published proof and repository links
         run: |
           python - <<'PY'
           import urllib.request, time
@@ -111,7 +146,7 @@ jobs:
             'https://mikelninh.github.io/',
             'https://mikelninh.github.io/trustready/legal/',
             'https://mikelninh.github.io/digital-democracy-studio/safetrace/venatic_application/',
-            'https://github.com/mikelninh/trustready',
+            'https://github.com/mikelninh/digital-worker-factory',
             'https://github.com/mikelninh/digital-democracy-studio/tree/main/zero-suffering-intelligence/entity-resolution',
             'https://github.com/mikelninh/drv-signallab/blob/main/docs/REVIEW_GUIDE.md',
             'https://github.com/mikelninh/drv-signallab',
@@ -133,6 +168,7 @@ jobs:
           PY
 
       - name: Upload visual readiness proof
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: application-portfolio-readiness
