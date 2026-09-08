@@ -60,25 +60,30 @@ jobs:
                 assert required in hero,required
               assert page.locator('.choice').count()==3
               trust_title=page.locator('#problemTitle').inner_text()
-              assert trust_title=='Can this AI take a real-world action without your approval?'
+              assert trust_title=='Can this AI run a command when execution is supposed to be off?'
               trust_evidence=page.locator('#evidenceGrid').inner_text()
               for required in ['3','3/3','Fail closed']:
                 assert required in trust_evidence,required
+              assert '--allow-exec' in page.locator('.stage').inner_text()
+              assert 'subprocess.run' in page.locator('.stage').inner_text()
               assert 'trustready/demo/' in page.locator('#tryLink').get_attribute('href')
               assert 'scoped technical assurance' in page.locator('#boundaryText').inner_text().lower()
 
-              # TrustReady: concrete real-effect authority story -> remove gate -> fail closed.
+              # TrustReady: explicit execution authority -> deny-by-default guard -> remove guard -> fail closed.
               page.goto('http://127.0.0.1:8765/trustready/demo/',wait_until='networkidle')
-              assert page.locator('h1').inner_text()=='Can this AI do something it shouldn’t?'
+              assert page.locator('h1').inner_text()=='Can this AI run a command it wasn’t allowed to run?'
               assert page.locator('#verdict').inner_text()=='TECHNICAL_GO'
-              assert 'POST /jobs/{id}/bids' in page.locator('.scenario').inner_text()
+              scenario=page.locator('.scenario').inner_text()
+              assert '--allow-exec' in scenario
+              assert 'subprocess.run' in scenario
+              assert 'disabled by policy' in scenario
               assert page.locator('#gateSwitch').get_attribute('aria-checked')=='true'
               page.locator('#gateSwitch').click()
               assert page.locator('#verdict').inner_text()=='CHANGED'
               page.locator('#runBtn').click()
               assert page.locator('#verdict').inner_text()=='NO_GO'
               assert page.locator('#gateStatus').inner_text()=='FAIL'
-              assert 'human gate is gone' in page.locator('#decisionTitle').inner_text().lower()
+              assert 'deny-by-default guard is gone' in page.locator('#decisionTitle').inner_text().lower()
               assert 'browser page is not itself the repository scanner' in page.locator('.scanFoot').inner_text().lower()
               page.locator('#resetBtn').click()
               assert page.locator('#verdict').inner_text()=='TECHNICAL_GO'
@@ -201,6 +206,7 @@ jobs:
               mobile.screenshot(path='artifacts/proof-experience/portfolio-mobile.png',full_page=True)
               mobile.goto('http://127.0.0.1:8765/trustready/demo/',wait_until='networkidle')
               assert mobile.locator('#gateSwitch').is_visible()
+              assert 'subprocess.run' in mobile.locator('.scenario').inner_text()
               mobile.locator('#gateSwitch').click()
               mobile.locator('#runBtn').click()
               assert mobile.locator('#verdict').inner_text()=='NO_GO'
