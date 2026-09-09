@@ -67,7 +67,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Smoke public portfolio and Broker Signup Lab
+      - name: Smoke public portfolio, TrustReady and Broker Signup Lab
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
@@ -96,4 +96,5 @@ jobs:
           }
 
           fetch_until_ready "$base/" "AI Engineer"
+          fetch_until_ready "$base/trustready.html" "Know what your AI agent can actually do."
           fetch_until_ready "$base/broker-signup-lab/" "Wo verlieren wir Nutzer"
