@@ -1,0 +1,28 @@
+name: INCA proof checks
+
+on:
+  push:
+    paths:
+      - 'inca/**'
+      - 'inca-proof/**'
+      - '.github/workflows/inca-proof.yml'
+  pull_request:
+    paths:
+      - 'inca/**'
+      - 'inca-proof/**'
+      - '.github/workflows/inca-proof.yml'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Rebuild deterministic evaluation
+        run: python inca-proof/src/claims_eval.py
+      - name: Run proof tests
+        run: python -m unittest discover inca-proof/tests -v
+      - name: Ensure checked-in report is clean
+        run: git diff --exit-code -- inca-proof/reports/deterministic_eval.json
