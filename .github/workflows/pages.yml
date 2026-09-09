@@ -26,6 +26,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Verify Cyber Resilience Commons simulator
+        run: node --test cyber-resilience-commons/test.mjs
+
       - name: Stage pinned TrustReady Bao rehearsal
         env:
           TRUSTREADY_SHA: ed5115bd8da897900c0ca9cadf01ffd1f60d8026
@@ -67,7 +70,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Smoke public portfolio, TrustReady and Broker Signup Lab
+      - name: Smoke public portfolio, TrustReady, Cyber Resilience Commons and Broker Signup Lab
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
@@ -97,4 +100,5 @@ jobs:
 
           fetch_until_ready "$base/" "AI Engineer"
           fetch_until_ready "$base/trustready.html" "Know what your AI agent can actually do."
+          fetch_until_ready "$base/cyber-resilience-commons/" "See how far an incident can spread"
           fetch_until_ready "$base/broker-signup-lab/" "Wo verlieren wir Nutzer"
