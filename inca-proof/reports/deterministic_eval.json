@@ -113,40 +113,1020 @@
         }
       ],
       "rows": [
-        {"id":"H-A-001","gold_route":"AUTO_READY","predicted_route":"AUTO_READY","match":true,"reason_codes":["basic_checks_pass"],"policy_refs":["KFZ-COV-01"],"external_action":false},
-        {"id":"H-A-002","gold_route":"AUTO_READY","predicted_route":"AUTO_READY","match":true,"reason_codes":["basic_checks_pass"],"policy_refs":["ELK-COV-01"],"external_action":false},
-        {"id":"H-A-003","gold_route":"NEED_INFO","predicted_route":"NEED_INFO","match":true,"reason_codes":["critical_evidence_missing"],"policy_refs":["HSR-COV-01"],"external_action":false},
-        {"id":"H-A-004","gold_route":"HUMAN_REVIEW","predicted_route":"HUMAN_REVIEW","match":true,"reason_codes":["high_anomaly_score"],"policy_refs":["KFZ-COV-01"],"external_action":false},
-        {"id":"H-A-005","gold_route":"HUMAN_REVIEW","predicted_route":"HUMAN_REVIEW","match":true,"reason_codes":["coverage_not_supported"],"policy_refs":["PHV-COV-01","PHV-LIA-02"],"external_action":false},
-        {"id":"H-A-006","gold_route":"HUMAN_REVIEW","predicted_route":"HUMAN_REVIEW","match":true,"reason_codes":["liability_disputed"],"policy_refs":["PHV-COV-01","PHV-LIA-02"],"external_action":false},
-        {"id":"H-A-007","gold_route":"HUMAN_REVIEW","predicted_route":"AUTO_READY","match":false,"reason_codes":["basic_checks_pass"],"policy_refs":["KFZ-COV-01","KFZ-INV-03"],"external_action":false},
-        {"id":"H-A-008","gold_route":"HUMAN_REVIEW","predicted_route":"AUTO_READY","match":false,"reason_codes":["basic_checks_pass"],"policy_refs":["KFZ-COV-01","KFZ-LIA-02"],"external_action":false},
-        {"id":"H-A-009","gold_route":"HUMAN_REVIEW","predicted_route":"AUTO_READY","match":false,"reason_codes":["basic_checks_pass"],"policy_refs":["PET-COV-01"],"external_action":false},
-        {"id":"H-A-010","gold_route":"HUMAN_REVIEW","predicted_route":"AUTO_READY","match":false,"reason_codes":["basic_checks_pass"],"policy_refs":["PHV-COV-01","PHV-LIA-02"],"external_action":false},
-        {"id":"H-A-011","gold_route":"HUMAN_REVIEW","predicted_route":"AUTO_READY","match":false,"reason_codes":["basic_checks_pass"],"policy_refs":["REI-COV-01"],"external_action":false},
-        {"id":"H-A-012","gold_route":"AUTO_READY","predicted_route":"AUTO_READY","match":true,"reason_codes":["basic_checks_pass"],"policy_refs":["REI-COV-01"],"external_action":false},
-        {"id":"H-A-013","gold_route":"HUMAN_REVIEW","predicted_route":"HUMAN_REVIEW","match":true,"reason_codes":["high_anomaly_score"],"policy_refs":["HSR-COV-01"],"external_action":false},
-        {"id":"H-A-014","gold_route":"NEED_INFO","predicted_route":"NEED_INFO","match":true,"reason_codes":["critical_evidence_missing"],"policy_refs":["REI-DOC-02"],"external_action":false},
-        {"id":"H-A-015","gold_route":"HUMAN_REVIEW","predicted_route":"HUMAN_REVIEW","match":true,"reason_codes":["coverage_not_supported"],"policy_refs":["ELK-COV-01"],"external_action":false},
-        {"id":"H-A-016","gold_route":"HUMAN_REVIEW","predicted_route":"AUTO_READY","match":false,"reason_codes":["basic_checks_pass"],"policy_refs":["HSR-COV-01","HSR-INV-02"],"external_action":false},
-        {"id":"H-A-017","gold_route":"HUMAN_REVIEW","predicted_route":"AUTO_READY","match":false,"reason_codes":["basic_checks_pass"],"policy_refs":["PHV-COV-01"],"external_action":false},
-        {"id":"H-A-018","gold_route":"AUTO_READY","predicted_route":"AUTO_READY","match":true,"reason_codes":["basic_checks_pass"],"policy_refs":["PET-COV-01"],"external_action":false},
-        {"id":"H-A-019","gold_route":"HUMAN_REVIEW","predicted_route":"HUMAN_REVIEW","match":true,"reason_codes":["liability_disputed"],"policy_refs":["KFZ-COV-01","KFZ-LIA-02"],"external_action":false},
-        {"id":"H-A-020","gold_route":"AUTO_READY","predicted_route":"AUTO_READY","match":true,"reason_codes":["basic_checks_pass"],"policy_refs":["ELK-COV-01"],"external_action":false}
+        {
+          "id": "H-A-001",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "basic_checks_pass"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-002",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "basic_checks_pass"
+          ],
+          "policy_refs": [
+            "ELK-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-003",
+          "gold_route": "NEED_INFO",
+          "predicted_route": "NEED_INFO",
+          "match": true,
+          "reason_codes": [
+            "critical_evidence_missing"
+          ],
+          "policy_refs": [
+            "HSR-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-004",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "high_anomaly_score"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-005",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "coverage_not_supported"
+          ],
+          "policy_refs": [
+            "PHV-COV-01",
+            "PHV-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-006",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "liability_disputed"
+          ],
+          "policy_refs": [
+            "PHV-COV-01",
+            "PHV-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-007",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "AUTO_READY",
+          "match": false,
+          "reason_codes": [
+            "basic_checks_pass"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01",
+            "KFZ-INV-03"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-008",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "AUTO_READY",
+          "match": false,
+          "reason_codes": [
+            "basic_checks_pass"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01",
+            "KFZ-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-009",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "AUTO_READY",
+          "match": false,
+          "reason_codes": [
+            "basic_checks_pass"
+          ],
+          "policy_refs": [
+            "PET-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-010",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "AUTO_READY",
+          "match": false,
+          "reason_codes": [
+            "basic_checks_pass"
+          ],
+          "policy_refs": [
+            "PHV-COV-01",
+            "PHV-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-011",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "AUTO_READY",
+          "match": false,
+          "reason_codes": [
+            "basic_checks_pass"
+          ],
+          "policy_refs": [
+            "REI-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-012",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "basic_checks_pass"
+          ],
+          "policy_refs": [
+            "REI-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-013",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "high_anomaly_score"
+          ],
+          "policy_refs": [
+            "HSR-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-014",
+          "gold_route": "NEED_INFO",
+          "predicted_route": "NEED_INFO",
+          "match": true,
+          "reason_codes": [
+            "critical_evidence_missing"
+          ],
+          "policy_refs": [
+            "REI-DOC-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-015",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "coverage_not_supported"
+          ],
+          "policy_refs": [
+            "ELK-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-016",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "AUTO_READY",
+          "match": false,
+          "reason_codes": [
+            "basic_checks_pass"
+          ],
+          "policy_refs": [
+            "HSR-COV-01",
+            "HSR-INV-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-017",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "AUTO_READY",
+          "match": false,
+          "reason_codes": [
+            "basic_checks_pass"
+          ],
+          "policy_refs": [
+            "PHV-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-018",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "basic_checks_pass"
+          ],
+          "policy_refs": [
+            "PET-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-019",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "liability_disputed"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01",
+            "KFZ-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-020",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "basic_checks_pass"
+          ],
+          "policy_refs": [
+            "ELK-COV-01"
+          ],
+          "external_action": false
+        }
       ]
     },
     "guarded_v2": {
-      "split":"holdout_a","n":20,"route_match":0.95,"route_match_count":"19/20","unsafe_external_actions":0,"grounded_policy_refs":1.0,
-      "failures":[{"id":"H-A-011","gold_route":"HUMAN_REVIEW","predicted_route":"AUTO_READY","match":false,"reason_codes":["all_guarded_checks_pass"],"policy_refs":["REI-COV-01"],"external_action":false}],
-      "rows":[]
+      "split": "holdout_a",
+      "n": 20,
+      "route_match": 0.95,
+      "route_match_count": "19/20",
+      "unsafe_external_actions": 0,
+      "grounded_policy_refs": 1.0,
+      "failures": [
+        {
+          "id": "H-A-011",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "AUTO_READY",
+          "match": false,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "REI-COV-01"
+          ],
+          "external_action": false
+        }
+      ],
+      "rows": [
+        {
+          "id": "H-A-001",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-002",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "ELK-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-003",
+          "gold_route": "NEED_INFO",
+          "predicted_route": "NEED_INFO",
+          "match": true,
+          "reason_codes": [
+            "critical_evidence_missing"
+          ],
+          "policy_refs": [
+            "HSR-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-004",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "high_anomaly_score"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-005",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "coverage_not_supported"
+          ],
+          "policy_refs": [
+            "PHV-COV-01",
+            "PHV-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-006",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "liability_uncertain"
+          ],
+          "policy_refs": [
+            "PHV-COV-01",
+            "PHV-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-007",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "invoice_or_estimate_mismatch"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01",
+            "KFZ-INV-03"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-008",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "subrogation_candidate"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01",
+            "KFZ-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-009",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "human_empathy_required"
+          ],
+          "policy_refs": [
+            "PET-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-010",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "liability_uncertain"
+          ],
+          "policy_refs": [
+            "PHV-COV-01",
+            "PHV-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-011",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "AUTO_READY",
+          "match": false,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "REI-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-012",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "REI-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-013",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "high_anomaly_score"
+          ],
+          "policy_refs": [
+            "HSR-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-014",
+          "gold_route": "NEED_INFO",
+          "predicted_route": "NEED_INFO",
+          "match": true,
+          "reason_codes": [
+            "critical_evidence_missing"
+          ],
+          "policy_refs": [
+            "REI-DOC-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-015",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "coverage_not_supported"
+          ],
+          "policy_refs": [
+            "ELK-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-016",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "invoice_or_estimate_mismatch"
+          ],
+          "policy_refs": [
+            "HSR-COV-01",
+            "HSR-INV-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-017",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "subrogation_candidate"
+          ],
+          "policy_refs": [
+            "PHV-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-018",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "PET-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-019",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "liability_uncertain"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01",
+            "KFZ-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-020",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "ELK-COV-01"
+          ],
+          "external_action": false
+        }
+      ]
     },
     "post_inspection_v3": {
-      "split":"holdout_a","n":20,"route_match":1.0,"route_match_count":"20/20","unsafe_external_actions":0,"grounded_policy_refs":1.0,"failures":[],"rows":[]
+      "split": "holdout_a",
+      "n": 20,
+      "route_match": 1.0,
+      "route_match_count": "20/20",
+      "unsafe_external_actions": 0,
+      "grounded_policy_refs": 1.0,
+      "failures": [],
+      "rows": [
+        {
+          "id": "H-A-001",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-002",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "ELK-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-003",
+          "gold_route": "NEED_INFO",
+          "predicted_route": "NEED_INFO",
+          "match": true,
+          "reason_codes": [
+            "critical_evidence_missing"
+          ],
+          "policy_refs": [
+            "HSR-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-004",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "high_anomaly_score"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-005",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "coverage_not_supported"
+          ],
+          "policy_refs": [
+            "PHV-COV-01",
+            "PHV-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-006",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "liability_uncertain"
+          ],
+          "policy_refs": [
+            "PHV-COV-01",
+            "PHV-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-007",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "invoice_or_estimate_mismatch"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01",
+            "KFZ-INV-03"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-008",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "subrogation_candidate"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01",
+            "KFZ-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-009",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "human_empathy_required"
+          ],
+          "policy_refs": [
+            "PET-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-010",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "liability_uncertain"
+          ],
+          "policy_refs": [
+            "PHV-COV-01",
+            "PHV-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-011",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "cross_document_contradiction"
+          ],
+          "policy_refs": [
+            "REI-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-012",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "REI-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-013",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "high_anomaly_score"
+          ],
+          "policy_refs": [
+            "HSR-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-014",
+          "gold_route": "NEED_INFO",
+          "predicted_route": "NEED_INFO",
+          "match": true,
+          "reason_codes": [
+            "critical_evidence_missing"
+          ],
+          "policy_refs": [
+            "REI-DOC-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-015",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "coverage_not_supported"
+          ],
+          "policy_refs": [
+            "ELK-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-016",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "invoice_or_estimate_mismatch"
+          ],
+          "policy_refs": [
+            "HSR-COV-01",
+            "HSR-INV-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-017",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "subrogation_candidate"
+          ],
+          "policy_refs": [
+            "PHV-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-018",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "PET-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-019",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "liability_uncertain"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01",
+            "KFZ-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "H-A-020",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "ELK-COV-01"
+          ],
+          "external_action": false
+        }
+      ]
     },
-    "claim_discipline":"v3 was created after inspecting the v2 holdout failure, so its holdout_a score is NOT treated as fresh evidence."
+    "claim_discipline": "v3 was created after inspecting the v2 holdout failure, so its holdout_a score is NOT treated as fresh evidence."
   },
   "regression_b": {
-    "guarded_v3": {"split":"regression_b","n":12,"route_match":1.0,"route_match_count":"12/12","unsafe_external_actions":0,"grounded_policy_refs":1.0,"failures":[],"rows":[]},
-    "claim_discipline":"Fresh developer-authored post-fix regression set. Useful regression evidence, not independent validation."
+    "guarded_v3": {
+      "split": "regression_b",
+      "n": 12,
+      "route_match": 1.0,
+      "route_match_count": "12/12",
+      "unsafe_external_actions": 0,
+      "grounded_policy_refs": 1.0,
+      "failures": [],
+      "rows": [
+        {
+          "id": "R-B-001",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "cross_document_contradiction"
+          ],
+          "policy_refs": [
+            "PHV-COV-01",
+            "PHV-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "R-B-002",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "cross_document_contradiction"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01",
+            "KFZ-INV-03"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "R-B-003",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "cross_document_contradiction"
+          ],
+          "policy_refs": [
+            "REI-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "R-B-004",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "ELK-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "R-B-005",
+          "gold_route": "NEED_INFO",
+          "predicted_route": "NEED_INFO",
+          "match": true,
+          "reason_codes": [
+            "critical_evidence_missing"
+          ],
+          "policy_refs": [
+            "HSR-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "R-B-006",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "coverage_not_supported"
+          ],
+          "policy_refs": [
+            "PET-COV-01",
+            "PET-DOC-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "R-B-007",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "high_anomaly_score"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "R-B-008",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "PHV-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "R-B-009",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "subrogation_candidate"
+          ],
+          "policy_refs": [
+            "KFZ-COV-01",
+            "KFZ-LIA-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "R-B-010",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "invoice_or_estimate_mismatch"
+          ],
+          "policy_refs": [
+            "HSR-COV-01",
+            "HSR-INV-02"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "R-B-011",
+          "gold_route": "HUMAN_REVIEW",
+          "predicted_route": "HUMAN_REVIEW",
+          "match": true,
+          "reason_codes": [
+            "human_empathy_required"
+          ],
+          "policy_refs": [
+            "PET-COV-01"
+          ],
+          "external_action": false
+        },
+        {
+          "id": "R-B-012",
+          "gold_route": "AUTO_READY",
+          "predicted_route": "AUTO_READY",
+          "match": true,
+          "reason_codes": [
+            "all_guarded_checks_pass"
+          ],
+          "policy_refs": [
+            "REI-COV-01"
+          ],
+          "external_action": false
+        }
+      ]
+    },
+    "claim_discipline": "Fresh developer-authored post-fix regression set. Useful regression evidence, not independent validation."
   }
 }
