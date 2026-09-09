@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Cyber Resilience Commons — a free synthetic planning tool for cities, hospitals, schools, NGOs and small businesses to understand cyber blast radius and recovery priorities.">
+  <meta name="theme-color" content="#f4f1e8">
+  <title>Cyber Resilience Commons</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="#top">Cyber Resilience Commons</a><nav class="nav"><a href="#workspace">Simulator</a><a href="#results">Priorities</a><a href="#method">Method</a><button id="print" class="cta">Print resilience brief</button></nav></div></header>
+<main id="top">
+<section class="hero"><div class="wrap"><div class="eyebrow">Free · open · synthetic by design</div><h1>See how far an incident can spread — before it happens.</h1><p class="lead">A public-interest cyber resilience simulator for cities, hospitals, schools, NGOs and small organizations. Assume one thing goes wrong, then see which boundary stops the damage and what to fix next.</p><div class="safe"><span>●</span><div><b>No real systems are scanned or attacked.</b> Every scenario runs against a synthetic planning model in your browser. It is a teaching and preparedness tool, not an audit, pentest or certification.</div></div></div></section>
+<section class="wrap" id="workspace">
+  <div class="workspace">
+    <div class="workspaceHead"><strong>Resilience workspace</strong><span>Assume compromise → contain → recover → prove</span></div>
+    <div class="templateBar"><span>1 · Choose an organization</span><div id="templates" class="choices"></div></div>
+    <div class="mainGrid">
+      <aside class="scenarioCol"><span>2 · Choose an incident</span><div id="scenarios" class="scenarioList"></div><div class="orgCard"><div class="panelLabel">Synthetic organization</div><h3 id="orgTitle"></h3><p id="orgDesc"></p><div id="assets" class="assets"></div></div></aside>
+      <section class="center">
+        <div class="scenarioIntro"><div><div class="panelLabel">3 · Run the same incident against your controls</div><h2 id="scenarioTitle"></h2><p id="scenarioDesc"></p></div></div>
+        <div class="verdictBox"><span id="verdict" class="verdict"></span><p id="verdictDesc"></p></div>
+        <div id="timeline" class="timeline"></div>
+        <div id="impact" class="impact"></div>
+        <button id="harden" class="harden"></button>
+      </section>
+      <aside class="controlCol"><span>4 · Change the boundaries</span><div id="controls" class="controls"></div><div class="controlActions"><button id="recommended" class="mini primary">Enable recommended baseline</button><button id="reset" class="mini">Reset</button></div></aside>
+    </div>
+  </div>
+</section>
+<section class="section" id="results"><div class="wrap"><div class="sectionHead"><div><div class="eyebrow">What should we do first?</div><h2>Turn a frightening incident into a prioritized engineering plan.</h2></div><p>We deliberately avoid a single “security score.” The useful question is which concrete boundary changes the modeled outcome, how many scenarios it improves, and whether you can later prove that control in your own authorized environment.</p></div><div class="resultsGrid"><article class="card"><div class="panelLabel">Highest-leverage missing boundaries</div><h3>Priority actions</h3><div id="priorities"></div></article><article class="card"><div class="panelLabel">Same incident, same assumptions</div><h3>Before → after</h3><div id="compare" class="compare"></div><div class="panelLabel" style="margin-top:22px">Recovery drill assumptions</div><h3>Could we get back up?</h3><div id="recovery" class="recovery"></div></article></div></div></section>
+<section class="section" id="method"><div class="wrap"><div class="sectionHead"><div><div class="eyebrow">How the Commons works</div><h2>Preparedness should be understandable, testable and shared.</h2></div><p>The simulator is intentionally simple enough for non-specialists, but its structure mirrors a serious resilience program: map assets, assume compromise, measure blast radius, introduce deterministic boundaries, test recovery and keep evidence.</p></div><div class="methodGrid"><article class="methodCard"><span>01 · MAP</span><h3>Know what matters.</h3><p>Identify critical identities, services, data, external dependencies and recovery paths. Unknown ownership and unknown dependencies are risks in themselves.</p></article><article class="methodCard"><span>02 · ASSUME</span><h3>Start after something went wrong.</h3><p>Some scenarios intentionally begin with a stolen session or compromised endpoint. Resilience is about limiting what happens next, not pretending prevention is perfect.</p></article><article class="methodCard"><span>03 · CONTAIN</span><h3>Measure the blast radius.</h3><p>Track which identities, services and datasets the synthetic path reaches before an explicit boundary stops it.</p></article><article class="methodCard"><span>04 · RECOVER</span><h3>Make restoration a practiced capability.</h3><p>Backups, session revocation, isolation and communications matter only when teams can use them under pressure.</p></article><article class="methodCard"><span>05 · PROVE</span><h3>Evidence beats checkboxes.</h3><p>In a real program, “MFA enabled” is not enough. Run an authorized test that demonstrates the intended effect is actually blocked or contained.</p></article><article class="methodCard"><span>06 · SHARE</span><h3>Make good patterns public.</h3><p>The Commons should help municipalities and small organizations reuse strong defensive patterns instead of solving the same problems alone.</p></article></div><div class="berlin"><h3>Why Berlin is the first synthetic city case.</h3><p>The public discussion around Berlin’s 2026 ransomware incident is a reminder that cyber resilience is civic infrastructure. This simulator does <strong>not</strong> model Berlin’s actual network, systems or vulnerabilities. Berlin is simply the first public-interest story we use to make blast radius, containment and recovery understandable to everyone.</p></div></div></section>
+<section class="closing"><div class="wrap"><div class="closingBox"><strong>A city should not have to believe it is resilient. It should be able to show what happens when one thing fails.</strong><a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/cyber-resilience-commons">View the open source →</a></div></div></section>
+</main>
+<footer class="footer"><div class="wrap"><span>Cyber Resilience Commons v1 · public-interest prototype</span><span>Synthetic planning model · no real-target scanning · no security certification</span></div></footer>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
