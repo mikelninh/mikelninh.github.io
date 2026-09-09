@@ -47,15 +47,11 @@ jobs:
             return 1
           }
 
-          # Root-level routes are the supported public URLs. GitHub Pages has
-          # repeatedly returned stale 404s for the otherwise correctly deployed
-          # /trustready/* subtree, so SHIP is gated on these stable root files.
           check 'https://mikelninh.github.io/trustready-demo.html' "Can this AI run a command it wasn’t allowed to run?"
           check 'https://mikelninh.github.io/trustready-security-delta.html' 'Does the boundary actually make the system safer?'
           check 'https://mikelninh.github.io/trustready-security-delta.json' '"attackCases":14'
+          check 'https://mikelninh.github.io/trustready-self-service.html' 'Connect your agent repo. Find the effects. Prove the boundary.'
 
-          # Keep visibility on the legacy subtree without making an unrelated
-          # Pages/CDN routing defect block the supported public route.
           for legacy in \
             'https://mikelninh.github.io/trustready/demo/' \
             'https://mikelninh.github.io/trustready/security-delta/'; do

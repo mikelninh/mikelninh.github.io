@@ -1,0 +1,103 @@
+name: TrustReady Self-Service QA
+
+on:
+  pull_request:
+    paths:
+      - 'trustready-self-service.html'
+      - '.github/workflows/trustready-self-service-qa.yml'
+      - '.github/workflows/public-pages-watch.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'trustready-self-service.html'
+      - '.github/workflows/trustready-self-service-qa.yml'
+      - '.github/workflows/public-pages-watch.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Chromium
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install chromium
+      - name: Test public preflight product flow
+        run: |
+          mkdir -p artifacts/trustready-self-service
+          python - <<'PY'
+          import json, subprocess, time
+          from playwright.sync_api import sync_playwright
+
+          server=subprocess.Popen(['python','-m','http.server','8765'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+          fixture_agent='''// security-boundary\nexport const maxToolCalls=8;\nexport const tools=[{id:"send_email",name:"send_email",risk:"consequential",external:true},{id:"read_case",name:"read_case",risk:"read",external:false}];\nexport async function runAgent(model){ const tool_calls=[model]; const tool=tools[0]; tool.handler=async()=>true; const args={}; return tool.handler(args) }\n// traceId approvedBy tenantId audit'''
+          try:
+            time.sleep(.5)
+            with sync_playwright() as p:
+              browser=p.chromium.launch(headless=True)
+              page=browser.new_page(viewport={'width':1440,'height':1000})
+              errors=[]
+              page.on('pageerror',lambda e:errors.append(str(e)))
+
+              def route(route):
+                url=route.request.url
+                if url=='https://api.github.com/repos/acme/agent':
+                  return route.fulfill(status=200,content_type='application/json',body=json.dumps({'full_name':'acme/agent','default_branch':'main'}))
+                if url=='https://api.github.com/repos/acme/agent/commits/main':
+                  return route.fulfill(status=200,content_type='application/json',body=json.dumps({'sha':'a'*40}))
+                if url==f"https://api.github.com/repos/acme/agent/git/trees/{'a'*40}?recursive=1":
+                  return route.fulfill(status=200,content_type='application/json',body=json.dumps({'truncated':False,'tree':[{'type':'blob','path':'src/agent.mjs','size':len(fixture_agent)}]}))
+                if url==f"https://raw.githubusercontent.com/acme/agent/{'a'*40}/src/agent.mjs":
+                  return route.fulfill(status=200,content_type='text/plain',body=fixture_agent)
+                return route.continue_()
+              page.route('https://api.github.com/**',route)
+              page.route('https://raw.githubusercontent.com/**',route)
+              page.goto('http://127.0.0.1:8765/trustready-self-service.html',wait_until='networkidle')
+              assert 'Connect your agent repo' in page.locator('h1').inner_text()
+              assert 'can never issue' in page.locator('.truth').inner_text()
+              page.locator('#repo').fill('https://github.com/acme/agent')
+              page.locator('#scan').click()
+              page.locator('#setup.show').wait_for(timeout=5000)
+              verdict=page.locator('#verdict').inner_text()
+              assert verdict in ('SETUP REQUIRED','TECHNICAL_NO_GO')
+              assert verdict!='TECHNICAL_GO'
+              assert page.locator('#entrypoints').inner_text()=='1'
+              assert int(page.locator('#tools').inner_text())>=2
+              assert int(page.locator('#attacks').inner_text())>=1
+              assert 'send_email' in page.locator('#effects').inner_text().lower()
+              assert 'untrusted instruction effect' in page.locator('#attackList').inner_text().lower()
+              assert 'git clone --depth 1 https://github.com/mikelninh/trustready.git' in page.locator('#ci').inner_text()
+              assert 'owned CI' in page.locator('body').inner_text()
+              assert not errors, errors
+              page.screenshot(path='artifacts/trustready-self-service/desktop.png',full_page=True)
+
+              mobile=browser.new_page(viewport={'width':390,'height':844})
+              mobile.route('https://api.github.com/**',route)
+              mobile.route('https://raw.githubusercontent.com/**',route)
+              mobile.goto('http://127.0.0.1:8765/trustready-self-service.html',wait_until='networkidle')
+              mobile.locator('#repo').fill('https://github.com/acme/agent')
+              mobile.locator('#scan').click()
+              mobile.locator('#setup.show').wait_for(timeout=5000)
+              assert mobile.locator('#verdict').inner_text()!='TECHNICAL_GO'
+              assert mobile.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1')
+              mobile.screenshot(path='artifacts/trustready-self-service/mobile.png',full_page=True)
+              browser.close()
+          finally:
+            server.terminate(); server.wait(timeout=5)
+          print('TrustReady Self-Service browser QA: PASS')
+          PY
+      - name: Upload visual QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trustready-self-service-qa
+          path: artifacts/trustready-self-service/
+          if-no-files-found: error
