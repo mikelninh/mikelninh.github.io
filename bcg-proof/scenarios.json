@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "purpose": "Independent application work sample for BCG Platinion AI Associate",
+    "scope": "Synthetic engineering behaviour only; not enterprise production validation"
+  },
+  "scenarios": [
+    {
+      "id": "ASF-2026-014",
+      "name": "verified_release_path",
+      "business_intent": "Add a vendor-onboarding workflow while preserving human approval for sensitive payment details and EU data residency.",
+      "gates": {
+        "spec_contract": true,
+        "tool_policy": true,
+        "tests": true,
+        "security": true,
+        "observability": true,
+        "ci": true
+      },
+      "expected_release": "READY_FOR_HUMAN_RELEASE"
+    },
+    {
+      "id": "ASF-2026-015",
+      "name": "protected_boundary_regression",
+      "business_intent": "Same feature, but the coding agent changes a protected payment-approval boundary.",
+      "gates": {
+        "spec_contract": true,
+        "tool_policy": true,
+        "tests": true,
+        "security": false,
+        "observability": true,
+        "ci": false
+      },
+      "expected_release": "BLOCKED"
+    }
+  ]
+}
