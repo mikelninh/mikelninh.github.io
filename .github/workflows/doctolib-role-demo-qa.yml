@@ -28,5 +28,5 @@ jobs:
           set -euo pipefail
           grep -Fq 'no official Doctolib product UI or data' doctolib-ai-ops/index.html
           grep -Fq 'no official Doctolib product UI or data' doctolib-onboarding/index.html
-          grep -Fq 'synthetic data only' doctolib-ai-ops/index.html
+          grep -Fq 'Synthetic work sample' doctolib-ai-ops/index.html
           grep -Fq 'synthetic configuration only' doctolib-onboarding/index.html
