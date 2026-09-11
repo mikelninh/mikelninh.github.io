@@ -17,5 +17,5 @@ for (const marker of [
 ]) assert.ok(html.includes(marker), `missing marker: ${marker}`);
 
 assert.ok(html.includes('https://github.com/mikelninh/digital-worker-factory'));
-assert.ok(html.includes('No Doctolib systems, customer data, internal architecture or production performance claims.'));
+assert.ok(html.includes('no official Doctolib product UI or data'));
 console.log('AI Operations one-screen demo QA PASS');
