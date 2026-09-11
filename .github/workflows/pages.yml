@@ -57,6 +57,12 @@ jobs:
           cp -R /tmp/council-mission-control/dist-pages/mission-control ./mission-control
           node -e "const fs=require('fs');const d=JSON.parse(fs.readFileSync('mission-control/mission-control.json','utf8'));if(d.schema!=='council-mission-control-v0.3'||!d.safety?.publicSafe||d.safety?.privateDetailsPublished!==false||d.projects.some(p=>p.private))process.exit(1);console.log('MISSION CONTROL DEPLOYMENT CONTRACT PASS:',d.projects.length,'public projects');"
 
+      - name: Doctolib role demo QA
+        run: |
+          set -euo pipefail
+          node doctolib-ai-ops/test.mjs
+          node doctolib-onboarding/test.mjs
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site
@@ -67,7 +73,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Smoke public portfolio, TrustReady and Broker Signup Lab
+      - name: Smoke public portfolio, TrustReady and role demos
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
@@ -98,3 +104,5 @@ jobs:
           fetch_until_ready "$base/" "AI Engineer"
           fetch_until_ready "$base/trustready.html" "Know what your AI agent can actually do."
           fetch_until_ready "$base/broker-signup-lab/" "Wo verlieren wir Nutzer"
+          fetch_until_ready "$base/doctolib-ai-ops/" "AI Operations Lab"
+          fetch_until_ready "$base/doctolib-onboarding/" "Implementation Onboarding Lab"

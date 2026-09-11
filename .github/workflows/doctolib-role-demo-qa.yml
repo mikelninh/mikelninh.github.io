@@ -1,0 +1,32 @@
+name: Doctolib role demo QA
+
+on:
+  pull_request:
+    paths:
+      - 'doctolib-ai-ops/**'
+      - 'doctolib-onboarding/**'
+      - '.github/workflows/doctolib-role-demo-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: AI Operations demo contract
+        run: node doctolib-ai-ops/test.mjs
+      - name: Technical Onboarding demo contract
+        run: node doctolib-onboarding/test.mjs
+      - name: Static HTML safety markers
+        run: |
+          set -euo pipefail
+          grep -Fq 'no official Doctolib product UI or data' doctolib-ai-ops/index.html
+          grep -Fq 'no official Doctolib product UI or data' doctolib-onboarding/index.html
+          grep -Fq 'synthetic data only' doctolib-ai-ops/index.html
+          grep -Fq 'synthetic configuration only' doctolib-onboarding/index.html
