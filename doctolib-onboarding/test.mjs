@@ -5,11 +5,13 @@ const html = fs.readFileSync(new URL('./index.html', import.meta.url), 'utf8');
 
 for (const marker of [
   'Implementation Onboarding Lab',
-  'Technical preflight',
-  'Data mapping & migration',
-  'Go-live readiness',
-  'VPN/API unreachable',
-  'Migration data issue',
+  'Make technical onboarding',
+  'Check prerequisites early',
+  'Validate data before migration',
+  'Turn blockers into next steps',
+  'Run 30-second check',
+  'Ready to launch?',
+  'In one sentence:',
   'CareOS',
   'synthetic configuration only'
 ]) assert.ok(html.includes(marker), `missing marker: ${marker}`);
