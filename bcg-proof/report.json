@@ -1,0 +1,23 @@
+{
+  "proof_scope": "Synthetic engineering behaviour only; not enterprise production validation",
+  "scenario_count": 2,
+  "all_expected_outcomes_match": true,
+  "results": [
+    {
+      "id": "ASF-2026-014",
+      "name": "verified_release_path",
+      "expected_release": "READY_FOR_HUMAN_RELEASE",
+      "actual_release": "READY_FOR_HUMAN_RELEASE",
+      "match": true,
+      "failed_gates": []
+    },
+    {
+      "id": "ASF-2026-015",
+      "name": "protected_boundary_regression",
+      "expected_release": "BLOCKED",
+      "actual_release": "BLOCKED",
+      "match": true,
+      "failed_gates": ["security", "ci"]
+    }
+  ]
+}
