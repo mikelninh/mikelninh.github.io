@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Phone Onboarding Lab — Role-fit demo</title>
+<meta name="description" content="Independent technical onboarding work sample: preflight, API and network checks, data mapping, migration validation, go-live readiness and handoff.">
+<style>
+:root{--ink:#101827;--muted:#637083;--line:#dce4eb;--paper:#f6f8fb;--card:#fff;--blue:#1f57d6;--navy:#102a47;--green:#0d8b62;--amber:#af6900;--red:#b42318;--cyan:#18b6a4;--shadow:0 16px 48px rgba(18,35,58,.08);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:linear-gradient(180deg,#fff 0,#f5f8fb 55%,#fff 100%)}button,a{font:inherit}.shell{max-width:1280px;margin:auto;padding:0 28px 72px}
+.topbar{height:74px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:11px}.mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,var(--cyan),#24d3ba);color:#073b35;display:grid;place-items:center;font-weight:950}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:2px}.links{display:flex;gap:14px;align-items:center}.links a{text-decoration:none;color:#164a90;font-size:12px;font-weight:800}.chip{border:1px solid var(--line);background:white;border-radius:999px;padding:7px 10px;color:var(--muted);font-size:11px;font-weight:700}
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:42px;padding:72px 0 34px}.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:850;color:#174b94;margin:0 0 13px}.hero h1{font-size:clamp(42px,6vw,72px);line-height:.99;letter-spacing:-.055em;margin:0;max-width:850px}.hero h1 span{color:#0c8e7d}.lede{font-size:18px;line-height:1.62;color:#4f6175;max-width:760px}.hero-note{margin-top:20px;padding:13px 15px;border:1px solid #cde7e2;background:#f1fbf8;border-radius:13px;color:#47645f;font-size:12px;line-height:1.55}
+.role-card{background:var(--navy);color:white;border-radius:22px;padding:24px;box-shadow:var(--shadow);align-self:start}.role-card .eyebrow{color:#8fe0d4}.role-card h3{font-size:20px;margin:0 0 12px}.role-card ul{list-style:none;padding:0;margin:0}.role-card li{padding:13px 0;border-top:1px solid rgba(255,255,255,.12);font-size:13px;line-height:1.5}.role-card b{display:block}.role-card span{color:#c0d1df}
+.scenario-bar{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 22px}.scenario{border:1px solid var(--line);background:white;border-radius:999px;padding:10px 14px;font-size:12px;font-weight:800;cursor:pointer}.scenario.active{background:var(--navy);border-color:var(--navy);color:white}
+.progress{display:grid;grid-template-columns:repeat(6,1fr);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:white;margin-bottom:18px;box-shadow:var(--shadow)}.pstep{padding:14px 12px;border-right:1px solid var(--line);min-height:72px}.pstep:last-child{border-right:0}.pstep span{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#edf2f8;color:#4d6178;font-size:10px;font-weight:900;margin-bottom:6px}.pstep strong{font-size:10px;display:block}.pstep small{font-size:9px;color:var(--muted)}.pstep.ok{background:#f3fbf8}.pstep.ok span{background:#dff4eb;color:#08724f}.pstep.block{background:#fff8eb}.pstep.block span{background:#ffebc5;color:#955900}
+.workspace{display:grid;grid-template-columns:.9fr 1.18fr .92fr;gap:14px}.panel{background:white;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow);min-width:0}.panel h2{font-size:20px;margin:0}.panel-help{font-size:12px;line-height:1.55;color:var(--muted);margin:8px 0 16px}.check{display:grid;grid-template-columns:1fr auto;gap:8px;border:1px solid var(--line);border-radius:13px;padding:12px;margin:8px 0}.check strong{font-size:11px}.check small{display:block;font-size:10px;color:var(--muted);line-height:1.45;margin-top:3px}.badge{font-size:9px;font-weight:900;border-radius:999px;padding:5px 7px;height:fit-content}.okb{background:#e7f7f0;color:#08714d}.warnb{background:#fff0d6;color:#945800}.failb{background:#feeceb;color:#a72119}
+.mapping{display:grid;grid-template-columns:1fr 28px 1fr;gap:8px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:11px;margin:8px 0}.mapping strong{font-size:11px}.mapping small{display:block;color:var(--muted);font-size:9px;margin-top:3px}.arrow{text-align:center;color:#607187;font-weight:900}.issue{border:1px solid #f0d4a4;background:#fff8ec;border-radius:14px;padding:13px;margin-top:12px}.issue b{font-size:11px}.issue p{font-size:10px;color:#7c633a;line-height:1.45;margin:5px 0 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.primary,.secondary{border-radius:999px;padding:11px 14px;font-size:11px;font-weight:850;cursor:pointer}.primary{border:1px solid #0c8e7d;background:#0c8e7d;color:white}.secondary{border:1px solid var(--line);background:white;color:#174b94}
+.readiness{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fbfcfe}.readiness strong{font-size:28px}.readiness small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.gate{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:10px}.gate:first-of-type{margin-top:12px}.gate b{font-size:10px}.handoff{margin-top:14px;border:1px solid var(--line);border-radius:14px;padding:13px}.handoff h3{font-size:12px;margin:0 0 8px}.handoff ul{font-size:10px;color:var(--muted);line-height:1.55;padding-left:17px;margin:0}
+.section{padding-top:68px}.section h2{font-size:34px;letter-spacing:-.04em;margin:0}.section-copy{max-width:760px;font-size:14px;color:var(--muted);line-height:1.65}.principles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}.principle{border:1px solid var(--line);background:white;border-radius:15px;padding:16px}.principle b{font-size:12px}.principle span{display:block;margin-top:4px;color:var(--muted);font-size:10px;line-height:1.45}.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}.proof a{display:block;text-decoration:none;color:inherit;background:white;border:1px solid var(--line);border-radius:14px;padding:16px}.proof b{display:block;font-size:12px}.proof span{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+footer{margin-top:64px;border-top:1px solid var(--line);padding-top:22px;color:var(--muted);font-size:10px;display:flex;justify-content:space-between;gap:15px}
+@media(max-width:980px){.hero,.workspace{grid-template-columns:1fr}.role-card{order:-1}.progress{grid-template-columns:repeat(3,1fr)}.principles{grid-template-columns:1fr 1fr}.proof{grid-template-columns:1fr}}
+@media(max-width:620px){.shell{padding:0 16px 48px}.topbar{height:auto;padding:16px 0}.chip{display:none}.hero{padding-top:42px}.hero h1{font-size:42px}.progress{grid-template-columns:1fr 1fr}.principles{grid-template-columns:1fr}footer{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <div class="brand"><div class="mark">IO</div><div><strong>Implementation Onboarding Lab</strong><small>Independent role-fit demo · synthetic configuration only</small></div></div>
+  <div class="links"><a href="https://github.com/mikelninh/care-os" target="_blank" rel="noreferrer">Source ↗</a><span class="chip">No patient/customer data</span></div>
+</header>
+
+<section class="hero">
+  <div>
+    <p class="eyebrow">Technical onboarding · APIs · data migration · go-live</p>
+    <h1>Make technical onboarding <span>boringly reliable.</span></h1>
+    <p class="lede">A compact simulation of how I would take an AI phone-assistant implementation from preflight to handoff: validate technical prerequisites, map data, catch migration issues, document blockers and make go-live readiness explicit.</p>
+    <div class="hero-note"><b>Independent work sample.</b> This is a synthetic onboarding scenario inspired by the role. It does not represent Doctolib’s product, internal architecture, clinic integrations or production data.</div>
+  </div>
+  <aside class="role-card">
+    <p class="eyebrow">What I’m demonstrating</p>
+    <h3>Implementation clarity under real-world constraints.</h3>
+    <ul>
+      <li><b>Preflight</b><span>API, network/VPN, permissions and ownership checked up front.</span></li>
+      <li><b>Migration quality</b><span>Schema mapping, completeness and duplicate checks before go-live.</span></li>
+      <li><b>Technical communication</b><span>Every blocker has an owner, next action and plain-language explanation.</span></li>
+      <li><b>Handoff</b><span>Training and support context are part of the implementation, not an afterthought.</span></li>
+    </ul>
+  </aside>
+</section>
+
+<div class="scenario-bar">
+  <button class="scenario active" data-mode="ready">Clean implementation</button>
+  <button class="scenario" data-mode="vpn">VPN/API unreachable</button>
+  <button class="scenario" data-mode="data">Migration data issue</button>
+</div>
+
+<section class="progress" id="progress"></section>
+
+<section class="workspace">
+  <article class="panel">
+    <p class="eyebrow">01 · Technical preflight</p>
+    <h2>Can we safely start?</h2>
+    <p class="panel-help">Synthetic clinic setup. The preflight makes hidden dependencies visible before migration day.</p>
+    <div id="preflight"></div>
+    <div class="actions"><button class="primary" id="run">Run preflight</button><button class="secondary" id="reset">Reset</button></div>
+  </article>
+
+  <article class="panel">
+    <p class="eyebrow">02 · Data mapping & migration</p>
+    <h2>Will the data arrive correctly?</h2>
+    <p class="panel-help">Only schema-level demo records are used. The important part is making mapping assumptions and validation results explicit.</p>
+    <div id="mapping"></div>
+    <div id="issue"></div>
+  </article>
+
+  <article class="panel">
+    <p class="eyebrow">03 · Go-live readiness</p>
+    <h2>What blocks launch?</h2>
+    <p class="panel-help">A go-live decision should be explainable to the clinic, IT contact and internal implementation team.</p>
+    <div class="readiness"><strong id="score">—</strong><small>readiness gates passed</small><div id="gates"></div></div>
+    <div class="handoff"><h3>Handoff package</h3><ul><li>technical configuration summary</li><li>known issues + owners</li><li>migration validation result</li><li>training checklist + support path</li></ul></div>
+  </article>
+</section>
+
+<section class="section">
+  <p class="eyebrow">Operating principles</p>
+  <h2>Fast onboarding without hand-waving.</h2>
+  <p class="section-copy">The demo is intentionally less “AI magic” and more implementation discipline: isolate a technical issue, explain it clearly, keep migration quality visible and automate repetitive checks so humans can focus on exceptions.</p>
+  <div class="principles">
+    <div class="principle"><b>Fail early</b><span>Catch connectivity, permissions and format problems before go-live.</span></div>
+    <div class="principle"><b>Validate data</b><span>Completeness and duplicates are explicit acceptance gates.</span></div>
+    <div class="principle"><b>Make ownership clear</b><span>Every blocker has a responsible party and next step.</span></div>
+    <div class="principle"><b>Document for reuse</b><span>Repeatable checks become playbooks, scripts and training material.</span></div>
+  </div>
+  <div class="proof">
+    <a href="https://mikelninh.github.io/careos/journey.html" target="_blank"><b>CareOS journey ↗</b><span>Healthcare interoperability, provenance and human review.</span></a>
+    <a href="https://github.com/mikelninh/care-os" target="_blank"><b>CareOS source ↗</b><span>FHIR/HL7 research paths, preflight tooling and validation boundaries.</span></a>
+    <a href="https://mikelninh.github.io/pruefpilot/" target="_blank"><b>PrüfPilot ↗</b><span>Structured intake, evidence gaps and review-ready next actions.</span></a>
+  </div>
+</section>
+
+<footer><span>Built by Michael Ninh · Berlin · independent work sample</span><span>Synthetic role-fit simulation · no official Doctolib product UI or data</span></footer>
+</div>
+
+<script>
+const steps=['Preflight','Connectivity','Data mapping','Migration QA','Go-live','Handoff'];
+const states={
+ ready:{
+  pre:[
+   ['API credentials','Sandbox credential present and scoped.','OK'],
+   ['Network path','Endpoint reachable over approved connection.','OK'],
+   ['Clinic owner','Technical contact and implementation owner assigned.','OK'],
+   ['Export format','Required fields available in agreed export.','OK']
+  ],
+  mappings:[
+   ['external_location_id','clinic.location_id'],['provider_id','assistant.routing_provider_id'],['phone_number','assistant.inbound_number'],['opening_hours','assistant.availability_window']
+  ],
+  issue:null,pass:6,block:null
+ },
+ vpn:{
+  pre:[
+   ['API credentials','Sandbox credential present and scoped.','OK'],
+   ['Network path','VPN endpoint unreachable from onboarding environment.','FAIL'],
+   ['Clinic owner','Technical contact and implementation owner assigned.','OK'],
+   ['Export format','Required fields available in agreed export.','OK']
+  ],
+  mappings:[
+   ['external_location_id','clinic.location_id'],['provider_id','assistant.routing_provider_id'],['phone_number','assistant.inbound_number'],['opening_hours','assistant.availability_window']
+  ],
+  issue:['Connectivity blocker','VPN route must be confirmed by clinic IT before API validation can continue. Owner: clinic IT. Next step: connectivity test with timestamped result.'],pass:1,block:1
+ },
+ data:{
+  pre:[
+   ['API credentials','Sandbox credential present and scoped.','OK'],
+   ['Network path','Endpoint reachable over approved connection.','OK'],
+   ['Clinic owner','Technical contact and implementation owner assigned.','OK'],
+   ['Export format','Required fields available in agreed export.','OK']
+  ],
+  mappings:[
+   ['external_location_id','clinic.location_id'],['provider_id','assistant.routing_provider_id'],['phone_number','assistant.inbound_number'],['opening_hours','assistant.availability_window']
+  ],
+  issue:['Migration quality blocker','Duplicate provider IDs detected in the synthetic export. Do not import. Owner: data migration. Next step: deduplicate at source and rerun validation.'],pass:3,block:3
+ }
+};
+let mode='ready',ran=false; const $=s=>document.querySelector(s);
+function badge(s){return s==='OK'?'okb':s==='FAIL'?'failb':'warnb'}
+function render(){
+ const s=states[mode];
+ $('#preflight').innerHTML=s.pre.map(([a,b,c])=>`<div class="check"><div><strong>${a}</strong><small>${b}</small></div><span class="badge ${badge(c)}">${c}</span></div>`).join('');
+ $('#mapping').innerHTML=s.mappings.map(([a,b])=>`<div class="mapping"><div><strong>${a}</strong><small>source field</small></div><div class="arrow">→</div><div><strong>${b}</strong><small>target contract</small></div></div>`).join('');
+ $('#issue').innerHTML=s.issue?`<div class="issue"><b>${s.issue[0]}</b><p>${s.issue[1]}</p></div>`:`<div class="issue" style="background:#f2fbf7;border-color:#c7e8da"><b style="color:#08714d">No blocking issue in this scenario</b><p style="color:#567469">All synthetic readiness checks can proceed to go-live review.</p></div>`;
+ $('#progress').innerHTML=steps.map((x,i)=>{
+  let cls='',label='WAITING';
+  if(ran){
+   if(s.block!==null && i>=s.block){cls=i===s.block?'block':'';label=i===s.block?'BLOCKED':'WAITING';}
+   else {cls='ok';label='READY';}
+  }
+  return `<div class="pstep ${cls}"><span>${i+1}</span><strong>${x}</strong><small>${label}</small></div>`;
+ }).join('');
+ $('#score').textContent=ran?`${s.pass}/6`:'—';
+ const gates=[
+  ['Technical prerequisites',s.block===1?'BLOCKED':'PASS'],
+  ['Data mapping',s.block!==null&&s.block<=2?'WAITING':'PASS'],
+  ['Migration validation',s.block===3?'BLOCKED':(s.block!==null&&s.block<3?'WAITING':'PASS')],
+  ['Launch approval',s.block===null?'READY':'NOT READY']
+ ];
+ $('#gates').innerHTML=gates.map(([a,b])=>`<div class="gate"><span>${a}</span><b style="color:${b==='PASS'||b==='READY'?'#0d8b62':b==='BLOCKED'?'#b42318':'#9a6500'}">${b}</b></div>`).join('');
+ $('#run').textContent=ran?'Run again':'Run preflight';
+}
+document.querySelectorAll('.scenario').forEach(btn=>btn.addEventListener('click',()=>{
+ document.querySelectorAll('.scenario').forEach(x=>x.classList.remove('active'));btn.classList.add('active');mode=btn.dataset.mode;ran=false;render();
+}));
+$('#run').addEventListener('click',()=>{ran=true;render();});
+$('#reset').addEventListener('click',()=>{ran=false;render();});
+render();
+</script>
+</body>
+</html>
