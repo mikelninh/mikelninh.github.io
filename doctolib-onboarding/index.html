@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI Phone Onboarding Lab — Role-fit demo</title>
-<meta name="description" content="Independent technical onboarding work sample: preflight, API and network checks, data mapping, migration validation, go-live readiness and handoff.">
+<meta name="description" content="Independent technical onboarding work sample: check prerequisites, validate data, surface blockers early and make go-live readiness explicit.">
 <style>
 :root{--ink:#101827;--muted:#637083;--line:#dce4eb;--paper:#f6f8fb;--card:#fff;--blue:#1f57d6;--navy:#102a47;--green:#0d8b62;--amber:#af6900;--red:#b42318;--cyan:#18b6a4;--shadow:0 16px 48px rgba(18,35,58,.08);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:linear-gradient(180deg,#fff 0,#f5f8fb 55%,#fff 100%)}button,a{font:inherit}.shell{max-width:1280px;margin:auto;padding:0 28px 72px}
@@ -32,67 +32,67 @@ footer{margin-top:64px;border-top:1px solid var(--line);padding-top:22px;color:v
 
 <section class="hero">
   <div>
-    <p class="eyebrow">Technical onboarding · APIs · data migration · go-live</p>
-    <h1>Make technical onboarding <span>boringly reliable.</span></h1>
-    <p class="lede">A compact simulation of how I would take an AI phone-assistant implementation from preflight to handoff: validate technical prerequisites, map data, catch migration issues, document blockers and make go-live readiness explicit.</p>
-    <div class="hero-note"><b>Independent work sample.</b> This is a synthetic onboarding scenario inspired by the role. It does not represent Doctolib’s product, internal architecture, clinic integrations or production data.</div>
+    <p class="eyebrow">Technical onboarding · APIs · data quality · go-live</p>
+    <h1>Make technical onboarding <span>clear, testable and go-live ready.</span></h1>
+    <p class="lede">This demo shows how I would take an AI phone-assistant implementation from first technical check to launch: verify access, map data, catch migration issues, assign blockers and prepare a clean handoff.</p>
+    <div class="hero-note"><b>Independent work sample.</b> This synthetic scenario is inspired by the role. It does not represent Doctolib’s product, internal architecture, clinic integrations or production data.</div>
   </div>
   <aside class="role-card">
-    <p class="eyebrow">What I’m demonstrating</p>
-    <h3>Implementation clarity under real-world constraints.</h3>
+    <p class="eyebrow">What this shows</p>
+    <h3>The role in 60 seconds.</h3>
     <ul>
-      <li><b>Preflight</b><span>API, network/VPN, permissions and ownership checked up front.</span></li>
-      <li><b>Migration quality</b><span>Schema mapping, completeness and duplicate checks before go-live.</span></li>
-      <li><b>Technical communication</b><span>Every blocker has an owner, next action and plain-language explanation.</span></li>
-      <li><b>Handoff</b><span>Training and support context are part of the implementation, not an afterthought.</span></li>
+      <li><b>Check prerequisites early</b><span>Verify API access, connectivity, permissions and ownership before migration starts.</span></li>
+      <li><b>Validate data before migration</b><span>Make mapping, completeness and duplicate checks explicit before go-live.</span></li>
+      <li><b>Turn blockers into next steps</b><span>Every issue gets a clear owner, next action and handoff path.</span></li>
     </ul>
   </aside>
 </section>
 
 <div class="scenario-bar">
-  <button class="scenario active" data-mode="ready">Clean implementation</button>
-  <button class="scenario" data-mode="vpn">VPN/API unreachable</button>
-  <button class="scenario" data-mode="data">Migration data issue</button>
+  <button class="scenario active" data-mode="ready">Everything ready</button>
+  <button class="scenario" data-mode="vpn">API/VPN blocked</button>
+  <button class="scenario" data-mode="data">Data quality issue</button>
 </div>
 
 <section class="progress" id="progress"></section>
 
 <section class="workspace">
   <article class="panel">
-    <p class="eyebrow">01 · Technical preflight</p>
-    <h2>Can we safely start?</h2>
-    <p class="panel-help">Synthetic clinic setup. The preflight makes hidden dependencies visible before migration day.</p>
+    <p class="eyebrow">01 · Technical check</p>
+    <h2>Can we start?</h2>
+    <p class="panel-help">Synthetic clinic setup. This check surfaces missing access, connectivity and ownership before they become launch-day problems.</p>
     <div id="preflight"></div>
-    <div class="actions"><button class="primary" id="run">Run preflight</button><button class="secondary" id="reset">Reset</button></div>
+    <div class="actions"><button class="primary" id="run">Run 30-second check</button><button class="secondary" id="reset">Reset</button></div>
   </article>
 
   <article class="panel">
-    <p class="eyebrow">02 · Data mapping & migration</p>
-    <h2>Will the data arrive correctly?</h2>
-    <p class="panel-help">Only schema-level demo records are used. The important part is making mapping assumptions and validation results explicit.</p>
+    <p class="eyebrow">02 · Data & migration</p>
+    <h2>Will the data migrate correctly?</h2>
+    <p class="panel-help">Only synthetic schema-level records are used. The point is to make mapping assumptions, completeness and validation results easy to review.</p>
     <div id="mapping"></div>
     <div id="issue"></div>
   </article>
 
   <article class="panel">
-    <p class="eyebrow">03 · Go-live readiness</p>
-    <h2>What blocks launch?</h2>
-    <p class="panel-help">A go-live decision should be explainable to the clinic, IT contact and internal implementation team.</p>
-    <div class="readiness"><strong id="score">—</strong><small>readiness gates passed</small><div id="gates"></div></div>
+    <p class="eyebrow">03 · Go-live</p>
+    <h2>Ready to launch?</h2>
+    <p class="panel-help">The launch decision should be easy to explain: what passed, what is blocked, who owns the fix, and what happens next.</p>
+    <div class="readiness"><strong id="score">—</strong><small>steps ready</small><div id="gates"></div></div>
     <div class="handoff"><h3>Handoff package</h3><ul><li>technical configuration summary</li><li>known issues + owners</li><li>migration validation result</li><li>training checklist + support path</li></ul></div>
   </article>
 </section>
 
 <section class="section">
-  <p class="eyebrow">Operating principles</p>
-  <h2>Fast onboarding without hand-waving.</h2>
-  <p class="section-copy">The demo is intentionally less “AI magic” and more implementation discipline: isolate a technical issue, explain it clearly, keep migration quality visible and automate repetitive checks so humans can focus on exceptions.</p>
+  <p class="eyebrow">Simple implementation discipline</p>
+  <h2>Find blockers early. Make the next step obvious.</h2>
+  <p class="section-copy">The goal is not “AI magic.” It is a reliable implementation process: catch technical issues early, keep migration quality visible, explain problems clearly and automate repeatable checks so people can focus on exceptions.</p>
   <div class="principles">
-    <div class="principle"><b>Fail early</b><span>Catch connectivity, permissions and format problems before go-live.</span></div>
+    <div class="principle"><b>Check early</b><span>Catch connectivity, permissions and format problems before go-live.</span></div>
     <div class="principle"><b>Validate data</b><span>Completeness and duplicates are explicit acceptance gates.</span></div>
-    <div class="principle"><b>Make ownership clear</b><span>Every blocker has a responsible party and next step.</span></div>
-    <div class="principle"><b>Document for reuse</b><span>Repeatable checks become playbooks, scripts and training material.</span></div>
+    <div class="principle"><b>Assign ownership</b><span>Every blocker has a responsible party and next step.</span></div>
+    <div class="principle"><b>Reuse what works</b><span>Repeatable checks become playbooks, scripts and training material.</span></div>
   </div>
+  <div class="hero-note"><b>In one sentence:</b> I make technical implementations safer by finding blockers early, assigning owners and making go-live readiness explicit.</div>
   <div class="proof">
     <a href="https://mikelninh.github.io/careos/journey.html" target="_blank"><b>CareOS journey ↗</b><span>Healthcare interoperability, provenance and human review.</span></a>
     <a href="https://github.com/mikelninh/care-os" target="_blank"><b>CareOS source ↗</b><span>FHIR/HL7 research paths, preflight tooling and validation boundaries.</span></a>
@@ -104,7 +104,7 @@ footer{margin-top:64px;border-top:1px solid var(--line);padding-top:22px;color:v
 </div>
 
 <script>
-const steps=['Preflight','Connectivity','Data mapping','Migration QA','Go-live','Handoff'];
+const steps=['Technical check','Connection','Data mapping','Migration QA','Go-live','Handoff'];
 const states={
  ready:{
   pre:[
@@ -128,7 +128,7 @@ const states={
   mappings:[
    ['external_location_id','clinic.location_id'],['provider_id','assistant.routing_provider_id'],['phone_number','assistant.inbound_number'],['opening_hours','assistant.availability_window']
   ],
-  issue:['Connectivity blocker','VPN route must be confirmed by clinic IT before API validation can continue. Owner: clinic IT. Next step: connectivity test with timestamped result.'],pass:1,block:1
+  issue:['Connection blocker','VPN route must be confirmed by clinic IT before API validation can continue. Owner: clinic IT. Next step: run a timestamped connectivity test.'],pass:1,block:1
  },
  data:{
   pre:[
@@ -140,7 +140,7 @@ const states={
   mappings:[
    ['external_location_id','clinic.location_id'],['provider_id','assistant.routing_provider_id'],['phone_number','assistant.inbound_number'],['opening_hours','assistant.availability_window']
   ],
-  issue:['Migration quality blocker','Duplicate provider IDs detected in the synthetic export. Do not import. Owner: data migration. Next step: deduplicate at source and rerun validation.'],pass:3,block:3
+  issue:['Data quality blocker','Duplicate provider IDs detected in the synthetic export. Do not import. Owner: data migration. Next step: deduplicate at source and rerun validation.'],pass:3,block:3
  }
 };
 let mode='ready',ran=false; const $=s=>document.querySelector(s);
@@ -149,7 +149,7 @@ function render(){
  const s=states[mode];
  $('#preflight').innerHTML=s.pre.map(([a,b,c])=>`<div class="check"><div><strong>${a}</strong><small>${b}</small></div><span class="badge ${badge(c)}">${c}</span></div>`).join('');
  $('#mapping').innerHTML=s.mappings.map(([a,b])=>`<div class="mapping"><div><strong>${a}</strong><small>source field</small></div><div class="arrow">→</div><div><strong>${b}</strong><small>target contract</small></div></div>`).join('');
- $('#issue').innerHTML=s.issue?`<div class="issue"><b>${s.issue[0]}</b><p>${s.issue[1]}</p></div>`:`<div class="issue" style="background:#f2fbf7;border-color:#c7e8da"><b style="color:#08714d">No blocking issue in this scenario</b><p style="color:#567469">All synthetic readiness checks can proceed to go-live review.</p></div>`;
+ $('#issue').innerHTML=s.issue?`<div class="issue"><b>${s.issue[0]}</b><p>${s.issue[1]}</p></div>`:`<div class="issue" style="background:#f2fbf7;border-color:#c7e8da"><b style="color:#08714d">No blocker in this scenario</b><p style="color:#567469">All synthetic readiness checks can proceed to go-live review.</p></div>`;
  $('#progress').innerHTML=steps.map((x,i)=>{
   let cls='',label='WAITING';
   if(ran){
@@ -166,7 +166,7 @@ function render(){
   ['Launch approval',s.block===null?'READY':'NOT READY']
  ];
  $('#gates').innerHTML=gates.map(([a,b])=>`<div class="gate"><span>${a}</span><b style="color:${b==='PASS'||b==='READY'?'#0d8b62':b==='BLOCKED'?'#b42318':'#9a6500'}">${b}</b></div>`).join('');
- $('#run').textContent=ran?'Run again':'Run preflight';
+ $('#run').textContent=ran?'Run again':'Run 30-second check';
 }
 document.querySelectorAll('.scenario').forEach(btn=>btn.addEventListener('click',()=>{
  document.querySelectorAll('.scenario').forEach(x=>x.classList.remove('active'));btn.classList.add('active');mode=btn.dataset.mode;ran=false;render();
