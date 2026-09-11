@@ -3,24 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Michael Ninh × INCA — 60s AI Operations Work Sample</title>
+<title>Michael Ninh × INCA — AI Operations Work Sample</title>
 <style>
-:root{--ink:#0d1612;--muted:#69716b;--line:#d9d5ca;--paper:#f3f0e7;--card:#fffdf8;--green:#b6ff3f;--deep:#07130e;--deep2:#0c1a12;--ok:#79efaa;--amber:#ffd36b;--red:#ff9a91;--blue:#a8d7ff}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}.wrap{width:min(1120px,calc(100% - 32px));margin:auto}.top{padding:24px 0 16px;display:flex;justify-content:space-between;gap:16px;align-items:center;border-bottom:1px solid var(--line);font-size:13px}.top b{font-size:16px}.top span{color:var(--muted)}.hero{padding:42px 0 24px}.eyebrow{font-size:10px;font-weight:850;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(40px,6vw,68px);line-height:.94;letter-spacing:-.055em;margin:10px 0 15px}.lead{font-size:18px;line-height:1.35;color:#39413c;max-width:900px}.guide{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:22px 0 0}.guide div{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:12px}.guide b{display:block;font-size:13px;margin-bottom:3px}.guide span{font-size:12px;color:var(--muted)}
-.demo{margin-top:10px;background:var(--deep);color:white;border-radius:18px;overflow:hidden;display:grid;grid-template-columns:245px 1fr}.queue{padding:14px;border-right:1px solid #30443a}.queue .eyebrow{color:#91a598;margin:4px 4px 10px}.case{display:block;width:100%;border:1px solid transparent;border-radius:11px;background:transparent;color:white;text-align:left;padding:10px;margin:4px 0;cursor:pointer}.case:hover,.case.active{background:#13231a;border-color:#3c5648}.case small{display:block;color:#9eb0a5;font-size:9px;margin-bottom:3px;text-transform:uppercase;letter-spacing:.08em}.case b{display:block;font-size:13px}.view{padding:21px}.case-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;border-bottom:1px solid #2d4337;padding-bottom:14px}.case-head h2{font-size:25px;margin:4px 0 4px}.summary{color:#a9b8ae;font-size:12px;margin:0}.route-badge{font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:6px 8px;white-space:nowrap}.route-badge.review{background:#4b3a1c;color:#ffd36b}.route-badge.info{background:#4a2825;color:#ffaaa3}.route-badge.auto{background:#173d2a;color:#80f3ad}
-.workflow-title{display:flex;justify-content:space-between;gap:10px;align-items:end;margin:15px 0 8px}.workflow-title b{font-size:12px}.workflow-title span{font-size:10px;color:#8fa396}.agents{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}.agent{border:1px solid #30443a;border-radius:10px;padding:9px;background:#0a1710;min-height:78px}.agent small{display:block;font-size:8px;letter-spacing:.07em;text-transform:uppercase;color:#82988b;margin-bottom:4px}.agent b{display:block;font-size:10px;margin-bottom:4px}.agent span{font-size:10px;color:#b4c2b9;line-height:1.25}.agent .agent-status{display:block;margin-top:5px;font-size:9px;font-weight:850;text-transform:uppercase}.agent.pass .agent-status{color:var(--ok)}.agent.review .agent-status{color:var(--amber)}.agent.missing .agent-status{color:var(--red)}.agent.neutral .agent-status{color:var(--blue)}
-.explain-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:10px;margin-top:11px}.reason-card,.source-card{border-radius:13px;padding:15px}.reason-card{background:#f7f3ea;color:var(--ink)}.source-card{border:1px solid #30443a;background:#0a1710}.reason-card small,.source-card>small,.next small,.handoff small{font-size:9px;font-weight:850;letter-spacing:.11em;text-transform:uppercase}.reason-card h3{font-size:27px;letter-spacing:-.04em;margin:5px 0 8px}.reason-list{margin:0;padding:0;list-style:none}.reason-list li{font-size:12px;line-height:1.35;padding:6px 0;border-top:1px solid #ded8ca}.reason-list li:first-child{border-top:0}.cite{display:inline-flex;min-width:24px;justify-content:center;background:#e8e3d8;border-radius:999px;padding:2px 5px;margin-right:5px;font:700 9px ui-monospace,SFMono-Regular,Menlo,monospace}.source-card>small{color:#8fa396}.sources{margin-top:7px;display:grid;gap:6px}.source{display:grid;grid-template-columns:32px 1fr;gap:7px;border-top:1px solid rgba(255,255,255,.07);padding-top:6px}.source:first-child{border-top:0;padding-top:0}.source-id{font:800 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--green)}.source b{display:block;font-size:10px}.source span{display:block;font-size:9px;line-height:1.3;color:#9fb0a5}.source.missing .source-id{color:var(--red)}
-.next{margin-top:10px;background:var(--green);color:var(--ink);border-radius:13px;padding:14px;display:grid;grid-template-columns:155px 1fr;gap:12px;align-items:center}.next strong{display:block;font-size:18px;line-height:1.2}.next p{margin:3px 0 0;font-size:11px;color:#34402f}
-.handoff{margin-top:10px;border:1px solid #30443a;border-radius:13px;padding:14px;background:#0a1710}.handoff>small{color:#8fa396}.handoff h3{font-size:16px;margin:4px 0 10px}.handoff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.handoff-step{border:1px solid #2b4035;border-radius:10px;padding:10px}.handoff-step b{display:block;font-size:10px;margin-bottom:4px}.handoff-step span{display:block;font-size:10px;line-height:1.3;color:#a8b8ae}.impact{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px}.impact>div{border-radius:11px;padding:11px}.impact .now{background:#f7f3ea;color:var(--ink)}.impact .learn{background:#13261b;border:1px solid #31503f}.impact b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}.impact span{font-size:11px;line-height:1.35}.impact .learn span{color:#acc0b3}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.actions a{border-radius:999px;padding:8px 11px;text-decoration:none;font-size:11px;font-weight:800}.deep{border:1px solid #3b5245;color:#dbe8df}.so-what{margin:18px 0 10px;background:var(--card);border:1px solid var(--line);border-radius:17px;padding:20px;display:grid;grid-template-columns:190px 1fr;gap:20px}.so-what h2{font-size:27px;line-height:1;letter-spacing:-.04em;margin:5px 0}.so-what-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.so-what-grid div{border-left:3px solid var(--ink);padding-left:10px}.so-what-grid b{display:block;font-size:12px;margin-bottom:3px}.so-what-grid span{font-size:11px;color:var(--muted)}.proof{margin:14px 0 48px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.proof div{border-top:2px solid var(--ink);padding-top:9px}.proof b{display:block;font-size:13px;margin-bottom:3px}.proof span{font-size:12px;color:var(--muted)}.note{font-size:10px;color:#8b938d;margin:10px 0 0}
+:root{
+  --paper:#f7f6f1;--surface:#ffffff;--soft:#f1f1ec;--ink:#121412;--muted:#68706a;--line:#e3e2dc;
+  --graphite:#171917;--graphite2:#202320;--graphite3:#292d29;--on-dark:#f5f7f4;--on-dark-muted:#aeb6af;
+  --lime:#b6ff3f;--lime-soft:#efffd7;--ok:#1f7a48;--ok-soft:#e9f7ee;--warn:#8a6500;--warn-soft:#fff4d3;
+  --danger:#a53b34;--danger-soft:#ffe8e4;--info:#35617c;--info-soft:#eaf2f7;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}.wrap{width:min(1140px,calc(100% - 32px));margin:auto}button,a{font:inherit}.top{padding:24px 0 17px;display:flex;justify-content:space-between;gap:16px;align-items:center;border-bottom:1px solid var(--line);font-size:13px}.top b{font-size:16px;letter-spacing:-.02em}.top span{color:var(--muted)}.hero{padding:48px 0 28px}.eyebrow{font-size:10px;font-weight:850;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}.accent{width:46px;height:4px;border-radius:99px;background:var(--lime);margin:0 0 18px}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(42px,6vw,72px);line-height:.93;letter-spacing:-.062em;margin:9px 0 16px;max-width:970px}.lead{font-size:18px;line-height:1.4;color:#3f4741;max-width:920px}.guide{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0 0}.guide div{background:rgba(255,255,255,.56);border:1px solid var(--line);border-radius:14px;padding:13px}.guide b{display:block;font-size:13px;margin-bottom:3px}.guide span{font-size:12px;color:var(--muted)}
+.demo-shell{margin-top:16px;border:1px solid #d9d9d3;border-radius:22px;overflow:hidden;box-shadow:0 14px 50px rgba(21,24,21,.07);background:var(--surface)}.demo-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 18px;border-bottom:1px solid var(--line);background:#fbfbf8}.demo-top strong{font-size:13px}.demo-top span{font-size:11px;color:var(--muted)}.demo{display:grid;grid-template-columns:245px 1fr}.queue{padding:14px;background:var(--soft);border-right:1px solid var(--line)}.queue .eyebrow{margin:4px 4px 10px}.case{display:block;width:100%;border:1px solid transparent;border-radius:12px;background:transparent;color:var(--ink);text-align:left;padding:11px;margin:5px 0;cursor:pointer;transition:.16s ease}.case:hover{background:#fff}.case.active{background:var(--surface);border-color:#d3d4ce;box-shadow:0 3px 12px rgba(20,24,20,.05);position:relative}.case.active:before{content:"";position:absolute;left:-1px;top:10px;bottom:10px;width:4px;border-radius:0 8px 8px 0;background:var(--lime)}.case small{display:block;color:#858c87;font-size:9px;margin-bottom:3px;text-transform:uppercase;letter-spacing:.08em}.case b{display:block;font-size:13px}.view{padding:23px}.case-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:15px}.case-head h2{font-size:27px;letter-spacing:-.035em;margin:4px 0 4px}.summary{color:var(--muted);font-size:12px;margin:0;max-width:700px}.route-badge{font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:7px 9px;white-space:nowrap;border:1px solid}.route-badge.review{background:var(--warn-soft);color:var(--warn);border-color:#eadca8}.route-badge.info{background:var(--danger-soft);color:var(--danger);border-color:#efc8c4}.route-badge.auto{background:var(--ok-soft);color:var(--ok);border-color:#cae7d5}
+.workflow-title{display:flex;justify-content:space-between;gap:10px;align-items:end;margin:17px 0 9px}.workflow-title b{font-size:12px}.workflow-title span{font-size:10px;color:#8a918c}.agents{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}.agent{border:1px solid var(--line);border-radius:11px;padding:10px;background:#fcfcfa;min-height:86px;position:relative}.agent:after{content:"";position:absolute;top:10px;right:10px;width:6px;height:6px;border-radius:999px;background:#adb4af}.agent.pass:after{background:#54b47b}.agent.review:after{background:#d5a92d}.agent.missing:after{background:#d66f66}.agent.neutral:after{background:#7ca9c3}.agent small{display:block;font-size:8px;letter-spacing:.07em;text-transform:uppercase;color:#929993;margin-bottom:5px}.agent b{display:block;font-size:10px;margin-bottom:4px;padding-right:8px}.agent span{font-size:10px;color:#667069;line-height:1.28}.agent .agent-status{display:block;margin-top:6px;font-size:9px;font-weight:850;text-transform:uppercase}.agent.pass .agent-status{color:var(--ok)}.agent.review .agent-status{color:var(--warn)}.agent.missing .agent-status{color:var(--danger)}.agent.neutral .agent-status{color:var(--info)}
+.explain-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:10px;margin-top:12px}.reason-card,.source-card{border-radius:14px;padding:16px}.reason-card{background:var(--graphite);color:var(--on-dark)}.source-card{background:#f6f6f2;border:1px solid var(--line);color:var(--ink)}.reason-card small,.source-card>small,.next small,.handoff small{font-size:9px;font-weight:850;letter-spacing:.11em;text-transform:uppercase}.reason-card small{color:#aeb7b0}.reason-card h3{font-size:29px;letter-spacing:-.045em;margin:5px 0 9px}.reason-list{margin:0;padding:0;list-style:none}.reason-list li{font-size:12px;line-height:1.4;padding:7px 0;border-top:1px solid rgba(255,255,255,.1);color:#dde1dd}.reason-list li:first-child{border-top:0}.cite{display:inline-flex;min-width:25px;justify-content:center;background:#2b2e2b;color:var(--lime);border-radius:999px;padding:2px 5px;margin-right:6px;font:800 9px ui-monospace,SFMono-Regular,Menlo,monospace}.source-card>small{color:#7e867f}.sources{margin-top:8px;display:grid;gap:6px}.source{display:grid;grid-template-columns:34px 1fr;gap:8px;border-top:1px solid var(--line);padding-top:7px}.source:first-child{border-top:0;padding-top:0}.source-id{font:850 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#536057}.source b{display:block;font-size:10px}.source span{display:block;font-size:9px;line-height:1.35;color:#737b75}.source.missing .source-id{color:var(--danger)}
+.next{margin-top:10px;background:var(--surface);border:1px solid #cfd0ca;border-radius:14px;padding:15px;display:grid;grid-template-columns:165px 1fr;gap:14px;align-items:center;position:relative;overflow:hidden}.next:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--lime)}.next small{color:#7b827d}.next strong{display:block;font-size:19px;line-height:1.2;margin-top:2px}.next p{margin:2px 0 0;font-size:11px;color:#5e665f}.handoff{margin-top:10px;border:1px solid var(--line);border-radius:14px;padding:15px;background:#fafaf7}.handoff>small{color:#7b837d}.handoff h3{font-size:17px;letter-spacing:-.02em;margin:5px 0 11px}.handoff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.handoff-step{border:1px solid var(--line);border-radius:11px;padding:11px;background:#fff}.handoff-step b{display:block;font-size:10px;margin-bottom:4px}.handoff-step span{display:block;font-size:10px;line-height:1.35;color:#717a73}.impact{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px}.impact>div{border-radius:12px;padding:12px}.impact .now{background:var(--lime-soft);border:1px solid #d8efa8;color:var(--ink)}.impact .learn{background:var(--graphite2);color:var(--on-dark);border:1px solid #2c302c}.impact b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}.impact span{font-size:11px;line-height:1.4}.impact .learn span{color:#c0c7c1}.resolution{margin-top:10px;padding:13px 14px;border-radius:12px;background:#fff;border:1px dashed #cbcec8;display:flex;align-items:center;justify-content:space-between;gap:14px}.resolution-text b{display:block;font-size:11px}.resolution-text span{font-size:10px;color:var(--muted)}.resolution-actions{display:flex;gap:7px;flex-wrap:wrap}.mini-btn{border:1px solid #c9cbc5;background:#fff;color:var(--ink);border-radius:999px;padding:7px 10px;font-size:10px;font-weight:800;cursor:pointer}.mini-btn.primary{background:var(--graphite);color:white;border-color:var(--graphite)}.mini-btn:hover{transform:translateY(-1px)}.resolution-result{display:none;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--lime-soft);border:1px solid #d7eea6;font-size:11px}.resolution-result.show{display:block}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions a{border-radius:999px;padding:8px 11px;text-decoration:none;font-size:11px;font-weight:800}.deep{border:1px solid #c8cbc5;color:#343a35;background:#fff}.so-what{margin:20px 0 10px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;display:grid;grid-template-columns:210px 1fr;gap:24px;box-shadow:0 8px 30px rgba(20,24,20,.04)}.so-what h2{font-size:29px;line-height:1;letter-spacing:-.045em;margin:5px 0}.so-what-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.so-what-grid div{border-left:3px solid var(--lime);padding-left:11px}.so-what-grid b{display:block;font-size:12px;margin-bottom:3px}.so-what-grid span{font-size:11px;color:var(--muted)}.proof{margin:15px 0 50px;display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.proof div{border-top:1px solid #bfc3bd;padding-top:10px}.proof b{display:block;font-size:13px;margin-bottom:3px}.proof span{font-size:12px;color:var(--muted)}.note{font-size:10px;color:#8c938e;margin:10px 0 0}
 @media(max-width:900px){.guide{grid-template-columns:1fr 1fr}.agents{grid-template-columns:repeat(3,1fr)}.explain-grid,.so-what{grid-template-columns:1fr}.proof{grid-template-columns:1fr 1fr}.handoff-grid,.so-what-grid{grid-template-columns:1fr}}
-@media(max-width:760px){.guide,.proof{grid-template-columns:1fr}.demo{grid-template-columns:1fr}.queue{border-right:0;border-bottom:1px solid #30443a}.agents{grid-template-columns:1fr 1fr}.case-head{display:block}.route-badge{display:inline-block;margin-top:8px}.next,.impact{grid-template-columns:1fr}}
+@media(max-width:760px){.guide,.proof{grid-template-columns:1fr}.demo{grid-template-columns:1fr}.queue{border-right:0;border-bottom:1px solid var(--line)}.agents{grid-template-columns:1fr 1fr}.case-head{display:block}.route-badge{display:inline-block;margin-top:8px}.next,.impact{grid-template-columns:1fr}.resolution{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top"><b>MICHAEL NINH × INCA</b><span>AI Operations Associate · independent work sample</span></div>
   <section class="hero">
+    <div class="accent"></div>
     <div class="eyebrow">60–90 second walkthrough</div>
     <h1>From claim to action — and back into the system.</h1>
     <p class="lead">Pick a synthetic claim. Specialist checks inspect the case, cite their evidence and produce one route. Then the important part: <b>the route triggers a concrete operational handoff, the human or system resolves the case, and that outcome feeds back into the next release.</b></p>
@@ -32,37 +36,46 @@
     </div>
   </section>
 
-  <section class="demo">
-    <div class="queue"><div class="eyebrow">Synthetic claim queue</div><div id="cases"></div></div>
-    <div class="view">
-      <div class="case-head">
-        <div><div class="eyebrow">Selected claim</div><h2 id="title"></h2><p id="summary" class="summary"></p></div>
-        <span id="routeBadge" class="route-badge review"></span>
+  <section class="demo-shell">
+    <div class="demo-top"><strong>Claims operations workspace</strong><span>synthetic case · inspectable decision path</span></div>
+    <div class="demo">
+      <div class="queue"><div class="eyebrow">Claim queue</div><div id="cases"></div></div>
+      <div class="view">
+        <div class="case-head">
+          <div><div class="eyebrow">Selected claim</div><h2 id="title"></h2><p id="summary" class="summary"></p></div>
+          <span id="routeBadge" class="route-badge review"></span>
+        </div>
+
+        <div class="workflow-title"><b>1 · Specialist checks</b><span>Each check owns one question</span></div>
+        <div class="agents" id="agents"></div>
+
+        <div class="explain-grid">
+          <div class="reason-card"><small>2 · Decision coordinator</small><h3 id="decision"></h3><ul class="reason-list" id="reasons"></ul></div>
+          <div class="source-card"><small>Evidence used</small><div class="sources" id="sources"></div></div>
+        </div>
+
+        <div class="next"><div><small>3 · Operational handoff</small><strong id="next"></strong></div><p id="nextWhy"></p></div>
+
+        <div class="handoff">
+          <small>What happens now?</small>
+          <h3 id="handoffTitle"></h3>
+          <div class="handoff-grid" id="handoffGrid"></div>
+        </div>
+
+        <div class="resolution" id="resolutionBox">
+          <div class="resolution-text"><b id="resolutionPrompt"></b><span id="resolutionHelp"></span></div>
+          <div class="resolution-actions" id="resolutionActions"></div>
+        </div>
+        <div class="resolution-result" id="resolutionResult"></div>
+
+        <div class="impact">
+          <div class="now"><b>So what?</b><span id="impactNow"></span></div>
+          <div class="learn"><b>4 · Close the loop</b><span id="impactLearn"></span></div>
+        </div>
+
+        <div class="actions"><a class="deep" href="/inca/">Engineering depth ↗</a><a class="deep" href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof" target="_blank">Proof files ↗</a></div>
+        <p class="note">Synthetic miniature based on INCA's public operating model. It does not reproduce MARS or claim access to INCA internals.</p>
       </div>
-
-      <div class="workflow-title"><b>1 · Specialist checks</b><span>Each check owns one question</span></div>
-      <div class="agents" id="agents"></div>
-
-      <div class="explain-grid">
-        <div class="reason-card"><small>2 · Decision coordinator</small><h3 id="decision"></h3><ul class="reason-list" id="reasons"></ul></div>
-        <div class="source-card"><small>Evidence used</small><div class="sources" id="sources"></div></div>
-      </div>
-
-      <div class="next"><div><small>3 · Operational handoff</small><strong id="next"></strong></div><p id="nextWhy"></p></div>
-
-      <div class="handoff">
-        <small>What happens now?</small>
-        <h3 id="handoffTitle"></h3>
-        <div class="handoff-grid" id="handoffGrid"></div>
-      </div>
-
-      <div class="impact">
-        <div class="now"><b>So what?</b><span id="impactNow"></span></div>
-        <div class="learn"><b>4 · Close the loop</b><span id="impactLearn"></span></div>
-      </div>
-
-      <div class="actions"><a class="deep" href="/inca/">Engineering depth ↗</a><a class="deep" href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof" target="_blank">Proof files ↗</a></div>
-      <p class="note">Synthetic miniature based on INCA's public operating model. It does not reproduce MARS or claim access to INCA internals.</p>
     </div>
   </section>
 
@@ -93,7 +106,9 @@ const claims=[
  handoffTitle:'The case leaves the general queue and enters a focused review.',
  handoff:[['System','Create review task','Attach S2, S3 and S5 + exact review reason.'],['Claims expert','Confirm or override','Inspect the anomaly; accept the route or correct it.'],['Workflow','Continue after review','Record the human outcome before any settlement step.']],
  impactNow:'Human attention is spent only on the flagged question — not on rereading the whole file.',
- impactLearn:'If the reviewer says the anomaly was irrelevant, that false positive becomes a regression case for the next release.'
+ impactLearn:'If the reviewer says the anomaly was irrelevant, that false positive becomes a regression case for the next release.',
+ resolutionPrompt:'You are the claims expert. What do you do?',resolutionHelp:'Try the human step and see how the workflow closes.',
+ resolution:[['Confirm concern','Review remains open; the case stays with the expert for investigation.'],['Override · false positive','Case returns to the standard path. The override reason is recorded and queued as a regression example.']]
 },
 {
  label:'Missing evidence',title:'Water damage',summary:'A home water-damage claim has a clear description, but a required cause document is missing.',route:'NEED INFO',tone:'info',
@@ -104,7 +119,9 @@ const claims=[
  handoffTitle:'The case pauses with one explicit blocker instead of becoming manual detective work.',
  handoff:[['System','Pause safely','Do not infer coverage or advance the case.'],['Customer / Ops','Supply one document','Request the plumber / cause report only.'],['Workflow','Rerun checks','Re-run evidence + coverage when S4 arrives.']],
  impactNow:'The next person sees the exact missing item immediately; no one has to rediscover why the case is stuck.',
- impactLearn:'If this missing-document pattern repeats, the intake workflow can request it earlier and reduce avoidable back-and-forth.'
+ impactLearn:'If this missing-document pattern repeats, the intake workflow can request it earlier and reduce avoidable back-and-forth.',
+ resolutionPrompt:'Simulate the missing document arriving.',resolutionHelp:'The relevant checks should rerun instead of restarting the whole case.',
+ resolution:[['Report received','S4 is attached. Evidence and coverage checks are queued to rerun; the case can now be reassessed.']]
 },
 {
  label:'Straightforward',title:'Dental treatment',summary:'Routine treatment with complete supporting documents and no configured review trigger.',route:'AUTO READY',tone:'auto',
@@ -115,7 +132,9 @@ const claims=[
  handoffTitle:'No specialist review is needed, so the case can leave the exception queue.',
  handoff:[['System','Package decision','Carry evidence + rationale into the next workflow step.'],['Control','Keep effect boundary','No external payment or consequential action is auto-executed here.'],['Quality','Sample + monitor','Audit a sample and watch for new failure patterns.']],
  impactNow:'Human capacity stays available for ambiguous or sensitive cases instead of routine file checking.',
- impactLearn:'Any sampled error or downstream correction becomes a new test before this case class earns broader automation.'
+ impactLearn:'Any sampled error or downstream correction becomes a new test before this case class earns broader automation.',
+ resolutionPrompt:'Continue the standard path.',resolutionHelp:'The case should move without creating unnecessary expert work.',
+ resolution:[['Prepare downstream packet','Evidence + rationale are packaged for the standard workflow. No payment or external action is executed in this demo.']]
 }
 ];
 let idx=0;
@@ -134,8 +153,13 @@ function render(){
  document.getElementById('handoffTitle').textContent=x.handoffTitle;
  document.getElementById('handoffGrid').innerHTML=x.handoff.map(h=>`<div class="handoff-step"><b>${esc(h[0])} · ${esc(h[1])}</b><span>${esc(h[2])}</span></div>`).join('');
  document.getElementById('impactNow').textContent=x.impactNow;document.getElementById('impactLearn').textContent=x.impactLearn;
+ document.getElementById('resolutionPrompt').textContent=x.resolutionPrompt;document.getElementById('resolutionHelp').textContent=x.resolutionHelp;
+ document.getElementById('resolutionActions').innerHTML=x.resolution.map((r,i)=>`<button class="mini-btn ${i===0?'primary':''}" onclick="resolveCase(${i})">${esc(r[0])}</button>`).join('');
+ const result=document.getElementById('resolutionResult');result.className='resolution-result';result.textContent='';
 }
-function pick(i){idx=i;render()}render();
+function pick(i){idx=i;render()}
+function resolveCase(i){const r=claims[idx].resolution[i];const result=document.getElementById('resolutionResult');result.innerHTML=`<b>${esc(r[0])}</b> · ${esc(r[1])}`;result.className='resolution-result show'}
+render();
 </script>
 </body>
 </html>
