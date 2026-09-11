@@ -6,159 +6,134 @@
 <title>Michael Ninh × INCA — AI Operations Work Sample</title>
 <style>
 :root{
-  --paper:#f7f6f1;--surface:#ffffff;--soft:#f1f1ec;--ink:#121412;--muted:#68706a;--line:#e3e2dc;
-  --graphite:#171917;--graphite2:#202320;--graphite3:#292d29;--on-dark:#f5f7f4;--on-dark-muted:#aeb6af;
-  --lime:#b6ff3f;--lime-soft:#efffd7;--ok:#1f7a48;--ok-soft:#e9f7ee;--warn:#8a6500;--warn-soft:#fff4d3;
-  --danger:#a53b34;--danger-soft:#ffe8e4;--info:#35617c;--info-soft:#eaf2f7;
+  --paper:#f7f6f1;--surface:#fff;--soft:#f1f1ec;--ink:#121412;--muted:#68706a;--line:#e2e2dc;
+  --graphite:#181a18;--lime:#b6ff3f;--lime-soft:#efffd7;
+  --ok:#236c47;--ok-soft:#eaf5ee;--warn:#7c5c05;--warn-soft:#fff3d2;--danger:#9b413b;--danger-soft:#fae9e7;
 }
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}.wrap{width:min(1140px,calc(100% - 32px));margin:auto}button,a{font:inherit}.top{padding:24px 0 17px;display:flex;justify-content:space-between;gap:16px;align-items:center;border-bottom:1px solid var(--line);font-size:13px}.top b{font-size:16px;letter-spacing:-.02em}.top span{color:var(--muted)}.hero{padding:48px 0 28px}.eyebrow{font-size:10px;font-weight:850;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}.accent{width:46px;height:4px;border-radius:99px;background:var(--lime);margin:0 0 18px}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(42px,6vw,72px);line-height:.93;letter-spacing:-.062em;margin:9px 0 16px;max-width:970px}.lead{font-size:18px;line-height:1.4;color:#3f4741;max-width:920px}.guide{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0 0}.guide div{background:rgba(255,255,255,.56);border:1px solid var(--line);border-radius:14px;padding:13px}.guide b{display:block;font-size:13px;margin-bottom:3px}.guide span{font-size:12px;color:var(--muted)}
-.demo-shell{margin-top:16px;border:1px solid #d9d9d3;border-radius:22px;overflow:hidden;box-shadow:0 14px 50px rgba(21,24,21,.07);background:var(--surface)}.demo-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 18px;border-bottom:1px solid var(--line);background:#fbfbf8}.demo-top strong{font-size:13px}.demo-top span{font-size:11px;color:var(--muted)}.demo{display:grid;grid-template-columns:245px 1fr}.queue{padding:14px;background:var(--soft);border-right:1px solid var(--line)}.queue .eyebrow{margin:4px 4px 10px}.case{display:block;width:100%;border:1px solid transparent;border-radius:12px;background:transparent;color:var(--ink);text-align:left;padding:11px;margin:5px 0;cursor:pointer;transition:.16s ease}.case:hover{background:#fff}.case.active{background:var(--surface);border-color:#d3d4ce;box-shadow:0 3px 12px rgba(20,24,20,.05);position:relative}.case.active:before{content:"";position:absolute;left:-1px;top:10px;bottom:10px;width:4px;border-radius:0 8px 8px 0;background:var(--lime)}.case small{display:block;color:#858c87;font-size:9px;margin-bottom:3px;text-transform:uppercase;letter-spacing:.08em}.case b{display:block;font-size:13px}.view{padding:23px}.case-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:15px}.case-head h2{font-size:27px;letter-spacing:-.035em;margin:4px 0 4px}.summary{color:var(--muted);font-size:12px;margin:0;max-width:700px}.route-badge{font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:7px 9px;white-space:nowrap;border:1px solid}.route-badge.review{background:var(--warn-soft);color:var(--warn);border-color:#eadca8}.route-badge.info{background:var(--danger-soft);color:var(--danger);border-color:#efc8c4}.route-badge.auto{background:var(--ok-soft);color:var(--ok);border-color:#cae7d5}
-.workflow-title{display:flex;justify-content:space-between;gap:10px;align-items:end;margin:17px 0 9px}.workflow-title b{font-size:12px}.workflow-title span{font-size:10px;color:#8a918c}.agents{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}.agent{border:1px solid var(--line);border-radius:11px;padding:10px;background:#fcfcfa;min-height:86px;position:relative}.agent:after{content:"";position:absolute;top:10px;right:10px;width:6px;height:6px;border-radius:999px;background:#adb4af}.agent.pass:after{background:#54b47b}.agent.review:after{background:#d5a92d}.agent.missing:after{background:#d66f66}.agent.neutral:after{background:#7ca9c3}.agent small{display:block;font-size:8px;letter-spacing:.07em;text-transform:uppercase;color:#929993;margin-bottom:5px}.agent b{display:block;font-size:10px;margin-bottom:4px;padding-right:8px}.agent span{font-size:10px;color:#667069;line-height:1.28}.agent .agent-status{display:block;margin-top:6px;font-size:9px;font-weight:850;text-transform:uppercase}.agent.pass .agent-status{color:var(--ok)}.agent.review .agent-status{color:var(--warn)}.agent.missing .agent-status{color:var(--danger)}.agent.neutral .agent-status{color:var(--info)}
-.explain-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:10px;margin-top:12px}.reason-card,.source-card{border-radius:14px;padding:16px}.reason-card{background:var(--graphite);color:var(--on-dark)}.source-card{background:#f6f6f2;border:1px solid var(--line);color:var(--ink)}.reason-card small,.source-card>small,.next small,.handoff small{font-size:9px;font-weight:850;letter-spacing:.11em;text-transform:uppercase}.reason-card small{color:#aeb7b0}.reason-card h3{font-size:29px;letter-spacing:-.045em;margin:5px 0 9px}.reason-list{margin:0;padding:0;list-style:none}.reason-list li{font-size:12px;line-height:1.4;padding:7px 0;border-top:1px solid rgba(255,255,255,.1);color:#dde1dd}.reason-list li:first-child{border-top:0}.cite{display:inline-flex;min-width:25px;justify-content:center;background:#2b2e2b;color:var(--lime);border-radius:999px;padding:2px 5px;margin-right:6px;font:800 9px ui-monospace,SFMono-Regular,Menlo,monospace}.source-card>small{color:#7e867f}.sources{margin-top:8px;display:grid;gap:6px}.source{display:grid;grid-template-columns:34px 1fr;gap:8px;border-top:1px solid var(--line);padding-top:7px}.source:first-child{border-top:0;padding-top:0}.source-id{font:850 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#536057}.source b{display:block;font-size:10px}.source span{display:block;font-size:9px;line-height:1.35;color:#737b75}.source.missing .source-id{color:var(--danger)}
-.next{margin-top:10px;background:var(--surface);border:1px solid #cfd0ca;border-radius:14px;padding:15px;display:grid;grid-template-columns:165px 1fr;gap:14px;align-items:center;position:relative;overflow:hidden}.next:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--lime)}.next small{color:#7b827d}.next strong{display:block;font-size:19px;line-height:1.2;margin-top:2px}.next p{margin:2px 0 0;font-size:11px;color:#5e665f}.handoff{margin-top:10px;border:1px solid var(--line);border-radius:14px;padding:15px;background:#fafaf7}.handoff>small{color:#7b837d}.handoff h3{font-size:17px;letter-spacing:-.02em;margin:5px 0 11px}.handoff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.handoff-step{border:1px solid var(--line);border-radius:11px;padding:11px;background:#fff}.handoff-step b{display:block;font-size:10px;margin-bottom:4px}.handoff-step span{display:block;font-size:10px;line-height:1.35;color:#717a73}.impact{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px}.impact>div{border-radius:12px;padding:12px}.impact .now{background:var(--lime-soft);border:1px solid #d8efa8;color:var(--ink)}.impact .learn{background:var(--graphite2);color:var(--on-dark);border:1px solid #2c302c}.impact b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}.impact span{font-size:11px;line-height:1.4}.impact .learn span{color:#c0c7c1}.resolution{margin-top:10px;padding:13px 14px;border-radius:12px;background:#fff;border:1px dashed #cbcec8;display:flex;align-items:center;justify-content:space-between;gap:14px}.resolution-text b{display:block;font-size:11px}.resolution-text span{font-size:10px;color:var(--muted)}.resolution-actions{display:flex;gap:7px;flex-wrap:wrap}.mini-btn{border:1px solid #c9cbc5;background:#fff;color:var(--ink);border-radius:999px;padding:7px 10px;font-size:10px;font-weight:800;cursor:pointer}.mini-btn.primary{background:var(--graphite);color:white;border-color:var(--graphite)}.mini-btn:hover{transform:translateY(-1px)}.resolution-result{display:none;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--lime-soft);border:1px solid #d7eea6;font-size:11px}.resolution-result.show{display:block}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions a{border-radius:999px;padding:8px 11px;text-decoration:none;font-size:11px;font-weight:800}.deep{border:1px solid #c8cbc5;color:#343a35;background:#fff}.so-what{margin:20px 0 10px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;display:grid;grid-template-columns:210px 1fr;gap:24px;box-shadow:0 8px 30px rgba(20,24,20,.04)}.so-what h2{font-size:29px;line-height:1;letter-spacing:-.045em;margin:5px 0}.so-what-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.so-what-grid div{border-left:3px solid var(--lime);padding-left:11px}.so-what-grid b{display:block;font-size:12px;margin-bottom:3px}.so-what-grid span{font-size:11px;color:var(--muted)}.proof{margin:15px 0 50px;display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.proof div{border-top:1px solid #bfc3bd;padding-top:10px}.proof b{display:block;font-size:13px;margin-bottom:3px}.proof span{font-size:12px;color:var(--muted)}.note{font-size:10px;color:#8c938e;margin:10px 0 0}
-@media(max-width:900px){.guide{grid-template-columns:1fr 1fr}.agents{grid-template-columns:repeat(3,1fr)}.explain-grid,.so-what{grid-template-columns:1fr}.proof{grid-template-columns:1fr 1fr}.handoff-grid,.so-what-grid{grid-template-columns:1fr}}
-@media(max-width:760px){.guide,.proof{grid-template-columns:1fr}.demo{grid-template-columns:1fr}.queue{border-right:0;border-bottom:1px solid var(--line)}.agents{grid-template-columns:1fr 1fr}.case-head{display:block}.route-badge{display:inline-block;margin-top:8px}.next,.impact{grid-template-columns:1fr}.resolution{align-items:flex-start;flex-direction:column}}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}button,a{font:inherit}.wrap{width:min(1060px,calc(100% - 32px));margin:auto}.top{padding:24px 0 17px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);font-size:13px}.top b{font-size:16px}.top span{color:var(--muted)}.hero{padding:46px 0 28px}.accent{width:44px;height:4px;border-radius:99px;background:var(--lime);margin-bottom:18px}.eyebrow{font-size:10px;font-weight:850;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(42px,6vw,68px);line-height:.94;letter-spacing:-.06em;margin:10px 0 15px;max-width:900px}.lead{font-size:18px;line-height:1.4;color:#3f4741;max-width:800px}.path{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px;font-size:12px;font-weight:800}.path span{display:inline-flex;align-items:center;gap:7px}.path i{font-style:normal;color:#9ca39e}.path b{background:var(--surface);border:1px solid var(--line);padding:7px 10px;border-radius:999px}
+.workspace{background:var(--surface);border:1px solid #d9d9d3;border-radius:20px;overflow:hidden;box-shadow:0 14px 44px rgba(20,24,20,.06);margin-bottom:18px}.workspace-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 17px;border-bottom:1px solid var(--line);background:#fbfbf8}.workspace-head strong{font-size:13px}.workspace-head span{font-size:11px;color:var(--muted)}.layout{display:grid;grid-template-columns:225px 1fr}.queue{background:var(--soft);padding:13px;border-right:1px solid var(--line)}.case{display:block;width:100%;text-align:left;border:1px solid transparent;border-radius:11px;background:transparent;color:var(--ink);padding:10px;margin:4px 0;cursor:pointer}.case:hover{background:#fff}.case.active{background:#fff;border-color:#d3d4ce;box-shadow:0 3px 10px rgba(20,24,20,.04);position:relative}.case.active:before{content:"";position:absolute;left:-1px;top:10px;bottom:10px;width:4px;background:var(--lime);border-radius:0 5px 5px 0}.case small{display:block;color:#858c87;font-size:9px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}.case b{font-size:13px}.main{padding:22px}.claim-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding-bottom:15px;border-bottom:1px solid var(--line)}.claim-head h2{font-size:27px;letter-spacing:-.035em;margin:4px 0 3px}.summary{font-size:12px;color:var(--muted);margin:0;max-width:650px}.badge{font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:7px 9px;border:1px solid;white-space:nowrap}.badge.review{background:var(--warn-soft);color:var(--warn);border-color:#e8d8a3}.badge.info{background:var(--danger-soft);color:var(--danger);border-color:#ecc8c5}.badge.auto{background:var(--ok-soft);color:var(--ok);border-color:#cbe3d4}
+.section{padding:17px 0;border-bottom:1px solid var(--line)}.section:last-of-type{border-bottom:0}.section-title{font-size:10px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:#7e867f;margin-bottom:9px}.checks{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.check{border:1px solid var(--line);border-radius:11px;padding:10px;background:#fcfcfa}.check b{display:block;font-size:10px;margin-bottom:4px}.check span{font-size:10px;color:var(--muted)}.check .state{display:block;margin-top:6px;font-size:9px;text-transform:uppercase;font-weight:900}.check.pass .state{color:var(--ok)}.check.review .state{color:var(--warn)}.check.block .state{color:var(--danger)}.check.neutral .state{color:#65747e}
+.decision-row{display:grid;grid-template-columns:1.1fr .9fr;gap:10px}.decision{background:var(--graphite);color:white;border-radius:14px;padding:16px}.decision small,.next small{font-size:9px;font-weight:850;letter-spacing:.1em;text-transform:uppercase}.decision small{color:#aeb6af}.decision h3{font-size:28px;letter-spacing:-.045em;margin:5px 0 9px}.reasons{margin:0;padding:0;list-style:none}.reasons li{font-size:12px;line-height:1.4;padding:6px 0;border-top:1px solid rgba(255,255,255,.1);color:#dde1dd}.reasons li:first-child{border-top:0}.cite{display:inline-flex;min-width:25px;justify-content:center;background:#2a2d2a;color:var(--lime);border-radius:999px;padding:2px 5px;margin-right:6px;font:800 9px ui-monospace,SFMono-Regular,Menlo,monospace}.next{border:1px solid #d0d2cc;border-radius:14px;padding:16px;background:#fff;position:relative;overflow:hidden}.next:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--lime)}.next small{color:#7b827d}.next h3{font-size:20px;letter-spacing:-.025em;margin:6px 0 6px}.next p{font-size:11px;color:var(--muted);margin:0 0 12px}.primary{border:0;background:var(--graphite);color:white;border-radius:999px;padding:8px 11px;font-size:10px;font-weight:850;cursor:pointer}.primary:hover{transform:translateY(-1px)}.result{display:none;margin-top:10px;background:var(--lime-soft);border:1px solid #d6eca4;border-radius:10px;padding:10px;font-size:11px}.result.show{display:block}
+details{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}summary{cursor:pointer;list-style:none;font-size:11px;font-weight:850;color:#4b524d}summary::-webkit-details-marker{display:none}summary:after{content:"+";float:right;font-size:16px;font-weight:500}details[open] summary:after{content:"–"}.details-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}.details-grid h4{font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin:0 0 8px;color:#707870}.source,.trace{padding:7px 0;border-top:1px solid var(--line)}.source:first-of-type,.trace:first-of-type{border-top:0}.source b,.trace b{font-size:10px}.source span,.trace span{display:block;font-size:9px;line-height:1.35;color:var(--muted)}.source-id{font:800 9px ui-monospace,SFMono-Regular,Menlo,monospace;margin-right:5px;color:#556057}
+.why{display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0 10px}.why h2{font-size:26px;line-height:1;letter-spacing:-.04em;margin:4px 0}.why p{margin:0;font-size:13px;color:var(--muted)}.why strong{color:var(--ink)}.footer{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:14px 0 42px;font-size:11px;color:var(--muted)}.footer a{color:var(--ink);text-decoration:none;font-weight:800}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.queue{border-right:0;border-bottom:1px solid var(--line)}.checks{grid-template-columns:1fr 1fr}.decision-row,.details-grid,.why{grid-template-columns:1fr}}
+@media(max-width:520px){.top{align-items:flex-start;flex-direction:column}.checks{grid-template-columns:1fr}.claim-head{display:block}.badge{display:inline-block;margin-top:8px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top"><b>MICHAEL NINH × INCA</b><span>AI Operations Associate · independent work sample</span></div>
+
   <section class="hero">
     <div class="accent"></div>
-    <div class="eyebrow">60–90 second walkthrough</div>
-    <h1>From claim to action — and back into the system.</h1>
-    <p class="lead">Pick a synthetic claim. Specialist checks inspect the case, cite their evidence and produce one route. Then the important part: <b>the route triggers a concrete operational handoff, the human or system resolves the case, and that outcome feeds back into the next release.</b></p>
-    <div class="guide">
-      <div><b>1 · Inspect</b><span>Specialist checks produce findings.</span></div>
-      <div><b>2 · Decide</b><span>Evidence + reasons become one route.</span></div>
-      <div><b>3 · Act</b><span>The route creates a clear owner and next step.</span></div>
-      <div><b>4 · Learn</b><span>Human corrections become tests before autonomy expands.</span></div>
-    </div>
+    <div class="eyebrow">60-second work sample</div>
+    <h1>AI checks the claim. Humans step in only when needed.</h1>
+    <p class="lead">Pick a synthetic claim and follow one simple path: <b>what the system found → why it chose this route → what happens next.</b></p>
+    <div class="path"><span><b>1 · Check</b><i>→</i></span><span><b>2 · Decide</b><i>→</i></span><span><b>3 · Act</b></span></div>
   </section>
 
-  <section class="demo-shell">
-    <div class="demo-top"><strong>Claims operations workspace</strong><span>synthetic case · inspectable decision path</span></div>
-    <div class="demo">
-      <div class="queue"><div class="eyebrow">Claim queue</div><div id="cases"></div></div>
-      <div class="view">
-        <div class="case-head">
+  <section class="workspace">
+    <div class="workspace-head"><strong>Claims review</strong><span>synthetic · inspectable · no external actions</span></div>
+    <div class="layout">
+      <aside class="queue">
+        <div class="eyebrow" style="margin:3px 4px 9px">Pick a claim</div>
+        <div id="cases"></div>
+      </aside>
+
+      <main class="main">
+        <div class="claim-head">
           <div><div class="eyebrow">Selected claim</div><h2 id="title"></h2><p id="summary" class="summary"></p></div>
-          <span id="routeBadge" class="route-badge review"></span>
+          <span id="badge" class="badge review"></span>
         </div>
 
-        <div class="workflow-title"><b>1 · Specialist checks</b><span>Each check owns one question</span></div>
-        <div class="agents" id="agents"></div>
-
-        <div class="explain-grid">
-          <div class="reason-card"><small>2 · Decision coordinator</small><h3 id="decision"></h3><ul class="reason-list" id="reasons"></ul></div>
-          <div class="source-card"><small>Evidence used</small><div class="sources" id="sources"></div></div>
+        <div class="section">
+          <div class="section-title">1 · What did the checks find?</div>
+          <div class="checks" id="checks"></div>
         </div>
 
-        <div class="next"><div><small>3 · Operational handoff</small><strong id="next"></strong></div><p id="nextWhy"></p></div>
+        <div class="section">
+          <div class="decision-row">
+            <div class="decision">
+              <small>2 · Decision</small>
+              <h3 id="decision"></h3>
+              <ul class="reasons" id="reasons"></ul>
+            </div>
+            <div class="next">
+              <small>3 · What happens next?</small>
+              <h3 id="next"></h3>
+              <p id="nextWhy"></p>
+              <button class="primary" id="actionBtn" onclick="runAction()"></button>
+              <div class="result" id="result"></div>
+            </div>
+          </div>
 
-        <div class="handoff">
-          <small>What happens now?</small>
-          <h3 id="handoffTitle"></h3>
-          <div class="handoff-grid" id="handoffGrid"></div>
+          <details>
+            <summary>Show evidence & full agent trace</summary>
+            <div class="details-grid">
+              <div><h4>Evidence</h4><div id="sources"></div></div>
+              <div><h4>Agent trace</h4><div id="trace"></div></div>
+            </div>
+          </details>
         </div>
-
-        <div class="resolution" id="resolutionBox">
-          <div class="resolution-text"><b id="resolutionPrompt"></b><span id="resolutionHelp"></span></div>
-          <div class="resolution-actions" id="resolutionActions"></div>
-        </div>
-        <div class="resolution-result" id="resolutionResult"></div>
-
-        <div class="impact">
-          <div class="now"><b>So what?</b><span id="impactNow"></span></div>
-          <div class="learn"><b>4 · Close the loop</b><span id="impactLearn"></span></div>
-        </div>
-
-        <div class="actions"><a class="deep" href="/inca/">Engineering depth ↗</a><a class="deep" href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof" target="_blank">Proof files ↗</a></div>
-        <p class="note">Synthetic miniature based on INCA's public operating model. It does not reproduce MARS or claim access to INCA internals.</p>
-      </div>
+      </main>
     </div>
   </section>
 
-  <section class="so-what">
-    <div><div class="eyebrow">Why this matters</div><h2>The goal is not a better prediction.</h2></div>
-    <div class="so-what-grid">
-      <div><b>Less queue-reading</b><span>Humans receive the exact reason, evidence and action instead of rebuilding the case context.</span></div>
-      <div><b>Safer automation</b><span>Straightforward cases can move; uncertainty and missing evidence stop or escalate explicitly.</span></div>
-      <div><b>A system that improves</b><span>Overrides and failures become regression cases, so repeated manual judgement can become a better workflow.</span></div>
-    </div>
+  <section class="why">
+    <div><div class="eyebrow">Why this matters</div><h2>Less queue-reading. More judgement.</h2></div>
+    <p>The system does the repeatable checking and prepares the evidence. <strong>Humans only receive the cases — and the exact questions — that need human judgement.</strong> Corrections can then become regression tests before more autonomy is earned.</p>
   </section>
 
-  <section class="proof">
-    <div><b>HR takeaway</b><span>I connect AI output to real operational work: owner, action and resolution are visible.</span></div>
-    <div><b>Operations takeaway</b><span>The system does not end at a label. Every route changes the queue and tells the next person exactly what to do.</span></div>
-    <div><b>Engineering takeaway</b><span>Human outcomes feed back into evals and regressions before more authority is automated.</span></div>
-  </section>
+  <div class="footer"><span>Synthetic miniature based on INCA's public operating model.</span><span><a href="/inca/">Engineering depth ↗</a> · <a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof" target="_blank">Proof files ↗</a></span></div>
 </div>
 
 <script>
 const claims=[
 {
- label:'Edge case',title:'Night parking damage',summary:'Vehicle damage reported after overnight parking. The file is complete, but one anomaly pattern deserves a human look.',route:'HUMAN REVIEW',tone:'review',
- agents:[['01','Intake','Claim + policy linked','pass'],['02','Coverage','Coverage supported','pass'],['03','Fraud signal','Anomaly needs review','review'],['04','Evidence','Required evidence present','pass'],['05','Recovery','No recovery trigger','neutral'],['06','Decision','Escalate to reviewer','review']],
- reasons:[['S2','Policy evidence supports this type of parking-damage claim.'],['S3','Submitted damage evidence is complete enough to assess.'],['S5','A configured anomaly signal is present, so automatic handling would be too aggressive.']],
- sources:[['S1','Claim notice','Overnight parking damage reported; statement and event time recorded.'],['S2','Policy excerpt · Motor §4.2','Synthetic policy supports covered accidental exterior damage.'],['S3','Damage evidence','Four synthetic damage photos + repair estimate supplied.'],['S4','Event context','Parking location and incident window supplied.'],['S5','Anomaly signal','Synthetic feature check flags an unusual pattern for human review.']],
- next:'Claims expert review',nextWhy:'Create a review task with the anomaly, reasons and evidence bundle already attached.',
- handoffTitle:'The case leaves the general queue and enters a focused review.',
- handoff:[['System','Create review task','Attach S2, S3 and S5 + exact review reason.'],['Claims expert','Confirm or override','Inspect the anomaly; accept the route or correct it.'],['Workflow','Continue after review','Record the human outcome before any settlement step.']],
- impactNow:'Human attention is spent only on the flagged question — not on rereading the whole file.',
- impactLearn:'If the reviewer says the anomaly was irrelevant, that false positive becomes a regression case for the next release.',
- resolutionPrompt:'You are the claims expert. What do you do?',resolutionHelp:'Try the human step and see how the workflow closes.',
- resolution:[['Confirm concern','Review remains open; the case stays with the expert for investigation.'],['Override · false positive','Case returns to the standard path. The override reason is recorded and queued as a regression example.']]
+ label:'Edge case',title:'Night parking damage',summary:'Complete file, but one anomaly deserves a human look.',route:'HUMAN REVIEW',tone:'review',
+ checks:[['Coverage','Supported','pass'],['Risk','Anomaly found','review'],['Evidence','Complete','pass'],['Recovery','No trigger','neutral']],
+ reasons:[['S2','Policy supports this claim type.'],['S3','Evidence is complete enough to assess.'],['S5','Anomaly signal makes automatic handling too aggressive.']],
+ next:'Claims expert review',nextWhy:'Only review the flagged anomaly; the relevant evidence is already attached.',action:'Open focused review',result:'Review task created. S2, S3 and S5 are attached with the exact review question. The human can confirm or override the concern before settlement.' ,
+ sources:[['S1','Claim notice','Overnight parking damage, statement and incident time.'],['S2','Policy excerpt · Motor §4.2','Synthetic policy supports accidental exterior damage.'],['S3','Damage evidence','Four synthetic photos + repair estimate.'],['S5','Anomaly signal','Synthetic feature check flags an unusual pattern.']],
+ trace:[['Intake','Claim + policy linked.'],['Coverage agent','Coverage supported.'],['Fraud / risk agent','Anomaly requires review.'],['Evidence agent','Required evidence present.'],['Recovery agent','No recovery trigger.'],['Decision coordinator','Escalate to claims expert.']]
 },
 {
- label:'Missing evidence',title:'Water damage',summary:'A home water-damage claim has a clear description, but a required cause document is missing.',route:'NEED INFO',tone:'info',
- agents:[['01','Intake','Claim + policy linked','pass'],['02','Coverage','Potentially covered','neutral'],['03','Fraud signal','No review trigger','pass'],['04','Evidence','Cause evidence missing','missing'],['05','Recovery','Not assessed yet','neutral'],['06','Decision','Stop and request info','missing']],
- reasons:[['S2','The policy may cover the event, but the cause still has to be established.'],['S3','The claimant statement describes the damage but does not prove the cause.'],['S4','The required plumber / cause report is missing, so the workflow must not guess.']],
- sources:[['S1','Claim notice','Water damage, affected room and incident date supplied.'],['S2','Policy excerpt · Home §7.1','Synthetic policy requires evidence of the covered cause.'],['S3','Claimant statement','Description supplied, but no independent cause confirmation.'],['S4','Plumber / cause report','MISSING · required evidence has not been supplied.','missing']],
- next:'Request missing report',nextWhy:'Pause the case and draft one precise request for the missing cause evidence.',
- handoffTitle:'The case pauses with one explicit blocker instead of becoming manual detective work.',
- handoff:[['System','Pause safely','Do not infer coverage or advance the case.'],['Customer / Ops','Supply one document','Request the plumber / cause report only.'],['Workflow','Rerun checks','Re-run evidence + coverage when S4 arrives.']],
- impactNow:'The next person sees the exact missing item immediately; no one has to rediscover why the case is stuck.',
- impactLearn:'If this missing-document pattern repeats, the intake workflow can request it earlier and reduce avoidable back-and-forth.',
- resolutionPrompt:'Simulate the missing document arriving.',resolutionHelp:'The relevant checks should rerun instead of restarting the whole case.',
- resolution:[['Report received','S4 is attached. Evidence and coverage checks are queued to rerun; the case can now be reassessed.']]
+ label:'Missing evidence',title:'Water damage',summary:'Clear description, but a required cause document is missing.',route:'NEED INFO',tone:'info',
+ checks:[['Coverage','Potentially covered','neutral'],['Risk','No trigger','pass'],['Evidence','Cause report missing','block'],['Recovery','Not assessed','neutral']],
+ reasons:[['S2','Policy may cover the event, but the cause must be established.'],['S4','Required plumber / cause report is missing.']],
+ next:'Request one document',nextWhy:'Pause the case and ask only for the missing cause report.',action:'Request missing report',result:'Request prepared. When the report arrives, evidence + coverage checks rerun automatically instead of restarting the whole case.',
+ sources:[['S1','Claim notice','Water damage, affected room and date.'],['S2','Policy excerpt · Home §7.1','Synthetic policy requires evidence of covered cause.'],['S4','Plumber / cause report','MISSING · required evidence not supplied.']],
+ trace:[['Intake','Claim + policy linked.'],['Coverage agent','Potentially covered.'],['Risk agent','No review trigger.'],['Evidence agent','Cause evidence missing.'],['Recovery agent','Waiting on evidence.'],['Decision coordinator','Stop and request info.']]
 },
 {
- label:'Straightforward',title:'Dental treatment',summary:'Routine treatment with complete supporting documents and no configured review trigger.',route:'AUTO READY',tone:'auto',
- agents:[['01','Intake','Claim + policy linked','pass'],['02','Coverage','Coverage supported','pass'],['03','Fraud signal','No review trigger','pass'],['04','Evidence / invoice','Invoice consistent','pass'],['05','Recovery','No recovery trigger','neutral'],['06','Decision','Standard path ready','pass']],
- reasons:[['S2','The treatment category is supported by the synthetic policy evidence.'],['S3','Invoice and treatment evidence are present and internally consistent.'],['S4','No configured fraud, contradiction or human-sensitivity trigger is active.']],
- sources:[['S1','Claim notice','Routine dental treatment and reimbursement request supplied.'],['S2','Policy excerpt · Health §3.4','Synthetic policy supports the treatment category within the example.'],['S3','Invoice + treatment record','Provider, date, treatment and amount are mutually consistent.'],['S4','Review-signal check','No anomaly, contradiction or missing-evidence trigger found.']],
- next:'Standard downstream handling',nextWhy:'Package the rationale and evidence for the normal path; this demo does not execute payment.',
- handoffTitle:'No specialist review is needed, so the case can leave the exception queue.',
- handoff:[['System','Package decision','Carry evidence + rationale into the next workflow step.'],['Control','Keep effect boundary','No external payment or consequential action is auto-executed here.'],['Quality','Sample + monitor','Audit a sample and watch for new failure patterns.']],
- impactNow:'Human capacity stays available for ambiguous or sensitive cases instead of routine file checking.',
- impactLearn:'Any sampled error or downstream correction becomes a new test before this case class earns broader automation.',
- resolutionPrompt:'Continue the standard path.',resolutionHelp:'The case should move without creating unnecessary expert work.',
- resolution:[['Prepare downstream packet','Evidence + rationale are packaged for the standard workflow. No payment or external action is executed in this demo.']]
+ label:'Straightforward',title:'Dental treatment',summary:'Complete routine claim with no configured review trigger.',route:'AUTO READY',tone:'auto',
+ checks:[['Coverage','Supported','pass'],['Risk','No trigger','pass'],['Evidence','Invoice consistent','pass'],['Recovery','No trigger','neutral']],
+ reasons:[['S2','Treatment category is supported by policy evidence.'],['S3','Invoice and treatment evidence are consistent.'],['S4','No anomaly, contradiction or missing-evidence trigger is active.']],
+ next:'Continue standard path',nextWhy:'No specialist review is needed; carry evidence + rationale downstream.',action:'Continue workflow',result:'Decision packet prepared for the normal downstream step. This demo does not execute payment or any external action.',
+ sources:[['S1','Claim notice','Routine dental treatment reimbursement request.'],['S2','Policy excerpt · Health §3.4','Synthetic policy supports the treatment category.'],['S3','Invoice + treatment record','Provider, date, treatment and amount are consistent.'],['S4','Review-signal check','No configured review trigger found.']],
+ trace:[['Intake','Claim + policy linked.'],['Coverage agent','Coverage supported.'],['Risk agent','No review trigger.'],['Evidence agent','Invoice consistent.'],['Recovery agent','No recovery trigger.'],['Decision coordinator','Standard path ready.']]
 }
 ];
 let idx=0;
-const cases=document.getElementById('cases');
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 function render(){
  const x=claims[idx];
- cases.innerHTML=claims.map((c,i)=>`<button class="case ${i===idx?'active':''}" onclick="pick(${i})"><small>${esc(c.label)}</small><b>${esc(c.title)}</b></button>`).join('');
- document.getElementById('title').textContent=x.title;document.getElementById('summary').textContent=x.summary;
- const badge=document.getElementById('routeBadge');badge.textContent=x.route;badge.className=`route-badge ${x.tone}`;
- document.getElementById('agents').innerHTML=x.agents.map(a=>`<div class="agent ${a[3]}"><small>${a[0]}</small><b>${esc(a[1])}</b><span>${esc(a[2])}</span><span class="agent-status">${a[3]==='pass'?'pass':a[3]==='missing'?'blocker':a[3]==='review'?'review':'context'}</span></div>`).join('');
+ document.getElementById('cases').innerHTML=claims.map((c,i)=>`<button class="case ${i===idx?'active':''}" onclick="pick(${i})"><small>${esc(c.label)}</small><b>${esc(c.title)}</b></button>`).join('');
+ document.getElementById('title').textContent=x.title;
+ document.getElementById('summary').textContent=x.summary;
+ const badge=document.getElementById('badge');badge.textContent=x.route;badge.className=`badge ${x.tone}`;
+ document.getElementById('checks').innerHTML=x.checks.map(c=>`<div class="check ${c[2]}"><b>${esc(c[0])}</b><span>${esc(c[1])}</span><span class="state">${c[2]==='pass'?'pass':c[2]==='review'?'review':c[2]==='block'?'blocker':'context'}</span></div>`).join('');
  document.getElementById('decision').textContent=x.route;
  document.getElementById('reasons').innerHTML=x.reasons.map(r=>`<li><span class="cite">${esc(r[0])}</span>${esc(r[1])}</li>`).join('');
- document.getElementById('sources').innerHTML=x.sources.map(s=>`<div class="source ${s[3]||''}"><div class="source-id">${esc(s[0])}</div><div><b>${esc(s[1])}</b><span>${esc(s[2])}</span></div></div>`).join('');
- document.getElementById('next').textContent=x.next;document.getElementById('nextWhy').textContent=x.nextWhy;
- document.getElementById('handoffTitle').textContent=x.handoffTitle;
- document.getElementById('handoffGrid').innerHTML=x.handoff.map(h=>`<div class="handoff-step"><b>${esc(h[0])} · ${esc(h[1])}</b><span>${esc(h[2])}</span></div>`).join('');
- document.getElementById('impactNow').textContent=x.impactNow;document.getElementById('impactLearn').textContent=x.impactLearn;
- document.getElementById('resolutionPrompt').textContent=x.resolutionPrompt;document.getElementById('resolutionHelp').textContent=x.resolutionHelp;
- document.getElementById('resolutionActions').innerHTML=x.resolution.map((r,i)=>`<button class="mini-btn ${i===0?'primary':''}" onclick="resolveCase(${i})">${esc(r[0])}</button>`).join('');
- const result=document.getElementById('resolutionResult');result.className='resolution-result';result.textContent='';
+ document.getElementById('next').textContent=x.next;
+ document.getElementById('nextWhy').textContent=x.nextWhy;
+ document.getElementById('actionBtn').textContent=x.action;
+ const result=document.getElementById('result');result.textContent='';result.className='result';
+ document.getElementById('sources').innerHTML=x.sources.map(s=>`<div class="source"><b><span class="source-id">${esc(s[0])}</span>${esc(s[1])}</b><span>${esc(s[2])}</span></div>`).join('');
+ document.getElementById('trace').innerHTML=x.trace.map(t=>`<div class="trace"><b>${esc(t[0])}</b><span>${esc(t[1])}</span></div>`).join('');
 }
 function pick(i){idx=i;render()}
-function resolveCase(i){const r=claims[idx].resolution[i];const result=document.getElementById('resolutionResult');result.innerHTML=`<b>${esc(r[0])}</b> · ${esc(r[1])}`;result.className='resolution-result show'}
+function runAction(){const r=document.getElementById('result');r.textContent=claims[idx].result;r.className='result show'}
 render();
 </script>
 </body>
