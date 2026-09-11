@@ -17,5 +17,5 @@ for (const marker of [
 ]) assert.ok(html.includes(marker), `missing marker: ${marker}`);
 
 assert.ok(html.includes('https://github.com/mikelninh/care-os'));
-assert.ok(html.includes('No Doctolib product UI, patient/customer data, internal architecture or production integration claims.'));
+assert.ok(html.includes('no official Doctolib product UI or data'));
 console.log('Technical Onboarding one-screen demo QA PASS');
