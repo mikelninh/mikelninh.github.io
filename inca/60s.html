@@ -1,5 +1,167 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Michael Ninh × INCA — 60s AI Operations Work Sample</title><style>
-:root{--ink:#0d1612;--muted:#616862;--line:#d8d4c8;--paper:#f3f0e7;--green:#b6ff3f;--deep:#07130e;--amber:#ffc75a;--red:#ff8d84}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif}.wrap{width:min(1040px,calc(100% - 32px));margin:auto}.top{padding:26px 0 18px;display:flex;justify-content:space-between;gap:16px;align-items:center;border-bottom:1px solid var(--line);font-size:13px}.top b{font-size:16px}.hero{padding:52px 0 28px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}h1{font-size:clamp(40px,6vw,70px);line-height:.94;letter-spacing:-.055em;margin:10px 0 16px}.lead{font-size:19px;line-height:1.35;color:#39413c;max-width:820px}.guide{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0}.guide div{background:#fffdf8;border:1px solid var(--line);border-radius:14px;padding:14px}.guide b{display:block;margin-bottom:4px}.guide span{font-size:13px;color:var(--muted)}.demo{background:var(--deep);color:white;border-radius:18px;overflow:hidden;display:grid;grid-template-columns:280px 1fr}.queue{padding:14px;border-right:1px solid #30443a}.queue .eyebrow{color:#91a598;margin:4px 4px 10px}.case{display:block;width:100%;border:1px solid transparent;border-radius:12px;background:transparent;color:white;text-align:left;padding:11px;margin:4px 0;cursor:pointer}.case.active{background:#13231a;border-color:#3c5648}.case small{display:block;color:#9eb0a5;font-size:10px;margin-bottom:4px}.case b{display:block;font-size:13px}.view{padding:22px}.view .eyebrow{color:#91a598}.view h2{font-size:27px;margin:5px 0 5px}.summary{color:#a9b8ae;font-size:13px}.decision-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:10px;margin-top:16px}.decision{background:#f7f3ea;color:var(--ink);border-radius:14px;padding:17px}.decision small,.next small{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.decision strong{display:block;font-size:29px;letter-spacing:-.04em;margin:6px 0 9px}.decision p{margin:0;font-size:14px;line-height:1.4}.next{background:var(--green);color:var(--ink);border-radius:14px;padding:17px}.next strong{display:block;font-size:20px;line-height:1.2;margin-top:7px}.checks{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.check{border:1px solid #30443a;border-radius:10px;padding:9px}.check b{display:block;font-size:11px;margin-bottom:3px}.check span{font-size:11px;color:#9fb1a6}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.actions a{border-radius:999px;padding:9px 12px;text-decoration:none;font-size:12px;font-weight:800}.deep{border:1px solid #3b5245;color:#dbe8df}.proof{margin:18px 0 54px;display:grid;grid-template-columns:1fr 1fr;gap:12px}.proof div{border-top:2px solid var(--ink);padding-top:10px}.proof b{display:block;margin-bottom:4px}.proof span{font-size:13px;color:var(--muted)}@media(max-width:760px){.guide,.proof{grid-template-columns:1fr}.demo{grid-template-columns:1fr}.queue{border-right:0;border-bottom:1px solid #30443a}.decision-grid,.checks{grid-template-columns:1fr}}
-</style></head><body><div class="wrap"><div class="top"><b>MICHAEL NINH × INCA</b><span>AI Operations Associate · independent work sample</span></div><section class="hero"><div class="eyebrow">60-second walkthrough</div><h1>One claim. One decision. One next step.</h1><p class="lead">Pick a synthetic claim. The workflow explains the decision, routes uncertainty to a human, and keeps the next action obvious. Engineering detail stays one click deeper.</p><div class="guide"><div><b>1 · Pick a claim</b><span>Start with the operator’s real question.</span></div><div><b>2 · Read the decision</b><span>Decision + reason + next action, no JSON wall.</span></div><div><b>3 · Compare an edge case</b><span>Uncertainty escalates instead of being guessed away.</span></div></div></section><section class="demo"><div class="queue"><div class="eyebrow">Synthetic claim queue</div><div id="cases"></div></div><div class="view"><div class="eyebrow">Selected claim</div><h2 id="title"></h2><p id="summary" class="summary"></p><div class="decision-grid"><div class="decision"><small>Decision</small><strong id="decision"></strong><p id="why"></p></div><div class="next"><small>Next action</small><strong id="next"></strong></div></div><div class="checks" id="checks"></div><div class="actions"><a class="deep" href="/inca/">Engineering depth ↗</a></div></div></section><section class="proof"><div><b>What HR should take away</b><span>I make AI output operationally clear: one decision, one reason, one next action.</span></div><div><b>What the team should take away</b><span>Hard cases are routed to humans, and failures can become regression tests before the next release.</span></div></section></div><script>
-const data=[{title:'Night parking damage',summary:'Vehicle damage reported after overnight parking; anomaly signals need review.',decision:'HUMAN REVIEW',why:'The claim is complete enough to assess, but anomaly signals make automatic handling inappropriate.',next:'Reviewer checks evidence before settlement.',checks:[['Coverage','Supported'],['Fraud signal','Review'],['Evidence','Complete']]},{title:'Water damage',summary:'Water damage claim submitted without a required supporting document.',decision:'NEED INFO',why:'A critical input is missing. The workflow should stop instead of inferring the missing evidence.',next:'Request the missing document from the claimant.',checks:[['Coverage','Pending'],['Fraud signal','No issue'],['Evidence','Missing']]},{title:'Dental treatment',summary:'Routine treatment with complete supporting evidence and no review signals.',decision:'AUTO READY',why:'Required evidence is present and no configured review trigger is active.',next:'Prepare the case for the standard downstream step.',checks:[['Coverage','Supported'],['Fraud signal','No issue'],['Evidence','Complete']]}];let idx=0;const cases=document.getElementById('cases');function render(){cases.innerHTML=data.map((x,i)=>`<button class="case ${i===idx?'active':''}" onclick="pick(${i})"><small>${i===0?'Edge case':i===1?'Missing evidence':'Straightforward'}</small><b>${x.title}</b></button>`).join('');const x=data[idx];document.getElementById('title').textContent=x.title;document.getElementById('summary').textContent=x.summary;document.getElementById('decision').textContent=x.decision;document.getElementById('why').textContent=x.why;document.getElementById('next').textContent=x.next;document.getElementById('checks').innerHTML=x.checks.map(y=>`<div class="check"><b>${y[0]}</b><span>${y[1]}</span></div>`).join('')}function pick(i){idx=i;render()}render();
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Michael Ninh × INCA — 60s AI Operations Work Sample</title>
+<style>
+:root{--ink:#0d1612;--muted:#69716b;--line:#d9d5ca;--paper:#f3f0e7;--card:#fffdf8;--green:#b6ff3f;--deep:#07130e;--deep2:#0c1a12;--deep3:#12251a;--ok:#79efaa;--amber:#ffd36b;--red:#ff9a91;--blue:#a8d7ff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}.wrap{width:min(1120px,calc(100% - 32px));margin:auto}.top{padding:24px 0 16px;display:flex;justify-content:space-between;gap:16px;align-items:center;border-bottom:1px solid var(--line);font-size:13px}.top b{font-size:16px}.top span{color:var(--muted)}.hero{padding:44px 0 26px}.eyebrow{font-size:10px;font-weight:850;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(40px,6vw,68px);line-height:.94;letter-spacing:-.055em;margin:10px 0 15px}.lead{font-size:18px;line-height:1.35;color:#39413c;max-width:880px}.guide{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:22px 0 0}.guide div{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:12px}.guide b{display:block;font-size:13px;margin-bottom:3px}.guide span{font-size:12px;color:var(--muted)}
+.demo{margin-top:10px;background:var(--deep);color:white;border-radius:18px;overflow:hidden;display:grid;grid-template-columns:245px 1fr}.queue{padding:14px;border-right:1px solid #30443a}.queue .eyebrow{color:#91a598;margin:4px 4px 10px}.case{display:block;width:100%;border:1px solid transparent;border-radius:11px;background:transparent;color:white;text-align:left;padding:10px;margin:4px 0;cursor:pointer}.case:hover,.case.active{background:#13231a;border-color:#3c5648}.case small{display:block;color:#9eb0a5;font-size:9px;margin-bottom:3px;text-transform:uppercase;letter-spacing:.08em}.case b{display:block;font-size:13px}.view{padding:21px}.view>.eyebrow{color:#91a598}.case-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;border-bottom:1px solid #2d4337;padding-bottom:14px}.case-head h2{font-size:25px;margin:4px 0 4px}.summary{color:#a9b8ae;font-size:12px;margin:0}.route-badge{font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:6px 8px;white-space:nowrap}.route-badge.review{background:#4b3a1c;color:#ffd36b}.route-badge.info{background:#4a2825;color:#ffaaa3}.route-badge.auto{background:#173d2a;color:#80f3ad}
+.workflow-title{display:flex;justify-content:space-between;gap:10px;align-items:end;margin:15px 0 8px}.workflow-title b{font-size:12px}.workflow-title span{font-size:10px;color:#8fa396}.agents{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}.agent{border:1px solid #30443a;border-radius:10px;padding:9px;background:#0a1710;min-height:78px}.agent small{display:block;font-size:8px;letter-spacing:.07em;text-transform:uppercase;color:#82988b;margin-bottom:4px}.agent b{display:block;font-size:10px;margin-bottom:4px}.agent span{font-size:10px;color:#b4c2b9;line-height:1.25}.agent .agent-status{display:block;margin-top:5px;font-size:9px;font-weight:850;text-transform:uppercase}.agent.pass .agent-status{color:var(--ok)}.agent.review .agent-status{color:var(--amber)}.agent.missing .agent-status{color:var(--red)}.agent.neutral .agent-status{color:var(--blue)}
+.explain-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:10px;margin-top:11px}.reason-card,.source-card{border-radius:13px;padding:15px}.reason-card{background:#f7f3ea;color:var(--ink)}.source-card{border:1px solid #30443a;background:#0a1710}.reason-card small,.source-card>small,.next small{font-size:9px;font-weight:850;letter-spacing:.11em;text-transform:uppercase}.reason-card h3{font-size:27px;letter-spacing:-.04em;margin:5px 0 8px}.reason-list{margin:0;padding:0;list-style:none}.reason-list li{font-size:12px;line-height:1.35;padding:6px 0;border-top:1px solid #ded8ca}.reason-list li:first-child{border-top:0}.cite{display:inline-flex;min-width:24px;justify-content:center;background:#e8e3d8;border-radius:999px;padding:2px 5px;margin-right:5px;font:700 9px ui-monospace,SFMono-Regular,Menlo,monospace}.source-card>small{color:#8fa396}.sources{margin-top:7px;display:grid;gap:6px}.source{display:grid;grid-template-columns:32px 1fr;gap:7px;border-top:1px solid rgba(255,255,255,.07);padding-top:6px}.source:first-child{border-top:0;padding-top:0}.source-id{font:800 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--green)}.source b{display:block;font-size:10px}.source span{display:block;font-size:9px;line-height:1.3;color:#9fb0a5}.source.missing .source-id{color:var(--red)}
+.next{margin-top:10px;background:var(--green);color:var(--ink);border-radius:13px;padding:14px;display:grid;grid-template-columns:145px 1fr;gap:12px;align-items:center}.next strong{display:block;font-size:18px;line-height:1.2}.next p{margin:3px 0 0;font-size:11px;color:#34402f}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.actions a{border-radius:999px;padding:8px 11px;text-decoration:none;font-size:11px;font-weight:800}.deep{border:1px solid #3b5245;color:#dbe8df}.proof{margin:17px 0 48px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.proof div{border-top:2px solid var(--ink);padding-top:9px}.proof b{display:block;font-size:13px;margin-bottom:3px}.proof span{font-size:12px;color:var(--muted)}.note{font-size:10px;color:#8b938d;margin:10px 0 0}
+@media(max-width:900px){.agents{grid-template-columns:repeat(3,1fr)}.explain-grid{grid-template-columns:1fr}.proof{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.guide,.proof{grid-template-columns:1fr}.demo{grid-template-columns:1fr}.queue{border-right:0;border-bottom:1px solid #30443a}.agents{grid-template-columns:1fr 1fr}.case-head{display:block}.route-badge{display:inline-block;margin-top:8px}.next{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><b>MICHAEL NINH × INCA</b><span>AI Operations Associate · independent work sample</span></div>
+  <section class="hero">
+    <div class="eyebrow">60–90 second walkthrough</div>
+    <h1>See how the decision gets made.</h1>
+    <p class="lead">Pick a synthetic claim. Specialist checks inspect different parts of the case, cite the evidence they used, and hand their findings to one decision step. You can see <b>what each check found, why the case is routed that way, which sources support it, and what happens next.</b></p>
+    <div class="guide">
+      <div><b>1 · Follow the checks</b><span>Coverage, fraud, evidence, invoice/recovery and human signals each contribute one finding.</span></div>
+      <div><b>2 · Read the evidence</b><span>Every important reason points to a visible synthetic source — or explicitly shows what is missing.</span></div>
+      <div><b>3 · Understand the route</b><span>The final step combines the findings into AUTO READY, HUMAN REVIEW or NEED INFO.</span></div>
+    </div>
+  </section>
+
+  <section class="demo">
+    <div class="queue">
+      <div class="eyebrow">Synthetic claim queue</div>
+      <div id="cases"></div>
+    </div>
+    <div class="view">
+      <div class="case-head">
+        <div><div class="eyebrow">Selected claim</div><h2 id="title"></h2><p id="summary" class="summary"></p></div>
+        <span id="routeBadge" class="route-badge review"></span>
+      </div>
+
+      <div class="workflow-title"><b>Specialist workflow</b><span>Findings → decision coordinator</span></div>
+      <div class="agents" id="agents"></div>
+
+      <div class="explain-grid">
+        <div class="reason-card">
+          <small>Decision coordinator</small>
+          <h3 id="decision"></h3>
+          <ul class="reason-list" id="reasons"></ul>
+        </div>
+        <div class="source-card">
+          <small>Evidence used</small>
+          <div class="sources" id="sources"></div>
+        </div>
+      </div>
+
+      <div class="next">
+        <div><small>Next action</small><strong id="next"></strong></div>
+        <p id="nextWhy"></p>
+      </div>
+      <div class="actions"><a class="deep" href="/inca/">Engineering depth ↗</a><a class="deep" href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof" target="_blank">Proof files ↗</a></div>
+      <p class="note">This is a synthetic miniature based on INCA's public operating model. It does not reproduce MARS or claim access to INCA internals.</p>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div><b>HR takeaway</b><span>The result is understandable without reading logs: findings, evidence, decision and next action are visible.</span></div>
+    <div><b>Operations takeaway</b><span>Specialist checks do not hide uncertainty. Missing or conflicting evidence changes the route.</span></div>
+    <div><b>Engineering takeaway</b><span>Reasons are tied to source IDs, and the routing behaviour can become regression evidence before release.</span></div>
+  </section>
+</div>
+
+<script>
+const claims=[
+{
+ label:'Edge case', title:'Night parking damage', summary:'Vehicle damage reported after overnight parking. The file is complete, but one anomaly pattern deserves a human look.', route:'HUMAN REVIEW', tone:'review',
+ agents:[
+  ['01','Intake','Claim + policy linked','pass'],
+  ['02','Coverage / liability','Coverage supported','pass'],
+  ['03','Fraud signal','Anomaly needs review','review'],
+  ['04','Evidence / estimate','Required evidence present','pass'],
+  ['05','Recovery','No recovery trigger','neutral'],
+  ['06','Decision','Escalate to reviewer','review']
+ ],
+ reasons:[
+  ['S2','The policy evidence supports this type of parking-damage claim.'],
+  ['S3','The submitted damage evidence is complete enough to assess.'],
+  ['S5','A configured anomaly signal is present, so automatic handling would be too aggressive.']
+ ],
+ sources:[
+  ['S1','Claim notice','Overnight parking damage reported; claimant statement and event time recorded.'],
+  ['S2','Policy excerpt · Motor §4.2','Synthetic policy section supports covered accidental exterior damage.'],
+  ['S3','Damage evidence','Four synthetic damage photos + repair estimate supplied.'],
+  ['S4','Event context','Parking location and incident window supplied.'],
+  ['S5','Anomaly signal','Synthetic feature check flags an unusual pattern for human review.']
+ ],
+ next:'Human reviewer', nextWhy:'Review the flagged anomaly alongside the supplied evidence before any consequential settlement step.'
+},
+{
+ label:'Missing evidence', title:'Water damage', summary:'A home water-damage claim has a clear description, but a required cause document is missing.', route:'NEED INFO', tone:'info',
+ agents:[
+  ['01','Intake','Claim + policy linked','pass'],
+  ['02','Coverage / liability','Potentially covered','neutral'],
+  ['03','Fraud signal','No review trigger','pass'],
+  ['04','Evidence / estimate','Cause evidence missing','missing'],
+  ['05','Recovery','Not assessed yet','neutral'],
+  ['06','Decision','Stop and request info','missing']
+ ],
+ reasons:[
+  ['S2','The policy may cover the event, but the cause still has to be established.'],
+  ['S3','The claimant statement describes the damage but does not prove the cause.'],
+  ['S4','The required plumber / cause report is missing, so the workflow must not guess.']
+ ],
+ sources:[
+  ['S1','Claim notice','Water damage, affected room and incident date supplied.'],
+  ['S2','Policy excerpt · Home §7.1','Synthetic policy requires evidence of the covered cause.'],
+  ['S3','Claimant statement','Description supplied, but no independent cause confirmation.'],
+  ['S4','Plumber / cause report','MISSING · required evidence has not been supplied.','missing']
+ ],
+ next:'Request missing report', nextWhy:'Ask for the plumber / cause report, then rerun the evidence and coverage checks with the new source.'
+},
+{
+ label:'Straightforward', title:'Dental treatment', summary:'Routine treatment with complete supporting documents and no configured review trigger.', route:'AUTO READY', tone:'auto',
+ agents:[
+  ['01','Intake','Claim + policy linked','pass'],
+  ['02','Coverage / liability','Coverage supported','pass'],
+  ['03','Fraud signal','No review trigger','pass'],
+  ['04','Evidence / invoice','Invoice consistent','pass'],
+  ['05','Recovery','No recovery trigger','neutral'],
+  ['06','Decision','Standard path ready','pass']
+ ],
+ reasons:[
+  ['S2','The treatment category is supported by the synthetic policy evidence.'],
+  ['S3','Invoice and treatment evidence are present and internally consistent.'],
+  ['S4','No configured fraud, contradiction or human-sensitivity trigger is active.']
+ ],
+ sources:[
+  ['S1','Claim notice','Routine dental treatment and reimbursement request supplied.'],
+  ['S2','Policy excerpt · Health §3.4','Synthetic policy supports the treatment category within the example.'],
+  ['S3','Invoice + treatment record','Provider, date, treatment and amount are mutually consistent.'],
+  ['S4','Review-signal check','No anomaly, contradiction or missing-evidence trigger found.']
+ ],
+ next:'Prepare standard downstream step', nextWhy:'The case can move forward in the normal workflow. This demo does not execute payment or any external action.'
+}
+];
+let idx=0;
+const cases=document.getElementById('cases');
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function render(){
+ const x=claims[idx];
+ cases.innerHTML=claims.map((c,i)=>`<button class="case ${i===idx?'active':''}" onclick="pick(${i})"><small>${esc(c.label)}</small><b>${esc(c.title)}</b></button>`).join('');
+ document.getElementById('title').textContent=x.title;
+ document.getElementById('summary').textContent=x.summary;
+ const badge=document.getElementById('routeBadge'); badge.textContent=x.route; badge.className=`route-badge ${x.tone}`;
+ document.getElementById('agents').innerHTML=x.agents.map(a=>`<div class="agent ${a[3]}"><small>${a[0]}</small><b>${esc(a[1])}</b><span>${esc(a[2])}</span><span class="agent-status">${a[3]==='pass'?'pass':a[3]==='review'?'review':a[3]==='missing'?'missing':'context'}</span></div>`).join('');
+ document.getElementById('decision').textContent=x.route;
+ document.getElementById('reasons').innerHTML=x.reasons.map(r=>`<li><span class="cite">${esc(r[0])}</span>${esc(r[1])}</li>`).join('');
+ document.getElementById('sources').innerHTML=x.sources.map(s=>`<div class="source ${s[3]==='missing'?'missing':''}"><span class="source-id">${esc(s[0])}</span><div><b>${esc(s[1])}</b><span>${esc(s[2])}</span></div></div>`).join('');
+ document.getElementById('next').textContent=x.next;
+ document.getElementById('nextWhy').textContent=x.nextWhy;
+}
+function pick(i){idx=i;render()}
+render();
+</script>
+</body>
+</html>
