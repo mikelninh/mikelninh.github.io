@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "purpose": "Independent application work sample for ESCRIBA AI Enablement Engineer",
+    "scope": "Synthetic internal-use-case prioritisation only; no ESCRIBA customer or internal data"
+  },
+  "weights": {
+    "volume": 0.20,
+    "data_readiness": 0.20,
+    "business_value": 0.25,
+    "ai_fit": 0.20,
+    "risk_inverse": 0.15
+  },
+  "use_cases": [
+    {
+      "id": "finance",
+      "team": "Finance",
+      "title": "Invoice exception triage",
+      "volume": 5,
+      "data_readiness": 5,
+      "business_value": 5,
+      "ai_fit": 5,
+      "risk": 3,
+      "system_shape": "Deterministic matching first; LLM only for ambiguous exceptions",
+      "human_boundary": "Human review on exceptions and before any external or financial action"
+    },
+    {
+      "id": "hr",
+      "team": "HR",
+      "title": "Policy Q&A with sources",
+      "volume": 4,
+      "data_readiness": 4,
+      "business_value": 4,
+      "ai_fit": 4,
+      "risk": 3,
+      "system_shape": "RAG over approved policy sources with citation gate",
+      "human_boundary": "Escalate missing, conflicting or sensitive policy questions"
+    },
+    {
+      "id": "sales",
+      "team": "Sales",
+      "title": "RFP response assistant",
+      "volume": 3,
+      "data_readiness": 4,
+      "business_value": 4,
+      "ai_fit": 4,
+      "risk": 2,
+      "system_shape": "RAG + approved response template",
+      "human_boundary": "Human owns final external send"
+    }
+  ]
+}
