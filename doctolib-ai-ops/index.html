@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI Operations Lab — Role-fit demo</title>
-<meta name="description" content="Independent role-fit work sample for AI operations: workflow redesign, agent context, evaluation, human release and impact measurement.">
+<meta name="description" content="Independent AI operations work sample: redesign repetitive work, give AI current information, run quality checks and keep sensitive actions behind human approval.">
 <style>
 :root{--ink:#111827;--muted:#627083;--line:#dce3ea;--paper:#f6f8fb;--card:#fff;--blue:#1d4ed8;--blue2:#0f5bd8;--cyan:#11b8aa;--green:#0e8f62;--amber:#b56b00;--red:#b42318;--shadow:0 16px 48px rgba(20,35,60,.08);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#fff 0,#f4f7fb 55%,#fff 100%);color:var(--ink)}button,a{font:inherit}.shell{max-width:1280px;margin:auto;padding:0 28px 72px}
@@ -33,82 +33,82 @@ footer{margin-top:64px;border-top:1px solid var(--line);padding-top:22px;color:v
 
 <section class="hero">
   <div>
-    <p class="eyebrow">Workflow redesign · Agent operations · Evaluation</p>
-    <h1>From manual casework to a <span>measurable AI workflow.</span></h1>
-    <p class="lede">A compact simulation of how I would own an Operations workflow end to end: understand the work, curate context, design bounded agent steps, define evals, catch stale knowledge and only expand autonomy after evidence.</p>
-    <div class="hero-note"><b>What this is:</b> a role-specific reviewer surface built on the same principles as my Digital Worker Factory. It is intentionally synthetic and does not represent Doctolib systems, Salesforce data or production performance.</div>
+    <p class="eyebrow">Operations workflow · AI quality · human approval</p>
+    <h1>Turn repetitive operations into a <span>safe, measurable AI workflow.</span></h1>
+    <p class="lede">This demo shows a simple path: understand the task, give the AI current information, run quality checks, keep sensitive actions behind human approval, and automate more only when the evidence is good.</p>
+    <div class="hero-note"><b>Independent work sample.</b> This synthetic role-fit demo is built on the same principles as my Digital Worker Factory. It does not represent Doctolib systems, customer data or measured production performance.</div>
   </div>
   <aside class="role-card">
-    <p class="eyebrow">What I’m demonstrating</p>
-    <h3>AI-Ops ownership, not a chatbot demo.</h3>
+    <p class="eyebrow">What this shows</p>
+    <h3>The role in 60 seconds.</h3>
     <ul>
-      <li><b>Workflow redesign</b><span>Start from the operational bottleneck, not the model.</span></li>
-      <li><b>Context quality</b><span>Freshness and source coverage are explicit gates.</span></li>
-      <li><b>Evaluation</b><span>Quality checks sit beside automation, not after it.</span></li>
-      <li><b>Earned autonomy</b><span>Consequential actions remain behind human release.</span></li>
+      <li><b>Redesign the workflow</b><span>Start with the manual bottleneck and decide where AI actually helps.</span></li>
+      <li><b>Control context & actions</b><span>Require current sources and keep sensitive actions behind human approval.</span></li>
+      <li><b>Measure quality before scaling</b><span>Use checks, failures and human corrections before increasing automation.</span></li>
     </ul>
   </aside>
 </section>
 
 <div class="tabs">
-  <button class="tab active" data-mode="healthy">Healthy context</button>
-  <button class="tab" data-mode="stale">Inject stale CRM note</button>
-  <button class="tab" data-mode="missing">Remove policy source</button>
+  <button class="tab active" data-mode="healthy">Everything current</button>
+  <button class="tab" data-mode="stale">Outdated CRM note</button>
+  <button class="tab" data-mode="missing">Missing policy</button>
 </div>
 
 <section class="kpis" aria-label="Workflow measurement">
-  <div class="kpi"><strong id="qualityGate">4/4</strong><small>deterministic quality checks passing</small></div>
-  <div class="kpi"><strong id="contextGate">3/3</strong><small>required context sources usable</small></div>
-  <div class="kpi"><strong>Human release</strong><small>external write boundary</small></div>
-  <div class="kpi"><strong>Shadow → Copilot</strong><small>current autonomy tier</small></div>
-  <div class="kpi"><strong>Measure, then scale</strong><small>time · quality · cost · usage</small></div>
+  <div class="kpi"><strong id="qualityGate">4/4</strong><small>quality checks passed</small></div>
+  <div class="kpi"><strong id="contextGate">3/3</strong><small>required sources available</small></div>
+  <div class="kpi"><strong>Human approval</strong><small>required before external action</small></div>
+  <div class="kpi"><strong>Controlled automation</strong><small>current operating mode</small></div>
+  <div class="kpi"><strong>Measure first</strong><small>time · quality · cost · usage</small></div>
 </section>
 
 <section class="workspace">
   <article class="panel">
-    <p class="eyebrow">01 · Context</p>
-    <h2>What does the agent know?</h2>
-    <p class="panel-help">Synthetic customer-success case: a clinic activation is delayed. The agent needs current account context, an implementation policy and recent support history before proposing a next action.</p>
+    <p class="eyebrow">01 · Current information</p>
+    <h2>Does the AI have what it needs?</h2>
+    <p class="panel-help">Synthetic clinic case: an activation is delayed. Before proposing a next step, the AI must have current account information, the implementation policy and recent support history.</p>
     <div id="sources"></div>
   </article>
 
   <article class="panel">
-    <p class="eyebrow">02 · Agent workflow</p>
-    <h2>What may it do?</h2>
-    <p class="panel-help">Interpretation is flexible; authority is not. The workflow can classify, retrieve, draft and prepare. CRM writes and customer communication remain review-gated.</p>
+    <p class="eyebrow">02 · AI workflow</p>
+    <h2>What can the AI do?</h2>
+    <p class="panel-help">It may sort the case, find information and prepare a draft. It may not write to CRM or contact the customer without human approval.</p>
     <div class="flow" id="flow"></div>
     <div class="actions">
-      <button class="primary" id="run">Run workflow</button>
+      <button class="primary" id="run">Run 30-second demo</button>
       <button class="secondary" id="reset">Reset</button>
     </div>
   </article>
 
   <article class="panel">
-    <p class="eyebrow">03 · Evals</p>
-    <h2>Would I trust it more?</h2>
-    <p class="panel-help">The demo evaluates properties I would want before increasing autonomy. No invented production KPI uplift.</p>
+    <p class="eyebrow">03 · Quality checks</p>
+    <h2>Is it safe to automate more?</h2>
+    <p class="panel-help">These checks show whether the workflow has enough reliable information to continue. If not, it stops.</p>
     <div class="eval-grid" id="evals"></div>
   </article>
 </section>
 
 <section class="section">
-  <p class="eyebrow">Baseline → redesigned workflow</p>
-  <h2>Automate the low-judgement work. Preserve the hard decisions.</h2>
-  <p class="section-copy">The goal is not “agent does everything.” The goal is to remove repetitive retrieval and drafting while making context freshness, failure modes, human decisions and measurement visible.</p>
+  <p class="eyebrow">Manual → assisted</p>
+  <h2>Automate repetitive work. Keep judgement with people.</h2>
+  <p class="section-copy">The goal is not “AI does everything.” It is to reduce repetitive searching and drafting while keeping missing information, failures, human decisions and results visible.</p>
   <div class="compare">
-    <div class="compare-card"><h3>Before</h3><ul><li>Operator opens CRM, help docs and support history manually.</li><li>Context freshness depends on memory and tab-hunting.</li><li>Quality is reviewed case by case with weak feedback capture.</li><li>Impact is hard to separate from anecdotes.</li></ul></div>
-    <div class="compare-card"><h3>After</h3><ul><li>Required sources are declared and checked before work starts.</li><li>Agent prepares a structured next-action package.</li><li>Eval failures become visible regression cases.</li><li>Human approval remains explicit for consequential writes.</li></ul></div>
+    <div class="compare-card"><h3>Before</h3><ul><li>Operator opens CRM, help docs and support history manually.</li><li>Whether information is current depends on memory and tab-hunting.</li><li>Quality is reviewed case by case with weak feedback capture.</li><li>Impact is hard to separate from anecdotes.</li></ul></div>
+    <div class="compare-card"><h3>After</h3><ul><li>Required sources are checked before work starts.</li><li>AI prepares a structured next-action package.</li><li>Failed quality checks become visible regression cases.</li><li>Human approval stays explicit for consequential actions.</li></ul></div>
   </div>
   <div class="metric-map">
     <div class="metric"><b>Handling time</b><span>Measure median operator time on the same workflow before and after.</span></div>
-    <div class="metric"><b>Quality</b><span>Track acceptance, corrections and source-coverage failures.</span></div>
-    <div class="metric"><b>Usage</b><span>Track eligible cases, agent runs and human overrides.</span></div>
-    <div class="metric"><b>Cost</b><span>Measure per-case model/tool cost before scaling autonomy.</span></div>
+    <div class="metric"><b>Quality</b><span>Track acceptance, corrections and missing-source failures.</span></div>
+    <div class="metric"><b>Usage</b><span>Track eligible cases, AI runs and human overrides.</span></div>
+    <div class="metric"><b>Cost</b><span>Measure per-case model/tool cost before increasing automation.</span></div>
   </div>
+  <div class="hero-note"><b>In one sentence:</b> I turn repetitive operations into a safer AI workflow that can be measured, reviewed and improved.</div>
   <div class="proof">
-    <a href="https://mikelninh.github.io/agents/" target="_blank"><b>Digital Worker Factory ↗</b><span>Reusable bounded-agent workflow demo.</span></a>
-    <a href="https://github.com/mikelninh/digital-worker-factory" target="_blank"><b>Source + evals ↗</b><span>Capabilities, evidence gates, tests and release boundaries.</span></a>
-    <a href="https://mikelninh.github.io/trustready/benchmark/" target="_blank"><b>TrustReady benchmark ↗</b><span>Independent evidence around agent authority surfaces.</span></a>
+    <a href="https://mikelninh.github.io/agents/" target="_blank"><b>Digital Worker Factory ↗</b><span>Reusable AI workflow with explicit action boundaries.</span></a>
+    <a href="https://github.com/mikelninh/digital-worker-factory" target="_blank"><b>Source + tests ↗</b><span>Capabilities, evidence gates, tests and approval boundaries.</span></a>
+    <a href="https://mikelninh.github.io/trustready/benchmark/" target="_blank"><b>TrustReady benchmark ↗</b><span>Independent evidence around AI authority surfaces.</span></a>
   </div>
 </section>
 
@@ -119,53 +119,53 @@ footer{margin-top:64px;border-top:1px solid var(--line);padding-top:22px;color:v
 const states={
  healthy:{
   sources:[
-   ['CRM account','Clinic Westend · activation pending · owner: CS-17','fresh','FRESH'],
-   ['Implementation policy','Activation checklist v4.2 · updated 2 days ago','fresh','FRESH'],
-   ['Support history','2 recent tickets · latest resolved yesterday','fresh','FRESH']
+   ['CRM account','Clinic Westend · activation pending · owner: CS-17','fresh','CURRENT'],
+   ['Implementation policy','Activation checklist v4.2 · updated 2 days ago','fresh','CURRENT'],
+   ['Support history','2 recent tickets · latest resolved yesterday','fresh','CURRENT']
   ],
   evals:[
-   ['Required source coverage','All declared context sources are available.','PASS'],
-   ['Freshness guard','No stale critical source used.','PASS'],
-   ['Unsupported claim guard','Draft must cite supplied context; no invented status.','PASS'],
-   ['Authority boundary','CRM write and customer contact require release.','PASS']
+   ['Required information present','All required sources are available.','PASS'],
+   ['Current information','No stale critical source used.','PASS'],
+   ['No invented claims','Draft must use supplied information only.','PASS'],
+   ['Human approval','CRM write and customer contact require approval.','PASS']
   ],
   blockAt:null, quality:'4/4', context:'3/3'
  },
  stale:{
   sources:[
-   ['CRM account','Clinic Westend · activation pending · note is 19 days old','stale','STALE'],
-   ['Implementation policy','Activation checklist v4.2 · updated 2 days ago','fresh','FRESH'],
-   ['Support history','2 recent tickets · latest resolved yesterday','fresh','FRESH']
+   ['CRM account','Clinic Westend · activation pending · note is 19 days old','stale','OUTDATED'],
+   ['Implementation policy','Activation checklist v4.2 · updated 2 days ago','fresh','CURRENT'],
+   ['Support history','2 recent tickets · latest resolved yesterday','fresh','CURRENT']
   ],
   evals:[
-   ['Required source coverage','All declared sources exist.','PASS'],
-   ['Freshness guard','Critical CRM context is stale — refresh required.','WARN'],
-   ['Unsupported claim guard','Workflow must not infer current activation state.','PASS'],
-   ['Authority boundary','No external action while freshness gate is open.','PASS']
+   ['Required information present','All required sources exist.','PASS'],
+   ['Current information','Critical CRM information is outdated — refresh required.','WARN'],
+   ['No invented claims','Workflow must not infer the current activation state.','PASS'],
+   ['Human approval','No external action while current information is missing.','PASS']
   ],
   blockAt:2, quality:'3/4', context:'2/3'
  },
  missing:{
   sources:[
-   ['CRM account','Clinic Westend · activation pending · owner: CS-17','fresh','FRESH'],
+   ['CRM account','Clinic Westend · activation pending · owner: CS-17','fresh','CURRENT'],
    ['Implementation policy','Required source unavailable','missing','MISSING'],
-   ['Support history','2 recent tickets · latest resolved yesterday','fresh','FRESH']
+   ['Support history','2 recent tickets · latest resolved yesterday','fresh','CURRENT']
   ],
   evals:[
-   ['Required source coverage','Implementation policy missing — workflow cannot proceed safely.','WARN'],
-   ['Freshness guard','Available sources are current.','PASS'],
-   ['Unsupported claim guard','Agent must stop instead of filling the policy gap.','PASS'],
-   ['Authority boundary','No external action while evidence is incomplete.','PASS']
+   ['Required information present','Implementation policy missing — workflow cannot continue safely.','WARN'],
+   ['Current information','Available sources are current.','PASS'],
+   ['No invented claims','AI must stop instead of filling the policy gap.','PASS'],
+   ['Human approval','No external action while evidence is incomplete.','PASS']
   ],
   blockAt:1, quality:'3/4', context:'2/3'
  }
 };
 const steps=[
- ['Classify the case','Identify workflow type and low-judgement subtask.'],
- ['Retrieve required context','Load account, policy and recent support history.'],
- ['Propose next action','Prepare a source-grounded plan and draft internal update.'],
- ['Run eval checks','Verify coverage, freshness, unsupported claims and authority.'],
- ['Prepare human release','Package the proposed CRM update and customer handoff.']
+ ['Understand the case','Identify the task and the low-judgement work AI can help with.'],
+ ['Load required information','Use the account, policy and recent support history.'],
+ ['Prepare the next action','Create a source-grounded plan and draft internal update.'],
+ ['Run quality checks','Check coverage, current information, unsupported claims and approval rules.'],
+ ['Ask for human approval','Package the proposed CRM update and customer handoff for review.']
 ];
 let mode='healthy',ran=false;
 const $=s=>document.querySelector(s);
@@ -177,12 +177,12 @@ function render(){
  $('#flow').innerHTML=steps.map((x,i)=>{
    let cls='',state='WAITING';
    if(ran){
-    if(s.blockAt!==null && i>=s.blockAt){cls='blocked'; state=i===s.blockAt?'BLOCKED':'NOT RUN';}
+    if(s.blockAt!==null && i>=s.blockAt){cls='blocked'; state=i===s.blockAt?'STOPPED':'NOT RUN';}
     else {cls='done';state='DONE';}
    }
    return `<div class="step ${cls}"><span class="n">${i+1}</span><div><strong>${x[0]}</strong><p>${x[1]}</p></div><span class="state">${state}</span></div>`;
  }).join('');
- $('#run').textContent=ran?'Run again':'Run workflow';
+ $('#run').textContent=ran?'Run again':'Run 30-second demo';
 }
 document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');mode=btn.dataset.mode;ran=false;render();
