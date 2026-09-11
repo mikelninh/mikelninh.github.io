@@ -1,0 +1,30 @@
+{
+  "proof_scope": "Synthetic internal-use-case prioritisation only; no ESCRIBA customer or internal data",
+  "recommended_first_mvp": "finance",
+  "ranking": [
+    {
+      "id": "finance",
+      "team": "Finance",
+      "title": "Invoice exception triage",
+      "priority_score": 94.0,
+      "system_shape": "Deterministic matching first; LLM only for ambiguous exceptions",
+      "human_boundary": "Human review on exceptions and before any external or financial action"
+    },
+    {
+      "id": "hr",
+      "team": "HR",
+      "title": "Policy Q&A with sources",
+      "priority_score": 77.0,
+      "system_shape": "RAG over approved policy sources with citation gate",
+      "human_boundary": "Escalate missing, conflicting or sensitive policy questions"
+    },
+    {
+      "id": "sales",
+      "team": "Sales",
+      "title": "RFP response assistant",
+      "priority_score": 76.0,
+      "system_shape": "RAG + approved response template",
+      "human_boundary": "Human owns final external send"
+    }
+  ]
+}
