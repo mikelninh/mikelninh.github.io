@@ -3,63 +3,84 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Operations Lab — Michael Ninh</title>
-<meta name="description" content="A simple role-fit demo showing how repetitive operations can become a safe AI-assisted workflow.">
+<title>AI Operations Review Console — Michael Ninh</title>
+<meta name="description" content="Production-style AI operations work sample: review a real queue, inspect AI recommendations, act on blockers, approve work and leave an audit trail.">
 <style>
-:root{--ink:#101827;--muted:#647083;--line:#dce4ed;--blue:#2156d9;--navy:#10243f;--green:#0c8a62;--amber:#ad6800;--red:#b42318;--soft:#f6f8fb;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-*{box-sizing:border-box}body{margin:0;color:var(--ink);background:#fff}.wrap{max-width:1040px;margin:auto;padding:0 28px 52px}.top{height:70px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.brand{font-weight:850}.brand small{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}.top a{font-size:12px;color:#184a95;text-decoration:none;font-weight:800}.hero{padding:54px 0 24px;max-width:830px}.eyebrow{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:#2053a7;font-weight:850}.hero h1{font-size:clamp(38px,6vw,64px);line-height:1.02;letter-spacing:-.05em;margin:10px 0 14px}.hero h1 span{color:var(--blue)}.hero p{font-size:18px;line-height:1.55;color:#4f6074;margin:0;max-width:780px}.showcase{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.show{padding:13px 14px;border:1px solid var(--line);border-radius:13px;background:#fff}.show b{font-size:12px}.show span{display:block;font-size:10px;color:var(--muted);line-height:1.45;margin-top:4px}.demo{margin-top:28px;border:1px solid var(--line);border-radius:22px;background:var(--soft);padding:20px}.demo-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}.demo-head h2{font-size:22px;margin:0}.demo-head p{font-size:12px;line-height:1.5;color:var(--muted);margin:5px 0 0}.scenarios{display:flex;gap:7px;flex-wrap:wrap}.scenario{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 12px;font-size:11px;font-weight:800;cursor:pointer}.scenario.active{background:var(--navy);border-color:var(--navy);color:#fff}.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.step{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff;min-height:126px}.step .num{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#eaf0fb;color:#214e99;font-size:10px;font-weight:900}.step h3{font-size:14px;margin:12px 0 5px}.step p{font-size:11px;color:var(--muted);line-height:1.45;margin:0}.step.ok{border-color:#c3e7d8;background:#f6fcf9}.step.block{border-color:#efd29d;background:#fff9ef}.result{margin-top:12px;border-radius:16px;padding:17px 18px;background:var(--navy);color:#fff;display:flex;justify-content:space-between;gap:20px;align-items:center}.result strong{font-size:18px}.result span{display:block;font-size:11px;color:#c7d6e8;margin-top:4px;line-height:1.45}.result .badge{font-size:10px;font-weight:900;border-radius:999px;padding:7px 10px;background:rgba(255,255,255,.12);white-space:nowrap}.takeaway{margin-top:22px;padding:16px 18px;border-left:4px solid var(--blue);background:#f5f8ff;border-radius:0 12px 12px 0;font-size:14px;line-height:1.55}.foot{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;align-items:center}.foot p{font-size:10px;color:var(--muted);line-height:1.5;margin:0}.links{display:flex;gap:14px;white-space:nowrap}.links a{font-size:11px;font-weight:800;color:#184a95;text-decoration:none}@media(max-width:760px){.wrap{padding:0 16px 38px}.hero{padding-top:38px}.showcase,.flow{grid-template-columns:1fr}.demo-head,.result,.foot{flex-direction:column}.scenarios{margin-top:4px}.links{white-space:normal}}
+:root{--ink:#111827;--muted:#667085;--line:#e3e8ef;--soft:#f7f9fc;--blue:#2457d6;--navy:#10243f;--green:#087a57;--amber:#a15c00;--red:#b42318;--white:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:#f6f8fb;color:var(--ink)}button,textarea{font:inherit}.app{max-width:1180px;margin:0 auto;padding:18px}.top{display:flex;justify-content:space-between;align-items:center;padding:10px 4px 18px}.title{font-weight:850}.title small{display:block;color:var(--muted);font-weight:550;font-size:11px;margin-top:2px}.top a{font-size:11px;font-weight:800;color:#1a4c98;text-decoration:none}.summary{display:flex;gap:8px;flex-wrap:wrap}.pill{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 10px;font-size:10px;color:#44536a}.pill b{color:var(--ink)}
+.shell{display:grid;grid-template-columns:290px 1fr;gap:14px}.queue,.case{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}.queue-head{padding:16px;border-bottom:1px solid var(--line)}.queue-head h2{font-size:16px;margin:0}.queue-head p{font-size:11px;color:var(--muted);margin:5px 0 0}.case-item{padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer}.case-item:last-child{border-bottom:0}.case-item:hover{background:#fafcff}.case-item.active{background:#f3f6ff;border-left:4px solid var(--blue);padding-left:12px}.case-item .row{display:flex;justify-content:space-between;gap:8px}.case-item b{font-size:12px}.case-item p{font-size:10px;color:var(--muted);line-height:1.4;margin:5px 0 0}.status{font-size:9px;font-weight:900;border-radius:999px;padding:4px 7px;height:max-content;white-space:nowrap}.review{background:#eaf0ff;color:#244f9f}.blocked{background:#fff0dc;color:#945400}.done{background:#e9f7f1;color:#08724f}.escalated{background:#feeceb;color:#a82119}
+.case-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:20px}.case-head h1{font-size:22px;margin:0}.case-head p{font-size:11px;color:var(--muted);margin:5px 0 0}.tag{font-size:9px;font-weight:900;padding:5px 8px;border-radius:999px;background:#eef2f8;color:#4a5d75;height:max-content}.body{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;padding:14px}.panel{border:1px solid var(--line);border-radius:15px;padding:15px}.panel h3{font-size:12px;margin:0 0 10px}.issue{font-size:14px;line-height:1.45;margin:0}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.meta div{background:var(--soft);border-radius:10px;padding:9px}.meta b{display:block;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.meta span{font-size:11px}.evidence{display:grid;gap:8px}.source{border:1px solid var(--line);border-radius:11px;padding:10px}.source-top{display:flex;justify-content:space-between;gap:8px}.source strong{font-size:10px}.source small{display:block;font-size:9px;color:var(--muted);line-height:1.4;margin-top:3px}.fresh{color:var(--green);font-size:9px;font-weight:900}.warn{color:var(--amber);font-size:9px;font-weight:900}.danger{color:var(--red);font-size:9px;font-weight:900}
+.recommend{background:#f5f8ff;border:1px solid #d7e1fb;border-radius:15px;padding:15px}.recommend .eyebrow{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#31589e}.recommend h2{font-size:18px;margin:6px 0}.recommend p{font-size:11px;color:#52637a;line-height:1.5;margin:0}.draft{margin-top:12px}.draft label{display:block;font-size:10px;font-weight:800;margin-bottom:6px}.draft textarea{width:100%;min-height:104px;resize:vertical;border:1px solid var(--line);border-radius:11px;padding:10px;font-size:11px;line-height:1.45;color:var(--ink);background:#fff}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{border-radius:999px;padding:9px 12px;font-size:10px;font-weight:850;cursor:pointer}.primary{background:var(--blue);border:1px solid var(--blue);color:#fff}.secondary{background:#fff;border:1px solid var(--line);color:#244b88}.danger-btn{background:#fff;border:1px solid #f1c6c1;color:var(--red)}.btn:disabled{opacity:.45;cursor:not-allowed}.next{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}.next b{font-size:10px}.next p{font-size:10px;color:var(--muted);line-height:1.45;margin:4px 0 0}.audit{margin-top:10px;border-top:1px solid var(--line);padding-top:10px}.audit h4{font-size:10px;margin:0 0 7px}.event{font-size:9px;color:var(--muted);line-height:1.45;margin:4px 0}.event strong{color:var(--ink)}
+.note{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;font-size:11px;color:#506078;line-height:1.5}.note b{color:var(--ink)}.foot{display:flex;justify-content:space-between;gap:16px;margin-top:14px;padding:0 4px;color:var(--muted);font-size:9px}.foot a{color:#1a4c98;text-decoration:none;font-weight:800}
+@media(max-width:820px){.shell{grid-template-columns:1fr}.queue{max-height:300px;overflow:auto}.body{grid-template-columns:1fr}.summary{display:none}.case-head{flex-direction:column}.foot{flex-direction:column}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header class="top">
-  <div class="brand">AI Operations Lab<small>Independent role-fit demo · synthetic data only</small></div>
-  <a href="https://github.com/mikelninh/digital-worker-factory" target="_blank" rel="noreferrer">Source ↗</a>
-</header>
+<div class="app">
+  <header class="top">
+    <div class="title">Operations Review Console<small>Production-style role-fit demo · synthetic data only</small></div>
+    <div class="summary"><span class="pill"><b>3</b> open cases</span><span class="pill"><b>1</b> needs review</span><span class="pill"><b>2</b> blocked</span></div>
+    <a href="https://github.com/mikelninh/digital-worker-factory" target="_blank" rel="noreferrer">Source ↗</a>
+  </header>
 
-<section class="hero">
-  <div class="eyebrow">Senior AI Specialist · Operations</div>
-  <h1>Turn repetitive work into a <span>safe AI workflow.</span></h1>
-  <p>A clinic activation is delayed. The AI checks the latest information, prepares the next action, and stops when the information is outdated or incomplete.</p>
+  <main class="shell">
+    <aside class="queue">
+      <div class="queue-head"><h2>Today’s queue</h2><p>An operator opens this throughout the day and works the next case.</p></div>
+      <div id="queue"></div>
+    </aside>
 
-  <div class="showcase" aria-label="What this shows">
-    <div class="show"><b>Understand the workflow</b><span>Start with the manual bottleneck.</span></div>
-    <div class="show"><b>Use AI with guardrails</b><span>Bad or missing context stops the flow.</span></div>
-    <div class="show"><b>Keep people in control</b><span>A human approves the external action.</span></div>
-  </div>
-</section>
+    <section class="case">
+      <div class="case-head"><div><h1 id="caseTitle"></h1><p id="caseSub"></p></div><span class="tag" id="caseTag"></span></div>
+      <div class="body">
+        <div>
+          <div class="panel">
+            <h3>What happened?</h3>
+            <p class="issue" id="issue"></p>
+            <div class="meta" id="meta"></div>
+          </div>
 
-<section class="demo">
-  <div class="demo-head">
-    <div><h2>One workflow. Three outcomes.</h2><p>Switch the scenario. The workflow updates immediately.</p></div>
-    <div class="scenarios">
-      <button class="scenario active" data-mode="ready">All information current</button>
-      <button class="scenario" data-mode="stale">CRM note outdated</button>
-      <button class="scenario" data-mode="missing">Policy missing</button>
-    </div>
-  </div>
+          <div class="recommend" style="margin-top:14px">
+            <div class="eyebrow">AI recommendation</div>
+            <h2 id="recommendTitle"></h2>
+            <p id="recommendCopy"></p>
+            <div class="draft"><label for="draftText">Prepared operator draft</label><textarea id="draftText"></textarea></div>
+            <div class="actions" id="actions"></div>
+            <div class="next"><b>Next concrete action</b><p id="nextAction"></p></div>
+          </div>
+        </div>
 
-  <div class="flow" id="flow"></div>
-  <div class="result" id="result"></div>
-</section>
+        <aside>
+          <div class="panel">
+            <h3>Evidence used</h3>
+            <div class="evidence" id="evidence"></div>
+          </div>
+          <div class="panel" style="margin-top:14px">
+            <h3>Decision log</h3>
+            <div class="audit" id="audit"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
 
-<div class="takeaway"><b>In one sentence:</b> I redesign repetitive operations so AI can help with the routine work, while bad context and sensitive actions stay under explicit control.</div>
-
-<footer class="foot">
-  <p>Built by Michael Ninh · Berlin · independent role-fit simulation<br>Synthetic work sample · no official Doctolib product UI or data · no internal architecture or production performance claims.</p>
-  <div class="links"><a href="https://mikelninh.github.io/agents/" target="_blank">Core proof ↗</a><a href="https://github.com/mikelninh/digital-worker-factory" target="_blank">Code & tests ↗</a></div>
-</footer>
+  <div class="note"><b>How this would be used in production:</b> an Operations specialist works a prioritized queue, reviews an AI-prepared recommendation, sees exactly which sources were used, edits or approves the draft, and leaves a traceable next action. Bad context blocks the workflow instead of producing confident nonsense.</div>
+  <footer class="foot"><span>Synthetic work sample · no official Doctolib product UI or data · no internal architecture or production performance claims.</span><span><a href="https://mikelninh.github.io/agents/" target="_blank">Core proof ↗</a> · <a href="https://github.com/mikelninh/digital-worker-factory" target="_blank">Code & tests ↗</a></span></footer>
 </div>
 
 <script>
-const scenarios={
- ready:{steps:[['Check information','CRM note, policy and support history are current.','ok'],['AI prepares next action','The AI summarizes the case and drafts the next step.','ok'],['Human approves','A person reviews before any CRM update or customer contact.','ok']],title:'READY FOR HUMAN REVIEW',copy:'Routine work is prepared. The consequential action still requires a person.',badge:'SAFE TO REVIEW'},
- stale:{steps:[['Check information','The CRM note is 19 days old.','block'],['AI prepares next action','Stopped. The AI should not act on stale account context.','block'],['Human approves','Nothing is sent. Refresh the source first.','']],title:'STOPPED — INFORMATION OUTDATED',copy:'The workflow fails safely instead of guessing from stale context.',badge:'REFRESH SOURCE'},
- missing:{steps:[['Check information','The required implementation policy is missing.','block'],['AI prepares next action','Stopped. A required source is unavailable.','block'],['Human approves','Nothing is sent. Restore the missing source first.','']],title:'STOPPED — REQUIRED SOURCE MISSING',copy:'The workflow makes the missing evidence visible and does not continue.',badge:'RESTORE SOURCE'}
+const cases={
+ westend:{title:'Clinic Westend',sub:'Activation delayed · opened 24 min ago',tag:'REVIEW',status:'review',summary:'Implementation checklist is complete, but the clinic has not booked the final activation call.',issue:'The activation is ready to move forward. The repetitive work is collecting the latest account context and preparing the next outreach.',meta:[['Owner','CS-17'],['Priority','Normal'],['Last contact','Yesterday'],['SLA','4h']],evidence:[['CRM account','Activation pending · owner CS-17','CURRENT'],['Implementation policy','Activation checklist v4.2','CURRENT'],['Support history','Latest ticket resolved yesterday','CURRENT']],recommend:'Send the final activation checklist and offer a 15-minute activation slot.',copy:'All required sources are current. The AI can prepare the routine work, but the operator decides whether to contact the clinic.',draft:'Hi Clinic Westend — your technical checklist is complete. The remaining step is the final activation call. I can offer a 15-minute slot tomorrow at 10:30 or 14:00. Which works better?',next:'Review or edit the draft, then approve it. Approval creates the follow-up task and records the decision.',actions:['approve','escalate']},
+ mitte:{title:'Praxis Berlin Mitte',sub:'Activation follow-up · opened 51 min ago',tag:'BLOCKED',status:'blocked',summary:'The account note used for activation status is 19 days old.',issue:'The AI cannot safely prepare customer outreach because the account state may have changed since the last CRM update.',meta:[['Owner','CS-08'],['Priority','High'],['CRM freshness','19 days'],['SLA','2h']],evidence:[['CRM account','Activation note is 19 days old','STALE'],['Implementation policy','Activation checklist v4.2','CURRENT'],['Support history','No new ticket in 3 days','CURRENT']],recommend:'Refresh the account state before drafting outreach.',copy:'The correct production behavior is to stop, surface the missing work, and create a concrete task for the owner.',draft:'',next:'Request a CRM refresh from the case owner. When the account state is updated, this case returns to the review queue.',actions:['refresh','escalate']},
+ park:{title:'Praxis am Park',sub:'Policy question · opened 1h 12m ago',tag:'BLOCKED',status:'blocked',summary:'A required implementation policy source is missing from the case context.',issue:'The operator needs the current policy before deciding whether this configuration can proceed.',meta:[['Owner','Impl-04'],['Priority','Normal'],['Missing source','Policy'],['SLA','Today']],evidence:[['CRM account','Configuration request received','CURRENT'],['Implementation policy','Required source not attached','MISSING'],['Support history','No related incident','CURRENT']],recommend:'Create a task for the implementation lead to attach the current policy.',copy:'The AI should not invent a policy answer. It should turn the missing evidence into an owned next step.',draft:'',next:'Assign the missing-policy task to Implementation. Once attached, the case can be reviewed again.',actions:['policy','escalate']}
 };
-let mode='ready';
-function render(){const s=scenarios[mode];document.querySelector('#flow').innerHTML=s.steps.map((x,i)=>`<div class="step ${x[2]}"><span class="num">${i+1}</span><h3>${x[0]}</h3><p>${x[1]}</p></div>`).join('');document.querySelector('#result').innerHTML=`<div><strong>${s.title}</strong><span>${s.copy}</span></div><div class="badge">${s.badge}</div>`;}
-document.querySelectorAll('.scenario').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.scenario').forEach(b=>b.classList.remove('active'));btn.classList.add('active');mode=btn.dataset.mode;render();}));render();
+let active='westend';
+const logs={westend:['09:42 · Case entered review queue'],mitte:['09:15 · Freshness check failed'],park:['08:54 · Required policy source missing']};
+function sourceState(s){return s==='CURRENT'?'fresh':s==='STALE'?'warn':'danger'}
+function renderQueue(){document.querySelector('#queue').innerHTML=Object.entries(cases).map(([id,c])=>`<div class="case-item ${id===active?'active':''}" data-id="${id}"><div class="row"><b>${c.title}</b><span class="status ${c.status}">${c.status.toUpperCase()}</span></div><p>${c.summary}</p></div>`).join('');document.querySelectorAll('.case-item').forEach(el=>el.onclick=()=>{active=el.dataset.id;render();});}
+function render(){const c=cases[active];renderQueue();document.querySelector('#caseTitle').textContent=c.title;document.querySelector('#caseSub').textContent=c.sub;document.querySelector('#caseTag').textContent=c.tag;document.querySelector('#issue').textContent=c.issue;document.querySelector('#meta').innerHTML=c.meta.map(([a,b])=>`<div><b>${a}</b><span>${b}</span></div>`).join('');document.querySelector('#evidence').innerHTML=c.evidence.map(([a,b,s])=>`<div class="source"><div class="source-top"><strong>${a}</strong><span class="${sourceState(s)}">${s}</span></div><small>${b}</small></div>`).join('');document.querySelector('#recommendTitle').textContent=c.recommend;document.querySelector('#recommendCopy').textContent=c.copy;document.querySelector('#draftText').value=c.draft;document.querySelector('#draftText').disabled=!c.draft;document.querySelector('#nextAction').textContent=c.next;document.querySelector('#audit').innerHTML=logs[active].map(x=>`<div class="event"><strong>${x.split(' · ')[0]}</strong> · ${x.split(' · ').slice(1).join(' · ')}</div>`).join('');
+ const a=[];if(c.actions.includes('approve'))a.push('<button class="btn primary" data-action="approve">Approve & create task</button>');if(c.actions.includes('refresh'))a.push('<button class="btn primary" data-action="refresh">Request CRM refresh</button>');if(c.actions.includes('policy'))a.push('<button class="btn primary" data-action="policy">Create policy task</button>');a.push('<button class="btn danger-btn" data-action="escalate">Escalate</button>');document.querySelector('#actions').innerHTML=a.join('');document.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>act(b.dataset.action));}
+function act(action){const c=cases[active];const time='now';if(action==='approve'){c.status='done';c.tag='APPROVED';c.summary='Draft approved; follow-up task created.';logs[active].unshift(`${time} · Draft approved and follow-up task created`);c.next='Follow-up task is now owned by the operator. The case can leave the review queue.';}if(action==='refresh'){c.status='review';c.tag='REFRESH REQUESTED';c.summary='CRM refresh requested from case owner.';logs[active].unshift(`${time} · CRM refresh requested from CS-08`);c.next='Wait for the account owner to refresh the CRM state. The case returns automatically when the source is current.';}if(action==='policy'){c.status='review';c.tag='TASK CREATED';c.summary='Implementation task created for missing policy.';logs[active].unshift(`${time} · Missing-policy task assigned to Implementation`);c.next='Implementation attaches the policy, then the case returns for review.';}if(action==='escalate'){c.status='escalated';c.tag='ESCALATED';c.summary='Escalated for manual handling.';logs[active].unshift(`${time} · Escalated for manual handling`);c.next='A specialist now owns the exception. No automated external action will run.';}render();}
+render();
 </script>
 </body>
 </html>
