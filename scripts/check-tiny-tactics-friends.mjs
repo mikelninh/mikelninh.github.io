@@ -11,9 +11,11 @@ for (const file of files) {
 const b64=parts.join('');
 if (b64.length !== 103404) throw new Error(`Unexpected base64 length: ${b64.length}`);
 const compressed=Buffer.from(b64,'base64');
-const sha=createHash('sha256').update(compressed).digest('hex');
-if (sha !== 'f0f45e3b01987b52e89983cf77c68282eabd091648736e571365869c5195c567') throw new Error(`Unexpected payload SHA-256: ${sha}`);
-const html=gunzipSync(compressed).toString('utf8');
+const compressedSha=createHash('sha256').update(compressed).digest('hex');
+const htmlBuffer=gunzipSync(compressed);
+const htmlSha=createHash('sha256').update(htmlBuffer).digest('hex');
+if (htmlSha !== '132745cbc76323cebfe7a19ff0efc6a432c485aa2d03bd95d575c306ed24ce07') throw new Error(`Unexpected HTML SHA-256: ${htmlSha}`);
+const html=htmlBuffer.toString('utf8');
 if (!html.includes('Tiny Tactics') || !html.includes('Friends RC1')) throw new Error('Unexpected Tiny Tactics build identity');
 if (!html.includes('0.20.0-rc.1')) throw new Error('Missing Friends RC1 version identity');
-console.log(JSON.stringify({ok:true,sha256:sha,compressedBytes:compressed.length,htmlBytes:Buffer.byteLength(html),identity:'Friends RC1 / 0.20.0-rc.1'},null,2));
+console.log(JSON.stringify({ok:true,compressedSha256:compressedSha,htmlSha256:htmlSha,compressedBytes:compressed.length,htmlBytes:htmlBuffer.length,identity:'Friends RC1 / 0.20.0-rc.1'},null,2));
