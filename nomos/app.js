@@ -1,0 +1,3 @@
+const body=document.getElementById('tbody'),q=document.getElementById('q'),cluster=document.getElementById('cluster'),owned=document.getElementById('owned');
+function draw(){const n=q.value.toLowerCase(),c=cluster.value,o=owned.value;body.innerHTML=window.PROMPTS.filter(x=>(!n||(x.p+' '+x.c+' '+x.a).toLowerCase().includes(n))&&(!c||x.c===c)&&(!o||x.o===o)).map(x=>`<tr><td>${String(x.id).padStart(2,'0')}</td><td>${x.c}</td><td>${x.p}</td><td><span class="pill ${x.o}">${x.o}</span></td><td><span class="pill ${x.e}">${x.e}</span></td><td>${x.a}</td></tr>`).join('')}
+[q,cluster,owned].forEach(el=>el.addEventListener('input',draw));draw();
