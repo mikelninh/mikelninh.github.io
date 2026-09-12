@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
 
-const files=['0a','0b','0c','0d','1','2a','2b0','2b1','2c','2d','3','4','5'];
+const files=['0a','0b','0c','0d','1','2a','2b0','2b1a','2b1b','2c','2d','3','4','5'];
 const parts=[];
 for (const file of files) {
   const text=(await readFile(new URL(`../tiny-tactics-friends/chunks/${file}.txt`, import.meta.url),'utf8')).trim();
