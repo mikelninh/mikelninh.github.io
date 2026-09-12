@@ -41,7 +41,7 @@
     const hex=[...new Uint8Array(digest)].map(x=>x.toString(16).padStart(2,'0')).join('');
     if(hex!=='132745cbc76323cebfe7a19ff0efc6a432c485aa2d03bd95d575c306ed24ce07') throw new Error('Playtest package failed its integrity check.');
     const html=new TextDecoder().decode(htmlBuffer);
-    if(!html.includes('Tiny Tactics')||!html.includes('Friends RC1')||!html.includes('0.20.0-rc.1')) throw new Error('Unexpected build identity.');
+    if(!html.includes('Tiny Tactics')||!html.includes('Friends RC1')) throw new Error('Unexpected build identity.');
     status.textContent='Starting the arena…';
     document.open();
     document.write(html);
