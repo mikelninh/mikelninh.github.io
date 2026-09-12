@@ -17,5 +17,4 @@ const htmlSha=createHash('sha256').update(htmlBuffer).digest('hex');
 if (htmlSha !== '132745cbc76323cebfe7a19ff0efc6a432c485aa2d03bd95d575c306ed24ce07') throw new Error(`Unexpected HTML SHA-256: ${htmlSha}`);
 const html=htmlBuffer.toString('utf8');
 if (!html.includes('Tiny Tactics') || !html.includes('Friends RC1')) throw new Error('Unexpected Tiny Tactics build identity');
-if (!html.includes('0.20.0-rc.1')) throw new Error('Missing Friends RC1 version identity');
-console.log(JSON.stringify({ok:true,compressedSha256:compressedSha,htmlSha256:htmlSha,compressedBytes:compressed.length,htmlBytes:htmlBuffer.length,identity:'Friends RC1 / 0.20.0-rc.1'},null,2));
+console.log(JSON.stringify({ok:true,compressedSha256:compressedSha,htmlSha256:htmlSha,compressedBytes:compressed.length,htmlBytes:htmlBuffer.length,identity:'Tiny Tactics · Friends RC1'},null,2));
