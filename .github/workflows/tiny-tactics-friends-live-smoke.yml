@@ -1,0 +1,62 @@
+name: Tiny Tactics Friends Live Smoke
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'tiny-tactics-friends/**'
+      - 'scripts/check-tiny-tactics-friends.mjs'
+      - '.github/workflows/tiny-tactics-friends-live-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Verify public Friends RC1 end to end
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { createHash } from 'node:crypto';
+          import { gunzipSync } from 'node:zlib';
+
+          const base='https://mikelninh.github.io/tiny-tactics-friends/';
+          const files=['0a','0b','0c','0d','1','2a','2b0','2b1a','2b1b','2c','2d','3','4','5'];
+          const expectedHtmlSha='132745cbc76323cebfe7a19ff0efc6a432c485aa2d03bd95d575c306ed24ce07';
+
+          const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+          async function get(url, predicate=()=>true){
+            let last='';
+            for(let attempt=1;attempt<=18;attempt++){
+              const response=await fetch(`${url}${url.includes('?')?'&':'?'}smoke=${Date.now()}`,{cache:'no-store'});
+              if(response.ok){
+                const text=await response.text();
+                last=text;
+                if(predicate(text)) return text;
+              }
+              await sleep(5000);
+            }
+            throw new Error(`Public smoke timed out for ${url}. Last response length: ${last.length}`);
+          }
+
+          const loader=await get(base,text=>text.includes(expectedHtmlSha)&&text.includes('2b1b'));
+          if(!loader.includes('Friends RC1')) throw new Error('Public loader identity is wrong');
+
+          const parts=[];
+          for(const file of files){
+            parts.push((await get(`${base}chunks/${file}.txt`)).trim());
+          }
+          const b64=parts.join('');
+          if(b64.length!==103404) throw new Error(`Public payload length mismatch: ${b64.length}`);
+          const htmlBuffer=gunzipSync(Buffer.from(b64,'base64'));
+          const sha=createHash('sha256').update(htmlBuffer).digest('hex');
+          if(sha!==expectedHtmlSha) throw new Error(`Public HTML hash mismatch: ${sha}`);
+          const html=htmlBuffer.toString('utf8');
+          if(!html.includes('Tiny Tactics')||!html.includes('Friends RC1')) throw new Error('Public game identity mismatch');
+          console.log(`PUBLIC FRIEND TEST OK · ${base} · ${sha}`);
+          NODE
