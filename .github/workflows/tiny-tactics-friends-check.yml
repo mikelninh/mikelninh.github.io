@@ -1,0 +1,28 @@
+name: Tiny Tactics Friends Preview Check
+
+on:
+  pull_request:
+    paths:
+      - 'tiny-tactics-friends/**'
+      - 'scripts/check-tiny-tactics-friends.mjs'
+      - '.github/workflows/tiny-tactics-friends-check.yml'
+  push:
+    branches:
+      - 'fix/tiny-tactics-friends-integrity'
+    paths:
+      - 'tiny-tactics-friends/**'
+      - 'scripts/check-tiny-tactics-friends.mjs'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Verify Friends RC1 payload
+        run: node scripts/check-tiny-tactics-friends.mjs
