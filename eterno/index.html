@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="ETERNO Partner Engine — application work sample by Michael Ninh." />
+  <title>ETERNO Partner Engine — Michael Ninh</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Back to top">
+      <span class="brand-mark">MN</span>
+      <span><strong>ETERNO Partner Engine</strong><small>Application work sample · Sep 2026</small></span>
+    </a>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#targets">Targets</a><a href="#oviva">Deep dive</a><a href="#evidence">Field evidence</a><a href="#system">90 days</a>
+    </nav>
+    <div class="header-badge">Outside-in · public information</div>
+  </header>
+
+  <main id="top">
+    <section class="hero section-dark">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow light">Platform partnerships · healthcare SaaS</div>
+          <h1>From ecosystem thesis to one partner I would actually call.</h1>
+          <p class="hero-copy">A small operating system for finding, qualifying, piloting and scaling partners around ETERNO / Doc Cirrus' inSuite ecosystem.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="#targets">Explore targets</a><a class="btn btn-ghost" href="#evidence">Add field evidence</a></div>
+        </div>
+        <aside class="thesis-card">
+          <div class="eyebrow light">Thesis</div><h2>The best partner is not the best-known.</h2>
+          <p>It is the one that increases <strong>practice value</strong>, <strong>integration readiness</strong> and <strong>distribution</strong> at the same time.</p>
+          <div class="northstar"><span>North star</span><strong>Activated practice value per partner</strong></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="personal-strip"><div class="wrap personal-grid"><div><div class="eyebrow">Why I care</div><h2>ETERNO is not a company I discovered yesterday on LinkedIn.</h2></div><p>I have followed ETERNO since before the first Berlin location opened and had already noticed an earlier Founders Associate role — the timing did not fit then. Through my partner, who works as a physician, I also see first-hand how much clinical time can disappear into fragmented software, documentation and weak digital hand-offs.</p></div></section>
+
+    <section id="targets" class="section section-paper">
+      <div class="wrap">
+        <div class="section-heading split-heading">
+          <div><div class="eyebrow">01 · Target</div><h2>Five partners I would investigate first.</h2><p>Not final recommendations — a prioritized discovery list built from public information. Scores are illustrative and meant to be recalibrated with internal CRM, usage, product and support data.</p></div>
+          <div class="filter-panel" aria-label="Partner filters">
+            <label><span>Filter</span><select id="laneFilter"><option value="all">All lanes</option><option value="chronic">Chronic care</option><option value="navigation">Care navigation</option><option value="radiology">Radiology AI</option><option value="mental">Mental health</option><option value="specialist">Specialist access</option></select></label>
+            <label><span>Minimum score</span><input id="scoreFilter" type="range" min="70" max="95" value="70" /><output id="scoreValue">70+</output></label>
+          </div>
+        </div>
+        <div id="partnerList" class="partner-list" aria-live="polite"></div>
+        <p class="fineprint">Checked against the public Doc Cirrus partner selection and Sol marketplace on 13 Sep 2026. Absence from a public page does not prove there is no existing relationship.</p>
+      </div>
+    </section>
+
+    <section id="oviva" class="section section-white"><div class="wrap">
+      <div class="section-heading"><div class="eyebrow">02 · Deep dive</div><h2>Oviva × inSuite</h2><p>One partnership from public signal → mutual value → pilot. Oviva publicly states that its DiGAs can already be prescribed directly via several German practice systems and that more than 30,000 physicians have prescribed Oviva to more than one million patients.</p></div>
+      <div class="value-grid">
+        <article class="value-card mint"><div class="eyebrow">ETERNO / inSuite</div><h3>Make chronic-care prescribing feel native.</h3><ul><li>Reduce prescribing friction</li><li>Differentiate the chronic-care workflow</li><li>Structure follow-up in the patient record</li><li>Create potential retention / enterprise value</li></ul></article>
+        <article class="value-card"><div class="eyebrow">Oviva</div><h3>Reach practices inside a workflow they already use.</h3><ul><li>Lower activation friction</li><li>Additional PVS distribution</li><li>Cleaner clinician hand-off</li><li>Measure prescription-to-start funnel</li></ul></article>
+      </div>
+      <div class="subsection"><div class="eyebrow">Pilot workflow · clinician remains in control</div><div class="flow" id="pilotFlow"></div></div>
+      <div class="subsection deal-grid">
+        <div><div class="eyebrow">Commercial hypotheses to validate</div><div class="models"><article><span>A</span><strong>Sol marketplace</strong><p>Partner-listed integration with low adoption friction.</p></article><article><span>B</span><strong>Co-sell / referral</strong><p>Joint enablement for relevant practice segments.</p></article><article><span>C</span><strong>Enterprise bundle</strong><p>Optional chronic-care module for MVZ / larger groups.</p></article></div><p class="fineprint">Hypotheses only — not proposed terms. Legal, reimbursement, data-protection and revenue mechanics require joint validation.</p></div>
+        <aside class="pilot-card"><div class="eyebrow">Pilot design</div><h3>5–10 practices · one indication · 8–12 weeks</h3><dl><div><dt>Primary</dt><dd>eligible → prescribed → activated</dd></div><div><dt>Secondary</dt><dd>clinician time/clicks · activation time · report return · support burden · satisfaction</dd></div><div><dt>Decision</dt><dd><span class="go-badge">GO</span> only if adoption + workflow value beat agreed baseline</dd></div></dl></aside>
+      </div>
+      <div class="outreach"><div><div class="eyebrow light">The outreach I would send</div><p id="outreachText">Hi Oviva team — you already support direct prescribing through several German PVS. I’m exploring whether an inSuite Sol could reduce the path from eligible patient → prescription → activation → therapy feedback across an ecosystem where 1,000+ practices and locations already rely on ETERNO solutions. Open to a 25-minute discovery to test workflow, integration and commercial fit?</p></div><button class="btn btn-primary" id="copyOutreach" type="button">Copy outreach</button></div>
+    </div></section>
+
+    <section id="evidence" class="section section-evidence"><div class="wrap">
+      <div class="section-heading split-heading"><div><div class="eyebrow">03 · Field evidence</div><h2>Turn desk research into three real conversations.</h2><p>10–15 minutes each. The goal is not “validation theatre”; it is to discover whether the pain is real, how it shows up in practice and what would actually change behaviour.</p></div><div class="evidence-status"><strong id="evidenceCount">0 / 3</strong><span>interviews captured</span><div class="progress"><i id="evidenceProgress"></i></div></div></div>
+      <div class="questions-card"><div class="eyebrow">Five questions</div><ol><li>Which digital hand-off wastes the most time in your day?</li><li>Which external tool works surprisingly well — and why?</li><li>Where do you copy, retype or chase information between systems?</li><li>If one workflow could be native in your practice software tomorrow, which one?</li><li>What would make you reject a new integration even if the idea sounds useful?</li></ol></div>
+      <form id="evidenceForm" class="evidence-grid" autocomplete="off"></form>
+      <div class="evidence-actions"><button class="btn btn-dark" id="exportEvidence" type="button">Export interview summary</button><button class="btn btn-text" id="clearEvidence" type="button">Clear local notes</button><span>Saved only in this browser via localStorage.</span></div>
+    </div></section>
+
+    <section id="system" class="section section-paper"><div class="wrap">
+      <div class="section-heading"><div class="eyebrow">04 · Operate</div><h2>From first signal to scaled partner.</h2><p>A repeatable partner system with commercial and technical exit criteria.</p></div>
+      <div class="score-layout"><div><div class="eyebrow">Score before outreach · 100 points</div><div id="scorecard" class="scorecard"></div></div><div><div class="eyebrow">Lifecycle</div><div id="lifecycle" class="lifecycle"></div></div></div>
+      <div class="subsection"><div class="eyebrow">My first 90 days</div><div class="ninety-grid"><article class="mint"><span>Days 1–30</span><h3>Listen + map</h3><p>20–30 interviews / call reviews · current partner inventory · pain lanes · scoring v1 · 10-target shortlist</p></article><article><span>Days 31–60</span><h3>Discover + test</h3><p>5–8 partner discoveries · 3 technical scopings · 2 commercial models · 2 pilot briefs</p></article><article><span>Days 61–90</span><h3>Pilot + systemise</h3><p>1–2 live pilots · activation dashboard · partner playbook v1 · monthly ecosystem review</p></article></div></div>
+      <div class="decision-rule"><strong>Decision cadence</strong><span>Weekly pipeline review · biweekly Product/Tech scoping · monthly ecosystem review · every pilot ends with <b>SCALE / FIX / STOP</b>.</span></div>
+    </div></section>
+
+    <section class="section section-white sources"><div class="wrap"><div class="section-heading"><div class="eyebrow">Sources</div><h2>Public evidence behind the outside-in hypotheses.</h2></div><div id="sourceGrid" class="source-grid"></div></div></section>
+  </main>
+
+  <footer><div class="wrap footer-grid"><div><strong>Michael Ninh</strong><span>Platform Partnerships · Product · Applied AI</span></div><div>Berlin · September 2026</div><div>This is an application work sample, not an ETERNO or partner document.</div></div></footer>
+  <dialog id="partnerDialog" class="partner-dialog"><button class="dialog-close" type="button" aria-label="Close">×</button><div id="dialogContent"></div></dialog>
+  <script src="./app.js"></script>
+</body>
+</html>
