@@ -4,54 +4,126 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Technical Onboarding Simulator — a playful miniature-clinic game for technical onboarding interview practice.">
-<meta name="theme-color" content="#eff4df">
-<title>Technical Onboarding Simulator — Michael Ninh</title>
+<meta name="theme-color" content="#eef5df">
+<title>Onboarding Shift — Michael Ninh</title>
 <link rel="stylesheet" href="./game.css">
 </head>
 <body>
-<header class="top"><div class="wrap"><div class="brand"><span class="logo">MN</span><span>Technical Onboarding Simulator</span></div><div class="topRight"><span class="pill"><span class="live"></span>clinic online</span><a class="pill" href="./design-bible/">Game Bible ↗</a><button class="pill soundBtn" id="soundBtn" type="button">Sound off</button></div></div></header>
+<header class="topbar">
+  <div class="wrap topbarInner">
+    <div class="brand"><span class="logo">MN</span><span>Onboarding Shift</span></div>
+    <div class="topActions">
+      <select id="caseSelect" class="caseSelect" aria-label="Choose case"></select>
+      <span class="clock" id="clock">120:00</span>
+      <button class="iconBtn" id="soundBtn" type="button" aria-label="Toggle sound">♪</button>
+    </div>
+  </div>
+</header>
 
-<main>
-<section class="hero"><div class="wrap"><div class="heroGrid"><div><div class="eyebrow">A tiny clinic. Real implementation judgement.</div><h1>Fix the clinic.<br>Keep the humans happy.</h1><p class="heroLead">Technical onboarding as a little playable world: talk to people, inspect systems, test your hypothesis, contain the problem and earn a clean handoff.</p><div class="heroButtons"><button class="btn primary" id="heroPlay" type="button">Play flagship case →</button><button class="btn secondary" id="heroRandom" type="button">Surprise me</button></div></div><aside class="heroToy"><div class="toyTitle"><strong>Praxis Sonnenhof</strong><span>08:47 · MONDAY</span></div><div class="miniMap"><i class="cloud a"></i><i class="cloud b"></i><div class="clinicToy"><div class="toyWindow l"></div><div class="toyWindow r"></div><div class="toyDoor"></div></div><div class="toyPeople"><i class="person"></i><i class="person"></i><i class="person"></i></div></div></aside></div></div></section>
+<main class="wrap gameShell">
+  <section class="missionLine">
+    <div><span class="kicker" id="modeLabel">TRAINING</span><strong id="missionTitle">Broken Calls</strong></div>
+    <span id="queueBadge" class="queueBadge">4 waiting</span>
+  </section>
 
-<section class="menu" id="menu"><div class="wrap"><div class="menuShell"><div class="menuHead"><div><div class="eyebrow">Choose a shift</div><h2>Five little disasters. One calm operator.</h2></div><div class="modeSwitch"><button class="modeBtn active" data-mode="train" type="button">Training</button><button class="modeBtn" data-mode="interview" type="button">Interview</button></div></div><div class="cases" id="cases"></div><div class="menuFoot"><p id="menuCopy">Training includes one small coach hint. Interview mode removes it and keeps the same game rules.</p><div style="display:flex;gap:7px"><button class="btn secondary small" id="randomBtn" type="button">Random</button><button class="btn primary small" id="launchBtn" type="button">Start shift →</button></div></div></div></div></section>
+  <section class="world panel" id="world" aria-label="Miniature clinic simulation">
+    <i class="sun"></i><i class="cloud cloudA"></i><i class="cloud cloudB"></i>
+    <div class="ground"></div><div class="path"></div><i class="tree treeL"></i><i class="tree treeR"></i>
 
-<section class="sim" id="sim"><div class="wrap">
-<div class="hud"><div class="hudLeft"><div class="caseBadge" id="caseBadge">03</div><div class="hudTitle"><b id="hudTitle">Broken Calls</b><span id="hudMode">TRAINING · INTERMEDIATE</span></div></div><div class="hudRight"><div class="meter"><div class="meterTop"><span>CLINIC TRUST</span><b id="trustValue">70</b></div><div class="meterBar"><i id="trustBar" style="width:70%"></i></div></div><div class="meter risk"><div class="meterTop"><span>RISK</span><b id="riskValue">35</b></div><div class="meterBar"><i id="riskBar" style="width:35%"></i></div></div><span class="clock" id="clock">120:00</span><button class="btn secondary small" id="clockBtn" type="button">Start</button><button class="btn secondary small" id="exitBtn" type="button">Exit</button></div></div>
+    <div class="clinic">
+      <div class="roof"></div><div class="clinicSign">+</div>
+      <button class="room phone" id="room-phone" type="button" aria-label="Phone system">☎<small>PHONE</small></button>
+      <button class="room route" id="room-route" type="button" aria-label="Routing">↔<small>ROUTING</small></button>
+      <button class="room ai" id="room-ai" type="button" aria-label="AI assistant">✦<small>AI</small></button>
+      <button class="room desk" id="room-reception" type="button" aria-label="Reception">☺<small>DESK</small></button>
+      <i class="wire wire1" id="wire1"></i><i class="wire wire2" id="wire2"></i><i class="wire wire3" id="wire3"></i>
+      <i class="fallbackLine" id="fallbackLine"></i>
+      <div class="npc mina" id="npc-mina"><span>M</span></div>
+      <div class="npc alex" id="npc-alex"><span>A</span></div>
+      <div class="npc jo" id="npc-jo"><span>J</span></div>
+    </div>
 
-<div class="chapterBar" aria-label="Mission progress"><div class="chapter active" id="chapter1"><i>1</i><span>Understand</span></div><div class="chapter" id="chapter2"><i>2</i><span>Contain</span></div><div class="chapter" id="chapter3"><i>3</i><span>Fix</span></div><div class="chapter" id="chapter4"><i>4</i><span>Verify</span></div></div>
+    <div class="queue" id="queue"></div>
+    <div class="speech" id="speech"></div>
+    <div class="sceneStatus" id="sceneStatus">Everything looks normal… for now.</div>
 
-<div class="game">
-<aside class="panel dossier"><div class="label">Case file</div><h2 id="caseTitle">Broken Calls</h2><p id="brief"></p><div class="objective"><div class="label">Mission</div><strong>Make the narrowest safe decision.</strong><p id="objective"></p></div><div class="hyp"><div class="label">Your current hunch</div><select id="hypothesis" aria-label="Working hypothesis"></select></div><div class="tip" id="tip"><b>Coach:</b> start with people and scope. Tools become smarter after the problem gets smaller.</div></aside>
+    <div class="introOverlay" id="introOverlay">
+      <span class="incoming">08:47 · INCOMING</span>
+      <div class="introAvatar">M</div>
+      <h1 id="introTitle">Broken Calls</h1>
+      <p id="introCopy">Some calls are disappearing. Patients are waiting.</p>
+      <button class="primaryBtn" id="answerBtn" type="button">Answer the call →</button>
+    </div>
+  </section>
 
-<section class="play">
-<div class="panel clinicWorld"><div class="worldTop"><div><div class="label">Praxis Sonnenhof</div><h2>What do you do?</h2><p>Tap a verb, choose one move, watch the clinic react.</p></div><span class="queueBadge" id="queueBadge">4 patients waiting</span></div>
-<div class="world" id="world">
-<i class="sun"></i><i class="cloud a"></i><i class="cloud b"></i><i class="tree treeL"></i><i class="tree treeR"></i><div class="worldGround"></div><div class="path"></div>
-<div class="missionCurtain" id="missionCurtain"><div class="incomingTag">INCOMING · 08:47 MONDAY</div><div class="incomingFace">M</div><h3>Praxis Sonnenhof needs you.</h3><p>Something changed overnight. Patients are waiting. The symptom is incomplete.</p><button class="btn primary" id="answerBtn" type="button">Answer the call →</button></div>
-<div class="clinic"><div class="clinicRoof"></div><div class="clinicSign">+</div>
-<button class="room phone" id="room-phone" type="button" aria-label="Phone system">☎<br>PHONE</button>
-<button class="room route" id="room-route" type="button" aria-label="Routing system">↔<br>ROUTING</button>
-<button class="room ai" id="room-ai" type="button" aria-label="AI assistant">✦<br>AI</button>
-<button class="room reception" id="room-reception" type="button" aria-label="Reception">☺<br>DESK</button>
-<i class="wire w1" id="wire1"></i><i class="wire w2" id="wire2"></i><i class="wire w3" id="wire3"></i><i class="fallbackLine" id="fallbackLine"></i>
-<div class="npc mina" id="npc-mina" aria-hidden="true"><span>M</span></div><div class="npc alex" id="npc-alex" aria-hidden="true"><span>A</span></div><div class="npc jo" id="npc-jo" aria-hidden="true"><span>J</span></div></div>
-<div class="queue" id="queue"></div><div class="speech" id="speech"></div><div class="worldLegend" id="worldLegend">Everything looks normal… for now.</div></div>
-<div class="turnBar"><button class="bigVerb active" data-verb="ask" type="button">💬 TALK</button><button class="bigVerb" data-verb="inspect" type="button">🔎 LOOK</button><button class="bigVerb" data-verb="test" type="button">▶ TRY</button></div><div class="actions" id="actions"></div></div>
+  <section class="controlPanel panel">
+    <h2>What do you do?</h2>
+    <div class="verbs" role="tablist" aria-label="Actions">
+      <button class="verb active" data-verb="ask" type="button">💬 <span>Talk</span></button>
+      <button class="verb" data-verb="inspect" type="button">🔎 <span>Look</span></button>
+      <button class="verb" data-verb="test" type="button">▶ <span>Try</span></button>
+    </div>
+    <div class="actionChoices" id="actionChoices"></div>
+  </section>
 
-<div class="panel clues"><div class="clueHead"><div><div class="label">Clue notebook</div><h3>What have you learned?</h3></div><span class="clueCount" id="clueCount">0 clues</span></div><div class="clueBoard" id="clueBoard"><div class="emptyClues">Your notebook is empty. Good. You haven’t jumped to conclusions yet.</div></div></div>
+  <section class="latestClue" id="latestClue" hidden>
+    <span class="clueIcon">✦</span>
+    <div><small>NEW CLUE</small><strong id="latestClueTitle"></strong><p id="latestClueBody"></p></div>
+  </section>
 
-<div class="panel resolve"><div class="label">Ready to call it?</div><h3 class="resolveTitle">Make the plan. Then prove it works.</h3><div class="resolveGrid"><div class="resolveBlock"><b>1 · Contain now</b><div class="containButtons" id="containButtons"></div></div><div class="resolveBlock"><b>2 · Root cause</b><select id="rootSelect" aria-label="Root cause"></select></div><div class="resolveBlock"><b>3 · Permanent fix</b><select id="fixSelect" aria-label="Permanent fix"></select></div></div><div class="resolveFoot"><button class="btn coral" id="commitBtn" type="button">Apply the plan →</button><button class="btn primary verifyBtn" id="verifyBtn" type="button" hidden>Run verification call →</button></div><div class="feedback" id="feedback" aria-live="polite"></div></div>
-
-<div class="panel debrief" id="debrief"><div class="clearTitle"><div class="burst">SHIFT COMPLETE</div><h2 id="clearText">Mission Clear!</h2><div class="stars" id="stars">★★★☆</div></div><div class="debriefGrid"><div class="report"><div class="label">How you played</div><div class="scoreRows" id="scoreRows"></div></div><div class="trail"><div class="label">Your little story</div><div class="trailList" id="trailList"></div></div></div><div class="againRow"><button class="btn primary" id="shareBtn" type="button">Copy challenge</button><button class="btn secondary" id="againBtn" type="button">Expert remix / next shift</button></div></div>
-</section>
-</div>
-</div></section>
+  <nav class="bottomBar">
+    <button class="quietBtn" id="notebookBtn" type="button">Notebook <span id="notebookCount">0</span></button>
+    <button class="callBtn" id="callBtn" type="button">Make the call →</button>
+  </nav>
 </main>
 
-<footer class="footer"><div class="wrap"><span>Independent synthetic work sample by Michael Ninh · no patient/customer data · no copied product UI · no production integration claims.</span><span><a href="./design-bible/">Game & art direction ↗</a> · <a href="https://github.com/mikelninh/care-os">Related engineering proof ↗</a></span></div></footer>
+<div class="modal" id="notebookModal" hidden>
+  <div class="modalCard notebookCard">
+    <button class="closeBtn" data-close="notebookModal" type="button">×</button>
+    <span class="kicker">YOUR NOTES</span>
+    <h2>What you know</h2>
+    <div class="notes" id="notes"></div>
+  </div>
+</div>
 
-<div class="srQA" aria-hidden="true">Implementation Workspace · Implementations · Readiness checks · Create task for Clinic IT · Create data-fix task · Approve go-live · Implementation activity · Target go-live · How this would be used in production: synthetic configuration only · no official Doctolib product UI or data</div>
+<div class="modal" id="decisionModal" hidden>
+  <div class="modalCard">
+    <button class="closeBtn" data-close="decisionModal" type="button">×</button>
+    <span class="kicker">MAKE THE CALL</span>
+    <h2 id="decisionTitle">What do you recommend?</h2>
+    <div class="decisionStep">
+      <label>Contain now</label>
+      <div id="containChoices" class="stackChoices"></div>
+    </div>
+    <div class="decisionStep">
+      <label for="rootSelect">Root cause</label>
+      <select id="rootSelect"></select>
+    </div>
+    <div class="decisionStep">
+      <label for="fixSelect">Permanent fix</label>
+      <select id="fixSelect"></select>
+    </div>
+    <div class="decisionFeedback" id="decisionFeedback" aria-live="polite"></div>
+    <button class="primaryBtn full" id="applyBtn" type="button">Apply the plan →</button>
+    <button class="primaryBtn full verify" id="verifyBtn" type="button" hidden>Run verification call →</button>
+  </div>
+</div>
+
+<div class="modal" id="debriefModal" hidden>
+  <div class="modalCard debriefCard">
+    <span class="kicker">SHIFT COMPLETE</span>
+    <h2 id="clearTitle">Mission Clear!</h2>
+    <div class="stars" id="stars">★★★☆</div>
+    <p class="clearCopy" id="clearCopy"></p>
+    <div class="scoreRows" id="scoreRows"></div>
+    <div class="debriefActions">
+      <button class="primaryBtn" id="againBtn" type="button">Expert remix →</button>
+      <button class="quietBtn" id="shareBtn" type="button">Copy challenge</button>
+    </div>
+  </div>
+</div>
+
+<div class="srOnly" aria-hidden="true">synthetic configuration only · no official Doctolib product UI or data · Technical Onboarding Simulator · Broken Calls · clue notebook · signal trace · expert remix</div>
 <script src="./game.js"></script>
 </body>
 </html>
