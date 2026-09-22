@@ -103,8 +103,9 @@ function renderAll(){
   renderWorld();renderVerbs();renderActions();renderNotebookCount();renderContainment();clock();
 }
 function renderWorld(){
-  const c=cur(),u=used();
+  const c=cur(),u=used(),world=q('#world');
   q('#introOverlay').classList.toggle('hidden',!state.introOpen);
+  world.dataset.state=state.done?'resolved':state.planApplied?'fixed':state.contain===c.contain?'contained':state.used.length?'investigating':'quiet';
   q('#queueBadge').textContent=state.queue+' waiting';
   q('#queue').innerHTML=Array.from({length:Math.min(state.queue,6)},()=>'<i class="qPerson"></i>').join('');
   q('#speech').innerHTML=`<b>${speakerLabel()}</b>${worldSpeech()}`;
@@ -184,6 +185,7 @@ function takeAction(id){
   checkInsights();
   soundClue();
   renderAll();
+  focusWorld(id);
 }
 function setLatest(title,body,insight){
   state.latest={title,body,insight};
@@ -221,6 +223,14 @@ function runSignalTrace(success){
   };
 }
 
+function focusWorld(actionId){
+  const map={scope:'reception',changes:'route',logs:'ai',config:'route',data:'ai',api:'ai',network:'route',sample:'ai',test:'phone',fallback:'reception'};
+  const world=q('#world'),focus=map[actionId];
+  if(!focus)return;
+  world.dataset.focus=focus;
+  clearTimeout(focusWorld._timer);
+  focusWorld._timer=setTimeout(()=>{delete world.dataset.focus},1400);
+}
 function renderNotebookCount(){q('#notebookCount').textContent=state.used.length+state.insights.length}
 function renderNotebook(){
   const c=cur();
