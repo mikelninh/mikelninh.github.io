@@ -26,7 +26,10 @@ for (const marker of [
   'room-route',
   'room-ai',
   'room-reception',
-  'Expert remix / next shift'
+  'Expert remix / next shift',
+  'missionCurtain',
+  'verifyBtn',
+  'chapter1'
 ]) assert.ok(html.includes(marker), `missing vertical-slice marker: ${marker}`);
 
 for (const marker of [
@@ -36,7 +39,11 @@ for (const marker of [
   'soundClear',
   'AHA!',
   'Restart the healthy assistant',
-  'b-fallback'
+  'b-fallback',
+  'applyPlan',
+  'verifyPlan',
+  'runSignalTrace(true)',
+  'answerBtn'
 ]) assert.ok(js.includes(marker), `missing game-engine marker: ${marker}`);
 
 for (const marker of [
@@ -44,7 +51,10 @@ for (const marker of [
   '.signalOrb',
   '.clueCard',
   '.aha',
-  '.confetti'
+  '.confetti',
+  '.npc',
+  '.room.fixed',
+  '.missionCurtain'
 ]) assert.ok(css.includes(marker), `missing game-style marker: ${marker}`);
 
 assert.doesNotThrow(() => new Function(js), 'game.js should parse as browser JavaScript');
