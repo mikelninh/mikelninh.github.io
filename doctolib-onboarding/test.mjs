@@ -1,41 +1,13 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
-const html = fs.readFileSync(new URL('./index.html', import.meta.url), 'utf8');
-const js = fs.readFileSync(new URL('./game.js', import.meta.url), 'utf8');
-const css = fs.readFileSync(new URL('./game.css', import.meta.url), 'utf8');
+const html=fs.readFileSync(new URL('./index.html',import.meta.url),'utf8');
+const js=fs.readFileSync(new URL('./game.js',import.meta.url),'utf8');
+const css=fs.readFileSync(new URL('./game.css',import.meta.url),'utf8');
 
-for (const marker of [
-  'Onboarding Shift',
-  'What do you do?',
-  'Talk',
-  'Look',
-  'Try',
-  'Notebook',
-  'Make the call',
-  'Answer the call',
-  'no official Doctolib product UI or data'
-]) assert.ok(html.includes(marker), `missing simplified UI marker: ${marker}`);
-
-for (const marker of [
-  'BROKEN_VARIANTS',
-  'renderAll',
-  'takeAction',
-  'runSignalTrace',
-  'applyPlan',
-  'verifyPlan',
-  'finishMission',
-  'Restart the healthy assistant'
-]) assert.ok(js.includes(marker), `missing game-engine marker: ${marker}`);
-
-for (const marker of [
-  '.world',
-  '.clinic',
-  '.actionChoices',
-  '.latestClue',
-  '.modalCard',
-  '.signalOrb'
-]) assert.ok(css.includes(marker), `missing simplified game-style marker: ${marker}`);
-
-assert.doesNotThrow(() => new Function(js), 'game.js should parse as browser JavaScript');
-console.log('Technical Onboarding simplified game QA PASS');
+for(const m of ['clinicScene','scene-room-phone','scene-room-route','scene-room-ai','scene-room-reception','signalPath','patientQueue','What do you do?','Notebook','Make the call']) assert.ok(html.includes(m),`missing authored scene marker: ${m}`);
+for(const m of ['BROKEN_VARIANTS','renderScene','runSignal','applyPlan','verifyPlan','finishMission','caseActionIds']) assert.ok(js.includes(m),`missing game engine marker: ${m}`);
+for(const m of ['.clinicScene','.sceneRoom','.speechBubble','.actionDock','.signalPath','.npc']) assert.ok(css.includes(m),`missing art-direction style marker: ${m}`);
+assert.doesNotThrow(()=>new Function(js),'game.js should parse');
+assert.ok(html.includes('no official Doctolib product UI or data'));
+console.log('Onboarding Shift authored-diorama QA PASS');
