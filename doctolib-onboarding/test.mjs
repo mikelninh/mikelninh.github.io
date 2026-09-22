@@ -6,58 +6,36 @@ const js = fs.readFileSync(new URL('./game.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('./game.css', import.meta.url), 'utf8');
 
 for (const marker of [
-  'Implementation Workspace',
-  'Implementations',
-  'Readiness checks',
-  'Create task for Clinic IT',
-  'Create data-fix task',
-  'Approve go-live',
-  'Implementation activity',
-  'Target go-live',
-  'How this would be used in production:',
-  'synthetic configuration only'
-]) assert.ok(html.includes(marker), `missing compatibility marker: ${marker}`);
-
-for (const marker of [
-  'Fix the clinic.',
-  'Clue notebook',
-  'Game Bible',
-  'room-phone',
-  'room-route',
-  'room-ai',
-  'room-reception',
-  'Expert remix / next shift',
-  'missionCurtain',
-  'verifyBtn',
-  'chapter1'
-]) assert.ok(html.includes(marker), `missing vertical-slice marker: ${marker}`);
+  'Onboarding Shift',
+  'What do you do?',
+  'Talk',
+  'Look',
+  'Try',
+  'Notebook',
+  'Make the call',
+  'Answer the call',
+  'no official Doctolib product UI or data'
+]) assert.ok(html.includes(marker), `missing simplified UI marker: ${marker}`);
 
 for (const marker of [
   'BROKEN_VARIANTS',
+  'renderAll',
+  'takeAction',
   'runSignalTrace',
-  'checkInsights',
-  'soundClear',
-  'AHA!',
-  'Restart the healthy assistant',
-  'b-fallback',
   'applyPlan',
   'verifyPlan',
-  'runSignalTrace(true)',
-  'answerBtn'
+  'finishMission',
+  'Restart the healthy assistant'
 ]) assert.ok(js.includes(marker), `missing game-engine marker: ${marker}`);
 
 for (const marker of [
+  '.world',
   '.clinic',
-  '.signalOrb',
-  '.clueCard',
-  '.aha',
-  '.confetti',
-  '.npc',
-  '.room.fixed',
-  '.missionCurtain'
-]) assert.ok(css.includes(marker), `missing game-style marker: ${marker}`);
+  '.actionChoices',
+  '.latestClue',
+  '.modalCard',
+  '.signalOrb'
+]) assert.ok(css.includes(marker), `missing simplified game-style marker: ${marker}`);
 
 assert.doesNotThrow(() => new Function(js), 'game.js should parse as browser JavaScript');
-assert.ok(html.includes('./design-bible/'));
-assert.ok(html.includes('no official Doctolib product UI or data'));
-console.log('Technical Onboarding game vertical-slice QA PASS');
+console.log('Technical Onboarding simplified game QA PASS');
