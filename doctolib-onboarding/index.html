@@ -3,182 +3,194 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Onboarding Shift — a miniature clinic mystery game for technical onboarding practice.">
-<meta name="theme-color" content="#edf4df">
+<meta name="description" content="Onboarding Shift — a cinematic technical onboarding game.">
+<meta name="theme-color" content="#dce8e1">
 <title>Onboarding Shift — Michael Ninh</title>
 <link rel="stylesheet" href="./game.css">
 </head>
 <body>
-<header class="topbar">
-  <div class="wrap topbarInner">
-    <div class="brand"><span class="logo">MN</span><span>Onboarding Shift</span></div>
-    <div class="topActions">
+<div class="gameApp">
+  <header class="hudTop">
+    <a class="gameBrand" href="../" aria-label="Michael Ninh portfolio">
+      <span class="brandMark">MN</span>
+      <span><b>Onboarding Shift</b><small>independent training prototype</small></span>
+    </a>
+    <div class="hudMeta">
       <select id="caseSelect" class="caseSelect" aria-label="Choose mission"></select>
-      <span class="clock" id="clock">120:00</span>
-      <button id="soundBtn" class="soundBtn" type="button" aria-label="Toggle sound">♪</button>
+      <div class="dayChip"><span class="sunIcon">●</span><span><b>Mon · 08:47</b><small id="modeLabel">Training</small></span></div>
+      <span id="clock" class="clock">120:00</span>
+      <button id="soundBtn" class="roundButton" type="button" aria-label="Toggle sound">♪</button>
+    </div>
+  </header>
+
+  <main class="stageWrap">
+    <section class="missionStrip">
+      <div><span class="eyebrow">SONNENHOF PRAXIS</span><h1 id="missionTitle">Broken Calls</h1></div>
+      <div id="queueBadge" class="queueBadge"><span></span>4 patients waiting</div>
+    </section>
+
+    <section class="cinematicStage" id="world">
+      <div class="sky">
+        <div class="sun"></div>
+        <div class="cloud c1"></div><div class="cloud c2"></div>
+        <div class="berlinSkyline" aria-hidden="true">
+          <i class="block b1"></i><i class="block b2"></i><i class="block b3"></i><i class="block b4"></i>
+          <i class="tower"><span></span></i><i class="church"></i>
+        </div>
+        <div class="haze"></div>
+      </div>
+
+      <div class="landscape">
+        <div class="tree t1"></div><div class="tree t2"></div><div class="tree t3"></div>
+        <div class="flowerPatch fp1"></div><div class="flowerPatch fp2"></div>
+      </div>
+
+      <div class="practice">
+        <div class="practiceRoof">
+          <div class="roofGarden"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="practiceSign"><span>+</span><div><b>Sonnenhof Praxis</b><small>Care, connected.</small></div></div>
+        </div>
+
+        <div class="upperFloor">
+          <button id="scene-room-phone" class="room roomPhone" data-room="phone" type="button">
+            <span class="roomLabel">Phone</span>
+            <span class="roomGlow"></span>
+            <span class="lamp"></span>
+            <span class="desk phoneDesk">
+              <i class="phoneBody"></i><i class="phoneReceiver"></i><i class="phoneLight"></i>
+            </span>
+            <span class="plant pA"></span>
+            <span class="roomState"></span>
+          </button>
+
+          <button id="scene-room-route" class="room roomRoute" data-room="route" type="button">
+            <span class="roomLabel">Routing</span>
+            <span class="roomGlow"></span>
+            <span class="server s1"><i></i><i></i><i></i><i></i></span>
+            <span class="server s2"><i></i><i></i><i></i><i></i></span>
+            <span class="cables"><i></i><i></i><i></i></span>
+            <span class="faultIcon">!</span>
+            <span class="roomState"></span>
+          </button>
+
+          <button id="scene-room-ai" class="room roomAi" data-room="ai" type="button">
+            <span class="roomLabel">AI Assistant</span>
+            <span class="roomGlow"></span>
+            <span class="aiHalo"></span>
+            <span class="aiBot"><i class="botHead"><b></b><b></b></i><i class="botBody"></i></span>
+            <span class="server mini"><i></i><i></i><i></i></span>
+            <span class="plant pB"></span>
+            <span class="roomState"></span>
+          </button>
+
+          <button id="scene-room-reception" class="room roomReception" data-room="reception" type="button">
+            <span class="roomLabel">Reception</span>
+            <span class="roomGlow"></span>
+            <span class="receptionDesk"><i class="monitor"></i><i class="papers"></i></span>
+            <span class="person alexPerson"><i></i><b></b></span>
+            <span class="noticeBoard"><i></i><i></i><i></i></span>
+            <span class="plant pC"></span>
+            <span class="roomState"></span>
+          </button>
+
+          <div class="signalTrack" id="signalTrack" aria-hidden="true">
+            <i class="trackBase"></i>
+            <i class="trackProgress" id="trackProgress"></i>
+            <i class="node n1"></i><i class="node n2"></i><i class="node n3"></i><i class="node n4"></i>
+            <i class="signalOrb" id="signalOrb"></i>
+          </div>
+        </div>
+
+        <div class="lowerFloor">
+          <div class="lowerRoom waitingRoom">
+            <span class="sofa"></span><span class="lampFloor"></span><span class="wallArt"></span>
+            <span class="patient seated a"><i></i><b></b></span><span class="patient seated b"><i></i><b></b></span>
+          </div>
+          <div class="lowerRoom entranceRoom">
+            <span class="glassDoor"></span><span class="entryMat"></span><span class="visitor"><i></i><b></b></span>
+          </div>
+          <div class="lowerRoom consultRoom">
+            <span class="consultDesk"></span><span class="person doctor"><i></i><b></b></span><span class="plant pD"></span>
+          </div>
+        </div>
+
+        <div class="fallbackRoute" id="fallbackPath">Fallback route active</div>
+      </div>
+
+      <div class="forecourt">
+        <div class="patientQueue" id="patientQueue"></div>
+        <div class="bench"></div><div class="bike"><i></i><b></b></div>
+      </div>
+
+      <aside class="messageCard" id="messageCard">
+        <div class="portrait" id="portrait"><span>M</span></div>
+        <div class="messageText"><div class="messageHead"><b id="speakerName">Mina</b><small id="messageTime">08:47</small></div><p id="speech">We’re getting reports that some calls at Location B aren’t coming through. Can you take a look?</p></div>
+      </aside>
+
+      <div class="sceneStatus" id="sceneStatus">Everything looks normal… for now.</div>
+
+      <div class="introOverlay" id="introOverlay">
+        <span class="introKicker">INCOMING · 08:47</span>
+        <div class="introPortrait"><span>M</span></div>
+        <h2 id="introTitle">Broken Calls</h2>
+        <p id="introCopy">Some calls are disappearing. Patients are waiting.</p>
+        <button id="answerBtn" class="primaryButton" type="button">Answer the call →</button>
+      </div>
+    </section>
+
+    <section class="controlDock">
+      <div class="goalText"><small>YOUR GOAL</small><p>Keep the clinic running.<br>Find the cause. Fix it. Verify it.</p></div>
+      <div class="verbGroup" role="tablist" aria-label="Actions">
+        <button class="verb talk active" data-verb="ask" type="button"><span class="verbIcon">●</span><span><b>TALK</b><small>Speak to the team</small></span></button>
+        <button class="verb look" data-verb="inspect" type="button"><span class="verbIcon">⌕</span><span><b>LOOK</b><small>Inspect systems</small></span></button>
+        <button class="verb try" data-verb="test" type="button"><span class="verbIcon">▶</span><span><b>TRY</b><small>Run a test</small></span></button>
+      </div>
+      <button id="callBtn" class="callButton" type="button"><span>☎</span><span><b>Make the call</b><small>Contain · Fix · Verify</small></span><i>→</i></button>
+    </section>
+
+    <section id="actionTray" class="actionTray">
+      <div id="actionChoices" class="actionChoices"></div>
+    </section>
+
+    <section id="latestClue" class="latestClue" hidden>
+      <span class="clueSpark">✦</span>
+      <div><small>NEW CLUE</small><strong id="latestClueTitle"></strong><p id="latestClueBody"></p></div>
+      <button id="notebookBtn" class="notebookLink" type="button">Notebook <span id="notebookCount">0</span></button>
+    </section>
+  </main>
+
+  <div id="notebookModal" class="modal" hidden>
+    <div class="modalCard">
+      <button class="closeButton" data-close="notebookModal" type="button">×</button>
+      <span class="eyebrow">YOUR NOTES</span><h2>What you know</h2><div id="notes" class="notes"></div>
     </div>
   </div>
-</header>
 
-<main class="wrap shell">
-  <section class="missionHeader">
-    <div><span id="modeLabel" class="eyebrow">TRAINING</span><h1 id="missionTitle">Broken Calls</h1></div>
-    <span id="queueBadge" class="queueBadge">4 waiting</span>
-  </section>
-
-  <section class="sceneCard">
-    <svg id="clinicScene" class="clinicScene" viewBox="0 0 960 560" role="img" aria-label="Cutaway miniature clinic showing phone, routing, AI assistant and reception">
-      <defs>
-        <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dff5ff"/><stop offset="1" stop-color="#cce9ef"/></linearGradient>
-        <linearGradient id="grassG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8e7a4"/><stop offset="1" stop-color="#a9d17d"/></linearGradient>
-        <linearGradient id="wallG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffdf5"/><stop offset="1" stop-color="#f4e7c9"/></linearGradient>
-        <linearGradient id="roofG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f29a7b"/><stop offset="1" stop-color="#db765b"/></linearGradient>
-        <linearGradient id="glassG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ecfbff"/><stop offset="1" stop-color="#a9d8e8"/></linearGradient>
-        <filter id="softShadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#315941" flood-opacity=".18"/></filter>
-        <filter id="smallShadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#315941" flood-opacity=".16"/></filter>
-        <filter id="glow"><feGaussianBlur stdDeviation="6" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <rect width="960" height="560" fill="url(#skyG)"/>
-      <circle cx="820" cy="78" r="38" fill="#f6d979"/><circle cx="820" cy="78" r="55" fill="#f6d979" opacity=".16"/>
-      <g class="cloud cloud1"><ellipse cx="120" cy="86" rx="49" ry="18" fill="#fff"/><circle cx="95" cy="76" r="23" fill="#fff"/><circle cx="132" cy="70" r="29" fill="#fff"/></g>
-      <g class="cloud cloud2"><ellipse cx="680" cy="122" rx="38" ry="13" fill="#fff"/><circle cx="663" cy="113" r="19" fill="#fff"/><circle cx="691" cy="109" r="23" fill="#fff"/></g>
-
-      <path d="M0 280 Q150 190 310 262 T590 245 T960 260 V560 H0Z" fill="#acd486" opacity=".72"/>
-      <path d="M0 335 Q180 260 355 320 T690 294 T960 322 V560 H0Z" fill="url(#grassG)"/>
-      <path d="M410 560 C430 500 430 454 455 412 C482 368 518 363 535 330 L610 340 C575 390 552 421 540 560Z" fill="#e4d5b2"/>
-
-      <g id="trees" opacity=".94">
-        <g transform="translate(82 288)" filter="url(#smallShadow)"><rect x="17" y="45" width="10" height="42" rx="4" fill="#87664a" stroke="#315941" stroke-width="3"/><circle cx="22" cy="35" r="35" fill="#78b977" stroke="#315941" stroke-width="3"/></g>
-        <g transform="translate(825 300) scale(.88)" filter="url(#smallShadow)"><rect x="17" y="45" width="10" height="42" rx="4" fill="#87664a" stroke="#315941" stroke-width="3"/><circle cx="22" cy="35" r="35" fill="#7fbf7c" stroke="#315941" stroke-width="3"/></g>
-        <g transform="translate(170 252) scale(.58)" opacity=".7"><rect x="17" y="45" width="10" height="42" rx="4" fill="#87664a" stroke="#315941" stroke-width="3"/><circle cx="22" cy="35" r="35" fill="#85c382" stroke="#315941" stroke-width="3"/></g>
-      </g>
-
-      <ellipse cx="493" cy="470" rx="355" ry="48" fill="#315941" opacity=".12"/>
-
-      <g id="building" filter="url(#softShadow)">
-        <path d="M145 205 L812 205 L852 435 L105 435Z" fill="url(#wallG)" stroke="#315941" stroke-width="5" stroke-linejoin="round"/>
-        <path d="M210 205 L282 136 L675 136 L747 205Z" fill="url(#roofG)" stroke="#315941" stroke-width="5" stroke-linejoin="round"/>
-        <rect x="450" y="158" width="58" height="58" rx="13" fill="#fff" stroke="#315941" stroke-width="4"/>
-        <path d="M479 169 V205 M461 187 H497" stroke="#df765e" stroke-width="10" stroke-linecap="round"/>
-
-        <path d="M160 402 L797 402 L827 430 L130 430Z" fill="#c4a981" opacity=".35"/>
-
-        <g class="window" transform="translate(170 232)"><rect width="72" height="50" rx="11" fill="url(#glassG)" stroke="#315941" stroke-width="3"/><path d="M36 0V50M0 25H72" stroke="#315941" stroke-width="1.5" opacity=".38"/></g>
-        <g class="window" transform="translate(714 232)"><rect width="72" height="50" rx="11" fill="url(#glassG)" stroke="#315941" stroke-width="3"/><path d="M36 0V50M0 25H72" stroke="#315941" stroke-width="1.5" opacity=".38"/></g>
-
-        <g id="scene-room-phone" class="sceneRoom phoneRoom" data-action="test" tabindex="0" role="button">
-          <rect x="155" y="306" width="142" height="105" rx="18" fill="#e8f6f7" stroke="#315941" stroke-width="3"/>
-          <ellipse cx="226" cy="389" rx="50" ry="9" fill="#315941" opacity=".08"/>
-          <rect x="188" y="334" width="76" height="42" rx="10" fill="#fff" stroke="#315941" stroke-width="3"/>
-          <path d="M201 348 Q226 326 251 348" fill="none" stroke="#6fa9c5" stroke-width="8" stroke-linecap="round"/>
-          <circle cx="206" cy="362" r="5" fill="#ef8d6f"/><circle cx="226" cy="362" r="5" fill="#efc75e"/><circle cx="246" cy="362" r="5" fill="#72b17a"/>
-          <text id="label-phone" x="226" y="400" text-anchor="middle">PHONE</text>
-        </g>
-
-        <g id="scene-room-route" class="sceneRoom routeRoom" data-action="config" tabindex="0" role="button">
-          <rect x="310" y="306" width="142" height="105" rx="18" fill="#fff1d2" stroke="#315941" stroke-width="3"/>
-          <ellipse cx="381" cy="389" rx="50" ry="9" fill="#315941" opacity=".08"/>
-          <rect x="338" y="328" width="86" height="51" rx="9" fill="#fffaf0" stroke="#315941" stroke-width="3"/>
-          <g fill="#6fa9c5"><circle cx="353" cy="343" r="5"/><circle cx="374" cy="343" r="5"/><circle cx="395" cy="343" r="5"/></g>
-          <g fill="#ef8d6f"><circle cx="353" cy="363" r="5"/><circle cx="374" cy="363" r="5"/></g><circle cx="395" cy="363" r="5" fill="#72b17a"/>
-          <path d="M352 343 C344 320 325 322 320 310 M395 363 C420 382 436 377 445 360" fill="none" stroke="#315941" stroke-width="3"/>
-          <text id="label-route" x="381" y="400" text-anchor="middle">ROUTING</text>
-        </g>
-
-        <g id="scene-room-ai" class="sceneRoom aiRoom" data-action="logs" tabindex="0" role="button">
-          <rect x="465" y="306" width="142" height="105" rx="18" fill="#e8eef9" stroke="#315941" stroke-width="3"/>
-          <ellipse cx="536" cy="389" rx="50" ry="9" fill="#315941" opacity=".08"/>
-          <circle class="aiHalo" cx="536" cy="351" r="31" fill="#6fa9c5" opacity=".12"/>
-          <circle cx="536" cy="351" r="21" fill="#f8fdff" stroke="#315941" stroke-width="3"/>
-          <path d="M536 337 L541 347 L552 349 L544 357 L546 368 L536 363 L526 368 L528 357 L520 349 L531 347Z" fill="#6fa9c5"/>
-          <text id="label-ai" x="536" y="400" text-anchor="middle">AI</text>
-        </g>
-
-        <g id="scene-room-reception" class="sceneRoom deskRoom" data-action="scope" tabindex="0" role="button">
-          <rect x="620" y="306" width="142" height="105" rx="18" fill="#f4e8f6" stroke="#315941" stroke-width="3"/>
-          <ellipse cx="691" cy="389" rx="50" ry="9" fill="#315941" opacity=".08"/>
-          <path d="M647 350 H735 V379 H647Z" fill="#c89567" stroke="#315941" stroke-width="3"/>
-          <rect x="657" y="330" width="30" height="22" rx="5" fill="#ecfbff" stroke="#315941" stroke-width="3"/>
-          <rect x="706" y="327" width="18" height="24" rx="4" fill="#fff8d7" stroke="#315941" stroke-width="3"/>
-          <text id="label-reception" x="691" y="400" text-anchor="middle">DESK</text>
-        </g>
-
-        <path id="signalPath" d="M226 357 L381 357 L536 357 L691 357" fill="none" stroke="#315941" stroke-width="6" stroke-linecap="round" opacity=".9"/>
-        <path id="fallbackPath" d="M381 386 Q455 458 690 399" fill="none" stroke="#6aa56e" stroke-width="6" stroke-dasharray="12 10" opacity="0"/>
-        <circle id="signalDot" cx="226" cy="357" r="10" fill="#6fc8ef" stroke="#315941" stroke-width="3" opacity="0" filter="url(#glow)"/>
-
-        <g id="npc-jo" class="npc jo" transform="translate(404 274)"><circle cx="0" cy="0" r="13" fill="#e6aa82" stroke="#315941" stroke-width="3"/><path d="M-14 20 Q0 7 14 20 V45 H-14Z" fill="#67a172" stroke="#315941" stroke-width="3"/><circle cx="-4" cy="-2" r="1.5" fill="#315941"/><circle cx="4" cy="-2" r="1.5" fill="#315941"/></g>
-        <g id="npc-alex" class="npc alex" transform="translate(664 276)"><circle cx="0" cy="0" r="13" fill="#dca37c" stroke="#315941" stroke-width="3"/><path d="M-14 20 Q0 7 14 20 V45 H-14Z" fill="#6fa9c5" stroke="#315941" stroke-width="3"/><circle cx="-4" cy="-2" r="1.5" fill="#315941"/><circle cx="4" cy="-2" r="1.5" fill="#315941"/></g>
-        <g id="npc-mina" class="npc mina" transform="translate(721 278)"><circle cx="0" cy="0" r="13" fill="#efb187" stroke="#315941" stroke-width="3"/><path d="M-14 20 Q0 7 14 20 V45 H-14Z" fill="#ef8d6f" stroke="#315941" stroke-width="3"/><circle cx="-4" cy="-2" r="1.5" fill="#315941"/><circle cx="4" cy="-2" r="1.5" fill="#315941"/></g>
-      </g>
-
-      <g id="patientQueue" transform="translate(65 430)"></g>
-      <g id="bench" transform="translate(122 391)"><rect x="0" y="18" width="82" height="14" rx="5" fill="#c89567" stroke="#315941" stroke-width="3"/><rect x="9" y="2" width="64" height="19" rx="6" fill="#d9a572" stroke="#315941" stroke-width="3"/><path d="M12 32V45 M70 32V45" stroke="#315941" stroke-width="4"/></g>
-    </svg>
-
-    <div id="speech" class="speechBubble"></div>
-    <div id="sceneStatus" class="sceneStatus">Everything looks normal… for now.</div>
-
-    <div id="introOverlay" class="introOverlay">
-      <span class="incoming">08:47 · INCOMING</span>
-      <div class="portrait minaPortrait">M</div>
-      <h2 id="introTitle">Broken Calls</h2>
-      <p id="introCopy">Some calls are disappearing. Patients are waiting.</p>
-      <button id="answerBtn" class="primaryBtn" type="button">Answer the call →</button>
+  <div id="decisionModal" class="modal" hidden>
+    <div class="modalCard decisionCard">
+      <button class="closeButton" data-close="decisionModal" type="button">×</button>
+      <span class="eyebrow">MAKE THE CALL</span><h2>What do you recommend?</h2>
+      <div class="decisionStep"><label>Contain now</label><div id="containChoices" class="stackChoices"></div></div>
+      <div class="decisionStep"><label for="rootSelect">Root cause</label><select id="rootSelect"></select></div>
+      <div class="decisionStep"><label for="fixSelect">Permanent fix</label><select id="fixSelect"></select></div>
+      <div id="decisionFeedback" class="decisionFeedback" aria-live="polite"></div>
+      <button id="applyBtn" class="primaryButton full" type="button">Apply the plan →</button>
     </div>
-  </section>
+  </div>
 
-  <section class="actionDock">
-    <h2>What do you do?</h2>
-    <div class="verbs" role="tablist" aria-label="Actions">
-      <button class="verb active" data-verb="ask" type="button">💬 <span>Talk</span></button>
-      <button class="verb" data-verb="inspect" type="button">🔎 <span>Look</span></button>
-      <button class="verb" data-verb="test" type="button">▶ <span>Try</span></button>
+  <div id="debriefModal" class="modal" hidden>
+    <div class="modalCard debriefCard">
+      <span class="eyebrow">SHIFT COMPLETE</span><h2 id="clearTitle">Mission Clear!</h2>
+      <div id="stars" class="stars">★★★☆</div><p id="clearCopy" class="clearCopy"></p>
+      <div id="scoreRows" class="scoreRows"></div>
+      <div class="debriefActions"><button id="againBtn" class="primaryButton" type="button">Expert remix →</button><button id="shareBtn" class="secondaryButton" type="button">Copy challenge</button></div>
     </div>
-    <div id="actionChoices" class="actionChoices"></div>
-  </section>
-
-  <section id="latestClue" class="latestClue" hidden>
-    <span class="clueIcon">✦</span>
-    <div><small>NEW CLUE</small><strong id="latestClueTitle"></strong><p id="latestClueBody"></p></div>
-  </section>
-
-  <nav class="bottomBar">
-    <button id="notebookBtn" class="quietBtn" type="button">Notebook <span id="notebookCount">0</span></button>
-    <button id="callBtn" class="callBtn" type="button">Make the call →</button>
-  </nav>
-</main>
-
-<div id="notebookModal" class="modal" hidden>
-  <div class="modalCard">
-    <button class="closeBtn" data-close="notebookModal" type="button">×</button>
-    <span class="eyebrow">YOUR NOTES</span><h2>What you know</h2><div id="notes" class="notes"></div>
   </div>
-</div>
 
-<div id="decisionModal" class="modal" hidden>
-  <div class="modalCard">
-    <button class="closeBtn" data-close="decisionModal" type="button">×</button>
-    <span class="eyebrow">MAKE THE CALL</span><h2>What do you recommend?</h2>
-    <div class="decisionStep"><label>Contain now</label><div id="containChoices" class="stackChoices"></div></div>
-    <div class="decisionStep"><label for="rootSelect">Root cause</label><select id="rootSelect"></select></div>
-    <div class="decisionStep"><label for="fixSelect">Permanent fix</label><select id="fixSelect"></select></div>
-    <div id="decisionFeedback" class="decisionFeedback" aria-live="polite"></div>
-    <button id="applyBtn" class="primaryBtn full" type="button">Apply the plan →</button>
-  </div>
-</div>
+  <button id="floatingNotebook" class="floatingNotebook" type="button">▤ <span>Notebook</span><b id="floatingNotebookCount">0</b></button>
 
-<div id="debriefModal" class="modal" hidden>
-  <div class="modalCard debriefCard">
-    <span class="eyebrow">SHIFT COMPLETE</span><h2 id="clearTitle">Mission Clear!</h2>
-    <div id="stars" class="stars">★★★☆</div><p id="clearCopy" class="clearCopy"></p>
-    <div id="scoreRows" class="scoreRows"></div>
-    <div class="debriefActions"><button id="againBtn" class="primaryBtn" type="button">Expert remix →</button><button id="shareBtn" class="quietBtn" type="button">Copy challenge</button></div>
-  </div>
+  <div class="srOnly" aria-hidden="true">synthetic configuration only · no official Doctolib product UI or data · Broken Calls · signal trace · clue notebook · expert remix</div>
 </div>
-
-<div class="srOnly" aria-hidden="true">synthetic configuration only · no official Doctolib product UI or data · Broken Calls · signal trace · clue notebook · expert remix</div>
 <script src="./game.js"></script>
 </body>
 </html>
