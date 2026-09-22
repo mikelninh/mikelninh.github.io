@@ -28,10 +28,17 @@
 
   <section class="world panel" id="world" aria-label="Miniature clinic simulation">
     <i class="sun"></i><i class="cloud cloudA"></i><i class="cloud cloudB"></i>
-    <div class="ground"></div><div class="path"></div><i class="tree treeL"></i><i class="tree treeR"></i>
+    <div class="hill hillA"></div><div class="hill hillB"></div>
+    <div class="ground"></div><div class="path"></div>
+    <i class="tree treeL"></i><i class="tree treeR"></i><i class="tree treeFar"></i>
+    <div class="garden gardenL"><i></i><i></i><i></i></div>
+    <div class="garden gardenR"><i></i><i></i><i></i></div>
+    <div class="clinicShadow"></div>
 
     <div class="clinic">
-      <div class="roof"></div><div class="clinicSign">+</div>
+      <div class="roof"></div><div class="eave"></div><div class="clinicSign">+</div>
+      <div class="windowGlow glowL"></div><div class="windowGlow glowR"></div>
+      <div class="awning awningL"></div><div class="awning awningR"></div>
       <button class="room phone" id="room-phone" type="button" aria-label="Phone system">☎<small>PHONE</small></button>
       <button class="room route" id="room-route" type="button" aria-label="Routing">↔<small>ROUTING</small></button>
       <button class="room ai" id="room-ai" type="button" aria-label="AI assistant">✦<small>AI</small></button>
@@ -43,6 +50,7 @@
       <div class="npc jo" id="npc-jo"><span>J</span></div>
     </div>
 
+    <div class="bench"></div><div class="bikeRack"></div>
     <div class="queue" id="queue"></div>
     <div class="speech" id="speech"></div>
     <div class="sceneStatus" id="sceneStatus">Everything looks normal… for now.</div>
