@@ -19,25 +19,29 @@
 <section class="sim" id="sim"><div class="wrap">
 <div class="hud"><div class="hudLeft"><div class="caseBadge" id="caseBadge">03</div><div class="hudTitle"><b id="hudTitle">Broken Calls</b><span id="hudMode">TRAINING · INTERMEDIATE</span></div></div><div class="hudRight"><div class="meter"><div class="meterTop"><span>CLINIC TRUST</span><b id="trustValue">70</b></div><div class="meterBar"><i id="trustBar" style="width:70%"></i></div></div><div class="meter risk"><div class="meterTop"><span>RISK</span><b id="riskValue">35</b></div><div class="meterBar"><i id="riskBar" style="width:35%"></i></div></div><span class="clock" id="clock">120:00</span><button class="btn secondary small" id="clockBtn" type="button">Start</button><button class="btn secondary small" id="exitBtn" type="button">Exit</button></div></div>
 
+<div class="chapterBar" aria-label="Mission progress"><div class="chapter active" id="chapter1"><i>1</i><span>Understand</span></div><div class="chapter" id="chapter2"><i>2</i><span>Contain</span></div><div class="chapter" id="chapter3"><i>3</i><span>Fix</span></div><div class="chapter" id="chapter4"><i>4</i><span>Verify</span></div></div>
+
 <div class="game">
 <aside class="panel dossier"><div class="label">Case file</div><h2 id="caseTitle">Broken Calls</h2><p id="brief"></p><div class="objective"><div class="label">Mission</div><strong>Make the narrowest safe decision.</strong><p id="objective"></p></div><div class="hyp"><div class="label">Your current hunch</div><select id="hypothesis" aria-label="Working hypothesis"></select></div><div class="tip" id="tip"><b>Coach:</b> start with people and scope. Tools become smarter after the problem gets smaller.</div></aside>
 
 <section class="play">
 <div class="panel clinicWorld"><div class="worldTop"><div><div class="label">Praxis Sonnenhof</div><h2>What do you do?</h2><p>Tap a verb, choose one move, watch the clinic react.</p></div><span class="queueBadge" id="queueBadge">4 patients waiting</span></div>
-<div class="world">
-<i class="cloud a"></i><i class="cloud b"></i><div class="worldGround"></div><div class="path"></div>
+<div class="world" id="world">
+<i class="sun"></i><i class="cloud a"></i><i class="cloud b"></i><i class="tree treeL"></i><i class="tree treeR"></i><div class="worldGround"></div><div class="path"></div>
+<div class="missionCurtain" id="missionCurtain"><div class="incomingTag">INCOMING · 08:47 MONDAY</div><div class="incomingFace">M</div><h3>Praxis Sonnenhof needs you.</h3><p>Something changed overnight. Patients are waiting. The symptom is incomplete.</p><button class="btn primary" id="answerBtn" type="button">Answer the call →</button></div>
 <div class="clinic"><div class="clinicRoof"></div><div class="clinicSign">+</div>
 <button class="room phone" id="room-phone" type="button" aria-label="Phone system">☎<br>PHONE</button>
 <button class="room route" id="room-route" type="button" aria-label="Routing system">↔<br>ROUTING</button>
 <button class="room ai" id="room-ai" type="button" aria-label="AI assistant">✦<br>AI</button>
 <button class="room reception" id="room-reception" type="button" aria-label="Reception">☺<br>DESK</button>
-<i class="wire w1" id="wire1"></i><i class="wire w2" id="wire2"></i><i class="wire w3" id="wire3"></i></div>
+<i class="wire w1" id="wire1"></i><i class="wire w2" id="wire2"></i><i class="wire w3" id="wire3"></i><i class="fallbackLine" id="fallbackLine"></i>
+<div class="npc mina" id="npc-mina" aria-hidden="true"><span>M</span></div><div class="npc alex" id="npc-alex" aria-hidden="true"><span>A</span></div><div class="npc jo" id="npc-jo" aria-hidden="true"><span>J</span></div></div>
 <div class="queue" id="queue"></div><div class="speech" id="speech"></div><div class="worldLegend" id="worldLegend">Everything looks normal… for now.</div></div>
 <div class="turnBar"><button class="bigVerb active" data-verb="ask" type="button">💬 TALK</button><button class="bigVerb" data-verb="inspect" type="button">🔎 LOOK</button><button class="bigVerb" data-verb="test" type="button">▶ TRY</button></div><div class="actions" id="actions"></div></div>
 
 <div class="panel clues"><div class="clueHead"><div><div class="label">Clue notebook</div><h3>What have you learned?</h3></div><span class="clueCount" id="clueCount">0 clues</span></div><div class="clueBoard" id="clueBoard"><div class="emptyClues">Your notebook is empty. Good. You haven’t jumped to conclusions yet.</div></div></div>
 
-<div class="panel resolve"><div class="label">Ready to call it?</div><div class="resolveGrid"><div class="resolveBlock"><b>1 · Contain now</b><div class="containButtons" id="containButtons"></div></div><div class="resolveBlock"><b>2 · Root cause</b><select id="rootSelect" aria-label="Root cause"></select></div><div class="resolveBlock"><b>3 · Permanent fix</b><select id="fixSelect" aria-label="Permanent fix"></select></div></div><div class="resolveFoot"><button class="btn coral" id="commitBtn" type="button">Make the call →</button></div><div class="feedback" id="feedback" aria-live="polite"></div></div>
+<div class="panel resolve"><div class="label">Ready to call it?</div><h3 class="resolveTitle">Make the plan. Then prove it works.</h3><div class="resolveGrid"><div class="resolveBlock"><b>1 · Contain now</b><div class="containButtons" id="containButtons"></div></div><div class="resolveBlock"><b>2 · Root cause</b><select id="rootSelect" aria-label="Root cause"></select></div><div class="resolveBlock"><b>3 · Permanent fix</b><select id="fixSelect" aria-label="Permanent fix"></select></div></div><div class="resolveFoot"><button class="btn coral" id="commitBtn" type="button">Apply the plan →</button><button class="btn primary verifyBtn" id="verifyBtn" type="button" hidden>Run verification call →</button></div><div class="feedback" id="feedback" aria-live="polite"></div></div>
 
 <div class="panel debrief" id="debrief"><div class="clearTitle"><div class="burst">SHIFT COMPLETE</div><h2 id="clearText">Mission Clear!</h2><div class="stars" id="stars">★★★☆</div></div><div class="debriefGrid"><div class="report"><div class="label">How you played</div><div class="scoreRows" id="scoreRows"></div></div><div class="trail"><div class="label">Your little story</div><div class="trailList" id="trailList"></div></div></div><div class="againRow"><button class="btn primary" id="shareBtn" type="button">Copy challenge</button><button class="btn secondary" id="againBtn" type="button">Expert remix / next shift</button></div></div>
 </section>
