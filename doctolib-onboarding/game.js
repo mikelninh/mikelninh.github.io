@@ -37,9 +37,10 @@ const BROKEN_VARIANTS=[
 
 
 
+
 function clone(obj){return JSON.parse(JSON.stringify(obj))}
 let CASES=clone(BASE_CASES);
-let state={idx:2,mode:'train',verb:'ask',used:[],insights:[],contain:'none',root:'',fix:'',seconds:7200,trust:70,risk:35,queue:4,running:false,timer:null,log:[],variant:0,sound:false,audio:null,introOpen:true,planApplied:false,verified:false,done:false,speaker:'mina',latest:null};
+let state={idx:2,mode:'train',verb:'ask',used:[],insights:[],contain:'none',root:'',fix:'',seconds:7200,trust:70,risk:35,queue:4,running:false,timer:null,log:[],variant:0,sound:false,audio:null,introOpen:true,planApplied:false,verified:false,done:false,speaker:'mina'};
 
 const q=s=>document.querySelector(s),qa=s=>[...document.querySelectorAll(s)],cur=()=>CASES[state.idx],used=()=>new Set(state.used);
 
@@ -51,100 +52,68 @@ function tone(freq,dur=.08,when=0,type='sine',gain=.04){if(!state.sound)return;c
 const soundTap=()=>tone(260,.05,0,'triangle',.03),soundClue=()=>{tone(620,.08);tone(820,.1,.06)},soundAha=()=>{tone(440,.1);tone(554,.12,.09);tone(660,.14,.18)},soundFail=()=>{tone(260,.12);tone(190,.16,.09)},soundClear=()=>{tone(392,.12);tone(494,.12,.1);tone(587,.14,.2);tone(784,.2,.31)};
 
 function populateCases(){q('#caseSelect').innerHTML=CASES.map((c,i)=>`<option value="${i}">${c.title}</option>`).join('');q('#caseSelect').value=String(state.idx)}
-function reset(){stopClock();applyVariant();const c=cur();Object.assign(state,{verb:'ask',used:[],insights:[],contain:'none',root:'',fix:'',seconds:7200,trust:70,risk:35,queue:c.queueStart,running:false,log:[],introOpen:true,planApplied:false,verified:false,done:false,speaker:'mina',latest:null});closeAllModals();q('#decisionFeedback').className='decisionFeedback';q('#decisionFeedback').textContent='';q('#callBtn').textContent='Make the call →';renderAll()}
-function renderAll(){const c=cur();q('#missionTitle').textContent=c.title;q('#modeLabel').textContent=state.mode==='interview'?'INTERVIEW':'TRAINING';q('#introTitle').textContent=c.title;q('#introCopy').textContent=c.speech;q('#queueBadge').textContent=state.queue+' waiting';q('#rootSelect').innerHTML='<option value="">Choose root cause…</option>'+c.rootOptions.map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('');q('#rootSelect').value=state.root;q('#fixSelect').innerHTML='<option value="">Choose permanent fix…</option>'+c.fixOptions.map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('');q('#fixSelect').value=state.fix;renderScene();renderVerbs();renderActions();renderNotebookCount();renderContainment();clock()}
+function reset(){stopClock();applyVariant();const c=cur();Object.assign(state,{verb:'ask',used:[],insights:[],contain:'none',root:'',fix:'',seconds:7200,trust:70,risk:35,queue:c.queueStart,running:false,log:[],introOpen:true,planApplied:false,verified:false,done:false,speaker:'mina'});closeAllModals();q('#decisionFeedback').className='decisionFeedback';q('#decisionFeedback').textContent='';q('#callBtn').querySelector('b').textContent='Make the call';q('#callBtn').querySelector('small').textContent='Contain · Fix · Verify';renderAll()}
+function renderAll(){const c=cur();q('#missionTitle').textContent=c.title;q('#modeLabel').textContent=state.mode==='interview'?'Interview':'Training';q('#introTitle').textContent=c.title;q('#introCopy').textContent=c.speech;q('#queueBadge').innerHTML='<span></span>'+state.queue+' patient'+(state.queue===1?'':'s')+' waiting';q('#rootSelect').innerHTML='<option value="">Choose root cause…</option>'+c.rootOptions.map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('');q('#rootSelect').value=state.root;q('#fixSelect').innerHTML='<option value="">Choose permanent fix…</option>'+c.fixOptions.map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('');q('#fixSelect').value=state.fix;renderWorld();renderVerbs();renderActions();renderNotebookCount();renderContainment();clock()}
 
-function renderScene(){
-  const c=cur(),u=used(),roomIds=['phone','route','ai','reception'];
+function renderWorld(){
+  const c=cur(),u=used(),ids=['phone','route','ai','reception'];
   q('#introOverlay').classList.toggle('hidden',!state.introOpen);
-  q('#speech').innerHTML=`<b>${speakerLabel()}</b>${worldSpeech()}`;
+  q('#speakerName').textContent=speakerLabel();
+  q('#speech').textContent=worldSpeech();
   q('#sceneStatus').textContent=sceneStatus();
   renderPatients();
-
-  roomIds.forEach((id,i)=>{
-    const el=q('#scene-room-'+id);el.classList.remove('checked','problem','fixed');el.dataset.action=c.roomActions[i]||'';
-    if(u.has(c.roomActions[i]))el.classList.add('checked');
-  });
-  if(u.size>=2&&!state.planApplied)q('#scene-room-'+roomIds[c.problemRoom]).classList.add('problem');
-  if(state.planApplied&&state.fix===c.fix)q('#scene-room-'+roomIds[c.problemRoom]).classList.add('fixed');
-
-  q('#signalPath').classList.remove('broken','fixed');
-  if(u.has('test')&&!state.planApplied)q('#signalPath').classList.add('broken');
-  if(state.planApplied&&state.fix===c.fix)q('#signalPath').classList.add('fixed');
-  q('#fallbackPath').classList.toggle('fallbackOn',state.contain===c.contain);
-
-  qa('.npc').forEach(n=>n.classList.remove('talking'));q('#npc-'+state.speaker)?.classList.add('talking');
-  c.roomLabels.forEach((label,i)=>{const id=['phone','route','ai','reception'][i];q('#label-'+id).textContent=label});
+  ids.forEach((id,i)=>{const el=q('#scene-room-'+id);el.classList.remove('checked','problem','fixed');el.dataset.action=c.roomActions[i]||'';if(u.has(c.roomActions[i]))el.classList.add('checked')});
+  if(u.size>=2&&!state.planApplied)q('#scene-room-'+ids[c.problemRoom]).classList.add('problem');
+  if(state.planApplied&&state.fix===c.fix)q('#scene-room-'+ids[c.problemRoom]).classList.add('fixed');
+  q('#fallbackPath').classList.toggle('on',state.contain===c.contain);
+  if(state.planApplied&&state.fix===c.fix){q('#trackProgress').style.width='100%'}else if(u.has('test')){q('#trackProgress').style.width=(Math.max(.12,Math.min(.88,[.18,.38,.67,.88][c.breakAt]))*100)+'%'}else q('#trackProgress').style.width='0';
 }
-function renderPatients(){
-  const g=q('#patientQueue');g.innerHTML='';
-  for(let i=0;i<Math.min(state.queue,6);i++){
-    const x=i*26;
-    g.insertAdjacentHTML('beforeend',`<g transform="translate(${x} 0)" class="patient"><circle cx="10" cy="8" r="8" fill="#efb188" stroke="#315941" stroke-width="2"/><path d="M1 30 Q10 15 19 30 V48 H1Z" fill="${['#6fa9c5','#efaa71','#7fbd7b','#bd8dc9','#e98670','#82b7cb'][i%6]}" stroke="#315941" stroke-width="2"/></g>`);
-  }
-}
+function renderPatients(){const box=q('#patientQueue');box.innerHTML='';for(let i=0;i<Math.min(state.queue,6);i++)box.insertAdjacentHTML('beforeend','<i class="qPerson"></i>')}
 function speakerLabel(){return state.speaker==='alex'?'Alex · Reception':state.speaker==='jo'?'Jo · Clinic IT':'Mina · Practice Manager'}
-function worldSpeech(){const c=cur();if(state.done)return 'That worked. We’re back in business.';if(state.planApplied)return 'The change is in. Can we prove it?';if(state.contain===c.contain)return 'The fallback is working. Keep going.';if(state.insights.length)return state.insights[state.insights.length-1].title;if(state.used.length>=4)return 'What are you recommending?';if(state.used.length>=2)return 'What have you ruled out?';return c.speech}
+function worldSpeech(){const c=cur();if(state.done)return 'That worked. We’re back in business.';if(state.planApplied)return 'The change is in. Can we prove the path is healthy?';if(state.contain===c.contain)return 'The fallback is working. The queue is easing.';if(state.insights.length)return state.insights[state.insights.length-1].title;if(state.used.length>=4)return 'What are you recommending?';if(state.used.length>=2)return 'What have you ruled out?';return c.speech}
 function sceneStatus(){if(state.done)return 'Healthy end-to-end ✓';if(state.planApplied)return 'Fix applied · verify it';if(state.contain===cur().contain)return 'Problem contained';if(state.insights.length)return 'Pattern found';if(state.used.length)return 'Narrowing it down';return 'Everything looks normal… for now'}
 
 function renderVerbs(){qa('[data-verb]').forEach(b=>b.classList.toggle('active',b.dataset.verb===state.verb))}
 function unlocked(id){return ACTIONS[id].requires.every(r=>state.used.includes(r))}
-function caseActionIds(){
-  const id=cur().id;
-  const map={
-    'broken-calls':{ask:['scope','changes'],inspect:['logs','config','network'],test:['test','fallback','restart']},
-    'new-clinic':{ask:['scope','changes'],inspect:['config','api','data'],test:['test','fallback','restart']},
-    'dirty-migration':{ask:['scope','changes'],inspect:['data','config','api'],test:['sample','fallback','restart']},
-    'tomorrow':{ask:['scope','changes'],inspect:['config','logs','api'],test:['test','fallback']},
-    'incident':{ask:['scope','changes'],inspect:['logs','network','config'],test:['test','fallback','restart']}
-  };
-  return (map[id]||VERBS)[state.verb]||[];
-}
+function caseActionIds(){const map={'broken-calls':{ask:['scope','changes'],inspect:['logs','config','network'],test:['test','fallback','restart']},'new-clinic':{ask:['scope','changes'],inspect:['config','api','data'],test:['test','fallback','restart']},'dirty-migration':{ask:['scope','changes'],inspect:['data','config','api'],test:['sample','fallback','restart']},'tomorrow':{ask:['scope','changes'],inspect:['config','logs','api'],test:['test','fallback']},'incident':{ask:['scope','changes'],inspect:['logs','network','config'],test:['test','fallback','restart']}};return (map[cur().id]||VERBS)[state.verb]||[]}
 function renderActions(){const u=used();q('#actionChoices').innerHTML=caseActionIds().map(id=>{const a=ACTIONS[id],locked=!unlocked(id)||state.introOpen;return `<button class="actionChoice ${a.bad?'bad':''} ${locked?'locked':''}" data-action="${id}" ${state.done||state.planApplied||u.has(id)||locked?'disabled':''}>${a.label}<small>${a.cost} min</small></button>`}).join('');qa('[data-action]').forEach(b=>b.addEventListener('click',()=>takeAction(b.dataset.action)))}
 function takeAction(id){
   if(state.done||state.planApplied||state.used.includes(id)||!unlocked(id)||state.introOpen)return;
   const a=ACTIONS[id];soundTap();state.seconds=Math.max(0,state.seconds-a.cost*60);
-  if(a.bad){state.trust=Math.max(0,state.trust-5);state.risk=Math.min(100,state.risk+2);state.queue=Math.min(9,state.queue+1);state.speaker='alex';addLog('Restarted a healthy assistant');showMessage('Whoops. The AI was healthy.','The clinic is still broken. You spent time without shrinking the problem.',false);soundFail();renderScene();clock();return}
+  if(a.bad){state.trust=Math.max(0,state.trust-5);state.risk=Math.min(100,state.risk+2);state.queue=Math.min(9,state.queue+1);state.speaker='alex';addLog('Restarted a healthy assistant');showMessage('Whoops. The AI was healthy.','Location B is still broken. You spent time without shrinking the problem.',false);soundFail();renderWorld();clock();return}
   state.used.push(id);state.speaker=id==='scope'?'alex':(['changes','config','network'].includes(id)?'jo':'mina');
   if(id==='scope'||id==='changes')state.trust=Math.min(100,state.trust+3);
   if(id==='fallback')state.risk=Math.max(0,state.risk-7);
   if(state.used.length>=3&&state.contain==='none'){state.risk=Math.min(100,state.risk+5);state.queue=Math.min(9,state.queue+1)}
-  addLog(a.label);setLatest(a.label,cur().ev[id]);
-  if(id==='test')runSignal(false);
-  checkInsights();soundClue();renderAll();focusRoom(id);
+  addLog(a.label);setLatest(a.label,cur().ev[id]);if(id==='test')runSignal(false);checkInsights();soundClue();renderAll();focusRoom(id);
 }
-function focusRoom(actionId){
-  const map={scope:'reception',changes:'route',logs:'ai',config:'route',network:'route',api:'ai',data:'ai',sample:'ai',test:'phone',fallback:'reception'};
-  const id=map[actionId];if(!id)return;const el=q('#scene-room-'+id);el.style.filter='drop-shadow(0 0 9px rgba(63,124,87,.55))';setTimeout(()=>el.style.filter='',1200)
-}
-function setLatest(title,body){q('#latestClueTitle').textContent=title;q('#latestClueBody').textContent=body;q('#latestClue').hidden=false;clearTimeout(setLatest.t);setLatest.t=setTimeout(()=>q('#latestClue').hidden=true,4000)}
+function focusRoom(actionId){const map={scope:'reception',changes:'route',logs:'ai',config:'route',network:'route',api:'ai',data:'ai',sample:'ai',test:'phone',fallback:'reception'},id=map[actionId];if(!id)return;const el=q('#scene-room-'+id);el.animate([{transform:'translateY(0)'},{transform:'translateY(-7px)'},{transform:'translateY(0)'}],{duration:480,easing:'ease-out'})}
+function setLatest(title,body){q('#latestClueTitle').textContent=title;q('#latestClueBody').textContent=body;q('#latestClue').hidden=false;clearTimeout(setLatest.t);setLatest.t=setTimeout(()=>q('#latestClue').hidden=true,4200)}
 function checkInsights(){const c=cur(),u=used();for(const ins of c.insights||[]){if(!state.insights.some(x=>x.title===ins.title)&&ins.need.every(x=>u.has(x))){state.insights.push(ins);addLog('Insight: '+ins.title);setTimeout(()=>{setLatest(ins.title,ins.body);showMessage(ins.title,ins.body,true);soundAha();renderNotebookCount()},180)}}}
-function showMessage(title,body,insight){q('.aha')?.remove();const el=document.createElement('div');el.className='aha';el.innerHTML=`<small>${insight?'AHA!':'REACTION'}</small><strong>${title}</strong><div style="font-size:9px;line-height:1.4;margin-top:4px;color:#687068">${body}</div>`;q('.sceneCard').appendChild(el);setTimeout(()=>el.remove(),2400)}
+function showMessage(title,body,insight){q('.aha')?.remove();const el=document.createElement('div');el.className='aha';el.innerHTML=`<small>${insight?'AHA!':'REACTION'}</small><strong>${title}</strong><div style="font-size:9px;line-height:1.4;margin-top:4px;color:#687068">${body}</div>`;q('#world').appendChild(el);setTimeout(()=>el.remove(),2400)}
 function runSignal(success){
-  const path=q('#signalPath'),dot=q('#signalDot'),len=path.getTotalLength(),end=success?len:len*([.2,.42,.68,.92][Math.max(0,Math.min(3,cur().breakAt))]);
-  dot.style.opacity='1';const start=performance.now();
-  function frame(now){const p=Math.min(1,(now-start)/(success?1100:900)),pt=path.getPointAtLength(end*p);dot.setAttribute('cx',pt.x);dot.setAttribute('cy',pt.y);if(p<1)requestAnimationFrame(frame);else{dot.setAttribute('fill',success?'#73c486':'#ef8d6f');success?soundAha():soundFail();setTimeout(()=>{dot.style.opacity='0';dot.setAttribute('fill','#6fc8ef')},800)}}
-  requestAnimationFrame(frame);
+  const orb=q('#signalOrb'),duration=success?1200:930,stop=success?1:Math.max(.14,Math.min(.9,[.18,.38,.67,.88][cur().breakAt]));
+  orb.style.opacity='1';orb.style.left='0%';orb.style.background='#73d3ff';
+  const anim=orb.animate([{left:'0%'},{left:(stop*100)+'%'}],{duration,easing:'ease-in-out',fill:'forwards'});
+  anim.onfinish=()=>{orb.style.background=success?'#64c978':'#ef725d';success?soundAha():soundFail();setTimeout(()=>{orb.style.opacity='0';orb.style.left='0%'},850)};
 }
 
-function renderNotebookCount(){q('#notebookCount').textContent=state.used.length+state.insights.length}
+function renderNotebookCount(){const n=state.used.length+state.insights.length;q('#notebookCount').textContent=n;q('#floatingNotebookCount').textContent=n}
 function renderNotebook(){const c=cur(),ev=state.used.filter(id=>ACTIONS[id].clue).map(id=>`<article class="noteCard"><b>${ACTIONS[id].label}</b><p>${c.ev[id]}</p></article>`),ins=state.insights.map(x=>`<article class="noteCard insight"><b>✦ ${x.title}</b><p>${x.body}</p></article>`);q('#notes').innerHTML=(ev.length+ins.length)?ev.concat(ins).join(''):'<p style="font-size:10px;color:var(--muted)">Nothing yet. Ask one useful question.</p>'}
 function renderContainment(){const opts=['none',cur().contain,'disable-all'].filter((x,i,a)=>a.indexOf(x)===i);q('#containChoices').innerHTML=opts.map(id=>`<button class="containChoice ${state.contain===id?'selected':''}" data-contain="${id}" type="button">${CONTAIN[id][0]}</button>`).join('');qa('[data-contain]').forEach(b=>b.addEventListener('click',()=>setContain(b.dataset.contain)))}
-function setContain(id){if(state.done||state.contain===id)return;soundTap();state.contain=id;state.speaker='alex';if(id===cur().contain){state.risk=Math.max(0,state.risk-15);state.trust=Math.min(100,state.trust+5);state.queue=Math.max(0,state.queue-2);soundAha()}else if(id==='disable-all'){state.risk=Math.max(0,state.risk-22);state.trust=Math.max(0,state.trust-7);state.queue=Math.max(0,state.queue-1);soundFail()}addLog('Containment: '+CONTAIN[id][0]);renderContainment();renderScene()}
+function setContain(id){if(state.done||state.contain===id)return;soundTap();state.contain=id;state.speaker='alex';if(id===cur().contain){state.risk=Math.max(0,state.risk-15);state.trust=Math.min(100,state.trust+5);state.queue=Math.max(0,state.queue-2);soundAha()}else if(id==='disable-all'){state.risk=Math.max(0,state.risk-22);state.trust=Math.max(0,state.trust-7);state.queue=Math.max(0,state.queue-1);soundFail()}addLog('Containment: '+CONTAIN[id][0]);renderContainment();renderWorld()}
 
 function openDecision(){if(state.planApplied){verifyPlan();return}renderContainment();q('#decisionModal').hidden=false}
 function feedback(t){q('#decisionFeedback').textContent=t;q('#decisionFeedback').classList.add('show')}
-function applyPlan(){state.root=q('#rootSelect').value;state.fix=q('#fixSelect').value;if(!state.root||!state.fix||state.contain==='none'){feedback('Choose containment, a root cause and a fix first.');soundFail();return}state.seconds=Math.max(0,state.seconds-8*60);const ok=state.fix===cur().fix;addLog('Applied plan: '+(cur().fixOptions.find(x=>x[0]===state.fix)?.[1]||state.fix));if(!ok){state.trust=Math.max(0,state.trust-4);state.risk=Math.min(100,state.risk+4);state.queue=Math.min(9,state.queue+1);feedback('The symptom is still there. That change did not repair the failing boundary.');showMessage('Still broken.','Good news: the failed fix taught you something.',false);soundFail();renderScene();clock();return}state.planApplied=true;state.speaker='jo';state.risk=Math.max(0,state.risk-7);state.trust=Math.min(100,state.trust+3);q('#decisionModal').hidden=true;q('#callBtn').textContent='Run verification →';showMessage('Fix applied.','One last thing: prove the critical path works.',true);soundAha();renderAll()}
-function verifyPlan(){if(!state.planApplied||state.verified)return;state.seconds=Math.max(0,state.seconds-5*60);addLog('Ran verification call');state.speaker='alex';runSignal(true);setTimeout(()=>{state.verified=true;state.done=true;state.risk=Math.max(0,state.risk-15);state.queue=Math.max(0,state.queue-2);state.trust=Math.min(100,state.trust+5);addLog('Verified healthy end-to-end');finishMission()},1200)}
-
+function applyPlan(){state.root=q('#rootSelect').value;state.fix=q('#fixSelect').value;if(!state.root||!state.fix||state.contain==='none'){feedback('Choose containment, a root cause and a fix first.');soundFail();return}state.seconds=Math.max(0,state.seconds-8*60);const ok=state.fix===cur().fix;addLog('Applied plan: '+(cur().fixOptions.find(x=>x[0]===state.fix)?.[1]||state.fix));if(!ok){state.trust=Math.max(0,state.trust-4);state.risk=Math.min(100,state.risk+4);state.queue=Math.min(9,state.queue+1);feedback('The symptom is still there. That change did not repair the failing boundary.');showMessage('Still broken.','The change did not alter the failing path.',false);soundFail();renderWorld();clock();return}state.planApplied=true;state.speaker='jo';state.risk=Math.max(0,state.risk-7);state.trust=Math.min(100,state.trust+3);q('#decisionModal').hidden=true;q('#callBtn').querySelector('b').textContent='Run verification';q('#callBtn').querySelector('small').textContent='Prove it end-to-end';showMessage('Fix applied.','One last thing: prove the critical path works.',true);soundAha();renderAll()}
+function verifyPlan(){if(!state.planApplied||state.verified)return;state.seconds=Math.max(0,state.seconds-5*60);addLog('Ran verification call');state.speaker='alex';runSignal(true);setTimeout(()=>{state.verified=true;state.done=true;state.risk=Math.max(0,state.risk-15);state.queue=Math.max(0,state.queue-2);state.trust=Math.min(100,state.trust+5);addLog('Verified healthy end-to-end');finishMission()},1250)}
 function diagnosis(){return state.root===cur().correct?100:20}
 function safety(){return state.contain===cur().contain?100:state.contain==='disable-all'?65:25}
 function efficiency(){const ess=new Set(cur().essential),w=state.used.filter(x=>!ess.has(x)).length;return Math.max(0,100-w*15)}
 function communication(){return Math.max(0,Math.min(100,55+Math.round((state.trust-50)*1.2)))}
 function total(){const fix=state.fix===cur().fix?100:25;return Math.round(diagnosis()*.3+fix*.25+safety()*.25+efficiency()*.12+communication()*.08)}
 function starCount(n){return n>=92?4:n>=78?3:n>=62?2:1}
-function finishMission(){stopClock();const n=total(),stars=starCount(n);q('#clearTitle').textContent=stars>=3?'Mission Clear!':'Shift Complete';q('#stars').textContent='★'.repeat(stars)+'☆'.repeat(4-stars);q('#clearCopy').textContent=state.root===cur().correct?'You found the failing boundary, kept the safe scope running, and verified the repair.':'The clinic is running again, but your explanation still has a gap.';const scores=[['Diagnosis',diagnosis()],['Safety',safety()],['Efficiency',efficiency()],['Communication',communication()]];q('#scoreRows').innerHTML=scores.map(([k,v])=>`<div class="scoreRow"><span>${k}</span><div class="scoreBar"><i style="width:${v}%"></i></div><b>${v}</b></div>`).join('');q('#debriefModal').hidden=false;q('#callBtn').textContent='Resolved ✓';renderScene();soundClear()}
-
+function finishMission(){stopClock();const n=total(),stars=starCount(n);q('#clearTitle').textContent=stars>=3?'Mission Clear!':'Shift Complete';q('#stars').textContent='★'.repeat(stars)+'☆'.repeat(4-stars);q('#clearCopy').textContent=state.root===cur().correct?'You found the failing boundary, kept the safe scope running, and verified the repair.':'The clinic is running again, but your explanation still has a gap.';const scores=[['Diagnosis',diagnosis()],['Safety',safety()],['Efficiency',efficiency()],['Communication',communication()]];q('#scoreRows').innerHTML=scores.map(([k,v])=>`<div class="scoreRow"><span>${k}</span><div class="scoreBar"><i style="width:${v}%"></i></div><b>${v}</b></div>`).join('');q('#debriefModal').hidden=false;q('#callBtn').querySelector('b').textContent='Resolved';q('#callBtn').querySelector('small').textContent='Healthy end-to-end ✓';renderWorld();soundClear()}
 function clock(){const m=Math.floor(state.seconds/60),s=state.seconds%60;q('#clock').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
 function startClock(){if(state.running||state.done)return;state.running=true;state.timer=setInterval(()=>{state.seconds=Math.max(0,state.seconds-1);clock();if(!state.seconds)stopClock()},1000)}
 function stopClock(){state.running=false;if(state.timer){clearInterval(state.timer);state.timer=null}}
@@ -154,14 +123,10 @@ function nextShift(){q('#debriefModal').hidden=true;if(cur().id==='broken-calls'
 
 q('#caseSelect').addEventListener('change',e=>{state.idx=Number(e.target.value);state.variant=0;applyVariant();reset()});
 qa('[data-verb]').forEach(b=>b.addEventListener('click',()=>{state.verb=b.dataset.verb;renderVerbs();renderActions();soundTap()}));
-qa('.sceneRoom').forEach(room=>{room.addEventListener('click',()=>{if(state.introOpen)return;const id=room.dataset.action;if(id&&unlocked(id)&&!state.used.includes(id)){state.verb=ACTIONS[id].verb;renderVerbs();takeAction(id)}});room.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!state.introOpen)room.click()})});
+qa('.room').forEach(room=>room.addEventListener('click',()=>{if(state.introOpen)return;const id=room.dataset.action;if(id&&unlocked(id)&&!state.used.includes(id)){state.verb=ACTIONS[id].verb;renderVerbs();takeAction(id)}}));
 q('#answerBtn').addEventListener('click',()=>{state.introOpen=false;addLog('Answered the practice call');soundAha();startClock();renderAll()});
 q('#soundBtn').addEventListener('click',()=>{state.sound=!state.sound;if(state.sound){audioCtx();soundAha()}q('#soundBtn').classList.toggle('on',state.sound)});
-q('#notebookBtn').addEventListener('click',()=>{renderNotebook();q('#notebookModal').hidden=false});
-q('#callBtn').addEventListener('click',openDecision);
-q('#applyBtn').addEventListener('click',applyPlan);
-q('#rootSelect').addEventListener('change',e=>state.root=e.target.value);q('#fixSelect').addEventListener('change',e=>state.fix=e.target.value);
-q('#againBtn').addEventListener('click',nextShift);q('#shareBtn').addEventListener('click',share);
+const openNotebook=()=>{renderNotebook();q('#notebookModal').hidden=false};q('#notebookBtn').addEventListener('click',openNotebook);q('#floatingNotebook').addEventListener('click',openNotebook);
+q('#callBtn').addEventListener('click',openDecision);q('#applyBtn').addEventListener('click',applyPlan);q('#rootSelect').addEventListener('change',e=>state.root=e.target.value);q('#fixSelect').addEventListener('change',e=>state.fix=e.target.value);q('#againBtn').addEventListener('click',nextShift);q('#shareBtn').addEventListener('click',share);
 qa('[data-close]').forEach(b=>b.addEventListener('click',()=>q('#'+b.dataset.close).hidden=true));qa('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.hidden=true}));
-
 const params=new URLSearchParams(location.search),requested=params.get('case'),mode=params.get('mode'),variant=params.get('variant');if(requested){const i=BASE_CASES.findIndex(c=>c.id===requested);if(i>=0)state.idx=i}if(mode==='interview')state.mode='interview';if(variant!==null&&!Number.isNaN(Number(variant)))state.variant=Math.max(0,Number(variant));applyVariant();populateCases();reset();
