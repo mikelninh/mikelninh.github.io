@@ -6,6 +6,8 @@ Prepare for a technical onboarding / implementation role by combining **concept 
 ## Learning loop
 **Learn → Play → Produce → Present**
 
+Every completed simulator run now automatically creates a **case dossier** containing the evidence gathered, insights, decision, verification, score breakdown, timeline, strength, next practice focus, and user reflection. Runs are saved locally in the browser and surfaced in the Academy progress view.
+
 ## Modules
 
 ### 1. Discovery & scoping
@@ -55,5 +57,6 @@ Artifact: SOP + training one-pager + automation proposal.
 6. SOP + training guide
 7. Automation note
 8. Capstone presentation
+9. Generated case dossier
 
 The goal is not to look like you already worked at the target company. The goal is to show transferable judgement, technical fluency, structured implementation thinking, and the ability to communicate clearly.
