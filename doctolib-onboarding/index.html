@@ -184,7 +184,38 @@
       <span class="eyebrow">SHIFT COMPLETE</span><h2 id="clearTitle">Mission Clear!</h2>
       <div id="stars" class="stars">★★★☆</div><p id="clearCopy" class="clearCopy"></p>
       <div id="scoreRows" class="scoreRows"></div>
-      <div class="debriefActions"><button id="againBtn" class="primaryButton" type="button">Expert remix →</button><button id="shareBtn" class="secondaryButton" type="button">Copy challenge</button></div>
+      <div class="debriefActions"><button id="dossierBtn" class="primaryButton" type="button">Open case dossier →</button><button id="againBtn" class="secondaryButton" type="button">Expert remix</button><button id="shareBtn" class="secondaryButton" type="button">Copy challenge</button></div>
+    </div>
+  </div>
+
+  <div id="dossierModal" class="modal" hidden>
+    <div class="modalCard dossierCard">
+      <button class="closeButton" data-close="dossierModal" type="button">×</button>
+      <div class="dossierTop">
+        <div><span class="eyebrow">GENERATED CASE DOSSIER</span><h2 id="dossierTitle">Broken Calls</h2></div>
+        <span id="evidenceStatus" class="evidenceStatus">Practice evidence</span>
+      </div>
+      <p class="dossierIntro">This is generated from your actual run. Refine the reflection before treating it as portfolio evidence.</p>
+
+      <div class="dossierGrid">
+        <section><small>SITUATION</small><p id="dossierSituation"></p></section>
+        <section><small>DECISION</small><p id="dossierDecision"></p></section>
+        <section class="wide"><small>EVIDENCE USED</small><div id="dossierEvidence" class="evidenceList"></div></section>
+        <section><small>STRENGTH</small><p id="dossierStrength"></p></section>
+        <section><small>NEXT PRACTICE FOCUS</small><p id="dossierFocus"></p></section>
+        <section class="wide"><small>DECISION TIMELINE</small><div id="dossierTimeline" class="timelineList"></div></section>
+      </div>
+
+      <label class="reflectionLabel" for="reflectionInput">Your reflection</label>
+      <textarea id="reflectionInput" rows="4" placeholder="What would you do differently next time? What did this case teach you?"></textarea>
+
+      <div class="dossierActions">
+        <button id="saveReflectionBtn" class="secondaryButton" type="button">Save reflection</button>
+        <button id="portfolioReadyBtn" class="secondaryButton" type="button">Mark portfolio-ready</button>
+        <button id="copyDossierBtn" class="secondaryButton" type="button">Copy Markdown</button>
+        <button id="downloadDossierBtn" class="primaryButton" type="button">Download .md</button>
+      </div>
+      <p class="dossierFoot">Saved locally in this browser. No patient/customer data is used.</p>
     </div>
   </div>
 
