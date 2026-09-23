@@ -113,7 +113,144 @@ function efficiency(){const ess=new Set(cur().essential),w=state.used.filter(x=>
 function communication(){return Math.max(0,Math.min(100,55+Math.round((state.trust-50)*1.2)))}
 function total(){const fix=state.fix===cur().fix?100:25;return Math.round(diagnosis()*.3+fix*.25+safety()*.25+efficiency()*.12+communication()*.08)}
 function starCount(n){return n>=92?4:n>=78?3:n>=62?2:1}
-function finishMission(){stopClock();const n=total(),stars=starCount(n);q('#clearTitle').textContent=stars>=3?'Mission Clear!':'Shift Complete';q('#stars').textContent='★'.repeat(stars)+'☆'.repeat(4-stars);q('#clearCopy').textContent=state.root===cur().correct?'You found the failing boundary, kept the safe scope running, and verified the repair.':'The clinic is running again, but your explanation still has a gap.';const scores=[['Diagnosis',diagnosis()],['Safety',safety()],['Efficiency',efficiency()],['Communication',communication()]];q('#scoreRows').innerHTML=scores.map(([k,v])=>`<div class="scoreRow"><span>${k}</span><div class="scoreBar"><i style="width:${v}%"></i></div><b>${v}</b></div>`).join('');q('#debriefModal').hidden=false;q('#callBtn').querySelector('b').textContent='Resolved';q('#callBtn').querySelector('small').textContent='Healthy end-to-end ✓';renderWorld();soundClear()}
+const RUNS_KEY='onboardingShiftRuns';
+let latestRun=null;
+
+function optionLabel(options,value){return options.find(x=>x[0]===value)?.[1]||value||'—'}
+function safeRuns(){try{return JSON.parse(localStorage.getItem(RUNS_KEY)||'[]')}catch{return []}}
+function storeRuns(runs){try{localStorage.setItem(RUNS_KEY,JSON.stringify(runs.slice(0,30)))}catch{}}
+function metricSummary(){
+  const metrics=[['Diagnosis',diagnosis()],['Safety',safety()],['Efficiency',efficiency()],['Communication',communication()]];
+  const sorted=[...metrics].sort((a,b)=>b[1]-a[1]);
+  return {metrics,strongest:sorted[0],weakest:sorted[sorted.length-1]};
+}
+function coachingText(record){
+  const essentialMissing=cur().essential.filter(x=>!state.used.includes(x));
+  let focus=record.weakest[0]+': '+record.weakest[1]+'/100.';
+  if(state.root!==cur().correct) focus='Diagnosis: slow down before committing. Gather evidence that localises the failing boundary.';
+  else if(state.contain!==cur().contain) focus='Safety: make containment match the actual blast radius instead of going broader than necessary.';
+  else if(essentialMissing.length) focus='Efficiency: prioritise the highest-information checks earlier. Missing useful checks: '+essentialMissing.map(x=>ACTIONS[x]?.label||x).join(', ')+'.';
+  else if(record.weakest[0]==='Communication') focus='Communication: explain scope, interim safety and the next evidence-producing step more explicitly.';
+  const strength=record.strongest[0]+': '+record.strongest[1]+'/100.';
+  return {strength,focus};
+}
+function buildRunRecord(){
+  const c=cur(), summary=metricSummary();
+  const record={
+    id:Date.now(),
+    createdAt:new Date().toISOString(),
+    caseId:c.id,
+    caseTitle:c.title,
+    mode:state.mode,
+    variant:state.variant,
+    brief:c.brief,
+    objective:c.objective,
+    elapsedMinutes:120-Math.floor(state.seconds/60),
+    stars:starCount(total()),
+    score:total(),
+    metrics:Object.fromEntries(summary.metrics),
+    strongest:summary.strongest,
+    weakest:summary.weakest,
+    evidence:state.used.filter(id=>ACTIONS[id]?.clue).map(id=>({action:ACTIONS[id].label,result:c.ev[id]})),
+    insights:state.insights.map(x=>({title:x.title,body:x.body})),
+    containment:{selected:CONTAIN[state.contain]?.[0]||state.contain,correct:CONTAIN[c.contain]?.[0]||c.contain,isCorrect:state.contain===c.contain},
+    diagnosis:{selected:optionLabel(c.rootOptions,state.root),correct:optionLabel(c.rootOptions,c.correct),isCorrect:state.root===c.correct},
+    fix:{selected:optionLabel(c.fixOptions,state.fix),correct:optionLabel(c.fixOptions,c.fix),isCorrect:state.fix===c.fix},
+    verified:state.verified,
+    timeline:state.log.map(x=>({...x})),
+    reflection:'',
+    portfolioReady:false
+  };
+  Object.assign(record,coachingText(record));
+  return record;
+}
+function saveRun(record){
+  const runs=safeRuns().filter(x=>x.id!==record.id);
+  runs.unshift(record);storeRuns(runs);
+}
+function updateLatestRun(mutator){
+  if(!latestRun)return;
+  mutator(latestRun);saveRun(latestRun);renderDossier(latestRun);
+}
+function dossierMarkdown(r){
+  const evidence=r.evidence.length?r.evidence.map(x=>`- **${x.action}:** ${x.result}`).join('\n'):'- No evidence recorded';
+  const insights=r.insights.length?r.insights.map(x=>`- **${x.title}:** ${x.body}`).join('\n'):'- No combined insight recorded';
+  const timeline=r.timeline.map(x=>`- ${x.t} — ${x.text}`).join('\n');
+  return `# Case Dossier — ${r.caseTitle}
+
+**Mode:** ${r.mode}  
+**Run:** variant ${r.variant}  
+**Overall:** ${r.score}/100 · ${'★'.repeat(r.stars)}${'☆'.repeat(4-r.stars)}  
+**Time used:** ${r.elapsedMinutes} min  
+**Verified end-to-end:** ${r.verified?'Yes':'No'}  
+**Portfolio-ready:** ${r.portfolioReady?'Yes':'No'}
+
+## Situation
+${r.brief}
+
+**Objective:** ${r.objective}
+
+## Evidence
+${evidence}
+
+## Insights
+${insights}
+
+## Decision
+- **Containment:** ${r.containment.selected}
+- **Root cause:** ${r.diagnosis.selected}
+- **Permanent fix:** ${r.fix.selected}
+- **Verification:** ${r.verified?'Critical path passed after the fix.':'Not verified.'}
+
+## Performance
+- Diagnosis: ${r.metrics.Diagnosis}/100
+- Safety: ${r.metrics.Safety}/100
+- Efficiency: ${r.metrics.Efficiency}/100
+- Communication: ${r.metrics.Communication}/100
+
+## Strength
+${r.strength}
+
+## Next practice focus
+${r.focus}
+
+## Decision timeline
+${timeline}
+
+## Reflection
+${r.reflection||'_Add your own reflection before presenting this as portfolio evidence._'}
+
+---
+Synthetic training case. No patient/customer data and no claim of official company affiliation.
+`;
+}
+function renderDossier(r){
+  q('#dossierTitle').textContent=r.caseTitle;
+  q('#evidenceStatus').textContent=r.portfolioReady?'Portfolio-ready':'Practice evidence';
+  q('#evidenceStatus').classList.toggle('ready',r.portfolioReady);
+  q('#dossierSituation').textContent=r.brief;
+  q('#dossierDecision').textContent=`${r.containment.selected} → ${r.diagnosis.selected} → ${r.fix.selected} → ${r.verified?'verified':'not verified'}`;
+  q('#dossierEvidence').innerHTML=(r.evidence.length?r.evidence:[{action:'No evidence',result:'Complete a run to generate evidence.'}]).map(x=>`<article><b>${x.action}</b><span>${x.result}</span></article>`).join('');
+  q('#dossierStrength').textContent=r.strength;
+  q('#dossierFocus').textContent=r.focus;
+  q('#dossierTimeline').innerHTML=r.timeline.map(x=>`<div><b>${x.t}</b><span>${x.text}</span></div>`).join('');
+  q('#reflectionInput').value=r.reflection||'';
+  q('#portfolioReadyBtn').textContent=r.portfolioReady?'Portfolio-ready ✓':'Mark portfolio-ready';
+}
+function openDossier(){if(!latestRun)return;renderDossier(latestRun);q('#dossierModal').hidden=false}
+function copyDossier(){
+  if(!latestRun)return;
+  const md=dossierMarkdown(latestRun);
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(md).then(()=>{q('#copyDossierBtn').textContent='Copied ✓';setTimeout(()=>q('#copyDossierBtn').textContent='Copy Markdown',1400)});
+  else prompt('Copy dossier Markdown:',md);
+}
+function downloadDossier(){
+  if(!latestRun)return;
+  const blob=new Blob([dossierMarkdown(latestRun)],{type:'text/markdown;charset=utf-8'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=`case-dossier-${latestRun.caseId}-${latestRun.id}.md`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500);
+}
+function finishMission(){stopClock();const n=total(),stars=starCount(n);q('#clearTitle').textContent=stars>=3?'Mission Clear!':'Shift Complete';q('#stars').textContent='★'.repeat(stars)+'☆'.repeat(4-stars);q('#clearCopy').textContent=state.root===cur().correct?'You found the failing boundary, kept the safe scope running, and verified the repair.':'The clinic is running again, but your explanation still has a gap.';const scores=[['Diagnosis',diagnosis()],['Safety',safety()],['Efficiency',efficiency()],['Communication',communication()]];q('#scoreRows').innerHTML=scores.map(([k,v])=>`<div class="scoreRow"><span>${k}</span><div class="scoreBar"><i style="width:${v}%"></i></div><b>${v}</b></div>`).join('');latestRun=buildRunRecord();saveRun(latestRun);q('#debriefModal').hidden=false;q('#callBtn').querySelector('b').textContent='Resolved';q('#callBtn').querySelector('small').textContent='Healthy end-to-end ✓';renderWorld();soundClear()}
 function clock(){const m=Math.floor(state.seconds/60),s=state.seconds%60;q('#clock').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
 function startClock(){if(state.running||state.done)return;state.running=true;state.timer=setInterval(()=>{state.seconds=Math.max(0,state.seconds-1);clock();if(!state.seconds)stopClock()},1000)}
 function stopClock(){state.running=false;if(state.timer){clearInterval(state.timer);state.timer=null}}
@@ -128,5 +265,10 @@ q('#answerBtn').addEventListener('click',()=>{state.introOpen=false;addLog('Answ
 q('#soundBtn').addEventListener('click',()=>{state.sound=!state.sound;if(state.sound){audioCtx();soundAha()}q('#soundBtn').classList.toggle('on',state.sound)});
 const openNotebook=()=>{renderNotebook();q('#notebookModal').hidden=false};q('#notebookBtn').addEventListener('click',openNotebook);q('#floatingNotebook').addEventListener('click',openNotebook);
 q('#callBtn').addEventListener('click',openDecision);q('#applyBtn').addEventListener('click',applyPlan);q('#rootSelect').addEventListener('change',e=>state.root=e.target.value);q('#fixSelect').addEventListener('change',e=>state.fix=e.target.value);q('#againBtn').addEventListener('click',nextShift);q('#shareBtn').addEventListener('click',share);
+q('#dossierBtn').addEventListener('click',openDossier);
+q('#copyDossierBtn').addEventListener('click',copyDossier);
+q('#downloadDossierBtn').addEventListener('click',downloadDossier);
+q('#saveReflectionBtn').addEventListener('click',()=>updateLatestRun(r=>{r.reflection=q('#reflectionInput').value.trim()}));
+q('#portfolioReadyBtn').addEventListener('click',()=>updateLatestRun(r=>{r.portfolioReady=!r.portfolioReady}));
 qa('[data-close]').forEach(b=>b.addEventListener('click',()=>q('#'+b.dataset.close).hidden=true));qa('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.hidden=true}));
 const params=new URLSearchParams(location.search),requested=params.get('case'),mode=params.get('mode'),variant=params.get('variant');if(requested){const i=BASE_CASES.findIndex(c=>c.id===requested);if(i>=0)state.idx=i}if(mode==='interview')state.mode='interview';if(variant!==null&&!Number.isNaN(Number(variant)))state.variant=Math.max(0,Number(variant));applyVariant();populateCases();reset();
