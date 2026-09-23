@@ -5,6 +5,7 @@ Independent, synthetic role-fit work sample for technical onboarding / AI implem
 ## Live experience
 
 - **Game:** https://mikelninh.github.io/doctolib-onboarding/
+- **Academy:** https://mikelninh.github.io/doctolib-onboarding/academy/
 - **Game & art direction bible:** https://mikelninh.github.io/doctolib-onboarding/design-bible/
 
 ## Product direction
@@ -19,6 +20,7 @@ Core player loop:
 4. **CONTAIN** — reduce blast radius before full certainty
 5. **CALL IT** — commit root cause + permanent fix
 6. **DEBRIEF** — review diagnosis, safety, efficiency and communication
+7. **DOSSIER** — automatically turn the run into structured proof-of-work
 
 The flagship vertical slice is **Broken Calls**.
 
@@ -35,7 +37,10 @@ It includes:
 - optional generated UI sound,
 - four-star mission clear,
 - replay variants with the same symptom but different hidden causes,
-- shareable interview-mode links.
+- shareable interview-mode links,
+- automatic case-dossier generation,
+- local run history and skill tracking in the Academy,
+- reflection + portfolio-ready evidence gating.
 
 ## Design principle
 
