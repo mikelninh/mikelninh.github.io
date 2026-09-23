@@ -11,7 +11,8 @@
 .section{padding:28px 0}.sectionHead{display:flex;justify-content:space-between;align-items:end;gap:14px;margin-bottom:14px}.sectionHead h2{font-size:36px;margin:5px 0 0}.sectionHead p{font-size:10px;color:var(--muted);max-width:440px;line-height:1.5}.modules{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.module{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 10px 30px rgba(50,70,54,.06)}.moduleNo{font:500 8px var(--mono);color:var(--green)}.module h3{font-size:28px;line-height:1.05;margin:8px 0}.module>p{font-size:10px;color:#5d6a61;line-height:1.55}.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:15px}.trio div{background:#f2f5ed;border-radius:12px;padding:10px;min-height:105px}.trio b{display:block;font-size:8px;margin-bottom:5px}.trio span,.trio a{font-size:8px;line-height:1.45;color:#68736b;text-decoration:none}.trio a{color:var(--green);font-weight:800}.skill{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px}.skill span{font:500 6px var(--mono);background:#e7f1df;color:#396e4d;border-radius:999px;padding:5px 7px}
 .capstone{background:#fff4d7;border:1px solid #e4cf94;border-radius:24px;padding:24px;display:grid;grid-template-columns:.8fr 1.2fr;gap:24px}.capstone h2{font-size:40px;margin:6px 0 8px}.capstone p{font-size:10px;color:#6b6658;line-height:1.55}.capstoneFlow{display:grid;gap:7px}.capstoneFlow div{background:rgba(255,255,255,.72);border-radius:12px;padding:11px;display:grid;grid-template-columns:80px 1fr;gap:8px;font-size:9px}.capstoneFlow b{font-family:var(--mono);font-size:7px;color:#8e702a}
 .proof{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.proofCard{background:white;border:1px solid var(--line);border-radius:18px;padding:17px}.proofCard b{font-size:10px}.proofCard p{font-size:9px;color:var(--muted);line-height:1.5}.proofCard a{display:inline-block;text-decoration:none;color:var(--green);font-size:8px;font-weight:800;margin-top:3px}.footer{padding:30px 0 45px;color:var(--muted);font-size:8px}.cta{margin-top:20px;display:inline-block;background:var(--green);color:white;text-decoration:none;border-radius:999px;padding:12px 16px;font-size:9px;font-weight:800}
-@media(max-width:760px){.coverage{grid-template-columns:1fr 1fr}.modules,.proof,.capstone{grid-template-columns:1fr}.trio{grid-template-columns:1fr}.sectionHead{display:block}.nav a:first-child{display:none}}
+.runStats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}.runStats div{background:#203f30;color:white;border-radius:16px;padding:15px}.runStats b,.runStats span{display:block}.runStats b{font:400 24px var(--serif)}.runStats span{font-size:7px;color:#c8d7cf;margin-top:2px}.runHistory{display:grid;gap:7px}.runHistory>p{font-size:9px;color:var(--muted)}.runRow{display:grid;grid-template-columns:1fr 90px 100px 120px;gap:8px;align-items:center;background:white;border:1px solid var(--line);border-radius:14px;padding:11px}.runRow strong,.runRow span{display:block}.runRow strong{font-size:9px}.runRow span{font-size:7px;color:var(--muted);margin-top:2px}.runScore{font:500 10px var(--mono);text-align:right}.runTag{font:500 7px var(--mono);text-align:center;border-radius:999px;background:#edf3e7;padding:6px;color:var(--green)}.runTag.ready{background:#e3f2e7}.runLink{font-size:8px;font-weight:800;color:var(--green);text-decoration:none;text-align:right}
+@media(max-width:760px){.coverage,.runStats{grid-template-columns:1fr 1fr}.modules,.proof,.capstone{grid-template-columns:1fr}.trio{grid-template-columns:1fr}.sectionHead{display:block}.nav a:first-child{display:none}.runRow{grid-template-columns:1fr 70px}.runTag{display:none}.runLink{grid-column:2;text-align:right}}
 </style>
 </head>
 <body>
@@ -21,10 +22,15 @@
 <h1>Train the role.<br>Show the evidence.</h1>
 <p class="lead">A compact preparation path for technical onboarding in healthcare AI: learn the concepts, practice them under pressure, then leave with artifacts you can actually discuss in an interview.</p>
 <div class="loop"><span>LEARN</span><i>→</i><span>PLAY</span><i>→</i><span>PRODUCE</span><i>→</i><span>PRESENT</span></div>
-<div class="coverage"><div><b>6</b><small>role-specific modules</small></div><div><b>5</b><small>playable implementation cases</small></div><div><b>8</b><small>portfolio-ready artifacts</small></div><div><b>1</b><small>2-hour interview capstone</small></div></div>
+<div class="coverage"><div><b>6</b><small>role-specific modules</small></div><div><b>5</b><small>playable implementation cases</small></div><div><b>9</b><small>proof artifacts + dossiers</small></div><div><b>1</b><small>2-hour interview capstone</small></div></div>
 </div></section>
 
 <main>
+<section class="section" id="runs"><div class="wrap"><div class="sectionHead"><div><div class="eyebrow">YOUR TRAINING EVIDENCE</div><h2>Practice that compounds.</h2></div><p>Completed simulator runs are saved locally in this browser. Use them to spot patterns, refine your judgement, and turn strong runs into case dossiers.</p></div>
+<div class="runStats" id="runStats"><div><b id="runCount">0</b><span>completed runs</span></div><div><b id="bestScore">—</b><span>best overall</span></div><div><b id="strongSkill">—</b><span>strongest skill</span></div><div><b id="focusSkill">—</b><span>practice next</span></div></div>
+<div class="runHistory" id="runHistory"><p>No completed runs yet. Finish a simulator case and your evidence will appear here.</p></div>
+</div></section>
+
 <section class="section"><div class="wrap"><div class="sectionHead"><div><div class="eyebrow">THE CURRICULUM</div><h2>From first discovery to stable go-live.</h2></div><p>Each module has one learning objective, one simulation, and one concrete deliverable. The artifact matters as much as the score.</p></div>
 <div class="modules">
 <article class="module"><span class="moduleNo">01 · DISCOVERY</span><h3>Scope before solution.</h3><p>Clarify clinic goals, patient journeys, ownership, constraints and the real affected scope before touching configuration.</p><div class="trio"><div><b>LEARN</b><span>Discovery questions · critical journey · dependencies · owners · success criteria</span></div><div><b>PLAY</b><a href="../?case=new-clinic&mode=train">New Clinic Go-Live →</a></div><div><b>PROVE</b><span>Implementation brief + current/target system map</span></div></div><div class="skill"><span>requirements</span><span>stakeholders</span><span>system mapping</span></div></article>
@@ -52,7 +58,25 @@
 <article class="proofCard"><b>06 · SOP + Training</b><p>A concise operational handoff that a practice or internal teammate can actually use.</p><a href="../proof-pack/sop-training.md">Open template →</a></article>
 <article class="proofCard"><b>07 · Automation Note</b><p>A recurring onboarding task, why it should be automated, inputs/outputs, safeguards and measurement.</p><a href="../proof-pack/automation-note.md">Open template →</a></article>
 <article class="proofCard"><b>08 · Capstone Presentation</b><p>Six-slide structure for the 2-hour live case: recommendation, system, plan, risks, tests and next steps.</p><a href="../proof-pack/capstone-presentation.md">Open template →</a></article>
+<article class="proofCard"><b>09 · Case Dossier</b><p>Generated from an actual simulator run: evidence, decision, verification, skill scores, timeline and reflection.</p><a href="../proof-pack/case-dossier.md">Open template →</a></article>
 </div></div></section>
 </main>
 <footer class="footer"><div class="wrap">Independent synthetic preparation project · no customer or patient data · no claim of official company affiliation.</div></footer>
+<script>
+const RUNS_KEY='onboardingShiftRuns';
+function loadRuns(){try{return JSON.parse(localStorage.getItem(RUNS_KEY)||'[]')}catch{return []}}
+function renderRuns(){
+  const runs=loadRuns(),history=document.getElementById('runHistory');
+  document.getElementById('runCount').textContent=runs.length;
+  if(!runs.length)return;
+  document.getElementById('bestScore').textContent=Math.max(...runs.map(r=>r.score||0))+'/100';
+  const sums={Diagnosis:0,Safety:0,Efficiency:0,Communication:0};
+  runs.forEach(r=>Object.keys(sums).forEach(k=>sums[k]+=Number(r.metrics?.[k]||0)));
+  const avgs=Object.entries(sums).map(([k,v])=>[k,Math.round(v/runs.length)]).sort((x,y)=>y[1]-x[1]);
+  document.getElementById('strongSkill').textContent=avgs[0][0]+' '+avgs[0][1];
+  document.getElementById('focusSkill').textContent=avgs[avgs.length-1][0]+' '+avgs[avgs.length-1][1];
+  history.innerHTML=runs.slice(0,8).map(r=>'<article class="runRow"><div><strong>'+r.caseTitle+'</strong><span>'+new Date(r.createdAt).toLocaleDateString()+' · '+r.mode+' · '+r.elapsedMinutes+' min</span></div><div class="runScore">'+r.score+'/100</div><div class="runTag '+(r.portfolioReady?'ready':'')+'">'+(r.portfolioReady?'portfolio-ready':'practice')+'</div><a class="runLink" href="../?case='+encodeURIComponent(r.caseId)+'&mode='+encodeURIComponent(r.mode)+'&variant='+encodeURIComponent(r.variant||0)+'">Replay →</a></article>').join('');
+}
+renderRuns();
+</script>
 </body></html>
