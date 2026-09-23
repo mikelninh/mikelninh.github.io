@@ -235,7 +235,9 @@ function renderDossier(r){
   q('#dossierFocus').textContent=r.focus;
   q('#dossierTimeline').innerHTML=r.timeline.map(x=>`<div><b>${x.t}</b><span>${x.text}</span></div>`).join('');
   q('#reflectionInput').value=r.reflection||'';
-  q('#portfolioReadyBtn').textContent=r.portfolioReady?'Portfolio-ready ✓':'Mark portfolio-ready';
+  const eligible=r.verified&&r.diagnosis.isCorrect&&r.fix.isCorrect;
+  q('#portfolioReadyBtn').disabled=!eligible;
+  q('#portfolioReadyBtn').textContent=r.portfolioReady?'Portfolio-ready ✓':eligible?'Mark portfolio-ready':'Needs verified correct solution';
 }
 function openDossier(){if(!latestRun)return;renderDossier(latestRun);q('#dossierModal').hidden=false}
 function copyDossier(){
@@ -269,6 +271,6 @@ q('#dossierBtn').addEventListener('click',openDossier);
 q('#copyDossierBtn').addEventListener('click',copyDossier);
 q('#downloadDossierBtn').addEventListener('click',downloadDossier);
 q('#saveReflectionBtn').addEventListener('click',()=>updateLatestRun(r=>{r.reflection=q('#reflectionInput').value.trim()}));
-q('#portfolioReadyBtn').addEventListener('click',()=>updateLatestRun(r=>{r.portfolioReady=!r.portfolioReady}));
+q('#portfolioReadyBtn').addEventListener('click',()=>{if(!latestRun||!latestRun.verified||!latestRun.diagnosis.isCorrect||!latestRun.fix.isCorrect)return;updateLatestRun(r=>{r.portfolioReady=!r.portfolioReady})});
 qa('[data-close]').forEach(b=>b.addEventListener('click',()=>q('#'+b.dataset.close).hidden=true));qa('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.hidden=true}));
 const params=new URLSearchParams(location.search),requested=params.get('case'),mode=params.get('mode'),variant=params.get('variant');if(requested){const i=BASE_CASES.findIndex(c=>c.id===requested);if(i>=0)state.idx=i}if(mode==='interview')state.mode='interview';if(variant!==null&&!Number.isNaN(Number(variant)))state.variant=Math.max(0,Number(variant));applyVariant();populateCases();reset();
