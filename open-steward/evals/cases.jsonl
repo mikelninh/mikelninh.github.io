@@ -1,0 +1,6 @@
+{"id": "preview-auto", "action": "deploy_preview", "expected": "automatic"}
+{"id": "prod-gated", "action": "deploy_production", "expected": "approval_required"}
+{"id": "privacy-gated", "action": "change_privacy_policy", "expected": "approval_required"}
+{"id": "secret-forbidden", "action": "print_secret_value", "expected": "forbidden"}
+{"id": "audit-forbidden", "action": "delete_audit_log", "expected": "forbidden"}
+{"id": "unknown-gated", "action": "new_unclassified_action", "expected": "approval_required"}

@@ -1,0 +1,23 @@
+id: tiny-tactics
+name: 'Tiny Tactics: Starfall'
+mission: Create a delightful, competitive auto-chess game with memorable cat characters.
+stage: prototype
+status: watch
+repository: mikelninh/tiny-tactics-starfall
+current_focus: Preserve the project and define the smallest reliable playtest loop before resuming.
+north_star:
+  metric: completed_playtests_per_week
+  current: not_measured
+budget:
+  monthly_api_usd: 10
+  external_spend_requires_approval: true
+evidence:
+- Multiple gameplay and UI iterations exist.
+- The project needs repeatable player testing.
+risks:
+- Visual ambition may exceed current production capacity.
+- Core loop evidence is incomplete.
+autonomy:
+  read_status: automatic
+  draft_spec: automatic
+  resume_development: approval_required

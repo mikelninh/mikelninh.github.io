@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07100f">
+  <meta name="description" content="Open Steward — a founder control room for agent-run projects.">
+  <title>Open Steward — Founder Control Room</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <div class="aurora aurora-a"></div><div class="aurora aurora-b"></div>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="mark">OS</span><div><strong>Open Steward</strong><small>Founder control room</small></div></div>
+      <div class="top-actions"><span id="modeBadge" class="mode-badge">Checking runtime…</span><a href="https://github.com/mikelninh/mikelninh.github.io" target="_blank" rel="noreferrer">Open source ↗</a></div>
+    </header>
+
+    <section class="hero">
+      <div><p class="kicker">GOOD EVENING, MICHAEL</p><h1>Your projects run.<br><em>You decide what matters.</em></h1><p id="briefSummary" class="hero-copy">Loading the portfolio brief…</p></div>
+      <div class="hero-orbit"><div class="steward-face">A</div><span>Aster</span><small>Portfolio Chief of Staff</small><i></i></div>
+    </section>
+
+    <section class="metrics" id="metrics"></section>
+
+    <section class="grid-main">
+      <div class="column-primary">
+        <section class="panel founder-brief">
+          <div class="panel-head"><div><p class="kicker">FOUNDER BRIEF</p><h2>Only what needs your attention</h2></div><button id="runReview" class="primary">Run portfolio review</button></div>
+          <div class="brief-lists"><div><h3>Autonomous this cycle</h3><ul id="actionsList"></ul></div><div><h3>Material risks</h3><ul id="risksList"></ul></div><div><h3>Opportunities</h3><ul id="opportunitiesList"></ul></div></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head"><div><p class="kicker">DECISION INBOX</p><h2>Founder approval queue</h2></div><span id="decisionCount" class="count"></span></div>
+          <div id="decisions" class="decision-list"></div>
+        </section>
+
+        <section class="panel ask-panel">
+          <div class="panel-head"><div><p class="kicker">ASK ASTER</p><h2>Turn uncertainty into a decision packet</h2></div></div>
+          <div id="assistantOutput" class="assistant-output">Ask about priorities, product direction, risk, team structure, or what should happen next.</div>
+          <form id="askForm"><textarea id="askInput" rows="3" placeholder="Example: Should SOULBODY prioritize custom art or friend multiplayer?"></textarea><button class="primary" type="submit">Ask steward</button></form>
+        </section>
+      </div>
+
+      <aside class="column-side">
+        <section class="panel"><div class="panel-head"><div><p class="kicker">PORTFOLIO</p><h2>Project health</h2></div></div><div id="projects" class="project-list"></div></section>
+        <section class="panel"><div class="panel-head"><div><p class="kicker">AGENT ORG</p><h2>Who owns what</h2></div></div><div id="agents" class="agent-list"></div></section>
+        <section class="panel constitution"><div class="panel-head"><div><p class="kicker">OPERATING CONSTITUTION</p><h2>Autonomy with boundaries</h2></div></div><div class="policy-row"><span class="dot automatic"></span><div><b>Automatic</b><small>Read, analyze, draft, test, PR, preview</small></div></div><div class="policy-row"><span class="dot gated"></span><div><b>Your approval</b><small>Production, money, public, privacy, legal</small></div></div><div class="policy-row"><span class="dot forbidden"></span><div><b>Never</b><small>Secrets, permission expansion, audit tampering</small></div></div></section>
+      </aside>
+    </section>
+
+    <footer><span>Open-source first · Apache-2.0</span><span>Agents advise. Humans remain accountable.</span></footer>
+  </main>
+  <dialog id="decisionDialog"><button class="close" aria-label="Close">×</button><div id="dialogContent"></div></dialog>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>
