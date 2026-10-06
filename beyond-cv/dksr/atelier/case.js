@@ -1,9 +1,16 @@
 (function () {
   'use strict';
   const E = window.EvidenceAtelier;
-  if (!E) return; // Keep the documented baseline visible and the controls disabled.
+  if (!E) {
+    const notice = document.getElementById('change-status');
+    if (notice) notice.textContent = 'Der interaktive Prüfmodus konnte nicht geladen werden. Sichtbar bleibt der gespeicherte Ausgangsfall; Quellensteuerung ist deaktiviert.';
+    return;
+  }
   document.documentElement.classList.add('js');
   const $ = id => document.getElementById(id);
+  // Visible feedback near controls; only the footer live region announces changes.
+  $('source-delta').removeAttribute('role');
+  $('source-delta').setAttribute('aria-live', 'off');
   const examples = {
     care: {
       title:'Ein Krankenhaus ist nah. Ist Hilfe damit gesichert?', intro:'Ein erfasster Standort ist ein Beleg. Verfügbare Versorgung ist eine andere Aussage.',

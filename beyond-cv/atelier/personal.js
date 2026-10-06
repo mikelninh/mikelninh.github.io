@@ -22,7 +22,7 @@
   $('intro-output').addEventListener('input', () => { edited = true; buttons(); });
   $('rebuild-draft').addEventListener('click', () => {
     $('intro-output').value = compose(); edited = false; $('rebuild-details').hidden = true;
-    $('rebuild-details').open = false; buttons(); $('gift-status').textContent = 'Introduction rebuilt from your current answers.';
+    $('rebuild-details').open = false; buttons(); $('intro-output').focus(); $('gift-status').textContent = 'Introduction rebuilt from your current answers.';
   });
   $('clear-draft').addEventListener('click', () => {
     undo = {answers: fields.map(f => f.value), text: $('intro-output').value, edited};
@@ -33,7 +33,7 @@
   $('undo-clear').addEventListener('click', () => {
     if (!undo) return;
     fields.forEach((f, i) => { f.value = undo.answers[i]; }); $('intro-output').value = undo.text;
-    edited = undo.edited; undo = null; $('undo-clear').hidden = true; buttons(); $('gift-status').textContent = 'Your draft has been restored.';
+    edited = undo.edited; undo = null; $('undo-clear').hidden = true; buttons(); $('intro-output').focus(); $('gift-status').textContent = 'Your draft has been restored.';
   });
   async function copy(text, status) {
     try {
