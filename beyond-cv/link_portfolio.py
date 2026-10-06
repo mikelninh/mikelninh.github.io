@@ -7,7 +7,7 @@ BRIDGE = '''<section id="work-proof" class="recruiter" aria-labelledby="work-pro
 </section>
 '''
 PERSONAL_ANCHOR = '<section id="hello" class="recruiter"'
-HOME_ANCHOR = '<a href="culture/">Culture ↗</a>'
+HOME_ANCHOR = '<a href="#method">How I build</a><a href="culture/">Culture ↗</a>'
 HOME_LINK = '<a href="beyond-cv/">Beyond CV</a>'
 
 
