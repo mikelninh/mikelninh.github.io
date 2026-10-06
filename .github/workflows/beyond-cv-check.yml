@@ -23,6 +23,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Build the same additive bridge as Pages
+        run: python beyond-cv/link_portfolio.py
       - name: Verify deployed page and exact content hash
         run: |
           node --input-type=module <<'JS'
@@ -33,7 +35,7 @@ jobs:
           const local = readFileSync('beyond-cv/index.html', 'utf8');
           const sha256 = text => createHash('sha256').update(text).digest('hex');
           const expected = sha256(local);
-          const markers = ['<h2 id="human-title">', 'id="gift-prompt"', 'id="open-builder"', 'id="share-linkedin"', 'id="hello"'];
+          const markers = ['<h2 id="human-title">', 'id="gift-prompt"', 'id="open-builder"', 'id="share-linkedin"', 'id="hello"', 'id="work-proof"'];
           if (!markers.every(marker => local.includes(marker))) throw new Error('Local page contract is incomplete');
           let last = 'No attempt completed';
           let verified = false;
@@ -60,7 +62,7 @@ jobs:
             }
             if (attempt < 30) await delay(5000);
           }
-          if (!verified) throw new Error('Public page did not match the committed release: ' + last);
+          if (!verified) throw new Error('Public page did not match the built release: ' + last);
           JS
       - name: Keep public delivery evidence
         uses: actions/upload-artifact@v4
