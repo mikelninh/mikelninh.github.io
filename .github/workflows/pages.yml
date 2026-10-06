@@ -90,7 +90,7 @@ jobs:
             body="$(mktemp)"
             for attempt in $(seq 1 36); do
               code="$(curl --location --silent --show-error --max-time 20 --output "$body" --write-out '%{http_code}' "$url" || true)"
-              if [ "$code" = "200" ] && grep -Fq "$marker" "$body"; then
+              if [ "$code" = "200" ] && grep -Fq -- "$marker" "$body"; then
                 echo "LIVE PASS: $url"
                 rm -f "$body"
                 return 0
