@@ -1,0 +1,74 @@
+name: Beyond Atelier public delivery
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'beyond-cv/atelier/**'
+      - 'beyond-cv/dksr/atelier/**'
+      - '.github/workflows/beyond-atelier-delivery.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: beyond-atelier-public
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify exact public page and asset contents
+        run: |
+          node --input-type=module <<'JS'
+          import {readFileSync,writeFileSync} from 'node:fs';
+          import {createHash} from 'node:crypto';
+          import {setTimeout as wait} from 'node:timers/promises';
+          const base='https://mikelninh.github.io/';
+          const files=[
+            ['beyond-cv/atelier/index.html','beyond-cv/atelier/'],
+            ['beyond-cv/dksr/atelier/index.html','beyond-cv/dksr/atelier/'],
+            ['beyond-cv/atelier/atelier.css','beyond-cv/atelier/atelier.css'],
+            ['beyond-cv/atelier/personal.js','beyond-cv/atelier/personal.js'],
+            ['beyond-cv/atelier/evidence.js','beyond-cv/atelier/evidence.js'],
+            ['beyond-cv/dksr/atelier/case.js','beyond-cv/dksr/atelier/case.js'],
+            ['beyond-cv/atelier/source-receipt.json','beyond-cv/atelier/source-receipt.json'],
+            ['hyperspace-kids/assets/v036/rift-seed-art-v3.webp','hyperspace-kids/assets/v036/rift-seed-art-v3.webp']
+          ];
+          const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+          const pending=new Map(files.map(([file,route])=>[file,{url:base+route,expected:hash(readFileSync(file))}]));
+          const results=[];
+          for(let attempt=0;attempt<36 && pending.size;attempt++){
+            await Promise.all([...pending.entries()].map(async([file,item])=>{
+              try {
+                const response=await fetch(item.url,{headers:{'Cache-Control':'no-cache','User-Agent':'Beyond-Atelier-release-check'},signal:AbortSignal.timeout(10000)});
+                const bytes=Buffer.from(await response.arrayBuffer());
+                const actual=hash(bytes);
+                if(response.ok && actual===item.expected){
+                  results.push({file,url:item.url,status:response.status,sha256:actual,exactMatch:true});pending.delete(file);
+                  console.log('PUBLIC PASS',item.url);
+                } else console.log('WAIT',item.url,response.status,actual);
+              } catch(error){ console.log('WAIT',item.url,error.message); }
+            }));
+            if(pending.size)await wait(5000);
+          }
+          const report={status:pending.size?'failed':'passed',sourceCommit:process.env.GITHUB_SHA,checkedAt:new Date().toISOString(),results,pending:[...pending.keys()],scope:'Exact HTTP delivery, not a user study or field performance measurement.'};
+          writeFileSync('atelier-public-delivery.json',JSON.stringify(report,null,2));
+          if(pending.size)throw new Error('Public content did not match: '+[...pending.keys()].join(', '));
+          JS
+      - name: Keep public delivery evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: beyond-atelier-public-delivery
+          path: atelier-public-delivery.json
+          retention-days: 14
