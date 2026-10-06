@@ -1,0 +1,70 @@
+name: Beyond the CV public delivery
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'beyond-cv/**'
+      - '.github/workflows/beyond-cv-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: beyond-cv-public-check
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify deployed page and exact content hash
+        run: |
+          node --input-type=module <<'JS'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          import { createHash } from 'node:crypto';
+          import { setTimeout as delay } from 'node:timers/promises';
+          const url = 'https://mikelninh.github.io/beyond-cv/';
+          const local = readFileSync('beyond-cv/index.html', 'utf8');
+          const sha256 = text => createHash('sha256').update(text).digest('hex');
+          const expected = sha256(local);
+          const markers = ['<h2 id="human-title">', 'id="gift-prompt"', 'id="open-builder"', 'id="share-linkedin"', 'id="hello"'];
+          if (!markers.every(marker => local.includes(marker))) throw new Error('Local page contract is incomplete');
+          let last = 'No attempt completed';
+          let verified = false;
+          for (let attempt = 1; attempt <= 30; attempt++) {
+            try {
+              const response = await fetch(url, {
+                headers: {'Cache-Control': 'no-cache', 'User-Agent': 'Beyond-CV-release-check'},
+                signal: AbortSignal.timeout(10000)
+              });
+              const body = await response.text();
+              const actual = sha256(body);
+              last = `HTTP ${response.status}; content SHA256 ${actual}`;
+              console.log(`Attempt ${attempt}: ${last}`);
+              if (response.status === 200 && actual === expected && markers.every(marker => body.includes(marker))) {
+                const proof = {status:'pass', url, httpStatus:response.status, exactContentMatch:true, sha256:actual, sourceCommit:process.env.GITHUB_SHA, checkedAt:new Date().toISOString()};
+                writeFileSync('beyond-cv-delivery.json', JSON.stringify(proof, null, 2));
+                console.log('BEYOND_CV_PUBLIC_PASS ' + JSON.stringify(proof));
+                verified = true;
+                break;
+              }
+            } catch (error) {
+              last = String(error.message);
+              console.log(`Attempt ${attempt}: ${last}`);
+            }
+            if (attempt < 30) await delay(5000);
+          }
+          if (!verified) throw new Error('Public page did not match the committed release: ' + last);
+          JS
+      - name: Keep public delivery evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: beyond-cv-delivery
+          path: beyond-cv-delivery.json
+          retention-days: 14
