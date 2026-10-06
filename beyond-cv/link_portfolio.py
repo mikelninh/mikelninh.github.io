@@ -1,39 +1,45 @@
-"""Add two small entry links without replacing the existing homepage.
-
-Build-time only: this script never commits or pushes. It refuses an unexpected
-homepage structure rather than silently rewriting unrelated content.
-"""
-from __future__ import annotations
-
+"""Build-only, reversible additions. Never commits or pushes source changes."""
 from pathlib import Path
 
-NAV_ANCHOR = '<a href="culture/">Culture ↗</a>'
-NAV_LINK = '<a href="beyond-cv/">Beyond CV</a>'
-HERO_ANCHOR = '<a class="btn text" href="cv.html">Open CV ↗</a>'
-HERO_LINK = '<a class="btn text" href="beyond-cv/">Beyond the CV ↗</a>'
+BRIDGE = '''<section id="work-proof" class="recruiter" aria-labelledby="work-proof-title">
+<div><div class="kicker">From curiosity to something you can inspect</div><h2 id="work-proof-title" style="margin-top:18px">What I care about.<br><em>What I build.</em></h2></div>
+<div><p><strong>Semantic City — what a city needs to know before it acts.</strong> An independent prototype connecting climate, neighbourhood, green-space and hospital evidence for one Berlin example.</p><p>It makes the sources and the missing information visible. It does not claim to rank whole cities or allocate resources automatically.</p><div class="buttons"><a class="button" href="./dksr/" lang="de">Fallstudie für DKSR prüfen ↗</a><a class="button outline" href="https://mikelninh.github.io/cv.html">Open CV ↗</a></div><p class="small">AI-assisted development. A stored example, not live conditions. Follow the evidence and see the limits in the case study.</p></div>
+</section>
+'''
+PERSONAL_ANCHOR = '<section id="hello" class="recruiter"'
+HOME_ANCHOR = '<a href="culture/">Culture ↗</a>'
+HOME_LINK = '<a href="beyond-cv/">Beyond CV</a>'
 
 
-def integrate(html: str) -> str:
-    for anchor, addition in ((NAV_ANCHOR, NAV_LINK), (HERO_ANCHOR, HERO_LINK)):
-        if addition in html:
-            continue
-        if html.count(anchor) != 1:
-            raise ValueError(f"Homepage integration anchor changed: {anchor}")
-        html = html.replace(anchor, anchor + addition, 1)
-    return html
+def integrate_personal(html: str) -> str:
+    if 'id="work-proof"' in html:
+        if BRIDGE not in html:
+            raise ValueError('Work bridge has been edited; review rather than overwrite.')
+        return html
+    for marker in (PERSONAL_ANCHOR, 'id="gift-prompt"', 'id="builder"', 'id="human"'):
+        if html.count(marker) != 1:
+            raise ValueError(f'Original Beyond CV contract changed: {marker}')
+    return html.replace(PERSONAL_ANCHOR, BRIDGE + PERSONAL_ANCHOR, 1)
 
 
-def main() -> None:
-    root = Path(__file__).resolve().parents[1]
-    if not (root / 'beyond-cv/index.html').is_file():
-        raise SystemExit('Beyond CV page is missing; refusing to add broken links.')
-    page = root / 'index.html'
-    original = page.read_text(encoding='utf-8')
-    result = integrate(original)
-    if result != original:
-        page.write_text(result, encoding='utf-8')
-    print('Beyond CV navigation ready; all other homepage content preserved.')
+def integrate_home(html: str) -> str:
+    if 'href="beyond-cv/"' in html or 'href="/beyond-cv/"' in html:
+        return html
+    if html.count(HOME_ANCHOR) != 1:
+        raise ValueError('Portfolio navigation changed; refusing an unreviewed rewrite.')
+    return html.replace(HOME_ANCHOR, HOME_ANCHOR + HOME_LINK, 1)
+
+
+def build(root: Path) -> None:
+    if not (root / 'beyond-cv/dksr/index.html').is_file():
+        raise ValueError('DKSR case is missing.')
+    for path, transform in ((root / 'beyond-cv/index.html', integrate_personal), (root / 'index.html', integrate_home)):
+        original = path.read_text(encoding='utf-8')
+        result = transform(original)
+        if result != original:
+            path.write_text(result, encoding='utf-8')
+    print('Beyond CV bridge built; original personal copy, gift and builder preserved.')
 
 
 if __name__ == '__main__':
-    main()
+    build(Path(__file__).resolve().parents[1])

@@ -1,47 +1,58 @@
-# Beyond the CV × Semantic City
+# Beyond the CV — Michael Ninh
 
-An additive chapter in Michael's existing portfolio, not a replacement homepage or a second identity.
+Public page: https://mikelninh.github.io/beyond-cv/
 
-## Entry points
+A personal companion to the professional portfolio, not another CV. The website is a single self-contained `index.html`, with no runtime dependencies or build step. The repository's existing GitHub Pages workflow publishes changes on `main`.
 
-- `/beyond-cv/`: the personal entry, retaining the approved English motto.
-- `/beyond-cv/?for=dksr`: the same page with a concise DKSR-focused opening.
-- Both entries retain direct CV, portfolio, evidence, code and contact links.
-- The gift is optional and never gates the recruiter path.
+## What is included
 
-The existing `index.html` source, CV and three featured proof families are preserved. During the Pages build, `link_portfolio.py` adds one navigation link and one secondary hero link. It checks exact anchors, is idempotent, and does not commit or push. Unexpected homepage structure causes a build failure rather than an unreviewed rewrite.
+- Personal stories and a future-facing, explicitly aspirational section.
+- Eight cycling conversation questions.
+- A free five-question reflection tool with editable output, copy and text download.
+- A reusable AI interview prompt.
+- LinkedIn sharing controls, a copyable visitor post, and recruiter conversation links.
+- Responsive layout, keyboard focus, native dialogs and disclosures, reduced-motion support and a readable no-JavaScript fallback.
 
-The previously generated standalone Beyond CV v1 HTML was not available in this checkout. This chapter implements the approved conversation/website-kit content and connects to the inspected portfolio. No original Beyond CV file was overwritten.
+The reflection tool arranges a visitor's own words. It does not call an AI model, score people, rewrite answers, collect emails, or send reflections to a server. Answers exist only in the open page, and are not saved to localStorage. Clipboard and download happen only on request. Hosting and external linked services have their own data-processing policies.
 
-## Evidence boundaries
+## Editing
 
-Semantic City is represented as an authored replay of one stored reference case, not a live query, model call or city-wide ranking. Displayed values link to the frozen source record at COMMONS commit `82f8d810762146eeda0d52b6fe02b87d4441f7d1`.
+Edit the copy and styles directly in `index.html`. Keep aspirations separate from established facts. Preserve the free prompt, accessibility and privacy boundaries. Keep professional proof and CV links on the main portfolio; avoid adding an achievement inventory here.
 
-- Structural 2022 climate models are not today's weather.
-- Planning-area context does not determine individual vulnerability.
-- Approximate geometry distances are not walking routes or service accessibility.
-- Reported beds are not available beds.
-- The underlying recommendation is currently a fixed template.
-- SHACL structure checks are not factual certification.
-- The Cologne adapter is an additional ingestion example, not proof of the same heat use case in a second city.
-- No DKSR commission, affiliation or CIVORA integration is claimed.
+The `SETTINGS` object near the bottom holds the canonical URL, optional support URL and photo list. Never put credentials in this publicly served file.
 
-## Privacy and interaction
+### Photos
 
-No third-party scripts, remotely loaded fonts, analytics, forms, API keys, model calls, payments or persistent visitor storage. Clipboard access happens only after a click; failure opens readable/selectable text. The download is a locally generated text file. Contact uses `mailto:` and never sends anything automatically.
+Only use Michael-approved real photos. Do not substitute generated images of his life or stock photos presented as personal memories. Confirm permission from identifiable people; exercise extra care with children. Remove unnecessary location metadata and private identifying details before publishing.
 
-Evidence and personal-topic tabs support arrow keys, Home and End. Native details keep all evidence and the gift readable with JavaScript disabled. Without JavaScript the page defaults to the personal opening. Reduced motion is honoured.
+Upload optimised images to `beyond-cv/photos/` and then populate:
+
+```js
+photos: [
+  {
+    src: './photos/dinner.webp',
+    alt: 'An accurate description of the real photo',
+    caption: 'A short caption approved by Michael.'
+  }
+]
+```
+
+The gallery is hidden until configured. Images must be same-origin. There are no fake or empty public placeholders.
+
+### Optional financial support
+
+The free gift is not paywalled. `supportUrl` is currently empty and the payment link is hidden. Set it only after Michael approves a real HTTPS payment link for his own verified account. Do not describe ordinary project support as a tax-deductible charitable donation. No checkout, payment processor, or donation collection was activated by this release.
+
+### Sharing
+
+LinkedIn share buttons open LinkedIn; they do not post automatically. Copying a draft does not publish it. No recruiter messages have been sent. Review each message and recipient before outreach.
 
 ## Verification
 
-Run from repository root:
+The HTML was tested in Chromium through inline document rendering at widths 320, 390, 768, 1024 and 1440 pixels. Twenty-three local checks passed, including question cycling, empty-input validation, literal input handling, text download, keyboard Escape/focus, hidden unconfigured features, no external requests in tested flows, reduced motion and no-JavaScript reading.
 
-```sh
-python -m pip install playwright==1.55.0
-python -m playwright install --with-deps chromium
-python beyond-cv/check.py
-```
+Environment boundary: local network navigation was unavailable. Clipboard fallback payloads were instrumented; external LinkedIn publication was not tested. Public delivery is a separate deployment check, not implied by local UI tests.
 
-The read-only `Beyond CV bridge QA` workflow checks both entry URLs, mode/history changes, keyboard tabs, decision gaps, copy/download/failure paths, no-JavaScript fallbacks, mobile overflow, no runtime errors and homepage preservation. Reports and screenshots are uploaded as artifacts; no test result is hardcoded into the public page.
+## Next useful test
 
-The Pages deployment checks the published route, CSS, JavaScript and homepage entry links. No email, application or social post is sent by this release.
+Share with a small, deliberately varied group and ask: “What felt like me? What would you ask me? Did anything feel performative or hard to use?” Measure actual conversations and specific feedback rather than inventing engagement numbers. Add real photos before expanding the page with more sections.

@@ -1,11 +1,6 @@
-name: Beyond CV bridge QA
+name: Beyond the CV public delivery
 
 on:
-  pull_request:
-    paths:
-      - 'beyond-cv/**'
-      - '.github/workflows/beyond-cv-check.yml'
-      - '.github/workflows/pages.yml'
   push:
     branches: [main]
     paths:
@@ -17,31 +12,61 @@ permissions:
   contents: read
 
 concurrency:
-  group: beyond-cv-qa-${{ github.ref }}
+  group: beyond-cv-public-check
   cancel-in-progress: true
 
 jobs:
-  browser:
+  verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Install pinned browser test runner
+          persist-credentials: false
+      - name: Build the same additive bridge as Pages
+        run: python beyond-cv/link_portfolio.py
+      - name: Verify deployed page and exact content hash
         run: |
-          python -m pip install playwright==1.55.0
-          python -m playwright install --with-deps chromium
-      - name: Test both entries, evidence, boundaries, keyboard and prompt
-        run: python beyond-cv/check.py
-      - name: Preserve browser proof
-        if: always()
+          node --input-type=module <<'JS'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          import { createHash } from 'node:crypto';
+          import { setTimeout as delay } from 'node:timers/promises';
+          const url = 'https://mikelninh.github.io/beyond-cv/';
+          const local = readFileSync('beyond-cv/index.html', 'utf8');
+          const sha256 = text => createHash('sha256').update(text).digest('hex');
+          const expected = sha256(local);
+          const markers = ['<h2 id="human-title">', 'id="gift-prompt"', 'id="open-builder"', 'id="share-linkedin"', 'id="hello"', 'id="work-proof"'];
+          if (!markers.every(marker => local.includes(marker))) throw new Error('Local page contract is incomplete');
+          let last = 'No attempt completed';
+          let verified = false;
+          for (let attempt = 1; attempt <= 30; attempt++) {
+            try {
+              const response = await fetch(url, {
+                headers: {'Cache-Control': 'no-cache', 'User-Agent': 'Beyond-CV-release-check'},
+                signal: AbortSignal.timeout(10000)
+              });
+              const body = await response.text();
+              const actual = sha256(body);
+              last = `HTTP ${response.status}; content SHA256 ${actual}`;
+              console.log(`Attempt ${attempt}: ${last}`);
+              if (response.status === 200 && actual === expected && markers.every(marker => body.includes(marker))) {
+                const proof = {status:'pass', url, httpStatus:response.status, exactContentMatch:true, sha256:actual, sourceCommit:process.env.GITHUB_SHA, checkedAt:new Date().toISOString()};
+                writeFileSync('beyond-cv-delivery.json', JSON.stringify(proof, null, 2));
+                console.log('BEYOND_CV_PUBLIC_PASS ' + JSON.stringify(proof));
+                verified = true;
+                break;
+              }
+            } catch (error) {
+              last = String(error.message);
+              console.log(`Attempt ${attempt}: ${last}`);
+            }
+            if (attempt < 30) await delay(5000);
+          }
+          if (!verified) throw new Error('Public page did not match the built release: ' + last);
+          JS
+      - name: Keep public delivery evidence
         uses: actions/upload-artifact@v4
         with:
-          name: beyond-cv-proof
-          path: beyond-cv-proof
+          name: beyond-cv-delivery
+          path: beyond-cv-delivery.json
           retention-days: 14

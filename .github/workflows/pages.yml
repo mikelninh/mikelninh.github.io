@@ -26,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Connect Beyond CV without replacing the homepage
+      - name: Connect original Beyond CV to the DKSR case
         run: python beyond-cv/link_portfolio.py
 
       - name: Stage pinned TrustReady Bao rehearsal
@@ -105,10 +105,10 @@ jobs:
           }
 
           fetch_until_ready "$base/" "AI Engineer"
-          fetch_until_ready "$base/" 'href="beyond-cv/"'
-          fetch_until_ready "$base/beyond-cv/" "My CV tells you what"
-          fetch_until_ready "$base/beyond-cv/beyond.js" "function applyMode"
-          fetch_until_ready "$base/beyond-cv/beyond.css" "--paper:#f6f2e9"
+          fetch_until_ready "$base/beyond-cv/" 'id="work-proof"'
+          fetch_until_ready "$base/beyond-cv/dksr/" "Was braucht eine Stadt"
+          fetch_until_ready "$base/beyond-cv/dksr/case.js" "var sources="
+          fetch_until_ready "$base/beyond-cv/dksr/case.css" "--paper:#f6f2e9"
           fetch_until_ready "$base/trustready.html" "Know what your AI agent can actually do."
           fetch_until_ready "$base/broker-signup-lab/" "Wo verlieren wir Nutzer"
           fetch_until_ready "$base/doctolib-ai-ops/" "AI Operations Workbench"
