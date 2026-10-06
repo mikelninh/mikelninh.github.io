@@ -28,6 +28,7 @@
     undo = {answers: fields.map(f => f.value), text: $('intro-output').value, edited};
     fields.forEach(f => { f.value = ''; }); $('intro-output').value = ''; edited = false;
     $('rebuild-details').hidden = true; $('undo-clear').hidden = false;
+    $('fallback-text').value = ''; $('copy-fallback').hidden = true; $('copy-fallback').open = false;
     $('gift-status').textContent = 'Draft cleared. Undo is available until you leave this page.'; buttons();
   });
   $('undo-clear').addEventListener('click', () => {
