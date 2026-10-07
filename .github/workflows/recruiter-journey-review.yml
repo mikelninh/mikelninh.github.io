@@ -1,0 +1,106 @@
+name: Recruiter journey review
+on:
+  push:
+    branches: [release/recruiter-journey-20261007]
+    paths:
+      - '.github/workflows/recruiter-journey-review.yml'
+      - 'scripts/recruiter-journey-audit.py'
+      - 'beyond-cv/**'
+      - 'selected-work/**'
+      - 'review/recruiter/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: recruiter-review-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /AGENTS.md
+            /PORTFOLIO_STANDARD.md
+            /POSITIONING.md
+            /MASTER_CV.md
+            /index.html
+            /cv.html
+            /cv-de.html
+            /Michael_Ninh_CV_DE.pdf
+            /package.json
+            /vercel.json
+            /beyond-cv/
+            /selected-work/
+            /pruefpilot/
+            /gitlaw/
+            /careos/
+            /review/
+            /scripts/
+            /hyperspace-kids/assets/v036/rift-seed-art-v3.webp
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing pinned browser runner
+        run: |
+          python -m pip install playwright==1.55.0
+          python -m playwright install --with-deps chromium
+      - name: Public route review (no uploads, messages, model calls or personal data)
+        run: |
+          mkdir -p recruiter-review/source
+          python - <<'PY'
+          import json, os, pathlib, shutil, time, traceback
+          from datetime import datetime, timezone
+          from playwright.sync_api import sync_playwright
+          out=pathlib.Path('recruiter-review')
+          allowed=['beyond-cv','selected-work','pruefpilot','gitlaw','careos','review']
+          for directory in allowed:
+            for source in pathlib.Path(directory).rglob('*'):
+              if source.is_file() and source.suffix in ('.html','.css','.js','.json','.md','.py','.cjs') and source.stat().st_size < 1500000:
+                dest=out/'source'/source; dest.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(source,dest)
+          for name in ['AGENTS.md','PORTFOLIO_STANDARD.md','POSITIONING.md','MASTER_CV.md','index.html','cv.html','cv-de.html','Michael_Ninh_CV_DE.pdf','vercel.json','package.json']:
+            if pathlib.Path(name).is_file(): shutil.copyfile(name,out/'source'/name)
+          artwork=pathlib.Path('hyperspace-kids/assets/v036/rift-seed-art-v3.webp')
+          if artwork.is_file():
+            dest=out/'source'/artwork;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(artwork,dest)
+          routes=['','beyond-cv/','beyond-cv/atelier/','beyond-cv/dksr/atelier/','selected-work/','pruefpilot/','gitlaw/','careos/','cv-de.html']
+          report={'checkedAt':datetime.now(timezone.utc).isoformat(),'sourceCommit':os.environ['GITHUB_SHA'],'scope':'Unauthenticated public HTTP and Chromium review. Human comprehension and field performance not measured. No real submissions.','pages':[]}
+          with sync_playwright() as p:
+            browser=p.chromium.launch()
+            for route in routes:
+              key=route.strip('/').replace('/','-') or 'portfolio'
+              item={'route':route,'url':'https://mikelninh.github.io/'+route,'views':[]}
+              for width in (1440,390):
+                context=browser.new_context(viewport={'width':width,'height':1000 if width>600 else 844},reduced_motion='reduce')
+                page=context.new_page();errors=[];failed=[]
+                page.on('pageerror',lambda e:errors.append(str(e)))
+                page.on('requestfailed',lambda r:failed.append({'url':r.url,'reason':r.failure}))
+                try:
+                  start=time.monotonic();response=page.goto(item['url'],wait_until='domcontentloaded',timeout=25000)
+                  page.wait_for_timeout(1500)
+                  data=page.evaluate('''() => ({title:document.title, lang:document.documentElement.lang, h1:[...document.querySelectorAll('h1')].map(x=>x.textContent.trim()),overflow:document.documentElement.scrollWidth>innerWidth+1,body:document.body.innerText.slice(0,12000),links:[...document.querySelectorAll('a[href]')].map(x=>({text:x.innerText.trim(),url:x.href})).filter(x=>x.text),controls:[...document.querySelectorAll('button,input,select,summary')].map(x=>({tag:x.tagName,id:x.id,text:(x.innerText||x.getAttribute('aria-label')||x.getAttribute('placeholder')||'').slice(0,160),disabled:!!x.disabled})),brokenImages:[...document.images].filter(x=>x.complete&&!x.naturalWidth).map(x=>x.src),storageKeys:Object.keys(localStorage)})''')
+                  page.screenshot(path=str(out/(key+'-'+str(width)+'.png')),full_page=True)
+                  view={'width':width,'status':response.status if response else None,'finalUrl':page.url,'elapsedSeconds':round(time.monotonic()-start,2),'errors':errors,'failedRequests':failed,**data}
+                  item['views'].append(view)
+                  print('ROUTE',key,width,'HTTP',view['status'],'OVERFLOW',data['overflow'],'JS_ERRORS',len(errors),'FINAL',page.url)
+                  if width==1440:
+                    print('HEADINGS',data['h1']);print('CONTROLS',data['controls'][:25]);print('EXCERPT',data['body'][:1500])
+                except Exception as exc:
+                  item['views'].append({'width':width,'error':str(exc)});print('UNVERIFIED',key,width,str(exc))
+                finally: context.close()
+              report['pages'].append(item)
+              (out/'public-audit.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+            browser.close()
+          print('AUDIT COMPLETE. See public-audit.json; route inspection is not interaction certification.')
+          PY
+      - name: Preserve inspected source, screenshots and observed results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recruiter-journey-review
+          path: recruiter-review
+          retention-days: 7
