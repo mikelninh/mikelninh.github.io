@@ -48,28 +48,32 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install existing pinned browser and accessibility tools
+      - name: Install pinned browser and accessibility tools
         run: |
           python -m pip install playwright==1.55.0
           python -m playwright install --with-deps chromium
           npm install --prefix /tmp/recruiter-axe --ignore-scripts axe-core@4.10.3
       - name: Apply only guarded candidate changes
-        run: python review/recruiter/prepare.py
+        run: |
+          python review/recruiter/prepare.py
+          python review/recruiter/polish.py
       - name: Existing source-dependency and personal reflection acceptance
         env:
           AXE_PATH: /tmp/recruiter-axe/node_modules/axe-core/axe.min.js
         run: python beyond-cv/atelier/verify.py
-      - name: Recruiter navigation, review race, handover and actual GitLaw route
+      - name: Recruiter navigation, first-screen action, review race and handover
         env:
           AXE_PATH: /tmp/recruiter-axe/node_modules/axe-core/axe.min.js
         run: python review/recruiter/verify.py
-      - name: Persist generated candidate only after both gates pass (review branch, never main)
+      - name: Actual GitLaw prepared example and induced source fallback
+        run: python review/recruiter/gitlaw_acceptance.py
+      - name: Persist candidate only after all gates pass (review branch, never main)
         run: |
           set -euo pipefail
           test "$GITHUB_REF" = 'refs/heads/release/recruiter-journey-20261007'
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- beyond-cv/atelier/index.html beyond-cv/atelier/personal.js beyond-cv/atelier/verify.py beyond-cv/link_portfolio.py pruefpilot/index.html careos/sjk/index.html
+          git add -- selected-work/index.html review/recruiter/verify.py beyond-cv/atelier/index.html beyond-cv/atelier/personal.js beyond-cv/atelier/verify.py beyond-cv/link_portfolio.py pruefpilot/index.html careos/sjk/index.html
           if ! git diff --cached --quiet; then
             git commit -m 'feat: apply browser-verified recruiter journey candidate'
             git push origin HEAD:refs/heads/release/recruiter-journey-20261007
@@ -82,7 +86,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import shutil
-          paths=['selected-work/index.html','pruefpilot/index.html','careos/sjk/index.html','beyond-cv/atelier/index.html','beyond-cv/atelier/atelier.css','beyond-cv/atelier/personal.js','beyond-cv/atelier/verify.py','beyond-cv/link_portfolio.py','review/recruiter/prepare.py','review/recruiter/verify.py']
+          paths=['selected-work/index.html','pruefpilot/index.html','careos/sjk/index.html','beyond-cv/atelier/index.html','beyond-cv/atelier/atelier.css','beyond-cv/atelier/personal.js','beyond-cv/atelier/verify.py','beyond-cv/link_portfolio.py','review/recruiter/prepare.py','review/recruiter/polish.py','review/recruiter/verify.py','review/recruiter/gitlaw_acceptance.py']
           for f in paths:
             source=Path(f)
             if source.is_file():
