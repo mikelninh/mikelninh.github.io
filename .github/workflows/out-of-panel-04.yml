@@ -1,0 +1,134 @@
+name: Publish OUT OF PANEL 0.4
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/out-of-panel-04.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: out-of-panel-release-04
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - name: Import checksum-verified static source and add narrow navigation links
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path, PurePosixPath
+          import hashlib, io, json, stat, urllib.request, zipfile
+          url = 'https://v3b.fal.media/files/b/0aad78ff/TxrxxGYr6q-HUbF05iJ1E_OUT-OF-PANEL-04-Public-Source.zip'
+          sha = '94989799d5945626612f1de3083e575d55dd32c35dc1f3c36e502c2bf5a00801'
+          expected = {'FIRST-LIGHT-paper-star.svg', 'QA-results.json', 'README.md', 'index.html', 'manifest.json', 'preview.png', 'source/app.js', 'source/assets.js', 'source/build.py', 'source/coin.js', 'source/index.html', 'source/qa.py', 'source/style.css', 'source/wonder.css', 'source/wonder.js'}
+          root = Path.cwd()
+          base = root / 'beyond-cv/out-of-panel'
+          if not (base / 'manifest.json').is_file():
+              with urllib.request.urlopen(url, timeout=60) as response:
+                  data = response.read(8 * 1024 * 1024 + 1)
+              if len(data) > 8 * 1024 * 1024 or hashlib.sha256(data).hexdigest() != sha:
+                  raise SystemExit('Release archive checksum mismatch; no files changed.')
+              z = zipfile.ZipFile(io.BytesIO(data))
+              if set(z.namelist()) != expected or len(z.namelist()) != len(expected):
+                  raise SystemExit('Unexpected release paths; no files changed.')
+              if sum(i.file_size for i in z.infolist()) > 10 * 1024 * 1024:
+                  raise SystemExit('Release expanded size exceeds limit.')
+              files = {}
+              for item in z.infolist():
+                  name = PurePosixPath(item.filename)
+                  if name.is_absolute() or '..' in name.parts or stat.S_ISLNK(item.external_attr >> 16):
+                      raise SystemExit('Unsafe archive entry.')
+                  files[item.filename] = z.read(item)
+              manifest = json.loads(files['manifest.json'])
+              if set(manifest) != expected - {'manifest.json'}:
+                  raise SystemExit('Invalid manifest.')
+              for name, digest in manifest.items():
+                  if hashlib.sha256(files[name]).hexdigest() != digest:
+                      raise SystemExit('File checksum mismatch: ' + name)
+              qa = json.loads(files['QA-results.json'])
+              if qa.get('failed') != 0 or qa.get('passed', 0) < 61:
+                  raise SystemExit('Local QA gate did not pass.')
+              for name, body in files.items():
+                  target = base / name
+                  if target.exists() and target.read_bytes() != body:
+                      raise SystemExit('Refusing to overwrite an existing release file: ' + name)
+          else:
+              files = {}
+              print('Release already imported; not depending on the staging CDN.')
+          patches = {}
+          home = root / 'index.html'
+          text = home.read_text(encoding='utf-8')
+          marker = 'id="out-of-panel-portfolio-door"'
+          anchor = '<a class="btn text" href="cv.html">Open CV ↗</a>'
+          if marker not in text:
+              if text.count(anchor) != 1:
+                  raise SystemExit('Portfolio hero changed; review before patching.')
+              text = text.replace(anchor, anchor + '<a class="btn text" id="out-of-panel-portfolio-door" href="beyond-cv/">Beyond the CV ↗</a>', 1)
+              patches[home] = text
+          original = root / 'beyond-cv/index.html'
+          text = original.read_text(encoding='utf-8')
+          anchor = '<section id="human" aria-labelledby="human-title">'
+          if 'id="out-of-panel-bridge"' not in text:
+              if text.count(anchor) != 1:
+                  raise SystemExit('Original Beyond CV changed; review before patching.')
+              bridge = '''<section id="out-of-panel-bridge" aria-labelledby="out-of-panel-bridge-title" style="border-bottom:1px solid var(--line);padding:38px 0 48px"><div class="section-head"><div class="kicker">Currently making / HYPERSPACE</div><h2 id="out-of-panel-bridge-title">What if a story could<br><em>leave the page?</em></h2></div><p style="max-width:680px;color:var(--muted)">I’m writing a comic and turning objects from its world into things you can play with. Start with a coin, find the little world inside it, and return it to the story.</p><div style="display:flex;gap:12px;flex-wrap:wrap"><a class="button" href="./out-of-panel/">Enter the playable world ↗</a><a class="button outline" href="./atelier/#out-of-panel">Visit the open atelier ↗</a></div><p style="font-size:12px;color:var(--muted);margin:15px 0 0">AI-assisted work in progress. Free to explore. No account, wallet or purchase.</p></section>\n'''
+              patches[original] = text.replace(anchor, bridge + anchor, 1)
+          study = base / 'coin-study.js'
+          text = study.read_text(encoding='utf-8')
+          anchor = '<p class="invitation">Start with this coin.<br>Turn it over. Give it a spin.</p>'
+          if 'id="enter-full-experience"' not in text:
+              if text.count(anchor) != 1:
+                  raise SystemExit('Coin study changed; review before patching.')
+              link = '<a id="enter-full-experience" href="../out-of-panel/" style="display:inline-flex;align-self:flex-start;align-items:center;gap:22px;background:#e1c58f;color:#172319;text-decoration:none;border-radius:3px;padding:12px 17px;font-size:13px;min-height:48px;margin:0 0 20px">Enter the full experience <span aria-hidden="true">↗</span></a>'
+              patches[study] = text.replace(anchor, anchor + link, 1)
+          # All integrity and anchor checks finish before any write.
+          for name, body in files.items():
+              target = base / name
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_bytes(body)
+          for path, text in patches.items():
+              path.write_text(text, encoding='utf-8')
+          print('Verified static release imported. Existing coin interaction and personal content preserved.')
+          PY
+          node --check beyond-cv/out-of-panel/source/app.js
+          node --check beyond-cv/out-of-panel/source/wonder.js
+          node --check beyond-cv/out-of-panel/coin-study.js
+      - name: Commit only the release and its entry points
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- beyond-cv/out-of-panel index.html beyond-cv/index.html
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish OUT OF PANEL 0.4: hidden world, return, invitations, game and comic'
+            git push origin HEAD:main
+          fi
+          echo "Release commit: $(git rev-parse HEAD)"
+      - name: Run the existing full portfolio deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, urllib.request
+          url = 'https://api.github.com/repos/mikelninh/mikelninh.github.io/actions/workflows/pages.yml/dispatches'
+          req = urllib.request.Request(url, data=json.dumps({'ref':'main'}).encode(), headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'], 'Accept':'application/vnd.github+json', 'Content-Type':'application/json', 'X-GitHub-Api-Version':'2022-11-28'}, method='POST')
+          with urllib.request.urlopen(req, timeout=30) as response:
+              if response.status != 204:
+                  raise SystemExit('Portfolio deployment was not accepted.')
+          print('Existing portfolio deployment dispatched. Its result must be checked separately.')
+          PY
