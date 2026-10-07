@@ -55,7 +55,7 @@ try:
         assert page.locator('h1').count()==1
         assert 'My CV tells you' in page.locator('main').inner_text()
         assert page.locator('img').evaluate('(el)=>el.complete && el.naturalWidth>0')
-        assert page.locator('.nav-links a[href="../../../cv.html"]').is_visible()
+        assert page.locator('.nav-links a[href="../../../cv-de.html"]').is_visible()
         passed('Original motto, real existing artwork and direct CV visible')
         page.screenshot(path=str(OUT/'personal-desktop.png'),full_page=True)
         page.screenshot(path=str(OUT/'personal-first-screen.png'))
@@ -108,6 +108,7 @@ try:
         assert page.locator('#intro-output').input_value()==''
         assert page.evaluate('localStorage.length + sessionStorage.length')==0
         passed('Reload clears reflections; no persistent storage')
+        page.locator('#work summary').click()
         page.locator('#work a[href="../dksr/atelier/"]').click()
         assert page.url.rstrip('/')==case.rstrip('/')
         assert page.locator('#answer-value').inner_text()=='415'

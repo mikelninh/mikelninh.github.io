@@ -8,7 +8,7 @@ BRIDGE = '''<section id="work-proof" class="recruiter" aria-labelledby="work-pro
 '''
 PERSONAL_ANCHOR = '<section id="hello" class="recruiter"'
 HOME_ANCHOR = '<a href="#method">How I build</a><a href="culture/">Culture ↗</a>'
-HOME_LINK = '<a href="beyond-cv/">Beyond CV</a>'
+HOME_LINK = '<a href="beyond-cv/atelier/">Beyond CV</a>'
 
 
 def integrate_personal(html: str) -> str:
@@ -23,7 +23,7 @@ def integrate_personal(html: str) -> str:
 
 
 def integrate_home(html: str) -> str:
-    if 'href="beyond-cv/"' in html or 'href="/beyond-cv/"' in html:
+    if any(link in html for link in ('href="beyond-cv/"', 'href="/beyond-cv/"', 'href="beyond-cv/atelier/"', 'href="/beyond-cv/atelier/"')):
         return html
     if html.count(HOME_ANCHOR) != 1:
         raise ValueError('Portfolio navigation changed; refusing an unreviewed rewrite.')

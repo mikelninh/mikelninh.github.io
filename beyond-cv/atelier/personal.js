@@ -60,6 +60,8 @@
   $('next-question').addEventListener('click', () => {
     question = (question + 1) % questions.length; $('question-text').textContent = questions[question];
     $('question-count').textContent = String(question + 1).padStart(2, '0') + ' / 08'; $('question-status').textContent = '';
+    const reply = $('reply-question');
+    if (reply) reply.href = 'mailto:mikel_ninh@yahoo.de?subject=' + encodeURIComponent('Beyond the CV — a good question') + '&body=' + encodeURIComponent(questions[question] + '\n\n');
   });
   $('copy-question').addEventListener('click', () => copy(questions[question], $('question-status')));
   $('turn-artifact').addEventListener('click', () => {
