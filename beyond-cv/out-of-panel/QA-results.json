@@ -1,0 +1,314 @@
+{
+  "release": "0.4.0",
+  "environment": "Chromium, software 3D fallback; inline portable build at about:blank; emulated viewport sizes. No Safari or physical device/GPU test. Storage persistence uses an explicit shim.",
+  "passed": 61,
+  "failed": 0,
+  "tests": [
+    {
+      "name": "No runtime errors at boot",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Default view is the coin",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Full model engine retained",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Spin has visible intermediate rotation",
+      "pass": true,
+      "detail": "initial=0.280, middle=4.671, final=6.563"
+    },
+    {
+      "name": "Spin completes a full turn",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Flip rotates half a turn",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Real mouse drag rotates model",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Keyboard rotation works",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Pointer cancellation restores orientation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Aperture matches a projected 64-sided opening",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Window opens into the rooftop",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Hidden world has accessible description",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Rooftop has live movement",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape closes the world",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Return is an actual scene",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Leaving mid-return cancels reward",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Drag-and-drop returns coin",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Thank-you star becomes visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Coin no longer captures touch after return",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Keepsake export has honest provenance",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Return is reversible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Button alternative to drag works",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Occupied cell is rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Local four-in-a-row wins",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Win direction 1,0",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Win direction 0,1",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Win direction 1,1",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Win direction 1,-1",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Invalid duplicate positions rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Unsafe giant coordinates rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Local computer responds",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Eight-page comic is present",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Comic page 1 renders",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Comic page 2 renders",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Comic page 3 renders",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Comic page 4 renders",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Comic page 5 renders",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Comic page 6 renders",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Comic page 7 renders",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Comic page 8 renders",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Page 04 links to the return",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Focused reader opens",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Reader zoom works",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Real feedback destination is shown",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Empty feedback is not drafted",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Email action prepares user-reviewed draft",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Device details excluded by default",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Device details are explicitly opt-in",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Offline sharing offers real portable file",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Gift file contains arrival marker",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Recipient gets the promised greeting",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Saved state includes story and board",
+      "pass": true,
+      "detail": "Simulated storage; browser restricts local storage at about:blank."
+    },
+    {
+      "name": "No horizontal overflow at 320px",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No horizontal overflow at 360px",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No horizontal overflow at 390px",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No horizontal overflow at 768px",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No horizontal overflow at 1440px",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Reduced motion makes discrete turns",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Reduced motion keeps world still",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No external runtime assets in portable build",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No runtime errors across tested flows",
+      "pass": true,
+      "detail": "[]"
+    }
+  ],
+  "errors": []
+}
