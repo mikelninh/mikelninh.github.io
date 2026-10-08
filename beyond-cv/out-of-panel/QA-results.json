@@ -1,211 +1,151 @@
 {
-  "release": "0.4.0",
-  "environment": "Chromium, software 3D fallback; inline portable build at about:blank; emulated viewport sizes. No Safari or physical device/GPU test. Storage persistence uses an explicit shim.",
+  "release": "0.5.0",
+  "environment": "Chromium with SwiftShader WebGL2; real browser interactions, viewport emulation, and explicit WebGL2-unavailable fallback. No Safari or physical-phone validation. No feedback email sent.",
   "passed": 61,
   "failed": 0,
   "tests": [
     {
-      "name": "No runtime errors at boot",
+      "name": "Three.js initializes and renders the actual WebGL2 journey",
       "pass": true,
-      "detail": "[]"
+      "detail": "{\"status\":\"ready\",\"reason\":\"\",\"entered\":false,\"progress\":0,\"selected\":null,\"seen\":[],\"renders\":18,\"orbit\":{\"x\":0,\"y\":0},\"camera\":[5.165813389138468,3.545,7.4],\"threeRevision\":\"180\",\"drawCalls\":6}"
     },
     {
-      "name": "Default view is the coin",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Full model engine retained",
+      "name": "Default route starts on the coin",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Spin has visible intermediate rotation",
-      "pass": true,
-      "detail": "initial=0.280, middle=4.671, final=6.563"
-    },
-    {
-      "name": "Spin completes a full turn",
+      "name": "No network dependency in the portable release",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Flip rotates half a turn",
+      "name": "Coin render produces a detailed image",
+      "pass": true,
+      "detail": "693387 bytes"
+    },
+    {
+      "name": "Spin has a real intermediate frame",
+      "pass": true,
+      "detail": "{\"initial\":0.28,\"frames\":[0.28,0.28,3.5048306842953743,4.060217710908707,4.514748300854304,5.566103973158865,5.747170626858781,6.16598832063698,6.36984877791947,6.469078315402754,6.517378516630607,6.525651864310539,6.538046007514184,6.550948696354198,6.554989420980135,6.559195941082413,6.5612434742319365]}"
+    },
+    {
+      "name": "Spin completes the full rotation",
+      "pass": true,
+      "detail": "{\"initial\":0.28,\"end\":6.5612434742319365,\"target\":6.5631853071795865,\"elapsedMs\":4055}"
+    },
+    {
+      "name": "Coin retains keyboard rotation",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Real mouse drag rotates model",
+      "name": "Coin drag releases cleanly",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Keyboard rotation works",
+      "name": "The portal has an intermediate transition",
+      "pass": true,
+      "detail": "{\"status\":\"ready\",\"reason\":\"\",\"entered\":true,\"progress\":0.06,\"selected\":null,\"seen\":[],\"renders\":65,\"orbit\":{\"x\":0,\"y\":0},\"camera\":[4.9906688,3.5927424,7.3834112],\"threeRevision\":\"180\",\"drawCalls\":6}"
+    },
+    {
+      "name": "Arrival reveals the interactive rooftop",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Pointer cancellation restores orientation",
+      "name": "Rooftop has an accessible description",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Aperture matches a projected 64-sided opening",
+      "name": "Discover mia",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Window opens into the rooftop",
+      "name": "Discover tea",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Hidden world has accessible description",
+      "name": "Discover note",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Rooftop has live movement",
+      "name": "All three discoveries are remembered for the visit",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Escape closes the world",
+      "name": "Rooftop supports keyboard exploration",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Return is an actual scene",
+      "name": "Keyboard Home restores the view",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Leaving mid-return cancels reward",
+      "name": "Escape returns focus to Look inside",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Drag-and-drop returns coin",
+      "name": "Page 04 exchange still returns the coin",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Thank-you star becomes visible",
+      "name": "The paper star remains a real downloadable SVG",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Coin no longer captures touch after return",
+      "name": "Return exchange remains replayable",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Keepsake export has honest provenance",
+      "name": "Comic page 1 is readable",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Return is reversible",
+      "name": "Comic page 2 is readable",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Button alternative to drag works",
+      "name": "Comic page 3 is readable",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Occupied cell is rejected",
+      "name": "Comic page 4 is readable",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Local four-in-a-row wins",
+      "name": "Comic page 5 is readable",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Win direction 1,0",
+      "name": "Comic page 6 is readable",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Win direction 0,1",
+      "name": "Comic page 7 is readable",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Win direction 1,1",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Win direction 1,-1",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Invalid duplicate positions rejected",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Unsafe giant coordinates rejected",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Local computer responds",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Eight-page comic is present",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Comic page 1 renders",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Comic page 2 renders",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Comic page 3 renders",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Comic page 4 renders",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Comic page 5 renders",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Comic page 6 renders",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Comic page 7 renders",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Comic page 8 renders",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Page 04 links to the return",
+      "name": "Comic page 8 is readable",
       "pass": true,
       "detail": ""
     },
@@ -215,57 +155,37 @@
       "detail": ""
     },
     {
-      "name": "Reader zoom works",
+      "name": "Reader zoom still works",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Real feedback destination is shown",
+      "name": "Real keyboard input places game pieces",
+      "pass": true,
+      "detail": "{\"state\":{\"view\":\"play\",\"taken\":true,\"page\":7,\"mode\":\"local\",\"difficulty\":\"medium\",\"clock\":\"off\",\"moves\":[{\"x\":0,\"y\":0,\"p\":1},{\"x\":1,\"y\":0,\"p\":2}],\"turn\":1,\"winner\":0,\"aiPending\":false,\"seconds\":[null,null],\"pan\":{\"x\":0,\"y\":0},\"scale\":48,\"coin\":{\"x\":54.41845326968797,\"y\":738.6730559598572,\"size\":67.26731024087384,\"drag\":false},\"renderer\":\"WebGL\",\"localOK\":true},\"focus\":\"board\",\"cursor\":{\"x\":1,\"y\":0}}"
+    },
+    {
+      "name": "All four game win directions remain valid",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Empty feedback is not drafted",
+      "name": "Feedback still requires a user-reviewed email draft",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Email action prepares user-reviewed draft",
+      "name": "Device details stay opt-in",
       "pass": true,
       "detail": ""
-    },
-    {
-      "name": "Device details excluded by default",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Device details are explicitly opt-in",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Offline sharing offers real portable file",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Gift file contains arrival marker",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Recipient gets the promised greeting",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Saved state includes story and board",
-      "pass": true,
-      "detail": "Simulated storage; browser restricts local storage at about:blank."
     },
     {
       "name": "No horizontal overflow at 320px",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Coin actions remain available at 320px",
       "pass": true,
       "detail": ""
     },
@@ -275,7 +195,22 @@
       "detail": ""
     },
     {
+      "name": "Coin actions remain available at 360px",
+      "pass": true,
+      "detail": ""
+    },
+    {
       "name": "No horizontal overflow at 390px",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Coin actions remain available at 390px",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Phone viewport exposes all three rooftop discoveries",
       "pass": true,
       "detail": ""
     },
@@ -285,30 +220,102 @@
       "detail": ""
     },
     {
+      "name": "Coin actions remain available at 768px",
+      "pass": true,
+      "detail": ""
+    },
+    {
       "name": "No horizontal overflow at 1440px",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Reduced motion makes discrete turns",
+      "name": "Coin actions remain available at 1440px",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Reduced motion keeps world still",
+      "name": "Reduced motion enters without a camera flight",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "No external runtime assets in portable build",
+      "name": "Reduced-motion scene remains visually still",
+      "pass": true,
+      "detail": "{\"hashA\":\"ca7e3437623d38357a8ef3b4d6777c1d1036c9d2837dae7fe3e84fe3096c02b7\",\"hashB\":\"ca7e3437623d38357a8ef3b4d6777c1d1036c9d2837dae7fe3e84fe3096c02b7\",\"before\":{\"status\":\"ready\",\"reason\":\"\",\"entered\":true,\"progress\":1,\"selected\":null,\"seen\":[\"mia\",\"tea\",\"note\"],\"renders\":243,\"orbit\":{\"x\":0,\"y\":0},\"camera\":[4.1,2.9,5.8],\"threeRevision\":\"180\",\"drawCalls\":114},\"after\":{\"status\":\"ready\",\"reason\":\"\",\"entered\":true,\"progress\":1,\"selected\":null,\"seen\":[\"mia\",\"tea\",\"note\"],\"renders\":243,\"orbit\":{\"x\":0,\"y\":0},\"camera\":[4.1,2.9,5.8],\"threeRevision\":\"180\",\"drawCalls\":114}}"
+    },
+    {
+      "name": "Unchanged reduced-motion frames do not redraw",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "No runtime errors across tested flows",
+      "name": "Reduced-motion discoveries remain accessible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Reduced motion gives a discrete half-turn",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Story discoveries persist across reload",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Game survives reload",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Offline invitation embeds its renderer and recipient greeting",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Saved invitation opens the real Three.js scene offline",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Saved invitation carries its greeting",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Offline invitation supports rooftop discoveries",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Shared invitation preserves its recipient greeting",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Missing WebGL2 retains the working original renderer",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Fallback still opens the hidden world",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No browser or shader errors across the tested flows",
       "pass": true,
       "detail": "[]"
     }
   ],
-  "errors": []
+  "errors": [],
+  "review_commit": "1e04472ce9cf48db8fc07a427addc221181d3585",
+  "workflow_url": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/37758978962",
+  "portable_sha256": "494c86c05a9ce020a2eeaebc1062415694abcde1a0f663f7e0d541c056646e25",
+  "screenshots": [
+    "preview.png",
+    "preview-mobile.png"
+  ]
 }

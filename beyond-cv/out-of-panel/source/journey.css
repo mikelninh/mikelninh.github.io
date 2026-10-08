@@ -1,0 +1,30 @@
+/* 0.5 / A small place to stay a little while. */
+body{font-size:16px}.lead{font-size:16px}.micro-story{font-size:14px}.primary,.outline-btn,.main-nav button,.subtle-link{font-size:14px}.eyebrow{font-size:11px}.brand small{font-size:9px}.chapter-note p{font-size:10px}.chapter-note b{font-size:11px}.quiet-note{font-size:12px}.footer-right button,.portfolio-return{font-size:12px}.specimen-top,.specimen-bottom{font-size:11px}.specimen-hint{font-size:12px}.specimen-controls .outline-btn{font-size:13px}
+#journey-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;display:none;border-radius:10px;transition:box-shadow .8s;outline-offset:-3px}
+.journey-ready #journey-canvas{display:block}
+body[data-view=object].journey-ready #coin-canvas,body[data-view=object].journey-ready #aperture-canvas,body[data-view=object].journey-ready #paw-canvas{visibility:hidden}
+.journey-ready .portal-theatre{display:none}
+.journey-ready.world-open #coin{opacity:0;pointer-events:none}
+.journey-ready.world-open .specimen-bottom{visibility:hidden}
+.journey-ready.world-open .specimen-top{z-index:5;top:24px;left:24px;color:#fff1d6;text-shadow:0 1px 12px #162d32}
+.journey-ready.world-open .specimen-top span:first-child{font-size:11px;max-width:none}
+.journey-ready.world-open #close-world{top:12px;right:12px;background:#1d3631dd;border:1px solid #ddd5b944;padding:12px 16px;font-size:13px;backdrop-filter:blur(8px)}
+.rooftop-arrived #journey-canvas{pointer-events:auto;touch-action:pan-y;box-shadow:0 24px 55px #040d1633,inset 0 0 0 1px #e9cf9a22}
+#rooftop-details{position:absolute;left:0;right:0;bottom:0;z-index:10;padding:65px 22px 22px;background:linear-gradient(transparent,#12282fbb 38%,#12282fed);border-radius:0 0 10px 10px;pointer-events:none}
+.rooftop-actions{display:flex;gap:8px;justify-content:center;pointer-events:auto}
+.rooftop-actions button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 15px;border:1px solid #e3d7b33b;border-radius:40px;background:#18363866;color:#eee5d0;font-size:13px;transition:background .2s,border-color .2s}
+.rooftop-actions button[aria-pressed=true],.rooftop-actions button:hover{background:#e6d2a2;color:#253735;border-color:#e6d2a2}
+#rooftop-caption{text-align:center;min-height:61px;margin-bottom:12px;color:#f2e3c5}#rooftop-caption em{display:block;font-size:25px;line-height:1.25}#rooftop-caption span{display:block;font-size:13px;line-height:1.5;color:#c4d0c2;margin-top:7px}
+.rooftop-drag-hint{text-align:center;font-size:11px;color:#a1b7b1;margin-top:11px;letter-spacing:.1px}
+.world-open #object-copy .micro-story{color:#b8c6ad}.world-open #object-copy .chapter-note{visibility:hidden}
+@media(min-width:761px){body[data-view=object] .experience{grid-template-columns:minmax(250px,.72fr) minmax(0,1.7fr)}body[data-view=object] .stage{height:clamp(590px,78vh,820px)}#object-copy h1{font-size:clamp(56px,5.5vw,86px)}#object-copy .subtle-link{margin-top:18px;min-height:40px}.specimen-controls{bottom:14%}.specimen-hint{bottom:8%}}
+@media(max-width:1100px){.specimen-controls .outline-btn{font-size:12px}.specimen-controls{gap:6px}}
+@media(max-width:760px){
+ .app-shell{padding:0 16px}.masthead{min-height:92px}.brand>span{font-size:12px;letter-spacing:2px}.brand small{font-size:8px;letter-spacing:1px}.main-nav button{font-size:13px}.main-nav{gap:28px}.header-actions .share-btn{font-size:12px}.specimen-top{font-size:10px;top:4%}.specimen-top span:last-child{display:none}
+ body[data-view=object] .stage{height:clamp(410px,60svh,520px);margin-top:8px}.specimen-controls{bottom:11%;gap:6px;flex-wrap:wrap;max-width:100%;width:100%;justify-content:center}.specimen-controls .round-btn{width:40px;min-width:40px}.specimen-controls .outline-btn{font-size:12px;padding:10px 11px}.specimen-hint{bottom:3%;font-size:11px;width:100%;line-height:1.5}.specimen-bottom{display:none}
+ #object-copy{padding:24px 0 26px}#object-copy h1{font-size:39px!important;line-height:1.13;letter-spacing:-1.5px}#object-copy h1 br{display:none}#object-copy h1 em:before{content:' '}#object-copy .lead{font-size:16px;margin-top:13px}#object-copy .micro-story{display:none}#object-copy .eyebrow{font-size:10px;margin-bottom:13px}#object-copy .primary{font-size:14px;min-height:48px;margin-top:21px}#object-copy .subtle-link{font-size:14px;margin-top:12px;min-height:40px}
+ .journey-ready.world-open .specimen-top{top:23px;left:14px;max-width:110px}.journey-ready.world-open .specimen-top span:first-child{font-size:9px;line-height:1.6;max-width:94px}.journey-ready.world-open #close-world{font-size:12px;padding:10px 12px;right:9px;top:12px}
+ #rooftop-details{padding:70px 12px 15px}#rooftop-caption{min-height:60px;margin-bottom:12px}#rooftop-caption em{font-size:21px}#rooftop-caption span{font-size:12px}.rooftop-actions{gap:6px}.rooftop-actions button{padding:9px 12px;font-size:12px;min-height:44px}.rooftop-drag-hint{font-size:10px;margin-top:8px}
+ .primary,.outline-btn,.subtle-link{font-size:14px}.lead{font-size:16px}.footer-right button,.portfolio-return{font-size:12px}.footer .steps{gap:11px}.step{font-size:11px}.footer{padding:17px 0}.footer-right{gap:8px}.quiet-note{font-size:12px}
+}
+@media(max-width:360px){.app-shell{padding:0 12px}.main-nav{gap:23px}.main-nav button{font-size:12px}.specimen-controls .outline-btn{padding:10px 9px;font-size:11px}.specimen-controls .round-btn{width:33px;min-width:33px}.rooftop-actions button{padding:9px 10px;font-size:11px}#object-copy h1{font-size:35px!important}}
