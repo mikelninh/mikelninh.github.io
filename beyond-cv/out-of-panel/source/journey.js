@@ -20,13 +20,13 @@
   let coinGroup, portal, materials, catHead, catBody, catTail, catEyes = [], cloths = [], steam;
   let progress = 0, destination = 0, entered = false, selected = null, elapsed = 0, lastTime = 0, lastDraw = 0;
   let w = 1, h = 1, ratio = 1, drag = null, aim = { x: 0, y: 0 }, drift = { x: 0, y: 0 }, orbit = { x: 0, y: 0 };
-  let opening = null, cameraPosition, cameraLook, raycaster, seen = new Set(), renders = 0, stillFrame = '';
+  let opening = null, cameraPosition, cameraLook, raycaster, seen = new Set(), renders = 0, stillFrame = '', lastPeek = -Infinity, fullTarget = false;
 
   function fallback(message) {
     status = 'fallback'; reason = message; entered = false; destination = progress = 0;
     document.body.classList.remove('journey-ready', 'rooftop-arrived');
     tray.hidden = true; canvas.setAttribute('aria-hidden', 'true');
-    $('#coin').tabIndex = view === 'read' ? -1 : 0;
+    $('#coin').tabIndex = view === 'read' ? -1 : 0; coin.renderDirty = true;
     if (document.body.classList.contains('world-open')) legacy.enterWorld();
   }
 
@@ -69,7 +69,7 @@
 
   function buildRooftop() {
     rooftop = new T.Scene();
-    rooftop.fog = new T.FogExp2(0xc89b87, .013);
+    rooftop.fog = new T.FogExp2(0xc89b87, .024);
     const skyMaterial = new T.ShaderMaterial({ side: T.BackSide, depthWrite: false, uniforms: {},
       vertexShader: 'varying vec3 vPosition;void main(){vPosition=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
       fragmentShader: 'varying vec3 vPosition;void main(){float y=normalize(vPosition).y;vec3 low=vec3(.89,.60,.40);vec3 high=vec3(.10,.27,.32);vec3 col=mix(low,high,smoothstep(-.02,.55,y));gl_FragColor=vec4(col,1.);#include <colorspace_fragment>}'.replace('#include', '\n#include') });
@@ -80,7 +80,7 @@
     Object.assign(sunLight.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: .1, far: 30 });
     sunLight.shadow.bias = -.001; sunLight.shadow.normalBias = .025; rooftop.add(sunLight);
     const sun = new T.Mesh(new T.CircleGeometry(3.0, 64), new T.MeshBasicMaterial({ color: 0xffd9aa, fog: false }));
-    sun.position.set(-10, 7.3, -35); rooftop.add(sun);
+    sun.position.set(-15, 10.5, -38); rooftop.add(sun);
     const haloCanvas = document.createElement('canvas'); haloCanvas.width = haloCanvas.height = 128;
     const hx = haloCanvas.getContext('2d'), hg = hx.createRadialGradient(64, 64, 5, 64, 64, 64);
     hg.addColorStop(0, '#ffe4b26f'); hg.addColorStop(.4, '#f5c29422'); hg.addColorStop(1, '#f5c29400'); hx.fillStyle = hg; hx.fillRect(0, 0, 128, 128);
@@ -102,13 +102,14 @@
     }
 
     let seed = 923; const random = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
-    const city = new T.InstancedMesh(boxGeo, material(0x486666), 140), buildings = [], dummy = new T.Object3D();
+    const city = new T.InstancedMesh(boxGeo, material(0xffffff), 140), buildings = [], dummy = new T.Object3D();
     for (let i = 0; i < 140; i++) {
-      const row = Math.floor(i / 28), x = (i % 28 - 14) * 2.4 + random(), z = -7 - row * 5.0, height = 1.1 + random() * (row ? 6.0 : 3.4), width = 1.0 + random() * 1.1;
+      const row = Math.floor(i / 28), x = (i % 28 - 14) * 2.4 + random(), z = -12 - row * 5.0, height = 1.1 + random() * (row ? 4.6 : 2.9), width = 1.0 + random() * 1.1;
       dummy.position.set(x, height / 2 - 1.0, z); dummy.scale.set(width, height, 1.1 + random() * 1.2); dummy.updateMatrix(); city.setMatrixAt(i, dummy.matrix);
-      city.setColorAt(i, new T.Color().setHSL(.47 + random() * .04, .12, .20 + row * .015 + random() * .10)); buildings.push({ x, z, height, width });
+      city.setColorAt(i, new T.Color().setHSL(.47 + random() * .04, .13, .24 + row * .012 + random() * .11)); buildings.push({ x, z, height, width });
     }
     rooftop.add(city);
+    box(rooftop, 0, -1.14, -24, 100, .15, 68, material(0x727a70), false);
     const windows = new T.InstancedMesh(boxGeo, new T.MeshBasicMaterial({ color: 0xeac398 }), 1700); let wi = 0;
     for (const b of buildings) {
       for (let y = .0; y < b.height - 1.25 && wi < 1700; y += .65) for (let col = -1; col <= 1 && wi < 1700; col++) {
@@ -219,7 +220,7 @@
 
   function buildCoin() {
     coinGroup=new T.Group(); studio.add(coinGroup);
-    const textures=CoinStudio.textures.map(c=>{const t=new T.CanvasTexture(c);t.colorSpace=T.SRGBColorSpace;t.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());return t;});
+    const textures=CoinStudio.textures.map(c=>{const t=new T.CanvasTexture(c);t.flipY=false;t.colorSpace=T.SRGBColorSpace;t.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());return t;});
     materials=[
       new T.MeshStandardMaterial({map:textures[0],bumpMap:textures[0],bumpScale:.018,metalness:.79,roughness:.47,side:T.DoubleSide,envMapIntensity:1.45}),
       material(0xc9a76a,.26,{metalness:.91,envMapIntensity:1.4}),
@@ -241,8 +242,15 @@
     const bounds=stage.getBoundingClientRect(); w=Math.max(1,bounds.width); h=Math.max(1,bounds.height);
     ratio=Math.min(devicePixelRatio||1,innerWidth<760?1.3:1.5);
     renderer.setPixelRatio(ratio);renderer.setSize(w,h,false);camera.aspect=worldCamera.aspect=w/h;camera.updateProjectionMatrix();worldCamera.updateProjectionMatrix();
-    target.setSize(Math.max(1,Math.round(w*ratio)),Math.max(1,Math.round(h*ratio)));
+    sizeTarget(fullTarget);
     portal.material.uniforms.resolution.value.set(Math.round(w*ratio),Math.round(h*ratio));
+    lastPeek=-Infinity;stillFrame='';
+  }
+
+  function sizeTarget(full) {
+    fullTarget=full;
+    const scale=full?ratio:Math.min(ratio,(innerWidth<760?320:512)/Math.max(w,h));
+    target.setSize(Math.max(1,Math.round(w*scale)),Math.max(1,Math.round(h*scale)));
   }
 
   function enter() {
@@ -250,9 +258,10 @@
     if(!ensure()){legacy.enterWorld();return;}
     opening={x:coin.x,y:coin.y,size:coin.size,yaw:coin.yaw,pitch:coin.pitch,roll:coin.roll};
     entered=true;destination=1; selected=null; orbit={x:0,y:0};aim={x:0,y:0};
+    tray.querySelectorAll('[data-rooftop]').forEach(b=>b.setAttribute('aria-pressed','false'));
     legacy.enterWorld(); $('#coin').tabIndex=-1; $('#close-world').focus({preventScroll:true});
     $('#wonder-title').innerHTML='Stay a<br><em>little while.</em>';
-    $('#wonder-lead').innerHTML='A rooftop above the city.<br>Someone saved you a place.';
+    $('#wonder-lead').innerHTML='A rooftop above the city. <br>Someone saved you a place.';
     $('#wonder-note').innerHTML='Meet Mia. Find the tea.<br>Take a moment before page 04.';
     caption.innerHTML='<em>“Oh. Hello.”</em><span>A small place to stay a little while.</span>';
     if(reduced())progress=1;
@@ -291,7 +300,7 @@
   function tick(t) {
     if(view!=='object') { if(entered||progress){exit(false);progress=0;} legacy.tick(t);lastTime=t;return; }
     if(!ensure()){legacy.tick(t);return;}
-    const dt=lastTime?Math.min(.06,(t-lastTime)/1000):0;lastTime=t;
+    const dt=lastTime?Math.max(0,(t-lastTime)/1000):0;lastTime=t;
     if(w!==stage.clientWidth||Math.abs(h-stage.clientHeight)>.8)resize();
     if(reduced()) {progress=destination;drift={x:0,y:0};}
     else {progress=clamp(progress+(destination?1:-1)*dt/.1/20,0,1);drift.x+=(aim.x-drift.x)*(1-Math.exp(-dt*5));drift.y+=(aim.y-drift.y)*(1-Math.exp(-dt*5));elapsed+=dt;}
@@ -301,7 +310,7 @@
     const rate=innerWidth<760?1000/30:1000/45;if(t-lastDraw<rate&&!reduced())return;lastDraw=t;
     if(reduced()){const signature=JSON.stringify([coin.x,coin.y,coin.size,coin.yaw,coin.pitch,coin.roll,progress,orbit,selected,w,h]);if(signature===stillFrame)return;stillFrame=signature;}else stillFrame='';
     const e=smooth(progress),source=opening&&progress>0?opening:coin;
-    const pixelScale=source.size/h;
+    const pixelScale=source.size/h*1.4333333;
     coinGroup.scale.setScalar(pixelScale);
     coinGroup.position.set((source.x-w/2)*2.8666667/h,(h/2-source.y)*2.8666667/h,0);
     coinGroup.rotation.set(source.pitch*(1-e),source.yaw*(1-e),source.roll*(1-e),'ZYX');
@@ -312,11 +321,18 @@
     const peekYaw=entered?0:clamp(Math.sin(coin.yaw)*.6,-.65,.65),peekPitch=entered?0:coin.pitch*.25;
     const near=new T.Vector3(4.1,2.90,5.8),far=new T.Vector3(5.0+peekYaw,3.6+peekPitch,7.4);
     cameraPosition.lerpVectors(far,near,e);cameraPosition.x+=drift.x*.20+orbit.x;cameraPosition.y+=drift.y*.12+orbit.y;
-    cameraLook.set(0,.90,-.2);
+    cameraLook.set(.25*(1-e),.10+.80*e,.60-.80*e);
     if(selected&&arrived){const p=places[selected].point;cameraLook.x=p[0]*.26;cameraLook.y=.88+p[1]*.07;cameraLook.z=p[2]*.16;}
     worldCamera.position.copy(cameraPosition);worldCamera.lookAt(cameraLook);
     animateScene(elapsed);
-    if(progress>=.995){renderer.render(rooftop,worldCamera);}else {renderer.setRenderTarget(target);renderer.render(rooftop,worldCamera);renderer.setRenderTarget(null);renderer.render(studio,camera);}
+    if(progress>=.995){renderer.render(rooftop,worldCamera);}else {
+      const full=progress>0;
+      if(full!==fullTarget){sizeTarget(full);lastPeek=-Infinity;}
+      if(full||t-lastPeek>=100||reduced()){
+        renderer.setRenderTarget(target);renderer.render(rooftop,worldCamera);renderer.setRenderTarget(null);lastPeek=t;
+      }
+      renderer.render(studio,camera);
+    }
     renders++;
   }
 
@@ -337,5 +353,6 @@
   window.addEventListener('oop-view',e=>{if(e.detail.view!=='object')exit(false);});
   window.addEventListener('oop-reset',()=>{exit(false);selected=null;seen.clear();});
   window.addEventListener('resize',()=>{if(status==='ready')resize();});
+  document.addEventListener('visibilitychange',()=>{lastTime=0;});
   window.OutOfPanelJourney=Object.freeze({version:'0.5.0',enter,exit,discover,tick,getState:()=>({status,reason,entered,progress,selected,seen:[...seen],renders,orbit:{...orbit},camera:worldCamera?worldCamera.position.toArray():null,threeRevision:T?.REVISION||null,drawCalls:renderer?.info.render.calls||0})});
 })();

@@ -28,10 +28,12 @@ try {
  check('No network dependency in the portable release',!html.toString().includes('<script src=')&&!html.toString().includes('rel="stylesheet"'));
  const coinPNG=await page.locator('#stage').screenshot();await fs.writeFile(path.join(out,'coin-desktop.png'),coinPNG);
  check('Coin render produces a detailed image',coinPNG.length>10000,coinPNG.length+' bytes');
- const initial=await page.evaluate(()=>coin.yaw);await page.locator('#spin-object').click();await page.waitForTimeout(180);const middle=await page.evaluate(()=>coin.yaw);
- await page.waitForTimeout(1800);const end=await page.evaluate(()=>coin.yaw);
- check('Spin has a real intermediate frame',middle>initial+.1&&middle<initial+Math.PI*2-.1);
- check('Spin completes the full rotation',Math.abs(end-initial-Math.PI*2)<.04);
+ await page.waitForFunction(()=>Math.abs(coin.yaw-coin.tyaw)<.002);
+ const initial=await page.evaluate(()=>{window.spinFrames=[];window.recordSpin=true;function record(){if(!window.recordSpin)return;window.spinFrames.push(coin.yaw);requestAnimationFrame(record)}requestAnimationFrame(record);return coin.yaw});
+ const spinStart=Date.now();await page.locator('#spin-object').click();await page.waitForFunction(()=>Math.abs(coin.yaw-coin.tyaw)<.002,{}, {timeout:12000});
+ const spin=await page.evaluate(()=>{window.recordSpin=false;return {frames:window.spinFrames,end:coin.yaw,target:coin.tyaw}});
+ check('Spin has a real intermediate frame',spin.frames.some(v=>v>initial+.1&&v<spin.target-.1),JSON.stringify({initial,frames:spin.frames}));
+ check('Spin completes the full rotation',Math.abs(spin.end-initial-Math.PI*2)<.04,JSON.stringify({initial,end:spin.end,target:spin.target,elapsedMs:Date.now()-spinStart}));
  await page.locator('#coin').focus();const yaw=await page.evaluate(()=>coin.tyaw);await page.keyboard.press('ArrowRight');
  check('Coin retains keyboard rotation',await page.evaluate(()=>coin.tyaw)>yaw+.2);
  const bounds=await page.locator('#coin').boundingBox();await page.mouse.move(bounds.x+bounds.width/2,bounds.y+bounds.height/2);await page.mouse.down();await page.mouse.move(bounds.x+bounds.width/2+70,bounds.y+bounds.height/2+18,{steps:8});await page.mouse.up();
@@ -53,11 +55,13 @@ try {
  check('Page 04 exchange still returns the coin',await page.evaluate(()=>OutOfPanelWonder.getState().returned));
  const downloadEvent=page.waitForEvent('download');await page.locator('#keep-star').click();const star=await downloadEvent;await star.saveAs(path.join(out,'paper-star.svg'));check('The paper star remains a real downloadable SVG',(await fs.readFile(path.join(out,'paper-star.svg'),'utf8')).includes('Not everything. Something.'));
  await page.locator('#return-replay').click();check('Return exchange remains replayable',!(await page.evaluate(()=>OutOfPanelWonder.getState().returned)));
- await page.evaluate(()=>OutOfPanel.switchView('read'));for(let i=0;i<8;i++){await page.evaluate(n=>OutOfPanel.goPage(n),i);check('Comic page '+(i+1)+' is readable',(await page.locator('#page-count').innerText()).startsWith(String(i+1).padStart(2,'0')));}
+ await page.locator('.main-nav [data-view=read]').click();
+ await page.locator('#page-dots [data-page=\"0\"]').click();
+ for(let i=0;i<8;i++){if(i)await page.locator('#next-page').click();await page.waitForFunction(n=>document.querySelector('#page-count').textContent.startsWith(String(n+1).padStart(2,'0')),i);check('Comic page '+(i+1)+' is readable',await page.locator('#comic-page svg').isVisible());}
  await page.locator('#focus-read').click();check('Focused reader opens',await page.locator('#reader-dialog').evaluate(el=>el.open));await page.locator('#reader-zoom').click();check('Reader zoom still works',(await page.locator('#reader-zoom').getAttribute('aria-pressed'))==='true');await page.locator('#close-reader').click();
  await page.evaluate(()=>{OutOfPanel.switchView('play');OutOfPanel.newLocalGame();});
- await page.locator('#board').focus();await page.keyboard.press('Enter');await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');
- check('Real keyboard input places game pieces',(await page.evaluate(()=>OutOfPanel.getState().moves.length))===2);
+ await page.waitForTimeout(250);await page.locator('#board').focus();await page.waitForFunction(()=>document.activeElement===document.querySelector('#board'));await page.keyboard.press('Home');await page.keyboard.press('Enter');await page.waitForFunction(()=>OutOfPanel.getState().moves.length===1);await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');
+ const played=await page.evaluate(()=>({state:OutOfPanel.getState(),focus:document.activeElement.id,cursor}));check('Real keyboard input places game pieces',played.state.moves.length===2,JSON.stringify(played));
  const gameRules=await page.evaluate(()=>[[1,0],[0,1],[1,1],[1,-1]].map(([dx,dy])=>{const b=new Map();for(let n=0;n<4;n++)b.set(n*dx+','+n*dy,1);return !!OutOfPanel.winAt(b,0,0,1)}));check('All four game win directions remain valid',gameRules.every(Boolean));
  await page.locator('#feedback-open').click();await page.locator('#feedback-note').fill('A review test — do not send.');
  check('Feedback still requires a user-reviewed email draft',(await page.locator('#feedback-state').innerText()).includes('Nothing is sent'));check('Device details stay opt-in',!(await page.locator('#feedback-device').isChecked()));await page.locator('#dialog-close').click();

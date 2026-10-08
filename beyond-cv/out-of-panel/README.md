@@ -1,60 +1,76 @@
-# OUT OF PANEL · 0.4 — A world on the inside
+# OUT OF PANEL · 0.5 — Stay a little while
 
-A playable, self-contained creative experiment by Michael Ninh / HYPERSPACE.
-AI-assisted development and illustration. This is a preview, not a manufactured
-product, NFT sale, ownership verifier or physical redemption system.
+A coin, a sunset rooftop, and Mia the black cat. A playable creative experiment
+by Michael Ninh / HYPERSPACE, made with AI-assisted development.
 
-## Try it
+## Come in
 
-Open `index.html` in a browser. Start with the coin. Drag or tap to rotate it,
-then choose **Look inside**. **Please return to page 04** opens an interactive
-after-panel moment. Return the coin by dragging or by pressing **Give it back**.
-The paper star is a free SVG keepsake. **Play** opens Infinite Four;
-**Read** opens the existing eight-page reading edition.
+Open https://mikelninh.github.io/beyond-cv/out-of-panel/ or open index.html directly.
 
-## What's new
+1. Turn the engraved coin or choose **Give it a spin**.
+2. Choose **Look inside**. The opening expands around a continuous camera move
+   into a three-dimensional Saigon rooftop.
+3. Drag gently to look around, or focus the canvas and use arrow keys.
+   **Home** restores the view. The buttons let you meet Mia, inspect the tea,
+   and read the folded note without aiming at a small object.
+4. **Back to the coin** or **Escape** returns to the object.
+5. **Please return to page 04** opens the reversible coin-for-paper-star moment.
+   **Play** and **Read** still open Infinite Four and the eight-page comic.
 
-- The original First Light mesh and turn/flip interaction remain intact.
-- A live, vector-drawn rooftop appears in the actual aperture, projected with
-  the same model rotation in the WebGL and software rendering paths.
-- The window expands into a tiny sunset world: black cat, plants, laundry,
-  skyline, a warm lamp and tea. Reduced motion holds the scene still.
-- A reversible page-04 exchange adds a thank-you star; it does not burn or
-  transfer an asset. This is a new after-panel scene, not a replacement of
-  the original comic's artwork.
-- Shared links use `?gift=window#object` to greet the recipient. Offline
-  invitations save a self-contained HTML with the same greeting.
-- Feedback prepares an email to `mikel_ninh@yahoo.de`. Visitors must review
-  the draft and send it in their email app. Copy and TXT alternatives exist.
-  Browser/device details are excluded unless explicitly selected.
-- Local v3 progress can be migrated to a separate v4 storage key. No analytics,
-  remote AI calls, account prompts or third-party runtime assets are added.
+## The 0.5 journey
 
-## Game and reading boundaries
+- The exact First Light master mesh and its front/back engravings are retained.
+  Three.js adds physically based brass, patina and sunset studio reflections.
+- A real aperture shows the live 3D scene. Approaching it expands that same scene
+  into the viewport, instead of opening an unrelated screen.
+- The rooftop contains terracotta tiles, a stairwell door, a warm lamp, washing,
+  plants, tea, a folded note and a black cat. Mia breathes, blinks and looks
+  towards the visitor. Clothes share a quiet breeze.
+- The scene is a deliberately stylised, procedurally authored digital miniature.
+- Foliage, buildings, floor tiles and city windows use instancing. The pixel
+  ratio and frame rate are capped for smaller devices. Rendering pauses when
+  the document is hidden and when the visitor leaves the object view.
+- Reduced motion uses immediate entry and a still scene; discoveries remain
+  available. Unchanged reduced-motion frames are not redrawn.
+- If WebGL2 is unavailable or its context is lost, the original world, renderer,
+  game and comic remain accessible.
+- Saved v4/v3 progress migrates to the separate v5 storage key.
 
-The computer opponent is a local heuristic, not a proven optimal solver.
-Solo and local pass-and-play are supported; link sharing is a board snapshot,
-not online multiplayer. Casual games end at 120 moves if neither player wins.
-Clocks pause away from the game and when dialogs are open. The interior comic
-art remains the earlier design/reading study, not approved HYPERSPACE canon.
+## Sharing and feedback
 
-## Validation
+**Pass it on** produces a public invitation with ?gift=window#object and the
+recipient greeting. The portable page can also save a self-contained HTML
+invitation that opens without an internet connection.
 
-`QA-results.json`: 61 checks passed in Chromium using Software 3D.
-Coverage includes spin intermediates, mouse drag, keyboard controls, cancelled
-pointers, cancelled return transitions, drop and button return, SVG keepsake,
-all win directions, heuristic replies, eight comic pages, reader zoom, draft
-feedback, offline invitations, reduced motion and 320–1440px widths.
+**How did it feel?** prepares an email to mikel_ninh@yahoo.de. Visitors review
+and send it in their own email app. Copy and TXT alternatives remain available;
+browser/device details are excluded unless selected. The website sends no email.
+Progress and game state stay on the visitor's device.
 
-Limits: no Safari, physical-phone or GPU-path validation. Storage testing used
-an explicitly simulated Storage object because the local browser disallowed
-storage at `about:blank`. Email delivery was not tested or submitted. Public
-origin checks are recorded separately when the deployment is verified.
+## Build and inspect
 
-## Source
+The source directory holds the modular HTML, styles and interaction code.
+Run python3 source/build.py to reproduce index.html and the portable source copy.
 
-`source/` contains the modular HTML, JS and CSS. Build the portable page with
-`python source/build.py`. Run QA with an installed Python Playwright package
-and Chromium, or serve the modular source with an ordinary static server.
+Three.js r180 is pinned to the official mrdoob/three.js tag. The two unchanged
+minified distributions and MIT licence are in source/vendor. The build combines
+them into isolated lazy scopes. There is no runtime CDN, dynamic evaluation,
+account, analytics or remote AI call.
 
-No external package or build dependency is needed to run the app itself.
+source/qa05.mjs is the current browser gate. It exercises real browser input,
+the portal transition, discoveries, game input/rules, the reader, keepsake
+download, storage, invitations, reduced motion and fallback. The scoped GitHub
+Actions job builds the release, runs Chromium with SwiftShader WebGL2, and saves
+screenshots and its report.
+
+The release report records the checks actually completed. Physical-phone,
+Safari and native GPU performance are not established by viewport emulation.
+Feedback email delivery is not tested or submitted.
+
+## Story and game boundaries
+
+The computer opponent is a local heuristic. Link sharing is a board snapshot,
+not online multiplayer. The original comic remains a reading/design study.
+Returning the coin is a reversible story interaction, not an asset transfer.
+A physical edition is still a concept. The exported GLB is a visual model,
+not production CAD. There is no wallet integration or purchase flow.
