@@ -80,7 +80,7 @@
     Object.assign(sunLight.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: .1, far: 30 });
     sunLight.shadow.bias = -.001; sunLight.shadow.normalBias = .025; rooftop.add(sunLight);
     const sun = new T.Mesh(new T.CircleGeometry(3.0, 64), new T.MeshBasicMaterial({ color: 0xffd9aa, fog: false }));
-    sun.position.set(-24, 4.8, -38); rooftop.add(sun);
+    sun.position.set(-24, 4.8, -38); sun.lookAt(new T.Vector3(4.1,2.9,5.8)); rooftop.add(sun);
     const haloCanvas = document.createElement('canvas'); haloCanvas.width = haloCanvas.height = 128;
     const hx = haloCanvas.getContext('2d'), hg = hx.createRadialGradient(64, 64, 5, 64, 64, 64);
     hg.addColorStop(0, '#ffe4b26f'); hg.addColorStop(.4, '#f5c29422'); hg.addColorStop(1, '#f5c29400'); hx.fillStyle = hg; hx.fillRect(0, 0, 128, 128);
@@ -308,7 +308,7 @@
   function tick(t) {
     if(view!=='object') { if(entered||progress){exit(false);progress=0;} legacy.tick(t);lastTime=t;return; }
     if(!ensure()){legacy.tick(t);return;}
-    const dt=lastTime?Math.max(0,(t-lastTime)/1000):0;lastTime=t;
+    const dt=lastTime?Math.min(.06,Math.max(0,(t-lastTime)/1000)):0;lastTime=t;
     if(Math.abs(w-stage.clientWidth)>.8||Math.abs(h-stage.clientHeight)>.8)resize();
     if(reduced()) {progress=destination;drift={x:0,y:0};}
     else {progress=clamp(progress+(destination?1:-1)*dt/.1/20,0,1);drift.x+=(aim.x-drift.x)*(1-Math.exp(-dt*5));drift.y+=(aim.y-drift.y)*(1-Math.exp(-dt*5));elapsed+=dt;}
@@ -336,7 +336,8 @@
     if(progress>=.995){renderer.render(rooftop,worldCamera);}else {
       const full=progress>0;
       if(full!==fullTarget){sizeTarget(full);lastPeek=-Infinity;}
-      if(full||t-lastPeek>=100||reduced()){
+      const turning=Math.abs(coin.tyaw-coin.yaw)>.003||Math.abs(coin.tpitch-coin.pitch)>.003||!!coin.drag;
+      if(full||(!turning&&t-lastPeek>=100)||reduced()){
         renderer.setRenderTarget(target);renderer.render(rooftop,worldCamera);renderer.setRenderTarget(null);lastPeek=t;
       }
       renderer.render(studio,camera);
@@ -362,5 +363,9 @@
   window.addEventListener('oop-reset',()=>{exit(false);selected=null;seen.clear();});
   window.addEventListener('resize',()=>{if(status==='ready')resize();});
   document.addEventListener('visibilitychange',()=>{lastTime=0;});
+  // Capture after the final script has been parsed, so the saved invitation
+  // contains the pinned renderer and this journey as well as the original story.
+  const capturePortable=()=>{if(IS_PORTABLE)PORTABLE_SOURCE='<!doctype html>'+document.documentElement.outerHTML;};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',capturePortable,{once:true});else capturePortable();
   window.OutOfPanelJourney=Object.freeze({version:'0.5.0',enter,exit,discover,tick,getState:()=>({status,reason,entered,progress,selected,seen:[...seen],renders,orbit:{...orbit},camera:worldCamera?worldCamera.position.toArray():null,threeRevision:T?.REVISION||null,drawCalls:renderer?.info.render.calls||0})});
 })();
