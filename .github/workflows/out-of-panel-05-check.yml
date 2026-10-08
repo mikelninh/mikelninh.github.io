@@ -1,0 +1,44 @@
+name: OUT OF PANEL 0.5 browser release gate
+
+on:
+  push:
+    branches: [out-of-panel-05, main]
+    paths: ['beyond-cv/out-of-panel/**', '.github/workflows/out-of-panel-05-check.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Rebuild the portable release and check the JavaScript
+        run: |
+          python3 beyond-cv/out-of-panel/source/build.py
+          node --check beyond-cv/out-of-panel/source/app.js
+          node --check beyond-cv/out-of-panel/source/wonder.js
+          node --check beyond-cv/out-of-panel/source/journey.js
+          node --check beyond-cv/out-of-panel/source/vendor/three-r180.js
+          git diff --exit-code -- beyond-cv/out-of-panel/index.html
+      - name: Install the isolated browser test runtime
+        run: |
+          mkdir -p /tmp/out-of-panel-qa
+          npm install --prefix /tmp/out-of-panel-qa playwright@1.58.2
+          /tmp/out-of-panel-qa/node_modules/.bin/playwright install --with-deps chromium
+      - name: Exercise the journey, story, game, invitations and fallback
+        env:
+          PLAYWRIGHT_MODULE: /tmp/out-of-panel-qa/node_modules/playwright/index.mjs
+        run: node beyond-cv/out-of-panel/source/qa05.mjs
+      - name: Save screenshots and the browser report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: out-of-panel-05-browser-review
+          path: beyond-cv/out-of-panel/source/qa05-artifacts/
+          retention-days: 14
