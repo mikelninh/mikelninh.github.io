@@ -28,7 +28,9 @@ Open https://mikelninh.github.io/beyond-cv/out-of-panel/ or open index.html dire
   towards the visitor. Clothes share a quiet breeze.
 - The scene is a deliberately stylised, procedurally authored digital miniature.
 - Foliage, buildings, floor tiles and city windows use instancing. The pixel
-  ratio and frame rate are capped for smaller devices. Rendering pauses when
+  ratio and frame rate are capped for smaller devices. The tiny aperture uses
+  a smaller render target refreshed at ten frames per second; the camera
+  flight uses the full-resolution scene. Rendering pauses when
   the document is hidden and when the visitor leaves the object view.
 - Reduced motion uses immediate entry and a still scene; discoveries remain
   available. Unchanged reduced-motion frames are not redrawn.

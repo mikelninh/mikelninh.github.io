@@ -365,7 +365,7 @@ $('#focus-read').onclick=openReader;$('#page-surface').onclick=openReader;$('#cl
 // ---- Clearly labelled concept and local-only feedback. No phantom sales funnel. ----
 const physicalMarkup='<p class="dialog-kicker">THE HANDHELD EDITION</p><span class="badge">DESIGN CONCEPT · NOT FOR SALE</span><h2 id="dialog-title">There is a little world inside.</h2><div class="gift-concept" role="img" aria-label="Packaging design study: a small First Light book and a removable coin."><div class="gift-book">FIRST<br><i>LIGHT</i><small>A SMALL BEGINNING · 00</small></div><div class="gift-coin"></div></div><p>The idea: a printed comic with a real coin tucked into the panel. Take it out. Underneath: <em>“Oh, good. You made it.”</em></p><p>The public QR code returns to this playable world. A future private claim, if offered, would be separate from access to the story.</p><p>There are no manufactured samples, orders, shipping promises or redeemable tokens in this release. Materials, safety, pricing and fulfilment still need testing.</p><button class="primary" id="physical-feedback">Tell Michael what you think ↗</button>';
 $('#physical-open').onclick=()=>{modal(physicalMarkup);$('#physical-feedback').onclick=feedbackModal};
-function feedbackModal(){modal('<p class="dialog-kicker">A WORK IN WONDER</p><h2 id="dialog-title">How did it feel?</h2><p>What made you reach for it? What broke the spell?</p><div class="local-feedback-buttons"><button data-feeling="Curious" aria-pressed="false">Curious</button><button data-feeling="Delighted" aria-pressed="false">Delighted</button><button data-feeling="Not quite yet" aria-pressed="false">Not quite yet</button></div><label class="form-field">A NOTE FOR MICHAEL<textarea id="feedback-note" maxlength="4000" placeholder="The moment that stayed with me…"></textarea></label><button class="primary" id="copy-feedback">Copy my feedback ↗</button><p class="legal-note">Local only. This copies a message for you to send; it does not submit a form or collect your email.</p>');let feeling='';$$('[data-feeling]').forEach(b=>b.onclick=()=>{feeling=b.dataset.feeling;$$('[data-feeling]').forEach(t=>t.setAttribute('aria-pressed',String(t===b)))});$('#copy-feedback').onclick=()=>copy('OUT OF PANEL · 0.3 feedback\nFeeling: '+(feeling||'Not selected')+'\n\n'+$('#feedback-note').value,'Feedback copied. Send it to Michael when you’re ready.')}
+function feedbackModal(){modal('<p class="dialog-kicker">A WORK IN WONDER</p><h2 id="dialog-title">How did it feel?</h2><p>What made you reach for it? What broke the spell?</p><div class="local-feedback-buttons"><button data-feeling="Curious" aria-pressed="false">Curious</button><button data-feeling="Delighted" aria-pressed="false">Delighted</button><button data-feeling="Not quite yet" aria-pressed="false">Not quite yet</button></div><label class="form-field">A NOTE FOR MICHAEL<textarea id="feedback-note" maxlength="4000" placeholder="The moment that stayed with me…"></textarea></label><button class="primary" id="copy-feedback">Copy my feedback ↗</button><p class="legal-note">Local only. This copies a message for you to send; it does not submit a form or collect your email.</p>');let feeling='';$$('[data-feeling]').forEach(b=>b.onclick=()=>{feeling=b.dataset.feeling;$$('[data-feeling]').forEach(t=>t.setAttribute('aria-pressed',String(t===b)))});$('#copy-feedback').onclick=()=>copy('OUT OF PANEL · 0.5 feedback\nFeeling: '+(feeling||'Not selected')+'\n\n'+$('#feedback-note').value,'Feedback copied. Send it to Michael when you’re ready.')}
 $('#feedback-open').onclick=feedbackModal;
 $('#about-open').onclick=()=>{modal('<p class="dialog-kicker">OUT OF PANEL / RELEASE 0.5</p><h2 id="dialog-title">A work in wonder.</h2><p>A comic you can take something out of. An object you can use. A small experiment in storytelling, design and play, by Michael Ninh with AI-assisted development.</p><label class="toggle-row"><input type="checkbox" id="reduce-toggle">Prefer reduced motion</label><p>Your browser’s reduced-motion preference is also respected. Sound starts off for new visitors and is always optional.</p><p>Progress, preferences and your current game are stored only on this device when storage is available. There are no third-party requests, analytics, remote AI calls or background feedback submissions in this app.</p><p>The computer opponent is local and heuristic. Match clocks pause when away. This is not online multiplayer. The artwork is a reading/design study, not approved visual canon for other HYPERSPACE series.</p><p class="legal-note">No wallet connection, NFT verification, purchase, physical claim or scarcity promise. The 3D object is a visual model, not production CAD. The playable release connects back to Michael’s Beyond the CV.</p><div class="version-code" id="runtime-info"></div><button id="clear-data" class="outline-btn">Reset this device’s saved progress</button>');$('#reduce-toggle').checked=session.reduced;$('#reduce-toggle').onchange=e=>{session.reduced=e.target.checked;document.body.classList.toggle('reduce-motion',session.reduced);positionCoin();save()};$('#runtime-info').textContent='v0.5.0 · '+(window.OutOfPanelJourney?.getState().status==='ready'?'Three.js r180 + '+coinRenderer.kind:coinRenderer.kind)+' · storage '+(localOK?'available':'unavailable');$('#clear-data').onclick=()=>{modal('<p class="dialog-kicker">LOCAL PROGRESS ONLY</p><h2 id="dialog-title">Begin again?</h2><p>This clears the saved game, reading position and preferences on this browser. No external account is affected.</p><div class="row"><button id="confirm-clear" class="primary">Reset progress</button><button id="cancel-clear" class="outline-btn">Keep it</button></div>');$('#cancel-clear').onclick=closeModal;$('#confirm-clear').onclick=()=>{session.taken=false;session.page=0;session.sound=false;session.reduced=false;session.surface='paper';session.completed=0;session.returned=false;session.discovered=false;window.dispatchEvent(new Event('oop-reset'));gameMode='solo';difficulty='medium';clockMode='off';try{localStorage.removeItem(STORAGE)}catch{}resetGame();updateSound();renderComic();closeModal();switchView('encounter');toast('A fresh beginning on this device.')}}};
 function shareURL(position=false){const u=new URL(location.href);u.search='';u.hash=position?'play':'encounter';if(position)u.searchParams.set('position',btoa(JSON.stringify({v:3,moves:moves.map(m=>[m.x,m.y]),mode:'local',difficulty:'medium',clock:'off'})));return u.href}
@@ -482,7 +482,31 @@ PORTABLE_SOURCE='<!doctype html>'+document.documentElement.outerHTML;
 })();
 
 </script><script>
-/* Three.js r180 · MIT · Copyright 2010–2025 Three.js Authors. */
+/* Three.js r180
+The MIT License
+
+Copyright © 2010-2025 three.js authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+*/
 window.FirstLightThree=function(){
 const core=(()=>{
 /**
@@ -585,7 +609,7 @@ return {...core,ACESFilmicToneMapping:re,AddEquation:Ae,AddOperation:le,Additive
     Object.assign(sunLight.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: .1, far: 30 });
     sunLight.shadow.bias = -.001; sunLight.shadow.normalBias = .025; rooftop.add(sunLight);
     const sun = new T.Mesh(new T.CircleGeometry(3.0, 64), new T.MeshBasicMaterial({ color: 0xffd9aa, fog: false }));
-    sun.position.set(-15, 10.5, -38); rooftop.add(sun);
+    sun.position.set(-24, 4.8, -38); rooftop.add(sun);
     const haloCanvas = document.createElement('canvas'); haloCanvas.width = haloCanvas.height = 128;
     const hx = haloCanvas.getContext('2d'), hg = hx.createRadialGradient(64, 64, 5, 64, 64, 64);
     hg.addColorStop(0, '#ffe4b26f'); hg.addColorStop(.4, '#f5c29422'); hg.addColorStop(1, '#f5c29400'); hx.fillStyle = hg; hx.fillRect(0, 0, 128, 128);
@@ -614,7 +638,15 @@ return {...core,ACESFilmicToneMapping:re,AddEquation:Ae,AddOperation:le,Additive
       city.setColorAt(i, new T.Color().setHSL(.47 + random() * .04, .13, .24 + row * .012 + random() * .11)); buildings.push({ x, z, height, width });
     }
     rooftop.add(city);
-    box(rooftop, 0, -1.14, -24, 100, .15, 68, material(0x727a70), false);
+    box(rooftop, 0, -1.14, -24, 100, .15, 68, material(0x344a4b), false);
+    const neighbours=new T.InstancedMesh(boxGeo,material(0xffffff),90);
+    for(let i=0;i<90;i++){
+      const height=.35+random()*.85;
+      dummy.position.set((i%18-9)*1.95+random()*.3,height/2-1, -5.3-Math.floor(i/18)*1.6);
+      dummy.scale.set(1.5+random()*.4,height,1.25+random()*.25);dummy.updateMatrix();neighbours.setMatrixAt(i,dummy.matrix);
+      neighbours.setColorAt(i,new T.Color().setHSL(.47,.11,.24+random()*.12));
+    }
+    rooftop.add(neighbours);
     const windows = new T.InstancedMesh(boxGeo, new T.MeshBasicMaterial({ color: 0xeac398 }), 1700); let wi = 0;
     for (const b of buildings) {
       for (let y = .0; y < b.height - 1.25 && wi < 1700; y += .65) for (let col = -1; col <= 1 && wi < 1700; col++) {
@@ -806,7 +838,7 @@ return {...core,ACESFilmicToneMapping:re,AddEquation:Ae,AddOperation:le,Additive
     if(view!=='object') { if(entered||progress){exit(false);progress=0;} legacy.tick(t);lastTime=t;return; }
     if(!ensure()){legacy.tick(t);return;}
     const dt=lastTime?Math.max(0,(t-lastTime)/1000):0;lastTime=t;
-    if(w!==stage.clientWidth||Math.abs(h-stage.clientHeight)>.8)resize();
+    if(Math.abs(w-stage.clientWidth)>.8||Math.abs(h-stage.clientHeight)>.8)resize();
     if(reduced()) {progress=destination;drift={x:0,y:0};}
     else {progress=clamp(progress+(destination?1:-1)*dt/.1/20,0,1);drift.x+=(aim.x-drift.x)*(1-Math.exp(-dt*5));drift.y+=(aim.y-drift.y)*(1-Math.exp(-dt*5));elapsed+=dt;}
     const arrived=entered&&progress>=.999;

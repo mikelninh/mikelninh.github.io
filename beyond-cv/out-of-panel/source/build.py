@@ -36,7 +36,7 @@ def portable_three():
     module_body = module_body.replace(imports[0], '')
     module_body = re.sub(r'export\{[^}]+\}from[\"\']\./three.core.min.js[\"\'];', '', module_body)
     return (
-        '/* Three.js r180 · MIT · Copyright 2010–2025 Three.js Authors. */\n'
+        '/* Three.js r180\n' + (P / 'vendor/THREE-LICENSE.txt').read_text() + '\n*/\n'
         'window.FirstLightThree=function(){\n'
         'const core=(()=>{\n' + core_body + '\nreturn {' + exports_map(core_export[1]) + '};})();\n'
         'return (()=>{const {' + import_map + '}=core;\n' + module_body +
