@@ -53,7 +53,8 @@ jobs:
         if: failure()
         run: |
           cat beyond-cv/out-of-panel/source/qa06-artifacts/QA06.json || true
-      # Use HEAD of main for the complete patched 0.7 experience.\n      - name: Capture 0.7 real browser moments and mobile performance
+      # Use HEAD of main for the complete patched 0.7 experience.
+      - name: Capture 0.7 real browser moments and mobile performance
         env:
           PLAYWRIGHT_MODULE: /tmp/oop06-tests/node_modules/playwright/index.mjs
         run: node beyond-cv/out-of-panel/source/qa07.mjs
