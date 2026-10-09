@@ -45,6 +45,10 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:20px;ma
 @media(max-width:800px){.sky-notes{right:10px;top:39px;padding:6px 8px;gap:6px}.sky-notes-label{font-size:8px}.sky-notes-icons{gap:3px;font-size:16px}.sky-notes-score{font-size:9px}.sky-hint{right:10px;bottom:75px;font-size:9px}}
 @media(max-width:620px){.sky-notes{top:52px;right:9px;max-width:133px;gap:5px;flex-wrap:wrap}.sky-notes-label{font-size:7px;flex-basis:100%}.sky-hint{top:111px;bottom:auto;right:8px;max-width:139px;line-height:1.5}.flight-report{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.sky-notes-icons i,.sky-hint{transition:none!important}}
+
+/* SkyDance UX pass: keep Mia and the flight corridor visible on mobile. */
+.toast{top:auto;bottom:18px;max-width:min(64%,420px);padding:9px 15px;font-size:clamp(12px,1.25vw,16px);line-height:1.35}
+@media(max-width:620px){.toast{top:auto;bottom:81px;max-width:calc(100% - 28px);padding:8px 12px;font-size:12px}.glide-status{display:none!important}}
 </style>
 </head>
 <body>
