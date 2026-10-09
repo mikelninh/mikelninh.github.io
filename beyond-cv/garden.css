@@ -389,3 +389,20 @@ dialog::backdrop{background:#020b08d9}
  .thought-grid{display:block}
  .seed-note{break-inside:avoid}
 }
+
+/* THE WAYS OF LIFE — clearly marked work-in-progress field study. */
+.ways-note{margin:clamp(43px,6vw,83px) 0 0;border-block:1px solid #52665a;display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);gap:clamp(21px,5vw,72px);align-items:center;padding:35px 0 42px}
+.ways-art{position:relative;display:block;min-height:248px;overflow:hidden;background:#254d49;color:#faf0d9;text-decoration:none;isolation:isolate;box-shadow:0 23px 49px #0003}
+.ways-art svg{width:100%;height:100%;min-height:265px;max-height:380px;display:block;object-fit:cover;transition:transform .8s cubic-bezier(.22,1,.36,1),filter .8s}
+.ways-art:hover svg,.ways-art:focus-visible svg{transform:scale(1.055);filter:saturate(1.15)}
+.ways-art:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#091d1dcc,transparent 44%,#08202029);pointer-events:none}
+.ways-art-caption,.ways-art-cta{position:absolute;left:20px;z-index:1;font:10px/1.2 ui-monospace,monospace;letter-spacing:.13em}
+.ways-art-caption{top:19px;color:#fae6b9}.ways-art-cta{bottom:20px;color:#fff}
+.ways-copy{padding:6px 0 10px}.ways-copy .kicker{font-size:10px;letter-spacing:.17em}
+.ways-copy h3{font:normal clamp(45px,5.4vw,78px)/.95 Georgia,serif;letter-spacing:-.055em;margin:18px 0;color:#f1eadb}
+.ways-copy h3 em{font-weight:400;color:#d6b588}
+.ways-copy p{font-size:14px;line-height:1.75;max-width:470px;color:#b9c9bb;margin:0 0 15px}
+.ways-copy .ways-disclaimer{font-size:11px;color:#91a99c;margin-bottom:22px}
+.ways-copy .text-link{display:inline-block;color:#f0ddbf}
+@media(max-width:760px){.ways-note{grid-template-columns:1fr;gap:25px;padding-block:22px 34px}.ways-art{min-height:245px}.ways-art svg{min-height:250px}.ways-copy h3{font-size:clamp(52px,13vw,76px);margin:12px 0 16px}}
+@media(prefers-reduced-motion:reduce){.ways-art svg{transition:none}}
