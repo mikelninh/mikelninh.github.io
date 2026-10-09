@@ -87,11 +87,9 @@ def run() -> None:
                 check(not page_errors, f"{width}px: JS errors: {page_errors}")
 
                 if width in (390, 1440):
-                    page.goto(BASE, wait_until="domcontentloaded")
-                    page.wait_for_function(
-                        "() => [...document.querySelectorAll('.grail-frame img')].every(i => i.complete && i.naturalWidth > 0)",
-                        timeout=30000,
-                    )
+                    # Capture the same DOM whose images were confirmed above; don't
+                    # reload and accidentally screenshot loading placeholders.
+                    page.evaluate("window.scrollTo(0, 0)")
                     page.screenshot(path=str(ARTIFACTS / f"hero-{width}.png"))
                     page.locator("#worlds").scroll_into_view_if_needed()
                     page.screenshot(path=str(ARTIFACTS / f"hana-gateway-{width}.png"))

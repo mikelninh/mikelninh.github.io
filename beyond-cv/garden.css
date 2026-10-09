@@ -116,11 +116,6 @@ section{padding:clamp(75px,9vw,125px) 0}
 .grail-frame img[hidden]{display:none!important}
 
 
-/* Artwork-derived lightweight blur-up plates: real HANA art is visible while
-   the larger original high-resolution PNGs finish downloading. */
-.grail-frame-one{background:#151019 url("data:image/webp;base64,UklGRuIBAABXRUJQVlA4INYBAAAQDQCdASo4AFQAPzGMsVMuqq8isBat+eAmCUAZ3YyxSxSBkrOWAo+XFftaQz3Fj5PCuwp8fLjdyCNJrFHYYlMvlahvPH/nqkCMnLXrNGXcuTDe98qtEFK6VzYlX+ukqXvWOY8ke9X0csEg6GBZg4FysAD+8je2zEgbJcujol2CmeDMLUVIc/CU2Mv6NvPOq7joJlDlORgKrcpPH7dypIzb+dczIezH8IKdQuQ8y94qJKb+WKWzxDdA5zfoGFNV2DfrzPzMQkkxJMHL6PKOkspgEbccoPxpHSjsN4UNHFMyUlN+bYM0jQ96iDwNeyPFQDcQdAv2SPKnYzCt0e3DXU1t3KO4xesxu6au0SRJnSa8uCumoGLVyyTEL+Y8cKmUdw+7ZpgkUrVCsc60JO+kzUeHOq14V/QPqSfBUBz1b+VVa6OVd65cQ5z32TNpZtQC/f4BgIdPT+KNciZiu6QQZiyvxhKzAlXtzQU7QgGbC166DgMECPL+krIR+DXMA50WAE/1koJR7IUTnOKZvAyyhhgMHBEuOg8jHiFV4HE3NpBNQTmlxw+4aPgavQAixMVlbotSKtWt77+MDaKVspkABxOJfSkKn3Ue2TpWU3oyIWlTQiXxmioAAA==") center/cover no-repeat}
-.grail-frame-two{background:#151019 url("data:image/webp;base64,UklGRuQBAABXRUJQVlA4INgBAADQDgCdASo4AFQAPy18tVMup6UisVscWdAliUAZOIu981MczAsIIHbhQSC5Cuh1uIfxR7gm2ei88mUKRK49pDp/fIjmQ5OCiyTzS0+sIHKnKM5oHbKZT6RbZgDaw3gHmqY7D0BH32xLEx4T5Thz6iSepyu9H08ZiMt62cvD0LgAAP71cunSRYJkYqgiuk595T+ZvIlTuVzIsYhJvg8vSlM2d2hXcuCTjLnprEQEC4N+h73A9WtoZ5pqWlLrEqy/wIP0aGhXL6XFH+miqAIEHRPjg/izT+icwmEc4bTCngc09yfiQv328PIu79FOpsgRBZTr9mZx9xfn3xykrg8qEqMXT7qqyNfq8MemnW2zArfQ/MfH88AOHOwuJbytUSvGKgSsidV12It15PwUNGEIF6U2P5afPEiE4KcMHWjU4MyLzLxnfYIDKtd0arrhVa/b1RlFMzFioL9GIiXqORZLtqdIVVTiUTvmJl0hgDLzj9UI5gYuEV9m/oV2ij5KgsXygb/JJrYC2SYdDh0th/s616qzvD/VkicQQ+TulL1gV0hFsUkEx2twzyaRZa3sWAB5km39uDZtxSy9Hyb1CHDXUm8yomiB7TRY4yxZhplAv9xxV5OvjRHLxAAA") center/cover no-repeat}
-
 /* Act II: HANA's first art exhibition */
 #worlds{padding-top:85px;padding-bottom:85px}
 .worlds-portal{
@@ -171,6 +166,12 @@ section{padding:clamp(75px,9vw,125px) 0}
 .story-thread .kicker{margin:0 0 12px}
 .story-thread h3{font:normal clamp(26px,3.1vw,42px)/1.15 Georgia,serif;margin:0 0 16px}
 .story-thread p{font-size:13px;color:var(--muted);max-width:420px}
+
+/* Artwork-derived lightweight blur-up plates: real HANA art is visible while
+   the larger original high-resolution PNGs finish downloading. */
+.grail-frame-one{background:#151019 url("data:image/webp;base64,UklGRuIBAABXRUJQVlA4INYBAAAQDQCdASo4AFQAPzGMsVMuqq8isBat+eAmCUAZ3YyxSxSBkrOWAo+XFftaQz3Fj5PCuwp8fLjdyCNJrFHYYlMvlahvPH/nqkCMnLXrNGXcuTDe98qtEFK6VzYlX+ukqXvWOY8ke9X0csEg6GBZg4FysAD+8je2zEgbJcujol2CmeDMLUVIc/CU2Mv6NvPOq7joJlDlORgKrcpPH7dypIzb+dczIezH8IKdQuQ8y94qJKb+WKWzxDdA5zfoGFNV2DfrzPzMQkkxJMHL6PKOkspgEbccoPxpHSjsN4UNHFMyUlN+bYM0jQ96iDwNeyPFQDcQdAv2SPKnYzCt0e3DXU1t3KO4xesxu6au0SRJnSa8uCumoGLVyyTEL+Y8cKmUdw+7ZpgkUrVCsc60JO+kzUeHOq14V/QPqSfBUBz1b+VVa6OVd65cQ5z32TNpZtQC/f4BgIdPT+KNciZiu6QQZiyvxhKzAlXtzQU7QgGbC166DgMECPL+krIR+DXMA50WAE/1koJR7IUTnOKZvAyyhhgMHBEuOg8jHiFV4HE3NpBNQTmlxw+4aPgavQAixMVlbotSKtWt77+MDaKVspkABxOJfSkKn3Ue2TpWU3oyIWlTQiXxmioAAA==") center/cover no-repeat}
+.grail-frame-two{background:#151019 url("data:image/webp;base64,UklGRuQBAABXRUJQVlA4INgBAADQDgCdASo4AFQAPy18tVMup6UisVscWdAliUAZOIu981MczAsIIHbhQSC5Cuh1uIfxR7gm2ei88mUKRK49pDp/fIjmQ5OCiyTzS0+sIHKnKM5oHbKZT6RbZgDaw3gHmqY7D0BH32xLEx4T5Thz6iSepyu9H08ZiMt62cvD0LgAAP71cunSRYJkYqgiuk595T+ZvIlTuVzIsYhJvg8vSlM2d2hXcuCTjLnprEQEC4N+h73A9WtoZ5pqWlLrEqy/wIP0aGhXL6XFH+miqAIEHRPjg/izT+icwmEc4bTCngc09yfiQv328PIu79FOpsgRBZTr9mZx9xfn3xykrg8qEqMXT7qqyNfq8MemnW2zArfQ/MfH88AOHOwuJbytUSvGKgSsidV12It15PwUNGEIF6U2P5afPEiE4KcMHWjU4MyLzLxnfYIDKtd0arrhVa/b1RlFMzFioL9GIiXqORZLtqdIVVTiUTvmJl0hgDLzj9UI5gYuEV9m/oV2ij5KgsXygb/JJrYC2SYdDh0th/s616qzvD/VkicQQ+TulL1gV0hFsUkEx2twzyaRZa3sWAB5km39uDZtxSy9Hyb1CHDXUm8yomiB7TRY4yxZhplAv9xxV5OvjRHLxAAA") center/cover no-repeat}
+
 
 /* Everyday life is a series of quiet close-ups, not bright app tiles. */
 #human{padding-top:80px}
