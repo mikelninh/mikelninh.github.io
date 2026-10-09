@@ -1,0 +1,93 @@
+{
+  "release": "0.6.0",
+  "testing": "local Chromium, mocked feedback backend; no production submission",
+  "passed": 21,
+  "failed": 0,
+  "tests": [
+    {
+      "name": "0.6 entrypoint initialises",
+      "pass": true
+    },
+    {
+      "name": "Actual 3D journey remains present",
+      "pass": true
+    },
+    {
+      "name": "Privacy details present",
+      "pass": true
+    },
+    {
+      "name": "Accessible feedback dialog opens",
+      "pass": true
+    },
+    {
+      "name": "Reaction choice starts unset",
+      "pass": true
+    },
+    {
+      "name": "Only a successful saved response shows thank you",
+      "pass": true
+    },
+    {
+      "name": "Payload contains no browser ID or email",
+      "pass": true
+    },
+    {
+      "name": "Network failure never claims submission succeeded",
+      "pass": true
+    },
+    {
+      "name": "Email/copy fallback offered",
+      "pass": true
+    },
+    {
+      "name": "Invite is a complete shareable public URL",
+      "pass": true
+    },
+    {
+      "name": "Invitation says it shares no ownership",
+      "pass": true
+    },
+    {
+      "name": "Feedback fits 320px",
+      "pass": true
+    },
+    {
+      "name": "Feedback fits 375px",
+      "pass": true
+    },
+    {
+      "name": "Feedback fits 390px",
+      "pass": true
+    },
+    {
+      "name": "Feedback fits 768px",
+      "pass": true
+    },
+    {
+      "name": "Feedback fits 1440px",
+      "pass": true
+    },
+    {
+      "name": "Reduced motion remains respected",
+      "pass": true
+    },
+    {
+      "name": "Reload does not store feedback form fields",
+      "pass": true
+    },
+    {
+      "name": "Offline/local version retains original share fallback",
+      "pass": true
+    },
+    {
+      "name": "Legacy full game is still present",
+      "pass": true
+    },
+    {
+      "name": "Comic reader is still present",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

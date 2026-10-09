@@ -65,6 +65,89 @@ body[data-view=object].journey-ready #coin-canvas,body[data-view=object].journey
 }
 @media(max-width:360px){.app-shell{padding:0 12px}.main-nav{gap:23px}.main-nav button{font-size:12px}.specimen-controls .outline-btn{padding:10px 9px;font-size:11px}.specimen-controls .round-btn{width:33px;min-width:33px}.rooftop-actions button{padding:9px 10px;font-size:11px}#object-copy h1{font-size:35px!important}}
 
+</style><style>
+/* OUT OF PANEL 0.6 — intimate, accessible invitations and feedback */
+.oop06-dialog{box-sizing:border-box;width:min(510px,calc(100vw - 26px));max-height:min(92dvh,760px);padding:0;background:#f6f0e2;color:#203028;border:1px solid #d0c5aa;border-radius:19px;box-shadow:0 30px 130px #030d0cb3;overflow:auto;overscroll-behavior:contain;position:fixed}
+.oop06-dialog::backdrop{background:rgba(6,16,13,.77);backdrop-filter:blur(7px)}
+.oop06-dialog *{box-sizing:border-box}
+.oop06-dialog button,.oop06-dialog input,.oop06-dialog select,.oop06-dialog textarea{font:inherit}
+.oop06-dialog button:focus-visible,.oop06-dialog a:focus-visible,.oop06-dialog input:focus-visible,.oop06-dialog select:focus-visible,.oop06-dialog textarea:focus-visible{outline:3px solid #ae7437;outline-offset:3px}
+.oop06-content{padding:31px 34px 34px}
+.oop06-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:21px}
+.oop06-eyebrow{font:700 10px/1.4 ui-sans-serif,system-ui,sans-serif;letter-spacing:.17em;color:#697a66}
+.oop06-close{border:1px solid #b5b49e;background:transparent;border-radius:50%;display:grid;place-items:center;color:#23382b;width:38px;height:38px;min-height:38px;font-size:23px!important;cursor:pointer}
+.oop06-dialog h2{font:400 clamp(35px,5vw,47px)/1.05 Georgia,serif;letter-spacing:-.035em;margin:0 0 13px;color:#1c2d26}
+.oop06-dialog h2 em{font-weight:400;color:#956b3e}
+.oop06-dialog p{color:#526052;font:400 14px/1.68 ui-sans-serif,system-ui,sans-serif;margin:0 0 19px}
+.oop06-lead{max-width:390px}
+.oop06-dialog fieldset{border:0;margin:22px 0;padding:0}
+.oop06-dialog legend,.oop06-label{display:block;color:#20342a;font:650 12px/1.7 ui-sans-serif,system-ui,sans-serif;margin:18px 0 7px}
+.oop06-label span{font-weight:400;color:#718071}
+.oop06-reactions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.oop06-reactions label{display:block;position:relative;cursor:pointer}
+.oop06-reactions input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2}.oop06-reactions span{pointer-events:none}
+.oop06-reactions span{display:flex;align-items:center;justify-content:center;text-align:center;border-radius:11px;border:1px solid #c5beaa;background:#fffbf4;min-height:57px;padding:8px 5px;font:600 11px/1.4 ui-sans-serif,system-ui,sans-serif;color:#395144;transition:background .16s,transform .16s,border-color .16s}
+.oop06-reactions label:hover span{transform:translateY(-1px);background:#edf0e4}
+.oop06-reactions input:checked+span{background:#dfe8d7;border:2px solid #486649;color:#183a26}
+.oop06-reactions input:focus-visible+span{outline:3px solid #ae7437;outline-offset:3px}
+.oop06-dialog select,.oop06-dialog textarea,.oop06-dialog input#oop06-link{width:100%;border-radius:10px;border:1px solid #c7bca5;background:#fffdf8;color:#24362b;padding:12px 13px;min-height:45px;font:400 13px/1.6 ui-sans-serif,system-ui,sans-serif}
+.oop06-dialog textarea{resize:vertical;min-height:96px;max-height:220px}
+.oop06-honeypot{position:absolute!important;clip-path:inset(50%);height:1px;width:1px;overflow:hidden}
+.oop06-primary{background:#253e31;color:#f9f5e9;border:1px solid #253e31;border-radius:99px;min-height:49px;padding:11px 19px;font:700 13px ui-sans-serif,system-ui,sans-serif;cursor:pointer}
+.oop06-primary:hover{background:#3c5c48}
+.oop06-primary:disabled{opacity:.62;cursor:wait}
+.oop06-dialog .oop06-privacy{font:400 10px/1.8 ui-sans-serif,system-ui,sans-serif;margin:17px 0 0;color:#687267}
+.oop06-status{font:600 12px/1.5 ui-sans-serif,system-ui,sans-serif;color:#75432d;min-height:18px;margin:9px 0!important}
+.oop06-success{text-align:center;padding:12px 0 6px}
+.oop06-star{font:66px/1 Georgia,serif;color:#b89557;margin:14px 0}
+.oop06-success h3{font:400 30px/1.1 Georgia,serif;letter-spacing:-.025em;margin:0 0 14px;color:#23382c}
+.oop06-success p{max-width:320px;margin:0 auto 23px}
+.oop06-fallback{border-top:1px solid #d8d0bc;margin-top:23px;padding-top:20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.oop06-fallback p{width:100%;margin:0 0 3px}
+.oop06-fallback button,.oop06-fallback a,.oop06-share-actions>button:not(.oop06-primary){border:1px solid #b2bbaa;background:#fffdf8;color:#2b4a36;border-radius:99px;padding:11px 14px;min-height:45px;font:600 12px/1.5 ui-sans-serif,system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.oop06-gift{min-height:280px;background:radial-gradient(ellipse at 65% 10%,#435446,#1d352b 70%);border:1px solid #668071;border-radius:10px;padding:25px;color:#e9d9b5;position:relative;overflow:hidden;margin-bottom:22px}
+.oop06-gift:before{content:'';position:absolute;inset:16px;border:1px solid #e8cf9350;pointer-events:none}
+.oop06-gift-moon{font:69px/1 Georgia,serif;position:absolute;right:26px;top:20px;opacity:.68}
+.oop06-gift-cat{position:absolute;right:32px;bottom:19px;font-size:48px;filter:drop-shadow(0 4px 8px #0005)}
+.oop06-gift>span{font:700 9px/1.4 ui-sans-serif,system-ui,sans-serif;letter-spacing:.16em;color:#d4be8e}
+.oop06-dialog .oop06-gift h2{font:400 36px/1.03 Georgia,serif;color:#f8eacf;max-width:275px;margin:46px 0 16px}
+.oop06-gift h2 em{color:#e2bd7d}
+.oop06-gift p{color:#d2dcc6;font-size:11px;max-width:240px;margin:0}
+.oop06-share-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.oop06-share-actions .oop06-primary{flex:1}
+.oop06-share-actions>button:not(.oop06-primary){flex:1}
+.oop06-invitation input#oop06-link{font-size:11px;direction:ltr}
+.oop06-privacy-details{max-width:980px;margin:0 auto;padding:12px 20px 24px;color:#a7b6aa;font:400 11px/1.75 ui-sans-serif,system-ui,sans-serif}
+.oop06-privacy-details summary{cursor:pointer;font-weight:600;display:list-item}
+.oop06-privacy-details p{max-width:720px;margin:14px 0 0}
+.oop06-privacy-details a{color:#e1c990}
+.oop06-nudge{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);width:max-content;max-width:calc(100% - 24px);border:1px solid #cabf985c;background:#18291db9;border-radius:99px;backdrop-filter:blur(10px);padding:7px 12px;color:#e3d4b7;font:600 10px/1.3 ui-sans-serif,system-ui,sans-serif;letter-spacing:.06em;z-index:2;pointer-events:none;opacity:0;transition:opacity .3s}
+body[data-view="object"]:not(.oop06-explored) .oop06-nudge{opacity:.9}
+@media(max-width:760px){
+ .oop06-dialog{width:min(100%,calc(100vw - 18px));max-height:94dvh;border-radius:17px}
+ .oop06-content{padding:21px 20px 26px}
+ .oop06-top{margin-bottom:16px}
+ .oop06-dialog h2{font-size:39px}
+ .oop06-dialog .oop06-privacy{font-size:10px}
+ .oop06-gift{min-height:255px;padding:23px}
+ .oop06-dialog .oop06-gift h2{font-size:32px}
+ .oop06-reactions span{font-size:10px;min-height:54px}
+ .oop06-nudge{bottom:8px;font-size:8px}
+ .main-nav{overflow-x:auto;scrollbar-width:none;max-width:65vw}
+ .main-nav::-webkit-scrollbar{display:none}
+ button, a{touch-action:manipulation}
+}
+@media(max-width:365px){.oop06-content{padding:18px 14px 21px}.oop06-dialog h2{font-size:33px}.oop06-reactions{gap:4px}.oop06-reactions span{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.oop06-reactions span,.oop06-nudge{transition:none!important}}
+
+/* Usable mobile invitation/feedback affordances: 44px touch targets. */
+@media(max-width:760px){
+ .footer-right{display:flex;flex-wrap:wrap;align-items:center;gap:5px 13px;width:100%;justify-content:flex-start}
+ .footer-right #share-footer,.footer-right #feedback-open{font:600 11px/1.4 ui-sans-serif,system-ui,sans-serif;letter-spacing:0;min-height:44px;padding:11px 8px;white-space:nowrap}
+ .footer-right .portfolio-return{min-height:44px;display:inline-flex;align-items:center;font-size:10px}
+ .footer-right>span{display:none}
+}
+
 </style></head>
 <body data-view="encounter">
 <a class="skip" href="#main-action">Skip to the experience</a>
@@ -367,7 +450,7 @@ const physicalMarkup='<p class="dialog-kicker">THE HANDHELD EDITION</p><span cla
 $('#physical-open').onclick=()=>{modal(physicalMarkup);$('#physical-feedback').onclick=feedbackModal};
 function feedbackModal(){modal('<p class="dialog-kicker">A WORK IN WONDER</p><h2 id="dialog-title">How did it feel?</h2><p>What made you reach for it? What broke the spell?</p><div class="local-feedback-buttons"><button data-feeling="Curious" aria-pressed="false">Curious</button><button data-feeling="Delighted" aria-pressed="false">Delighted</button><button data-feeling="Not quite yet" aria-pressed="false">Not quite yet</button></div><label class="form-field">A NOTE FOR MICHAEL<textarea id="feedback-note" maxlength="4000" placeholder="The moment that stayed with me…"></textarea></label><button class="primary" id="copy-feedback">Copy my feedback ↗</button><p class="legal-note">Local only. This copies a message for you to send; it does not submit a form or collect your email.</p>');let feeling='';$$('[data-feeling]').forEach(b=>b.onclick=()=>{feeling=b.dataset.feeling;$$('[data-feeling]').forEach(t=>t.setAttribute('aria-pressed',String(t===b)))});$('#copy-feedback').onclick=()=>copy('OUT OF PANEL · 0.5 feedback\nFeeling: '+(feeling||'Not selected')+'\n\n'+$('#feedback-note').value,'Feedback copied. Send it to Michael when you’re ready.')}
 $('#feedback-open').onclick=feedbackModal;
-$('#about-open').onclick=()=>{modal('<p class="dialog-kicker">OUT OF PANEL / RELEASE 0.5</p><h2 id="dialog-title">A work in wonder.</h2><p>A comic you can take something out of. An object you can use. A small experiment in storytelling, design and play, by Michael Ninh with AI-assisted development.</p><label class="toggle-row"><input type="checkbox" id="reduce-toggle">Prefer reduced motion</label><p>Your browser’s reduced-motion preference is also respected. Sound starts off for new visitors and is always optional.</p><p>Progress, preferences and your current game are stored only on this device when storage is available. There are no third-party requests, analytics, remote AI calls or background feedback submissions in this app.</p><p>The computer opponent is local and heuristic. Match clocks pause when away. This is not online multiplayer. The artwork is a reading/design study, not approved visual canon for other HYPERSPACE series.</p><p class="legal-note">No wallet connection, NFT verification, purchase, physical claim or scarcity promise. The 3D object is a visual model, not production CAD. The playable release connects back to Michael’s Beyond the CV.</p><div class="version-code" id="runtime-info"></div><button id="clear-data" class="outline-btn">Reset this device’s saved progress</button>');$('#reduce-toggle').checked=session.reduced;$('#reduce-toggle').onchange=e=>{session.reduced=e.target.checked;document.body.classList.toggle('reduce-motion',session.reduced);positionCoin();save()};$('#runtime-info').textContent='v0.5.0 · '+(window.OutOfPanelJourney?.getState().status==='ready'?'Three.js r180 + '+coinRenderer.kind:coinRenderer.kind)+' · storage '+(localOK?'available':'unavailable');$('#clear-data').onclick=()=>{modal('<p class="dialog-kicker">LOCAL PROGRESS ONLY</p><h2 id="dialog-title">Begin again?</h2><p>This clears the saved game, reading position and preferences on this browser. No external account is affected.</p><div class="row"><button id="confirm-clear" class="primary">Reset progress</button><button id="cancel-clear" class="outline-btn">Keep it</button></div>');$('#cancel-clear').onclick=closeModal;$('#confirm-clear').onclick=()=>{session.taken=false;session.page=0;session.sound=false;session.reduced=false;session.surface='paper';session.completed=0;session.returned=false;session.discovered=false;window.dispatchEvent(new Event('oop-reset'));gameMode='solo';difficulty='medium';clockMode='off';try{localStorage.removeItem(STORAGE)}catch{}resetGame();updateSound();renderComic();closeModal();switchView('encounter');toast('A fresh beginning on this device.')}}};
+$('#about-open').onclick=()=>{modal('<p class="dialog-kicker">OUT OF PANEL / RELEASE 0.5</p><h2 id="dialog-title">A work in wonder.</h2><p>A comic you can take something out of. An object you can use. A small experiment in storytelling, design and play, by Michael Ninh with AI-assisted development.</p><label class="toggle-row"><input type="checkbox" id="reduce-toggle">Prefer reduced motion</label><p>Your browser’s reduced-motion preference is also respected. Sound starts off for new visitors and is always optional.</p><p>Progress, preferences and your current game are stored only on this device when storage is available. The playable experience uses no advertising trackers or remote AI calls. 0.6 adds optional private feedback submissions and daily aggregate event counts without visitor identifiers; its privacy details appear below the experience. Your game and reading progress remain on this device.</p><p>The computer opponent is local and heuristic. Match clocks pause when away. This is not online multiplayer. The artwork is a reading/design study, not approved visual canon for other HYPERSPACE series.</p><p class="legal-note">No wallet connection, NFT verification, purchase, physical claim or scarcity promise. The 3D object is a visual model, not production CAD. The playable release connects back to Michael’s Beyond the CV.</p><div class="version-code" id="runtime-info"></div><button id="clear-data" class="outline-btn">Reset this device’s saved progress</button>');$('#reduce-toggle').checked=session.reduced;$('#reduce-toggle').onchange=e=>{session.reduced=e.target.checked;document.body.classList.toggle('reduce-motion',session.reduced);positionCoin();save()};$('#runtime-info').textContent='v0.6.0 · '+(window.OutOfPanelJourney?.getState().status==='ready'?'Three.js r180 + '+coinRenderer.kind:coinRenderer.kind)+' · storage '+(localOK?'available':'unavailable');$('#clear-data').onclick=()=>{modal('<p class="dialog-kicker">LOCAL PROGRESS ONLY</p><h2 id="dialog-title">Begin again?</h2><p>This clears the saved game, reading position and preferences on this browser. No external account is affected.</p><div class="row"><button id="confirm-clear" class="primary">Reset progress</button><button id="cancel-clear" class="outline-btn">Keep it</button></div>');$('#cancel-clear').onclick=closeModal;$('#confirm-clear').onclick=()=>{session.taken=false;session.page=0;session.sound=false;session.reduced=false;session.surface='paper';session.completed=0;session.returned=false;session.discovered=false;window.dispatchEvent(new Event('oop-reset'));gameMode='solo';difficulty='medium';clockMode='off';try{localStorage.removeItem(STORAGE)}catch{}resetGame();updateSound();renderComic();closeModal();switchView('encounter');toast('A fresh beginning on this device.')}}};
 function shareURL(position=false){const u=new URL(location.href);u.search='';u.hash=position?'play':'encounter';if(position)u.searchParams.set('position',btoa(JSON.stringify({v:3,moves:moves.map(m=>[m.x,m.y]),mode:'local',difficulty:'medium',clock:'off'})));return u.href}
 function portableCopy(position=false){
  if(!IS_PORTABLE){toast('Use the self-contained OUT-OF-PANEL.html file in the release package to share offline.');return}
@@ -897,6 +980,177 @@ return {...core,ACESFilmicToneMapping:re,AddEquation:Ae,AddOperation:le,Additive
   const capturePortable=()=>{if(IS_PORTABLE)PORTABLE_SOURCE='<!doctype html>'+document.documentElement.outerHTML;};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',capturePortable,{once:true});else capturePortable();
   window.OutOfPanelJourney=Object.freeze({version:'0.5.0',enter,exit,discover,tick,getState:()=>({status,reason,entered,progress,selected,seen:[...seen],renders,orbit:{...orbit},camera:worldCamera?worldCamera.position.toArray():null,threeRevision:T?.REVISION||null,drawCalls:renderer?.info.render.calls||0})});
+})();
+
+</script><script>
+/* OUT OF PANEL 0.6 — discovery, private feedback, inviting friends. */
+(() => {
+  'use strict';
+  const ROOT = 'https://mikelninh.github.io/beyond-cv/out-of-panel/';
+  const API = 'https://htffcvdopavknnylbowl.supabase.co/functions/v1/out-of-panel-v06';
+  // Preserve the 0.5 fully-offline share/email flows; QA may opt into the public UI.
+  if (location.hostname !== 'mikelninh.github.io' && !new URLSearchParams(location.search).has('v06test')) return;
+  const $ = (s, root = document) => root.querySelector(s);
+  const safe = s => String(s ?? '').slice(0, 800);
+  const state = { feedbackOpen: false, shareOpen: false, feeling: '', submitting: false };
+  const metricsSeen = new Set();
+  let activeModal = null;
+  const copyText = async text => {
+    if (!navigator.clipboard || !window.isSecureContext) throw new Error('Clipboard unavailable');
+    await navigator.clipboard.writeText(text);
+  };
+  function createDialog(id, html) {
+    const d = document.createElement('dialog');
+    d.id = id;
+    d.className = 'oop06-dialog';
+    d.innerHTML = html;
+    d.addEventListener('click', e => {
+      if (e.target === d) d.close();
+    });
+    d.addEventListener('close', () => { activeModal = null; });
+    document.body.append(d);
+    return d;
+  }
+  const feedbackDialog = createDialog('oop06-feedback',
+    `<div class="oop06-content"><div class="oop06-top"><span class="oop06-eyebrow">A SMALL NOTE / 0.6</span><button class="oop06-close" type="button" aria-label="Close feedback">×</button></div>
+    <h2>How did it <em>feel?</em></h2>
+    <p class="oop06-lead">A couple of taps are enough. Your response helps shape the next chapter.</p>
+    <form id="oop06-form">
+      <fieldset><legend>What was your first reaction? <span aria-hidden="true">*</span></legend>
+      <div class="oop06-reactions">
+        <label><input type="radio" name="feeling" value="Loved it" required><span>✦ Loved it</span></label>
+        <label><input type="radio" name="feeling" value="Curious"><span>◌ Curious</span></label>
+        <label><input type="radio" name="feeling" value="Needs work"><span>↗ Needs work</span></label>
+      </div></fieldset>
+      <label class="oop06-label" for="oop06-moment">What caught your attention?</label>
+      <select name="moment" id="oop06-moment"><option value="">Choose a moment (optional)</option><option value="coin">Turning the coin</option><option value="rooftop">Entering the rooftop</option><option value="mia">Meeting Mia</option><option value="game">Playing the game</option><option value="comic">Reading the comic</option><option value="other">Something else</option></select>
+      <label class="oop06-label" for="oop06-note">One thought for the creator <span>(optional)</span></label>
+      <textarea id="oop06-note" name="note" maxlength="700" rows="3" placeholder="What made you smile—or what broke the spell?"></textarea>
+      <label class="oop06-honeypot" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      <div id="oop06-form-status" class="oop06-status" role="status" aria-live="polite"></div>
+      <button id="oop06-send" type="submit" class="oop06-primary">Send feedback ↗</button>
+      <p class="oop06-privacy">No account or email required. Your response is stored privately, not published. A short-lived daily pseudonymous anti-spam token is kept for at most two days. No advertising trackers. <a href="#oop06-privacy-note">Privacy details</a>.</p>
+    </form>
+    <div class="oop06-success" hidden><div class="oop06-star">✧</div><h3>Thank you for looking closer.</h3><p>Your note has been saved. It will help shape the next release.</p><button type="button" class="oop06-primary" data-oop06-close>Back to the world ↗</button></div>
+    <div class="oop06-fallback" hidden><p>Couldn't save this time. Your words are still here.</p><button type="button" id="oop06-copy-feedback">Copy your feedback</button><a id="oop06-email-feedback" href="mailto:mikel_ninh@yahoo.de?subject=OUT%20OF%20PANEL%20feedback">Open email draft ↗</a></div>
+    </div>`);
+  const shareDialog = createDialog('oop06-share',
+    `<div class="oop06-content oop06-invitation"><div class="oop06-top"><span class="oop06-eyebrow">PASS A LITTLE MAGIC ON</span><button class="oop06-close" type="button" aria-label="Close invitation">×</button></div>
+    <div class="oop06-gift"><div class="oop06-gift-moon">☾</div><div class="oop06-gift-cat" aria-hidden="true">🐈‍⬛</div><span>HYPERSPACE / OUT OF PANEL</span><h2>Something is waiting for you <em>on the inside.</em></h2><p>A strange little coin. A rooftop. A very curious cat.</p></div>
+    <p class="oop06-lead">Send an invitation straight to the coin. No account, no purchase—just a small surprise.</p>
+    <div class="oop06-share-actions"><button id="oop06-copy-invite" class="oop06-primary" type="button">Copy invitation ↗</button><button id="oop06-native-share" type="button">Share with a friend</button></div>
+    <label class="oop06-label" for="oop06-link">Invitation link</label>
+    <input id="oop06-link" readonly aria-label="Shareable invitation URL">
+    <p id="oop06-share-status" class="oop06-status" role="status" aria-live="polite"></p>
+    <p class="oop06-privacy">This passes a link to a playful moment, not ownership of a digital asset.</p></div>`);
+  function show(d) {
+    if (activeModal?.open) activeModal.close();
+    const existing = $('#dialog');
+    if (existing?.open) existing.close();
+    if (d.showModal) d.showModal(); else d.setAttribute('open','');
+    activeModal = d;
+  }
+  function openFeedback() {
+    feedbackDialog.querySelector('.oop06-success').hidden = true;
+    feedbackDialog.querySelector('#oop06-form').hidden = false;
+    feedbackDialog.querySelector('.oop06-fallback').hidden = true;
+    $('#oop06-form-status').textContent = '';
+    show(feedbackDialog);
+  }
+  function invitationURL() {
+    return ROOT + '?gift=window#object';
+  }
+  function openShare() {
+    const url = invitationURL();
+    $('#oop06-link').value = url;
+    $('#oop06-share-status').textContent = '';
+    $('#oop06-native-share').hidden = !navigator.share;
+    show(shareDialog);
+  }
+  document.querySelectorAll('#feedback-open,#share,#share-footer').forEach(b => {
+    b.onclick = b.id === 'feedback-open' ? openFeedback : openShare;
+  });
+  document.addEventListener('click', e => {
+    const physical = e.target.closest?.('#physical-feedback');
+    if (physical) { e.preventDefault(); e.stopImmediatePropagation(); openFeedback(); }
+  }, true);
+  document.querySelectorAll('.oop06-dialog').forEach(d => d.querySelectorAll('.oop06-close,[data-oop06-close]').forEach(b => b.onclick = () => d.close()));
+  const feedbackForm = $('#oop06-form');
+  feedbackForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (state.submitting || !feedbackForm.reportValidity()) return;
+    const fd = new FormData(feedbackForm);
+    const payload = {kind:'feedback',feeling:fd.get('feeling'),moment:fd.get('moment'),note:safe(fd.get('note')).trim(),website:safe(fd.get('website'))};
+    const status = $('#oop06-form-status'), button = $('#oop06-send');
+    state.submitting = true; button.disabled = true; button.textContent = 'Sending…'; status.textContent = 'Saving your feedback…';
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 9000);
+      let res;
+      try { res = await fetch(API, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:controller.signal,cache:'no-store'}); }
+      finally {clearTimeout(timeout);}
+      const answer = await res.json().catch(() => ({}));
+      if (!res.ok || answer.saved !== true) throw new Error(answer.error || 'Save did not complete');
+      feedbackForm.hidden = true;
+      feedbackDialog.querySelector('.oop06-fallback').hidden = true;
+      feedbackDialog.querySelector('.oop06-success').hidden = false;
+      status.textContent = '';
+      feedbackForm.reset();
+    } catch (error) {
+      status.textContent = 'Not saved: ' + (error?.name === 'AbortError' ? 'connection timed out.' : String(error?.message || 'Connection unavailable.'));
+      feedbackDialog.querySelector('.oop06-fallback').hidden = false;
+      const message = 'OUT OF PANEL / Feedback\\nReaction: '+payload.feeling+'\\nMoment: '+(payload.moment || 'Not selected')+'\\n\\n'+payload.note;
+      $('#oop06-copy-feedback').onclick = async () => {
+        try {await copyText(message);status.textContent = 'Copied. You can send it to Michael.';}catch{status.textContent='Copy manually from the fields above.';}
+      };
+      $('#oop06-email-feedback').href='mailto:mikel_ninh@yahoo.de?subject='+encodeURIComponent('OUT OF PANEL 0.6 feedback')+'&body='+encodeURIComponent(message);
+    } finally { state.submitting = false; button.disabled = false; button.textContent = 'Send feedback ↗';}
+  });
+  function privacyOff(){return navigator.doNotTrack === '1' || navigator.globalPrivacyControl === true || navigator.msDoNotTrack === '1';}
+  function metric(event){
+    if (privacyOff() || metricsSeen.has(event) || !/^https:$/.test(location.protocol) || location.hostname !== 'mikelninh.github.io') return;
+    metricsSeen.add(event);
+    try { if(sessionStorage.getItem('oop06-count-'+event)==='1') return; sessionStorage.setItem('oop06-count-'+event,'1'); } catch {}
+    // Anonymous aggregate count only; no visitor ID, cookie, fingerprint, or user profile.
+    fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:'event',event}),keepalive:true,cache:'no-store'}).catch(()=>{});
+  }
+  $('#oop06-copy-invite').onclick = async () => {
+    const message = 'I found a tiny world hidden inside a coin. The cat might be expecting you. 🐈‍⬛\\n' + invitationURL();
+    const st=$('#oop06-share-status');
+    try {await copyText(message);st.textContent='Invitation copied. Pass the magic on.';metric('invite_copy');}
+    catch {$('#oop06-link').focus();$('#oop06-link').select();st.textContent='Select and copy the link above.';}
+  };
+  $('#oop06-native-share').onclick = async () => {
+    if(!navigator.share)return;
+    try {await navigator.share({title:'OUT OF PANEL — a small impossible world',text:'I found a world hiding inside a coin. Come meet the cat.',url:invitationURL()});$('#oop06-share-status').textContent='Invitation shared.';metric('invite_copy');}
+    catch(e){if(e.name!=='AbortError')$('#oop06-share-status').textContent='Sharing unavailable. Try copying the invitation instead.';}
+  };
+  const privacy = document.createElement('details');
+  privacy.id='oop06-privacy-note';privacy.className='oop06-privacy-details';
+  privacy.innerHTML='<summary>Privacy & feedback</summary><p>The game and reading position remain on your device. If you choose to send feedback, we store only the reaction, optional moment and words, in a private database accessible to the creator. We do not request your identity or email. To limit automated spam, the server temporarily stores a daily HMAC-derived pseudonym of the requesting network address; it is deleted within two days. Some interactions are counted in daily anonymous totals, without a visitor identifier or raw network address retained by our application. We honour Do Not Track / Global Privacy Control signals. Hosting and infrastructure providers may separately process technical request data. Contact: <a href="mailto:mikel_ninh@yahoo.de">mikel_ninh@yahoo.de</a> to request deletion of a feedback entry (include the words you sent).</p>';
+  const f=$('.footer'); if(f) f.after(privacy);
+  const nudge=document.createElement('p');
+  nudge.className='oop06-nudge';nudge.setAttribute('aria-hidden','true');nudge.textContent='↔ Drag the coin · Tap Look inside';
+  const obj=$('#object-scene');
+  if(obj) obj.append(nudge);
+  const dismissNudge=()=>document.body.classList.add('oop06-explored');
+  $('#coin')?.addEventListener('pointerdown',dismissNudge,{once:true});
+  $('#look-inside')?.addEventListener('click',()=>{
+    dismissNudge();
+    // The transition is tracked only once the existing scene enters.
+    setTimeout(()=>{if(window.OutOfPanelJourney?.getState()?.entered)metric('portal_enter');},350);
+  });
+  $('#give-back')?.addEventListener('click',()=>metric('story_return'));
+  // Actual view state is checked on the next frame instead of counting the click in advance.
+  document.addEventListener('click',e=>{
+    const t=e.target.closest?.('[data-view]');
+    if(!t||!['play','read'].includes(t.dataset.view))return;
+    requestAnimationFrame(()=>{if(document.body.dataset.view===t.dataset.view)metric(t.dataset.view==='play'?'game_start':'read_start');});
+  },true);
+  $('#first-move')?.addEventListener('click',()=>requestAnimationFrame(()=>{if(document.body.dataset.view==='play')metric('game_start');}));
+  const previousSessionVisit = (()=>{try{const k='oop06-seen-session';let had=sessionStorage.getItem(k)==='1';sessionStorage.setItem(k,'1');return had}catch{return false}})();
+  if (!previousSessionVisit && location.search.includes('gift=window')) document.body.classList.add('oop06-invited');
+  window.OutOfPanel06 = Object.freeze({version:'0.6.0',invitationURL,openFeedback,openShare});
 })();
 
 </script>
