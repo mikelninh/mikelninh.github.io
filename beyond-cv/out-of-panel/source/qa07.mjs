@@ -74,7 +74,7 @@ try {
  // New dashboards must not expose feedback without a valid owner session.
  const admin=await mobile.newPage();await admin.goto('https://mikelninh.github.io/beyond-cv/out-of-panel/listening-room/',{waitUntil:'domcontentloaded',timeout:20000}).catch(()=>{});
  if(admin.url().includes('/listening-room/')){
-   check('Owner dashboard never shows feedback without a login',!(await admin.locator('#dash').isVisible()).catch(()=>true));
+   check('Owner dashboard never shows feedback without a login',(await admin.locator('#login').isVisible())&&!(await admin.locator('#dash').isVisible()));
  }
  await mobile.close();
 }catch(e){errors.push(String(e));console.log('FAIL exception',String(e));}
