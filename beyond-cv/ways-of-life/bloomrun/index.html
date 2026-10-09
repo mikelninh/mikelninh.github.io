@@ -97,6 +97,10 @@ const hash=(n,seed=0)=>{const v=Math.sin(n*127.1+seed*311.7)*43758.5453123;retur
 const lerpColor=(a,b,t)=>{const h=s=>s.match(/[a-f\d]{2}/gi).map(x=>parseInt(x,16));let A=h(a),B=h(b);return '#'+A.map((x,i)=>Math.round(mix(x,B[i],t)).toString(16).padStart(2,'0')).join('')};
 const isMobile=()=>matchMedia('(pointer:coarse)').matches||window.innerWidth<720;
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Subtle original illustrated matte behind procedural parallax.
+const paintedMatte=new Image();
+const inlineMatte=(document.querySelector('style')?.textContent||'').match(/data:image\/webp;base64,[A-Za-z0-9+/=]+/);
+paintedMatte.src=inlineMatte?inlineMatte[0]:'assets/valley-window.webp';
 const water={left:960,right:1510,y:605};
 const land=[{x:-500,w:1470,y:570,kind:'meadow'},{x:1510,w:675,y:570,kind:'wood'},{x:2420,w:1230,y:385,kind:'highland'},{x:3650,w:1500,y:492,kind:'future'}];
 const lily=[{x:1070,y:537,r:58},{x:1198,y:512,r:64},{x:1321,y:531,r:57},{x:1440,y:544,r:60}];
@@ -154,12 +158,21 @@ function leap(){if(!inputActive())return;const p=g.player;p.jumpBuffer=.16;}
 function executeJump(){const p=g.player;if(p.grounded||p.coyote>0){p.vy=-600;p.grounded=false;p.coyote=0;p.jumps=1;p.jumpBuffer=0;p.squash=1;emit(p.x,p.y-9,'#fff0bd',17,.66);sfx('hop');return true}if(p.jumps<2){p.jumps=2;p.vy=-550;p.jumpBuffer=0;p.squash=1;emit(p.x,p.y-42,'#b8fff3',23,1);ring(p.x,p.y-25,'#c8ffed',110);sfx('double');return true}return false}
 function plant(){const p=g.player,k=Math.floor(hash(g.stepCount+g.pulses,3)*4);let y=topAt(p.x+38*p.face)??p.y;g.seedlings.push({x:clamp(p.x+p.face*40,0,W-10),y,k,age:0});g.seedlings=g.seedlings.slice(-60);emit(p.x+p.face*36,y-15,k===2?'#f9c9ea':'#c2ffc6',20,.6);ring(p.x+p.face*38,y-6,'#d3ffcc',80);if(g.seedlings.length<=2)burstText('Even this little flower will stay.',1.5);save();}
 function bloom(){if(!inputActive()||g.coolBloom>0)return;g.coolBloom=.55;g.pulses++;const p=g.player;
- const inWater=p.x>840&&p.x<1540&&(!g.lilies||g.lilies<4);
+ const inWater=p.x>840&&p.x<1540&&g.lilies<4;
  const inCliff=p.x>1910&&p.x<2475&&!g.vines;
  const atTree=p.x>3180&&p.x<3510&&g.vines&&g.lilies>=4&&!g.tree;
  ring(p.x,p.y-32,'#f5f0ab',125);emit(p.x,p.y-35,'#bfffd9',22,.9);sfx('bloom');
  if(atTree){greatBloom();return}
- if(inWater){let old=g.lilies;g.lilies=clamp(g.lilies+2,0,4);for(let i=old;i<g.lilies;i++){g.lilyGrow[i]=Math.max(g.lilyGrow[i],.005);emit(lily[i].x,lily[i].y-16,'#fdc3e8',38,1.25);ring(lily[i].x,lily[i].y-5,'#e6d7ff',130)}g.checkpoint=Math.max(g.checkpoint,840);shaker=.18;burstText(g.lilies>=4?'A path you made yourself.':'The water remembers.',1.75);updateHint();save();return}
+ if(inWater){let old=g.lilies;g.lilies=4;
+ for(let i=old;i<g.lilies;i++){
+  g.lilyGrow[i]=Math.max(g.lilyGrow[i],.005-i*.16);
+  emit(lily[i].x,lily[i].y-16,'#fdc3e8',38,1.25);
+  ring(lily[i].x,lily[i].y-5,'#e6d7ff',130);
+ }
+ // A gentle lift lets players use the path without fighting the timing of the interaction.
+ p.vy=Math.min(p.vy,-450);p.grounded=false;p.coyote=0;p.jumps=Math.min(p.jumps,1);
+ g.checkpoint=Math.max(g.checkpoint,840);shaker=.18;
+ burstText('A path you made yourself.',1.75);updateHint();save();return}
  if(inCliff){g.vines=true;g.vineGrow=.001;g.checkpoint=Math.max(g.checkpoint,1760);emit(2260,435,'#beffce',95,1.5);ring(2240,470,'#c9ffb5',280);shaker=.22;burstText('The mountain is growing!',2.3);updateHint();save();return}
  const moving=Math.abs(p.vx)>60||!p.grounded;
  if(moving){p.dash=.24;p.vx=(p.face||1)*780;p.vy=Math.min(-85,p.vy);p.squash=1;emit(p.x-p.face*14,p.y-35,'#c8ffdf',47,1.3);shaker=.09;sfx('dash');if(g.pulses<=3)burstText('Whoosh! Bloom while you run.',1.25)}
@@ -187,7 +200,7 @@ function physics(dt){const p=g.player,ctrl=keysDown(),dir=(ctrl.right?1:0)-(ctrl
  let hit=null;
  if(p.vy>=0){const platforms=[...land];for(let i=0;i<lily.length;i++)if(g.lilyGrow[i]>.5)platforms.push({x:lily[i].x-lily[i].r*.8,w:lily[i].r*1.6,y:lily[i].y,kind:'lily'});
  if(g.vineGrow>.6)for(const v of vines)platforms.push({x:v.x,w:v.w,y:v.y,kind:'vine'});
- for(const l of platforms){if(p.x>l.x-10&&p.x<l.x+l.w+10&&oldY<=l.y+15&&p.y>=l.y-1&&(!hit||l.y<hit.y))hit=l;}}
+ for(const l of platforms){if(p.x>l.x-10&&p.x<l.x+l.w+10&&oldY<=l.y+(l.kind==='lily'?31:15)&&p.y>=l.y-1&&(!hit||l.y<hit.y))hit=l;}}
  if(hit){const fallingSpeed=p.vy,wasAir=!p.grounded;p.y=hit.y;p.vy=0;p.grounded=true;p.coyote=.13;p.jumps=0;if(p.jumpBuffer>0)executeJump();if(wasAir){p.squash=clamp(fallingSpeed/850,0.2,1);emit(p.x,p.y-3,hit.kind==='lily'?'#ffe5ed':'#fff1d5',hit.kind==='lily'?14:9,.43);if(hit.kind==='lily'){sfx('pad');p.vy=-70;}}}
  else {if(p.grounded)p.coyote=.12;p.grounded=false;}
  p.run+=Math.abs(p.vx)*dt*.05;p.squash=Math.max(0,p.squash-dt*5);p.blink+=dt;
@@ -238,6 +251,9 @@ function petal(x,y,len,angle,c){ctx.save();ctx.translate(x,y);ctx.rotate(angle);
 function background(){const awakened=clamp(g.treeGrow,0,1),awake=g.lilies/4*.27+(g.vines?.2:0)+awakened*.53;
  const gr=ctx.createLinearGradient(0,0,0,H);gr.addColorStop(0,lerpColor('#092431','#30596a',awake*.8));gr.addColorStop(.46,lerpColor('#2d6875','#93a4a1',awake*.9));gr.addColorStop(1,lerpColor('#b0b59b','#f4dcb3',awake));ctx.fillStyle=gr;ctx.fillRect(0,0,viewW,H);
  glow(viewW*.77,160,220,'#ffe9b080',.58+awake*.2);disk(viewW*.77,140,38+awake*7,38+awake*7,lerpColor('#e5dfbf','#ffe9b6',awake));
+ if(paintedMatte.complete&&paintedMatte.naturalWidth){ctx.save();ctx.globalAlpha=.15+awake*.04;ctx.globalCompositeOperation='soft-light';
+ const imW=Math.max(viewW*1.18,1340),imH=H*.8,x=-camX*.052+(viewW-imW)*.41,y=66;
+ ctx.drawImage(paintedMatte,x,y,imW,imH);ctx.restore();}
  ctx.save();ctx.globalAlpha=.62*(1-awake*.72);for(const s of stars){const x=((s.x-camX*.035)%(viewW+95)+(viewW+95))%(viewW+95)-45;if(s.y>320)continue;disk(x,s.y,s.r,s.r,'#f5ead0')}ctx.restore();
  for(let layer=0;layer<4;layer++){const par=[.035,.085,.16,.27][layer],base=[285,340,415,493][layer],gcols=['#375867','#436c70','#54827c','#6a9a8b'],bcols=['#738a8d','#829b99','#a0b7a0','#b1c09f'];ctx.beginPath();ctx.moveTo(-20,H);ctx.lineTo(-20,base);for(let x=-20;x<viewW+70;x+=20){let wx=x+camX*par,y=base-Math.sin(wx/(130+layer*38)+layer*2)*40-Math.sin(wx/(65+layer*21)+layer)*20-Math.sin(wx/480+layer*1.9)*32;ctx.lineTo(x,y)}ctx.lineTo(viewW+20,H);ctx.closePath();ctx.fillStyle=lerpColor(gcols[layer],bcols[layer],awake*.9);ctx.globalAlpha=[.82,.74,.59,.46][layer];ctx.fill();ctx.globalAlpha=1;}
  // Clouds and mist are made from layered washes rather than harsh geometric shapes.
