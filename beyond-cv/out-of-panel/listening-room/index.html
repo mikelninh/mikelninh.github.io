@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#12251e">
+<title>Listening room · HYPERSPACE</title>
+<style>
+:root{--bg:#102019;--panel:#1c3228;--green:#293e31;--gold:#dfc38d;--paper:#f4eedf;--muted:#a8b6a4;--stroke:#52705a55}
+*{box-sizing:border-box}body{font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--paper);margin:0;background:radial-gradient(circle at 70% -10%,#284b35,var(--bg) 65%);min-height:100dvh}
+button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}a{color:var(--gold);text-underline-offset:4px}[hidden]{display:none!important}
+.wrap{max-width:1100px;margin:auto;padding:25px clamp(20px,5vw,65px) 70px}
+header{display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid var(--stroke);padding:10px 0 24px}.brand{font-size:12px;letter-spacing:.17em;font-weight:800;color:var(--gold)}.brand span{display:block;color:var(--muted);font-size:9px;letter-spacing:.16em}nav{display:flex;gap:18px;align-items:center}nav a{font-size:12px;text-decoration:none}.logout{background:transparent;border:1px solid #78917a;border-radius:99px;color:var(--paper);padding:8px 17px}
+main{padding-top:55px}.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin:0 0 15px}h1{font:400 clamp(42px,7vw,76px)/1.05 Georgia,serif;letter-spacing:-.05em;margin:0 0 21px}h1 em{color:var(--gold)}h2{font:400 30px/1.12 Georgia,serif;margin:0 0 12px}p{color:var(--muted)}.intro{font-size:16px;max-width:610px;margin:0 0 34px}.panel{background:var(--panel);border:1px solid var(--stroke);border-radius:18px;padding:clamp(22px,4vw,38px);box-shadow:0 20px 50px #0002}.login{max-width:560px}label{display:block;margin:17px 0 8px;font-size:12px;color:var(--paper);font-weight:650}input,select{width:100%;border-radius:9px;padding:13px 14px;border:1px solid #718375;background:#102019;color:var(--paper);min-height:46px}input::placeholder{color:#9eafa2}.btn{background:var(--gold);border:1px solid var(--gold);border-radius:99px;color:#17271e;padding:12px 23px;min-height:48px;font-weight:750;margin-top:16px}.btn.alt{background:transparent;color:var(--gold);margin-left:8px}.muted{font-size:12px;color:#a7b4a7}.status{color:#f4d298;min-height:20px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:28px 0 35px}.metric{background:var(--panel);border:1px solid var(--stroke);padding:25px;border-radius:15px}.metric strong{display:block;font:400 37px/1.1 Georgia,serif;color:var(--gold)}.metric span{display:block;font-size:11px;color:var(--muted);margin-top:10px}.actions{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.actions select{width:170px}.actions button{border:1px solid #819b7c;background:transparent;color:var(--paper);padding:11px 14px;border-radius:99px}.notes{display:grid;gap:13px;margin:20px 0}.note{background:var(--panel);border:1px solid var(--stroke);border-radius:13px;padding:22px}.note-top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.note time{color:var(--muted);font-size:11px}.note .reaction{color:var(--gold);font-weight:700}.note p{margin:12px 0 0;color:#e2e6d8;overflow-wrap:anywhere;white-space:pre-wrap}.note .context{font-size:12px;color:var(--muted);margin:6px 0}.note select{width:140px;font-size:12px;padding:8px}.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:18px 0 30px}.total{font-size:12px;color:var(--muted);border-bottom:1px solid var(--stroke);padding:8px 0}.total strong{color:var(--paper);display:block;font-size:22px}.empty{border:1px dashed #768876;border-radius:14px;padding:35px;text-align:center}.empty strong{display:block;font:400 25px Georgia,serif;color:var(--gold)}footer{border-top:1px solid var(--stroke);font-size:11px;color:var(--muted);padding:23px 0;margin-top:40px}
+@media(max-width:700px){header{align-items:flex-start}.grid{grid-template-columns:1fr}.metric{padding:16px}.btn.alt{margin-left:0}.actions select{width:100%}.note-top{align-items:flex-start}}
+</style></head>
+<body><div class="wrap">
+<header><div class="brand">HYPERSPACE<span>YOUR PRIVATE LISTENING ROOM</span></div><nav><a href="../">← The experience</a><button class="logout" id="logout" hidden>Log out</button></nav></header>
+<main><p class="eyebrow">Out of panel / For the maker</p><h1>Listen <em>closer.</em></h1>
+<p class="intro">A quiet place for what visitors felt, what they explored, and what we should make better. Private by design.</p>
+<section id="login" class="panel login">
+<h2>Your key is in your inbox.</h2>
+<p>Only the project owner can read these notes. Request an email sign-in link, then enter the code or paste the sign-in link here.</p>
+<label for="email">Owner email</label><input id="email" type="email" autocomplete="email" value="mikel_ninh@yahoo.de" readonly>
+<button class="btn" id="send">Email my sign-in link ↗</button>
+<details><summary class="muted" style="cursor:pointer;margin:21px 0 4px">Received a code or link?</summary>
+<label for="code">6-digit email code, if supplied</label><input id="code" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="123456" maxlength="12">
+<button class="btn alt" id="verify">Verify code</button>
+<label for="magic">Or paste the entire email sign-in link</label><input id="magic" type="text" autocomplete="off" placeholder="https://…/auth/v1/verify?token=…">
+<button class="btn alt" id="verify-link">Verify link</button>
+</details>
+<p id="login-status" role="status" class="status"></p>
+<p class="muted">Authentication is supplied by Supabase. The link is intended for the owner only. No access is granted merely by visiting this URL.</p>
+</section>
+<section id="dash" hidden>
+<div class="actions"><p class="eyebrow">Last 30 days · Approximate event counts</p><button id="refresh">Refresh ↻</button></div>
+<div class="grid"><div class="metric"><strong id="k-feedback">—</strong><span>Feedback entries</span></div><div class="metric"><strong id="k-discovery">—</strong><span>Portal entries (not unique)</span></div><div class="metric"><strong id="k-invites">—</strong><span>Invitations copied (not unique)</span></div></div>
+<section class="panel"><h2>What people explored</h2><div class="totals" id="totals"></div><p class="muted">Counts reflect recorded interactions, not unique people. Tracking is disabled for visitors who enable DNT/GPC; no identifying device profile is stored by the app.</p></section>
+<section style="margin-top:36px"><div class="actions"><div><h2>Feedback inbox</h2><p class="muted">Only responses visitors deliberately sent.</p></div>
+<div><label for="filter" style="margin:0 0 5px">Filter</label><select id="filter"><option value="all">All notes</option><option value="new">New</option><option value="reviewing">Reviewing</option><option value="planned">Planned</option><option value="resolved">Resolved</option><option value="archived">Archived</option></select><button id="export">Export CSV</button></div></div>
+<div id="notes" class="notes"></div></section>
+</section>
+</main><footer>No tracking on this private dashboard. Authentication is verified by the backend on every read and update. <a href="https://supabase.com/dashboard/project/htffcvdopavknnylbowl/editor" target="_blank" rel="noopener noreferrer">Open the secure Supabase database console ↗</a></footer>
+</div>
+<script>
+(() => {
+'use strict';
+const PROJECT='https://htffcvdopavknnylbowl.supabase.co', KEY='sb_publishable_0cPCOu4yilz5wtsuFuPA1w_Z_uMcLcO',OWNER='mikel_ninh@yahoo.de';
+const API=PROJECT+'/functions/v1/out-of-panel-admin', $=s=>document.querySelector(s);
+let accessToken='', expiry=0, data={feedback:[],counts:[]};
+function message(t){$('#login-status').textContent=t}
+async function auth(endpoint,payload){
+ const r=await fetch(PROJECT+'/auth/v1/'+endpoint,{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY},body:JSON.stringify(payload)});
+ const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.msg||d.error_description||d.message||d.error||'Sign-in unavailable');
+ return d;
+}
+async function req(method,body){
+ if(!accessToken)throw Error('Sign in required');
+ const r=await fetch(API,{method,headers:{'Authorization':'Bearer '+accessToken,...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined,cache:'no-store'});
+ const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'Not authorised');
+ return d;
+}
+function session(d){if(!d?.access_token)throw Error('No valid session returned');accessToken=d.access_token;expiry=Date.now()+(Number(d.expires_in||3600)*1000);try{sessionStorage.setItem('oop-admin-token',accessToken);sessionStorage.setItem('oop-admin-exp',String(expiry))}catch{} $('#login').hidden=true;$('#dash').hidden=false;$('#logout').hidden=false;load()}
+function logout(){accessToken='';expiry=0;try{sessionStorage.removeItem('oop-admin-token');sessionStorage.removeItem('oop-admin-exp')}catch{} $('#login').hidden=false;$('#dash').hidden=true;$('#logout').hidden=true;}
+$('#logout').onclick=logout;
+$('#send').onclick=async()=>{const b=$('#send');b.disabled=true;message('Sending a secure sign-in email…');try{await auth('otp',{email:OWNER,create_user:true});message('Check your inbox. Use the link or code provided in the email. If the link takes you elsewhere, return here and paste it into the box above.')}catch(e){message('Unable to send: '+e.message)}finally{b.disabled=false}};
+$('#verify').onclick=async()=>{message('Verifying…');try{session(await auth('verify',{email:OWNER,token:$('#code').value.replace(/\s/g,''),type:'email'}));message('')}catch(e){message(e.message)}};
+$('#verify-link').onclick=async()=>{message('Verifying link…');try{const url=new URL($('#magic').value.trim());const hash=url.searchParams.get('token_hash')||url.searchParams.get('token');if(!hash)throw Error('Could not find the token in that link');session(await auth('verify',{token_hash:hash,type:'email'}))}catch(e){message('Unable to verify link: '+e.message)}};
+async function load(){
+ if(Date.now()>expiry-5000){logout();message('Sign in again to continue.');return}
+ try{const x=await req('GET');data=x;render()}catch(e){if(/authoriz|sign in/i.test(e.message)){logout();message(e.message)}else{$('#notes').textContent='Could not load dashboard: '+e.message}}
+}
+$('#refresh').onclick=load;$('#filter').onchange=render;
+function make(tag,txt,cls){const el=document.createElement(tag);if(cls)el.className=cls;if(txt!=null)el.textContent=txt;return el}
+const statuses=['new','reviewing','planned','resolved','archived'];
+function render(){
+ const feedback=data.feedback||[],counts=data.counts||[],totals={};
+ for(const c of counts){totals[c.event]=(totals[c.event]||0)+Number(c.hits||0)}
+ $('#k-feedback').textContent=feedback.length===200?'200+':feedback.length;
+ $('#k-discovery').textContent=totals.portal_enter||0;$('#k-invites').textContent=totals.invite_copy||0;
+ const list=$('#totals');list.replaceChildren();
+ for(const [k,label] of [['portal_enter','Entered portal'],['story_return','Returned the coin'],['game_start','Started playing'],['read_start','Opened comic'],['invite_copy','Shared invitation'],['feedback_success','Sent feedback']]){
+ const d=make('div',null,'total');d.append(make('strong',String(totals[k]||0)),make('span',label));list.append(d)}
+ const area=$('#notes');area.replaceChildren();const filter=$('#filter').value,shown=feedback.filter(f=>filter==='all'||f.status===filter);
+ if(!shown.length){const x=make('div',null,'empty');x.append(make('strong','A little quiet, for now.'),make('p','Share the experience with a few testers, then come back here.'));area.append(x);return}
+ for(const f of shown){
+  const node=make('article',null,'note');const top=make('div',null,'note-top');
+  const label=make('span',f.feeling||'Unspecified','reaction'),date=make('time',new Date(f.created_at).toLocaleString());top.append(label,date);
+  const context=make('p',(f.moment||'General feeling'),'context');const body=make('p',f.note||'Reaction only.');
+  const select=make('select');select.setAttribute('aria-label','Status for '+(f.feeling||'feedback'));for(const v of statuses){const o=make('option',v);o.value=v;select.append(o)}select.value=f.status||'new';
+  select.onchange=async()=>{const previous=f.status;select.disabled=true;try{await req('POST',{action:'status',id:f.id,status:select.value});f.status=select.value;render()}catch(e){select.value=previous;alert('Could not save status: '+e.message)}finally{select.disabled=false}};
+  node.append(top,context,body,select);area.append(node)
+ }
+}
+$('#export').onclick=()=>{
+ const rows=[['created_at','feeling','moment','note','status'],...(data.feedback||[]).map(f=>[f.created_at,f.feeling,f.moment,f.note,f.status])];
+ const csv=rows.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""').replace(/^([=+\-@])/, "'$1")+'"').join(',')).join('\r\n');
+ const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='out-of-panel-feedback.csv';a.click();URL.revokeObjectURL(url);
+};
+try{accessToken=sessionStorage.getItem('oop-admin-token')||'';expiry=Number(sessionStorage.getItem('oop-admin-exp')||'0')}catch{}
+if(accessToken&&Date.now()<expiry){$('#login').hidden=true;$('#dash').hidden=false;$('#logout').hidden=false;load()}else logout();
+})();
+</script></body></html>
