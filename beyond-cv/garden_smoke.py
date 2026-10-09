@@ -87,16 +87,25 @@ def run() -> None:
                 check(not page_errors, f"{width}px: JS errors: {page_errors}")
 
                 if width in (390, 1440):
-                    # Capture the same DOM whose images were confirmed above; don't
-                    # reload and accidentally screenshot loading placeholders.
-                    page.evaluate("window.scrollTo(0, 0)")
+                    # Capture the same DOM whose artworks decoded. Force instant
+                    # scrolling: the site's default smooth scroll is asynchronous,
+                    # otherwise snapshots might show the previous scene (or nothing).
+                    page.evaluate("window.scrollTo({top:0,behavior:'instant'})")
+                    page.wait_for_function("window.scrollY < 2")
                     page.screenshot(path=str(ARTIFACTS / f"hero-{width}.png"))
-                    page.locator("#worlds").scroll_into_view_if_needed()
-                    page.screenshot(path=str(ARTIFACTS / f"hana-gateway-{width}.png"))
-                    page.locator("#thoughts").scroll_into_view_if_needed()
-                    page.screenshot(path=str(ARTIFACTS / f"thought-garden-{width}.png"))
+                    for section, filename in (
+                        ("worlds", f"hana-gateway-{width}.png"),
+                        ("thoughts", f"thought-garden-{width}.png"),
+                    ):
+                        page.evaluate(
+                            "(id) => document.getElementById(id).scrollIntoView({block:'start',behavior:'instant'})",
+                            section,
+                        )
+                        page.screenshot(path=str(ARTIFACTS / filename))
                     if width == 1440:
-                        page.locator("#savasana").scroll_into_view_if_needed()
+                        page.evaluate(
+                            "() => document.getElementById('savasana').scrollIntoView({block:'start',behavior:'instant'})"
+                        )
                         page.screenshot(path=str(ARTIFACTS / "savasana.png"))
                 findings.append({"viewport":width, "status":"pass","artwork":images,"overflow":overflow})
                 context.close()
