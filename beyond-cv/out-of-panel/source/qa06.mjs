@@ -49,7 +49,7 @@ try{
  await test('Network failure never claims submission succeeded',async()=>!(await page.locator('#oop06-feedback .oop06-success').isVisible())&&await page.locator('#oop06-feedback .oop06-fallback').isVisible());
  await test('Email/copy fallback offered',()=>page.locator('#oop06-email-feedback').getAttribute('href').then(x=>x.startsWith('mailto:')));
  await page.locator('#oop06-feedback .oop06-close').click();
- await page.locator('#share').click();
+ await page.locator('#share-footer').click();
  await test('Invite is a complete shareable public URL',()=>page.locator('#oop06-link').inputValue().then(s=>s==='https://mikelninh.github.io/beyond-cv/out-of-panel/?gift=window#object'));
  await test('Invitation says it shares no ownership',()=>page.locator('#oop06-share .oop06-privacy').innerText().then(s=>s.includes('not ownership')));
  await page.screenshot({path:path.join(artifacts,'share-mobile.png')});
