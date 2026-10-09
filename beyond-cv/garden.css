@@ -426,3 +426,72 @@ dialog::backdrop{background:#020b08d9}
 @media(max-width:820px){.crea-case{grid-template-columns:1fr}.crea-case-visual{min-height:315px}.crea-case-body{padding:34px 28px 38px}.crea-case-body h3{font-size:clamp(36px,6vw,48px);max-width:25ch}}
 @media(max-width:540px){.crea-case-visual{min-height:230px}.crea-case-visual>span{left:18px;bottom:17px}.crea-case-body{padding:26px 21px 32px}.crea-case-body h3{font-size:37px}}
 @media(prefers-reduced-motion:reduce){.crea-case-visual img{transition:none!important}.crea-case-visual:hover img{transform:none}}
+
+
+
+/* Quiet pathways: keep the garden discoverable without showing every experiment at once. */
+.garden-extra-experiences,
+.garden-extra-human{
+  margin-top:clamp(24px,4vw,42px);
+  border-top:1px solid #75917b75;
+  border-bottom:1px solid #75917b75;
+}
+.garden-extra-experiences>summary,
+.garden-extra-human>summary{
+  display:grid;
+  grid-template-columns: .55fr 1.05fr auto;
+  align-items:center;
+  min-height:110px;
+  gap:18px;
+  padding:25px 8px;
+  list-style:none;
+  cursor:pointer;
+  color:#e9f0e7;
+  transition:background-color .24s ease;
+}
+.garden-extra-experiences>summary::-webkit-details-marker,
+.garden-extra-human>summary::-webkit-details-marker{display:none}
+.garden-extra-experiences>summary:hover,
+.garden-extra-human>summary:hover{background-color:#abcba00c}
+.garden-extras-number{
+  font:600 10px/1.5 ui-monospace,monospace;
+  letter-spacing:.11em;
+  color:#c7a77e;
+}
+.garden-extra-experiences>summary strong,
+.garden-extra-human>summary strong{
+  font:400 clamp(23px,3vw,35px)/1.08 Georgia,serif;
+  letter-spacing:-.045em;
+}
+.garden-extras-action{
+  color:#bbcbbb;
+  font-size:12px;
+  white-space:nowrap;
+}
+.garden-extra-experiences[open]>summary,
+.garden-extra-human[open]>summary{border-bottom:1px solid #77937a50}
+.garden-extra-experiences-content{padding:24px 0 30px}
+.garden-extra-experiences-content>aside:first-child{margin-top:0}
+.garden-extra-experiences-content>aside:not(:first-child){margin-top:32px}
+.garden-extra-human>.grid{margin:27px 0 32px}
+.garden-extra-human>.more{margin:0 0 25px}
+#worlds,#human,#thoughts,#future,#conversation,#your-turn,#hello{
+  scroll-margin-top:95px;
+}
+@media(max-width:760px){
+  .garden-extra-experiences>summary,
+  .garden-extra-human>summary{
+    grid-template-columns:1fr;
+    min-height:0;
+    gap:7px;
+    padding:21px 6px 23px;
+  }
+  .garden-extra-experiences>summary strong,
+  .garden-extra-human>summary strong{font-size:28px}
+  .garden-extras-action{white-space:normal}
+  .garden-extra-experiences-content{padding-top:18px}
+}
+@media(prefers-reduced-motion:reduce){
+  .garden-extra-experiences>summary,
+  .garden-extra-human>summary{transition:none}
+}
