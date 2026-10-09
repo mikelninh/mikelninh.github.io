@@ -406,3 +406,23 @@ dialog::backdrop{background:#020b08d9}
 .ways-copy .text-link{display:inline-block;color:#f0ddbf}
 @media(max-width:760px){.ways-note{grid-template-columns:1fr;gap:25px;padding-block:22px 34px}.ways-art{min-height:245px}.ways-art svg{min-height:250px}.ways-copy h3{font-size:clamp(52px,13vw,76px);margin:12px 0 16px}}
 @media(prefers-reduced-motion:reduce){.ways-art svg{transition:none}}
+
+
+/* A small, tangible product experiment within the garden */
+.crea-case{margin:32px 0 0;display:grid;grid-template-columns:1.12fr .88fr;background:#10251e;color:#edf1e5;border:1px solid #71887365;min-height:405px;overflow:hidden;isolation:isolate}
+.crea-case-visual{position:relative;display:block;overflow:hidden;min-height:395px;text-decoration:none;background:radial-gradient(ellipse at 70% 26%,#335d49,#163b2c 70%);color:#f1f5e9!important}
+.crea-case-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.83);transition:transform .8s cubic-bezier(.22,1,.36,1),filter .45s}
+.crea-case-visual:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(0deg,#061d16a9,transparent);pointer-events:none}
+.crea-case-visual:hover img{transform:scale(1.035);filter:saturate(1)}
+.crea-case-visual>span{position:absolute;bottom:23px;left:27px;z-index:2;font:10px ui-monospace,monospace;letter-spacing:.13em;color:#e3edda;border-bottom:1px solid #d6ecc1a6;padding-bottom:7px}
+.crea-case-body{padding:clamp(27px,4vw,54px);display:flex;flex-direction:column;justify-content:center}
+.crea-case-body .kicker{color:#b8d1ac;margin-bottom:17px}
+.crea-case-body h3{font:400 clamp(32px,3.4vw,54px)/1.09 Georgia,serif;letter-spacing:-.048em;color:#f2f2e9;margin:0 0 24px;max-width:15ch}
+.crea-case-body p{font-size:13px;line-height:1.72;color:#c1d1bf;margin:0 0 13px;max-width:55ch}
+.crea-case-body .crea-case-honesty{font-size:11px;color:#91aa98;margin-top:5px}
+.crea-case-links{display:flex;gap:16px 24px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.crea-case-links a{color:#e7dcc0;text-decoration:none;border-bottom:1px solid #b7aa8599;padding-bottom:7px;font-size:12px;line-height:1.5;transition:color .2s,border-color .2s}
+.crea-case-links a:hover{color:#fff9dc;border-color:#fff9dc}
+@media(max-width:820px){.crea-case{grid-template-columns:1fr}.crea-case-visual{min-height:315px}.crea-case-body{padding:34px 28px 38px}.crea-case-body h3{font-size:clamp(36px,6vw,48px);max-width:25ch}}
+@media(max-width:540px){.crea-case-visual{min-height:230px}.crea-case-visual>span{left:18px;bottom:17px}.crea-case-body{padding:26px 21px 32px}.crea-case-body h3{font-size:37px}}
+@media(prefers-reduced-motion:reduce){.crea-case-visual img{transition:none!important}.crea-case-visual:hover img{transform:none}}
