@@ -42,15 +42,20 @@ try {
  const film=await filmContext.newPage();
  await film.goto(base,{waitUntil:'load'});
  await film.waitForFunction(()=>window.OutOfPanelJourney?.getState().status!=='idle');
+ await film.waitForTimeout(800);
  await film.locator('#spin-object').click();
- await film.waitForTimeout(1700);
+ await film.waitForFunction(()=>Math.abs(coin.yaw-coin.tyaw)<.003,{},{timeout:17000});
+ await film.waitForTimeout(250);
  // Smooth turn is visible before reduced-motion switches to an immediate
  // entry; the final frame is a genuinely rendered rooftop, not AI art.
  await film.emulateMedia({reducedMotion:'reduce'});
  await film.locator('#look-inside').click();
+ await film.waitForFunction(()=>document.body.classList.contains('rooftop-arrived'),{},{timeout:17000});
+ await film.waitForTimeout(2350);
+ await film.locator('[data-rooftop="mia"]').click();
  await film.waitForTimeout(1700);
  const filmState=await film.evaluate(()=>OutOfPanelJourney.getState());
- check('Film reaches the real Three.js rooftop',filmState.status==='ready'&&filmState.entered&&filmState.progress>=.99,JSON.stringify(filmState));
+ check('Film reaches and holds the real Three.js rooftop',filmState.status==='ready'&&filmState.entered&&filmState.progress>=.99,JSON.stringify(filmState));
  const recorded=film.video();await filmContext.close();
  if(recorded){const p=await recorded.path();await fs.copyFile(p,path.join(out,'real-teaser.webm'));check('Actual browser interaction video captured',(await fs.stat(path.join(out,'real-teaser.webm'))).size>10000);}
  
