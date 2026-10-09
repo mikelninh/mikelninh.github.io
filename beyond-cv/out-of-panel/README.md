@@ -1,4 +1,4 @@
-# OUT OF PANEL · 0.5 — Stay a little while
+# OUT OF PANEL · 0.6 — A little more human
 
 A coin, a sunset rooftop, and Mia the black cat. A playable creative experiment
 by Michael Ninh / HYPERSPACE, made with AI-assisted development.
@@ -38,15 +38,21 @@ Open https://mikelninh.github.io/beyond-cv/out-of-panel/ or open index.html dire
   game and comic remain accessible.
 - Saved v4/v3 progress migrates to the separate v5 storage key.
 
+## 0.6: feedback and invitations
+
+- The public GitHub Pages origin exposes a two-tap optional feedback dialog (reaction, optional moment and up to 700 characters). Confirmation appears **only** after Supabase acknowledges storage. If saving fails, the form offers an editable copy/email fallback without discarding entered text.
+- Feedback is stored privately in `public.oop06_feedback` (RLS on, no anon read/write grants) in the connected Supabase project. The Edge Function `out-of-panel-v06` validates input, permits only the GitHub Pages origin, and imposes a daily abuse-control limit. Do not expose server credentials in client code.
+- Daily count-only opt-in usage events track portal entry, story return, game/read starts and invitations. There are no application-level visitor IDs; Do Not Track and Global Privacy Control are respected. Feedback and counts are distinct flows. Infrastructure may have technical logs.
+- Share creates a gift invitation link that opens the existing coin world, not an ownership transfer. The 0.5 offline HTML remains fully playable and uses its original local email/share flow rather than depending on the network.
+- The footer share and feedback buttons have 44px touch targets on small screens. Mobile real-device acceptance is still outstanding.
+
 ## Sharing and feedback
 
 **Pass it on** produces a public invitation with ?gift=window#object and the
 recipient greeting. The portable page can also save a self-contained HTML
 invitation that opens without an internet connection.
 
-**How did it feel?** prepares an email to mikel_ninh@yahoo.de. Visitors review
-and send it in their own email app. Copy and TXT alternatives remain available;
-browser/device details are excluded unless selected. The website sends no email.
+On the public site **How did it feel?** submits an optional reaction and note to a private server-side inbox after explicit consent. The visitor sees acknowledgment only after saving. On local/offline copies, the original 0.5 email/copy experience remains available. The website sends no emails itself.
 Progress and game state stay on the visitor's device.
 
 ## Build and inspect
@@ -59,13 +65,13 @@ minified distributions and MIT licence are in source/vendor. The build combines
 them into isolated lazy scopes. There is no runtime CDN, dynamic evaluation,
 account, analytics or remote AI call.
 
-source/qa05.mjs is the current browser gate. It exercises real browser input,
+source/qa05.mjs and source/qa06.mjs are the browser gates. It exercises real browser input,
 the portal transition, discoveries, game input/rules, the reader, keepsake
 download, storage, invitations, reduced motion and fallback. The scoped GitHub
 Actions job builds the release, runs Chromium with SwiftShader WebGL2, and saves
 screenshots and its report.
 
-QA-results.json records 61 passing browser checks and the review workflow.
+QA-results.json records 61 passing 0.5 regression checks. QA-results-06.json records the new 0.6 checks once the release gate passes.
 QA-results-04.json preserves the previous release report for comparison. Physical-phone,
 Safari and native GPU performance are not established by viewport emulation.
 Feedback email delivery is not tested or submitted.
