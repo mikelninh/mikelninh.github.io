@@ -4,3 +4,12 @@ body.oop07-curious[data-view=object] #portal-hint{color:#f3d79b}
 body.oop07-first-visit:not(.oop07-curious)[data-view=object] #portal-hint{color:#dfc995}
 @media(max-width:760px){#object-scene #portal-hint{padding:0 12px;max-width:96%;font-size:9px;line-height:1.35}}
 @media(prefers-reduced-motion:reduce){#object-scene #portal-hint{transition:none}}
+
+/* 320px phones: never collapse the fourth coin control to zero width. */
+@media(max-width:359px){
+ .specimen-controls{display:grid;grid-template-columns:36px minmax(110px,145px) 36px;justify-content:center;gap:5px;bottom:10%}
+ .specimen-controls .round-btn{height:36px;width:36px;padding:2px;min-width:36px}
+ .specimen-controls .outline-btn{min-height:36px;padding:6px 10px;justify-content:center;white-space:nowrap;font-size:9px}
+ .specimen-controls #spin-object{grid-column:1 / -1;justify-self:center;min-width:150px}
+ .specimen-hint{bottom:2%;font-size:7px}
+}
