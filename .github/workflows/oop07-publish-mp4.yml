@@ -1,0 +1,54 @@
+name: Publish OUT OF PANEL short teaser MP4
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/oop07-publish-mp4.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  publish-clip:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - name: Install video converter if needed
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+          ffmpeg -version | head -1
+      - name: Cut authentic 3D browser footage into a short social clip
+        run: |
+          set -euo pipefail
+          input='beyond-cv/out-of-panel/real-teaser.webm'
+          output='beyond-cv/out-of-panel/real-teaser.mp4'
+          test -s "$input"
+          ffmpeg -hide_banner -loglevel error -y -i "$input" -filter_complex '[0:v]trim=start=7.3:end=10.5,setpts=PTS-STARTPTS,fps=30,scale=960:600,format=yuv420p[v0];[0:v]trim=start=13.2:end=16.7,setpts=PTS-STARTPTS,fps=30,scale=960:600,format=yuv420p[v1];[v0][v1]concat=n=2:v=1:a=0[v]' -map '[v]' -c:v libx264 -preset medium -crf 24 -pix_fmt yuv420p -movflags +faststart "$output"
+          duration="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$output")"
+          python3 -c "d=float('$duration');assert 5.5<d<8.5,d;print('Real browser MP4 length:',d)"
+          test -s "$output"
+      - name: Commit the verified short film
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+mikelninh@users.noreply.github.com'
+          git add -- beyond-cv/out-of-panel/real-teaser.mp4
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish authentic HYPERSPACE short teaser with coin and rooftop'
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Deploy clip to GitHub Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
