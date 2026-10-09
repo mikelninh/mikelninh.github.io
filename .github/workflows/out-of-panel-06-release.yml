@@ -17,7 +17,7 @@ concurrency:
 jobs:
   build-test-publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 16
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -53,7 +53,7 @@ jobs:
         if: failure()
         run: |
           cat beyond-cv/out-of-panel/source/qa06-artifacts/QA06.json || true
-      - name: Capture 0.7 real browser moments and mobile performance
+      # Use HEAD of main for the complete patched 0.7 experience.\n      - name: Capture 0.7 real browser moments and mobile performance
         env:
           PLAYWRIGHT_MODULE: /tmp/oop06-tests/node_modules/playwright/index.mjs
         run: node beyond-cv/out-of-panel/source/qa07.mjs
