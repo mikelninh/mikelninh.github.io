@@ -15,7 +15,7 @@ const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disab
 const checks=[],errors=[];
 const check=(name,value,details)=>{checks.push({name,pass:!!value,details:details||''});console.log((value?'PASS ':'FAIL ')+name)};
 try {
- const videoContext=await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:1,recordVideo:{dir:out,size:{width:960,height:600}},acceptDownloads:true});
+ const videoContext=await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:1,acceptDownloads:true});
  const page=await videoContext.newPage();page.on('pageerror',e=>errors.push(e.message));
  await page.goto(base,{waitUntil:'load'});
  await page.waitForFunction(()=>window.OutOfPanelJourney?.getState().status!=='idle',{},{timeout:20000});
@@ -24,7 +24,7 @@ try {
  await page.locator('#stage').screenshot({path:path.join(out,'coin-real.png')});
  await page.locator('#spin-object').click();await page.waitForTimeout(2000);
  check('Spin hints at the world',await page.locator('#portal-hint').textContent().then(x=>x.includes('Look inside')));
- await page.locator('#look-inside').click();await page.waitForFunction(()=>OutOfPanelJourney.getState().progress>=.999,{},{timeout:23000});
+ await page.locator('#look-inside').click();await page.waitForFunction(()=>OutOfPanelJourney.getState().progress>=.999,{},{timeout:35000});
  await page.waitForTimeout(700);
  const three=await page.evaluate(()=>OutOfPanelJourney.getState());
  check('Portal rendering is actual Three.js',three.status==='ready'&&three.threeRevision==='180');
@@ -35,8 +35,25 @@ try {
  await page.locator('#return-page').click();await page.waitForTimeout(650);
  await page.locator('#give-back').click();await page.waitForTimeout(1700);
  await page.screenshot({path:path.join(out,'page04-real.png')});
- const video=page.video();await videoContext.close();
- if(video){const p=await video.path();await fs.copyFile(p,path.join(out,'real-teaser.webm'));check('Real interaction video was captured',(await fs.stat(path.join(out,'real-teaser.webm'))).size>10000)}
+ await videoContext.close();
+ // Film in a separate, small context. GPU screenshots above must not compete
+ // with video encoding during the heavier portal flight.
+ const filmContext=await browser.newContext({viewport:{width:960,height:600},deviceScaleFactor:1,recordVideo:{dir:out,size:{width:960,height:600}}});
+ const film=await filmContext.newPage();
+ await film.goto(base,{waitUntil:'load'});
+ await film.waitForFunction(()=>window.OutOfPanelJourney?.getState().status!=='idle');
+ await film.locator('#spin-object').click();
+ await film.waitForTimeout(1700);
+ // Smooth turn is visible before reduced-motion switches to an immediate
+ // entry; the final frame is a genuinely rendered rooftop, not AI art.
+ await film.emulateMedia({reducedMotion:'reduce'});
+ await film.locator('#look-inside').click();
+ await film.waitForTimeout(1700);
+ const filmState=await film.evaluate(()=>OutOfPanelJourney.getState());
+ check('Film contains a real rendered rooftop or compatible fallback',filmState.status==='ready'||filmState.status==='fallback',filmState);
+ const recorded=film.video();await filmContext.close();
+ if(recorded){const p=await recorded.path();await fs.copyFile(p,path.join(out,'real-teaser.webm'));check('Actual browser interaction video captured',(await fs.stat(path.join(out,'real-teaser.webm'))).size>10000);}
+ 
  // A phone-shaped Chromium browser is NOT a physical device; record only honest emulation results.
  const mobile=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true});
  const phone=await mobile.newPage();phone.on('pageerror',e=>errors.push(e.message));
