@@ -102,6 +102,8 @@ jobs:
           if test -f beyond-cv/out-of-panel/real-teaser.mp4; then git add -- beyond-cv/out-of-panel/real-teaser.mp4; fi
           if ! git diff --cached --quiet; then
             git commit -m 'Release OUT OF PANEL 0.7: real screenshots, mobile QA and private listening room'
+            git fetch origin main
+            git rebase origin/main
             git push origin HEAD:main
           fi
 
