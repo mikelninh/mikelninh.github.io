@@ -1,9 +1,6 @@
 name: Verify OUT OF PANEL feedback delivery
 
 on:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/oop-feedback-delivery-check.yml']
   workflow_dispatch:
 
 permissions:
