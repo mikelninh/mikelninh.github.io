@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08090d">
+<meta name="description" content="HANA — Three moments from an emerging universe. Explore original collectible artwork from Lotus Impact, Rooftop Pounce and The World Falls Up.">
+<meta property="og:title" content="HANA — Three Moments">
+<meta property="og:description" content="Collectible art and interactive storytelling. Three moments from Hana's world.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mikelninh.github.io/beyond-cv/hana-grails/">
+<link rel="canonical" href="https://mikelninh.github.io/beyond-cv/hana-grails/">
+<title>HANA — Three Moments / The Grail Studies</title>
+<style>
+:root{color-scheme:dark;--ink:#f3eee4;--muted:#aaa4a0;--line:#ffffff26;--red:#ad4a48;--gold:#ddbea0;--ease:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:#090a0e;font:15px/1.65 system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased;min-width:320px}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 54% 12%,#603b3a55,transparent 49%),radial-gradient(ellipse at 6% 67%,#211e2f99,transparent 52%),linear-gradient(#0a0b10,#08090d);opacity:.96}
+body:after{content:"";position:fixed;inset:0;z-index:8;pointer-events:none;opacity:.16;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.34' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:screen}
+main,nav,footer{position:relative;z-index:1}.wrap{width:min(1280px,calc(100% - 48px));margin:auto}a{color:inherit;text-underline-offset:5px}button{font:inherit;cursor:pointer;color:inherit}a:focus-visible,button:focus-visible{outline:2px solid #f2c8a7;outline-offset:5px}.skip{position:absolute;top:-80px;left:24px;z-index:15}.skip:focus{top:20px}
+nav{display:flex;align-items:center;justify-content:space-between;gap:25px;padding:25px 0;border-bottom:1px solid #ffffff1e}.wordmark{font-weight:700;font-size:13px;letter-spacing:.24em;text-decoration:none}.wordmark em{font:italic 13px Georgia,serif;letter-spacing:0;margin-left:12px;color:var(--muted)}.nav-right{display:flex;gap:26px;align-items:center}.nav-right a{font-size:12px;text-decoration:none;color:#c8c3bb}.nav-right a:hover,.footlink:hover{color:#fff}
+.hero{padding:clamp(70px,9vw,148px) 0 48px;max-width:1110px;position:relative}.kicker{font:700 10px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}.hero h1{font:normal clamp(66px,10.6vw,168px)/.87 Georgia,"Times New Roman",serif;letter-spacing:-.082em;margin:33px 0 34px;text-wrap:balance}.hero h1 em{color:#c98880;font-weight:normal}.intro{display:flex;align-items:end;justify-content:space-between;gap:34px}.intro p{max-width:490px;color:#ccc3ba;margin:0;font-size:clamp(15px,1.5vw,19px);line-height:1.65}.intro aside{font-size:11px;color:#938e8b;letter-spacing:.12em;white-space:nowrap}
+.exhibit{padding:65px 0 72px}.stage-top{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding:22px 0 34px;gap:12px}.stage-top span{font:11px ui-monospace,monospace;letter-spacing:.17em;color:#a79c95}.stage-top .right{color:#e5b1a0}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:clamp(14px,2.4vw,34px);perspective:1400px}
+.piece{min-width:0}.piece:nth-child(2){padding-top:46px}.piece:nth-child(3){padding-top:92px}
+.holder{position:relative;aspect-ratio:2/3;perspective:1250px;filter:drop-shadow(0 40px 40px #0009);transition:filter .6s var(--ease)}
+.holder:hover{filter:drop-shadow(0 46px 62px #000e)}.card-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .85s var(--ease)}.piece.is-flipped .card-inner{transform:rotateY(180deg)}
+.front,.back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;background:#1b1418;border:1px solid #e4c1a75b;box-shadow:inset 0 0 0 5px #000b,inset 0 0 0 6px #f0e5d017}
+.front:before{content:"";position:absolute;inset:-2px;pointer-events:none;z-index:3;background:linear-gradient(110deg,transparent 22%,#fff0 30%,#ffddac27 47%,#c4d4ff1b 49%,transparent 69%);transform:translateX(-130%);transition:transform .95s var(--ease);mix-blend-mode:screen}
+.piece:hover .front:before,.piece:focus-within .front:before{transform:translateX(130%)}
+.front:after{content:"";position:absolute;inset:9px;pointer-events:none;border:1px solid #fff6;z-index:4;opacity:.45}.front img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.94) contrast(1.05)}.front img[hidden]{display:none}.art-loading{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(140deg,#22191f,#100f18);color:#be8e83;letter-spacing:.15em;text-align:center;padding:20px;font:italic clamp(23px,3vw,47px)/1.1 Georgia,serif}
+.back{transform:rotateY(180deg);padding:clamp(22px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(circle at 50% 35%,#713d3a42,transparent 50%),linear-gradient(160deg,#201820,#0b0c12);color:var(--ink)}
+.back .mark{font:italic clamp(62px,9vw,130px)/.9 Georgia,serif;color:#c27d6e}.back h2{font:normal clamp(24px,3vw,44px)/1.05 Georgia,serif;letter-spacing:-.055em;margin:12px 0}.back p{font-size:clamp(12px,1.25vw,16px);color:#d2c5bd;line-height:1.65}.back small{font:10px ui-monospace,monospace;letter-spacing:.12em;color:#af9f98}
+.card-info{display:flex;justify-content:space-between;gap:8px;padding-top:18px;border-top:1px solid #ffffff2c;margin-top:18px}.card-info .number{font:10px ui-monospace,monospace;letter-spacing:.18em;color:#b49e91}.card-info h3{font:normal clamp(24px,2.7vw,38px)/1.08 Georgia,serif;letter-spacing:-.05em;margin:10px 0 6px}.card-info p{font-size:12px;color:#b3a8a0;max-width:290px;margin:0}
+.card-buttons{display:flex;align-items:start;gap:6px;flex-direction:column;flex:0 0 auto}.card-buttons button{font-size:11px;background:none;border:0;border-bottom:1px solid #bb9f91;padding:3px 0;white-space:nowrap}.card-buttons button:hover{color:#f8d1bb}
+.after{display:grid;grid-template-columns:1fr 1fr;gap:50px;border-top:1px solid var(--line);margin-top:50px;padding:45px 0 68px}.after h2{font:normal clamp(34px,4vw,58px)/1.08 Georgia,serif;letter-spacing:-.055em;margin:11px 0 14px}.after p{color:#b5ada7;max-width:450px}.after .pull{border-left:1px solid #ffffff30;padding-left:40px}.after blockquote{font:italic clamp(24px,2.6vw,39px)/1.22 Georgia,serif;margin:18px 0;color:#e0c2b3}.cta{display:inline-flex;align-items:center;justify-content:center;min-height:48px;margin:10px 12px 4px 0;padding:12px 21px;border:1px solid #b89786;text-decoration:none;font-size:12px;font-weight:650;letter-spacing:.02em;transition:background .25s,color .25s}.cta:hover{background:#e5bba2;color:#171218}.cta.solid{background:#d9b7a1;color:#151017}.cta.solid:hover{background:#f8dbc4}
+.small{font:11px/1.7 system-ui,sans-serif;color:#8f8b89}.disclaimer{padding:18px 0 32px;border-top:1px solid #ffffff20;color:#8e8885;font-size:11px;line-height:1.8}.disclaimer b{color:#c4b7ad;font-weight:600}
+footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:27px 0 50px;border-top:1px solid #ffffff20;color:#958f8c;font-size:11px}.footlink{text-decoration:none}
+dialog{border:1px solid #ffffff40;background:#101115;color:var(--ink);max-width:min(92vw,770px);max-height:94vh;padding:18px;box-shadow:0 45px 120px #000d}dialog::backdrop{background:#020203e9;backdrop-filter:blur(9px)}dialog img{max-height:78vh;max-width:100%;object-fit:contain;display:block;margin:auto}dialog .dlg-head{display:flex;align-items:center;justify-content:space-between;gap:25px;padding:0 0 10px;font-size:12px}dialog button{background:none;border:1px solid #fff5;padding:6px 13px}
+@media(max-width:900px){.cards{gap:14px}.piece:nth-child(2){padding-top:25px}.piece:nth-child(3){padding-top:50px}.card-info{display:block}.card-buttons{flex-direction:row;margin-top:9px}.intro aside{display:none}.after{gap:26px}}
+@media(max-width:650px){.wrap{width:calc(100% - 34px)}nav{padding:19px 0}.nav-right{gap:12px}.nav-right a{font-size:11px}.wordmark em{display:none}.hero{padding:72px 0 26px}.hero h1{font-size:clamp(58px,15vw,92px);margin:21px 0 28px}.intro p{font-size:16px}.exhibit{padding-top:36px}.cards{display:flex;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scroll-padding-inline:calc((100% - min(82vw,370px))/2);gap:19px;padding:0 10px 25px;margin:0 -10px;align-items:start}.piece{flex:0 0 min(82vw,370px);scroll-snap-align:center}.piece:nth-child(2),.piece:nth-child(3){padding-top:0}.back h2{font-size:38px}.back p{font-size:15px}.card-info{display:flex}.after{grid-template-columns:1fr;gap:12px}.after .pull{border-left:0;border-top:1px solid #ffffff2c;padding:26px 0 0}.after{margin-top:10px;padding-bottom:42px}.card-info h3{font-size:30px}.stage-top .right{display:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}.front:before{display:none}}
+</style>
+</head>
+<body>
+<a href="#gallery" class="skip">Skip to the cards</a>
+<nav class="wrap" aria-label="Main navigation"><a href="../" class="wordmark">HANA <em>/ an unfinished universe</em></a><div class="nav-right"><a href="../">← Beyond the CV</a><a href="../out-of-panel/">Play the story ↗</a></div></nav>
+<main class="wrap">
+<header class="hero"><div class="kicker">HYPERSPACE / THE GRAIL STUDIES · VOL. 01</div><h1>Three<br><em>moments.</em><br>One universe.</h1><div class="intro"><p>A leap. A landing. A world turned upside down. Three pieces of HANA — a collectible art and interactive storytelling project from a universe still being written.</p><aside>AN EXHIBITION, NOT A SHOP<br>01 — 03 / ORIGINAL ARTWORK</aside></div></header>
+<section id="gallery" class="exhibit" aria-label="The three collectible artworks">
+<div class="stage-top"><span>ARCHIVE / THE FIRST THREE MOMENTS</span><span class="right">TOUCH TO TURN · OPEN TO LOOK CLOSER</span></div>
+<div class="cards">
+<article class="piece" id="lotus">
+ <div class="holder"><div class="card-inner">
+  <div class="front"><img src="./art/lotus-impact.png" width="1024" height="1536" alt="Lotus Impact original art: Hana lands beneath a crimson moon, with rain suspended around her" fetchpriority="high"></div>
+  <div class="back"><div class="kicker">HANA / MOMENT 01</div><div><span class="mark" aria-hidden="true">花</span><h2>Lotus<br>Impact</h2><p>A crimson moon. Rain held in the air. A landing that turns a rooftop into a memory.</p></div><small>AN IMAGE / NOT AN EDITION PROMISE</small></div>
+ </div></div>
+ <div class="card-info"><div><span class="number">01 / THE LANDING</span><h3>Lotus Impact</h3><p>When an ordinary choice changes the night.</p></div><div class="card-buttons"><button class="flip" type="button" aria-pressed="false" aria-label="Turn Lotus Impact card">Turn ↻</button><button class="view" type="button" aria-label="View Lotus Impact artwork larger">View ↗</button></div></div>
+</article>
+<article class="piece" id="pounce">
+ <div class="holder"><div class="card-inner">
+  <div class="front"><img src="./art/rooftop-pounce.png" width="1023" height="1537" loading="lazy" alt="Rooftop Pounce original art: Hana leaps forward through a moonlit Saigon skyline"></div>
+  <div class="back"><div class="kicker">HANA / MOMENT 02</div><div><span class="mark" aria-hidden="true">風</span><h2>Rooftop<br>Pounce</h2><p>The last instant of hesitation is already behind her. Saigon opens beneath the leap.</p></div><small>A STUDY OF VELOCITY / NOT A PHYSICAL CARD</small></div>
+ </div></div>
+ <div class="card-info"><div><span class="number">02 / THE LEAP</span><h3>Rooftop Pounce</h3><p>The whole city holds its breath.</p></div><div class="card-buttons"><button class="flip" type="button" aria-pressed="false" aria-label="Turn Rooftop Pounce card">Turn ↻</button><button class="view" type="button" aria-label="View Rooftop Pounce artwork larger">View ↗</button></div></div>
+</article>
+<article class="piece" id="world">
+ <div class="holder"><div class="card-inner">
+  <div class="front"><div id="world-loading" class="art-loading" role="status">THE WORLD<br>FALLS UP</div><img id="world-art" width="1024" height="1536" loading="lazy" alt="The World Falls Up original art: two opposing cities meet across a surreal seam as Hana reaches forward" hidden></div>
+  <div class="back"><div class="kicker">HANA / MOMENT 03</div><div><span class="mark" aria-hidden="true">∞</span><h2>The World<br>Falls Up</h2><p>Two cities. One impossible seam. Her hand is still reaching towards us.</p></div><small>SPATIAL GRAIL STUDY / NOT A LIMITED RELEASE</small></div>
+ </div></div>
+ <div class="card-info"><div><span class="number">03 / THE IMPOSSIBLE</span><h3>The World Falls Up</h3><p>Gravity changes. Her purpose doesn't.</p></div><div class="card-buttons"><button class="flip" type="button" aria-pressed="false" aria-label="Turn The World Falls Up card">Turn ↻</button><button class="view" type="button" aria-label="View The World Falls Up artwork larger">View ↗</button></div></div>
+</article>
+</div></section>
+<section class="after" aria-label="Continue exploring the story"><div><div class="kicker">AN INVITATION TO EXPLORE</div><h2>The world is bigger<br>than three cards.</h2><p>These artworks are fragments of a story about small promises, impossible choices, and what we protect when everything changes.</p><a class="cta solid" href="../out-of-panel/">Explore the playable story ↗</a><a class="cta" href="../">Meet the maker ↗</a></div><div class="pull"><div class="kicker">FROM THE UNFINISHED UNIVERSE</div><blockquote>“A thread cannot force an outcome. It can only make another possible.”</blockquote><p>That is where the story begins. Not with power — with a choice.</p></div></section>
+<p class="disclaimer"><b>About this collection.</b> Personal, AI-assisted conceptual artwork and interactive presentation. Three existing digital pieces, presented as studies from a fictional universe. No purchase, random pack, physical print, verified scarcity, playable trading-card game, or rights-cleared commercial release is offered here. Explore freely. Artwork is not a claim of association with any existing superhero franchise.</p>
+</main>
+<footer class="wrap"><span>HANA / HYPERSPACE · Made with care, still becoming.</span><a class="footlink" href="../">Return to Beyond the CV ↑</a></footer>
+<dialog id="lightbox" aria-labelledby="lightbox-name"><div class="dlg-head"><span id="lightbox-name">Artwork</span><button id="close-lightbox" type="button" aria-label="Close enlarged artwork">Close ✕</button></div><img id="lightbox-img" alt=""></dialog>
+<script>
+(function(){
+ const pieces=Array.from(document.querySelectorAll('.piece'));
+ const dialog=document.getElementById('lightbox');
+ const image=document.getElementById('lightbox-img');
+ const label=document.getElementById('lightbox-name');
+ const world=document.getElementById('world-art');
+ let readyWorld=null,lastFocus=null;
+ function loadWorld(){
+  if(readyWorld)return readyWorld;
+  readyWorld=Promise.all([
+    fetch('./art/the-world-falls-up.part1.b64.txt').then(check).then(r=>r.text()),
+    fetch('./art/the-world-falls-up.part2.b64.txt').then(check).then(r=>r.text())
+  ]).then(parts=>{
+   world.src='data:image/png;base64,'+parts.join('');
+   world.hidden=false;
+   document.getElementById('world-loading').hidden=true;
+   return world.src;
+  }).catch(()=>{
+   document.getElementById('world-loading').textContent='ARTWORK TEMPORARILY UNAVAILABLE';
+   readyWorld=null;return null;
+  });
+  return readyWorld;
+ }
+ function check(response){if(!response.ok)throw new Error('Asset unavailable');return response}
+ if('IntersectionObserver' in window){
+  const obs=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){loadWorld();obs.disconnect()}},{rootMargin:'250px'});
+  obs.observe(document.getElementById('world'));
+ }else{loadWorld()}
+ for(const piece of pieces){
+  const flip=piece.querySelector('.flip');
+  flip.addEventListener('click',()=>{
+   const active=piece.classList.toggle('is-flipped');
+   flip.setAttribute('aria-pressed',String(active));
+   flip.textContent=active?'Return ↶':'Turn ↻';
+  });
+  piece.querySelector('.view').addEventListener('click',async event=>{
+   lastFocus=event.currentTarget;
+   const cardImage=piece.querySelector('.front img');
+   let source=cardImage.getAttribute('src')||cardImage.currentSrc;
+   if(piece.id==='world'){label.textContent='Opening artwork…';source=await loadWorld();if(!source){label.textContent='Artwork unavailable';return}}
+   image.src=source;
+   image.alt=cardImage.alt;
+   label.textContent=piece.querySelector('h3').textContent;
+   if(typeof dialog.showModal==='function')dialog.showModal();
+   else window.open(source,'_blank','noopener');
+  });
+ }
+ function close(){dialog.close()}
+ document.getElementById('close-lightbox').addEventListener('click',close);
+ dialog.addEventListener('click',event=>{if(event.target===dialog)close()});
+ dialog.addEventListener('close',()=>{image.removeAttribute('src');if(lastFocus)lastFocus.focus()});
+})();
+</script>
+</body></html>
