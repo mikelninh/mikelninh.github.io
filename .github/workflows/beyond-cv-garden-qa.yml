@@ -1,0 +1,43 @@
+name: Beyond CV garden browser gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'beyond-cv/**'
+      - '.github/workflows/beyond-cv-garden-qa.yml'
+  pull_request:
+    paths:
+      - 'beyond-cv/**'
+      - '.github/workflows/beyond-cv-garden-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: beyond-cv-garden-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Chromium test environment
+        run: |
+          python -m pip install playwright==1.55.0
+          python -m playwright install --with-deps chromium
+      - name: Verify art, essays, reflection builder, responsive layout and HANA exhibit
+        run: python beyond-cv/garden_smoke.py
+      - name: Preserve screenshots and release evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: beyond-cv-garden-proof
+          path: beyond-cv-garden-proof
+          retention-days: 14
