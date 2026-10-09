@@ -1,0 +1,369 @@
+/* THE GARDEN OF BECOMING · 2026
+   A cinematic skin for Beyond the CV. Preserves the existing accessible tools.
+   Original artwork lives in /beyond-cv/hana-grails/. No third-party fonts or trackers. */
+:root{
+  color-scheme:dark;
+  --bg:#091410;--ink:#ebeee3;--muted:#a6b5a9;--line:#35483f;
+  --accent:#d8ad7f;--orange:#d3a079;--sun:#dec29b;--paper:#12231c;--r:3px;
+  --ease:cubic-bezier(.22,1,.36,1)
+}
+html{scroll-padding-top:95px}
+body{
+  background:radial-gradient(ellipse 90% 36% at 80% 11%,#19362d8b,transparent 75%),
+             radial-gradient(ellipse 80% 23% at 0 65%,#1d2f267a,transparent 80%),var(--bg);
+  color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.75;overflow-x:clip
+}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  opacity:.22;background:linear-gradient(105deg,transparent,#9fb79a0b 49%,transparent 51%)}
+::selection{background:#d6b688;color:#111f19}
+.wrap{width:min(1170px,calc(100% - 52px))}
+h1,h2,h3{font-weight:400}
+h2,h2 em,.section-head h2,.future-intro h2,.conversation h2,.gift h2,.recruiter h2{
+  font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.055em
+}
+h2{font-size:clamp(39px,5vw,68px);line-height:1.08}
+h2 em{color:#ddbf95}
+.kicker{font-size:10px;color:var(--accent);font-weight:650;letter-spacing:.23em}
+a{transition:color .25s var(--ease)}
+a:hover{color:#f9d7ab}
+a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible,input:focus-visible{
+ outline:2px solid #eac899;outline-offset:4px
+}
+.nav-shell{background:#091611db;border-bottom:1px solid #69807336;backdrop-filter:blur(20px)}
+nav{min-height:73px}
+.brand{font-weight:650;letter-spacing:.015em;color:#eae9df}
+.brand span{color:#a8b2a8;letter-spacing:.01em}
+.nav-links{font-size:12px;gap:27px}
+.nav-links a{color:#d5ddcf}
+.nav-links .pill{border:1px solid #d6be967c;border-radius:1px;padding:9px 16px;color:#ead3b6}
+.nav-links .pill:hover{color:#0e1c18;background:#e1c59d}
+.topline span{background:#e3ba85}
+section{padding:clamp(75px,9vw,125px) 0}
+.section-head{grid-template-columns:.55fr 1.45fr;gap:40px;margin-bottom:38px;align-items:start}
+.section-head h2{margin:0;max-width:740px}
+.text-link{color:#ead4b7;border-color:#b7a68d;font-size:13px}
+.text-link:hover{color:#fff4df;border-color:#fff4df}
+.button{border-radius:2px;background:#e2c9a8;color:#15221c;border-color:#e2c9a8;
+  font-weight:600;font-size:13px;letter-spacing:.015em;padding:14px 21px;min-height:48px}
+.button:hover{background:#fff0d3;border-color:#fff0d3;color:#102119;transform:translateY(-2px)}
+.button.outline{color:#f2ead9;border-color:#b4bdaa6d;background:#1b2b2480}
+.button.outline:hover{background:#31463b;color:#fff}
+.button.light{background:#ead4ae;color:#18251f;border-color:#ead4ae}
+.button.light:hover{background:#fff3d6}
+.chip{border:1px solid #bbc5b151;background:#0d1c1a86;color:#dbe2d6;border-radius:2px;font-size:11px;padding:5px 10px}
+.dot{background:#d5b17e}
+
+/* Act I: the gate. An entirely local illustrated atmosphere. */
+.hero{
+  min-height:min(780px,84svh);background:#0d211c;overflow:hidden;isolation:isolate;
+  display:flex;flex-direction:column;justify-content:flex-end;position:relative;
+  border:1px solid #b9baaa2b;margin-top:20px;padding:clamp(30px,5vw,75px);
+  box-shadow:0 46px 90px #0003
+}
+.hero>*:not(.garden-visual){z-index:2;position:relative}
+.garden-visual,.garden-visual:after,.garden-visual:before{position:absolute;inset:0;pointer-events:none}
+.garden-visual{z-index:0;overflow:hidden;background:radial-gradient(ellipse at 72% 30%,#375f52,#0a1d1b 70%)}
+.garden-visual svg{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.035);
+  animation:garden-breathe 28s ease-in-out infinite alternate}
+.garden-visual:after{content:"";background:linear-gradient(90deg,#081711ef 0%,#091a17a6 42%,#14211a10 90%),
+  linear-gradient(0deg,#07130ff2 0%,#0a1a143b 56%,#00000016 100%);z-index:1}
+.garden-visual:before{content:"";z-index:2;opacity:.23;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)' opacity='.54'/%3E%3C/svg%3E")}
+.garden-mote{position:absolute;z-index:3;width:4px;height:4px;border-radius:50%;background:#f0c58b;
+  box-shadow:0 0 22px 6px #eaba7788;opacity:.7;animation:mote-float 9s ease-in-out infinite alternate}
+.mote-a{top:33%;right:15%}.mote-b{top:55%;right:31%;animation-delay:-4s;opacity:.46}
+.mote-c{top:68%;right:9%;animation-delay:-7s;opacity:.35}
+@keyframes garden-breathe{to{transform:scale(1.085) translate(-.7%,.3%)}}
+@keyframes mote-float{to{transform:translate3d(18px,-25px,0);opacity:.18}}
+.hero .eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#eed7b4;margin:0 0 25px;
+  max-width:650px;text-wrap:pretty;text-shadow:0 2px 25px #0008}
+.hero h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;
+  font-size:clamp(58px,8.6vw,120px);line-height:.93;letter-spacing:-.065em;
+  max-width:1020px;text-shadow:0 3px 36px #0006}
+.hero h1 em{font-weight:400;color:#f0ca96}
+.hero h1 em:after{display:none}
+.hero .lede{font-size:clamp(16px,1.6vw,21px);line-height:1.6;max-width:560px;
+  color:#e0e4d9;margin:28px 0 0;text-shadow:0 3px 16px #000c}
+.hero-bottom{margin-top:32px;align-items:flex-end;gap:24px}
+.hero-bottom .text-link{color:#f0dbb8;border-color:#f0dbb8}
+.hero-ctas{display:flex;gap:11px;flex-wrap:wrap;align-items:center}
+.hero-ctas .button.outline{background:#12251f8c}
+.garden-film-tag{position:absolute!important;right:30px;top:27px!important;font-size:10px;
+  color:#f0d6b6;letter-spacing:.2em;text-transform:uppercase;text-align:right}
+.intro-note{border-color:#44574b;grid-template-columns:.75fr 1.25fr;gap:34px;
+  padding:32px 0;font-size:14px;color:#aab7ac}
+.intro-note strong{font-family:Georgia,serif;color:#e9d6bb;font-size:19px;font-weight:400}
+
+/* The paths: quiet navigation, not a dashboard. */
+.garden-paths{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
+  border-block:1px solid #435748;margin:36px 0 30px;padding:18px 0}
+.garden-paths a{position:relative;display:flex;align-items:flex-start;gap:16px;padding:15px 26px;
+  text-decoration:none;border-right:1px solid #3a5143;color:#e8ede1;min-height:95px}
+.garden-paths a:first-child{padding-left:0}.garden-paths a:last-child{border-right:0}
+.garden-paths .path-n{font:11px ui-monospace,monospace;color:#c5a77f;letter-spacing:.12em;margin-top:7px}
+.garden-paths strong{display:block;font:normal 25px/1.1 Georgia,serif;letter-spacing:-.03em;margin-bottom:8px}
+.garden-paths small{display:block;font-size:11px;color:#a1b1a2;line-height:1.55}
+.garden-paths a:after{content:"↗";font-size:17px;color:#e2c297;margin-left:auto;opacity:.5;transition:.25s}
+.garden-paths a:hover:after{transform:translate(3px,-4px);opacity:1}
+
+/* Act II: HANA's first art exhibition */
+#worlds{padding-top:85px;padding-bottom:85px}
+.worlds-portal{
+  min-height:650px;position:relative;isolation:isolate;overflow:hidden;
+  display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;align-items:center;
+  background:radial-gradient(circle at 81% 28%,#5c393c83,transparent 46%),
+             radial-gradient(circle at 45% 85%,#39292477,transparent 57%),#10151a;
+  border:1px solid #b69c8a4e;padding:clamp(28px,5vw,68px)
+}
+.worlds-portal:before{content:"";position:absolute;inset:0;pointer-events:none;
+  opacity:.24;background-image:linear-gradient(90deg,#ffffff07 1px,transparent 1px),
+     linear-gradient(#ffffff06 1px,transparent 1px);background-size:76px 76px;mask-image:linear-gradient(90deg,transparent,#000)}
+.worlds-copy{position:relative;z-index:3;max-width:520px}
+.worlds-copy .kicker{color:#d7b6a3}
+.worlds-copy h2{font-size:clamp(52px,6.5vw,91px);line-height:.97;margin:30px 0 25px;color:#f4ebdf}
+.worlds-copy h2 em{color:#cf897b}
+.worlds-copy>p{font-size:16px;line-height:1.8;color:#d7c5c1;max-width:430px}
+.worlds-copy .worlds-meta{font:10px/1.8 ui-monospace,monospace;letter-spacing:.13em;color:#ae9691;margin:25px 0}
+.worlds-copy .button{background:#e5c5ae;border-color:#e5c5ae}
+.worlds-copy .sub-link{font-size:13px;display:block;margin-top:23px;color:#e0cabd}
+.worlds-gallery{height:545px;position:relative;perspective:1250px;min-width:0}
+.grail-frame{display:block;position:absolute;overflow:hidden;aspect-ratio:2/3;
+  width:min(46%,260px);background:#140f15;border:1px solid #d1ac9466;
+  box-shadow:0 42px 80px #000a,inset 0 0 0 4px #181219;
+  transition:transform .8s var(--ease),filter .8s var(--ease);transform-origin:50% 90%}
+.grail-frame img{display:block;width:100%;height:100%;object-fit:cover}
+.grail-frame:after{content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(112deg,transparent 34%,#fff8 47%,transparent 53%);
+ mix-blend-mode:screen;opacity:.45}
+.grail-frame-one{left:7%;top:18%;transform:rotate(-11deg) translateZ(-20px);z-index:2}
+.grail-frame-two{right:4%;top:3%;transform:rotate(8deg) translateZ(20px);z-index:3}
+.grail-frame:hover,.grail-frame:focus-visible{filter:brightness(1.09);z-index:5}
+.grail-frame-one:hover,.grail-frame-one:focus-visible{transform:rotate(-4deg) translateY(-15px) scale(1.03)}
+.grail-frame-two:hover,.grail-frame-two:focus-visible{transform:rotate(3deg) translateY(-15px) scale(1.03)}
+.grail-ghost{position:absolute;bottom:3%;left:27%;width:43%;aspect-ratio:2/3;border:1px solid #bc9f9477;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:23px 12px;text-align:center;color:#dbcac4;z-index:1;transform:rotate(2deg);
+  background:radial-gradient(ellipse at 55% 42%,#642f3e9e,transparent 56%),#1b161d;
+  text-decoration:none;transition:transform .6s}
+.grail-ghost:hover{transform:rotate(0) translateY(-9px);color:#fff5e8}
+.grail-ghost span{font:10px/1.4 ui-monospace,monospace;letter-spacing:.2em}
+.grail-ghost strong{font:italic 29px/1.08 Georgia,serif;font-weight:400}
+.grail-footnote{margin:18px 0 0;color:#b5b8a9;font-size:11px;letter-spacing:.06em}
+.story-thread{margin-top:24px;border-block:1px solid #4b594e;display:grid;grid-template-columns:1.15fr .85fr;
+  gap:40px;align-items:center;padding:32px 0}
+.story-thread img{width:100%;height:250px;object-fit:cover;object-position:50% 50%;
+  display:block;filter:brightness(.84) saturate(.75);border:1px solid #52645166}
+.story-thread .kicker{margin:0 0 12px}
+.story-thread h3{font:normal clamp(26px,3.1vw,42px)/1.15 Georgia,serif;margin:0 0 16px}
+.story-thread p{font-size:13px;color:var(--muted);max-width:420px}
+
+/* Everyday life is a series of quiet close-ups, not bright app tiles. */
+#human{padding-top:80px}
+.grid{gap:1px;background:#31473b;border:1px solid #31473b}
+.card,.card.dark,.card.sun,.card.red{border:0;border-radius:0;min-height:260px;padding:32px;
+  background:#10201b;color:#ecede2;box-shadow:none}
+.card.dark{background:#172d27}.card.sun{background:#263429}.card.red{background:#302522}
+.card-number,.dark .card-number{color:#b4c0ae;font-size:10px;letter-spacing:.14em}
+.card h3{font:normal clamp(25px,2.6vw,35px)/1.18 Georgia,serif;max-width:680px}
+.card p,.card.dark p,.card.red p,.card.sun p{font-size:13px;color:#b1c1b3;max-width:440px}
+.card.red p{color:#d4bfb6}.card.sun p{color:#c3d0bb}
+.scribble{color:#bca889;opacity:.55}
+.card:hover{z-index:1;background:#1c3027;transform:translateY(-2px)!important;box-shadow:0 20px 38px #0004}
+.more{border-color:#3d5445}.more summary{color:#e2dfd1}.more-inner h3{color:#e8ebdd}
+
+/* The living essays: present tense, no invented memory product. */
+#thoughts{border-top:1px solid #3c5143;padding-top:100px}
+.thought-intro{display:grid;grid-template-columns:.78fr 1.22fr;gap:45px;align-items:end;margin-bottom:44px}
+.thought-intro h2{margin:14px 0 0;font-size:clamp(48px,6.5vw,87px)}
+.thought-intro p{color:#b9c4b7;max-width:530px;font-size:16px;line-height:1.9;margin:0}
+.thought-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid #48594a}
+.seed-note{padding:30px 28px 35px;min-width:0;position:relative;
+  background:linear-gradient(155deg,#162820,#0b1714);border-right:1px solid #48594a}
+.seed-note:last-child{border-right:0}
+.seed-note:nth-child(2){background:linear-gradient(155deg,#1b2926,#101816)}
+.seed-note .seed-head{font:10px ui-monospace,monospace;letter-spacing:.16em;color:#d3b58c}
+.seed-note h3{font:normal clamp(27px,3vw,39px)/1.12 Georgia,serif;min-height:91px;
+  color:#f0ede2;margin:45px 0 18px;letter-spacing:-.045em}
+.seed-note .seed-excerpt{font:italic 19px/1.45 Georgia,serif;color:#e0cdb2;min-height:114px}
+.seed-note .seed-details{margin-top:26px;border-top:1px solid #65725d7c}
+.seed-note .seed-details summary{padding:17px 0 5px;cursor:pointer;list-style:none;color:#e9dac3;font-size:12px}
+.seed-note .seed-details summary::-webkit-details-marker{display:none}
+.seed-note .seed-details summary:after{content:"  ↗";color:#eac89a}
+.seed-note .seed-details[open] summary:after{content:"  −"}
+.seed-note .seed-details p{font-size:13px;color:#b9c6b9;line-height:1.9;margin:16px 0 0}
+.seed-note .seed-details p:last-child{margin-bottom:4px}
+.thought-note{font-size:12px;line-height:1.8;color:#a1b1a6;margin-top:20px}
+
+/* The future, drawn with restraint. */
+.future{border-color:#415346}
+.future-intro p,.future-list details p{color:#aebfb0}
+.future-intro h2{margin-top:20px}
+.margin-note{color:#d5bc93!important;font-size:23px}
+.future-list details{border-color:#415647}
+.future-list details:last-child{border-color:#415647}
+.future-list summary{font-family:Georgia,serif;font-weight:400;font-size:21px;color:#e6e8db}
+.future-list summary:after{color:#dcb78b}
+.future-list summary span{color:#a9bca9}
+.future-list details p{color:#b3bfb3;font-size:14px;line-height:1.9}
+.tomorrow-feature{border:1px solid #506b59;background:#182920;color:#e8eddd;border-radius:1px}
+.tomorrow-feature .tomorrow-kicker{color:#cbae83;font-size:10px;letter-spacing:.2em}
+.tomorrow-feature h3{color:#f2ead5}
+.tomorrow-feature p{color:#bbcab8}
+.tomorrow-feature .tomorrow-link{color:#e7ceab}
+.tomorrow-illustration{background:linear-gradient(180deg,#3d5b50 0%,#7e8566 52%,#314c35 53%,#11251b 100%)}
+.tomorrow-illustration:before{background:linear-gradient(0deg,#11251b7e,transparent 80%),
+  repeating-linear-gradient(160deg,transparent 0 32px,#142c1944 33px 37px,transparent 39px 68px)}
+.tomorrow-illustration .seedling{font-size:0;position:relative;display:block;width:100px;height:146px;
+  margin-bottom:48px;filter:drop-shadow(0 22px 17px #071c1790)}
+.tomorrow-illustration .seedling:before{content:"";position:absolute;left:48px;bottom:0;
+  width:5px;height:125px;background:linear-gradient(#d4dcad,#3e633b);border-radius:50%;transform:rotate(6deg)}
+.tomorrow-illustration .seedling:after{content:"";position:absolute;left:50px;top:10px;
+  width:66px;height:42px;border-radius:0 95% 0 95%;background:linear-gradient(135deg,#afcb86,#406f44);
+  box-shadow:-57px 26px 0 -1px #709a65;transform:rotate(-14deg)}
+.tomorrow-illustration .caption{color:#efeed7}
+.vision-line{border-color:#455d4b;background:#12241b;color:#dce8d9}
+.vision-line p{color:#b7c8b8}
+
+/* A conversation beneath a lamp. */
+.conversation{border-top:1px solid #3c5143}
+.conversation p{color:#b7c4b7}
+.question-card{border:1px solid #67765a;border-radius:1px;box-shadow:17px 18px 0 #1b3024;
+  background:#bfc09a;color:#243427;min-height:320px}
+.question-card .question-text{font:normal clamp(30px,3.5vw,45px)/1.22 Georgia,serif;letter-spacing:-.045em}
+.question-card .round-button{border-color:#233528;color:#233528}
+.question-card .round-button:hover{background:#233528;color:#e2e2b4}
+.gift{background:linear-gradient(125deg,#1d2c24,#10211d);border:1px solid #54705b;
+  border-radius:2px;color:#eff2e8}
+.gift .kicker{color:#d9bd92}
+.gift p{color:#b7c7b9}
+.gift .gift-note{color:#a4b4a4}
+.gift .button.outline:hover{background:#31483a}
+.prompt-panel{background:#0d1d1980;border-color:#496354;border-radius:2px}
+.prompt-panel h3{font-family:Georgia,serif;font-size:27px}
+.prompt-panel ol{color:#d1d7ca}
+.prompt-panel details{border-color:#526656}
+.prompt-panel details p{color:#d1d7ca}
+.recruiter{border-color:#3e5846}
+.recruiter p{color:#b7c5b8}
+.recruiter .buttons{gap:12px}
+.end-line{display:none}
+.footer{border-color:#3b5143;color:#a9b7a8}
+.footer a:hover{color:#efcf9e}
+.privacy{color:#a6b3a4}
+.toast{background:#dec8aa;color:#15251e;border-radius:2px;box-shadow:0 9px 45px #0008}
+
+/* The final exhale. The page finishes without a second sales pitch. */
+.savasana{padding:clamp(110px,15vw,210px) 25px;min-height:540px;position:relative;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  isolation:isolate;overflow:hidden;border-top:1px solid #426049;margin-top:35px}
+.savasana:before{content:"";position:absolute;width:min(750px,120vw);height:min(550px,100vw);
+  left:50%;top:47%;transform:translate(-50%,-50%);z-index:-1;
+  background:radial-gradient(ellipse,#c79f6b2b 0%,#47715f25 38%,transparent 70%)}
+.savasana:after{content:"";position:absolute;width:160px;height:160px;border-radius:50%;
+  left:50%;top:10%;transform:translateX(-50%);z-index:-1;
+  border:1px solid #9fae8560;box-shadow:0 0 80px 32px #899c6622}
+.savasana .kicker{color:#dabb8d}
+.savasana h2{font:normal clamp(48px,8vw,108px)/1.04 Georgia,serif;letter-spacing:-.065em;
+  margin:25px 0 20px;color:#e9e8d5}
+.savasana h2 em{color:#d9bc93}
+.savasana p{max-width:510px;margin:0 auto;color:#bfccbb;font-size:16px;line-height:1.85}
+.savasana .return-gate{margin-top:36px;font-size:12px;color:#dfc9a4;letter-spacing:.08em}
+.savasana .om-mark{font:normal 50px Georgia,serif;color:#d4b78a;margin:42px 0 0;opacity:.7}
+.savasana small{font-size:10px;color:#a0b0a2;letter-spacing:.13em;text-transform:uppercase}
+
+/* Tool accessibility, dialogs and responsive framing */
+dialog{background:#10211c;color:#f0eee1;border:1px solid #668171;border-radius:5px}
+.dialog-head h2{color:#eeebdf}
+.dialog-description,.field small{color:#b7c7b6}
+.field textarea,.field input,.result{border:1px solid #607569;background:#10201d;
+  color:#f0eee4;border-radius:3px}
+.field label{color:#eee9dc}
+.error{color:#ffc3a7}
+.close{border-color:#789081;color:#f1eadb}
+dialog::backdrop{background:#020b08d9}
+.photo-grid img{border-radius:2px}
+@media(max-width:950px){
+ .hero{min-height:690px}
+ .worlds-portal{grid-template-columns:1fr 1fr;min-height:550px}
+ .worlds-gallery{height:430px}
+ .grail-frame{width:54%}
+ .grail-ghost{left:24%;width:50%}
+ .garden-paths a{padding:12px 15px}
+ .story-thread{gap:24px}
+}
+@media(max-width:760px){
+ .wrap{width:calc(100% - 34px)}
+ nav{min-height:65px}
+ .nav-links{gap:12px}
+ .nav-links .minor{display:none}
+ .hero{min-height:min(760px,85svh);padding:31px 25px;margin-top:12px}
+ .hero h1{font-size:clamp(54px,10vw,80px)}
+ .garden-film-tag{right:20px;top:16px!important}
+ .hero .eyebrow{font-size:9px;max-width:420px}
+ .intro-note{grid-template-columns:1fr;gap:9px}
+ .garden-paths{grid-template-columns:1fr;margin-top:24px}
+ .garden-paths a,.garden-paths a:first-child{padding:15px 5px;border-right:0;border-bottom:1px solid #3c5546;min-height:auto}
+ .garden-paths a:last-child{border-bottom:0}
+ .garden-paths strong{font-size:22px}
+ .worlds-portal{display:block;padding:34px 25px}
+ .worlds-copy h2{max-width:560px}
+ .worlds-gallery{height:410px;margin-top:24px}
+ .grail-frame{width:min(46%,220px)}
+ .story-thread{grid-template-columns:1fr}
+ .story-thread img{height:240px}
+ .thought-intro{grid-template-columns:1fr;gap:18px}
+ .thought-grid{grid-template-columns:1fr}
+ .seed-note{border-right:0;border-bottom:1px solid #42584a}
+ .seed-note:last-child{border-bottom:0}
+ .seed-note h3{min-height:0;margin:25px 0 15px;font-size:36px}
+ .seed-note .seed-excerpt{min-height:0}
+ .section-head{grid-template-columns:1fr;gap:13px}
+ .future-layout,.conversation{grid-template-columns:1fr}
+ .gift{grid-template-columns:1fr}
+ .recruiter{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+ html{scroll-padding-top:75px}
+ section{padding:70px 0}
+ .hero{min-height:735px;min-height:84svh}
+ .hero h1{font-size:clamp(51px,12vw,74px);line-height:1}
+ .hero h1 br{display:block}
+ .hero .lede{font-size:16px;margin-top:19px}
+ .hero-bottom{margin-top:24px;align-items:flex-start}
+ .hero-ctas{flex-direction:column;align-items:stretch;width:100%}
+ .hero-ctas .button{min-height:46px;width:100%}
+ .hero .chips{gap:6px}
+ .garden-film-tag{font-size:9px}
+ .worlds-copy h2{font-size:clamp(49px,12vw,75px)}
+ .worlds-gallery{height:360px}
+ .grail-frame{width:min(49%,195px)}
+ .grail-frame-one{left:5%;top:20%}
+ .grail-frame-two{right:2%;top:4%}
+ .grail-ghost{width:47%;left:27%;bottom:0}
+ .grail-ghost strong{font-size:22px}
+ .grid{grid-template-columns:1fr;gap:1px}
+ .card,.card.wide{grid-column:span 12;min-height:190px;padding:25px}
+ .card h3{font-size:29px}
+ .gift{padding:25px 20px}
+ .question-card{box-shadow:8px 9px 0 #1b3024}
+ .savasana{min-height:470px;margin-top:0}
+ .savasana h2{font-size:clamp(52px,12vw,82px)}
+ .thought-intro h2{font-size:54px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+ .garden-visual svg{transform:none!important}
+ .grail-frame:hover{transform:none!important}
+ .card:hover{transform:none!important}
+}
+@media print{
+ body{background:white;color:#20251e}
+ .garden-visual,.garden-paths,.savasana,.worlds-gallery{display:none!important}
+ .hero{background:white;color:#151515;min-height:auto;border:0;padding:20px}
+ .hero h1,.hero .lede,.hero .eyebrow{color:#20251e;text-shadow:none}
+ .worlds-portal,.card,.seed-note{background:white;color:#111;border-color:#bbb}
+ .worlds-copy h2,.worlds-copy p,.seed-note h3,.seed-note .seed-excerpt{color:#111}
+ .thought-grid{display:block}
+ .seed-note{break-inside:avoid}
+}
