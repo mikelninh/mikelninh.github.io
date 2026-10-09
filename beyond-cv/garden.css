@@ -107,6 +107,14 @@ section{padding:clamp(75px,9vw,125px) 0}
 .garden-paths a:after{content:"↗";font-size:17px;color:#e2c297;margin-left:auto;opacity:.5;transition:.25s}
 .garden-paths a:hover:after{transform:translate(3px,-4px);opacity:1}
 
+/* Real artwork remains primary. A typographic plate appears only if its image cannot load. */
+.grail-frame{background:radial-gradient(ellipse at 48% 35%,#56313c,#17131a 60%,#0d1216)}
+.grail-frame:before{content:attr(data-label);position:absolute;inset:0;z-index:0;
+ display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
+ font:italic 25px/1.14 Georgia,serif;letter-spacing:-.025em;color:#e7c5ab}
+.grail-frame img{position:relative;z-index:1}
+.grail-frame img[hidden]{display:none!important}
+
 /* Act II: HANA's first art exhibition */
 #worlds{padding-top:85px;padding-bottom:85px}
 .worlds-portal{
