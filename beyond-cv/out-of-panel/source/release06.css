@@ -17,7 +17,7 @@
 .oop06-label span{font-weight:400;color:#718071}
 .oop06-reactions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .oop06-reactions label{display:block;position:relative;cursor:pointer}
-.oop06-reactions input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.oop06-reactions input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2}.oop06-reactions span{pointer-events:none}
 .oop06-reactions span{display:flex;align-items:center;justify-content:center;text-align:center;border-radius:11px;border:1px solid #c5beaa;background:#fffbf4;min-height:57px;padding:8px 5px;font:600 11px/1.4 ui-sans-serif,system-ui,sans-serif;color:#395144;transition:background .16s,transform .16s,border-color .16s}
 .oop06-reactions label:hover span{transform:translateY(-1px);background:#edf0e4}
 .oop06-reactions input:checked+span{background:#dfe8d7;border:2px solid #486649;color:#183a26}
