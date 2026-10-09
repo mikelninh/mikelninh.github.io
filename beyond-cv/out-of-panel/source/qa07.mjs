@@ -50,7 +50,7 @@ try {
  await film.locator('#look-inside').click();
  await film.waitForTimeout(1700);
  const filmState=await film.evaluate(()=>OutOfPanelJourney.getState());
- check('Film contains a real rendered rooftop or compatible fallback',filmState.status==='ready'||filmState.status==='fallback',filmState);
+ check('Film reaches the real Three.js rooftop',filmState.status==='ready'&&filmState.entered&&filmState.progress>=.99,JSON.stringify(filmState));
  const recorded=film.video();await filmContext.close();
  if(recorded){const p=await recorded.path();await fs.copyFile(p,path.join(out,'real-teaser.webm'));check('Actual browser interaction video captured',(await fs.stat(path.join(out,'real-teaser.webm'))).size>10000);}
  
