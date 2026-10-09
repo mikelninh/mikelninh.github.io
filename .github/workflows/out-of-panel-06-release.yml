@@ -61,7 +61,7 @@ jobs:
       - name: Convert authentic walkthrough to a small MP4
         run: |
           if command -v ffmpeg >/dev/null 2>&1; then
-            ffmpeg -hide_banner -loglevel error -y -i beyond-cv/out-of-panel/source/qa07-artifacts/real-teaser.webm -t 10 -c:v libx264 -preset veryfast -crf 27 -pix_fmt yuv420p -movflags +faststart beyond-cv/out-of-panel/source/qa07-artifacts/real-teaser.mp4
+            ffmpeg -hide_banner -loglevel error -y -ss 1.3 -i beyond-cv/out-of-panel/source/qa07-artifacts/real-teaser.webm -t 10 -c:v libx264 -preset veryfast -crf 27 -pix_fmt yuv420p -movflags +faststart beyond-cv/out-of-panel/source/qa07-artifacts/real-teaser.mp4
           else
             echo "ffmpeg unavailable: retain original WebM only"
           fi
