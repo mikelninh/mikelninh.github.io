@@ -52,6 +52,7 @@ try {
  await film.locator('#look-inside').click();
  await film.waitForFunction(()=>document.body.classList.contains('rooftop-arrived'),{},{timeout:17000});
  await film.waitForTimeout(2350);
+ await film.screenshot({path:path.join(out,'film-rooftop-frame.png')});
  await film.locator('[data-rooftop="mia"]').click();
  await film.waitForTimeout(1700);
  const filmState=await film.evaluate(()=>OutOfPanelJourney.getState());
