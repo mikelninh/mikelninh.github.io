@@ -88,9 +88,18 @@ def run() -> None:
 
                 if width in (390, 1440):
                     page.goto(BASE, wait_until="domcontentloaded")
+                    page.wait_for_function(
+                        "() => [...document.querySelectorAll('.grail-frame img')].every(i => i.complete && i.naturalWidth > 0)",
+                        timeout=30000,
+                    )
                     page.screenshot(path=str(ARTIFACTS / f"hero-{width}.png"))
                     page.locator("#worlds").scroll_into_view_if_needed()
                     page.screenshot(path=str(ARTIFACTS / f"hana-gateway-{width}.png"))
+                    page.locator("#thoughts").scroll_into_view_if_needed()
+                    page.screenshot(path=str(ARTIFACTS / f"thought-garden-{width}.png"))
+                    if width == 1440:
+                        page.locator("#savasana").scroll_into_view_if_needed()
+                        page.screenshot(path=str(ARTIFACTS / "savasana.png"))
                 findings.append({"viewport":width, "status":"pass","artwork":images,"overflow":overflow})
                 context.close()
 
