@@ -46,10 +46,10 @@ def portable_three():
 
 (P / 'vendor/three-r180.js').write_text(portable_three())
 h = (P / 'index.html').read_text()
-for css in ['style.css', 'wonder.css', 'journey.css', 'release06.css']:
+for css in ['style.css', 'wonder.css', 'journey.css', 'release06.css', 'release07.css']:
     h = h.replace(f'<link rel="stylesheet" href="{css}">', '<style>\n' + (P / css).read_text() + '\n</style>')
-for js in ['assets.js', 'coin.js', 'app.js', 'wonder.js', 'vendor/three-r180.js', 'journey.js', 'release06.js']:
+for js in ['assets.js', 'coin.js', 'app.js', 'wonder.js', 'vendor/three-r180.js', 'journey.js', 'release06.js', 'release07.js']:
     h = h.replace(f'<script src="{js}"></script>', '<script>\n' + (P / js).read_text().replace('</script', '<\\/script') + '\n</script>')
-(P / 'OUT-OF-PANEL-06.html').write_text(h)
+(P / 'OUT-OF-PANEL-07.html').write_text(h)
 (P.parent / 'index.html').write_text(h)
-print('Built OUT OF PANEL 0.6:', len(h), 'characters')
+print('Built OUT OF PANEL 0.7:', len(h), 'characters')
