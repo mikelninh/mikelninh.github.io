@@ -48,6 +48,10 @@ jobs:
         env:
           PLAYWRIGHT_MODULE: /tmp/oop06-tests/node_modules/playwright/index.mjs
         run: node beyond-cv/out-of-panel/source/qa06.mjs
+      - name: Summarize 0.6 browser failures
+        if: failure()
+        run: |
+          cat beyond-cv/out-of-panel/source/qa06-artifacts/QA06.json || true
       - name: Save browser artifacts
         if: always()
         uses: actions/upload-artifact@v4
