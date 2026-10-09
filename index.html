@@ -3,33 +3,354 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Michael Ninh — AI Engineer building reliable agentic systems with explicit specifications, evals, verification gates and human authority.">
-<meta name="theme-color" content="#f3eee3">
-<title>Michael Ninh — AI Engineer · Agentic Systems · AI Operations</title>
+<meta name="theme-color" content="#eaf0e9">
+<meta name="description" content="Michael Ninh — AI engineer and creative builder in Berlin. A few useful systems, thoughtful products and little worlds you can actually explore.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Michael Ninh — Useful things, made with care">
+<meta property="og:description" content="AI engineering, purposeful products and playful worlds. Three selected projects and an invitation to explore further.">
+<meta property="og:url" content="https://mikelninh.github.io/">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://mikelninh.github.io/">
+<title>Michael Ninh — Useful things, made with care</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f3eee3;--surface:#fbf8f1;--surface2:#eee6d9;--ink:#111410;--muted:#686c65;--line:rgba(17,20,16,.13);--forest:#294d3b;--forest2:#1d3d2e;--forestSoft:#e7efe8;--coral:#b7644c;--warm:#e9dece;--shadow:0 24px 70px rgba(57,45,31,.09);--serif:"DM Serif Display",Georgia,serif;--sans:"Manrope",system-ui,sans-serif;--max:1180px;--radius:28px}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,var(--bg),#f1eadf);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}a{color:inherit}button,a{outline-offset:4px}button:focus-visible,a:focus-visible{outline:3px solid rgba(41,77,59,.24)}.wrap{width:min(var(--max),calc(100% - 48px));margin:auto}.top{position:sticky;top:0;z-index:30;background:rgba(243,238,227,.88);backdrop-filter:blur(20px);border-bottom:1px solid transparent}.top.scrolled{border-color:var(--line)}.top .wrap{height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:800;text-decoration:none;letter-spacing:-.02em}.brand:before{content:'✦';color:var(--forest);margin-right:8px}.nav{display:flex;align-items:center;gap:21px}.nav a{font-size:12px;font-weight:700;text-decoration:none;color:var(--muted)}.nav a:hover{color:var(--ink)}.nav .contact{background:var(--forest);color:#fffaf1;border-radius:999px;padding:9px 14px}.hero{padding:92px 0 82px;min-height:700px;display:flex;align-items:center}.eyebrow{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--forest)}.hero h1{font-family:var(--serif);font-size:clamp(68px,9vw,112px);line-height:.9;letter-spacing:-.05em;font-weight:400;margin:18px 0 18px}.role{font-size:clamp(17px,2vw,22px);font-weight:750;letter-spacing:-.02em;margin-bottom:29px;color:#31362f}.lead{font-size:clamp(21px,2.2vw,27px);line-height:1.42;letter-spacing:-.02em;max-width:900px;color:#3f443c;margin:0}.buildLoop{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-top:29px;font-size:12px;font-weight:800;letter-spacing:.015em}.buildLoop span{display:inline-flex;align-items:center}.buildLoop span:not(:last-child):after{content:'→';margin-left:11px;color:#aaa294;font-weight:500}.agentNote{max-width:820px;margin:19px 0 0;font-size:13px;line-height:1.7;color:var(--muted)}.actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:32px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;border-radius:999px;text-decoration:none;font-size:13px;font-weight:800}.btn.primary{background:var(--forest);color:#fffaf1;box-shadow:0 10px 28px rgba(41,77,59,.16)}.btn.primary:hover{background:var(--forest2);transform:translateY(-1px)}.btn.text:hover{text-decoration:underline;text-underline-offset:4px}.proof,.method{padding:92px 0;border-top:1px solid var(--line)}.sectionHead{display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:end;margin-bottom:31px}.sectionHead h2{font-family:var(--serif);font-size:clamp(44px,5vw,67px);line-height:.98;letter-spacing:-.04em;font-weight:400;margin:9px 0 0;max-width:760px}.sectionHead p{color:var(--muted);font-size:15px;line-height:1.7;margin:0;max-width:470px}.chooserShell{display:inline-flex;padding:5px;background:#e7dfd2;border-radius:999px;margin-bottom:22px;max-width:100%}.chooser{display:flex;gap:4px;overflow:auto;scrollbar-width:none}.chooser::-webkit-scrollbar{display:none}.choice{white-space:nowrap;border:0;background:transparent;border-radius:999px;padding:10px 15px;font:inherit;font-size:12px;font-weight:800;color:var(--muted);cursor:pointer}.choice.active{background:var(--surface);color:var(--ink);box-shadow:0 2px 8px rgba(49,42,31,.10)}.stage{display:grid;grid-template-columns:.88fr 1.12fr;min-height:520px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}.stageLeft,.stageRight{padding:44px}.stageLeft{display:flex;flex-direction:column;border-right:1px solid var(--line);background:rgba(233,222,206,.32)}.label{display:flex;align-items:center;gap:9px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--muted)}.labelNum{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--warm);color:var(--ink);font-size:9px}.stageLeft h3{font-family:var(--serif);font-size:clamp(31px,3.4vw,46px);line-height:1.04;letter-spacing:-.03em;font-weight:400;margin:22px 0 15px}.stageLeft p,.stageRight .desc{color:var(--muted);font-size:15px;line-height:1.68;margin:0}.facts{margin-top:auto;padding-top:30px}.fact{display:grid;grid-template-columns:112px 1fr;gap:13px;padding:12px 0;border-top:1px solid var(--line)}.fact small{color:var(--muted);font-size:10px;font-weight:700}.fact b{font-size:12px;font-weight:800}.kicker{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--forest);margin-top:21px}.stageRight h3{font-family:var(--serif);font-size:clamp(38px,4vw,55px);line-height:1;letter-spacing:-.035em;font-weight:400;margin:16px 0 16px;max-width:650px}.evidence{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:27px 0 0}.evidenceCard{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fffdf8}.evidenceCard strong{display:block;font-family:var(--serif);font-size:24px;font-weight:400;line-height:1;margin-bottom:6px}.evidenceCard span{font-size:10px;color:var(--muted);font-weight:700;line-height:1.45}.stageActions{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:auto;padding-top:30px}.stageActions a{font-size:13px;font-weight:800;text-decoration:none}.stageActions .try{background:var(--forest);color:#fffaf1;border-radius:999px;padding:11px 16px}.stageActions .try:hover{background:var(--forest2)}.stageActions .code{color:var(--muted)}.stageActions .code:hover{color:var(--ink)}.boundary{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:11px;line-height:1.55;color:var(--muted)}.thesis{margin-bottom:34px;max-width:900px;font-size:17px;line-height:1.7;color:#41463e}.methodGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.methodCard{min-height:170px;padding:22px;border:1px solid var(--line);border-radius:20px;background:rgba(251,248,241,.7)}.methodCard small{display:block;color:var(--forest);font-size:10px;letter-spacing:.12em;font-weight:900}.methodCard h3{font-family:var(--serif);font-size:27px;font-weight:400;margin:11px 0 7px}.methodCard p{font-size:12px;color:var(--muted);line-height:1.65;margin:0}.principle{display:grid;grid-template-columns:1.25fr .75fr;gap:34px;align-items:center;margin-top:22px;padding:31px 34px;border-radius:24px;background:var(--forest);color:#fffaf1}.principle strong{font-family:var(--serif);font-size:clamp(27px,3vw,40px);font-weight:400;line-height:1.08}.principle p{margin:0;color:rgba(255,250,241,.75);font-size:12px;line-height:1.7}.about{margin-top:62px;display:grid;grid-template-columns:1.2fr .8fr;gap:70px;align-items:start}.about h2{font-family:var(--serif);font-size:clamp(38px,4.5vw,58px);line-height:1;letter-spacing:-.035em;font-weight:400;margin:8px 0 18px}.about p{color:var(--muted);font-size:15px;line-height:1.75;max-width:720px}.profile{padding:23px;border:1px solid var(--line);border-radius:20px;background:rgba(251,248,241,.58)}.profileRow{display:flex;justify-content:space-between;gap:18px;padding:12px 0;border-bottom:1px solid var(--line);font-size:12px}.profileRow:last-child{border-bottom:0}.profileRow span{color:var(--muted)}.profileRow b{text-align:right}.closing{margin-top:67px;padding:33px 35px;border-radius:24px;background:#171b16;color:#fffaf1;display:flex;align-items:flex-end;justify-content:space-between;gap:28px}.closing strong{font-family:var(--serif);font-size:clamp(28px,3vw,41px);font-weight:400;line-height:1.08}.closing a{font-size:13px;font-weight:800;text-decoration:none}.closing a:hover{text-decoration:underline;text-underline-offset:4px}.footer{padding:36px 0 48px}.footer .wrap{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:11px}.footer b{color:var(--ink)}.footer a{text-decoration:none;font-weight:800}.footer a:hover{color:var(--ink)}@media(max-width:900px){.sectionHead,.stage,.principle,.about{grid-template-columns:1fr}.stageLeft{border-right:0;border-bottom:1px solid var(--line);min-height:380px}.methodGrid{grid-template-columns:repeat(2,1fr)}.principle{gap:16px}.about{gap:40px}}@media(max-width:620px){.wrap{width:calc(100% - 28px)}.top .wrap{height:62px}.nav a:not(.contact){display:none}.hero{min-height:auto;padding:66px 0 58px}.hero h1{font-size:62px}.role{font-size:17px}.lead{font-size:20px}.buildLoop{gap:8px}.buildLoop span:not(:last-child):after{margin-left:8px}.proof,.method{padding:66px 0}.sectionHead{grid-template-columns:1fr;gap:22px}.sectionHead h2{font-size:44px}.chooserShell{width:100%;border-radius:18px}.chooser{width:100%}.choice{flex:1;white-space:normal;padding:10px 8px;font-size:10px}.stage{border-radius:23px}.stageLeft,.stageRight{padding:26px}.stageLeft{min-height:auto}.stageRight h3{font-size:40px}.fact{grid-template-columns:88px 1fr}.evidence{grid-template-columns:1fr 1fr}.evidenceCard strong{font-size:21px}.methodGrid{grid-template-columns:1fr}.methodCard{min-height:0}.principle{padding:26px}.closing{align-items:flex-start;flex-direction:column}.footer .wrap{display:block}.footer span:last-child{display:block;margin-top:6px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+:root{--bg:#eaf0e9;--paper:#f7f9f4;--ink:#172f28;--muted:#587063;--forest:#183a30;--forest-soft:#cedfd0;--line:#afc3b3;--sage:#cce8b8;--accent:#dbe8bd;--serif:"DM Serif Display",Georgia,serif;--sans:"Manrope",system-ui,sans-serif;--ease:cubic-bezier(.22,1,.36,1)}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:94px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.68 var(--sans);-webkit-font-smoothing:antialiased}
+button,a,summary{touch-action:manipulation}
+a{color:inherit;text-underline-offset:5px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #52916e;outline-offset:5px}
+::selection{background:var(--sage);color:var(--forest)}
+.wrap{width:min(1080px,calc(100% - 56px));margin-inline:auto}
+.skip{position:fixed;top:-80px;left:18px;background:var(--forest);color:#fff;padding:10px 14px;z-index:1000}
+.skip:focus{top:10px}
+.scroll-progress{position:fixed;left:0;right:0;top:0;height:2px;z-index:101;pointer-events:none}
+.scroll-progress span{display:block;width:100%;height:100%;transform:scaleX(0);transform-origin:left center;background:#4d8263}
+.site-header{position:sticky;top:0;z-index:100;background:rgba(234,240,233,.91);border-bottom:1px solid rgba(86,118,96,.17);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.site-nav{display:flex;align-items:center;justify-content:space-between;gap:20px;height:76px}
+.site-brand{text-decoration:none;display:flex;align-items:center;gap:11px;font-size:13px;font-weight:700;letter-spacing:-.025em;white-space:nowrap}
+.brand-seed{display:grid;place-items:center;width:33px;height:33px;border:1px solid #7d9c88;border-radius:50%;color:#2c6c4b;font-size:17px}
+.site-brand small{color:#718477;font-weight:500;margin-left:2px;font-size:11px}
+.site-links{display:flex;align-items:center;gap:30px}
+.site-links a{font-size:12px;font-weight:600;text-decoration:none;color:#435e4f;transition:color .2s}
+.site-links a:hover,.site-links a[aria-current=location]{color:#132f23}
+.site-links .nav-contact{padding:10px 17px;color:#f5f7ef;background:#214535;border:1px solid #214535;border-radius:4px;transition:background .2s}
+.site-links .nav-contact:hover{background:#37624b;color:#fff}
+.hero{position:relative;isolation:isolate;overflow:hidden;padding:clamp(90px,12vw,155px) 0 74px;min-height:clamp(620px,82svh,850px);display:flex;align-items:center}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 54% 70% at 95% 42%,rgba(154,185,158,.32),transparent 80%),linear-gradient(150deg,#eaf0e9 0%,#edf2eb 65%,#e0ebe0 100%);z-index:-2}
+.hero-content{position:relative;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(230px,.7fr);gap:clamp(45px,7vw,105px);align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:11px;color:#4a7159;font:600 11px/1.5 var(--sans);letter-spacing:.13em;text-transform:uppercase}
+.eyebrow::before{content:"";width:19px;height:1px;background:#538568}
+.hero h1{font:400 clamp(64px,7.8vw,114px)/.98 var(--serif);letter-spacing:-.055em;max-width:850px;margin:31px 0 28px;text-wrap:balance}
+.hero h1 em{font-style:italic;font-weight:400;color:#527e62}
+.hero-lead{font-size:clamp(17px,1.65vw,20px);line-height:1.7;max-width:555px;color:#486051;margin:0}
+.hero-ctas{display:flex;align-items:center;flex-wrap:wrap;gap:13px 22px;margin-top:40px}
+.btn-main{display:inline-flex;align-items:center;gap:30px;min-height:53px;padding:0 22px;text-decoration:none;background:#183d30;color:#f3f7e9;border-radius:3px;font-size:13px;font-weight:700;transition:background .3s,transform .3s var(--ease)}
+.btn-main:hover{background:#35694b;transform:translateY(-2px)}
+.btn-quiet{display:inline-flex;gap:11px;align-items:center;color:#365846;font-size:13px;font-weight:650;text-decoration:none;padding:10px 0;border-bottom:1px solid #93b29a}
+.btn-quiet:hover{color:#102d1f;border-color:#244b37}
+.hero-note{position:relative;border-left:1px solid #a8c0ad;min-height:365px;padding:17px 0 22px 40px;display:flex;flex-direction:column;justify-content:space-between;max-width:365px}
+.hero-note::before{content:"";position:absolute;right:-64px;top:19px;width:275px;height:275px;border:1px solid rgba(39,93,58,.15);border-radius:48% 52% 44% 56%;transform:rotate(20deg);pointer-events:none}
+.hero-note::after{content:"";position:absolute;right:-38px;top:40px;width:221px;height:221px;border:1px solid rgba(39,93,58,.17);border-radius:55% 45% 55% 45%;transform:rotate(-22deg);pointer-events:none}
+.hero-note .number{font:12px var(--sans);letter-spacing:.13em;font-weight:600;color:#63836f}
+.hero-note strong{font:400 clamp(30px,3vw,42px)/1.16 var(--serif);letter-spacing:-.025em;max-width:250px;position:relative;z-index:1}
+.hero-note .hero-note-bottom{display:flex;flex-direction:column;gap:6px;color:#51725d;font-size:12px;position:relative;z-index:1}
+.hero-note-bottom span{display:flex;gap:13px;padding:8px 0;border-top:1px solid #b6cbb9}
+.hero-note-bottom b{font:11px var(--sans);color:#77937c}
+.scroll-hint{position:relative;margin-top:60px;font:600 10px var(--sans);letter-spacing:.13em;text-transform:uppercase;color:#63866f}
+.scroll-hint a{text-decoration:none;display:inline-flex;align-items:center;gap:13px}
+.scroll-hint a:after{content:"↓";font-size:20px;font-weight:400}
+section[id]{scroll-margin-top:94px}
+.work{padding:115px 0 120px;background:#f8f9f4;border-top:1px solid #d5e2d4}
+.section-topline{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid #becfbd;padding-top:19px}
+.section-index{font:600 11px var(--sans);letter-spacing:.12em;color:#53745b;text-transform:uppercase}
+.section-side{font:500 11px var(--sans);letter-spacing:.08em;color:#839486}
+.section-intro{display:grid;grid-template-columns:1.2fr .8fr;align-items:end;gap:50px;margin:52px 0 45px}
+.section-intro h2{font:400 clamp(54px,6vw,81px)/1.03 var(--serif);letter-spacing:-.045em;margin:0;max-width:620px}
+.section-intro h2 em{color:#558365}
+.section-intro p{margin:0 0 5px;color:#526c5b;font-size:16px;line-height:1.73;max-width:365px}
+.work-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.work-card{background:#edf3e9;border:1px solid #c5d4c2;min-width:0;display:flex;flex-direction:column;overflow:hidden;transition:transform .4s var(--ease),border-color .3s;min-height:520px}
+.work-card:hover{transform:translateY(-4px);border-color:#91ae98}
+.work-art{display:block;position:relative;width:100%;aspect-ratio:1.14;min-height:230px;overflow:hidden;text-decoration:none;background:#153b31;color:#ebf4e3}
+.work-art img{display:block;width:100%;height:100%;position:absolute;inset:0;object-fit:cover;transition:transform .7s var(--ease)}
+.work-card:hover .work-art img{transform:scale(1.045)}
+.work-art .art-caption{position:absolute;left:18px;bottom:18px;right:18px;z-index:2;display:flex;justify-content:space-between;align-items:center;color:#e7f2e6;font:600 10px var(--sans);letter-spacing:.11em}
+.work-art:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(0deg,rgba(7,30,22,.63),transparent);pointer-events:none}
+.work-art.trust{background:radial-gradient(ellipse at 55% 0,#2e6351 0,#1b4539 48%,#132e28 100%);display:grid;place-items:center}
+.trust-motif{display:grid;grid-template-columns:1fr 25px 1fr;align-items:center;gap:13px;width:85%;position:relative;z-index:1}
+.trust-motif>span{text-align:center;padding:21px 8px;border:1px solid rgba(214,238,213,.38);font:600 10px var(--sans);letter-spacing:.09em;color:#e6f4da;background:#305b4736}
+.trust-motif>i{font:20px var(--serif);font-style:normal;color:#c4e6b7;text-align:center}
+.trust-motif small{display:block;color:#b3d2bb;font:11px var(--sans);letter-spacing:.01em;margin-top:6px}
+.work-art.crea img{object-position:center}
+.work-art.hana img{object-position:center}
+.work-card-content{flex:1;display:flex;flex-direction:column;padding:24px}
+.work-card-kicker{font:700 10px var(--sans);letter-spacing:.12em;color:#5b7965;text-transform:uppercase}
+.work-card h3{font:400 30px/1.14 var(--serif);letter-spacing:-.03em;margin:17px 0 13px}
+.work-card p{font-size:13px;line-height:1.67;color:#57705d;margin:0}
+.work-card-content>a{display:flex;align-items:center;justify-content:space-between;gap:14px;text-decoration:none;color:#24563d;border-top:1px solid #b9cbb6;padding-top:17px;margin-top:auto;font-size:13px;font-weight:700}
+.work-card-content>a:hover{color:#122d22}
+.work-links{display:flex;flex-wrap:wrap;justify-content:space-between;gap:15px 30px;margin:35px 0 0;align-items:center}
+.work-links p{max-width:570px;font-size:13px;color:#69806b;margin:0}
+.work-links>a{display:inline-flex;gap:20px;align-items:center;color:#27543e;font-size:13px;font-weight:700;text-decoration:none;border-bottom:1px solid #9cb59e;padding:10px 0}
+.principle{padding:105px 0;background:#dbe8da}
+.principle-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.principle h2{font:400 clamp(43px,5vw,69px)/1.08 var(--serif);letter-spacing:-.035em;margin:25px 0 0;max-width:490px}
+.principle h2 em{color:#4f815f}
+.principle-right>p{color:#41644e;font-size:17px;line-height:1.7;max-width:460px;margin:0 0 20px}
+.principle-words{display:flex;flex-wrap:wrap;gap:9px}
+.principle-words span{font:600 11px var(--sans);color:#37664a;border:1px solid #8fac94;padding:7px 12px;border-radius:99px}
+.principle .proof-details{margin-top:25px;border-top:1px solid #9eb9a3}
+.principle .proof-details summary{list-style:none;cursor:pointer;font-size:13px;font-weight:700;padding:18px 0;display:flex;justify-content:space-between;gap:15px}
+.principle .proof-details summary::-webkit-details-marker{display:none}
+.principle .proof-details summary::after{content:"+";font-size:19px}
+.principle .proof-details[open] summary::after{content:"−"}
+.principle .proof-details p{margin:0 0 12px;font-size:13px;color:#58725d;line-height:1.7}
+.principle .proof-details a{display:inline-block;margin:0 0 16px;font-size:13px;font-weight:700}
+.beyond{background:#17382e;color:#e8f1e5;padding:110px 0}
+.beyond-content{display:grid;grid-template-columns:1fr .95fr;gap:75px;align-items:center}
+.beyond-graphic{position:relative;min-height:395px;background:radial-gradient(ellipse at 58% 20%,#476454,#1b453a 62%,#122f27 100%);border:1px solid #73958365;overflow:hidden}
+.beyond-graphic:before{content:"";position:absolute;inset:0;background:linear-gradient(130deg,transparent 30%,#bad6b312 50%,transparent 73%);pointer-events:none}
+.beyond-path{position:absolute;left:15%;right:15%;top:13%;bottom:-10%;border:1px solid rgba(215,234,197,.35);border-radius:51% 49% 32% 68% / 41% 31% 69% 59%;transform:rotate(24deg)}
+.beyond-path::before{content:"";position:absolute;inset:12% 14%;border:1px solid rgba(215,234,197,.3);border-radius:61% 39% 37% 63% / 54% 48% 52% 46%;transform:rotate(-42deg)}
+.beyond-path::after{content:"✳";position:absolute;left:46%;top:40%;font:75px var(--serif);color:#d5e3c0;text-shadow:0 0 42px #d2e5bd87;transform:rotate(-24deg)}
+.beyond-art-caption{position:absolute;left:26px;bottom:24px;font:11px var(--sans);letter-spacing:.1em;color:#c3d5c1}
+.beyond-copy .eyebrow{color:#b5d7a9}
+.beyond-copy .eyebrow::before{background:#bad7b4}
+.beyond h2{font:400 clamp(51px,5.8vw,78px)/1.05 var(--serif);letter-spacing:-.035em;margin:28px 0 22px;max-width:520px}
+.beyond h2 em{color:#c6dfb1}
+.beyond p{font-size:16px;line-height:1.75;color:#c4d8c9;max-width:450px;margin:0 0 28px}
+.beyond .btn-quiet{color:#e3eddb;border-color:#9cbca0}
+.hello{padding:105px 0 110px;background:#f8f9f4}
+.hello-inner{display:flex;align-items:end;justify-content:space-between;gap:40px}
+.hello h2{font:400 clamp(57px,7vw,103px)/.98 var(--serif);letter-spacing:-.055em;margin:27px 0 0;max-width:690px}
+.hello h2 em{color:#639273}
+.hello-actions{display:flex;flex-direction:column;align-items:start;gap:18px;padding-bottom:4px}
+.hello .btn-main{white-space:nowrap}
+.hello .btn-quiet{white-space:nowrap}
+.site-footer{background:#f8f9f4;border-top:1px solid #d0dbcc}
+.site-footer .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:26px 0;color:#69806d;font-size:12px}
+.site-footer a{text-decoration:none;border-bottom:1px solid #b2c5b6}
+@media(max-width:980px){
+.hero-content{grid-template-columns:1fr .6fr;gap:35px}
+.hero-note{padding-left:24px;min-height:310px}
+.work-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.work-card:last-child{grid-column:1/-1;display:grid;grid-template-columns:.95fr 1.05fr;min-height:290px}
+.work-card:last-child .work-art{height:100%;aspect-ratio:auto}
+.principle-inner,.beyond-content{gap:40px}
+}
+@media(max-width:690px){
+.wrap{width:calc(100% - 36px)}
+.site-nav{height:65px}
+.site-links{gap:17px}
+.site-links a{font-size:11px}
+.site-links .mobile-secondary{display:none}
+.site-brand small{display:none}
+.hero{padding:100px 0 45px;min-height:auto}
+.hero-content{grid-template-columns:1fr}
+.hero h1{font-size:clamp(56px,12vw,85px);margin:24px 0}
+.hero-lead{font-size:16px}
+.hero-note{min-height:auto;max-width:100%;border-left:0;border-top:1px solid #b2c9b5;padding:23px 0 0;display:block}
+.hero-note:before,.hero-note:after{display:none}
+.hero-note>strong{font-size:26px;display:block;max-width:360px;margin:12px 0}
+.hero-note-bottom{display:grid!important;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:12px}
+.hero-note-bottom span{display:block;font-size:10px;line-height:1.55}
+.hero-note-bottom b{display:block;margin-bottom:3px}
+.scroll-hint{margin-top:35px}
+.work,.principle,.beyond,.hello{padding:75px 0}
+.section-intro{grid-template-columns:1fr;gap:22px;margin:45px 0 35px}
+.section-intro h2{font-size:53px}
+.section-intro p{font-size:15px}
+.work-grid{grid-template-columns:1fr}
+.work-card,.work-card:last-child{display:flex;grid-column:auto;min-height:0}
+.work-card:last-child .work-art{aspect-ratio:1.14;height:auto}
+.work-card-content{padding:24px}
+.work-card-content h3{font-size:31px}
+.work-art{aspect-ratio:1.18;min-height:220px}
+.principle-inner,.beyond-content{grid-template-columns:1fr}
+.principle h2{font-size:49px}
+.beyond-graphic{min-height:280px;order:1}
+.beyond-copy{order:0}
+.beyond h2{font-size:56px}
+.hello-inner{display:block}
+.hello h2{font-size:64px;margin-bottom:27px}
+.hello-actions{display:flex;flex-direction:row;flex-wrap:wrap}
+.site-footer .wrap{padding:21px 0}
+}
+@media(prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+.work-card:hover,.btn-main:hover,.work-card:hover .work-art img{transform:none}
+}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><a class="brand" href="#top">Michael Ninh</a><nav class="nav"><a href="#proof">Proof</a><a href="#method">How I build</a><a href="culture/">Culture ↗</a><a href="cv.html">CV ↗</a><a href="https://github.com/mikelninh">GitHub ↗</a><a class="contact" href="mailto:mikel_ninh@yahoo.de">Say hello</a></nav></div></header>
-<main id="top">
-<section class="hero"><div class="wrap"><div class="eyebrow">Michael Ninh</div><h1>AI Engineer</h1><div class="role">Agentic Systems · AI Operations</div><p class="lead">I build reliable AI systems that turn messy real-world workflows into tested, observable software.</p><div class="buildLoop" aria-label="Build loop"><span>Spec</span><span>Build</span><span>Evaluate</span><span>Verify</span><span>Ship</span><span>Monitor</span></div><p class="agentNote">Coding agents do much of the implementation. I design the system, architecture, autonomy boundaries, evals and evidence that make the result trustworthy.</p><div class="actions"><a class="btn primary" href="#proof">See the proof ↓</a><a class="btn text" href="cv.html">Open CV ↗</a><a class="btn text" id="out-of-panel-portfolio-door" href="beyond-cv/">Beyond the CV ↗</a></div></div></section>
-<section class="proof" id="proof"><div class="wrap"><div class="sectionHead"><div><div class="eyebrow">Three featured proofs</div><h2>Different systems. The same engineering discipline.</h2></div><p>Choose a capability. Each proof exposes the evidence, the authority boundary and the part that remains deliberately unclaimed.</p></div><div class="chooserShell"><div class="chooser" role="tablist" aria-label="Choose proof focus"><button class="choice active" data-focus="trust">Control AI safely</button><button class="choice" data-focus="evidence">Resolve messy evidence</button><button class="choice" data-focus="monitoring">Monitor public systems</button></div></div><div class="stage" aria-live="polite"><div class="stageLeft"><div class="label"><span class="labelNum">01</span><span>The engineering question</span></div><h3 id="problemTitle">Can this AI run a command when execution is supposed to be off?</h3><p id="problemBody">TrustReady traces explicit execution authority through the software and checks whether deny-by-default enforcement holds before the process sink.</p><div class="facts"><div class="fact"><small>Default state</small><b id="agentFact">Process execution disabled</b></div><div class="fact"><small>Explicit authority</small><b id="humanFact"><code>--allow-exec</code></b></div><div class="fact"><small>Verification</small><b id="verifyFact">Propagation · sink · fail-closed guard</b></div></div></div><div class="stageRight"><div class="label"><span class="labelNum">02</span><span>Working proof</span></div><div class="kicker" id="proofKicker">TRUSTREADY · EXECUTION AUTHORITY</div><h3 id="proofTitle">Remove the execution guard. Watch TrustReady refuse GO.</h3><p class="desc" id="proofDesc">A 30-second interactive replay of a verified ProofWorker path: command checks can reach <code>subprocess.run</code>, but only after explicit <code>--allow-exec</code> authority passes a deny-by-default policy guard.</p><div class="evidence" id="evidenceGrid"><div class="evidenceCard"><strong>3</strong><span>real repositories</span></div><div class="evidenceCard"><strong>3</strong><span>architecture families</span></div><div class="evidenceCard"><strong>3/3</strong><span>control suites pass</span></div><div class="evidenceCard"><strong>Fail closed</strong><span>lost guard → NO_GO</span></div></div><div class="stageActions"><a class="try" id="tryLink" href="trustready/demo/">Try the 30-second demo →</a><a class="code" id="codeLink" href="https://github.com/mikelninh/digital-worker-factory">Inspect engine ↗</a></div><div class="boundary" id="boundaryText">Interactive explainer grounded in a verified real-repo scan. Benchmark results are scoped technical assurance, not whole-repository security certification.</div></div></div></div></section>
-<section class="method" id="method"><div class="wrap"><div class="sectionHead"><div><div class="eyebrow">How I build</div><h2>Agents can move fast. The system around them has to stay rigorous.</h2></div><p>I design agentic software-development systems with explicit specifications, autonomy boundaries, evals, verification gates and production monitoring.</p></div><p class="thesis">The goal is not maximum autonomy. It is <strong>useful autonomy with evidence</strong>: give agents room to execute, give them measurable definitions of done, and keep human judgement where the consequences matter.</p><div class="methodGrid"><article class="methodCard"><small>01 — SHAPE</small><h3>Problem first.</h3><p>Problem → user → constraints → architecture</p></article><article class="methodCard"><small>02 — SPECIFY</small><h3>Define done.</h3><p>Requirements → boundaries → acceptance criteria</p></article><article class="methodCard"><small>03 — DELEGATE</small><h3>Bound autonomy.</h3><p>Agents execute within explicit autonomy limits</p></article><article class="methodCard"><small>04 — PROVE</small><h3>Demand evidence.</h3><p>Tests → evals → benchmarks → adversarial cases</p></article><article class="methodCard"><small>05 — SHIP</small><h3>Gate release.</h3><p>CI → deployment gates → production</p></article><article class="methodCard"><small>06 — WATCH</small><h3>Learn from reality.</h3><p>Traces → logs → regressions → feedback</p></article></div><div class="principle"><strong>Agents build. Evidence earns trust. Humans retain judgement.</strong><p>When verification fails, the workflow loops backwards. A failure should become a stronger test, boundary, fixture or source rule — not merely another prompt.</p></div><div class="about"><div><div class="eyebrow">A little about me</div><h2>Product judgement meets hands-on engineering.</h2><p>Before AI engineering I worked across founder-led e-commerce, product/business development and high-tempo service operations. That background made me unusually interested in the messy bit between a clever model and a workflow people can actually rely on.</p><p>I’m looking for an early-career AI engineering / AI operations role where careful reasoning, agentic systems, evidence and real product outcomes matter.</p></div><aside class="profile"><div class="profileRow"><span>Location</span><b>Berlin</b></div><div class="profileRow"><span>Languages</span><b>German · English · Vietnamese</b></div><div class="profileRow"><span>Training</span><b>1,600h AI & Software Engineering</b></div><div class="profileRow"><span>Core stack</span><b>Python · FastAPI · LLMs · RAG · MCP · React/TS</b></div></aside></div><div class="closing"><strong>Useful first.<br>Trustworthy by design.</strong><a href="mailto:mikel_ninh@yahoo.de">mikel_ninh@yahoo.de ↗</a></div></div></section>
+<a class="skip" href="#main">Skip to content</a>
+<div class="scroll-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<header class="site-header">
+  <nav class="site-nav wrap" aria-label="Main navigation">
+    <a class="site-brand" href="#top"><span class="brand-seed" aria-hidden="true">✳</span>Michael Ninh <small>/ open studio</small></a>
+    <div class="site-links">
+      <a href="#work" data-section="work">Work</a>
+      <a href="beyond-cv/">Beyond</a>
+      <a class="mobile-secondary" href="cv.html">CV ↗</a>
+      <a class="nav-contact" href="#hello" data-section="hello">Say hello</a>
+    </div>
+  </nav>
+</header>
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero-content">
+        <div>
+          <div class="eyebrow">AI engineer · Creative builder · Berlin</div>
+          <h1 id="hero-title">I build useful things.<br><em>And little worlds.</em></h1>
+          <p class="hero-lead">I turn messy problems into thoughtful, testable products. Sometimes they’re AI systems. Sometimes they’re stories, experiences or everyday objects. The thread is care.</p>
+          <div class="hero-ctas">
+            <a class="btn-main" href="#work">Explore selected work <span aria-hidden="true">↗</span></a>
+            <a class="btn-quiet" href="beyond-cv/">Meet the human <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <aside class="hero-note" aria-label="Three things I love making">
+          <span class="number">A SMALL INTRODUCTION / 001</span>
+          <strong>Curiosity is good.<br>Finishing something is better.</strong>
+          <div class="hero-note-bottom">
+            <span><b>01</b>Systems you can trust</span>
+            <span><b>02</b>Products made for people</span>
+            <span><b>03</b>Stories you can touch</span>
+          </div>
+        </aside>
+      </div>
+      <div class="scroll-hint"><a href="#work">A little further</a></div>
+    </div>
+  </section>
+
+  <section class="work" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="section-topline"><span class="section-index">01 / Selected work</span><span class="section-side">Three doors, not thirty tabs</span></div>
+      <div class="section-intro">
+        <h2 id="work-title">A few things,<br><em>made real.</em></h2>
+        <p>A good project should be easier to try than to explain. These three show the different sides of how I think and build.</p>
+      </div>
+      <div class="work-grid">
+        <article class="work-card">
+          <a class="work-art trust" href="trustready/demo/" aria-label="Try the TrustReady interactive AI safety proof">
+            <div class="trust-motif" aria-hidden="true"><span>AI action<small>request</small></span><i>→</i><span>Authority gate<small>fail closed</small></span></div>
+            <span class="art-caption">TRUSTREADY <span>01 / SYSTEM</span></span>
+          </a>
+          <div class="work-card-content">
+            <span class="work-card-kicker">AI engineering · Real technical proof</span>
+            <h3>Can an AI know when not to act?</h3>
+            <p>An inspectable safety check for agentic systems, with clear human authority boundaries.</p>
+            <a href="trustready/demo/">Try the demonstration <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <article class="work-card">
+          <a class="work-art crea" href="https://riverstone-five.higgsfield.app/#formats" aria-label="Explore the PURNAM DAILY CREA+ product concept and format lab">
+            <img src="https://riverstone-five.higgsfield.app/assets/og-cover.jpg" alt="PURNAM DAILY CREA+ concept: a forest-green creatine vessel and a quiet everyday ritual" loading="lazy" width="1200" height="630">
+            <span class="art-caption">PURNAM DAILY · CREA+ <span>02 / PRODUCT</span></span>
+          </a>
+          <div class="work-card-content">
+            <span class="work-card-kicker">Product design · Live interest experiment</span>
+            <h3>What if a good habit felt beautiful?</h3>
+            <p>A refillable creatine concept with real pricing questions, useful maths and a working feedback loop.</p>
+            <a href="https://riverstone-five.higgsfield.app/#formats">Explore the format lab <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <article class="work-card">
+          <a class="work-art hana" href="beyond-cv/out-of-panel/" aria-label="Play Out of Panel: an interactive storytelling experience">
+            <img src="beyond-cv/out-of-panel/preview.png" alt="Out of Panel: an interactive coin looking into a miniature rooftop story" loading="lazy" width="1200" height="675">
+            <span class="art-caption">HYPERSPACE · OUT OF PANEL <span>03 / PLAY</span></span>
+          </a>
+          <div class="work-card-content">
+            <span class="work-card-kicker">Interactive storytelling · Playable</span>
+            <h3>What if a story could be held?</h3>
+            <p>A small world inside a coin. Turn it, look closer, and help return it to its story.</p>
+            <a href="beyond-cv/out-of-panel/">Step inside the story <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      </div>
+      <div class="work-links">
+        <p>There’s more in the studio. I keep the technical evidence and other experiments available without putting every detail in your way.</p>
+        <a href="proofs.html">All AI engineering proofs <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="principle" id="approach" aria-labelledby="approach-title">
+    <div class="wrap principle-inner">
+      <div>
+        <span class="section-index">02 / How I work</span>
+        <h2 id="approach-title">Make it useful.<br><em>Then prove it.</em></h2>
+      </div>
+      <div class="principle-right">
+        <p>I start with a real problem, build something people can use, and check whether it actually helps. With AI, that means tests, clear boundaries and a person who remains in charge.</p>
+        <div class="principle-words" aria-label="My working principles"><span>Understand</span><span>Make</span><span>Verify</span></div>
+        <details class="proof-details">
+          <summary>Want the engineering details?</summary>
+          <p>I work with Python, FastAPI, RAG, MCP, and React/TypeScript. My deeper case studies show evaluations, tests, limitations and release decisions instead of relying on claims.</p>
+          <a href="proofs.html">Read the technical work ↗</a>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="beyond" id="human" aria-labelledby="human-title">
+    <div class="wrap beyond-content">
+      <div class="beyond-copy">
+        <div class="eyebrow">03 / Beyond the CV</div>
+        <h2 id="human-title">There’s a person<br><em>behind the projects.</em></h2>
+        <p>Food, art, martial arts, meditation, unfinished stories and a fair bit of curiosity. The work is part of my life, not all of it.</p>
+        <a class="btn-quiet" href="beyond-cv/">Wander into the garden <span aria-hidden="true">↗</span></a>
+      </div>
+      <a class="beyond-graphic" href="beyond-cv/" aria-label="Explore Beyond the CV, a garden of stories and curiosity">
+        <span class="beyond-path" aria-hidden="true"></span>
+        <span class="beyond-art-caption">THE GARDEN OF BECOMING / ENTER ↗</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="hello" id="hello" aria-labelledby="hello-title">
+    <div class="wrap hello-inner">
+      <div><div class="section-index">04 / A conversation</div><h2 id="hello-title">Have something<br><em>worth making?</em></h2></div>
+      <div class="hello-actions">
+        <a class="btn-main" href="mailto:mikel_ninh@yahoo.de?subject=Let%27s%20build%20something">Say hello <span aria-hidden="true">↗</span></a>
+        <a class="btn-quiet" href="cv.html">Or take a look at my CV <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
 </main>
-<footer class="footer"><div class="wrap"><span><b>Michael Ninh</b> · Berlin</span><span>Built to be used, tested and inspected. · <a href="culture/">Culture ↗</a></span></div></footer>
+<footer class="site-footer"><div class="wrap"><span>Michael Ninh · Berlin · Still becoming</span><span><a href="https://github.com/mikelninh">GitHub</a> · <a href="beyond-cv/">Beyond the CV</a> · <a href="#top">Back to top ↑</a></span></div></footer>
 <script>
-const proofs={
-trust:{problemTitle:'Can this AI run a command when execution is supposed to be off?',problemBody:'TrustReady traces explicit execution authority through the software and checks whether deny-by-default enforcement holds before the process sink.',agent:'Process execution disabled',human:'--allow-exec',verify:'Propagation · sink · fail-closed guard',kicker:'TRUSTREADY · EXECUTION AUTHORITY',title:'Remove the execution guard. Watch TrustReady refuse GO.',desc:'A 30-second interactive replay of a verified ProofWorker path: command checks can reach subprocess.run, but only after explicit --allow-exec authority passes a deny-by-default policy guard.',evidence:[['3','real repositories'],['3','architecture families'],['3/3','control suites pass'],['Fail closed','lost guard → NO_GO']],try:'trustready/demo/',tryText:'Try the 30-second demo →',code:'https://github.com/mikelninh/digital-worker-factory',boundary:'Interactive explainer grounded in a verified real-repo scan. Benchmark results are scoped technical assurance, not whole-repository security certification.'},
-evidence:{problemTitle:'When does a messy organisation record describe the same entity — and when should the system refuse to guess?',problemBody:'False merges are dangerous in investigations. SafeTrace keeps legal form, group identity, address evidence and stable identifiers visible, then routes ambiguous pairs to review.',agent:'Merge · separate · abstain',human:'Ambiguous identity judgement',verify:'Frozen holdout + regression suite',kicker:'CIVICOS · SAFETRACE ENTITY RESOLUTION',title:'Resolve messy organisations — and know when not to decide.',desc:'A tri-state entity resolver is evaluated on a fresh frozen 40-case set covering punctuation, typos, transliteration, subsidiaries, group identities, address conflicts and stable identifiers.',evidence:[['40','frozen holdout cases'],['34','automatic decisions'],['6','routed to review'],['0','false auto merge/separate decisions']],try:'https://mikelninh.github.io/digital-democracy-studio/safetrace/venatic_application/',tryText:'Try the investigation proof →',code:'https://github.com/mikelninh/digital-democracy-studio/tree/main/zero-suffering-intelligence/entity-resolution',boundary:'The 40-case benchmark is developer-authored, not independent external validation. After inspecting v2 outcomes, future tuning requires a fresh holdout-v3.'},
-monitoring:{problemTitle:'How do you surface a meaningful operational change without turning a statistical signal into an automated conclusion?',problemBody:'Public-sector monitoring needs reproducible data quality checks, uncertainty, explicit thresholds and a clear line between “review this” and “this caused it”.',agent:'Compute · explain · recommend review',human:'Cause + operational decision',verify:'Golden cases + CI regressions',kicker:'DRV SIGNALLAB · RESPONSIBLE MONITORING',title:'Turn 50,000 synthetic administrative cases into an inspectable operational brief.',desc:'SignalLab detects processing shifts and source-system drift with deterministic analytics, exposes uncertainty and effect size, and keeps consequential interpretation outside the system.',evidence:[['50k','deterministic synthetic records'],['95% CI','mean-difference uncertainty'],['Cohen’s d','effect size exposed'],['PSI','input drift monitoring']],try:'https://github.com/mikelninh/drv-signallab/blob/main/docs/REVIEW_GUIDE.md',tryText:'Open the 60-second review →',code:'https://github.com/mikelninh/drv-signallab',boundary:'Synthetic portfolio proof only: no real citizen data, DRV schema, operational thresholds or automated benefit/enforcement decisions.'}
-};
-function renderEvidence(items){evidenceGrid.innerHTML=items.map(([value,label])=>`<div class="evidenceCard"><strong>${value}</strong><span>${label}</span></div>`).join('')}
-function setFocus(key){const d=proofs[key]||proofs.trust;document.querySelectorAll('.choice').forEach(x=>{const active=x.dataset.focus===key;x.classList.toggle('active',active);x.setAttribute('aria-selected',active?'true':'false')});problemTitle.textContent=d.problemTitle;problemBody.textContent=d.problemBody;agentFact.textContent=d.agent;humanFact.textContent=d.human;verifyFact.textContent=d.verify;proofKicker.textContent=d.kicker;proofTitle.textContent=d.title;proofDesc.textContent=d.desc;renderEvidence(d.evidence);tryLink.href=d.try;tryLink.textContent=d.tryText;codeLink.href=d.code;boundaryText.textContent=d.boundary;history.replaceState(null,'',key==='trust'?location.pathname:`${location.pathname}?focus=${key}`)}
-document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>setFocus(b.dataset.focus)));const requested=new URLSearchParams(location.search).get('focus');if(proofs[requested])setFocus(requested);const topbar=document.querySelector('.top');addEventListener('scroll',()=>topbar.classList.toggle('scrolled',scrollY>8),{passive:true});
+(function(){
+  var bar=document.getElementById('reading-progress');
+  var links=[].slice.call(document.querySelectorAll('.site-links [data-section]'));
+  var ticking=false;
+  function update(){
+    ticking=false;
+    var total=document.documentElement.scrollHeight-innerHeight;
+    var fraction=total>0?Math.max(0,Math.min(1,scrollY/total)):0;
+    if(bar)bar.style.transform='scaleX('+fraction.toFixed(4)+')';
+  }
+  addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
+  addEventListener('resize',update,{passive:true});
+  update();
+  if('IntersectionObserver' in window){
+    var seen=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting)return;
+        links.forEach(function(link){
+          if(link.dataset.section===entry.target.id)link.setAttribute('aria-current','location');
+          else link.removeAttribute('aria-current');
+        });
+      });
+    },{rootMargin:'-27% 0px -58% 0px',threshold:0});
+    ['work','hello'].forEach(function(id){var el=document.getElementById(id);if(el)seen.observe(el)});
+  }
+})();
 </script>
 </body>
 </html>
