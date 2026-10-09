@@ -3,6 +3,8 @@
   'use strict';
   const ROOT = 'https://mikelninh.github.io/beyond-cv/out-of-panel/';
   const API = 'https://htffcvdopavknnylbowl.supabase.co/functions/v1/out-of-panel-v06';
+  // Preserve the 0.5 fully-offline share/email flows; QA may opt into the public UI.
+  if (location.hostname !== 'mikelninh.github.io' && !new URLSearchParams(location.search).has('v06test')) return;
   const $ = (s, root = document) => root.querySelector(s);
   const safe = s => String(s ?? '').slice(0, 800);
   const state = { feedbackOpen: false, shareOpen: false, feeling: '', submitting: false };
