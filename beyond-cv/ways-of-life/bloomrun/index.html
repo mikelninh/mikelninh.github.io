@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#071c24" />
+<meta name="description" content="The Ways of Life — BLOOMRUN. A tiny side-scrolling adventure where every movement can bring a world to life. Independent playable prototype." />
+<meta property="og:title" content="BLOOMRUN — The Ways of Life · Field Study 09" />
+<meta property="og:description" content="Run. Leap. Make the valley bloom." />
+<title>BLOOMRUN — The Ways of Life</title>
+<style>
+:root{color-scheme:dark;--cream:#fff4d8;--ink:#051e27;--mint:#a6f0d0;--gold:#ffe9aa}
+*{box-sizing:border-box} html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#071c24;font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--cream)}
+button{font:inherit;cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #fdc87b;outline-offset:4px}
+#game{position:fixed;inset:0;width:100vw;height:100dvh;touch-action:none;display:block;cursor:default}
+#grain{position:fixed;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.79' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");opacity:.19;mix-blend-mode:soft-light}
+#interface{position:fixed;inset:0;pointer-events:none;z-index:4}
+header{position:absolute;top:0;left:0;width:100%;padding:clamp(16px,2.5vw,32px);display:flex;align-items:start;justify-content:space-between;gap:12px}
+.brand{font-weight:900;text-transform:uppercase;letter-spacing:.14em;font-size:clamp(11px,1.1vw,15px);line-height:1.5;text-shadow:0 3px 18px #001a22}.brand small{display:block;text-transform:none;letter-spacing:.17em;font-size:9px;opacity:.7;font-weight:650;margin-top:2px}.lumen{color:#e6e4a5}.right{display:flex;gap:8px;align-items:center}
+.hud{display:flex;gap:7px;align-items:center;border:1px solid #def1da54;background:#071c24a1;backdrop-filter:blur(16px);border-radius:999px;padding:8px 12px;font-size:12px;font-weight:750;letter-spacing:.045em;box-shadow:0 7px 30px #00151f52}.hud b{font-size:13px;color:#ffe6ab}.hud .orb{height:9px;width:9px;background:#6b98a8;border-radius:50%;box-shadow:0 0 0 2px #184b4d}.hud .orb.on{background:#ffe09b;box-shadow:0 0 13px 3px #facb6980}
+.icon-btn{pointer-events:auto;border:1px solid #fff5db40;background:#0b2029b0;color:#fff4e2;border-radius:999px;padding:9px 12px;font-size:12px;backdrop-filter:blur(12px);font-weight:750;min-height:38px}.icon-btn:hover{background:#21414a}
+#hint{position:absolute;bottom:27px;left:50%;transform:translateX(-50%);color:#faedd0;background:#061f29c7;border:1px solid #ffefcf4a;border-radius:999px;padding:10px 19px;font-size:12px;font-weight:700;letter-spacing:.03em;white-space:nowrap;opacity:0;transition:opacity .3s;text-align:center;text-shadow:0 1px 12px #000;max-width:95vw;overflow:hidden;text-overflow:ellipsis}
+#hint.show{opacity:1}#objective{position:absolute;top:95px;left:clamp(15px,2.5vw,34px);padding:10px 16px;border-left:2px solid #f9d688;background:linear-gradient(90deg,#071e29b9,transparent);max-width:290px;font-size:12px;color:#eef6de;line-height:1.6;text-shadow:0 2px 6px #00292e;transition:opacity .3s}#objective .section{font-size:9px;letter-spacing:.22em;color:#f4d58b;font-weight:900;text-transform:uppercase}
+#toast{position:absolute;left:50%;top:22%;transform:translateX(-50%) translateY(-8px);text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(22px,4vw,42px);line-height:1.1;color:#fff9e3;text-shadow:0 2px 18px #042d39,0 2px 4px #102f36;opacity:0;transition:opacity .24s,transform .24s;max-width:90vw}
+#toast.visible{opacity:1;transform:translateX(-50%) translateY(0)}
+.overlay{position:fixed;inset:0;display:grid;place-items:center;z-index:8;padding:22px;pointer-events:auto;background:linear-gradient(90deg,#041720aa 0%,#04172035 65%,#0417206b 100%);transition:opacity .4s}
+.overlay[hidden]{display:none!important}.panel{max-width:570px;width:100%;text-align:center;animation:enter .7s ease both}@keyframes enter{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+.kicker{text-transform:uppercase;letter-spacing:.25em;color:#f4d59f;font-size:11px;font-weight:900}.panel h1,.panel h2{font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:clamp(52px,8vw,96px);letter-spacing:-.055em;line-height:.95;margin:18px 0 17px;text-shadow:0 3px 35px #001b25}.panel h1 em,.panel h2 em{color:#a2ddc1;font-weight:normal}.panel h2{font-size:clamp(37px,6.2vw,67px)}.panel p{max-width:360px;margin:0 auto 27px;color:#deeadf;line-height:1.7;font-size:clamp(14px,1.6vw,17px)}
+.primary{border:0;min-height:56px;padding:15px 38px;background:#f7daa0;color:#193639;border-radius:999px;font-weight:900;letter-spacing:.09em;text-transform:uppercase;box-shadow:0 9px 34px #ffca7251, inset 0 -4px 0 #a6743f50;transition:transform .18s,box-shadow .18s}.primary:hover{transform:translateY(-3px);box-shadow:0 16px 42px #ffca7282}.primary:active{transform:translateY(2px)}.primary:disabled{opacity:.55;cursor:wait}
+.secondary{border:1px solid #fff4d85c;background:transparent;color:#fff2d9;border-radius:999px;min-height:48px;padding:11px 20px;font-weight:750}
+.small-key{font-size:12px;color:#c8d6cb;letter-spacing:.045em;margin-top:20px;line-height:1.9}.small-key kbd{font:inherit;background:#cedbd52c;padding:4px 6px;border-radius:4px;border:1px solid #ffffff33;color:#fff4ce}
+#mobileControls{display:none;position:absolute;bottom:max(16px,env(safe-area-inset-bottom));left:0;right:0;padding:0 17px;align-items:end;justify-content:space-between;pointer-events:none;gap:18px;z-index:5}
+#mobileControls .cluster{display:flex;gap:12px;align-items:end;pointer-events:auto}#mobileControls button{touch-action:none;user-select:none;-webkit-user-select:none;pointer-events:auto;width:67px;height:67px;border-radius:50%;background:#0a2637b8;color:#fdf5da;border:1px solid #e0eee37d;box-shadow:0 9px 17px #00141da8,inset 0 1px 0 #e5eacc33;font-size:26px;font-weight:800;backdrop-filter:blur(12px)}#mobileControls button:active,#mobileControls button.pressed{background:#a8e3b7b8;color:#072831;transform:scale(.95)}#mobileControls .action{height:78px;width:78px;background:#e0cda5d9;color:#173c3f;border:2px solid #fff4d599;font-size:15px;text-transform:uppercase;letter-spacing:.02em}
+#mobileControls .pulse{width:66px;height:66px;font-size:12px;color:#f5f3df;background:#185d60bb}
+#feedback{background:#071b28de;backdrop-filter:blur(12px)}#feedback .panel{background:#092d38ef;box-shadow:0 35px 100px #0009;border:1px solid #d7e9da36;border-radius:25px;padding:clamp(20px,4vw,36px);text-align:left;max-width:520px}
+#feedback .panel h2{font-size:39px;margin:12px 0 22px;line-height:1.1}#feedback .form-label{font-weight:800;color:#f5ebd2;font-size:13px;margin:16px 0 9px;display:block}#feedback .chips{display:flex;flex-wrap:wrap;gap:7px}#feedback .chips button{font-size:12px;border-radius:999px;padding:10px 12px;color:#eaf3e9;background:#18424a;border:1px solid #adcfc654}#feedback .chips button[aria-pressed="true"]{background:#f5d69b;color:#17363d;font-weight:900;border-color:#f5d69b}textarea{width:100%;background:#0d3841;border:1px solid #a9ccbd76;border-radius:12px;padding:12px;color:#faf3da;resize:vertical;min-height:62px}.consent{display:flex;gap:10px;align-items:start;font-size:12px;color:#cde0d8;line-height:1.5;margin:16px 0}.consent input{width:18px;height:18px;accent-color:#ecc58a;flex-shrink:0}.fb-actions{display:flex;gap:8px;flex-wrap:wrap}.fb-actions button{font-size:12px;min-height:42px}.fb-status{font-size:12px;margin-top:13px;min-height:19px;color:#d8e6d8}
+@media(max-width:700px),(pointer:coarse){#mobileControls{display:flex}#hint{bottom:109px;font-size:11px;padding:9px 10px}#objective{top:78px;font-size:11px;max-width:240px}header{padding:13px 13px}.brand small{font-size:8px}.hud{padding:8px;gap:6px;font-size:10px}.right{gap:5px}.icon-btn{font-size:11px;padding:8px 10px}#mobileControls button{width:60px;height:60px}#mobileControls .action{width:73px;height:73px}#mobileControls .pulse{width:63px;height:63px}.panel h1{font-size:clamp(46px,14vw,74px)}.panel p{font-size:14px}.small-key{font-size:11px}#toast{top:28%}}
+@media(max-width:380px){.brand{font-size:10px}.brand small{letter-spacing:.08em}.hud .orb{height:8px;width:8px}.icon-btn{padding:7px}.right .icon-btn:first-child{display:none}#mobileControls{padding:0 10px;gap:7px}#mobileControls .cluster{gap:8px}#mobileControls button{width:53px;height:53px}#mobileControls .action{width:64px;height:64px}#mobileControls .pulse{width:56px;height:56px}#hint{bottom:90px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style></head><body>
+<canvas id="game" role="img" aria-label="A playable side-scrolling garden at twilight, with a luminous little fox, floating landscapes, lanterns and glowing flowers."></canvas><div id="grain" aria-hidden="true"></div>
+<div id="interface">
+<header><div class="brand">THE WAYS OF LIFE <small>FIELD STUDY 09 · BLOOMRUN</small></div><div class="right"><div class="hud" aria-label="Bloom progress"><span class="orb" id="o0"></span><span class="orb" id="o1"></span><span class="orb" id="o2"></span><b id="progress">0 / 3</b></div><button id="sound" class="icon-btn" type="button">♪ Off</button><button id="feedbackBtn" class="icon-btn" type="button">♡</button></div></header>
+<div id="objective"><div class="section">Your little adventure</div><span id="objectiveText">Find a sleeping flower. Tap BLOOM to wake it.</span></div>
+<div id="toast" role="status" aria-live="polite"></div><div id="hint" role="status">Move to explore · SPACE to leap · X to bloom</div>
+<div id="mobileControls" aria-label="Touch game controls"><div class="cluster"><button type="button" id="leftBtn" aria-label="Run left">◀</button><button type="button" id="rightBtn" aria-label="Run right">▶</button></div><div class="cluster"><button type="button" class="pulse" id="bloomBtn" aria-label="Bloom around you">BLOOM</button><button type="button" class="action" id="jumpBtn" aria-label="Jump or double jump">HOP<br>↟</button></div></div>
+</div>
+<section class="overlay" id="intro"><div class="panel"><div class="kicker">A tiny game about bringing things to life</div><h1>Run wild.<br><em>Grow gentle.</em></h1><p>Three sleeping flowers. One valley that wakes when you do something beautiful. No errands. Just play.</p><button class="primary" id="play" type="button">Enter the garden ↗</button><div class="small-key"><kbd>←</kbd> <kbd>→</kbd> move &nbsp; <kbd>SPACE</kbd> jump twice &nbsp; <kbd>X</kbd> bloom<br>On your phone? Use the buttons. Works with touch.</div></div></section>
+<section class="overlay" id="ending" hidden><div class="panel"><div class="kicker" id="endingKicker">THE VALLEY REMEMBERS</div><h2 id="endHeading">Look what<br><em>you started.</em></h2><p id="endText">A garden can begin with a single act, but it never belongs to only one person.</p><button class="primary" id="again" type="button">Run another way ↗</button> <button class="secondary" id="endFb" type="button">Tell me how it felt ♡</button><div class="small-key">A small playable experiment, not a scientific simulation.<br>Built to test whether making a world bloom actually feels fun.</div></div></section>
+<section class="overlay" id="feedback" role="dialog" aria-modal="true" aria-label="Anonymous game feedback" hidden><div class="panel"><div class="kicker">Field Study 09 · 60 seconds</div><h2>Did it feel<br><em>like play?</em></h2><span class="form-label">Your first feeling</span><div class="chips" id="feelings"><button type="button" data-value="delighted" aria-pressed="false">✨ Delightful</button><button type="button" data-value="curious" aria-pressed="true">🌱 Curious</button><button type="button" data-value="flat" aria-pressed="false">😐 Still flat</button><button type="button" data-value="confused" aria-pressed="false">😵 Confusing</button></div><span class="form-label">What mattered most?</span><div class="chips" id="highlights"><button type="button" data-value="touch" aria-pressed="true">The controls</button><button type="button" data-value="world" aria-pressed="false">The visuals</button><button type="button" data-value="choices" aria-pressed="false">The transformation</button><button type="button" data-value="nothing" aria-pressed="false">Nothing yet</button></div><label class="form-label" for="note">What should be extraordinary next? (optional)</label><textarea id="note" maxlength="700" placeholder="One moment that felt good, or didn't…"></textarea><label class="consent"><input type="checkbox" id="consent"><span>I choose to send anonymous answers and play progress. No name, email or cross-site tracking ID is requested. Only sent when I press Send.</span></label><div class="fb-actions"><button class="primary" type="button" id="sendFb" disabled>Send feedback</button><button class="secondary" type="button" id="copyFb">Copy instead</button><button class="secondary" type="button" id="closeFb">Close</button></div><div id="fbStatus" class="fb-status" role="status" aria-live="polite">Nothing has been sent.</div></div></section>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d',{alpha:false});
+const WORLD=3070, H=640, reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const land=[{x:-100,w:905,y:475},{x:902,w:604,y:464},{x:1594,w:706,y:486},{x:2398,w:780,y:445}];
+const springs=[{x:704,y:422},{x:1411,y:410},{x:2102,y:430}];
+const flowers=[{x:535,y:475,c:'#f9c4aa',name:'The first light'},{x:1280,y:464,c:'#b7e7f2',name:'A new beginning'},{x:2142,y:486,c:'#ffdd83',name:'All the little lives'}];
+const collectibles=[235,367,715,925,1110,1420,1680,1900,2150,2480,2650,2855].map((x,i)=>({x,y:300+Math.sin(i*2.6)*45,hit:false}));
+const stars=Array.from({length:145},(_,i)=>({x:hash(i,1)*3800,y:hash(i,2)*370,r:.4+hash(i,3)*1.5,phase:hash(i,4)*7}));
+const trees=Array.from({length:78},(_,i)=>({x:15+i*41+hash(i,5)*35,h:45+hash(i,6)*102,r:hash(i,7),f:hash(i,8)}));
+const skyBirds=Array.from({length:9},(_,i)=>({x:220+i*375,y:145+hash(i,16)*150,s:hash(i,17)*.5+.4}));
+const keys=new Set(),touch={left:false,right:false,jump:false};
+let cw=innerWidth,ch=innerHeight,dpr=1,scale=1,viewW=960,camera=0,worldTick=0,last=0,hintTimer=0,toastTimer=0,shake=0,audio=null,soundOn=false,resizeTimer=0;
+let game=createState();let particles=[];let rings=[];
+function createState(){return {mode:'intro',startedAt:0,elapsed:0,flowerStatus:[false,false,false],bloomAges:[0,0,0],seedlings:[],collected:0,ending:null,complete:false,bridgeProgress:0,worldLight:0,flash:0,player:{x:158,y:475,vx:0,vy:0,onGround:true,coyote:.12,buffer:0,airJumps:0,facing:1,runCycle:0,landPulse:0,dashTime:0,trail:[],lastJump:0},lastNear:null,pulseCool:0,emotions:0,steps:0,combo:0,respawn:158};}
+function hash(n,s=0){let q=Math.sin(n*127.1+s*78.233)*43758.5453;return q-Math.floor(q)}
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)); const lerp=(a,b,k)=>a+(b-a)*k; const near=(a,b,d)=>Math.abs(a-b)<=d;
+function resize(){cw=innerWidth;ch=innerHeight;dpr=Math.min(devicePixelRatio||1,1.75);canvas.width=Math.floor(cw*dpr);canvas.height=Math.floor(ch*dpr);scale=ch/H;viewW=cw/scale;}
+window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(resize,80)});resize();
+function emit(x,y,c,n=12,power=1,life=.75){n=Math.min(n,95);for(let i=0;i<n;i++){const a=hash(i+particles.length+Math.floor(worldTick*100),i)*Math.PI*2;const speed=(35+hash(i,worldTick)*145)*power;particles.push({x,y,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed-35,life:life*(.65+hash(i,99)),maxLife:life,r:1.8+hash(i,88)*3.3,c,drag:.985,gravity:72,spin:hash(i,5)*4})}if(particles.length>620)particles.splice(0,particles.length-620);}
+function ring(x,y,c='#ffffff',max=135){rings.push({x,y,r:7,life:.6,max:.6,color:c,maxRadius:max});}
+function chord(freq=470,kind='sine',duration=.15,volume=.037){if(!soundOn)return;try{audio ||= new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const o=audio.createOscillator(),gain=audio.createGain();o.type=kind;o.frequency.setValueAtTime(freq,audio.currentTime);o.frequency.exponentialRampToValueAtTime(Math.max(60,freq*.63),audio.currentTime+duration);gain.gain.setValueAtTime(volume,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+duration);o.connect(gain);gain.connect(audio.destination);o.start();o.stop(audio.currentTime+duration)}catch{}}
+function ping(){chord(660,'sine',.13);setTimeout(()=>chord(1030,'sine',.25),100)}
+function toast(text,duration=1.75){const el=$('toast');el.textContent=text;el.classList.add('visible');toastTimer=duration;}
+function hint(text,dur=3){const el=$('hint');el.textContent=text;el.classList.add('show');hintTimer=dur;}
+function updateObjective(){const total=game.flowerStatus.filter(Boolean).length;
+ $('progress').textContent=`${total} / 3`;
+ flowers.forEach((f,i)=>{$('o'+i).classList.toggle('on',game.flowerStatus[i])});
+ $('objectiveText').textContent=total===0?'Find the sleeping rose · press X or BLOOM nearby.':total<3?`${total} of 3 flowers awakened · keep exploring!`:'Three flowers awakened! Cross the bridge, stand by an arch, press BLOOM.';
+ if(game.ending)$('objectiveText').textContent='You made something. Stay and explore—or run another way.';
+}
+function start(){game=createState();game.mode='play';game.startedAt=Date.now();particles=[];rings=[];camera=0;$('intro').hidden=true;$('ending').hidden=true;updateObjective();hint('← / → to run  ·  SPACE to jump twice  ·  X to BLOOM',5);}
+function jump(){if(game.mode!=='play')return;const p=game.player;if(p.onGround||p.coyote>0){p.vy=-650;p.onGround=false;p.coyote=0;p.airJumps=0;p.landPulse=1;emit(p.x,p.y-4,'#f9e5bd',12,.6,.55);chord(355,'sine',.14,.03);return}if(p.airJumps<1){p.airJumps=1;p.vy=-560;p.landPulse=1;emit(p.x,p.y-35,'#a7fff3',25,1,.85);ring(p.x,p.y-24,'#cdfdeb',77);chord(596,'triangle',.18,.03);toast('A little more sky!',.7)}}
+function bloom(){if(game.mode!=='play')return;if(game.pulseCool>0)return;const p=game.player;game.pulseCool=.54;game.flash=.23;p.landPulse=1;ring(p.x,p.y-28,'#fce5ae',138);emit(p.x,p.y-32,'#cafbe1',33,1.2,1);chord(392,'sine',.3,.03);let acted=false;
+ flowers.forEach((f,i)=>{if(!game.flowerStatus[i]&&Math.hypot(p.x-f.x,p.y-30-(f.y-35))<121){game.flowerStatus[i]=true;game.bloomAges[i]=.001;acted=true;shake=.24;game.worldLight+=1;game.respawn=f.x-65;emit(f.x,f.y-70,f.c,92,1.5,1.25);ring(f.x,f.y-35,f.c,320);const index=i;setTimeout(()=>{if(game.mode==='play'){chord(540+index*110,'sine',.22,.04);chord(780+index*110,'sine',.3,.025)}},170);toast(['The valley is listening.','Look what woke up!','The last light is yours.'][i],2.2);updateObjective();}});
+ if(acted && game.flowerStatus.every(Boolean) && game.bridgeProgress===0){game.bridgeProgress=.002;toast('THE WORLD IS BLOOMING',3);hint('The bridge is growing. Two futures are waiting →',4)}
+ if(game.flowerStatus.every(Boolean)&&p.x>2480){const dGarden=Math.hypot(p.x-2615,p.y-425),dStars=Math.hypot(p.x-2855,p.y-425);if(Math.min(dGarden,dStars)<108){win(dGarden<dStars?'garden':'stars');acted=true}}
+ if(!acted){const speed=Math.abs(p.vx);if(speed>65||!p.onGround){p.dashTime=.22;p.vx=p.facing*650;p.vy=Math.min(p.vy,-60);emit(p.x,p.y-30,'#d4fff1',50,1.45,.45);ring(p.x,p.y-34,'#fff2ca',110);shake=.1;hint('A gust of bloom! Try combining with a double-hop.',1.1);chord(252,'triangle',.18,.035);}else{game.seedlings.push({x:p.x+45*p.facing,y:p.y,life:1,age:0,c:hash(game.seedlings.length,4)>.5?'#f5d18a':'#9be1cf'});emit(p.x+40*p.facing,p.y-8,'#bcffcc',12,.6);if(game.seedlings.length>75)game.seedlings.shift();hint('A tiny seedling! Move + BLOOM for a wind dash.',1.6)}}
+}
+function win(kind){if(game.ending)return;game.ending=kind;game.complete=true;game.mode='celebrate';game.elapsed=(Date.now()-game.startedAt)/1000;emit(game.player.x,game.player.y-58,kind==='garden'?'#adf5b3':'#fbd6ff',150,1.8,2.1);ring(game.player.x,game.player.y-30,'#faf7d0',600);shake=.25;chord(620,'sine',.35);setTimeout(()=>chord(940,'sine',.45),200);setTimeout(()=>{if(game.mode!=='celebrate')return;game.mode='end';$('endingKicker').textContent=kind==='garden'?'THE GARDEN PATH':'THE SKYWARD PATH';$('endHeading').innerHTML=kind==='garden'?'You made<br><em>room to grow.</em>':'You made<br><em>room to dream.</em>';$('endText').textContent=kind==='garden'?'You woke three flowers. Across the valley, people now have a place to gather, grow and help each other. That is one way of life.':`You woke three flowers. Across the valley, people now have a place to wonder, invent and follow the stars. That is another way of life.`;$('ending').hidden=false},1900);}
+function addMotion(p,dt){const left=keys.has('arrowleft')||keys.has('a')||touch.left;const right=keys.has('arrowright')||keys.has('d')||touch.right;const dir=(right?1:0)-(left?1:0);
+ const target=dir*333;const accel=p.onGround?2100:1260;if(p.dashTime>0){p.dashTime=Math.max(0,p.dashTime-dt);p.vx=p.facing*650;p.vy=Math.min(p.vy,120);if(Math.random()<dt*55)emit(p.x-p.facing*12,p.y-26,'#b0f3dc',2,.4,.34)}else p.vx+=clamp(target-p.vx,-accel*dt,accel*dt);if(dir)p.facing=dir;p.runCycle+=Math.abs(p.vx)*dt*.045;
+ if(!dir&&p.onGround&&p.dashTime<=0)p.vx*=Math.max(0,1-4*dt);
+ const py=p.y;p.x=clamp(p.x+p.vx*dt,19,WORLD-19);let gravity=1530;const held=keys.has(' ')||keys.has('arrowup')||keys.has('w')||touch.jump; if(p.vy<0&&!held)gravity=2100;else if(p.vy>0&&held)gravity=980;
+ p.vy=clamp(p.vy+gravity*dt,-1000,790);p.y+=p.vy*dt;
+ const isFalling=p.vy>=0;let floorHit=null;
+ if(isFalling){for(const l of land)if(p.x>l.x-11&&p.x<l.x+l.w+11&&py<=l.y+15&&p.y>=l.y-1){if(!floorHit||floorHit.y>l.y)floorHit=l}
+ for(const s of springs)if(p.x>s.x-23&&p.x<s.x+23&&py<=s.y+7&&p.y>=s.y&&(!floorHit||s.y<floorHit.y)){floorHit={y:s.y,spring:true,x:s.x}}
+ // The bridge is a physical walkable surface, not just an illustration.
+ if(game.bridgeProgress>=.99 && p.x>=land[2].x+land[2].w-5 && p.x<=land[3].x+6){const ax=land[2].x+land[2].w,bx=land[3].x,u=clamp((p.x-ax)/(bx-ax),0,1),y=lerp(land[2].y,land[3].y,u);if(py<=y+15&&p.y>=y-1)floorHit={y};}
+ }
+ if(floorHit){let wasAir=!p.onGround;p.y=floorHit.y;p.vy=0;p.onGround=true;p.coyote=.11;p.airJumps=0;if(floorHit.spring){p.vy=-805;p.onGround=false;p.coyote=0;emit(p.x,p.y,'#fae4a5',24,1.3);ring(p.x,p.y,'#fceaae',78);chord(450,'triangle',.18,.045);hint('BOING!  Keep hopping ↟',.95)}else if(wasAir){emit(p.x,p.y,'#dde4be',10,.4,.42);p.landPulse=Math.min(.8,Math.abs(p.vx)/320);if(Math.abs(p.vy)>350){shake=.035;chord(195,'sine',.07,.012)}}}else{if(p.onGround)p.coyote=.12;p.onGround=false;p.coyote=Math.max(0,p.coyote-dt)}
+ if(game.flowerStatus.every(Boolean)&&game.bridgeProgress<.99&&p.x>land[2].x+land[2].w-14&&p.x<land[3].x+7){p.x=land[2].x+land[2].w-14;p.vx=0;p.vy=0;p.onGround=true;p.y=land[2].y;hint('Wait a heartbeat—the bridge is growing.',1.1)}
+ if(p.y>760){p.x=game.respawn;p.y=420;p.vx=0;p.vy=0;p.onGround=false;game.respawn=Math.min(game.respawn,p.x);emit(p.x,p.y-40,'#c3ffff',25,.8);toast('Another try. You can do it!',1.2)}
+ if(Math.abs(p.vx)>80&&p.onGround&&Math.random()<dt*16){particles.push({x:p.x-p.facing*13,y:p.y-4,vx:-p.facing*(15+Math.random()*45),vy:-20-Math.random()*30,life:.5,maxLife:.5,r:2.4,c:'#f7dcad',drag:.95,gravity:65})}
+ p.landPulse=Math.max(0,p.landPulse-dt*2.8);
+ if(p.x>2500&&!game.flowerStatus.every(Boolean)&&game.mode==='play'){p.vx=-Math.abs(p.vx)*.68;p.x=2498;hint('Three flowers can wake the far shore. Explore left ←',2.1)}
+}
+function update(dt){worldTick+=dt;game.flash=Math.max(0,game.flash-dt);if(toastTimer>0){toastTimer-=dt;if(toastTimer<=0)$('toast').classList.remove('visible')};if(hintTimer>0){hintTimer-=dt;if(hintTimer<=0)$('hint').classList.remove('show')};
+ if(game.mode==='play'){game.pulseCool=Math.max(0,game.pulseCool-dt);addMotion(game.player,dt);game.elapsed=(Date.now()-game.startedAt)/1000;for(const c of collectibles){if(!c.hit&&Math.hypot(game.player.x-c.x,game.player.y-32-c.y)<43){c.hit=true;game.collected++;emit(c.x,c.y,'#fff0b0',18,.9,.5);chord(840,'sine',.1,.018);if(game.collected===1)hint('Secret lights live along the paths.',2)}}
+ if(game.bridgeProgress>0)game.bridgeProgress=clamp(game.bridgeProgress+dt*1.52,0,1);for(let i=0;i<3;i++)if(game.bloomAges[i]>0)game.bloomAges[i]+=dt;
+ if(game.flowerStatus.every(Boolean)&&game.player.x>2410&&!game.complete&&!near(game.player.x,2600,180)&&!near(game.player.x,2840,180))hint('Find a future to bloom into →',1);
+ }
+ for(const e of game.seedlings){e.age+=dt;e.life=Math.max(0,1-e.age/16)}game.seedlings=game.seedlings.filter(a=>a.life>0);
+ for(const p of particles){p.life-=dt;p.vx*=Math.max(.1,1-.48*dt);p.vy+=(p.gravity||75)*dt;p.x+=p.vx*dt;p.y+=p.vy*dt}particles=particles.filter(p=>p.life>0);
+ for(const r of rings){r.life-=dt;r.r+=(r.maxRadius-r.r)*dt*3.2}rings=rings.filter(r=>r.life>0);
+ const target=clamp(game.player.x-viewW*.39,0,Math.max(0,WORLD-viewW));camera=lerp(camera,target,1-Math.exp(-dt*5.3));shake=Math.max(0,shake-dt*.9);
+}
+const path=(pts)=>{ctx.beginPath();for(let i=0;i<pts.length;i++)i===0?ctx.moveTo(...pts[i]):ctx.lineTo(...pts[i]);ctx.closePath()};
+const ellipse=(x,y,rx,ry,c)=>{ctx.fillStyle=c;ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fill()};
+function glow(x,y,r,color,alpha=1){ctx.save();const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(1,'transparent');ctx.globalAlpha=alpha;ctx.fillStyle=g;ctx.fillRect(x-r,y-r,2*r,2*r);ctx.restore()}
+function sky(){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#071c2b');g.addColorStop(.35,'#17404c');g.addColorStop(.65,game.flowerStatus.filter(Boolean).length>1?'#677f7b':'#416c6a');g.addColorStop(1,game.flowerStatus.every(Boolean)?'#d3bf9b':'#98b3a0');ctx.fillStyle=g;ctx.fillRect(0,0,viewW,H);
+ glow(viewW*.72,145,190,'#f0ce976b',.6);glow(viewW*.68,165,105,'#ffe4bb83',.5);ellipse(viewW*.72,152,37,37,'#e4d1b0');ellipse(viewW*.72+9,147,37,37,'#2c505b');
+ ctx.save();ctx.globalAlpha=.65;for(const s of stars){const x=((s.x-camera*.06)%(viewW+90)+(viewW+90))%(viewW+90)-40;if(s.y>330)continue;ellipse(x,s.y,s.r,s.r,`rgba(255,236,192,${.3+Math.sin(worldTick*1.8+s.phase)*.27})`)}ctx.restore();
+ for(let layer=0;layer<3;layer++){let points=[[0,H],[0,0]];const base=294+layer*53;ctx.beginPath();ctx.moveTo(0,H);ctx.lineTo(0,base+Math.sin(camera*.0001+layer)*24);for(let x=0;x<=viewW+60;x+=55){const ax=x+camera*(.05+.045*layer);const y=base-38*Math.sin(ax/170+layer*9)-25*Math.sin(ax/85+layer*4)-20*Math.sin(ax/300+layer);ctx.lineTo(x,y)}ctx.lineTo(viewW,H);ctx.closePath();ctx.fillStyle=['#244856','#2d6569','#568981'][layer];ctx.globalAlpha=[.7,.65,.42][layer];ctx.fill();ctx.globalAlpha=1}
+ // The night sky gradually grows a living aurora as the valley wakes.
+ const awake=game.flowerStatus.filter(Boolean).length;
+ if(awake>0){ctx.save();ctx.globalCompositeOperation='screen';for(let band=0;band<3;band++){
+ const alpha=awake*.022;ctx.strokeStyle=band===0?`rgba(131,229,173,${alpha})`:band===1?`rgba(172,209,248,${alpha})`:`rgba(250,219,160,${alpha})`;ctx.lineWidth=42+band*27;ctx.lineCap='round';ctx.beginPath();for(let k=0;k<=30;k++){const xx=k/30*viewW;const yy=115+band*31+Math.sin(xx/165+worldTick*.24+band)*35; k?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy)}ctx.stroke();}ctx.restore()}
+ // soft drifting clouds and light haze
+ for(let i=0;i<13;i++){let x=(i*198-camera*.13+worldTick*(i%2?2.5:4))%(viewW+500);if(x<-190)x+=viewW+500;const y=115+(i*73)%190;ctx.globalAlpha=.06;ellipse(x,y,140,16,'#e5f6c8');ctx.globalAlpha=1}
+ let vign=ctx.createRadialGradient(viewW/2,H/2,H*.13,viewW/2,H/2,Math.max(viewW,H)*.65);vign.addColorStop(0,'#07162400');vign.addColorStop(1,'#04101d9c');ctx.fillStyle=vign;ctx.fillRect(0,0,viewW,H);
+}
+function backgroundWorld(){ctx.save();ctx.translate(-camera*.34,0);
+ for(let i=0;i<26;i++){let x=i*150+Math.sin(i*2)*70,base=456+Math.sin(i*.61)*40,height=110+hash(i,31)*140;drawDistantTree(x,base,height,.28+i%3*.06)}
+ for(const b of skyBirds){let x=b.x+Math.sin(worldTick*.4+b.x)*14;let y=b.y+Math.sin(worldTick*1.4+b.x)*9;ctx.globalAlpha=.3;ctx.strokeStyle='#f4ddb3';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x-8,y);ctx.quadraticCurveTo(x-3,y-4,x,y);ctx.quadraticCurveTo(x+6,y-5,x+10,y);ctx.stroke();ctx.globalAlpha=1}
+ ctx.restore()}
+function drawDistantTree(x,base,h,a){ctx.save();ctx.globalAlpha=a;ctx.strokeStyle='#103e45';ctx.lineWidth=9;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x,base);ctx.bezierCurveTo(x-6,base-h*.45,x+8,base-h*.8,x,base-h*.9);ctx.stroke();
+ for(let i=0;i<13;i++){let ang=i*2.4,dx=Math.cos(ang)*h*(.22+.06*Math.sin(ang)),dy=-h*.74+Math.sin(ang)*h*.18;ctx.save();ctx.translate(x+dx,base+dy);ctx.rotate(ang*.38);ctx.fillStyle=i%3===0?'#679e8e':i%2?'#37706c':'#4d8780';ctx.beginPath();ctx.moveTo(0,0);ctx.quadraticCurveTo(-10,-h*.09,0,-h*.23);ctx.quadraticCurveTo(16,-h*.06,0,0);ctx.fill();ctx.restore()}
+ ctx.restore()}
+function leaf(x,y,rx,ry,rot,fill,vein=false){ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.fillStyle=fill;ctx.beginPath();ctx.moveTo(0,-ry);ctx.bezierCurveTo(rx*.97,-ry*.66,rx*.96,ry*.56,0,ry);ctx.bezierCurveTo(-rx*.82,ry*.5,-rx,-ry*.6,0,-ry);ctx.fill();if(vein){ctx.strokeStyle='#d2e7b22c';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,-ry*.8);ctx.lineTo(0,ry*.8);ctx.stroke()}ctx.restore()}
+function drawGapFalls(i){const a=land[i],b=land[i+1];let left=a.x+a.w,right=b.x,width=right-left;if(width>260)return;const top=lerp(a.y,b.y,.5)+1;
+ const flow=ctx.createLinearGradient(left,0,right,0);flow.addColorStop(0,'#67a7a82b');flow.addColorStop(.34,'#b0e5c478');flow.addColorStop(.7,'#9bdad773');flow.addColorStop(1,'#568b9a21');ctx.fillStyle=flow;ctx.beginPath();ctx.moveTo(left+3,top+4);ctx.quadraticCurveTo(lerp(left,right,.4),top-10,right-5,top+3);ctx.lineTo(right+14,640);ctx.lineTo(left-17,640);ctx.closePath();ctx.fill();
+ for(let j=0;j<15;j++){const xx=left+j*width/15+Math.sin(worldTick*1.5+j)*7,y=top+((worldTick*110+j*37)%(640-top));glow(xx,y,13,'#a9f1e36d',.42);ellipse(xx,y,2,4,'#d9f9e2a8')}
+ glow(lerp(left,right,.5),top+140,100,'#9ae8dd25',.45);
+}
+function drawBloomCanopy(f,i,age){const ease=v=>1-Math.pow(1-clamp(v,0,1),3);const x=f.x,top=f.y,grow=ease(age/1.7),shade=['#c6eb9c','#b4f0eb','#f9d0a4'][i];
+ if(grow<=.01)return;
+ glow(x,top-145*grow,240*grow,shade+'6a',.75);glow(x,top-115*grow,160*grow,'#fff0b375',.5);
+ ctx.save();ctx.translate(x,top);ctx.scale(1,grow);let height=252;
+ ctx.strokeStyle='#a3ad82';ctx.lineCap='round';ctx.lineWidth=17;ctx.beginPath();ctx.moveTo(0,7);ctx.bezierCurveTo(-20,-75,18,-117,4,-190);ctx.stroke();ctx.strokeStyle='#688f7b';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(-5,-120);ctx.quadraticCurveTo(-89,-186,-103,-192);ctx.moveTo(4,-155);ctx.quadraticCurveTo(92,-192,103,-220);ctx.moveTo(9,-89);ctx.quadraticCurveTo(80,-125,96,-124);ctx.stroke();
+ for(let k=0;k<61;k++){const a=k*2.399+hash(k,i)*.19,rr=Math.sqrt((k+.1)/61),xx=Math.cos(a)*rr*136,yy=-180+Math.sin(a)*rr*83;
+ const color=i===0?['#badf9a','#5da892','#91c48d','#d6d8a1'][k%4]:i===1?['#b9dcd1','#6eafae','#8bccb2','#b9c2e7'][k%4]:['#caaa91','#e5d9a9','#f0b99a','#bd93a4'][k%4];
+ leaf(xx+Math.sin(worldTick*.3+k)*1.6,yy,15+hash(k,11)*9,25+hash(k,13)*14,a*.13,color,k%8===0);
+ }
+ for(let k=0;k<17;k++){const a=k*2.399,rr=Math.sqrt((k+.2)/18),xx=Math.cos(a)*rr*105,yy=-182+Math.sin(a)*rr*63;
+ if(k%3===0){glow(xx,yy,31,'#fff6c890',.65);ellipse(xx,yy,4+Math.sin(worldTick+k)*.5,5,'#fff6cc')}
+ }
+ // A signature flower at the canopy crest.
+ let bx=0,by=-225;glow(bx,by,60,'#fff0d2a8',.75);
+ for(let k=0;k<6;k++){const a=k*Math.PI/3+Math.sin(worldTick*.4)*.04;leaf(bx+Math.cos(a)*16,by+Math.sin(a)*13,15,26,a+Math.PI/2,shade)}ellipse(bx,by,11,11,'#fff6d4');
+ ctx.restore();
+ if(age<2.2&&Math.random()<.31){particles.push({x:x+(Math.random()-.5)*210,y:top-150+(Math.random()-.5)*125,vx:(Math.random()-.5)*24,vy:-10-Math.random()*25,life:1,maxLife:1,r:2.8,c:shade,gravity:-3})}
+}
+function worldObjects(){for(let i=0;i<trees.length;i++){let tree=trees[i];if(tree.x<camera-100||tree.x>camera+viewW+130)continue;let floor=land.find(l=>tree.x>=l.x&&tree.x<=l.x+l.w);if(!floor)continue;const top=floor.y;const alpha=tree.r<.5?.67:.43;ctx.save();ctx.globalAlpha=alpha;drawTree(tree.x,top,tree.h,tree.r);ctx.restore()}
+ // Tall living silhouettes bloom dramatically as a player awakens each flower.
+ flowers.forEach((f,i)=>{if(game.bloomAges[i]>0)drawBloomCanopy(f,i,game.bloomAges[i]);});
+ for(let i=0;i<3;i++)drawGapFalls(i);
+ // Houses and festival backdrop
+ [[245,0],[975,1],[1840,2],[2583,3],[2800,4]].forEach(([x,i])=>{let l=land.find(e=>x>e.x&&x<e.x+e.w);if(l)drawHouse(x,l.y, i,game.flowerStatus.filter(Boolean).length)});
+ for(const l of land)if(l.x<camera+viewW+160&&l.x+l.w>camera-160)drawLand(l);
+ for(const s of springs)drawMushroom(s.x,s.y);
+ for(const f of flowers)drawFlower(f,game.flowerStatus[flowers.indexOf(f)]);
+ if(game.flowerStatus.every(Boolean))drawBridge();
+ for(const seed of game.seedlings)drawSeedling(seed);
+ for(const c of collectibles)if(!c.hit)drawOrb(c.x,c.y);
+ if(game.flowerStatus.every(Boolean)){drawBeacon(2615,land[3].y,'garden','#9bffae');drawBeacon(2855,land[3].y,'stars','#dbaaff')}
+ drawVillagers();}
+function drawTree(x,y,h,seed){ctx.save();const sway=Math.sin(worldTick*.68+x*.02)*1.5;ctx.strokeStyle='#305a54';ctx.lineCap='round';ctx.lineWidth=Math.max(3,h/14);ctx.beginPath();ctx.moveTo(x,y);ctx.bezierCurveTo(x-10,y-h*.35,x+8,y-h*.69,x+sway,y-h*.9);ctx.stroke();
+ for(let i=0;i<12;i++){let a=i*2.399+seed*3,rx=Math.cos(a)*h*.235,ry=-h*.72+Math.sin(a)*h*.23;const palette=['#4f9280','#72ae91','#aec69d','#43837e'];leaf(x+rx+sway,y+ry,6+seed*8,18+seed*12,a*.22,palette[i%4]);}
+ leaf(x+sway,y-h*.93,12+seed*4,22+seed*8,0,'#98c6a2',true);ctx.restore();}
+function drawLand(l){let y=l.y,x=l.x,w=l.w;
+ // cloud-shadow side of floating island
+ ctx.save();ctx.shadowColor='#001e2cbb';ctx.shadowBlur=22;ctx.shadowOffsetY=13;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.lineTo(x+w-26,y+28);ctx.lineTo(x+w-35,y+92);ctx.bezierCurveTo(x+w*.67,y+174,x+w*.35,y+187,x+51,y+100);ctx.lineTo(x+12,y+35);ctx.closePath();let soil=ctx.createLinearGradient(0,y,0,H);soil.addColorStop(0,'#466258');soil.addColorStop(.28,'#274a47');soil.addColorStop(1,'#0b2c38');ctx.fillStyle=soil;ctx.fill();ctx.restore();
+ ctx.save();ctx.beginPath();ctx.rect(x,y-11,w,18);ctx.clip();const grass=ctx.createLinearGradient(0,y-10,0,y+10);grass.addColorStop(0,'#b8c68b');grass.addColorStop(1,'#5f8e76');ctx.fillStyle=grass;ctx.fillRect(x,y-13,w,24);ctx.restore();
+ // hand-crafted terraces and rich surface foliage
+ for(let k=0;k<Math.round(w/15);k++){const rx=x+13+k*15,rv=hash(k+Math.floor(x),10);if(rx<camera-60||rx>camera+viewW+60)continue;
+ const top=y-12;ctx.strokeStyle=rv>.45?'#789975':'#b0bb88';ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(rx,top+4);ctx.quadraticCurveTo(rx+4,top-5-rv*14,rx-2,top-7-rv*14);ctx.stroke(); if(rv>.83){glow(rx,top-14,16,'#c4f6bd55');ellipse(rx,top-13,2.1,2.9,'#f3d99f')}
+ if(rv<.22){ellipse(rx,y+25+rv*22,3.4,2,'#8aaa93')}
+ }
+ // dangling roots and small glowy buds
+ for(let i=0;i<Math.floor(w/73);i++){let rx=x+52+i*73+hash(i+x,21)*24;if(rx<camera-100||rx>camera+viewW+100)continue;const len=26+hash(i+x,8)*52;ctx.strokeStyle='#346a60';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(rx,y+12);ctx.quadraticCurveTo(rx-13,y+len*.5,rx+8+Math.sin(worldTick+rx*.02)*7,y+len);ctx.stroke();if(hash(i+x,99)>.65)ellipse(rx+8,y+len,4,5,'#e6c792')}
+}
+function drawHouse(x,y,i,lit){let floorY=y,base=y-12,scaleHouse=i===4?1.27:1;ctx.save();ctx.translate(x,base);ctx.scale(scaleHouse,scaleHouse);
+ ellipse(0,3,65,13,'#102d3b66');glow(3,-55,75,'#efb77a55',lit>i*.42?.5:.15);
+ ctx.fillStyle='#2a5754';ctx.fillRect(-40,-69,80,68);ctx.fillStyle='#ebcba1';ctx.beginPath();ctx.moveTo(-35,-67);ctx.lineTo(36,-67);ctx.lineTo(36,-2);ctx.lineTo(-35,-2);ctx.closePath();ctx.fill();
+ ctx.fillStyle='#975d53';ctx.beginPath();ctx.moveTo(-54,-72);ctx.lineTo(0,-111);ctx.lineTo(54,-72);ctx.lineTo(42,-69);ctx.lineTo(0,-95);ctx.lineTo(-42,-69);ctx.closePath();ctx.fill();
+ ctx.strokeStyle='#c88b65';ctx.lineWidth=1.2;for(let t=0;t<5;t++){ctx.beginPath();ctx.moveTo(-41+t*17,-70-t*.24);ctx.lineTo(-15+t*17,-88+t*.4);ctx.stroke()}
+ ctx.fillStyle='#715654';ctx.fillRect(-11,-34,20,33);
+ glow(-21,-46,31,lit?'#ffdb8b80':'#e7e0c72c',lit?1:.4);
+ ctx.fillStyle=lit?'#ffe6a5':'#c5d8ba';ctx.fillRect(-26,-51,15,15);ctx.fillRect(18,-49,10,14);ctx.strokeStyle='#6c7b75';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-18,-51);ctx.lineTo(-18,-36);ctx.moveTo(18,-42);ctx.lineTo(28,-42);ctx.stroke();
+ if(lit>0){const chimney=-22;ctx.fillStyle='#8c6257';ctx.fillRect(20,-112,9,19);for(let j=0;j<3;j++){ctx.globalAlpha=.2-j*.03;ellipse(24+Math.sin(worldTick+j)*9,-125-j*14,5+j*3,4+j*2,'#f8d7ba')}ctx.globalAlpha=1}
+ ctx.restore();}
+function drawMushroom(x,y){let v=Math.sin(worldTick*3+x)*1.6;glow(x,y-16,60,'#f3d5a044',.7);ctx.fillStyle='#ebddbe';ctx.beginPath();ctx.moveTo(x-9,y+6);ctx.lineTo(x-8,y-30);ctx.quadraticCurveTo(x,y-43,x+8,y-30);ctx.lineTo(x+9,y+6);ctx.closePath();ctx.fill();ellipse(x,y-30+v,26,14,'#de7b79');ellipse(x-9,y-33+v,3,2,'#fceab6');ellipse(x+7,y-28+v,4,2,'#fceab6');}
+function drawFlower(f,active){const x=f.x,y=f.y;const bob=Math.sin(worldTick*2+x*.1)*3;
+ if(!active){glow(x,y-38,84,f.c+'55',.8);ctx.strokeStyle='#75b4a0';ctx.lineWidth=6;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x,y-8);ctx.bezierCurveTo(x+15,y-26,x-15,y-38,x,y-55+bob);ctx.stroke();ellipse(x-11,y-25,14,6,'#4b998b');ellipse(x+12,y-37,15,7,'#80b399');ellipse(x,y-62+bob,16,21,'#d0cda9');ellipse(x-6,y-65+bob,6,10,'#f6e1bc');glow(x,y-65,34,'#faf2af8c',.9);
+ }else{glow(x,y-75,123,f.c+'88',.9);ctx.strokeStyle='#5a9d81';ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(x,y-8);ctx.quadraticCurveTo(x+18,y-43,x,y-91+bob);ctx.stroke();for(let i=0;i<7;i++){const a=i*Math.PI*2/7+worldTick*.05;let px=x+Math.cos(a)*24,py=y-90+Math.sin(a)*24+bob;ellipse(px,py,19,12,f.c)}ellipse(x,y-90+bob,13,13,'#fff6c8');for(let i=0;i<4;i++){let a=i*1.55+worldTick*.27;glow(x+Math.cos(a)*58,y-94+Math.sin(a)*50,19,f.c+'99',.7)}
+ }
+}
+function drawBridge(){const p=game.bridgeProgress;if(p<=0)return;const l=land[2],r=land[3];let x=l.x+l.w, end=r.x, y1=l.y,y2=r.y;ctx.save();ctx.strokeStyle='#bb9b76';ctx.lineWidth=8;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x,y1-1);ctx.lineTo(lerp(x,end,p),lerp(y1,y2,p));ctx.stroke();ctx.strokeStyle='#dec29a';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x,y1-3);ctx.lineTo(lerp(x,end,p),lerp(y1,y2,p)-3);ctx.stroke();for(let b=0;b<13*p;b++){const u=b/13,xx=lerp(x,end,u),yy=lerp(y1,y2,u);ctx.fillStyle=b%2?'#c9a980':'#e3c497';ctx.fillRect(xx-4,yy-10,8,11);ctx.fillStyle='#f2dfbb';ctx.fillRect(xx-4,yy-10,6,1)}ctx.restore();}
+function drawSeedling(a){const g=clamp(a.age/.7,0,1);const s=(Math.sin(a.age*2)+1)/2;glow(a.x,a.y-28,25,a.c+'77');ctx.strokeStyle='#70c49a';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(a.x,a.y-23*g);ctx.stroke();ellipse(a.x-8*g,a.y-18*g,12*g,5*g,a.c);ellipse(a.x+8*g,a.y-25*g,12*g,6*g,'#a6e4b4');}
+function drawOrb(x,y){let bob=Math.sin(worldTick*2+x*.12)*12;glow(x,y+bob,36,'#fee9ac99');ellipse(x,y+bob,5,7,'#fff0b9');ellipse(x,y+bob,2,3,'#fff');}
+function drawBeacon(x,y,kind,c){glow(x,y-58,95,c+'70',.9);ctx.strokeStyle='#f2d8b4';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(x-25,y-5);ctx.lineTo(x-25,y-75);ctx.quadraticCurveTo(x,y-100,x+25,y-75);ctx.lineTo(x+25,y-5);ctx.stroke();ellipse(x,y-57+Math.sin(worldTick*2)*6,17,21,c);ctx.fillStyle='#fcf4dd';ctx.font='bold 12px system-ui';ctx.textAlign='center';ctx.fillText(kind==='garden'?'GARDEN':'SKYWARD',x,y-118);if(near(x,game.player.x,95))ctx.fillText('X · BLOOM',x,y-135)}
+function drawVillagers(){for(let i=0;i<9;i++){let l=land[i%land.length],x=235+i*290+(i%3)*15;if(x>l.x+l.w-30)x=l.x+l.w-49;if(x<l.x+25)x=l.x+45;if(x<camera-55||x>camera+viewW+55)continue;let y=l.y;let wave=Math.sin(worldTick*1.5+i)*2,body=i%3?'#be9a88':'#94b69f';
+ ellipse(x,y-29+wave,8,11,'#ebc6a1');ctx.fillStyle=body;ctx.beginPath();ctx.moveTo(x-8,y-18+wave);ctx.lineTo(x+8,y-18+wave);ctx.lineTo(x+12,y-2);ctx.lineTo(x-12,y-2);ctx.closePath();ctx.fill();ellipse(x-4,y-31+wave,1.5,1.4,'#38454c');ellipse(x+4,y-31+wave,1.5,1.4,'#38454c');
+ if(game.flowerStatus.every(Boolean)&&i>4)glow(x,y-25,41,'#f8d6a044')
+}}
+function drawPlayer(){const p=game.player,run=Math.sin(p.runCycle),hop=p.vy<0?Math.min(1,-p.vy/560):0;
+ let sx=p.x,sy=p.y+(p.onGround?Math.sin(p.runCycle*2)*1:0);glow(sx,sy-28,74,'#e2ecd18b',.8);ellipse(sx,sy-2,18,5,'#0a2e3866');ctx.save();ctx.translate(sx,sy-1);ctx.scale(p.facing,1);
+ // flowing scarf
+ ctx.strokeStyle='#ecc286';ctx.lineWidth=7;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-3,-39);ctx.quadraticCurveTo(-20-Math.abs(p.vx)*.026,-35+run*4,-35-Math.abs(p.vx)*.07,-40+run*7);ctx.stroke();
+ // fox ears & body with squash/stretch
+ ctx.save();ctx.translate(0,-p.landPulse*3);ctx.scale(1+p.landPulse*.13,1-p.landPulse*.11);
+ ctx.fillStyle='#e5d3b7';ctx.beginPath();ctx.moveTo(-16,-38);ctx.lineTo(-17,-67);ctx.lineTo(-4,-55);ctx.lineTo(5,-55);ctx.lineTo(18,-70);ctx.lineTo(18,-38);ctx.closePath();ctx.fill();
+ ctx.fillStyle='#9f8c83';ctx.beginPath();ctx.moveTo(-13,-56);ctx.lineTo(-13,-64);ctx.lineTo(-7,-56);ctx.moveTo(11,-57);ctx.lineTo(15,-65);ctx.lineTo(15,-53);ctx.closePath();ctx.fill();
+ const body=ctx.createLinearGradient(-15,-62,12,-5);body.addColorStop(0,'#fff3d8');body.addColorStop(1,'#d4a99e');ctx.fillStyle=body;ellipse(0,-24,20,27,body);
+ ellipse(0,-52,22,20,'#f3dfc5');ellipse(-8,-57,3,4,'#283b43');ellipse(9,-57,3,4,'#283b43');ellipse(1,-49,3.7,2.8,'#745b5d');
+ ellipse(-16,-40,6,8,'#efcbb6');ellipse(18,-40,6,8,'#efd1ba');
+ ctx.strokeStyle='#cf9e8f';ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(-9,-4);ctx.lineTo(-8+run*4,1+hop*4);ctx.moveTo(9,-4);ctx.lineTo(9-run*4,1+hop*4);ctx.stroke();
+ ctx.restore();ctx.restore();}
+function drawParticles(){for(const a of game.seedlings){};for(const r of rings){ctx.globalAlpha=clamp(r.life/r.max,0,1)*.7;ctx.strokeStyle=r.color;ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(r.x,r.y,r.r,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1}for(const p of particles){ctx.save();ctx.globalAlpha=clamp(p.life/p.maxLife,0,1);glow(p.x,p.y,p.r*5,p.c+'99',.5);ellipse(p.x,p.y,p.r,p.r,p.c);ctx.restore()}}
+function draw(){ctx.setTransform(dpr*scale,0,0,dpr*scale,0,0);ctx.clearRect(0,0,viewW,H);sky();backgroundWorld();ctx.save();ctx.translate(-camera+(shake?Math.sin(worldTick*99)*shake*8:0),(shake?Math.cos(worldTick*128)*shake*4:0));
+ worldObjects();drawPlayer();drawParticles();ctx.restore();
+ if(game.flash>0){ctx.fillStyle=`rgba(242,255,217,${game.flash*.21})`;ctx.fillRect(0,0,viewW,H)}
+ // golden foreground fireflies
+ for(let i=0;i<22;i++){const x=(hash(i,7)*viewW+Math.sin(worldTick*.6+i)*31),y=hash(i,13)*280+370;ctx.globalAlpha=(.1+.28*(.5+Math.sin(worldTick*1.8+i)*.5));ellipse(x,y,2,2,'#efdb94');ctx.globalAlpha=1}
+}
+function frame(ts){if(!last)last=ts;const dt=Math.min((ts-last)/1000,.033);last=ts;update(dt);draw();requestAnimationFrame(frame)} requestAnimationFrame(frame);
+function keyDown(e){let k=e.key.toLowerCase();if(['arrowleft','arrowright','arrowup',' ','x','w','a','d'].includes(k)&&!$('feedback').hidden)return;if(['arrowleft','arrowright','arrowup',' ','x','w','a','d'].includes(k))e.preventDefault();const repeat=e.repeat;keys.add(k);if(game.mode==='play'&&!repeat){if(k===' '||k==='arrowup'||k==='w')jump();if(k==='x'||k==='e')bloom();}if(k==='escape'&&!$('feedback').hidden)closeFeedback();}
+window.addEventListener('keydown',keyDown);window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>{keys.clear();touch.left=touch.right=touch.jump=false});
+function touchButton(id,key,action){const b=$(id);const down=e=>{e.preventDefault();b.setPointerCapture?.(e.pointerId);b.classList.add('pressed');if(action){action();if(key==='jump')touch.jump=true}else touch[key]=true};const up=e=>{e.preventDefault();b.classList.remove('pressed');if(key)touch[key]=false};b.addEventListener('pointerdown',down);b.addEventListener('pointerup',up);b.addEventListener('pointercancel',up);b.addEventListener('lostpointercapture',up)}
+touchButton('leftBtn','left');touchButton('rightBtn','right');touchButton('jumpBtn','jump',jump);touchButton('bloomBtn',null,bloom);
+$('play').addEventListener('click',start);$('again').addEventListener('click',start);
+$('sound').addEventListener('click',()=>{soundOn=!soundOn;$('sound').textContent=soundOn?'♪ On':'♪ Off';if(soundOn)ping()});
+const feedback={feel:'curious',highlight:'touch',sent:false,token:null,tokenAt:0,openedFrom:null};
+function openFeedback(){if(!$('feedback').hidden)return;feedback.openedFrom=game.mode;game.mode='feedback';$('feedback').hidden=false;$('fbStatus').textContent='Nothing has been sent.';}
+function closeFeedback(){$('feedback').hidden=true;game.mode=feedback.openedFrom||'play';}
+$('feedbackBtn').addEventListener('click',openFeedback);$('endFb').addEventListener('click',openFeedback);$('closeFb').addEventListener('click',closeFeedback);
+for(const [id,key]of [['feelings','feel'],['highlights','highlight']])for(const b of $(id).querySelectorAll('button')){b.addEventListener('click',()=>{feedback[key]=b.dataset.value;for(const sibling of $(id).querySelectorAll('button'))sibling.setAttribute('aria-pressed',String(sibling===b))})}
+$('consent').addEventListener('change',()=>{$('sendFb').disabled=!$('consent').checked||feedback.sent;});
+const endpoint='https://htffcvdopavknnylbowl.supabase.co/functions/v1/civilization-lab-feedback';
+async function fetchToken(){const r=await fetch(endpoint,{mode:'cors',credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer'});if(!r.ok)throw Error('unavailable');const b=await r.json();if(!b.ok||!b.token)throw Error('unavailable');feedback.token=b.token;feedback.tokenAt=Date.now();}
+function payload(){const total=game.flowerStatus.filter(Boolean).length;return {version:'0.9',consent:true,feeling:feedback.feel,highlight:feedback.highlight,note:$('note').value.trim().slice(0,700),phase:game.complete?'ending':total===3?'reveal':total>0?'decision':'intro',world_code:game.ending==='garden'?'012':game.ending==='stars'?'021':null,marks_count:Math.min(12,game.collected),token:feedback.token,website:null};}
+$('sendFb').addEventListener('click',async()=>{if(!$('consent').checked||feedback.sent)return;const button=$('sendFb');button.disabled=true;button.textContent='Sending…';$('fbStatus').textContent='Contacting the private feedback inbox…';let result='Delivery could not be confirmed. Nothing marked as sent.';try{if(!feedback.token||Date.now()-feedback.tokenAt>850000)await fetchToken();const r=await fetch(endpoint,{method:'POST',mode:'cors',credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer',headers:{'content-type':'application/json'},body:JSON.stringify(payload())});const b=await r.json();if(!r.ok||!b.ok||!b.saved)throw Error('unsaved');feedback.sent=true;result='Saved. Thank you for helping this little game grow.';}catch{feedback.token=null}finally{button.textContent=feedback.sent?'Saved ✓':'Send feedback';button.disabled=feedback.sent||!$('consent').checked;$('fbStatus').textContent=result;}});
+$('copyFb').addEventListener('click',async()=>{const t=`The Ways of Life — BLOOMRUN V0.9\nFeeling: ${feedback.feel}\nMost memorable: ${feedback.highlight}\nNotes: ${$('note').value.trim()||'None'}\nAwakened: ${game.flowerStatus.filter(Boolean).length}/3\nEnding: ${game.ending||'not yet'}`;try{await navigator.clipboard.writeText(t);$('fbStatus').textContent='Copied to clipboard. Nothing sent to the server.'}catch{$('fbStatus').textContent='Copy unavailable here. You can still select and copy your text.'}});
+window.__BLOOM09={getState:()=>({mode:game.mode,x:game.player.x,y:game.player.y,flowers:game.flowerStatus.slice(),collected:game.collected,ending:game.ending,elapsed:game.elapsed,bridge:game.bridgeProgress,particleCount:particles.length,camera}),getGeometry:()=>({viewW,scale,land,flowers}),};
+updateObjective();
+})();
+
+</script>
+</body></html>
