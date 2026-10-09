@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#173a3b">
+<meta name="description" content="The Ways of Life — a playable, illustrated world about the many ways a civilisation can flourish. Shape a valley across a thousand years.">
+<meta property="og:title" content="The Ways of Life — Civilization Lab">
+<meta property="og:description" content="One valley. A hundred beginnings. No perfect answer. A playable thought experiment and open work-in-progress field test.">
+<title>The Ways of Life · Civilization Lab 0.5 Playtest</title>
+<style>
+/* Civilization Lab 0.4 / The Ways of Life. Original cinematic editorial UI. */
+:root{--ink:#223a33;--deep:#15352f;--paper:#f7f0e2;--paper-rich:#fff9ec;--warm:#d99569;--pale:#f6dfbe;--line:#dfd9ca;--mono:'DM Mono',ui-monospace,SFMono-Regular,Consolas,monospace;--sans:'DM Sans',system-ui,-apple-system,sans-serif;--serif:'Instrument Serif',Georgia,serif;--edge:clamp(22px,4.8vw,82px)}
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{font-family:var(--sans);background:#183c40;color:var(--paper);overflow:hidden}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:2px solid #f9cc8f;outline-offset:4px}button:disabled{opacity:.46;cursor:not-allowed}button:active{transform:translateY(1px)}.experience{height:100vh;height:100dvh;min-height:580px;width:100%;isolation:isolate;position:relative;overflow:hidden;background:#28474a}#landscape{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab;z-index:-4}.film-grain{position:absolute;inset:0;pointer-events:none;z-index:-1;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.91' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");mix-blend-mode:soft-light}.edge-shade{position:absolute;inset:0;z-index:-3;pointer-events:none;background:linear-gradient(180deg,#092d2a88 0%,#153a3320 20%,transparent 38%,#17372e0b 56%,#112c2abf 100%),linear-gradient(90deg,#142c28a3 0%,#132f2c50 31%,transparent 66%)}.light-wash{position:absolute;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse 60% 60% at 76% 31%,#ffe5ae10 0%,transparent 75%)}
+.topbar{height:100px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--edge);position:relative;z-index:15}.identity{border:0;background:transparent;color:#fff7e7;display:flex;align-items:center;gap:12px;text-align:left;padding:8px 0}.identity-icon{width:42px;height:42px;display:grid;place-items:center}.identity-icon svg{width:42px;height:42px}.identity b{display:block;letter-spacing:.105em;font:600 12px var(--sans)}.identity small{display:block;margin-top:6px;letter-spacing:.19em;font:9px var(--mono);color:#f2e8d4a3}.center-signature{position:absolute;left:50%;transform:translateX(-50%);font:10px var(--mono);letter-spacing:.17em;color:#fff0d3b3;white-space:nowrap}.signature-star{color:#edc197;margin:0 12px;font-size:15px}.top-actions{display:flex;align-items:center;gap:9px}.top-link,.icon-button{height:40px;border:1px solid #fff7dc4a;background:#193c3d32;backdrop-filter:blur(10px);color:#fffae9}.top-link{padding:0 14px;display:flex;align-items:center;gap:10px;font:10px var(--mono);letter-spacing:.06em}.top-link-icon{font-size:17px}.top-link:hover,.icon-button:hover{background:#fff4d328}.atlas-count{display:grid;place-items:center;border-radius:50%;background:#faf4e72a;width:22px;height:22px;font-size:10px}.icon-button{width:40px;display:grid;place-items:center;border-radius:50%;font-size:16px}.muted .sound-wave{display:none}
+.scene-stamp{position:absolute;top:121px;left:var(--edge);display:flex;align-items:center;gap:13px;font:10px var(--mono);letter-spacing:.15em;color:#fff5e3b8;z-index:4}.stamp-dot{height:7px;width:7px;border-radius:50%;background:#ffd7a0;box-shadow:0 0 16px #ffd7a0aa}.stamp-divider{width:28px;height:1px;background:#ffefdb68}#stamp-year{color:#fff6e2ed}.story-stepper{position:absolute;top:120px;right:var(--edge);z-index:4;display:flex;align-items:center;gap:12px;color:#fff6e4bd;font:10px var(--mono);letter-spacing:.09em}.step-line{display:flex;gap:4px}.step-line i{width:22px;height:3px;background:#fbe5c055;border-radius:4px}.step-line i.done{background:#f6d39c}.step-line i.current{background:#f9e5c3;box-shadow:0 0 0 3px #f3e5d226}#step-count{color:#fff4e1}
+.narrative{position:absolute;inset:0;z-index:6;pointer-events:none}.narrative>*{pointer-events:auto}.intro-content{position:absolute;bottom:clamp(110px,15vh,164px);left:var(--edge);width:min(630px,74vw);animation:inhale .8s ease both}.eyebrow{display:flex;align-items:center;gap:14px;font:10px var(--mono);letter-spacing:.2em;color:#fbe9c8;text-transform:uppercase}.eyebrow:before{content:'';width:27px;height:1px;background:#efc595}.display-title{font:normal clamp(65px,8.6vw,142px)/.88 var(--serif);letter-spacing:-.044em;margin:22px 0 24px;text-shadow:0 5px 40px #0c292953}.display-title em{font-weight:normal;color:#ffe1ad}.intro-copy{max-width:370px;font-size:clamp(14px,1.13vw,17px);line-height:1.7;color:#fff6e8dd;margin:0 0 32px}.primary{border:0;background:var(--paper-rich);color:#1b4038;height:55px;padding:0 24px;display:inline-flex;justify-content:space-between;align-items:center;gap:48px;box-shadow:0 11px 32px #06262233;font-weight:700;font-size:12px;letter-spacing:.02em;transition:background .3s,transform .3s,box-shadow .3s}.primary:hover{background:#fff;transform:translateY(-2px);box-shadow:0 14px 40px #082d293b}.primary .arrow{font:24px var(--serif)}.micro-line{font:10px var(--mono);letter-spacing:.11em;margin-top:19px;color:#fbe4c4b3}.micro-line span{margin:0 10px;color:#f0d4a080}.scene-caption{position:absolute;bottom:31px;left:var(--edge);display:flex;gap:13px;align-items:center;z-index:5;color:#f5e9d1ad;font:10px var(--mono);letter-spacing:.12em;text-transform:uppercase}.caption-line{height:1px;width:23px;background:#f8dcb39c}.scene-controls{position:absolute;bottom:30px;right:var(--edge);z-index:5;display:flex;gap:12px}.scene-control{display:flex;align-items:center;gap:10px;color:#fef1d7;background:transparent;border:0;font:10px var(--mono);letter-spacing:.08em;padding:7px 3px}.scene-control span:first-child{font-size:20px}.scene-control:hover{color:white}.experience[data-phase=intro] #observe-button{display:none}
+/* Decisions have one contained paper surface; the world occupies the rest. */
+.decision-shell{position:absolute;bottom:clamp(27px,5.4vh,56px);left:50%;width:min(1050px,calc(100vw - 2 * var(--edge)));transform:translateX(-50%);background:linear-gradient(125deg,#fbf4e9f5,#f2ead8f3);color:var(--ink);border:1px solid #fff9eedd;box-shadow:0 35px 110px #0e2f2890;backdrop-filter:blur(26px);padding:27px 31px 28px;animation:sheetUp .55s cubic-bezier(.2,.7,.1,1) both}.decision-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;border-bottom:1px solid #7f987e44;padding-bottom:18px}.chapter-eyebrow{font:10px var(--mono);letter-spacing:.14em;color:#996a51}.decision-head h1{font:normal clamp(41px,4.45vw,67px)/.96 var(--serif);letter-spacing:-.04em;margin:12px 0 0;color:#24423b}.decision-head h1 em{font-weight:normal;color:#b77b59}.decision-help{font-size:13px;line-height:1.55;color:#647369;max-width:280px;text-align:right;margin:0 0 2px}.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:15px}.choice{display:flex;flex-direction:column;align-items:flex-start;text-align:left;min-height:147px;background:#fffdf64d;border:1px solid #9eae9b60;color:#2a433a;padding:17px 17px 13px;position:relative;transition:background .2s,border .2s,transform .22s,box-shadow .22s}.choice:hover,.choice:focus-visible{background:#fff9ed;border-color:#bd9070;transform:translateY(-3px);box-shadow:0 10px 19px #514c3820}.choice-top{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:8px}.choice-motif{font:28px var(--serif);color:#b77953;line-height:1}.choice-ordinal{font:10px var(--mono);color:#9b9d84}.choice strong{font-size:14px;font-weight:700;margin:0 0 7px}.choice .choice-description{font:13px/1.5 var(--serif);color:#67766b;max-width:260px}.choice .choice-cost{font:9px var(--mono);color:#a2765d;letter-spacing:.05em;margin-top:auto;padding-top:13px}.decision-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:15px;color:#869083;font:10px var(--mono);letter-spacing:.07em}.chapter-progress{display:flex;align-items:center;gap:8px}.chapter-progress b{width:18px;height:2px;background:#b9c6b6}.chapter-progress b.active{background:#b97b5a}.no-score{font:10px var(--mono);color:#a38970}.decision-exit{background:none;border:0;color:#7c8a7f;padding:6px 2px;font:10px var(--mono)}.decision-exit:hover{color:#224e43}
+/* The consequence screen gives the world breathing space. */
+.reveal-card{position:absolute;bottom:clamp(93px,12vh,130px);left:var(--edge);width:min(505px,calc(100vw - var(--edge)*2));animation:inhale .65s ease both}.reveal-eyebrow{font:10px var(--mono);color:#ffe2af;letter-spacing:.16em}.reveal-card h1{font:normal clamp(56px,6.3vw,94px)/.94 var(--serif);letter-spacing:-.04em;margin:15px 0 13px;text-shadow:0 7px 20px #13362f47}.reveal-card h1 em{font-weight:normal;color:#ffdcaa}.reveal-card p{font:15px/1.72 var(--sans);color:#fff6e9e6;max-width:400px;margin:0}.tension{border-left:2px solid #e7bc8c;padding:0 0 0 15px;margin:18px 0 27px;font:14px/1.5 var(--serif);color:#ffe3c0}.reveal-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.subtle-action{border:0;background:transparent;color:#fff1d7;font:10px var(--mono);letter-spacing:.07em;padding:10px 0;text-decoration:underline;text-decoration-color:#ecd5ac77;text-underline-offset:6px}.subtle-action:hover{color:white}.reveal-card .primary{height:50px}
+/* Final scene — large type and one small letter, not a report/dashboard. */
+.ending-shell{position:absolute;left:var(--edge);right:var(--edge);bottom:clamp(90px,12vh,127px);display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,395px);align-items:end;gap:clamp(35px,7vw,140px);animation:inhale .8s ease both}.ending-title{font:normal clamp(64px,7.2vw,114px)/.88 var(--serif);letter-spacing:-.04em;margin:14px 0 12px;text-shadow:0 5px 30px #123d366e}.ending-title em{color:#fdd7a9;font-weight:normal}.world-title{font:normal clamp(26px,3vw,43px) var(--serif);margin:0 0 16px;color:#ffe7c7}.ending-caption{max-width:430px;font:14px/1.7 var(--sans);color:#fff0dcd0}.world-signature{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:20px 0 23px}.world-signature span{border:1px solid #fff2d27b;padding:7px 9px;color:#fcebd1c2;font:9px var(--mono);letter-spacing:.04em}.ending-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.ending-actions .primary{height:50px;gap:15px}.outline-light{border:1px solid #ffebcf80;background:#163b3647;color:#fff1d8;padding:0 16px;height:50px;font:11px var(--mono);letter-spacing:.07em;backdrop-filter:blur(8px)}.outline-light:hover{background:#eadeba29}.ending-letter{background:#fcf5e8f5;color:#2e4c3e;padding:27px 29px 23px;box-shadow:0 23px 80px #0a29275e;transform:rotate(1deg);border:1px solid #fffaf0;backdrop-filter:blur(16px)}.letter-header{display:flex;justify-content:space-between;align-items:center;font:9px var(--mono);letter-spacing:.1em;color:#b07b5a;border-bottom:1px solid #d9d3c1;padding-bottom:15px}.ending-letter blockquote{font:italic 24px/1.23 var(--serif);margin:19px 0;color:#345949}.letter-from{font:10px var(--mono);color:#8b9b8d;letter-spacing:.08em}.letter-read{display:flex;align-items:center;justify-content:space-between;margin-top:21px;width:100%;text-align:left;border:0;border-top:1px solid #dad8c8;padding:16px 0 0;background:none;color:#9e7257;font:10px var(--mono);letter-spacing:.09em}.letter-read:hover{color:#2a4d44}
+/* Drawer: theatrical book page rather than a regular modal */
+.drawer{border:0;padding:0;width:min(615px,calc(100vw - 30px));max-height:min(88dvh,830px);margin:auto 0 auto auto;background:#f7f0e2;color:#2c463d;box-shadow:-22px 0 100px #001b1c88;overflow:auto;overscroll-behavior:contain}.drawer::backdrop{background:#051f22a6;backdrop-filter:blur(9px)}.drawer[open]{animation:drawerIn .3s ease both}.drawer-toolbar{position:sticky;top:0;background:#f7f0e2e8;backdrop-filter:blur(12px);z-index:2;height:75px;padding:0 clamp(24px,6%,47px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #d9dbca}.drawer-issue{font:10px var(--mono);letter-spacing:.14em;color:#b78060}.drawer-close{border:1px solid #c5cebb;background:transparent;color:#2b4f42;border-radius:50%;height:37px;width:37px;display:grid;place-items:center}.drawer-close:hover{background:#e6e5d7}.drawer-content{padding:40px clamp(24px,7%,49px) 54px}.drawer-content h2{font:normal clamp(52px,6vw,75px)/.92 var(--serif);letter-spacing:-.03em;margin:0 0 19px}.drawer-content h2 em{color:#b87856}.drawer-content p{font-size:14px;line-height:1.9;color:#667567;margin:0 0 17px}.drawer-content strong{color:#34594a}.drawer-note{border-left:2px solid #cfa07f;padding:14px 18px;color:#687468;font:16px/1.4 var(--serif);background:#efe7d8;margin:23px 0}.drawer-divider{height:1px;background:#d7d9cb;margin:26px 0}.drawer-action{border:1px solid #547666;color:#2c5d4a;background:transparent;padding:13px 17px;font:10px var(--mono);letter-spacing:.1em}.drawer-action:hover{background:#e9e9db}.drawer-primary{border:0;background:#315b4f;color:white;padding:14px 18px;font:11px var(--mono);letter-spacing:.05em}.drawer-primary:hover{background:#23483d}.people-profile{display:flex;gap:18px;padding:21px 0;border-top:1px solid #d7ddcf}.person-symbol{flex:0 0 49px;height:49px;background:#e3dfc8;color:#ac7e57;display:grid;place-items:center;border-radius:50%;font:28px var(--serif)}.people-profile:nth-of-type(3) .person-symbol{background:#d4e1d5}.person-symbol:last-child{background:#e3dfc8}.person-meta{font:10px var(--mono);letter-spacing:.1em;color:#a7785c;margin-bottom:10px}.people-profile blockquote{font:20px/1.32 var(--serif);margin:0;color:#355547}.atlas-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.atlas-item{display:block;text-align:left;border:1px solid #d9ddce;background:#fffcf2;padding:0;color:#38584d}.atlas-item:hover{border-color:#b27b5b;transform:translateY(-2px)}.atlas-art{height:130px;background:#46685a;overflow:hidden}.atlas-art img{width:100%;height:100%;object-fit:cover}.atlas-item-copy{padding:12px 14px 16px}.atlas-item-copy strong{font:24px/1 var(--serif);color:#2a5647;display:block;margin-bottom:9px}.atlas-item-copy span{font:9px var(--mono);color:#9d856e}.atlas-empty{padding:35px 10px;border:1px dashed #b6c9b8;text-align:center;color:#557463}.atlas-empty span{font:39px var(--serif);display:block;margin-bottom:10px}.small-note{font:11px/1.7 var(--mono)!important;letter-spacing:.04em;color:#8c9788!important}.letter-long{font:18px/1.6 var(--serif)!important;color:#375549!important}.chapter-history{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.chapter-history button{background:#e9e8d9;color:#466b58;padding:11px 14px;border:1px solid #cad5c8;font:10px var(--mono)}.chapter-history button:hover{background:#d9e4d8}.dialog-backdrop{display:none}.toast{position:absolute;bottom:80px;left:50%;z-index:31;transform:translate(-50%,15px);background:#163c38e8;backdrop-filter:blur(12px);border:1px solid #efe0c075;padding:12px 19px;color:#fff5e1;max-width:90vw;text-align:center;font:11px var(--sans);opacity:0;pointer-events:none;transition:.3s}.toast.visible{transform:translate(-50%,0);opacity:1}.experience[data-phase=decision] .scene-caption{opacity:.65}.experience[data-phase=decision] .scene-controls{bottom:auto;top:164px}.experience[data-phase=ending] .scene-controls{bottom:auto;top:170px}
+@keyframes inhale{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}@keyframes sheetUp{from{opacity:0;transform:translate(-50%,24px)}to{opacity:1;transform:translate(-50%,0)}}@keyframes drawerIn{from{opacity:.4;transform:translateX(25px)}to{opacity:1;transform:translateX(0)}}
+@media(max-width:1100px){.center-signature{display:none}.decision-shell{width:calc(100vw - 42px)}.ending-shell{gap:20px;grid-template-columns:minmax(0,1fr) minmax(270px,350px)}.ending-letter{padding:22px}.display-title{font-size:clamp(70px,10.4vw,120px)}}
+@media(max-height:690px) and (min-width:769px){.topbar{height:75px}.scene-stamp,.story-stepper{top:90px}.intro-content{bottom:91px}.display-title{font-size:clamp(56px,8.2vh,85px);margin:11px 0}.intro-copy{margin-bottom:15px}.decision-shell{bottom:25px;padding:18px 25px}.decision-head{padding-bottom:9px}.decision-head h1{font-size:47px;margin:6px 0 0}.choice{min-height:120px}.ending-shell{bottom:65px}.ending-title{font-size:80px}.scene-controls{bottom:20px}.scene-caption{bottom:20px}}
+@media(max-width:768px){body{overflow:auto}.experience{height:100dvh;min-height:630px}.topbar{height:77px}.identity b{font-size:10px}.identity small{font-size:8px;letter-spacing:.1em}.identity-icon,.identity-icon svg{width:33px;height:33px}.top-actions{gap:5px}.top-link{height:36px;padding:0 9px}.top-link-name{display:none}.icon-button{height:36px;width:36px}.scene-stamp{top:91px;font-size:8px}.story-stepper{top:116px;right:auto;left:var(--edge);font-size:9px}.scene-controls{right:20px;bottom:26px}.scene-control{font-size:9px}.scene-caption{bottom:29px}.intro-content{left:var(--edge);bottom:clamp(100px,14vh,140px);width:min(490px,calc(100vw - 44px))}.display-title{font-size:clamp(68px,13vw,113px);margin:17px 0}.intro-copy{font-size:14px;max-width:330px}.decision-shell{bottom:18px;width:calc(100vw - 26px);padding:20px 20px 16px;max-height:calc(100dvh - 176px);overflow:auto;overscroll-behavior:contain}.decision-head{display:block;padding-bottom:12px}.decision-head h1{font-size:clamp(43px,7vw,61px);margin:8px 0}.decision-help{text-align:left;max-width:none;font-size:11px}.choice-grid{gap:8px}.choice{min-height:155px;padding:12px}.choice strong{font-size:12px}.choice .choice-description{font-size:12px}.choice .choice-cost{font-size:8px}.choice-motif{font-size:25px}.decision-footer{margin-top:10px}.reveal-card{bottom:100px}.reveal-card h1{font-size:75px}.ending-shell{display:block;bottom:72px;right:var(--edge)}.ending-title{font-size:clamp(66px,10vw,99px)}.ending-letter{max-width:360px;margin:24px 0 0;padding:17px 18px}.ending-letter blockquote{font-size:18px;margin:10px 0}.ending-caption{font-size:12px}.world-signature{margin:12px 0}.scene-controls{bottom:24px!important;top:auto!important}.experience[data-phase=decision] .scene-controls{display:none}.experience[data-phase=ending] .scene-controls{display:none}}
+@media(max-width:540px){:root{--edge:23px}.experience{min-height:620px}.identity{gap:7px}.identity b{font-size:9px}.identity small{font-size:7px}.topbar{padding:0 17px}.top-actions{gap:4px}.top-link{border:0;background:transparent;padding:0 4px;font-size:9px;gap:5px}.top-link-icon{font-size:15px}.atlas-count{width:18px;height:18px}.icon-button{width:31px;height:31px;border:0;background:transparent}.scene-stamp{top:87px;font-size:8px;gap:9px}.stamp-divider{width:14px}.story-stepper{top:113px}.step-label{display:none}.intro-content{bottom:106px}.display-title{font-size:clamp(62px,16.2vw,94px);letter-spacing:-.046em;max-width:390px}.eyebrow{font-size:9px;letter-spacing:.12em}.intro-copy{line-height:1.65;font-size:13px;max-width:290px;margin-bottom:21px}.primary{height:50px;padding:0 20px;font-size:11px}.micro-line{font-size:9px}.scene-caption{font-size:8px;max-width:60vw}.caption-line{width:12px}.scene-control span:last-child{display:none}.scene-control span:first-child{font-size:22px}.scene-controls{gap:9px}.decision-shell{bottom:8px;width:calc(100vw - 16px);border-radius:3px 3px 0 0;max-height:calc(100dvh - 185px);padding:17px 17px 14px}.decision-head h1{font-size:clamp(44px,10vw,57px)}.decision-head h1 br{display:none}.decision-help{font-size:11px;line-height:1.4}.choice-grid{display:grid;grid-template-columns:1fr;gap:6px;margin-top:10px}.choice{min-height:75px;padding:10px 12px 10px 48px;display:block;position:relative}.choice-top{display:contents}.choice-motif{position:absolute;left:11px;top:16px;font-size:25px}.choice-ordinal{position:absolute;top:12px;right:11px;font-size:9px}.choice strong{display:block;margin:0 24px 3px 0;font-size:12px}.choice .choice-description{display:block;font:12px/1.3 var(--serif);max-width:290px}.choice .choice-cost{display:block;padding-top:6px;font:8px var(--mono)}.decision-footer{font-size:9px}.no-score{font-size:8px}.reveal-card{bottom:93px}.reveal-card h1{font-size:clamp(65px,14vw,88px);margin:11px 0}.reveal-card p{font-size:13px;line-height:1.65;max-width:290px}.tension{font-size:13px;margin:13px 0 21px}.reveal-actions{gap:8px}.reveal-actions .primary{gap:15px}.subtle-action{font-size:9px}.ending-shell{bottom:73px}.ending-title{font-size:clamp(59px,13vw,76px)}.world-title{font-size:27px;margin-bottom:6px}.ending-caption{max-width:280px;font-size:12px;line-height:1.4}.world-signature{margin:12px 0;gap:5px}.world-signature span{font-size:7px;padding:6px}.ending-actions .primary,.outline-light{height:43px;padding:0 10px;font-size:9px}.ending-letter{margin:16px 0 0;max-width:290px;transform:rotate(.4deg);padding:13px 15px}.ending-letter blockquote{font-size:18px;line-height:1.15;margin:9px 0}.letter-header,.letter-from{font-size:8px}.letter-header{padding-bottom:9px}.letter-read{margin-top:11px;padding-top:11px;font-size:8px}.drawer{width:100vw;max-height:100dvh;height:100dvh;margin:auto 0 0 auto}.drawer-content{padding:32px 26px}.drawer-content h2{font-size:61px}.atlas-grid{gap:7px}.atlas-art{height:94px}.atlas-item-copy{padding:11px}.atlas-item-copy strong{font-size:20px}.people-profile blockquote{font-size:19px}}
+@media(max-width:375px){.experience{min-height:570px}.scene-stamp #stamp-name{display:none}.display-title{font-size:62px}.decision-shell{max-height:calc(100dvh - 153px)}.decision-head h1{font-size:44px}.choice{min-height:69px}.choice .choice-description{font-size:11px}.choice .choice-cost{font-size:7px}.ending-letter{max-width:250px}.ending-title{font-size:60px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+/* Civilization Lab 0.4 / Wonder Pass. Restrained enchantment and real interaction. */
+:root{--mooncream:#fff2d9;--gold:#e9c899;--jade:#9ebbae;--ink-dark:#183b38}
+.experience::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 74% 25%,#ffda9d15,transparent 43%),linear-gradient(92deg,#092c2b27,transparent 53%);mix-blend-mode:screen}
+.identity-icon{filter:drop-shadow(0 0 16px #e7d3a344)}
+.signature-star{color:#ffddaa;text-shadow:0 0 15px #ffe5a9b0}
+.eyebrow{color:#ffe1ad}
+.intro-content{filter:drop-shadow(0 8px 26px #0b2b2a1e)}
+.display-title{letter-spacing:-.052em;text-shadow:0 6px 30px #153a3a7a,0 0 80px #fae6c721}
+.display-title em{color:#f6c993;text-shadow:0 0 46px #fcd5a93b}
+.intro-copy{color:#fff7e4e7;max-width:405px}
+.primary{background:linear-gradient(125deg,#fffdf1,#f3e3ca);box-shadow:0 4px 1px #fff7e633 inset,0 18px 48px #102e2c50;transition:transform .28s cubic-bezier(.16,1,.3,1),box-shadow .3s,background .3s}
+.primary:hover{transform:translateY(-3px);box-shadow:0 7px 1px #fff7e644 inset,0 26px 55px #102e2c70;background:#fffdf0}
+.choice{position:relative;overflow:hidden;transition:background .3s,transform .35s cubic-bezier(.16,1,.3,1),border-color .3s,box-shadow .3s}
+.choice:after{content:'';position:absolute;inset:0;opacity:0;pointer-events:none;background:linear-gradient(110deg,transparent 23%,#fff9e980 49%,transparent 69%);transform:translateX(-95%);transition:transform .6s ease,opacity .3s}
+.choice:hover:after,.choice:focus-visible:after{opacity:.53;transform:translateX(95%)}
+.choice:hover,.choice:focus-visible{transform:translateY(-3px);box-shadow:0 12px 23px #54725e21}
+.choice-motif{filter:drop-shadow(0 3px 9px #dda47d55)}
+.choice:active{transform:translateY(0)}
+.echo-star{display:inline-block;margin-right:9px;color:#ffe6a7;text-shadow:0 0 21px #f6d4a0}
+.scene-controls{gap:11px;align-items:center}
+.scene-control{transition:color .25s,background .25s,border-color .25s,transform .25s;border-radius:40px;padding:8px 10px;color:#fff6ddce;border:1px solid transparent}
+.scene-control:hover,.scene-control:focus-visible{color:#fff9e5;background:#173b3a82;border-color:#f2d9b246;transform:translateY(-2px)}
+.scene-control span:first-child{color:#ffdb9a;font-size:15px}
+.seed-button{background:#f4dfb517;border:1px solid #ffe2aa5c;padding:11px 15px;box-shadow:0 4px 20px #142f282a}
+.seed-button:hover{background:#fbe8c344;color:#fffcef}
+.seed-button[hidden],.wonder-button[hidden]{display:none!important}
+.wonder-toast{position:absolute;left:50%;bottom:clamp(88px,12vh,132px);z-index:24;transform:translateX(-50%);width:min(460px,calc(100vw - 44px));min-height:128px;display:flex;align-items:flex-start;gap:20px;padding:26px 24px 21px;background:linear-gradient(120deg,#f9f0dbfa,#f5e5cbea);color:#28483e;box-shadow:0 29px 90px #08231f88,0 0 0 1px #fef4e8be inset;border-radius:8px;backdrop-filter:blur(18px);animation:wonderAppear .55s cubic-bezier(.19,1,.22,1) both}
+.wonder-toast[hidden]{display:none}
+.wonder-glint{flex:0 0 30px;font:34px var(--serif);color:#bc8863;text-shadow:0 0 22px #efbe7e94;animation:breathing 3s ease-in-out infinite}
+.wonder-toast .wonder-eyebrow{display:block;color:#ad8162;font:9px var(--mono);letter-spacing:.16em;margin:0 0 13px}
+.wonder-toast p{font:clamp(18px,2.1vw,23px)/1.3 var(--serif);letter-spacing:-.016em;margin:0 0 13px;color:#285246}
+.wonder-footnote{font:8px/1.6 var(--mono);letter-spacing:.08em;color:#9d9581}
+#wonder-close{background:transparent;border:0;color:#7b8c7b;font:24px var(--serif);margin:-13px -7px 0 auto;min-width:30px;min-height:32px}
+#wonder-close:hover{color:#315a49}
+.experience.timewalking .narrative,.experience.timewalking .scene-caption,.experience.timewalking .story-stepper,.experience.timewalking .scene-controls{opacity:0;pointer-events:none;visibility:hidden}
+.experience.timewalking .scene-stamp{color:#fff4d7}
+.timewalk{position:absolute;z-index:18;bottom:clamp(18px,5.4vh,60px);left:50%;width:min(720px,calc(100vw - 34px));transform:translateX(-50%);padding:28px 33px 21px;border:1px solid #fff6d14a;background:linear-gradient(140deg,#143b3add,#234640ed);box-shadow:0 24px 90px #001d1a9c,0 1px 0 #fbe2b126 inset;backdrop-filter:blur(30px);border-radius:17px;color:#f9ead1;animation:timewalkAppear .8s ease both}
+.timewalk[hidden]{display:none}
+.timewalk-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:20px}
+.timewalk-prefix,.timewalk-close,.timewalk-footer,.timewalk-end{font:9px var(--mono);letter-spacing:.15em;color:#f5d8b59c}
+.timewalk-close{border:1px solid #f1d7a355;border-radius:99px;background:transparent;color:#f5ead4;min-height:33px;padding:0 13px;white-space:nowrap;letter-spacing:.05em}
+.timewalk-close:hover{background:#ffffff20}
+.timewalk-title{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px}
+.timewalk-title strong{display:block;font:clamp(28px,4vw,47px)/1 var(--serif);font-weight:400;letter-spacing:-.045em;color:#fff5e4}
+.timewalk-title span{font:12px/1.6 var(--sans);color:#eadbc7b0;display:block;margin-top:8px}
+.timewalk-title output{font:clamp(46px,6vw,74px)/.9 var(--serif);color:#f9d1a0;font-variant-numeric:tabular-nums}
+.timewalk-rail{display:flex;align-items:center;gap:20px}
+#time-play{border:1px solid #f2e0b47d;width:47px;height:47px;flex-shrink:0;border-radius:100%;display:grid;place-items:center;background:#e9d4ad19;color:#ffe8c1;font:24px var(--serif)}
+#time-play:hover{background:#f3deb848}
+#time-range{height:24px;flex:1;min-width:0;background:transparent;cursor:pointer;appearance:none;-webkit-appearance:none;--progress:0%}
+#time-range::-webkit-slider-runnable-track{height:3px;border-radius:4px;background:linear-gradient(90deg,#f8d4a0 var(--progress),#d6c6b052 var(--progress))}
+#time-range::-moz-range-track{height:3px;background:#d6c6b052;border-radius:4px}
+#time-range::-moz-range-progress{height:3px;background:#f8d4a0}
+#time-range::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:17px;height:17px;border-radius:100%;background:#fff3dc;border:4px solid #edbb84;margin-top:-7px;box-shadow:0 0 20px #f8cb91bb}
+#time-range::-moz-range-thumb{height:12px;width:12px;border:4px solid #e4b785;background:#fff1d4;border-radius:100%}
+.timewalk-footer{margin-top:20px;display:flex;align-items:center;justify-content:space-between;font-size:8px;opacity:.66}.timewalk-footer span{font-size:16px;color:#ffd4a4}
+@keyframes breathing{50%{opacity:.65;transform:scale(.83) rotate(20deg)}}
+@keyframes wonderAppear{from{opacity:0;transform:translate(-50%,28px) scale(.96)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes timewalkAppear{from{opacity:0;transform:translate(-50%,30px)}to{opacity:1;transform:translate(-50%,0)}}
+@media(max-width:1100px){.ending-actions .outline-light{padding:0 11px}}
+@media(max-width:768px){.timewalk{bottom:21px}.wonder-toast{bottom:110px}.scene-controls{flex-wrap:wrap;justify-content:flex-end;max-width:290px}.experience[data-phase=decision] .scene-controls{display:none}.experience[data-phase=ending] .scene-controls{display:flex;top:auto;bottom:16px}.experience[data-phase=ending] .scene-controls .scene-control:not(.wonder-button):not(.seed-button){display:none}}
+@media(max-width:540px){.intro-content{bottom:103px}.seed-button{padding:7px 9px}.scene-controls{bottom:11px!important;right:12px;gap:5px}.scene-control{padding:7px 8px}.scene-controls .scene-control span:last-child{display:none}.scene-controls .seed-button span:first-child{font-size:24px}.scene-controls .wonder-button span:first-child{font-size:22px}.ending-actions{gap:7px}.ending-actions .primary,.ending-actions .outline-light{padding:0 11px}.ending-caption{max-width:280px}.timewalk{bottom:0;width:100vw;border-radius:18px 18px 0 0;padding:22px 23px 25px}.timewalk-top{margin-bottom:13px}.timewalk-title{gap:10px;margin-bottom:17px}.timewalk-title strong{font-size:30px}.timewalk-title output{font-size:54px}.timewalk-title span{font-size:11px;line-height:1.4}.timewalk-rail{gap:10px}.timewalk-end{display:none}.timewalk-footer{margin-top:13px}.wonder-toast{bottom:clamp(115px,18vh,170px);padding:23px 18px 18px;gap:10px;min-height:110px}.wonder-glint{font-size:28px;flex:0 0 27px}.wonder-toast p{font-size:19px}.wonder-footnote{font-size:7px}}
+@media(prefers-reduced-motion:reduce){.wonder-glint{animation:none}.wonder-toast,.timewalk{animation:none}}
+/* Keep discoveries away from the main call to action. */
+@media(min-width:769px){.wonder-toast{left:auto;right:var(--edge);top:clamp(135px,18vh,200px);bottom:auto;transform:none;width:min(390px,30vw);animation:wonderSideIn .5s cubic-bezier(.18,1,.28,1) both}}
+@media(max-width:768px){.wonder-toast{top:145px;bottom:auto}}
+@keyframes wonderSideIn{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(prefers-reduced-motion:reduce){.wonder-toast{animation:none}}
+
+/* The first touch wakes the valley, once, without blocking interaction. */
+.experience.awakening .light-wash{animation:valleyAwakens 1.8s cubic-bezier(.2,.7,.1,1) both}
+@keyframes valleyAwakens{0%{opacity:.1;filter:brightness(1)}22%{opacity:.52;filter:brightness(1.25)}100%{opacity:0;filter:brightness(1)}}
+@media(prefers-reduced-motion:reduce){.experience.awakening .light-wash{animation:none}}
+
+/* Name the optional gesture clearly on touch screens. */
+@media(max-width:540px){.scene-controls .seed-button span:last-child{display:inline;font:8px var(--mono);letter-spacing:.055em}.scene-controls .seed-button{gap:7px;padding:8px 10px}.experience[data-phase=ending] .scene-controls{bottom:9px!important}}
+/* Decorative captions must never steal touches from discovery and seed controls. */
+.scene-caption{pointer-events:none;z-index:4}
+.scene-controls{z-index:9}
+
+/* V0.5 Touch the Valley: a small, intentional world-making control. */
+.maker-dock[hidden],.maker-tools[hidden]{display:none!important}
+.maker-dock{position:absolute;right:var(--edge);top:172px;z-index:12;max-width:min(330px,calc(100vw - 24px));color:#fff9e8}
+.maker-open{color:#fff8e6;border:1px solid #fbe3bd7a;background:#163e37b8;backdrop-filter:blur(18px);padding:13px 17px;display:flex;align-items:center;gap:12px;font:11px var(--mono);letter-spacing:.07em;box-shadow:0 9px 33px #13282060}
+.maker-open .tiny-icon{font:24px var(--serif);color:#f0c98d;line-height:.8}
+.maker-open:hover,.maker-open[aria-expanded=true]{border-color:#ffe7b6;background:#21473edb}
+.maker-tools{border:1px solid #d6c8a6aa;background:#faf2e6f9;color:#233e36;backdrop-filter:blur(18px);padding:17px;margin-top:6px;box-shadow:0 16px 55px #102f2a96;width:330px;max-width:calc(100vw - 24px)}
+.maker-title{font:normal 31px/1.03 var(--serif);margin:0 0 4px}.maker-intro{font:12px/1.45 var(--sans);color:#52675d;margin:0 0 12px}
+.maker-options{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.maker-option{min-width:0;border:1px solid #9eb3a16d;background:#f9f6ee;padding:10px 3px;text-align:center;color:#2c4b3f;transition:transform .2s,border-color .2s,background .2s}
+.maker-option>span{font:24px var(--serif);display:block;margin-bottom:3px}.maker-option>small{font:10px var(--sans);display:block}.maker-option:hover{transform:translateY(-2px);border-color:#b17b5c}.maker-option.selected{border-color:#9a684c;background:#e8d9c1;box-shadow:inset 0 0 0 1px #a97961}
+.maker-hint{font:11px/1.5 var(--sans);color:#688075;margin:12px 0 0}.maker-actions{display:flex;align-items:center;gap:8px;margin-top:12px}.maker-actions button{border:1px solid #8b9986a1;padding:10px 13px;background:#254b3e;color:#fff5e1;font:11px var(--sans)}.maker-actions button+button{background:transparent;color:#4e6458}.maker-actions button:disabled{opacity:.45}.maker-counter{font:10px var(--mono);color:#607366;margin-left:auto}
+.maker-flag{position:absolute;top:123px;left:var(--edge);font:10px var(--mono);color:#f5e0b5c9;letter-spacing:.1em;z-index:5}
+.feedback-top{border:1px solid #f7e2bc6d;background:#173d36bb;color:#fff4d9;padding:9px 11px;font:10px var(--mono);letter-spacing:.05em;min-height:40px;cursor:pointer}.feedback-top:hover{background:#fff3db;color:#204339}
+@media(max-width:860px){.feedback-top{padding:8px 10px}.feedback-top span{display:none}.maker-dock{top:161px;right:16px}.maker-tools{max-height:calc(100dvh - 232px);overflow:auto}.maker-flag{top:113px;font-size:8px}}
+@media(max-width:540px){.maker-open{font-size:10px;padding:9px 11px}.maker-tools{width:min(300px,calc(100vw - 26px));padding:13px}.maker-title{font-size:26px}.maker-dock{top:146px;right:12px}.maker-flag{left:16px;top:104px;letter-spacing:0}.feedback-top{min-width:41px;display:grid;place-items:center;font:14px var(--serif)}.feedback-top span{display:none}}
+/* The feedback form belongs to the playtest, not the simulation. */
+.feedback-dialog{background:#f7f0e3;color:#1e3d34;border:1px solid #d8bb91;max-width:min(510px,calc(100vw - 24px));width:100%;max-height:min(91dvh,850px);padding:0;box-shadow:0 35px 120px #062b26a8}
+.feedback-dialog::backdrop{background:#061c1bba;backdrop-filter:blur(9px)}
+.fb-inner{padding:clamp(23px,4vw,40px);font-family:var(--sans)}.fb-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:23px}.fb-eyebrow{font:10px var(--mono);letter-spacing:.17em;color:#a47b55}.fb-close{font:22px var(--serif);border:1px solid #b9c4b8;background:transparent;color:#21433a;width:38px;height:38px}
+.feedback-dialog h2{font:normal clamp(43px,7vw,63px)/.94 var(--serif);letter-spacing:-.035em;margin:0 0 15px}.feedback-dialog h2 em{font-weight:normal;color:#ad7756}.fb-dek{font-size:14px;line-height:1.5;color:#62766a;margin:0 0 18px}.fb-label{display:block;font-weight:700;font-size:12px;margin:18px 0 8px;color:#385b4b}
+.fb-moods{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.fb-moods label{cursor:pointer}.fb-moods input{position:absolute;opacity:0;width:1px;height:1px}.fb-moods span{min-height:55px;border:1px solid #c3cbbf;background:#fffcf6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:20px}.fb-moods span small{font:9px var(--sans);color:#66736a}.fb-moods input:checked+span{background:#dfece0;border-color:#457963;box-shadow:inset 0 0 0 1px #457963}.fb-moods input:focus-visible+span{outline:3px solid #3b7459;outline-offset:2px}
+.feedback-dialog select,.feedback-dialog textarea{width:100%;border:1px solid #bac7b8;background:#fffdf6;color:#214339;font:13px/1.5 var(--sans);padding:11px;resize:vertical}.feedback-dialog textarea{min-height:87px}.fb-checkbox{display:flex;align-items:start;gap:9px;font:11px/1.5 var(--sans);color:#6b786b;margin:18px 0}.fb-checkbox input{margin:3px 0}.fb-send{background:#1c493a;border:0;color:#fff8e5;padding:14px 19px;font:12px var(--sans);min-height:47px}.fb-send:disabled{opacity:.5}.fb-copy{margin-left:10px;border:0;text-decoration:underline;background:transparent;color:#315346;font:11px var(--sans)}.fb-status{margin-top:13px;font:12px/1.5 var(--sans);min-height:20px;color:#8e583f}.fb-privacy{font:10px/1.55 var(--sans);color:#6c8172;margin-top:12px}.fb-complete{padding:20px 0;font:22px/1.3 var(--serif);color:#2c5944}
+@media(max-width:440px){.fb-inner{padding:23px 16px}.fb-moods span{min-height:52px;font-size:17px}.fb-moods span small{font-size:8px}.fb-copy{margin-left:6px;font-size:10px}}
+@media(prefers-reduced-motion:reduce){.maker-option{transition:none}}
+
+/* Creation mode is a moment of play, not another overlay competing with prose. */
+.experience.is-making .narrative{opacity:0;pointer-events:none;transition:opacity .28s ease}
+.experience.is-making .scene-controls,.experience.is-making .scene-caption{opacity:0;pointer-events:none}
+.experience.is-making #maker-dock{z-index:18}
+.experience.is-making #maker-open{background:#f7ebda;color:#214b3e;border-color:#e7d4b4}
+@media(max-width:540px){.experience.is-making .maker-dock{top:146px;left:13px;right:13px;max-width:none}.experience.is-making .maker-tools{width:100%;max-width:none}.experience.is-making #maker-open{width:100%;justify-content:space-between}.experience.is-making #maker-place{flex:1}}
+
+
+/* Creation mode: hidden narrative cannot intercept world-touch input. */
+.experience.is-making .narrative,.experience.is-making .narrative *{pointer-events:none!important}
+.experience.is-making #landscape{touch-action:none;cursor:crosshair}
+</style>
+
+</head>
+<body>
+<div id="experience" class="experience" data-phase="intro">
+  <canvas id="landscape" role="img" aria-label="A cinematic illustrated valley with a winding river, layered hills, trees and a living village that evolves as the story progresses."></canvas>
+  <div class="film-grain" aria-hidden="true"></div>
+  <div class="edge-shade" aria-hidden="true"></div>
+  <div class="light-wash" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <button class="identity" id="home-button" type="button" aria-label="Civilization Lab, return to the introduction">
+      <span class="identity-icon" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20.5" stroke="currentColor" stroke-width="1.15"/><path d="M12 30c4-12 11-19 19-18M12 30c6-4 12-6 21-4M13 29l6-8m7-8-5 19" stroke="currentColor" stroke-linecap="round" stroke-width="1.35"/><circle cx="30" cy="12" r="2.5" fill="currentColor"/></svg></span>
+      <span><b>CIVILIZATION LAB</b><small>AN EXPERIMENT IN POSSIBILITY</small></span>
+    </button>
+    <div class="center-signature">THE WAYS OF LIFE <span class="signature-star">✳</span> FIELD STUDY 05 · OPEN PLAYTEST</div>
+    <div class="top-actions"><button class="feedback-top" id="feedback-top" type="button" aria-label="Share playtest feedback">✧ <span>SHAPE THE NEXT VERSION</span></button>
+      <button class="top-link" id="atlas-button" type="button"><span class="top-link-icon" aria-hidden="true">◈</span> <span class="top-link-name">ATLAS</span> <span class="atlas-count" id="atlas-count">0</span></button>
+      <button class="icon-button" id="light-button" type="button" aria-label="Switch to nightfall" title="Change the light"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 15.2A8.3 8.3 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z"/></svg></button>
+      <button class="icon-button" id="sound-button" type="button" aria-label="Turn sound on" title="Sound"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="sound-wave" d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12"/></svg></button>
+      <button class="icon-button" id="info-button" type="button" aria-label="About the game" title="About the experience">?</button>
+    </div>
+  </header>
+
+  <div class="scene-stamp" id="scene-stamp"><span class="stamp-dot"></span><span id="stamp-name">THE VALLEY BEFORE US</span><span class="stamp-divider"></span><span id="stamp-year">YEAR 0000</span></div>
+  <div class="story-stepper" id="story-stepper" aria-label="Story progress"><span class="step-label">OUR JOURNEY</span><span class="step-line"><i data-step="0"></i><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i></span><span id="step-count">00 / 04</span></div>
+
+  <main class="narrative" id="narrative" aria-live="polite"></main>
+
+  <div class="scene-controls" id="scene-controls">
+    <button id="wonder-button" class="scene-control wonder-button" type="button" aria-label="Discover a small wonder" title="Discover a small moment in the world"><span aria-hidden="true">✧</span><span>FIND A MOMENT</span></button>
+    <button id="seed-button" class="scene-control seed-button" type="button" aria-label="Plant a seed for future generations" title="Leave a little kindness in the world" hidden><span aria-hidden="true">✺</span><span>PLANT A PROMISE</span></button>
+    <button id="observe-button" class="scene-control" type="button" aria-label="See a resident's story" title="Meet someone who lives here"><span aria-hidden="true">◎</span><span>THE PEOPLE</span></button>
+    <button id="look-button" class="scene-control" type="button" aria-label="Look closer at the valley" title="Look closer"><span aria-hidden="true">⌖</span><span>LOOK CLOSER</span></button>
+  </div>
+<aside class="maker-dock" id="maker-dock" aria-label="Create small moments in the valley" hidden>
+    <button class="maker-open" id="maker-open" type="button" aria-expanded="false" aria-controls="maker-tools"><span class="tiny-icon">✳</span><span>TOUCH THE VALLEY</span><span aria-hidden="true">↗</span></button>
+    <div class="maker-tools" id="maker-tools" hidden>
+      <h2 class="maker-title">Leave a little trace.</h2>
+      <p class="maker-intro">Choose an act, then tap the land. Come back in a hundred years and see what remains.</p>
+      <div class="maker-options" role="group" aria-label="Choose what to make">
+        <button type="button" class="maker-option" data-make="grove" aria-pressed="false"><span aria-hidden="true">✳</span><small>Grow a grove</small></button>
+        <button type="button" class="maker-option" data-make="shelter" aria-pressed="false"><span aria-hidden="true">⌂</span><small>Make a home</small></button>
+        <button type="button" class="maker-option" data-make="gathering" aria-pressed="false"><span aria-hidden="true">♡</span><small>Gather people</small></button>
+      </div>
+      <p class="maker-hint">You can tap a clear patch of ground, or place your choice beside the village.</p>
+      <div class="maker-actions"><button type="button" id="maker-place">Place by village ↗</button><button type="button" id="maker-undo">Undo</button><span class="maker-counter" id="maker-count">0 / 9</span></div>
+    </div>
+  </aside>
+  <div class="scene-caption" id="scene-caption"><span class="caption-line"></span><span id="scene-caption-text">A place before it has a name.</span></div>
+  <div id="wonder-toast" class="wonder-toast" role="status" aria-live="polite" hidden>
+    <span class="wonder-glint" aria-hidden="true">✦</span>
+    <div><span id="wonder-eyebrow" class="wonder-eyebrow">A SMALL MOMENT</span><p id="wonder-message"></p><span class="wonder-footnote" id="wonder-footnote">THERE IS MORE HERE THAN MEETS THE EYE</span></div>
+    <button id="wonder-close" type="button" aria-label="Close the moment">×</button>
+  </div>
+  <section id="timewalk" class="timewalk" aria-label="Walk through a thousand years" hidden>
+    <div class="timewalk-top"><span class="timewalk-prefix">A THOUSAND YEARS IN A BREATH</span><button type="button" id="time-close" class="timewalk-close" aria-label="Return to your future">CLOSE ×</button></div>
+    <div class="timewalk-title"><div><strong id="time-chapter">Before the first home</strong><span id="time-subline">Everything is still possible.</span></div><output id="time-output" for="time-range">0000</output></div>
+    <div class="timewalk-rail"><button id="time-play" type="button" aria-label="Pause time">Ⅱ</button><input id="time-range" type="range" min="0" max="1000" step="1" value="0" aria-label="Year in this civilization"><span class="timewalk-end">YEAR 1000</span></div>
+    <div class="timewalk-footer">DRAG THROUGH HISTORY <span>✧</span> NOTICE WHAT REMAINS</div>
+  </section>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</div>
+
+<dialog id="drawer" class="drawer" aria-labelledby="drawer-title">
+  <div class="drawer-toolbar"><span class="drawer-issue" id="drawer-issue">FIELD NOTES / 03</span><button type="button" id="drawer-close" class="drawer-close" aria-label="Close dialog">✕</button></div>
+  <div id="drawer-body"></div>
+</dialog>
+<div id="dialog-backdrop" class="dialog-backdrop" hidden></div>
+<dialog id="feedback-dialog" class="feedback-dialog" aria-labelledby="fb-title" aria-describedby="fb-dek">
+ <div class="fb-inner"><div class="fb-top"><span class="fb-eyebrow">THE WAYS OF LIFE · FIELD TEST 05</span><button id="fb-close" class="fb-close" aria-label="Close feedback" type="button">×</button></div>
+ <h2 id="fb-title">Help make this<br><em>feel alive.</em></h2>
+ <p id="fb-dek" class="fb-dek">This is unfinished. Your reaction is more useful than a polite compliment. About 20 seconds, if you fancy it.</p>
+ <form id="feedback-form">
+ <label class="fb-label">How did it really feel?</label>
+ <div class="fb-moods" role="group" aria-label="How did the game feel">
+  <label><input type="radio" name="feeling" value="flat" required><span>😐<small>Flat</small></span></label>
+  <label><input type="radio" name="feeling" value="confused"><span>❔<small>Lost</small></span></label>
+  <label><input type="radio" name="feeling" value="curious"><span>👀<small>Curious</small></span></label>
+  <label><input type="radio" name="feeling" value="delighted"><span>✨<small>Delighted</small></span></label>
+  <label><input type="radio" name="feeling" value="moved"><span>♥<small>Moved</small></span></label>
+ </div>
+ <label class="fb-label" for="fb-highlight">What, if anything, was interesting?</label>
+ <select id="fb-highlight" name="highlight" required><option value="" selected disabled>Choose a moment</option><option value="world">The living valley</option><option value="touch">Touching / shaping the world</option><option value="choices">Civilisation choices</option><option value="time">Watching time pass</option><option value="people">People and their stories</option><option value="nothing">Nothing stood out yet</option></select>
+ <label class="fb-label" for="fb-note">What would make this genuinely magical? <span style="font-weight:400">(optional)</span></label>
+ <textarea id="fb-note" name="note" maxlength="700" placeholder="Be specific. What bored you? What would you love to do?" rows="3"></textarea>
+ <label hidden>Leave this blank <input type="text" name="website" autocomplete="off" tabindex="-1"></label>
+ <label class="fb-checkbox"><input type="checkbox" name="consent" value="yes" required><span>Send my anonymous selections and optional note to the project’s private feedback inbox. No name or email requested.</span></label>
+ <button class="fb-send" id="fb-send" type="submit">Send honest feedback ↗</button><button class="fb-copy" id="fb-copy" type="button">Copy instead</button>
+ </form>
+ <div id="fb-done" class="fb-complete" hidden>Thank you. You helped shape what comes next. <span aria-hidden="true">✳</span></div>
+ <div id="fb-status" class="fb-status" role="status" aria-live="polite"></div>
+ <p class="fb-privacy">No accounts, emails, browser IDs or raw IPs are stored by the game. No automatic gameplay tracking. Submitting is optional. This is a fictional thought experiment, not a science forecast.</p>
+ </div>
+</dialog>
+<script>
+/* CIVILIZATION LAB / THE WAYS OF LIFE / V0.4
+   Original interactive fiction and handcrafted Canvas 2D landscape.
+   Four three-way decisions (3^4 = 81 paths); narrative illustrations, NOT predictions.
+   Offline-first, accessible controls, no tracking, no external game assets. */
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const canvas=$('landscape'),g=canvas.getContext('2d',{alpha:false});
+const app=$('experience'),stage=$('narrative'),drawer=$('drawer');
+const STORAGE='civilization-lab-ways-v05';
+const KEYS=['settlement','ethos','energy','drought'];
+const CHAPTERS=[
+ {key:'settlement',number:'01',year:0,afterYear:80,part:'THE FIRST HOME',question:'Where will we <em>belong?</em>',description:'A hundred people arrive in a valley. There is water, shelter and fertile land. There is no place without a price.',choices:[
+  {id:'river',glyph:'≈',title:'Follow the river',desc:'Grow near the water. Let connection shape the town.',hint:'ABUNDANCE / FLOOD EXPOSURE',result:'A place begins beside the water.',body:'Boats carry food between gardens. Children learn the rhythm of the river before they can write its name.',tension:'The land is generous. So, sometimes, are the floods.',tag:'RIVER COUNTRY'},
+  {id:'highlands',glyph:'△',title:'Climb the highlands',desc:'Seek shelter on the ridge. Carry what you need.',hint:'SAFETY / DISTANCE',result:'A thousand steps become a road.',body:'Small homes hold fast to the hills. Carrying food uphill is hard, but neighbours become good at lending a hand.',tension:'They can see storms coming. They cannot always reach the valley in time.',tag:'HIGH COUNTRY'},
+  {id:'forest',glyph:'✳',title:'Live among trees',desc:'Make the forest a neighbour, not just a resource.',hint:'SHELTER / HABITAT PRESSURE',result:'A village appears between the trees.',body:'The canopy becomes a calendar. Mushrooms, birds and remedies are close at hand; every clearing changes their world.',tension:'A home built of wood must remember where the wood came from.',tag:'CANOPY COUNTRY'}
+ ]},
+ {key:'ethos',number:'02',year:80,afterYear:230,part:'WHAT WE VALUE',question:'What makes a <em>good life?</em>',description:'A few generations have passed. There are disagreements, friendships, festivals and children who ask why things are the way they are.',choices:[
+  {id:'care',glyph:'♡',title:'Care for each other',desc:'Make the essentials a shared responsibility.',hint:'SOLIDARITY / SLOWER CONSENSUS',result:'A place is set at every table.',body:'Shared kitchens, gardens and clinics begin to organise life. People learn that being a neighbour is a kind of promise.',tension:'When everyone deserves a say, important decisions take patience.',tag:'CARE'},
+  {id:'craft',glyph:'✺',title:'Build and discover',desc:'Let curiosity and making guide the community.',hint:'INVENTION / UNEVEN ACCESS',result:'The streets become workshops.',body:'Every generation learns to make and question. A school becomes a laboratory, a market becomes an exhibition of ideas.',tension:'Brilliant inventions matter less when only a few people can reach them.',tag:'DISCOVERY'},
+  {id:'open',glyph:'↗',title:'Make room for difference',desc:'Let neighbourhoods choose how they live.',hint:'FREEDOM / HARDER COORDINATION',result:'No two streets look alike.',body:'Travellers arrive. Districts develop their own languages of work, celebration and belonging.',tension:'People are free to build differently. Building something together can take longer.',tag:'AUTONOMY'}
+ ]},
+ {key:'energy',number:'03',year:230,afterYear:480,part:'THE POWER AGE',question:'What will <em>power us?</em>',description:'Your world has learned to do remarkable things. More people need warmth, medicine, light and the energy to make them.',choices:[
+  {id:'solar',glyph:'☼',title:'Gather sun and wind',desc:'Build distributed clean power with local storage.',hint:'CLEANER AIR / STORAGE DEMANDS',result:'The rooftops catch the sunrise.',body:'Panels glitter between gardens. At night, stored sunlight glows in a thousand windows.',tension:'Clean energy still needs land, materials and careful planning for quiet days.',tag:'RENEWABLES'},
+  {id:'industry',glyph:'⚙',title:'Raise great engines',desc:'Expand power and production with speed.',hint:'ABUNDANCE / EXTRACTION',result:'The valley finds a louder voice.',body:'Factories bring medicines, transport and extraordinary output. Their smoke can be seen from the orchard.',tension:'Much depends on who enjoys the benefits—and who carries the costs.',tag:'INDUSTRY'},
+  {id:'commons',glyph:'◇',title:'Learn the art of enough',desc:'Repair, share and build for lower energy needs.',hint:'LESS WASTE / LIMITED CAPACITY',result:'Making less becomes making well.',body:'Repair halls and efficient homes are ordinary. Objects get second and third lives.',tension:'Efficiency creates room to breathe, but leaves less spare capacity in an emergency.',tag:'SUFFICIENCY'}
+ ]},
+ {key:'drought',number:'04',year:480,afterYear:700,part:'THE DRY YEARS',question:'When trouble comes, <em>who are we?</em>',description:'For three seasons the rains fail. The river thins. Your neighbours are frightened for different reasons.',choices:[
+  {id:'share',glyph:'♡',title:'Make a watershed pact',desc:'Limit use together and give wetlands time to heal.',hint:'SHARED RESTRAINT / RECOVERY',result:'A promise is made in a dry year.',body:'People change crops, save water and make exceptions for the most vulnerable. The marsh slowly returns.',tension:'No one gets everything they want. The question of fairness never quite disappears.',tag:'THE PACT'},
+  {id:'reservoir',glyph:'▤',title:'Build a great reservoir',desc:'Hold winter rains behind an enormous new dam.',hint:'STORAGE / DISPLACEMENT',result:'A new lake holds the winter rain.',body:'The great reservoir sustains homes and clinics through another drought. Its wall can be seen from every ridge.',tension:'Some people lose the places they called home. The river’s creatures cannot negotiate.',tag:'THE RESERVOIR'},
+  {id:'trade',glyph:'↗',title:'Reach beyond the valley',desc:'Share goods and knowledge with faraway neighbours.',hint:'COOPERATION / DEPENDENCE',result:'The roads lead out into the world.',body:'Caravans carry grain, stories and new friendships across the mountains.',tension:'When neighbouring lands struggle too, dependence becomes more visible.',tag:'THE ROUTES'}
+ ]}
+];
+const PEOPLE=[{name:'Mara',role:'Keeper of seeds',sigil:'✺'},{name:'Ayo',role:'Builder & tinkerer',sigil:'⌘'},{name:'Sol',role:'Keeper of stories',sigil:'≈'}];
+const VOICES={
+ settlement:{river:['I love this river. I wish it could promise never to rise again.','The boats bring us together, and the floods remind us who is in charge.','Our celebrations still begin at the water.'],highlands:['You know your neighbour when you carry grain up a hill together.','I see every storm from here. Not always who needs help below.','We remember each journey as carefully as each arrival.'],forest:['The trees have taught me names for a thousand kinds of shelter.','The warmest homes ask the forest to give something up.','We remember some birds by their absence.']},
+ ethos:{care:['No one asks if I deserve medicine. We do argue over what we can afford.','Help is wonderful. Consensus can be exhausting.','Neighbour became something like a promise.'],craft:['Every workshop has a new invention. I worry about who gets invited inside.','For every new tool there seems to be another problem to solve.','The schoolbooks change faster than the festivals.'],open:['My street and my sister’s street are different worlds. We both feel at home.','Nobody tells me what to make. Agreeing on a bridge takes forever.','Our festivals are messy. Our emergency councils are messier.']},
+ energy:{solar:['The workshops still have blue skies above them. The batteries do run out.','Sunlight is free; turning it into power asks for materials.','Our children talk about storage as their ancestors talked about harvests.'],industry:['These machines make medicines my parents never imagined.','Factory wages changed our lives. The orchard suffers for it.','Miracles and arguments both arrived with the engines.'],commons:['The repair hall saved my winter coat twice. I wish we had more spare electricity.','Using less doesn’t feel like poverty when everything is cared for.','Every repaired object has a story, and every shortage has one too.']},
+ drought:{share:['We all gave up something. Most of us kept what we needed.','Who decided which sacrifices were fair? I still ask.','The marsh is returning. So must our agreement.'],reservoir:['The hospital kept its water. My cousin lost her home beneath the new lake.','The engineering is astonishing. Fish cannot vote.','No two families tell the story of the dam alike.'],trade:['The caravan brought food. I worry about the road closing.','Our neighbours saved us. Now their troubles are ours too.','Far away does not mean what it used to.']}
+};
+const NAME_START={river:'River',highlands:'Skyward',forest:'Canopy'};
+const NAME_END={care:'Commons',craft:'Ateliers',open:'Routes'};
+const OPENING={river:'My grandparents lived beside the first wooden landing. We still build where the river bends, and we still watch the water after a storm.',highlands:'I write from the ridge the founders climbed. Each morning the clouds appear below my window. The journey down remains long.',forest:'Some of the trees you knew still stand. We gave a few of them names, and there are others we only remember from books.'};
+const VALUES={care:'Our tables always hold an extra place. It does not stop us arguing, but it changes how we argue.',craft:'Our children are taught to ask what could be made differently. I hope we are learning to ask who was left out.',open:'No two streets are quite alike. We love the freedom, and keep discovering how difficult it is to act together.'};
+const POWER={solar:'The roofs shine in the morning. At dusk we discuss storage as earnestly as the weather.',industry:'The great engines changed what became possible here. Their gifts and debts both outlived their makers.',commons:'We repair what we can and try to need less. The hard years remind us that spare capacity matters too.'};
+const CRISIS={share:'The water pact survived its founders because each generation made it again.',reservoir:'The dam held. We remember the villages that had to move as carefully as the valley it saved.',trade:'The mountain road is part of our life now. We are richer in friendships, and vulnerable in new ways.'};
+const endingQuestion={river:'What do we owe a river that gives so much?',highlands:'How far can safety be separated from connection?',forest:'How do we build a home without unmaking another?'};
+const yearFor=(phase,chapter)=>phase==='intro'?0:phase==='ending'?1000:phase==='reveal'?CHAPTERS[chapter].afterYear:CHAPTERS[chapter].year;
+const S={phase:'intro',chapter:0,choices:{},atlas:[],night:false,sound:false,zoom:false,preview:null,pan:0,nightLerp:0,growth:0,yearLerp:0,visited:null,focusX:720,desktopShift:0,seed:false,discoveries:[],marks:[],markMode:null,markOpen:false,timeWalking:false,timePlaying:false,timeYear:0,sceneTransform:null,particles:[],lastPointer:0,gesture:null,wonderIndex:0};
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const choiceList=i=>CHAPTERS[i].choices;
+const validChoices=c=>!!c&&KEYS.every((key,i)=>choiceList(i).some(x=>x.id===c[key]));
+const choiceFor=(i)=>choiceList(i).find(x=>x.id===S.choices[KEYS[i]]);
+const worldCode=(c=S.choices)=>KEYS.map((key,i)=>String(choiceList(i).findIndex(x=>x.id===c[key]))).join('');
+const decodeCode=code=>{if(!/^[012]{4}$/.test(code))return null;const c={};code.split('').forEach((d,i)=>c[KEYS[i]]=choiceList(i)[Number(d)].id);return c};
+function activeChoice(key){const index=KEYS.indexOf(key);return S.phase==='decision'&&S.chapter===index&&S.preview?S.preview:S.choices[key]}
+const worldName=(c=S.choices)=>'The '+NAME_START[c.settlement]+' '+NAME_END[c.ethos];
+const keyPhrase=(c=S.choices)=>`${CHAPTERS[0].choices.find(x=>x.id===c.settlement).tag} · ${CHAPTERS[1].choices.find(x=>x.id===c.ethos).tag} · ${CHAPTERS[2].choices.find(x=>x.id===c.energy).tag}`;
+function outcome(c=S.choices){return {name:worldName(c),opening:OPENING[c.settlement],values:VALUES[c.ethos],power:POWER[c.energy],crisis:CRISIS[c.drought],question:endingQuestion[c.settlement],short:`${VALUES[c.ethos]} ${CRISIS[c.drought]}`,code:worldCode(c)}}
+function load(){try{const d=JSON.parse(localStorage.getItem(STORAGE)||localStorage.getItem('civilization-lab-ways-v04')||localStorage.getItem('civilization-lab-ways-v03')||'null');if(d&&typeof d==='object'){
+  S.atlas=(Array.isArray(d.atlas)?d.atlas:[]).filter(w=>w&&/^[012]{4}$/.test(w.code)&&typeof w.name==='string').slice(-8);S.seed=!!d.seed;S.marks=(Array.isArray(d.marks)?d.marks:[]).filter(m=>m&&['grove','shelter','gathering'].includes(m.kind)&&Number.isInteger(m.x)&&m.x>=150&&m.x<=1300&&Number.isInteger(m.y)&&m.y>=480&&m.y<=847&&Number.isInteger(m.year)&&m.year>=0&&m.year<=1000).slice(0,9);S.discoveries=Array.isArray(d.discoveries)?d.discoveries.filter(x=>Number.isInteger(x)&&x>=0&&x<=2).slice(0,3):[];
+  S.night=d.night===true;S.sound=d.sound===true;S.zoom=d.zoom===true;
+  const c=d.choices||{};let chosen=0;for(let i=0;i<4;i++){if(choiceList(i).some(x=>x.id===c[KEYS[i]])){S.choices[KEYS[i]]=c[KEYS[i]];chosen++}else break}
+  if(['intro','decision','reveal','ending'].includes(d.phase)){S.phase=d.phase;S.chapter=clamp(Number(d.chapter)||0,0,3);if(S.phase==='ending'&&!validChoices(S.choices))S.phase='decision';if(S.phase==='reveal'&&!S.choices[KEYS[S.chapter]])S.phase='decision';if(S.phase==='decision'&&S.chapter>chosen)S.chapter=chosen;}
+ }
+ }catch(e){}
+ const h=location.hash.match(/(?:^#|&)world=([012]{4})(?:&|$)/);if(h){S.choices=decodeCode(h[1]);S.phase='ending';S.chapter=3;S.visited=h[1];const matched=S.atlas.find(w=>w.code===h[1]);S.seed=!!matched?.seed;S.discoveries=Array.isArray(matched?.discoveries)?matched.discoveries:[]}
+ S.growth=targetGrowth();S.nightLerp=S.night?1:0;S.yearLerp=yearFor(S.phase,S.chapter);
+}
+function persist(){try{localStorage.setItem(STORAGE,JSON.stringify({phase:S.phase,chapter:S.chapter,choices:S.choices,night:S.night,sound:S.sound,zoom:S.zoom,atlas:S.atlas,seed:S.seed,discoveries:S.discoveries,marks:S.marks}))}catch(e){/* File:// and restricted storage remain playable in memory. */}}
+function reset(){S.phase='intro';S.chapter=0;S.choices={};S.visited=null;S.preview=null;S.pan=0;S.zoom=false;S.growth=0;S.seed=false;S.discoveries=[];S.marks=[];S.markMode=null;S.markOpen=false;S.timeWalking=false;S.timePlaying=false;S.timeYear=0;hideWonder();if(location.hash.startsWith('#world='))history.replaceState({},'',location.href.split('#')[0]);persist();render();tone('soft')}
+function begin(){S.phase='decision';S.chapter=0;S.visited=null;persist();render();emitWorldBurst(802,590,75);app.classList.remove('awakening');void app.offsetWidth;app.classList.add('awakening');setTimeout(()=>app.classList.remove('awakening'),1900);tone('begin')}
+function choose(id){if(S.phase!=='decision'||S.timeWalking)return;const item=choiceList(S.chapter).find(x=>x.id===id);if(!item)return;S.choices[KEYS[S.chapter]]=id;for(let i=S.chapter+1;i<4;i++)delete S.choices[KEYS[i]];S.preview=null;S.phase='reveal';hideWonder();persist();render();emitWorldBurst();tone('choice')}
+function next(){if(S.phase!=='reveal')return;if(S.chapter>=3){S.phase='ending';S.visited=null;archive();const finishedCode=worldCode();setTimeout(()=>{if(S.phase==='ending'&&validChoices(S.choices)&&worldCode()===finishedCode){const saved=S.atlas.find(x=>x.code===finishedCode);if(saved){saved.thumb=captureThumb();persist()}}},1800)}else {S.chapter++;S.phase='decision'}persist();render();tone(S.phase==='ending'?'end':'next')}
+function fork(i){const idx=Number(i);if(!Number.isInteger(idx)||idx<0||idx>3)return;for(let j=idx;j<4;j++)delete S.choices[KEYS[j]];S.chapter=idx;S.phase='decision';S.preview=null;S.visited=null;S.timeWalking=false;hideWonder();closeDrawer();persist();render();toast('A different future begins here. Your previous world stays in the Atlas.')}
+function visit(code){const c=decodeCode(code);if(!c)return;S.choices=c;S.chapter=3;S.phase='ending';S.visited=code;const old=S.atlas.find(x=>x.code===code);S.seed=!!old?.seed;S.marks=Array.isArray(old?.marks)?old.marks.slice(0,9):[];S.discoveries=Array.isArray(old?.discoveries)?old.discoveries:[];S.timeWalking=false;closeDrawer();persist();render();tone('next')}
+function targetGrowth(){if(S.timeWalking){const y=S.timeYear;return y<80?y/80:y<230?1+(y-80)/150:y<480?2+(y-230)/250:y<700?3+(y-480)/220:4;}if(S.phase==='intro')return 0;return Object.keys(S.choices).filter(k=>KEYS.includes(k)).length}
+function updateChrome(){app.dataset.phase=S.phase;const sceneLabel=S.phase==='intro'?'An uninhabited green valley beneath a golden sky with mountains and a winding river.':S.phase==='ending'?'A living valley a thousand years after your decisions, with homes, people, forests and a winding river.':'A miniature valley with a settlement that changes in response to your decisions.';$('landscape').setAttribute('aria-label',sceneLabel);app.classList.toggle('muted',!S.sound);const year=yearFor(S.phase,S.chapter);$('stamp-year').textContent='YEAR '+String(S.timeWalking?Math.round(S.timeYear):year).padStart(4,'0');$('stamp-name').textContent=S.phase==='intro'?'THE VALLEY BEFORE US':S.phase==='ending'?worldName(S.choices).toUpperCase():'THE VALLEY OF FIRST LIGHT';$('step-count').textContent=(S.phase==='intro'?'00':S.phase==='ending'?'04':String(S.chapter+1).padStart(2,'0'))+' / 04';const done=targetGrowth();document.querySelectorAll('.step-line i').forEach((x,i)=>{x.classList.toggle('done',i<done);x.classList.toggle('current',i===S.chapter&&S.phase==='decision')});$('atlas-count').textContent=String(S.atlas.length);$('seed-button').hidden=S.phase==='intro'||S.phase==='ending'||S.seed||S.timeWalking;$('wonder-button').hidden=S.timeWalking;app.classList.toggle('timewalking',S.timeWalking);app.classList.toggle('has-seed',S.seed);$('light-button').setAttribute('aria-label',S.night?'Switch to golden hour':'Switch to nightfall');$('sound-button').setAttribute('aria-label',S.sound?'Turn sound off':'Turn sound on');$('scene-caption-text').textContent=S.phase==='intro'?'A place before it has a name.':S.phase==='ending'?'One future among many.':S.phase==='reveal'?'The valley remembers what you chose.':'Every choice leaves a trace.';}
+function render(){updateChrome();updateMakerUI();if(S.phase==='intro'){stage.innerHTML=`<section class="intro-content"><div class="eyebrow">A LITTLE UNIVERSE OF POSSIBILITIES</div><h1 class="display-title">The ways<br><em>of life.</em></h1><p class="intro-copy">One valley. A hundred people. A thousand years. Discover what happens when you choose not just how to survive, but how to live.</p><button class="primary" type="button" data-action="begin"><span>Enter the valley</span><span class="arrow">↗</span></button><div class="micro-line">FOUR CHAPTERS <span>✦</span> SIX MINUTES <span>✦</span> EVERY LIFE LEAVES A TRACE</div></section>`;return}
+ if(S.phase==='decision'){const ch=CHAPTERS[S.chapter];stage.innerHTML=`<section class="decision-shell" aria-labelledby="question-title"><div class="decision-head"><div><div class="chapter-eyebrow">CHAPTER ${ch.number} OF 04 &nbsp; / &nbsp; ${ch.part} &nbsp; · &nbsp; YEAR ${String(ch.year).padStart(4,'0')}</div><h1 id="question-title">${ch.question}</h1></div><p class="decision-help">${ch.description}</p></div><div class="choice-grid">${ch.choices.map((c,i)=>`<button class="choice" type="button" data-choice="${c.id}" aria-label="${escapeHTML(c.title)}. ${escapeHTML(c.desc)}"><span class="choice-top"><span class="choice-motif" aria-hidden="true">${c.glyph}</span><span class="choice-ordinal">0${i+1}</span></span><strong>${c.title}</strong><span class="choice-description">${c.desc}</span><span class="choice-cost">${c.hint}</span></button>`).join('')}</div><div class="decision-footer"><span class="chapter-progress">${CHAPTERS.map((_,i)=>`<b class="${i<=S.chapter?'active':''}"></b>`).join('')}<span>THE YEARS AHEAD</span></span><span class="no-score">NO SINGLE WAY TO WIN</span></div></section>`;stage.querySelectorAll('.choice').forEach(el=>{el.addEventListener('pointerenter',()=>{S.preview=el.dataset.choice});el.addEventListener('pointerleave',()=>{S.preview=null});el.addEventListener('focus',()=>{S.preview=el.dataset.choice});el.addEventListener('blur',()=>{S.preview=null})});return}
+ if(S.phase==='reveal'){const ch=CHAPTERS[S.chapter],item=choiceFor(S.chapter);stage.innerHTML=`<section class="reveal-card"><div class="reveal-eyebrow"><span class="echo-star">✦</span> YEAR ${String(ch.afterYear).padStart(4,'0')} &nbsp; / &nbsp; THE WORLD ANSWERS</div><h1>${item.result.replace(/\.$/,'')+'.'}</h1><p>${item.body}</p><div class="tension">${item.tension}</div><div class="reveal-actions"><button class="primary" type="button" data-action="next"><span>${S.chapter===3?'Meet the future':'Let the years pass'}</span><span class="arrow">→</span></button><button class="subtle-action" type="button" data-action="make">Make something in the valley ✳</button><button class="subtle-action" type="button" data-action="people">Hear another perspective ↗</button></div></section>`;return}
+ if(S.phase==='ending'){const o=outcome();stage.innerHTML=`<section class="ending-shell"><div class="ending-left"><div class="eyebrow">YEAR 1000 &nbsp; / &nbsp; ONE FUTURE AMONG MANY</div><h1 class="ending-title">And still,<br><em>life goes on.</em></h1><h2 class="world-title">${o.name}</h2><p class="ending-caption">A thousand years of small lives: meals shared, doors opened, disagreements survived, lights left on for one another.</p><div class="world-signature">${keyPhrase().split(' · ').map(s=>`<span>${s}</span>`).join('')}</div><div class="ending-actions"><button class="primary" type="button" data-action="postcard">Keep this world <span class="arrow">↓</span></button><button class="outline-light" type="button" data-action="fork-menu">Imagine another ↗</button><button class="outline-light" type="button" data-action="timewalk">Watch 1,000 years ◷</button><button class="outline-light" type="button" data-action="make">Touch your world ✳</button><button class="outline-light" type="button" data-action="feedback">Give honest feedback ✧</button><button class="outline-light" type="button" data-action="share">Share ↗</button></div></div><div class="ending-letter"><div class="letter-header"><span>${S.seed?'A LETTER TO THE PERSON WHO PLANTED A SEED':'AN UNFINISHED LETTER'}</span><span>✳</span></div><blockquote>“${o.values}”</blockquote><div class="letter-from">— A VOICE FROM YEAR 1000</div><button type="button" class="letter-read" data-action="letter"><span>READ THE LETTER</span><span>↗</span></button></div></section>`;}
+}
+function toast(message){const t=$('toast');t.textContent=message;t.classList.add('visible');clearTimeout(toast._id);toast._id=setTimeout(()=>t.classList.remove('visible'),3500)}
+// --- THE WONDER LAYER: all optional, no additional scoring mechanics. ---
+let wonderTimer=null, timePrev=0;
+const wonderSites=[{x:810,y:758},{x:537,y:569},{x:0,y:0}];
+function settlementSite(){return {river:[885,625],highlands:[426,540],forest:[485,665]}[S.choices.settlement]||[885,625]}
+function wonderPosition(i){if(i===2){const a=settlementSite();return {x:a[0]-72,y:a[1]+52}}return wonderSites[i]}
+function wonderCopy(i){
+ if(i===0)return S.night?'After dusk, the water holds the lanterns of everyone heading home.':'In the shallows, someone helps a stranded fish return to the current. Nobody writes it down.';
+ if(i===1)return S.choices.settlement==='forest'?'A child discovers a tree hollow that will shelter generations of birds.':'A young tree bends in the wind. It is growing slower than the village—and does not seem to mind.';
+ return S.choices.ethos==='craft'?'The workshop stays lit late. Tonight an apprentice is repairing their neighbour’s old toy.':S.choices.ethos==='open'?'Three houses celebrate three different festivals on the same street. All three invite the others.':'Someone leaves one light on for a neighbour who has not yet come home.';
+}
+function hideWonder(){clearTimeout(wonderTimer);const e=$('wonder-toast');if(e)e.hidden=true}
+function showWonder(title,message,foot='A SMALL MOMENT IN A VERY LARGE STORY'){
+ const box=$('wonder-toast');if(!box)return;
+ $('wonder-eyebrow').textContent=title;$('wonder-message').textContent=message;$('wonder-footnote').textContent=foot;box.hidden=false;
+ clearTimeout(wonderTimer);wonderTimer=setTimeout(()=>{if(!box.matches(':hover')&&!box.contains(document.activeElement))hideWonder()},9000);
+}
+function discover(which){
+ const possibilities=S.phase==='intro'?[0,1]:[0,1,2];
+ let i=Number.isInteger(which)&&possibilities.includes(which)?which:possibilities.find(k=>!S.discoveries.includes(k));
+ if(i===undefined)i=possibilities[S.wonderIndex++%possibilities.length];
+ if(!S.discoveries.includes(i)){S.discoveries.push(i);persist()}
+ const titles=['THE RIVER’S QUIET SECRET','BENEATH THE CANOPY','A LIGHT IN THE WINDOW'];
+ showWonder(titles[i],wonderCopy(i),`${S.discoveries.length} LITTLE MOMENT${S.discoveries.length===1?'':'S'} NOTICED · THERE IS NO SCORE`);
+ const p=wonderPosition(i);emitWorldBurst(p.x,p.y,24);tone('wonder');
+ return i;
+}
+function plantSeed(){
+ if(S.seed||S.phase==='intro'||S.timeWalking)return;
+ S.seed=true;S.discoveries=S.discoveries.filter(x=>x<=2);
+ const a=settlementSite();emitWorldBurst(a[0]+173,a[1]+38,64);
+ showWonder('A TINY ACT','You planted one small seed. You may never sit beneath its shade. Others might.','A PROMISE THE WORLD WILL REMEMBER');
+ tone('seed');persist();updateChrome();
+ if(S.phase==='ending'){archive();render()}
+}
+function addParticle(x,y,kind='glint',strength=1){
+ if(reduce)return;
+ if(S.particles.length>160)S.particles.splice(0,35);
+ const angle=Math.random()*Math.PI*2,spd=(kind==='burst'?22+Math.random()*95:6+Math.random()*20)*strength;
+ S.particles.push({x,y,vx:Math.cos(angle)*spd,vy:Math.sin(angle)*spd-(kind==='burst'?19:7),age:0,life:kind==='burst'?.65+Math.random()*1.35:.25+Math.random()*.65,r:kind==='burst'?1.1+Math.random()*2.3:.65+Math.random()*1.3,kind});
+}
+function emitWorldBurst(x,y,count=32){if(typeof x!=='number'){const a=settlementSite();x=a[0];y=a[1]}const pt=worldToScreen(x,y);if(!pt)return;for(let i=0;i<count;i++)addParticle(pt.x,pt.y,'burst',.7+Math.random()*.9)}
+function worldToScreen(x,y){const z=S.sceneTransform;if(!z)return null;return {x:z.x+x*z.scale,y:z.y+(y+z.shift)*z.scale}}
+function screenToWorld(x,y){const z=S.sceneTransform;if(!z)return null;return {x:(x-z.x)/z.scale,y:(y-z.y)/z.scale-z.shift}}
+function drawParticles(dt){
+ if(!S.particles.length)return;
+ g.save();g.setTransform(DPR,0,0,DPR,0,0);g.globalCompositeOperation='screen';
+ for(let i=S.particles.length-1;i>=0;i--){const p=S.particles[i];p.age+=dt;
+  if(p.age>=p.life){S.particles.splice(i,1);continue}
+  p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=(p.kind==='burst'?3:-2)*dt;
+  const a=Math.min(1,(p.life-p.age)/.4)*Math.min(1,p.age/.1);
+  g.globalAlpha=a*.7;circ(p.x,p.y,p.r*3,'#ecd39722');g.globalAlpha=a;circ(p.x,p.y,p.r,'#ffeab5')
+ }
+ g.restore();g.globalAlpha=1;
+}
+const chronicle=[
+ {from:0,title:'Before the first home',line:'Everything here has a future, even without us.'},
+ {from:80,title:'Paths become streets',line:'The first households make room for their neighbours.'},
+ {from:230,title:'Habits become traditions',line:'Children inherit questions as well as answers.'},
+ {from:480,title:'The nights grow brighter',line:'Power changes what is possible—and who can reach it.'},
+ {from:700,title:'A community remembers',line:'The dry years become a story told by many voices.'},
+ {from:1000,title:'And still, life goes on',line:'No single ending. Just people, making a home.'}
+];
+function updateTimeUI(){if(!S.timeWalking)return;
+ const y=Math.round(S.timeYear),entry=[...chronicle].reverse().find(x=>y>=x.from)||chronicle[0];
+ $('time-chapter').textContent=entry.title;$('time-subline').textContent=entry.line;
+ $('time-output').textContent=String(y).padStart(4,'0');$('stamp-year').textContent='YEAR '+String(y).padStart(4,'0');
+ $('time-range').value=String(y);$('time-play').textContent=S.timePlaying?'Ⅱ':'▶';$('time-play').setAttribute('aria-label',S.timePlaying?'Pause time':'Resume time');
+ $('time-range').style.setProperty('--progress',(S.timeYear/10)+'%');
+}
+function startTimeWalk(){
+ if(S.phase!=='ending'||!validChoices(S.choices))return;
+ hideWonder();S.timeWalking=true;S.timeYear=0;S.timePlaying=!reduce;S.growth=0;S.pan=0;
+ $('timewalk').hidden=false;updateChrome();updateTimeUI();tone('time');
+}
+function closeTimeWalk(){S.timeWalking=false;S.timePlaying=false;S.timeYear=0;$('timewalk').hidden=true;hideWonder();updateChrome();tone('soft')}
+function timeToggle(){if(!S.timeWalking)return;if(S.timeYear>=1000)S.timeYear=0;S.timePlaying=!S.timePlaying;updateTimeUI();tone('soft')}
+
+function openDrawer(type){$('drawer-issue').textContent={about:'A NOTE FROM THE AUTHORS / 04',people:'THE HUMAN VIEW / 04',atlas:'THE ATLAS / 04',letter:'YEAR 1000 / LETTER 01',fork:'CHOOSE AN EARLIER MOMENT'}[type]||'FIELD NOTES / 04';let content='';
+ if(type==='about'){content=`<div class="drawer-content"><h2>Not a model.<br><em>A question.</em></h2><p>Welcome to <strong>Civilization Lab: The Ways of Life</strong>, an original interactive story about the many possible ways communities organise their lives.</p><p>The four chapters contain <strong>81 authored decision paths</strong>. The outcomes are illustrative fiction, not scientific forecasts or claims that real cultures can be ranked by four choices.</p><div class="drawer-note">The purpose is not to prove that one civilisation is best. It is to make room for trade-offs, disagreement, curiosity and empathy.</div><p>We deliberately avoid a victory score. Real societies are shaped by geography, institutions, historical events, ecosystems, power relationships, and the actions of people who are never merely numbers.</p><p class="small-note">V0.5 · ORIGINAL ART & SOUND · NO AUTOMATIC TRACKING · OPTIONAL OPT-IN FEEDBACK · YOUR ATLAS STAYS IN THIS BROWSER · MOTION RESPECTS SYSTEM SETTINGS</p><div class="drawer-divider"></div><button class="drawer-primary" type="button" data-action="close">Return to the valley ↗</button></div>`}
+ if(type==='people'){const n=S.phase==='intro'?-1:S.phase==='ending'?3:S.chapter;const curr=n>=0?CHAPTERS[n]:null;const id=curr?S.choices[curr.key]:null;const voices=id?VOICES[curr.key][id]:['I wonder what this valley will sound like in a hundred years.','Every new place begins with people choosing how to share it.','Nothing is empty just because it does not have a name yet.'];content=`<div class="drawer-content"><h2>More than<br><em>one voice.</em></h2><p>${id?'Here are three people experiencing the same choice differently. No single voice speaks for a whole civilisation.':'There are a hundred people waiting to begin. Every one of them will see this place differently.'}</p><div class="drawer-divider"></div>${PEOPLE.map((person,i)=>`<article class="people-profile"><div class="person-symbol" aria-hidden="true">${person.sigil}</div><div><div class="person-meta">${person.name.toUpperCase()} / ${person.role.toUpperCase()}</div><blockquote>“${voices[i]}”</blockquote></div></article>`).join('')}<div class="drawer-note">A world is more than the choice of the person holding the mouse.</div><button type="button" class="drawer-primary" data-action="close">Back to our story ↗</button></div>`}
+ if(type==='atlas'){content=`<div class="drawer-content"><h2>A collection of<br><em>possible worlds.</em></h2><p>Every ending you explore can live here. Revisit a world or make a different choice. There are no winners to rank.</p><div class="atlas-grid">${S.atlas.length?S.atlas.slice().reverse().map(w=>`<button class="atlas-item" type="button" data-visit="${w.code}"><div class="atlas-art">${w.thumb?`<img alt="Illustrated world" src="${w.thumb}">`:''}</div><div class="atlas-item-copy"><strong>${escapeHTML(w.name)}</strong><span>WORLD ${w.code} &nbsp; ${w.seed?'✺ SEED PLANTED · ':''}↗</span></div></button>`).join(''):`<div class="atlas-empty" style="grid-column:1/-1"><span>◈</span>YOUR FIRST WORLD IS WAITING.</div>`}</div><div class="drawer-divider"></div><p class="small-note">The Atlas is stored on this device. It is not synced or sent to a server. Up to eight unique futures are preserved.</p><button type="button" class="drawer-action" data-action="new-world">Begin a new world ↗</button></div>`}
+ if(type==='letter'){if(!validChoices(S.choices))return;const o=outcome();content=`<div class="drawer-content"><h2>Dear<br><em>founder,</em></h2><p class="small-note">THE ${escapeHTML(o.name.toUpperCase())} / YEAR 1000</p><div class="drawer-divider"></div><p class="letter-long">${o.opening}</p><p class="letter-long">${o.values}</p><p class="letter-long">${o.power} ${o.crisis}</p>${S.seed?'<p class="letter-long">There is a tree near the first square. Not the same one you planted—a descendant, cared for by strangers who never knew your name. We call the place around it the Small Beginning.</p>':''}<p class="letter-long">We are not the ending of your story. We are the people living after it. Some of us are grateful. Some would choose differently. Some have not yet decided.</p><p class="letter-long">${o.question}</p><p class="letter-long">If you came here today, I hope you would recognise something beautiful. I also hope you would ask us difficult questions.</p><p class="small-note">WITH LOVE, SOMEONE FROM THE FUTURE</p><div class="drawer-divider"></div><button class="drawer-primary" type="button" data-action="close">Return to the world ↗</button></div>`}
+ if(type==='fork'){content=`<div class="drawer-content"><h2>What if<br><em>we chose again?</em></h2><p>Take your story back to an earlier turning point. Your completed world remains in the Atlas.</p><div class="chapter-history">${CHAPTERS.map((ch,i)=>`<button type="button" data-fork="${i}">${ch.number} · ${ch.part}</button>`).join('')}</div><div class="drawer-note">There is no correct branch. Discover what changed, then listen to someone who lives with your decisions.</div></div>`}
+ $('drawer-body').innerHTML=content;const drawerHeading=$('drawer-body').querySelector('h2');if(drawerHeading)drawerHeading.id='drawer-title';
+ if(typeof drawer.showModal==='function'){if(!drawer.open)drawer.showModal()}else drawer.setAttribute('open','');
+}
+function closeDrawer(){if(drawer.open){if(typeof drawer.close==='function')drawer.close();else drawer.removeAttribute('open')}}
+function archive(){if(!validChoices(S.choices))return;const code=worldCode();const old=S.atlas.find(x=>x.code===code);if(old){old.seed=S.seed;old.marks=S.marks.map(m=>({...m}));old.discoveries=[...S.discoveries];old.thumb=captureThumb();persist();return}const o=outcome();const thumb=captureThumb();S.atlas.push({name:o.name,code,seed:S.seed,marks:S.marks.map(m=>({...m})),discoveries:[...S.discoveries],thumb,created:new Date().toISOString()});if(S.atlas.length>8)S.atlas.shift();persist()}
+function captureThumb(){try{const mini=document.createElement('canvas');mini.width=540;mini.height=300;mini.getContext('2d').drawImage(canvas,0,0,540,300);return mini.toDataURL('image/webp',.65)}catch(e){return null}}
+function savePostcard(){if(!validChoices(S.choices))return;const off=document.createElement('canvas');off.width=1350;off.height=1010;const x=off.getContext('2d');x.fillStyle='#173c3c';x.fillRect(0,0,off.width,off.height);x.drawImage(canvas,0,0,1350,840);const shade=x.createLinearGradient(0,590,0,845);shade.addColorStop(0,'#153e3700');shade.addColorStop(1,'#153e37');x.fillStyle=shade;x.fillRect(0,590,1350,255);x.fillStyle='#fff1db';x.font='62px Georgia';x.fillText(worldName(),65,807);x.fillStyle='#e1c79f';x.font='17px monospace';x.fillText('C I V I L I Z A T I O N   L A B    ·    T H E   W A Y S   O F   L I F E',70,68);x.fillStyle='#d2dcbd';x.font='21px Georgia';x.fillText(S.seed?'One tiny kindness travelled further than a lifetime.':'One possible world, one thousand years later.',70,855);x.fillStyle='#e4dbc5';x.font='15px monospace';x.fillText('WORLD '+worldCode()+'     ·     NOT A PREDICTION     ·     NO SINGLE WAY TO WIN',70,961);x.fillStyle='#ddb98b';x.fillRect(70,896,390,2);try{const a=document.createElement('a');a.download='the-ways-of-life-world-'+worldCode()+'.png';a.href=off.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast('Your world postcard is ready.');tone('soft')}catch(e){toast('This browser could not save the postcard.')}}
+async function share(){if(!validChoices(S.choices))return;const code=worldCode(),o=outcome();const shareUrl=location.protocol==='http:'||location.protocol==='https:'?location.href.split('#')[0]+'#world='+code:'';const msg=`I created ${o.name} in Civilization Lab: The Ways of Life. World code: ${code}. ${shareUrl}\nWhat world would you make?`;try{if(navigator.share){await navigator.share({title:o.name,text:msg,...(shareUrl?{url:shareUrl}:{})});return}if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(msg);toast('Your world description was copied.');return}}catch(e){if(e.name==='AbortError')return}
+ const ta=document.createElement('textarea');ta.value=msg;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('Your world description was copied.')}catch(e){toast('World code: '+code)}ta.remove();}
+let audioCtx=null;function tone(kind){if(!S.sound)return;try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;audioCtx=audioCtx||new AC();audioCtx.resume();startAmbience();const now=audioCtx.currentTime;const notes=kind==='choice'?[329.63,493.88,659.25]:kind==='seed'?[349.23,440,523.25,698.46]:kind==='wonder'?[523.25,659.25,880]:kind==='time'?[261.63,329.63,392,523.25]:kind==='end'?[392,523.25,659.25,783.99]:kind==='begin'?[261.63,392,523.25]:[392,493.88];notes.forEach((note,i)=>{const osc=audioCtx.createOscillator(),gain=audioCtx.createGain(),lp=audioCtx.createBiquadFilter();osc.type='sine';osc.frequency.value=note;lp.type='lowpass';lp.frequency.value=1700;const start=now+i*.12;gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.055,start+.025);gain.gain.exponentialRampToValueAtTime(.0001,start+.46);osc.connect(lp).connect(gain).connect(audioCtx.destination);osc.start(start);osc.stop(start+.5)})}catch(e){}}
+// Optional generative river-and-wind bed. Never starts without the player's choice.
+let ambience=null;
+function startAmbience(){
+ if(!S.sound||ambience||!audioCtx)return;
+ try{
+  const ctx=audioCtx,length=ctx.sampleRate*2,buf=ctx.createBuffer(1,length,ctx.sampleRate),a=buf.getChannelData(0);
+  let brown=0;
+  for(let i=0;i<length;i++){brown=(brown+(.025*(Math.random()*2-1)))/1.015;a[i]=brown*.8}
+  const source=ctx.createBufferSource(),low=ctx.createBiquadFilter(),high=ctx.createBiquadFilter(),gain=ctx.createGain();
+  source.buffer=buf;source.loop=true;low.type='lowpass';low.frequency.value=850;high.type='highpass';high.frequency.value=85;
+  gain.gain.setValueAtTime(0,ctx.currentTime);gain.gain.linearRampToValueAtTime(.019,ctx.currentTime+3);
+  source.connect(low).connect(high).connect(gain).connect(ctx.destination);source.start();
+  ambience={source,gain};
+ }catch(_){ambience=null}
+}
+function stopAmbience(){
+ if(!ambience)return;
+ const {source,gain}=ambience;ambience=null;
+ try{gain.gain.setTargetAtTime(0,audioCtx.currentTime,.15);source.stop(audioCtx.currentTime+1.2)}catch(_){try{source.stop()}catch(__){}}
+}
+
+function clickAction(evt){const t=evt.target.closest('button');if(!t)return;const action=t.dataset.action;
+ if(t.dataset.choice){choose(t.dataset.choice);return}
+ if(t.dataset.visit){visit(t.dataset.visit);return}
+ if(t.dataset.fork!==undefined){fork(t.dataset.fork);return}
+ switch(action){case'begin':begin();break;case'next':next();break;case'people':openDrawer('people');break;case'letter':openDrawer('letter');break;case'fork-menu':openDrawer('fork');break;case'postcard':savePostcard();break;case'share':share();break;case'feedback':$('feedback-top').click();break;case'make':if(!S.markOpen)$('maker-open').click();break;case'timewalk':startTimeWalk();break;case'close':closeDrawer();break;case'new-world':closeDrawer();reset();break;}
+}
+function bindEvents(){
+ stage.addEventListener('click',clickAction);
+ $('drawer-body').addEventListener('click',clickAction);
+ $('drawer-close').addEventListener('click',closeDrawer);
+ drawer.addEventListener('click',e=>{if(e.target===drawer)closeDrawer()});
+ $('atlas-button').addEventListener('click',()=>openDrawer('atlas'));
+ $('info-button').addEventListener('click',()=>openDrawer('about'));
+ $('observe-button').addEventListener('click',()=>openDrawer('people'));
+ $('wonder-button').addEventListener('click',()=>discover());
+ $('seed-button').addEventListener('click',plantSeed);
+ $('wonder-close').addEventListener('click',hideWonder);
+ $('time-close').addEventListener('click',closeTimeWalk);
+ $('time-play').addEventListener('click',timeToggle);
+ $('time-range').addEventListener('input',e=>{if(!S.timeWalking)return;S.timeYear=clamp(Number(e.target.value),0,1000);S.timePlaying=false;S.growth=targetGrowth();updateTimeUI()});
+ $('home-button').addEventListener('click',()=>{if(S.timeWalking)closeTimeWalk();else if(S.phase!=='intro')openDrawer('fork');else toast('Your valley is ready when you are.')});
+ $('light-button').addEventListener('click',()=>{S.night=!S.night;updateChrome();persist();tone('soft');toast(S.night?'Night falls. Look for the lights people leave on.':'Morning comes, and everything begins again.')});
+ $('sound-button').addEventListener('click',()=>{S.sound=!S.sound;updateChrome();persist();if(S.sound){tone('begin');startAmbience()}else stopAmbience()});
+ $('look-button').addEventListener('click',()=>{S.zoom=!S.zoom;persist();toast(S.zoom?'A little closer to the lives below.':'A wider view of the valley.');tone('soft')});
+ let pointerDown=null;
+ canvas.addEventListener('pointerdown',e=>{pointerDown={x:e.clientX,y:e.clientY,pan:S.pan,id:e.pointerId};try{canvas.setPointerCapture(e.pointerId)}catch(_){}});
+ canvas.addEventListener('pointermove',e=>{
+  if(pointerDown){const dx=e.clientX-pointerDown.x;if(Math.abs(dx)>7)S.pan=clamp(pointerDown.pan+dx*.17,-75,75);return}
+  if(e.pointerType==='mouse'&&!reduce&&performance.now()-S.lastPointer>65){S.lastPointer=performance.now();const rect=canvas.getBoundingClientRect();addParticle(e.clientX-rect.left,e.clientY-rect.top,'glint',.6)}
+ });
+ const end=e=>{
+  if(!pointerDown)return;
+  const dist=Math.hypot(e.clientX-pointerDown.x,e.clientY-pointerDown.y),rec=canvas.getBoundingClientRect(),pos={x:e.clientX-rec.left,y:e.clientY-rec.top};
+  if(dist<12&&!S.timeWalking){
+   if(S.markMode&&(S.phase==='reveal'||S.phase==='ending')){placeScreenMark(e.clientX,e.clientY);pointerDown=null;return}
+   const sites=S.phase==='intro'?[0,1]:[0,1,2];const near=sites.find(i=>{const pt=wonderPosition(i),q=worldToScreen(pt.x,pt.y);return q&&Math.hypot(pos.x-q.x,pos.y-q.y)<52});
+   if(near!==undefined)discover(near);else if(!reduce){for(let i=0;i<7;i++)addParticle(pos.x,pos.y,'glint',1.1)}
+  }
+  pointerDown=null;
+ };
+ canvas.addEventListener('pointerup',end);
+ canvas.addEventListener('pointercancel',()=>{pointerDown=null});
+ canvas.addEventListener('lostpointercapture',()=>{pointerDown=null});
+ window.addEventListener('resize',resize);
+ document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if(drawer.open){closeDrawer();return}if(S.timeWalking){closeTimeWalk();return}if(!$('wonder-toast').hidden)hideWonder()}
+  if(S.timeWalking&&e.code==='Space'&&e.target.tagName!=='BUTTON'&&e.target.tagName!=='INPUT'){e.preventDefault();timeToggle()}
+ });
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&S.timeWalking){S.timePlaying=false;updateTimeUI()}});
+}
+
+// ---- ORIGINAL LIVING LANDSCAPE ENGINE ----------------------------------------------------
+const rand=seed=>{let n=seed>>>0;return ()=>{n+=0x6D2B79F5;let t=n;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return ((t^(t>>>14))>>>0)/4294967296}};
+const rng=rand(20261009);
+const forests=[],grasses=[],stones=[],stars=[],flowerbeds=[],houses=[];
+for(let i=0;i<145;i++){const x=rng()*1560-90,y=440+rng()*500,typ=rng(),size=.65+rng()*1.05;forests.push({x,y,s:size,type:typ,h:rng(),phase:rng()*7})}
+forests.sort((a,b)=>a.y-b.y);
+for(let i=0;i<580;i++)grasses.push({x:rng()*1560-60,y:550+rng()*400,r:rng(),q:rng()});
+for(let i=0;i<105;i++)flowerbeds.push({x:rng()*1550-60,y:570+rng()*340,p:rng()});
+for(let i=0;i<50;i++)stones.push({x:rng()*1500-30,y:550+rng()*370,s:rng()});
+for(let i=0;i<95;i++)stars.push({x:rng()*1440,y:rng()*520,r:rng(),w:rng()*8});
+for(let i=0;i<40;i++)houses.push({x:(rng()-.5)*580,y:(rng()-.5)*200,scale:.75+rng()*.55,roof:rng(),height:rng()});
+let W=1,H=1,DPR=1,last=0,t=0;let reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const palette={sky1:['#294e53','#101d31'],sky2:['#9baea0','#2a4960'],sky3:['#e9c698','#617077'],far:['#91a79c','#334962'],mid:['#6a8b76','#254659'],near:['#4c7761','#244c50'],grass:['#5f916a','#275458'],grassLight:['#87a87c','#346066'],grassDark:['#345f4c','#1c4248'],river:['#8fd0c2','#527e98'],waterLine:['#e5fae5','#adc4de'],road:['#c1aa79','#68736b'],wall:['#e8d5a9','#b0bec1'],roof:['#ad6c55','#89536a'],sun:['#fff0b7','#eff4e7']};
+const hex=(x)=>{x=x.replace('#','');return [parseInt(x.slice(0,2),16),parseInt(x.slice(2,4),16),parseInt(x.slice(4,6),16)]};
+function mix(a,b,p){const x=hex(a),y=hex(b),v=x.map((n,i)=>Math.round(n+(y[i]-n)*p));return '#'+v.map(n=>n.toString(16).padStart(2,'0')).join('')}
+function C(name){const p=palette[name];return mix(p[0],p[1],S.nightLerp)}
+function fill(color){g.fillStyle=color}function stroke(color,weight=1){g.strokeStyle=color;g.lineWidth=weight;g.stroke()}
+function circ(x,y,r,color){g.beginPath();g.arc(x,y,r,0,Math.PI*2);fill(color);g.fill()}
+function ell(x,y,rx,ry,color,angle=0){g.beginPath();g.ellipse(x,y,rx,ry,angle,0,Math.PI*2);fill(color);g.fill()}
+function polygon(points,color){g.beginPath();points.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));g.closePath();fill(color);g.fill()}
+function line(x1,y1,x2,y2,color,w=1){g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);stroke(color,w)}
+function ellipsePath(x,y,rx,ry,color,lw){g.beginPath();g.ellipse(x,y,rx,ry,0,0,Math.PI*2);stroke(color,lw)}
+function sky(sec){const grad=g.createLinearGradient(0,0,0,900);grad.addColorStop(0,C('sky1'));grad.addColorStop(.52,C('sky2'));grad.addColorStop(1,C('sky3'));fill(grad);g.fillRect(0,0,1440,900);
+ const n=S.nightLerp;
+ for(const st of stars)if(n>.03){g.globalAlpha=n*(.2+st.r*.75)*(.72+.28*Math.sin(sec*.9+st.w));circ(st.x,st.y,st.r*1.15+.3,'#fff1d5')}g.globalAlpha=1;
+ const cx=1074,cy=241;
+ g.save();const glow=g.createRadialGradient(cx,cy,14,cx,cy,440);glow.addColorStop(0,n>.5?'#dbe5d723':'#ffdc9495');glow.addColorStop(.26,n>.5?'#c9dff817':'#f6c8784a');glow.addColorStop(1,'#ffe5aa00');fill(glow);g.fillRect(cx-450,cy-450,900,900);const orb=g.createRadialGradient(cx-25,cy-25,0,cx,cy,n>.5?49:78);orb.addColorStop(0,n>.5?'#fbfff1':'#fffddd');orb.addColorStop(.55,n>.5?'#eaf2e8':'#fff0bd');orb.addColorStop(1,n>.5?'#becedb':'#eeca89');circ(cx,cy,n>.5?43:72,orb);if(n<.7){g.globalAlpha=(1-n)*.23;circ(cx,cy,88,'#fff6ce')}g.restore();
+ celestialDetails(sec);
+ for(let i=0;i<5;i++){const x=(i*337+Math.sin(sec*.009+i)*55)%1650-100,y=146+i*47+(i%2)*22;g.globalAlpha=(.10+((i%2)*.07))*(1-n*.4);ell(x,y,158,18,'#fff3d8');ell(x+57,y-6,105,16,'#fff6e5');ell(x-36,y+6,95,11,'#ecf3dc')}g.globalAlpha=1;
+ // a handful of birds, almost a signature hidden in the sky
+ g.save();g.globalAlpha=.5-n*.2;for(let i=0;i<5;i++){const x=755+i*41+Math.sin(sec*.23+i)*4,y=210+i%3*19+Math.sin(sec*.17+i)*2;g.beginPath();g.moveTo(x-6,y);g.quadraticCurveTo(x-2,y-4,x,y);g.quadraticCurveTo(x+3,y-4,x+7,y);stroke(n>.5?'#d8d7c9':'#385e5b',1.4)}g.restore();
+}
+function ridge(level,y,amplitude,c,factor){g.beginPath();g.moveTo(-100,950);g.lineTo(-100,y);for(let x=-100;x<=1540;x+=20){const noise=Math.sin(x*.0062+level)*amplitude+Math.sin(x*.018+level*2.2)*amplitude*.30+Math.cos(x*.0029+level)*amplitude*.48;g.lineTo(x,y+noise)}g.lineTo(1540,950);g.closePath();fill(c);g.fill();g.globalAlpha=.085;for(let i=0;i<25;i++){const x=i*65;line(x,y+40+factor*Math.sin(x*.02),x-10,y+46+factor*Math.sin(x*.02),'#faf5dc',1)}g.globalAlpha=1}
+// The sky changes character. Night is designed to reveal life, not obscure it.
+function celestialDetails(sec){
+ const n=S.nightLerp;
+ g.save();
+ if(n>.1){
+  const haze=g.createRadialGradient(688,223,20,688,223,470);
+  haze.addColorStop(0,'#b1bded18');haze.addColorStop(.6,'#c2b5dc10');haze.addColorStop(1,'#9cb0d100');
+  g.globalAlpha=n;fill(haze);g.fillRect(210,-190,900,800);
+  // A few almost-imaginary constellations appear as your own windows begin to glow.
+  const constellation=[[[110,155],[178,130],[240,172],[322,121]],[[570,94],[635,108],[711,78],[780,132]],[[1177,91],[1229,151],[1313,136],[1354,207]]];
+  constellation.forEach((path,j)=>{
+   g.globalAlpha=n*.14;g.beginPath();path.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));stroke('#e4eac9',.9);
+   g.globalAlpha=n*.6;path.forEach(([x,y])=>{circ(x,y,1.65,'#ffefcf');circ(x,y,3.6,'#e6eac31b')});
+  });
+  if(!reduce){
+   const progress=(sec%27)-17;
+   if(progress>0&&progress<1.2){const x=340+progress*210,y=154+progress*90;
+    const tail=g.createLinearGradient(x-125,y-53,x,y);tail.addColorStop(0,'#f8f4d500');tail.addColorStop(1,'#f8f4d5bd');
+    g.globalAlpha=n*(1-progress/1.25)*.58;line(x-120,y-50,x,y,tail,1.6);circ(x,y,2.2,'#fff8e6')
+   }
+  }
+ }
+ g.restore();
+}
+function riverLife(sec){
+ if(S.growth<.85)return;
+ const settlement=activeChoice('settlement');
+ if(settlement==='river'){
+  // Two slow boats make the river a place that people actually use.
+  const y=666+Math.sin(sec*.15)*2,v=riverAt(y),x=v.x+Math.sin(sec*.13)*13;
+  g.save();g.translate(x,y);g.rotate(-.08);
+  ell(0,10,29,5,'#234b4765');polygon([[-27,2],[27,2],[16,12],[-18,12]],'#735c52');polygon([[-23,0],[23,0],[14,7],[-15,7]],'#caac80');
+  line(0,0,0,-43,'#eadbbb',1.7);polygon([[1,-42],[21,-7],[1,-8]],'#fff1d4d9');polygon([[-2,-35],[-16,-10],[-2,-10]],'#b6d2bdad');
+  g.restore();
+ }
+ // Tiny moving reflections on the water at night.
+ if(S.nightLerp>.18){g.save();g.globalAlpha=S.nightLerp*.48;
+  for(let i=0;i<24;i++){const y=510+i*17,v=riverAt(y),x=v.x+Math.sin(i*3.1+sec*.61)*v.w*.32;
+   line(x,y,x+3+(i%4)*1.5,y,'#ffe6a4',1)
+  }g.restore()}
+}
+
+function drawMountains(){ridge(1.3,460,72,C('far'),25);ridge(2.8,517,61,C('mid'),24);const grad=g.createLinearGradient(0,470,0,690);grad.addColorStop(0,C('near'));grad.addColorStop(1,C('grassDark'));g.beginPath();g.moveTo(-40,900);g.lineTo(-40,602);g.bezierCurveTo(180,530,225,607,352,590);g.bezierCurveTo(555,520,620,624,784,601);g.bezierCurveTo(1040,558,1160,588,1490,528);g.lineTo(1500,950);g.closePath();fill(grad);g.fill();
+ g.save();g.globalAlpha=.32;const fog=g.createLinearGradient(0,464,0,700);fog.addColorStop(0,'#edf5d6a2');fog.addColorStop(1,'#e4e8b300');fill(fog);g.fillRect(0,464,1440,240);g.restore()}
+function drawHills(sec){const grad=g.createLinearGradient(0,520,0,980);grad.addColorStop(0,C('grassLight'));grad.addColorStop(.55,C('grass'));grad.addColorStop(1,C('grassDark'));g.beginPath();g.moveTo(-30,910);g.lineTo(-30,664);g.bezierCurveTo(210,577,373,581,534,606);g.bezierCurveTo(650,623,694,588,838,615);g.bezierCurveTo(1090,655,1207,552,1480,609);g.lineTo(1480,950);g.closePath();fill(grad);g.fill();
+ // layered sunlit contours, respecting rolling elevations
+ g.globalAlpha=.18;for(let i=0;i<8;i++){g.beginPath();g.moveTo(-60,638+i*43);g.bezierCurveTo(280,575+i*40,457,671+i*32,738,638+i*41);g.bezierCurveTo(1042,587+i*37,1128,674+i*33,1540,615+i*37);stroke('#fff0be',1.8)}g.globalAlpha=1;
+ // broad, soft meadow patches
+ ell(335,700,230,80,C('grassLight'),-.16);ell(1182,780,310,120,C('grassLight'),-.1);ell(116,828,208,83,C('grassDark'),.09);
+ // scenic hill terraces near the highlands
+ g.globalAlpha=.3;for(let i=0;i<4;i++){g.beginPath();g.moveTo(202,568+i*21);g.bezierCurveTo(307,535+i*29,381,564+i*29,457,554+i*28);stroke('#e0dfa8',2)}g.globalAlpha=1;
+ // pollen in the long grass
+ for(const p of grasses){if(p.y<614)continue;const col=p.r>.5?'#efdda45d':'#1e614852';const sw=1.3+p.r*.6;g.beginPath();g.moveTo(p.x,p.y);g.quadraticCurveTo(p.x-3+Math.sin(sec*.6+p.q*14)*2,p.y-5-p.r*9,p.x-2,p.y-9-p.r*9);stroke(col,sw)}
+ for(const f of flowerbeds){circ(f.x,f.y,1.2+f.p*1.3,f.p>.54?'#ead7a3':'#ecb7a5')}
+ for(const st of stones)ell(st.x,st.y,st.s*5+2,st.s*2+1,'#b7c0a37a',-.3);
+}
+// The river widens in perspective: a narrow stream in the distance, a broad river below.
+const RIVER_NODES=[[482,883,8],[518,868,19],[552,846,24],[608,771,41],[664,735,62],[719,768,79],[768,832,101],[827,911,128],[906,937,155],[1040,920,206]];
+function riverAt(y){let i=0;while(i<RIVER_NODES.length-2&&RIVER_NODES[i+1][0]<y)i++;const a=RIVER_NODES[i],b=RIVER_NODES[i+1],f=clamp((y-a[0])/(b[0]-a[0]),0,1),v=f*f*(3-2*f);return {x:a[1]+(b[1]-a[1])*v,w:a[2]+(b[2]-a[2])*v}}
+function riverRibbon(mul,color){const left=[],right=[];for(let y=483;y<=950;y+=5){const v=riverAt(y),wiggle=Math.sin(y*.046)*1.7;left.push([v.x+wiggle-v.w*mul*.5,y]);right.push([v.x+wiggle+v.w*mul*.5,y])}polygon(left.concat(right.reverse()),color)}
+function drawRiver(sec){g.save();const dra=activeChoice('drought'),showAt=S.phase==='decision'&&S.chapter===3&&S.preview?4:S.growth;const shallow=(S.chapter===3&&S.phase==='decision'&&!S.preview)||(dra==='share'&&showAt>3.25);const narrowing=shallow?.76:1;
+ riverRibbon(narrowing*1.27,'#285f60b7');riverRibbon(narrowing*1.12,'#7fb1a9a4');
+ const water=g.createLinearGradient(760,490,935,930);water.addColorStop(0,mix('#86c9b6','#5b8da0',S.nightLerp));water.addColorStop(.48,C('river'));water.addColorStop(1,mix('#5ba5a2','#3d7299',S.nightLerp));riverRibbon(narrowing,water);
+ // irregular shallow bands make the water feel translucent rather than like a solid blue road
+ riverRibbon(narrowing*.65,'#d9e8d328');riverRibbon(narrowing*.32,'#e7f3d123');
+ for(let i=0;i<53;i++){const y=514+i*8.2,v=riverAt(y);const x=v.x+Math.sin(i*2.7+sec*.7)*v.w*.23;const width=(3+i%5*2.5)*(1+i/60);g.globalAlpha=.12+(i%4)*.06;line(x,y,x+width,y-1.1,'#f7f3dc',.7+(i%3)*.35)}g.globalAlpha=1;
+ // wooden crossing, with tiny bridge posts
+ if(S.growth>.5){const rv=riverAt(676);g.save();g.translate(rv.x,676);g.rotate(.06);fill('#8b7661');g.fillRect(-90,0,180,13);fill('#ccb38c');g.fillRect(-90,-8,180,12);for(let i=-85;i<90;i+=17){line(i,-8,i,5,'#f5dfb6',1)}g.restore()}
+ if(dra==='reservoir'&&showAt>3.4){const rv=riverAt(570);g.save();g.translate(rv.x,565);g.rotate(.11);fill('#afb6ab');g.fillRect(-54,-8,113,23);fill('#e6d6ad');g.fillRect(-54,-9,113,5);for(let i=-42;i<48;i+=19)g.fillRect(i,-20,7,12);g.restore();ell(rv.x+8,552,86,14,'#88b6b57c',-.1)}
+ if(dra==='share'&&showAt>3.4){for(let i=0;i<18;i++){const y=700+i*9,v=riverAt(y),x=v.x-v.w*.54-12;line(x,y,x+4,y-9,'#b3bb7a',1.7);circ(x+4,y-10,2.4,'#e1c1a2')}}
+ g.restore()}
+function tree(x,y,s,kind,sec){const night=S.nightLerp;const variation=(Math.sin(x*.093+y*.025)+1)*.5;const bark=mix('#756549','#445d54',night);const base=mix(kind>.55?'#3d6d58':'#457459','#244b54',night);const dark=mix('#315949','#1c404a',night);const light=mix(variation>.6?'#a2af73':'#7eaa7c','#486e6b',night);const drift=Math.sin(sec*.48+x*.009+y*.005)*1.7;
+ g.save();g.translate(x,y);g.scale(s,s);g.globalAlpha=clamp(.70+(y-460)/850,0,1);ell(5,5,19,5,'#143f3451');
+ if(kind>.78){line(0,7,0,-62,bark,3);polygon([[-14,-8],[1,-56+drift],[16,-8]],dark);polygon([[-13,-26],[1,-81+drift],[15,-26]],base);polygon([[-9,-47],[1,-96+drift],[12,-47]],light);line(1,-92,1,-8,'#e5deae32',1)}
+ else {line(0,7,1,-29,bark,4);line(1,-20,-12,-39,bark,2);line(1,-26,15,-38,bark,2);
+  circ(-16+drift,-30,14,dark);circ(13+drift,-33,18,base);circ(-4+drift,-49,18,base);circ(10+drift,-50,15,light);circ(-16+drift,-48,13,light);circ(-2+drift,-33,11,base);
+  g.globalAlpha=.23;for(let i=0;i<6;i++){const dx=-18+(i*11)%37,dy=-54+(i*7)%30;ell(dx,dy,4+(i%3),2.2,'#e4e8aa',-.35)}g.globalAlpha=1;
+ }
+ g.restore()}
+function house(x,y,sc,kind,energy,sec,i){g.save();g.translate(x,y);g.scale(sc,sc);const night=S.nightLerp,roof=kind==='open'?['#ca9672','#96a798','#e7b179','#9b827b'][i%4]:kind==='craft'?'#b87a5e':kind==='care'?'#b78a72':'#b06f5d';const roofC=mix(roof,'#7c5a69',night);const wall=mix('#e1d2ac','#9baea9',night);const windowC=night>.28?'#ffe1a2':'#667b6d';
+ ell(5,3,32,11,'#123a3352');polygon([[-21,-25],[22,-25],[24,1],[-21,1]],mix('#b8a88a','#7c999b',night));polygon([[22,-25],[35,-33],[36,-8],[24,1]],mix('#8d987c','#7b848d',night));polygon([[-28,-25],[0,-46],[27,-25]],roofC);polygon([[0,-46],[13,-53],[41,-31],[27,-25]],mix('#8f5348','#674653',night));line(-28,-24,27,-24,'#f6dfb188',1);
+ fill(windowC);g.fillRect(-12,-18,6,8);g.fillRect(11,-17,5,7);g.fillStyle='#755f4f';g.fillRect(-1,-15,8,16);if(night>.15){g.globalAlpha=night*.7;const glow=g.createRadialGradient(-8,-15,1,-8,-15,22);glow.addColorStop(0,'#ffd98c88');glow.addColorStop(1,'#ffd98c00');fill(glow);g.fillRect(-33,-39,55,53);g.globalAlpha=1}
+ if(energy==='solar'&&(S.growth>2.5||(S.phase==='decision'&&S.chapter===2&&S.preview==='solar'))){polygon([[7,-45],[19,-50],[29,-40],[18,-35]],'#426478');line(10,-45,21,-38,'#b4d6cc',.7)}
+ if(kind==='craft'&&i%4===0){g.fillStyle=mix('#c8a46e','#ad8671',night);g.fillRect(24,-15,11,17);circ(29,-17,3,'#dbc391')}
+ if(kind==='care'&&i%4===0){circ(14,-3,3,'#e0b477');circ(19,-2,3,'#ba8e6b')}
+ g.restore();}
+function drawSettlement(sec){const prog=Math.max(S.growth,S.phase==='decision'&&S.preview?S.chapter+1:0),done=Math.floor(prog+.01);if(prog<.4&&!(S.phase==='decision'&&S.chapter===0&&S.preview))return;const site=activeChoice('settlement')||'river';const home={river:[885,625],highlands:[426,540],forest:[485,665]}[site]||[885,625];const ethos=activeChoice('ethos')||'care';const power=activeChoice('energy')||null;const usePreview=S.phase==='decision'&&S.chapter===0&&!!S.preview;
+ // one small town, several possible ways to shape its silhouette
+ const amount=usePreview&&prog<.5?5:done<1?5:done===1?8:done===2?15:done===3?23:30;const group=[];
+ for(let i=0;i<amount;i++){const b=houses[i],nx=home[0]+b.x*.84+Math.sin(i*2.1)*20,ny=home[1]+b.y*.58+Math.sin(i*.9)*14;group.push({x:nx,y:ny,sc:b.scale*(.75+(ny-480)/690),i})}
+ group.sort((a,b)=>a.y-b.y);
+ // town square and footpath: amber earth contours
+ g.save();g.globalAlpha=.58;ell(home[0],home[1]+19,230,67,C('road'),-.04);ell(home[0]-60,home[1]-24,115,28,'#cebb909a',-.12);g.restore();
+ if(usePreview&&prog<.5)g.globalAlpha=.66;for(const b of group)house(b.x,b.y,b.sc,ethos,power,sec,b.i);g.globalAlpha=1;
+ // town lights and winding paths from the first homes
+ g.globalAlpha=.7;g.beginPath();g.moveTo(home[0]-210,home[1]+22);g.quadraticCurveTo(home[0]-120,home[1]+67,home[0]+80,home[1]+57);stroke(C('road'),6);g.globalAlpha=1;
+ if(prog>1.6){ // a central gathering structure
+  house(home[0]-22,home[1]+28,1.55,ethos,power,sec,7);
+  const lampCount=ethos==='care'?8:5;for(let i=0;i<lampCount;i++){const x=home[0]-76+i*20,y=home[1]+48+(i%2)*11;line(x,y,x,y-12,'#5a6652',1.5);circ(x,y-13,2.8,S.nightLerp>.3?'#ffdf99':'#eed3a1')}
+ }
+ if(prog>2.3&&power==='solar'){for(let j=0;j<2;j++){const x=home[0]+190+j*74,y=home[1]-77-j*19;line(x,y+72,x,y-2,'#e5d9ae',3);g.save();g.translate(x,y-2);g.rotate(sec*.65+j);for(let i=0;i<3;i++){g.rotate(Math.PI*2/3);polygon([[0,0],[-4,-4],[52,-6],[59,1]],'#f4e9cc')}g.restore();circ(x,y-2,5,'#e9d4ad')}}
+ if(prog>2.3&&power==='industry'){for(let i=0;i<2;i++){const x=home[0]+149+i*50,y=home[1]-35;polygon([[x-16,y],[x+17,y],[x+12,y-85-i*13],[x-9,y-85-i*13]],'#7e6760');polygon([[x-11,y-83-i*13],[x+13,y-83-i*13],[x+15,y-77-i*13],[x-14,y-77-i*13]],'#dec7ae');g.globalAlpha=.25;for(let s=0;s<4;s++)circ(x+Math.sin(sec*.55+s+i)*13,y-103-i*13-s*16-(sec*4%19),10+s*3,'#bdc1b7');g.globalAlpha=1;}}
+ if(prog>2.3&&power==='commons'){for(let i=0;i<4;i++){const x=home[0]-140+i*23,y=home[1]+78;polygon([[x,y],[x+18,y],[x+20,y+13],[x-2,y+13]],'#b9c995');line(x+5,y-4,x+15,y-4,'#f4e3b5',1.5)}}
+ if(prog>3.3&&activeChoice('drought')==='trade'){for(let i=0;i<3;i++){const x=home[0]-200+i*31,y=home[1]+93+i*3;ell(x,y+3,14,5,'#253e3652');polygon([[x-14,y],[x+14,y],[x+7,y-14],[x-9,y-13]],'#dbb17a');circ(x+10,y+5,3,'#5f6551');circ(x-10,y+5,3,'#5f6551')}}
+ if(prog>3.3&&activeChoice('drought')==='share'){for(let i=0;i<8;i++){const x=home[0]-212+i*13,y=home[1]+91;circ(x,y,5,'#89a16c');circ(x+3,y-5,4,'#b9c67c')}}
+ // inhabitants move gently as though living independent lives
+ if(prog>.7){for(let i=0;i<12;i++){const x=home[0]-160+(i*47%322)+Math.sin(sec*.16+i*2)*14, y=home[1]+37+(i%3)*13+Math.cos(sec*.18+i)*2;if(i>amount/2+3)continue;ell(x,y+2,2.9,1.2,'#103e353c');circ(x,y-7,2.2,'#d8ba96');line(x,y-4,x,y+1,i%2?'#f0c3a1':'#3d6e5e',2.4)}}
+ drawLegacyTree(sec);
+ if(usePreview){g.globalAlpha=.15;ellipsePath(home[0],home[1],225,82,'#fff4c9',3);g.globalAlpha=1}
+}
+// Handcrafted environmental details. Beauty is in ordinary life, not a magic score.
+function drawLegacyTree(sec){
+ if(!S.seed||S.growth<.45)return;
+ const home=settlementSite(),age=clamp((S.growth-.35)/3.8,0,1),x=home[0]+174,y=home[1]+52;
+ const height=23+age*100,spread=17+age*53,n=S.nightLerp;
+ g.save();g.translate(x,y);
+ ell(5,4,spread*1.12,8+age*9,'#183c3469');
+ // Its ancestors were planted here. The tree is always young enough to be alive.
+ for(let j=0;j<7;j++){const dx=(j-3)*spread*.29;line(2,1,dx,5+Math.abs(j-3)*1.5,'#ab927165',1+age*1.4)}
+ g.beginPath();g.moveTo(-5,2);g.bezierCurveTo(-5,-height*.28,12,-height*.64,-1,-height);
+ g.bezierCurveTo(10,-height*.7,10,-height*.26,9,2);g.closePath();fill(mix('#766348','#889b85',n));g.fill();
+ for(let k=0;k<7;k++){
+  const side=k%2?1:-1,vy=-height*(.38+k*.09);
+  g.beginPath();g.moveTo(2,vy+18);g.quadraticCurveTo(side*spread*.25,vy+5,side*spread*(.52+k*.035),vy-height*.08);stroke(mix('#997f5f','#879d89',n),1.6+age*1.5)
+ }
+ // Layered green leaves catch the last sunlight. The warm lights are highlights, not neon.
+ const clusters=[[0,-.96,1],[-.5,-.79,.83],[.5,-.79,.83],[-.68,-.58,.67],[.7,-.59,.69],[-.20,-1.15,.65],[.30,-1.12,.66],[0,-.63,.78]];
+ clusters.forEach(([dx,dy,scale],i)=>{
+  const cx=dx*spread*1.08+Math.sin(sec*.2+i)*age*1.1,cy=dy*height,rad=spread*.52*scale;
+  const shades=['#658c73','#799b80','#547e72','#819f7d','#688b77','#8faf8a','#678d77','#769a80'];
+  const light=['#b7b882','#bdd6a1','#9dbd95','#c4c28c','#b3b889','#c2d39a','#bed3a2','#9ebf9b'];
+  const grd=g.createRadialGradient(cx-rad*.32,cy-rad*.35,0,cx,cy,rad*1.2);
+  grd.addColorStop(0,mix(light[i], '#b7c7b0',n));grd.addColorStop(.58,mix(shades[i],'#527c77',n));grd.addColorStop(1,mix('#355d50','#33585a',n));
+  circ(cx,cy,rad,grd);
+  for(let j=0;j<23;j++){
+   const theta=i*1.7+j*2.39996,r=rad*Math.sqrt((j+.5)/24)*.9;
+   const xx=cx+Math.cos(theta)*r,yy=cy+Math.sin(theta)*r*.83;
+   g.globalAlpha=.24+((j+i)%5)*.07;
+   ell(xx,yy,1.6+age*.8,3.1+age*.6,j%4===0?'#f2da9d':j%3===0?'#d7d9a2':'#d3e3ae',theta);
+  }g.globalAlpha=1;
+ });
+ if(age>.45){
+  for(let i=0;i<11;i++){
+   const xx=Math.sin(i*8.6+sec*.27)*spread*(.7+(i%5)*.12),yy=-height*.8+(i*37+(reduce?0:sec*4))%(height+30);
+   g.globalAlpha=.25+(i%5)*.08;g.save();g.translate(xx,yy);g.rotate(sec*.22+i);ell(0,0,1.4,2.8,'#ead9a7',.7);g.restore();
+  }g.globalAlpha=1;
+ }
+ if(age>.8){
+  const sway=reduce?0:Math.sin(sec*.55)*1.6,lx=spread*.34+sway,ly=-height*.23;
+  line(spread*.34,-height*.45,lx,ly,'#d3bb95',1.1);
+  const glow=g.createRadialGradient(lx,ly,0,lx,ly,23);
+  glow.addColorStop(0,'#ffdd9788');glow.addColorStop(1,'#ffe5ac00');fill(glow);g.fillRect(lx-25,ly-25,50,50);
+  polygon([[lx-5,ly-5],[lx+5,ly-5],[lx+4,ly+5],[lx-4,ly+5]],'#b7976f');circ(lx,ly,2.7,'#ffe5b4');
+ }
+ g.restore();
+}
+function drawLivingDetails(sec){
+ const n=S.nightLerp,p=S.growth;
+ // Low-growing summer flowers, moths, butterflies and a patient heron.
+ for(let i=0;i<24;i++){
+  const x=105+(i*127)%1215,y=639+(i*89)%212;
+  if(i%3===0){g.globalAlpha=.58;circ(x,y,1.6,'#fee1a4');circ(x-3,y-2,1.2,'#f3b0a2');circ(x+2,y-2,1.1,'#f9e7c7');g.globalAlpha=1}
+ }
+ for(let i=0;i<8;i++){
+  const x=210+(i*181)%1015+Math.sin(sec*.33+i*5)*10,y=570+(i*77)%190+Math.cos(sec*.49+i)*9;
+  if(reduce&&i>2)continue;const a=n>.65?.25:.85;g.globalAlpha=a;
+  g.save();g.translate(x,y);g.rotate(Math.sin(sec*.51+i)*.2);
+  const wing=Math.max(.3,Math.abs(Math.sin(sec*2+i)));
+  ell(-3,-1,wing*5,2.3,i%2?'#f6d9a1':'#f4bb9d',-.65);ell(3,-1,wing*5,2.3,'#d5deb4',.65);line(0,-2,0,3,'#5c5c47',1.2);g.restore();g.globalAlpha=1;
+ }
+ const hx=riverAt(632).x-28,hy=623+Math.sin(sec*.2)*1.5;
+ if(p<3.2){ // Heron on the bank.
+  ell(hx+2,hy+3,6,1.5,'#234c4652');line(hx,hy-17,hx-3,hy+1,'#d8dcc6',1.5);line(hx+3,hy-16,hx+5,hy+1,'#d8dcc6',1.5);
+  ell(hx,hy-26,5,12,'#dee6d5',-.22);line(hx+2,hy-36,hx+7,hy-47,'#e4ead5',2);circ(hx+7,hy-49,3.6,'#e4ead5');line(hx+10,hy-49,hx+19,hy-48,'#d0aa73',1.5)
+ }
+ if(p>.7){
+  const home=settlementSite(),ethos=activeChoice('ethos');
+  if(ethos==='care'&&p>1.5){ // Common table festival, a warmly lit gathering.
+   for(let i=0;i<10;i++){const x=home[0]-150+i*24,y=home[1]-68+Math.sin(i*.65)*13;
+    line(x,y,x+24,y+Math.sin((i+1)*.65)*13,'#e2c9ab',.7);if(i%2===0){circ(x,y,3,n>.4?'#ffe9b9':'#eac687');circ(x,y,9,'#f3d3a517')}
+   }
+  }
+  if(ethos==='open'&&p>1.5){for(let i=0;i<12;i++){const x=home[0]-185+i*29,y=home[1]-85+Math.sin(i*.45)*15;line(x,y,x+30,y+Math.sin((i+1)*.45)*15,'#dfcba9',1);polygon([[x,y],[x+6,y+1],[x+3,y+11]],['#e3a58b','#e8d99f','#9ebcaa'][i%3])}}
+  if(ethos==='craft'&&p>1.5){for(let i=0;i<4;i++){const x=home[0]+30+i*68,y=home[1]-110-i%2*25;line(x,y,x+Math.sin(sec*.3+i)*9,y-27,'#c9af8e',1);polygon([[x,y-25],[x-10,y-37],[x,y-49],[x+10,y-37]],['#dfad8d','#e4cd9e','#9cb9b0'][i%3])}}
+  // Far-off homes: a constellation of life, responsive to nightfall.
+  if(n>.15){for(let i=0;i<12;i++){const x=home[0]-220+(i*59%445),y=home[1]-71+(i*39%110);const brightness=n*(.25+.3*Math.sin(sec*.5+i));const glow=g.createRadialGradient(x,y,0,x,y,16);glow.addColorStop(0,`rgba(255,222,160,${brightness})`);glow.addColorStop(1,'#ffe2a000');fill(glow);g.fillRect(x-17,y-17,34,34)}}
+ }
+}
+function drawWonderMarks(sec){
+ if(S.timeWalking)return;
+ const ids=S.phase==='intro'?[0,1]:[0,1,2];
+ for(const i of ids){
+  const p=wonderPosition(i),visited=S.discoveries.includes(i),pulse=reduce?1:1+.1*Math.sin(sec*1.7+i*2),r=visited?5:7.5;
+  g.save();g.globalAlpha=visited?.22:.7;const glow=g.createRadialGradient(p.x,p.y,0,p.x,p.y,28);glow.addColorStop(0,'#fff0b9bb');glow.addColorStop(1,'#fff0b900');fill(glow);g.fillRect(p.x-30,p.y-30,60,60);
+  g.translate(p.x,p.y);g.scale(pulse,pulse);
+  line(-r,0,r,0,'#fff7ce',visited?1:1.4);line(0,-r,0,r,'#fff7ce',visited?1:1.4);
+  g.save();g.rotate(Math.PI/4);line(-r*.52,0,r*.52,0,'#fae1b7',.7);line(0,-r*.52,0,r*.52,'#fae1b7',.7);g.restore();
+  circ(0,0,visited?1.5:2.1,'#fffdf1');g.restore();
+ }
+}
+
+function drawForest(sec){const prog=Math.max(S.growth,S.phase==='decision'&&S.preview?S.chapter+1:0),sett=activeChoice('settlement'),energy=activeChoice('energy');for(const f of forests){if(f.y<514||f.y>890)continue;const danger=sett==='forest'&&prog>1&&(Math.abs(f.x-485)<270&&Math.abs(f.y-665)<115);const industry=energy==='industry'&&prog>2.5&&f.x>940&&f.y<720;if(danger||industry)continue;if((f.x>670&&f.x<965&&f.y>595&&f.y<740&&prog>1))continue;const river=riverAt(f.y);if(Math.abs(f.x-river.x)<river.w*.6+9)continue;tree(f.x,f.y,f.s*.96,f.type,sec)}
+ // foreground framing provides depth and makes the player feel inside the landscape
+ for(let i=0;i<5;i++){const x=[18,88,1350,1410,-13][i],y=[878,963,953,877,940][i];tree(x,y,1.72+(i%2)*.33,.82,sec)}
+}
+function atmosphericDetails(sec){const n=S.nightLerp;g.save();if(n>.2){for(let i=0;i<35;i++){const x=105+(i*97)%1240+Math.sin(sec*.2+i)*7,y=545+(i*61)%325;const alpha=n*(.16+.22*(.5+.5*Math.sin(sec*.75+i)));g.globalAlpha=alpha;const glow=g.createRadialGradient(x,y,0,x,y,10);glow.addColorStop(0,'#ffefac');glow.addColorStop(1,'#ffe9a000');fill(glow);g.fillRect(x-10,y-10,20,20)}g.globalAlpha=1}
+ const haze=g.createLinearGradient(0,325,0,900);haze.addColorStop(0,'#fff0c51a');haze.addColorStop(.65,'#e9e8bb00');haze.addColorStop(1,'#15392a18');fill(haze);g.fillRect(0,320,1440,580);
+ // shafts of late sunlight
+ if(n<.8){g.globalAlpha=(1-n)*.035;for(let i=0;i<5;i++)polygon([[1047,252],[1060+i*88,930],[850+i*100,930]],'#fff4cd');g.globalAlpha=1}
+ g.restore()}
+// TOUCH THE VALLEY / v0.5 — directly placed, symbolic acts (not a socioeconomic model).
+const MARK_KINDS={
+  grove:{title:'A little grove',story:'Someone plants today for a shade they may never know.',icon:'✳'},
+  shelter:{title:'A place to belong',story:'A roof appears. Tomorrow it will be someone’s childhood.',icon:'⌂'},
+  gathering:{title:'A place to meet',story:'A gathering place begins with one invitation.',icon:'♡'}
+};
+function updateMakerUI(){
+ const panel=$('maker-dock');if(!panel)return;
+ const available=S.phase==='reveal'||S.phase==='ending';if(!available){S.markOpen=false;S.markMode=null}panel.hidden=!available;app.classList.toggle('is-making',Boolean(available&&S.markOpen));
+ $('maker-tools').hidden=!S.markOpen;
+ const btn=$('maker-open');btn.setAttribute('aria-expanded',String(S.markOpen));btn.querySelectorAll('span')[1].textContent=S.markOpen?'BACK TO STORY':'TOUCH THE VALLEY';
+ const count=$('maker-count');count.textContent=S.marks.length+' / 9';
+ document.querySelectorAll('[data-make]').forEach(el=>{const on=el.dataset.make===S.markMode;el.setAttribute('aria-pressed',String(on));el.classList.toggle('selected',on)});
+ $('maker-place').disabled=!S.markMode||S.marks.length>=9;
+ $('maker-undo').disabled=!S.marks.length;
+ canvas.style.cursor=S.markMode&&available?'crosshair':'grab';
+}
+function updateMakerAndPersist(){persist();updateMakerUI()}
+function setupMaker(){
+ $('maker-open').addEventListener('click',()=>{S.markOpen=!S.markOpen;if(!S.markOpen)S.markMode=null;updateMakerUI()});
+ document.querySelectorAll('[data-make]').forEach(el=>el.addEventListener('click',()=>{
+  S.markMode=S.markMode===el.dataset.make?null:el.dataset.make;
+  updateMakerUI();if(S.markMode)toast('Tap the ground to leave '+MARK_KINDS[S.markMode].title.toLowerCase()+'.');
+ }));
+ $('maker-place').addEventListener('click',()=>{if(!S.markMode)return;const [hx,hy]=settlementSite();const i=S.marks.length;placeWorldMark(hx+115+(i%3)*37,hy+115-Math.floor(i/3)*22)});
+ $('maker-undo').addEventListener('click',()=>{S.marks.pop();updateMakerAndPersist();toast('An earlier idea is possible again.')});
+}
+function placeWorldMark(x,y){
+ if(!S.markMode||!(S.phase==='reveal'||S.phase==='ending'))return false;
+ if(S.marks.length>=9){toast('Your valley has room for nine small gestures. Undo one to try another.');return true}
+ if(x<150||x>1300||y<480||y>847){toast('Try a patch of ground in the valley, away from the sky.');return true}
+ // Markers are not allowed in the river; buildings and groves should not erase the water.
+ if(Math.abs(x-riverAt(y).x)<56){toast('Let the river keep its own space. Try the bank.');return true}
+ const mark={x:Math.round(x),y:Math.round(y),kind:S.markMode,year:yearFor(S.phase,S.chapter)};
+ S.marks.push(mark);const detail=MARK_KINDS[mark.kind];
+ toast('✳ '+detail.story);
+ emitWorldBurst(x,y,36);tone('seed');updateMakerAndPersist();
+ if(S.phase==='ending')archive();
+ return true;
+}
+function placeScreenMark(clientX,clientY){
+ if(!S.markMode||!S.sceneTransform)return false;
+ const rect=canvas.getBoundingClientRect(),tr=S.sceneTransform;
+ const x=(clientX-rect.left-tr.x)/tr.scale;
+ const y=(clientY-rect.top-tr.y)/tr.scale-tr.shift;
+ return placeWorldMark(x,y);
+}
+function drawWorldMarks(sec){
+ if(!S.marks.length)return;
+ const yNow=S.timeWalking?S.timeYear:yearFor(S.phase,S.chapter);
+ const n=S.nightLerp;
+ for(const m of S.marks){
+  if(yNow<m.year)continue;
+  const age=clamp((yNow-m.year)/520,0,1),breeze=reduce?0:Math.sin(sec*.8+m.x*.05)*.8;
+  g.save();g.translate(m.x,m.y);
+  const sx=.48+age*.65;
+  if(m.kind==='grove'){
+   ell(0,6,29+age*14,6,'#173e345e');
+   for(let i=0;i<3;i++){
+    const xx=(i-1)*24;smoothBranch(xx,0,xx-2+breeze,-20-(age*54)+Math.abs(i-1)*10,5+age*3,'#705f46');
+    for(let j=0;j<5;j++){
+     const a=(j-2)*Math.PI*.39,r=(14+age*21)*(i===1?1.17:.72),cx=xx+Math.cos(a)*r*.56+breeze,cy=-24-age*54+Math.sin(a)*r*.5;
+     const grad=g.createRadialGradient(cx-4,cy-7,1,cx,cy,r);grad.addColorStop(0,mix('#c8d6a2','#9aada5',n));grad.addColorStop(.76,mix('#6f9b76','#487e80',n));grad.addColorStop(1,mix('#375f50','#265763',n));circ(cx,cy,r*.62,grad);
+    }
+   }
+   if(n>.25){g.globalAlpha=n*.75;circ(-18,-35-age*45,2.4,'#ffecb2');circ(15,-19-age*52,2.1,'#ffecb2');g.globalAlpha=1}
+  }else if(m.kind==='shelter'){
+   const h=34+age*19,w=43+age*17;
+   ell(3,5,w*.72,9,'#24453964');
+   polygon([[-w/2,0],[w/2,0],[w/2,-h],[-w/2,-h]],mix('#ddc3a0','#abbcba',n));
+   polygon([[-w/2-7,-h+3],[0,-h-30-age*9],[w/2+8,-h+3]],mix('#a96e58','#796075',n));
+   polygon([[-11,0],[5,0],[5,-22],[-11,-22]],'#6c635b');
+   circ(17,-h*.62,4.5,n>.2?'#ffdead':'#63929a');
+   if(age>.5){line(-w/2-6,3,-w/2-6,-22,'#d4c4a3',1.5);line(-w/2-8,-22,0,-23,'#ecd29a',1)}
+  }else if(m.kind==='gathering'){
+   ell(0,2,42+age*17,13,'#c2b39a99');
+   ell(0,-1,31+age*7,9,'#897a61');
+   for(let i=0;i<8;i++){
+    const a=i*Math.PI/4+sec*.017,rx=Math.cos(a)*(31+age*10),ry=Math.sin(a)*(12+age*5);
+    circ(rx,ry-7,3,'#e6b99c');line(rx,ry-4,rx+1,ry+2,['#9c7d61','#758b73','#c3907c'][i%3],2.8);
+   }
+   const gr=g.createRadialGradient(0,-12,0,0,-12,33);gr.addColorStop(0,'#ffcb7899');gr.addColorStop(1,'#f8c26b00');circ(0,-12,33,gr);
+   polygon([[-6,-8],[0,-30-breeze],[6,-8]],'#f7bd73');circ(0,-11,3.7,'#fff4c9');
+  }
+  g.restore();
+ }
+}
+function smoothBranch(x1,y1,x2,y2,w,c){g.beginPath();g.moveTo(x1,y1);g.quadraticCurveTo((x1+x2)/2-6,(y1+y2)/2,x2,y2);stroke(c,w)}
+
+function renderLandscape(sec,dt=.034){
+ const w=W,h=H;if(w<=0||h<=0)return;
+ const targetNight=S.night?1:0;
+ S.nightLerp+=(targetNight-S.nightLerp)*(reduce?1:.042);
+ const goal=targetGrowth();S.growth+=(goal-S.growth)*(reduce?1:S.timeWalking?.14:.038);
+ if(Math.abs(S.growth-goal)<.006)S.growth=goal;
+ const mobile=w<760;const wantedSite=S.choices.settlement||(S.phase==='decision'&&S.chapter===0?S.preview:null);
+ const focus=mobile?(wantedSite==='highlands'?480:wantedSite==='forest'?535:wantedSite==='river'?(S.seed&&S.phase==='ending'?934:880):955):720;
+ S.focusX+=(focus-S.focusX)*(reduce?1:.09);
+ const desktopTarget=mobile?0:(wantedSite==='highlands'?265:wantedSite==='forest'?225:wantedSite==='river'?-22:0);
+ S.desktopShift+=(desktopTarget-S.desktopShift)*(reduce?1:.08);
+ const scale=Math.max(w/1440,h/900),z=S.zoom?1.105:1;
+ const offsetX=(w-1440*scale*z)/2-(S.focusX-720)*scale*z+S.desktopShift*scale*z;
+ const offsetY=(h-900*scale*z)/2;
+ const worldShiftY=S.timeWalking?-16:S.phase==='decision'?-85:S.phase==='ending'?-38:S.phase==='reveal'?-5:0;
+ S.sceneTransform={x:offsetX-S.pan*scale,y:offsetY,scale:scale*z,shift:worldShiftY};
+ g.save();g.setTransform(DPR,0,0,DPR,0,0);g.clearRect(0,0,w,h);
+ g.translate(offsetX-S.pan*scale,offsetY);g.scale(scale*z,scale*z);sky(sec);
+ g.save();g.translate(0,worldShiftY);
+ drawMountains();drawHills(sec);drawRiver(sec);riverLife(sec);drawForest(sec);drawLivingDetails(sec);drawSettlement(sec);drawWorldMarks(sec);drawWonderMarks(sec);atmosphericDetails(sec);
+ g.restore();g.restore();drawParticles(dt);
+}
+function resize(){const r=canvas.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);DPR=Math.min(devicePixelRatio||1,1.75);canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);g.setTransform(DPR,0,0,DPR,0,0);renderLandscape(performance.now()/1000,0)}
+function loop(now){
+ const dt=clamp((now-(timePrev||now))/1000,0,.075);timePrev=now;
+ if(S.timeWalking&&S.timePlaying){S.timeYear=Math.min(1000,S.timeYear+dt*130);if(S.timeYear>=1000){S.timePlaying=false;tone('end')}updateTimeUI()}
+ if(now-last>31||reduce){last=now;t=now/1000;renderLandscape(reduce?0:t,dt)}
+ requestAnimationFrame(loop)
+}
+load();bindEvents();setupMaker();render();resize();requestAnimationFrame(loop);
+window.CIVLAB={version:'0.5.0',getState:()=>({phase:S.phase,chapter:S.chapter,choices:{...S.choices},atlas:S.atlas.map(x=>({code:x.code,name:x.name})),night:S.night,seed:S.seed,marks_count:S.marks.length,discoveries:[...S.discoveries],timeWalking:S.timeWalking,timeYear:S.timeYear}),begin,choose,next,fork,reset,openDrawer,plantSeed,startTimeWalk,closeTimeWalk,discover};
+})();
+
+</script>
+<script>
+/* V0.5 opt-in playtest feedback. Never claim success without a 201 backend acknowledgement. */
+(()=>{'use strict';
+ const endpoint='https://htffcvdopavknnylbowl.supabase.co/functions/v1/civilization-lab-feedback';
+ const $=id=>document.getElementById(id);
+ const dlg=$('feedback-dialog'),status=$('fb-status'),form=$('feedback-form');
+ let token='';let loading=false;let sent=false;
+ function state(){try{return window.CIVLAB?.getState?.()||{}}catch{return {}}}
+ async function refreshToken(){
+  token='';try{const r=await fetch(endpoint,{cache:'no-store'});if(!r.ok)throw new Error('not_available');const d=await r.json();if(!d.ok||!d.token)throw new Error('not_available');token=d.token;status.textContent='Ready to send privately.'}
+  catch{status.textContent='Online feedback is unavailable here. You can still copy your thoughts.'}
+ }
+ function open(){sent=false;status.textContent='Connecting to the feedback inbox…';$('fb-send').disabled=false;form.hidden=false;$('fb-done').hidden=true;dlg.showModal();refreshToken()}
+ $('feedback-top').addEventListener('click',open);$('fb-close').addEventListener('click',()=>dlg.close());
+ dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+ function payload(){const fd=new FormData(form),s=state();const code=s.choices&&Object.keys(s.choices).length===4?Object.keys(s.choices).map((k,i)=>[k,s.choices[k]]):null;
+  const labels={settlement:{river:0,highlands:1,forest:2},ethos:{care:0,craft:1,open:2},energy:{solar:0,industry:1,commons:2},drought:{share:0,reservoir:1,trade:2}};
+  let world=null;if(s.choices&&['settlement','ethos','energy','drought'].every(k=>labels[k]?.[s.choices[k]]!==undefined))world=['settlement','ethos','energy','drought'].map(k=>labels[k][s.choices[k]]).join('');
+  return {version:'0.5',feeling:String(fd.get('feeling')||''),highlight:String(fd.get('highlight')||''),note:String(fd.get('note')||'').trim(),phase:['intro','decision','reveal','ending'].includes(s.phase)?s.phase:'intro',world_code:world,marks_count:Math.min(9,Math.max(0,Number(s.marks_count)||0)),website:String(fd.get('website')||''),consent:fd.get('consent')==='yes',token};
+ }
+ $('fb-copy').addEventListener('click',async()=>{const p=payload(),txt=`The Ways of Life v0.5 feedback\nFeeling: ${p.feeling}\nMost interesting: ${p.highlight}\nWhat would improve it: ${p.note||'(not specified)'}\nPhase: ${p.phase}\nWorld: ${p.world_code||'not completed'}`;try{await navigator.clipboard.writeText(txt);status.textContent='Feedback copied. You can paste and send it wherever you like.'}catch{const ta=$('fb-note');ta.focus();ta.select();status.textContent='Clipboard blocked. Select your note and copy it manually.'}});
+ form.addEventListener('submit',async e=>{
+  e.preventDefault();if(loading||sent)return;const p=payload();
+  if(!p.consent){status.textContent='Please confirm you want to send this feedback.';return}
+  if(!p.feeling||!p.highlight){status.textContent='Choose how it felt and one part of the experience.';return}
+  if(!token){status.textContent='No connection yet. Try again, or copy your feedback.';await refreshToken();return}
+  loading=true;$('fb-send').disabled=true;status.textContent='Sending your thoughts…';
+  try{const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});const data=await res.json();if(res.status!==201||data.saved!==true)throw new Error(data.error||'unavailable');sent=true;form.hidden=true;$('fb-done').hidden=false;status.textContent='Saved in the private feedback inbox. Thank you for helping shape this world.'}
+  catch{status.textContent='Could not confirm delivery. Nothing is marked as sent. You can retry or copy your feedback.';await refreshToken()}
+  finally{loading=false;$('fb-send').disabled=false}
+ });
+})();
+
+</script>
+</body>
+</html>
