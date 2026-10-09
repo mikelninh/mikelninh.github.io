@@ -1,4 +1,4 @@
-name: Publish OUT OF PANEL 0.6
+name: Publish OUT OF PANEL 0.7
 
 on:
   push:
@@ -53,6 +53,23 @@ jobs:
         if: failure()
         run: |
           cat beyond-cv/out-of-panel/source/qa06-artifacts/QA06.json || true
+      - name: Capture 0.7 real browser moments and mobile performance
+        env:
+          PLAYWRIGHT_MODULE: /tmp/oop06-tests/node_modules/playwright/index.mjs
+        run: node beyond-cv/out-of-panel/source/qa07.mjs
+      - name: Convert authentic walkthrough to a small MP4
+        run: |
+          if command -v ffmpeg >/dev/null 2>&1; then
+            ffmpeg -hide_banner -loglevel error -y -i beyond-cv/out-of-panel/source/qa07-artifacts/real-teaser.webm -t 10 -c:v libx264 -preset veryfast -crf 27 -pix_fmt yuv420p -movflags +faststart beyond-cv/out-of-panel/source/qa07-artifacts/real-teaser.mp4
+          else
+            echo "ffmpeg unavailable: retain original WebM only"
+          fi
+      - name: Verify private API rejects anonymous dashboard reads
+        run: |
+          set -euo pipefail
+          code="$(curl -L -sS --max-time 20 -o /tmp/oop07admin -w '%{http_code}' -H 'Origin: https://mikelninh.github.io' https://htffcvdopavknnylbowl.supabase.co/functions/v1/out-of-panel-admin)"
+          test "$code" = "401"
+          echo "Anonymous admin read blocked by backend (401)."
       - name: Save browser artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -61,6 +78,7 @@ jobs:
           path: |
             beyond-cv/out-of-panel/source/qa05-artifacts/
             beyond-cv/out-of-panel/source/qa06-artifacts/
+            beyond-cv/out-of-panel/source/qa07-artifacts/
           retention-days: 14
       - name: Check mobile share control in the gate
         run: |
@@ -71,11 +89,19 @@ jobs:
         run: |
           set -euo pipefail
           cp beyond-cv/out-of-panel/source/qa06-artifacts/QA06.json beyond-cv/out-of-panel/QA-results-06.json
+          cp beyond-cv/out-of-panel/source/qa07-artifacts/QA07.json beyond-cv/out-of-panel/QA-results-07.json
+          cp beyond-cv/out-of-panel/source/qa07-artifacts/performance.json beyond-cv/out-of-panel/mobile-emulation-results.json
+          cp beyond-cv/out-of-panel/source/qa07-artifacts/social-preview.png beyond-cv/out-of-panel/social-preview.png
+          cp beyond-cv/out-of-panel/source/qa07-artifacts/rooftop-real.png beyond-cv/out-of-panel/rooftop-real.png
+          cp beyond-cv/out-of-panel/source/qa07-artifacts/coin-real.png beyond-cv/out-of-panel/coin-real.png
+          cp beyond-cv/out-of-panel/source/qa07-artifacts/real-teaser.webm beyond-cv/out-of-panel/real-teaser.webm
+          if test -f beyond-cv/out-of-panel/source/qa07-artifacts/real-teaser.mp4; then cp beyond-cv/out-of-panel/source/qa07-artifacts/real-teaser.mp4 beyond-cv/out-of-panel/real-teaser.mp4; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+mikelninh@users.noreply.github.com'
-          git add -- beyond-cv/out-of-panel/index.html beyond-cv/out-of-panel/QA-results-06.json
+          git add -- beyond-cv/out-of-panel/index.html beyond-cv/out-of-panel/QA-results-06.json beyond-cv/out-of-panel/QA-results-07.json beyond-cv/out-of-panel/mobile-emulation-results.json beyond-cv/out-of-panel/social-preview.png beyond-cv/out-of-panel/rooftop-real.png beyond-cv/out-of-panel/coin-real.png beyond-cv/out-of-panel/real-teaser.webm
+          if test -f beyond-cv/out-of-panel/real-teaser.mp4; then git add -- beyond-cv/out-of-panel/real-teaser.mp4; fi
           if ! git diff --cached --quiet; then
-            git commit -m 'Release OUT OF PANEL 0.6: real feedback and magical invitations'
+            git commit -m 'Release OUT OF PANEL 0.7: real screenshots, mobile QA and private listening room'
             git push origin HEAD:main
           fi
 
