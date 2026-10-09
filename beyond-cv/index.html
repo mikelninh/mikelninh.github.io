@@ -34,6 +34,7 @@
 </style>
 <link rel="stylesheet" href="./cinematic.css">
 <link rel="stylesheet" href="./garden.css">
+<link rel="stylesheet" href="./mia-project.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -92,6 +93,19 @@
 <a href="./out-of-panel/" aria-label="Open the interactive coin and story"><img src="./out-of-panel/preview.png" width="1200" height="675" loading="lazy" alt="Preview of the playable HANA world: a dimensional coin that reveals a miniature rooftop story"></a>
 <div><div class="kicker">ONE OBJECT, ANOTHER STORY</div><h3>What if a coin remembered where it belonged?</h3><p>Turn it in your hands. Look through to a rooftop at sunset. Return it to the story. A little experiment in making fiction feel touchable.</p><a class="text-link" href="./out-of-panel/">Play Out of Panel ↗</a></div>
 </aside>
+<aside class="mia-project" aria-labelledby="mia-project-title">
+<a class="mia-project-art" href="./mia-little-lights/" aria-label="Open Mia and the Little Lights, a playable moonlit rooftop game">
+<img src="./mia-little-lights/preview.svg" width="1200" height="675" loading="lazy" decoding="async" alt="Mia, a small black cat, beneath the crescent moon on a glowing Saigon rooftop with seven little lights">
+<span class="mia-project-art-caption"><span>AN INTERACTIVE POSTCARD</span><span class="mia-start">EXPLORE THE ROOFTOP ↗</span></span>
+</a>
+<div class="mia-project-copy">
+<div class="kicker">HYPERSPACE / TINY WORLDS · 001 · PLAYABLE</div>
+<h3 id="mia-project-title">Meet Mia.<br><em>She has a little mission.</em></h3>
+<p>Seven wandering lights, one determined cat, and a quiet rooftop above Saigon. I made this tiny world because sometimes a small act of kindness deserves its own game.</p>
+<div class="mia-project-stats"><span>1 minute</span><span>7 little lights</span><span>Touch + keyboard</span></div>
+<div class="mia-project-buttons"><button type="button" id="mia-play-button" aria-haspopup="dialog" aria-controls="mia-dialog">Play here ↗</button><a href="./mia-little-lights/">Open full game ↗</a></div>
+<p class="mia-project-note">A working short-form game, made with original Canvas artwork and sound. No account, no wallet, no download.</p>
+</div></aside>
 <aside class="ways-note" aria-labelledby="ways-note-title">
 <a class="ways-art" href="./ways-of-life/" aria-label="Play The Ways of Life work-in-progress field test">
 <svg viewBox="0 0 620 410" role="img" aria-label="An editorial illustration of a little valley, river, trees and village homes" xmlns="http://www.w3.org/2000/svg">
@@ -197,6 +211,11 @@ Then draft a 120–180-word introduction in my voice, three conversation starter
 <footer class="footer"><span>Michael Ninh · An ongoing introduction · October 2026</span><div><a href="https://mikelninh.github.io/">Portfolio ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/beyond-cv" target="_blank" rel="noopener noreferrer">Source ↗</a><a href="#main">Back to the beginning ↑</a></div></footer>
 <details class="privacy"><summary>A small privacy note</summary><p>This page adds no analytics, advertising cookies, or third-party fonts. The reflection tool keeps your answers only in this open page. It does not send them to a server or AI service, and does not save them after a reload. Copying, downloading, or posting is your choice. External links take you to services with their own privacy policies. GitHub Pages hosts the website and may process technical request data under its own policies. Please only share details and photos you have permission to publish.</p></details>
 <noscript><p class="privacy">JavaScript is off. All the reading, questions, and links still work. You can select and copy the free prompt above; the interactive reflection tool needs JavaScript.</p></noscript>
+<dialog class="mia-dialog" id="mia-dialog" aria-label="Play Mia and the Little Lights">
+<div class="mia-dialog-bar"><strong>HYPERSPACE · TINY WORLDS / 001</strong><button type="button" id="mia-close-button" aria-label="Close game and return to Beyond the CV">Close ✕</button></div>
+<iframe id="mia-frame" title="Mia and the Little Lights playable rooftop game" loading="lazy" allow="autoplay" src="about:blank"></iframe>
+<div class="mia-dialog-footer"><span>A small adventure. Stay as long as you like.</span><a href="./mia-little-lights/" target="_blank" rel="noopener">Open in a new tab ↗</a></div>
+</dialog>
 </main>
 <dialog id="builder" aria-labelledby="builder-title" aria-describedby="builder-description"><div class="dialog-inner"><div class="dialog-head"><h2 id="builder-title">Your beyond.</h2><button class="close" id="close-builder" type="button" aria-label="Close reflection tool">×</button></div><p class="dialog-description" id="builder-description">A few honest lines, not a personal-branding assignment. Skip anything. Nothing is sent anywhere; a reload clears this draft.</p><div id="builder-input"><div class="field"><label for="your-name">What should we call you? <span style="font-weight:400">(optional)</span></label><input id="your-name" type="text" maxlength="80" autocomplete="off" placeholder="A first name is plenty"></div><div class="field"><label for="answer-0">01 / What do you happily lose yourself in?</label><small>A small ritual, a curiosity, something you do just because.</small><textarea id="answer-0" maxlength="1200" placeholder="I lose track of time when…"></textarea></div><div class="field"><label for="answer-1">02 / What are you still learning?</label><small>Being a beginner absolutely counts.</small><textarea id="answer-1" maxlength="1200" placeholder="At the moment I’m learning…"></textarea></div><div class="field"><label for="answer-2">03 / What do you care about in ordinary life?</label><small>Something that matters even when nobody is watching.</small><textarea id="answer-2" maxlength="1200" placeholder="I try to make room for…"></textarea></div><div class="field"><label for="answer-3">04 / What kind of future are you making room for?</label><small>A direction, not a five-year performance target.</small><textarea id="answer-3" maxlength="1200" placeholder="I hope my life has more…"></textarea></div><div class="field"><label for="answer-4">05 / What would you love someone to ask you?</label><small>Leave a door open for a real conversation.</small><textarea id="answer-4" maxlength="1200" placeholder="Ask me about…"></textarea></div><p id="builder-error" class="error" role="alert" hidden>Add a thought to at least one question. The rest can stay blank.</p><div class="dialog-actions"><button id="make-intro" type="button" class="button">Make my introduction ↗</button></div></div><div id="builder-output" hidden><p class="dialog-description">Your own words, arranged — not scored, rewritten, or AI-generated. Review and edit before sharing.</p><label class="micro" for="intro-output">Your introduction</label><textarea id="intro-output" class="result" maxlength="8500"></textarea><div class="dialog-actions"><button id="copy-intro" type="button" class="button">Copy introduction</button><button id="download-intro" type="button" class="button outline">Download .txt</button><button id="edit-answers" type="button" class="plain-button">Back to my answers</button></div><p class="dialog-description" style="margin-top:20px">Add #BeyondTheCV to invite someone else in. Only share what feels right to you.</p></div></div></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
@@ -235,6 +254,14 @@ if(SETTINGS.photos.length){for(const photo of SETTINGS.photos){if(!photo.src||!p
 let pending=false;
 function updateProgress(){const height=document.documentElement.scrollHeight-innerHeight;byId('progress').style.transform='scaleX('+(height>0?Math.min(1,Math.max(0,scrollY/height)):0)+')';pending=false;}
 window.addEventListener('scroll',()=>{if(!pending){pending=true;requestAnimationFrame(updateProgress);}},{passive:true});window.addEventListener('resize',updateProgress);updateProgress();
+</script>
+<script>
+(()=>{const btn=document.getElementById('mia-play-button'),modal=document.getElementById('mia-dialog'),frame=document.getElementById('mia-frame'),close=document.getElementById('mia-close-button');if(!btn||!modal||!frame||!close)return;
+btn.addEventListener('click',()=>{if(typeof modal.showModal!=='function'){location.href='./mia-little-lights/';return;}frame.src='./mia-little-lights/?embed=1';modal.showModal();document.body.classList.add('mia-playing')});
+close.addEventListener('click',()=>modal.close());
+modal.addEventListener('click',event=>{if(event.target===modal)modal.close()});
+modal.addEventListener('close',()=>{document.body.classList.remove('mia-playing');frame.src='about:blank';btn.focus({preventScroll:true})});
+})();
 </script>
 </body>
 </html>
