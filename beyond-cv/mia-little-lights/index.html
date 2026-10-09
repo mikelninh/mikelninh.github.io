@@ -45,6 +45,9 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:20px;ma
 @media(max-width:800px){.sky-notes{right:10px;top:39px;padding:6px 8px;gap:6px}.sky-notes-label{font-size:8px}.sky-notes-icons{gap:3px;font-size:16px}.sky-notes-score{font-size:9px}.sky-hint{right:10px;bottom:75px;font-size:9px}}
 @media(max-width:620px){.sky-notes{top:52px;right:9px;max-width:133px;gap:5px;flex-wrap:wrap}.sky-notes-label{font-size:7px;flex-basis:100%}.sky-hint{top:111px;bottom:auto;right:8px;max-width:139px;line-height:1.5}.flight-report{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.sky-notes-icons i,.sky-hint{transition:none!important}}
+/* Preserve shipped SkyDance mobile readability improvements. */
+.toast{top:auto;bottom:18px;max-width:min(64%,420px);padding:9px 15px;font-size:clamp(12px,1.25vw,16px);line-height:1.35}
+@media(max-width:620px){.toast{top:auto;bottom:81px;max-width:calc(100% - 28px);padding:8px 12px;font-size:12px}.glide-status{display:none!important}}
 </style>
 </head>
 <body>
@@ -81,7 +84,7 @@ const H=540,WORLD=2040,GRAVITY=1250,TAU=Math.PI*2;
 const GUST={start:1320,end:1500,bottom:470,top:135};
 const CHIME={x:472,y:256}; // Optional, physical world interaction: Mia rings it by leaping into the bells.
 // Optional aerial melody, not a mandatory key to finishing the game. No timers, no punishments.
-const SKY_RINGS=[{x:1417,y:145,f:587.33,lit:false},{x:1533,y:60,f:739.99,lit:false},{x:1664,y:131,f:987.77,lit:false}];
+const SKY_RINGS=[{x:1417,y:185,f:587.33,lit:false},{x:1533,y:155,f:739.99,lit:false},{x:1664,y:227,f:987.77,lit:false}];
 let ringCount=0,bestRings=0,airKickCount=0,flightPulse=0,lastSoftLanding=-10,ringMoments=0;
 // Pawprints: no compulsory new HUD. The game communicates feel through motion, sound and environment.
 let pawprints=[], landingRipples=[], furMotes=[], pawSpringCount=0, landingCount=0, chimeCount=0, chimeTimer=0, chimeFlash=0;
@@ -99,6 +102,7 @@ const platforms=[
  {x:-120,w:730,y:433,id:'home'},
  {x:260,w:90,y:385,id:'stool'},
  {x:418,w:96,y:333,id:'pot'},
+ {x:606,w:42,y:433,id:'vineThreshold',unlock:true},
  {x:645,w:74,y:430,id:'vine1',unlock:true},
  {x:727,w:78,y:416,id:'vine2',unlock:true,spring:true},
  {x:812,w:466,y:414,id:'middle'},
@@ -155,7 +159,7 @@ function hitPlatform(oldY){
  for(const plat of platforms){
   if(plat.unlock&&growth<.77)continue;
   const near=p.x+13>plat.x&&p.x-13<plat.x+plat.w;
-  if(!near||oldY>plat.y+5||p.y<plat.y-4)continue;
+  if(!near||oldY>plat.y+(p.wasGround?23:5)||p.y<plat.y-4)continue;
   const impact=Math.abs(p.vy),wasAir=!p.wasGround;
   p.y=plat.y;p.vy=0;p.grounded=true;coyote=.12;p.airKickUsed=false;
   if(wasAir){
