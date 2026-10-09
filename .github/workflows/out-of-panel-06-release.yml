@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: out-of-panel-06-release
@@ -77,3 +78,12 @@ jobs:
             git commit -m 'Release OUT OF PANEL 0.6: real feedback and magical invitations'
             git push origin HEAD:main
           fi
+
+      - name: Dispatch Github Pages deployment after gated release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          gh workflow run pages.yml --ref main
+          echo "Pages deployment dispatched for current main."
