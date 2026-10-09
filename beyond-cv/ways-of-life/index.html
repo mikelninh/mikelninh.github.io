@@ -143,6 +143,10 @@
 .experience.is-making #maker-open{background:#f7ebda;color:#214b3e;border-color:#e7d4b4}
 @media(max-width:540px){.experience.is-making .maker-dock{top:146px;left:13px;right:13px;max-width:none}.experience.is-making .maker-tools{width:100%;max-width:none}.experience.is-making #maker-open{width:100%;justify-content:space-between}.experience.is-making #maker-place{flex:1}}
 
+
+/* Creation mode: hidden narrative cannot intercept world-touch input. */
+.experience.is-making .narrative,.experience.is-making .narrative *{pointer-events:none!important}
+.experience.is-making #landscape{touch-action:none;cursor:crosshair}
 </style>
 
 </head>
@@ -753,7 +757,7 @@ function setupMaker(){
  $('maker-open').addEventListener('click',()=>{S.markOpen=!S.markOpen;if(!S.markOpen)S.markMode=null;updateMakerUI()});
  document.querySelectorAll('[data-make]').forEach(el=>el.addEventListener('click',()=>{
   S.markMode=S.markMode===el.dataset.make?null:el.dataset.make;
-  updateMakerUI();if(S.markMode)toast('Tap the ground to leave a '+MARK_KINDS[S.markMode].title.toLowerCase()+'.');
+  updateMakerUI();if(S.markMode)toast('Tap the ground to leave '+MARK_KINDS[S.markMode].title.toLowerCase()+'.');
  }));
  $('maker-place').addEventListener('click',()=>{if(!S.markMode)return;const [hx,hy]=settlementSite();const i=S.marks.length;placeWorldMark(hx+115+(i%3)*37,hy+115-Math.floor(i/3)*22)});
  $('maker-undo').addEventListener('click',()=>{S.marks.pop();updateMakerAndPersist();toast('An earlier idea is possible again.')});
