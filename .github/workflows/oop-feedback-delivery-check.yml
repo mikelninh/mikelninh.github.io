@@ -1,0 +1,36 @@
+name: Verify OUT OF PANEL feedback delivery
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/oop-feedback-delivery-check.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live-delivery-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Check private owner route and real feedback submission
+        shell: bash
+        run: |
+          set -euo pipefail
+          API="https://htffcvdopavknnylbowl.supabase.co/functions/v1"
+          ORIGIN="https://mikelninh.github.io"
+          code="$(curl -sS --max-time 25 -o /tmp/admin.json -w '%{http_code}' -H "Origin: $ORIGIN" "$API/out-of-panel-admin")"
+          echo "Anonymous dashboard response: $code"
+          test "$code" = "401"
+          code="$(curl -sS --max-time 25 -o /tmp/feedback.json -w '%{http_code}' -X POST -H "Origin: $ORIGIN" -H "Content-Type: application/json" -d '{"kind":"feedback","feeling":"Curious","moment":"coin","note":"AUTOMATED_OOP07_DELIVERY_CHECK_20261009 — please remove after QA."}' "$API/out-of-panel-v06")"
+          echo "Real feedback delivery response: $code"
+          cat /tmp/feedback.json
+          echo
+          test "$code" = "201"
+          python3 - <<'PY'
+          import json
+          d=json.load(open('/tmp/feedback.json'))
+          assert d.get('ok') is True and d.get('saved') is True
+          print('LIVE FEEDBACK ACKNOWLEDGMENT PASS')
+          PY
