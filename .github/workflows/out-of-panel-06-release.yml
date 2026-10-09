@@ -61,6 +61,10 @@ jobs:
             beyond-cv/out-of-panel/source/qa05-artifacts/
             beyond-cv/out-of-panel/source/qa06-artifacts/
           retention-days: 14
+      - name: Check mobile share control in the gate
+        run: |
+          grep -q "'#share-footer'" beyond-cv/out-of-panel/source/qa06.mjs
+          grep -q '44px touch targets' beyond-cv/out-of-panel/source/release06.css
       - name: Commit gated public release
         shell: bash
         run: |
