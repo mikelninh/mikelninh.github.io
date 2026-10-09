@@ -1,0 +1,68 @@
+{
+  "release": "0.7.0",
+  "checks": [
+    {
+      "name": "Opening gives an interactive hint",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "Spin hints at the world",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "Portal rendering is actual Three.js",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "Film reaches and holds the real Three.js rooftop",
+      "pass": true,
+      "details": "{\"status\":\"ready\",\"reason\":\"\",\"entered\":true,\"progress\":1,\"selected\":\"mia\",\"seen\":[\"mia\"],\"renders\":25,\"orbit\":{\"x\":0,\"y\":0},\"camera\":[4.1,2.9,5.8],\"threeRevision\":\"180\",\"drawCalls\":114}"
+    },
+    {
+      "name": "Actual browser interaction video captured",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "Mobile viewport has no horizontal overflow",
+      "pass": true,
+      "details": {
+        "domContentLoadedMs": 357,
+        "loadMs": 358,
+        "width": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "name": "Mobile coin is reachable above normal scrolling area",
+      "pass": true,
+      "details": {
+        "x": 16,
+        "y": 127,
+        "width": 358,
+        "height": 506.390625
+      }
+    },
+    {
+      "name": "Mobile spin reveals next action",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "Rooftop remains interactive on mobile",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "Owner dashboard never shows feedback without a login",
+      "pass": true,
+      "details": ""
+    }
+  ],
+  "passed": 10,
+  "failed": 0,
+  "errors": []
+}
