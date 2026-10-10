@@ -62,6 +62,26 @@ def run() -> None:
                 )
                 check(all(i["width"] > 500 for i in images), f"{width}px: degraded card preview")
 
+                # The optional garden secret must actually feel interactive,
+                # remain keyboard-operable, and never block the original page.
+                seed = page.locator("#light-seed")
+                secret = page.locator("#light-note")
+                check(seed.is_visible(), f"{width}px: light seed not visible")
+                check(secret.is_hidden(), f"{width}px: little secret visible before opt-in")
+                seed.click()
+                check(secret.is_visible(), f"{width}px: little secret didn't open")
+                check(seed.get_attribute("aria-expanded") == "true", f"{width}px: light accessibility state wrong")
+                check("Oh, you found it." in secret.inner_text(), f"{width}px: secret copy missing")
+                if width in (390, 1440):
+                    page.evaluate("window.scrollTo({top:0,behavior:'instant'})")
+                    page.screenshot(path=str(ARTIFACTS / f"little-light-awake-{width}.png"))
+                page.keyboard.press("Escape")
+                check(secret.is_hidden(), f"{width}px: Escape didn't close the secret")
+                check(seed.get_attribute("aria-expanded") == "false", f"{width}px: light state not reset")
+                seed.click()
+                page.locator("#light-close").click()
+                check(secret.is_hidden(), f"{width}px: close button didn't work")
+
                 # Native details must work without custom code.
                 note = page.locator("#note-savasana details")
                 check(not note.get_attribute("open"), f"{width}px: note unexpectedly expanded")
