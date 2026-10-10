@@ -1,0 +1,107 @@
+/* ONE SMALL LIGHT · A discoverable, not compulsory, bit of wonder.
+   No tracking, sound, network dependency, or motion requirement. */
+.hero{--little-light-x:76%;--little-light-y:37%}
+.hero .light-seed{
+  position:absolute!important;z-index:8;right:14%;top:29%;
+  width:110px;height:110px;display:flex;align-items:center;justify-content:center;
+  padding:0;appearance:none;border:0;border-radius:50%;background:transparent;
+  color:#fff1d0;cursor:pointer;isolation:isolate;
+  -webkit-tap-highlight-color:transparent;
+}
+.light-seed:before,.light-seed:after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.light-seed:before{
+  width:66px;height:66px;border:1px solid #ffe6bd6b;
+  box-shadow:0 0 23px #fbd28d39,inset 0 0 22px #ffdfa625;
+  animation:little-ring 4.3s ease-in-out infinite alternate;
+}
+.light-seed:after{width:30px;height:30px;background:#ffdda281;filter:blur(14px);opacity:.9}
+.light-seed-core{
+  position:relative;display:block;z-index:1;width:15px;height:15px;border-radius:50%;
+  background:#fff8d8;box-shadow:0 0 7px 2px #fff3ba,0 0 24px 10px #efc27ba8,0 0 70px 25px #fac9865a;
+  transform-origin:center;animation:little-heartbeat 3.4s ease-in-out infinite;
+}
+.light-seed-label{
+  position:absolute;top:calc(100% - 12px);left:50%;width:175px;transform:translateX(-50%);
+  font:500 11px/1.5 ui-sans-serif,system-ui,sans-serif;letter-spacing:.035em;
+  color:#fff0d5;text-shadow:0 2px 12px #172b26;pointer-events:none;
+}
+.light-seed:hover .light-seed-core,.light-seed:focus-visible .light-seed-core{box-shadow:0 0 8px 3px #fff8d2,0 0 37px 15px #ffdb9fd6,0 0 90px 35px #ffd08299}
+.light-seed:focus-visible{outline:2px solid #ffefca;outline-offset:2px}
+.light-sky{
+  position:absolute!important;z-index:1!important;inset:0;pointer-events:none;overflow:hidden;
+}
+.light-sky:before{
+  content:"";position:absolute;inset:-10%;opacity:0;
+  background:radial-gradient(ellipse 37% 50% at var(--little-light-x) var(--little-light-y),#ffe0a06e,transparent 80%);
+  transition:opacity 1.2s cubic-bezier(.22,1,.36,1);
+}
+.light-sky svg{position:absolute;width:51%;height:81%;right:-2%;top:16%;overflow:visible;filter:drop-shadow(0 0 10px #fbd39e66)}
+.light-sky .light-path{
+  fill:none;stroke:#f8d59a;stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:570;stroke-dashoffset:570;opacity:.8;
+  transition:stroke-dashoffset 2.6s cubic-bezier(.14,.8,.27,1);
+}
+.light-sky .light-flower,.light-sky .light-leaf{
+  transform-box:fill-box;transform-origin:center;transform:scale(.04);opacity:0;
+  transition:transform 1s cubic-bezier(.16,1.5,.36,1),opacity .9s ease;
+}
+.light-sky .light-leaf{transition-delay:.5s}
+.light-sky .light-flower{transition-delay:1.05s}
+.light-sky .light-fleck{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.2)}
+.hero.light-awake .light-sky:before{opacity:1}
+.hero.light-awake .light-sky .light-path{stroke-dashoffset:0}
+.hero.light-awake .light-sky .light-flower,.hero.light-awake .light-sky .light-leaf{transform:scale(1);opacity:1}
+.hero.light-awake .light-sky .light-fleck{animation:light-fleck-rise 4s ease-in-out infinite;opacity:.9}
+.hero.light-awake .light-sky .light-fleck:nth-of-type(2){animation-delay:.6s}
+.hero.light-awake .light-sky .light-fleck:nth-of-type(3){animation-delay:1.3s}
+.hero.light-awake .light-seed-core{animation:none;transform:scale(1.25)}
+.light-note{
+  position:absolute!important;z-index:7!important;
+  right:5%;bottom:9%;width:min(350px,39%);
+  border:1px solid #fff0d8b3;border-radius:3px;
+  background:linear-gradient(145deg,#fff7e8f2,#f3e7cbea);
+  box-shadow:0 15px 65px #0a201fb5,0 0 60px #f7d29f25;
+  color:#30483a;padding:25px 26px 26px;backdrop-filter:blur(10px);
+  transform-origin:bottom center;animation:little-note-appear .65s cubic-bezier(.22,1,.36,1) both;
+}
+.light-note[hidden]{display:none!important}
+.light-note-kicker{
+  margin:0 0 11px!important;font:700 10px/1.5 ui-sans-serif,system-ui,sans-serif!important;
+  letter-spacing:.17em;text-transform:uppercase;color:#a7795a!important;text-shadow:none!important
+}
+.light-note-title{
+  display:block;font:italic normal clamp(28px,3vw,39px)/1.04 Georgia,serif;
+  color:#345443;margin:0 0 13px;letter-spacing:-.045em
+}
+.light-note p:not(.light-note-kicker){
+  margin:0!important;color:#536a58!important;font:14px/1.65 ui-sans-serif,system-ui,sans-serif!important;
+  text-shadow:none!important
+}
+.light-note-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px;flex-wrap:wrap}
+.light-note-actions a{color:#416c4b!important;font-size:12px;font-weight:650;text-decoration:none;border-bottom:1px solid #8ea897;padding-bottom:3px}
+.light-note-actions button{background:transparent;color:#786b58;border:0;padding:8px;font-size:12px;text-decoration:underline;text-underline-offset:3px}
+.light-note a:focus-visible,.light-note button:focus-visible{outline:2px solid #6b8c6a;outline-offset:3px}
+@keyframes little-ring{to{transform:scale(1.28);opacity:.42}}
+@keyframes little-heartbeat{50%{transform:scale(1.18);filter:brightness(1.1)}}
+@keyframes little-note-appear{from{opacity:0;transform:translateY(15px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes light-fleck-rise{0%,100%{opacity:0;transform:translate(0,12px) scale(.2)}35%{opacity:1}65%{opacity:.8}80%{transform:translate(-17px,-30px) scale(1)}}
+@media(max-width:760px){
+  .hero .light-seed{width:86px;height:86px;top:15%;right:9%}
+  .light-seed:before{width:52px;height:52px}
+  .light-seed-label{font-size:9px;top:calc(100% - 6px);width:140px}
+  .light-sky svg{width:78%;height:60%;right:-12%;top:13%}
+  .light-note{right:4%;left:4%;bottom:auto;top:32%;width:auto;padding:22px 24px}
+}
+@media(max-width:420px){
+  .hero .light-seed{top:15%;right:8%}
+  .light-note{top:27%;padding:20px 22px}
+  .light-note-title{font-size:29px}
+  .light-note p:not(.light-note-kicker){font-size:13px!important}
+  .light-note-actions{margin-top:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .light-seed:before,.light-seed-core,.light-note,.hero.light-awake .light-sky .light-fleck{animation:none!important}
+  .light-sky:before,.light-sky .light-path,.light-sky .light-flower,.light-sky .light-leaf{transition:none!important}
+  .hero.light-awake .light-sky .light-fleck{opacity:.7;transform:scale(1)}
+}
+@media print{.light-seed,.light-sky,.light-note{display:none!important}}
