@@ -36,6 +36,7 @@
 <link rel="stylesheet" href="./garden.css">
 <link rel="stylesheet" href="./mia-project.css">
 <link rel="stylesheet" href="./daylight.css">
+<link rel="stylesheet" href="./little-light.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -60,6 +61,46 @@
 <g fill="#1a462f" opacity=".8"><path d="M50 850L89 709L111 850ZM169 850L194 755L205 850ZM1198 850L1249 701L1268 850ZM1311 850L1344 742L1358 850Z"/></g>
 <g opacity=".9"><circle cx="1092" cy="547" r="3" fill="#ffe3aa"/><circle cx="1023" cy="622" r="2.2" fill="#ffe3aa"/><circle cx="937" cy="688" r="1.8" fill="#ffe3aa"/></g>
 </svg><span class="garden-mote mote-a"></span><span class="garden-mote mote-b"></span><span class="garden-mote mote-c"></span></div>
+<div class="light-sky" aria-hidden="true">
+<svg viewBox="0 0 620 600" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="light-bloom-glow"><stop stop-color="#fff4c0" stop-opacity=".92"/><stop offset=".36" stop-color="#fbd593" stop-opacity=".54"/><stop offset="1" stop-color="#ebc183" stop-opacity="0"/></radialGradient>
+    <linearGradient id="light-stem-ink" x1="0" x2="1" y1="1" y2="0"><stop stop-color="#95bc91"/><stop offset=".58" stop-color="#fbd79b"/><stop offset="1" stop-color="#fff4d2"/></linearGradient>
+  </defs>
+  <ellipse class="light-flower" cx="380" cy="210" rx="115" ry="115" fill="url(#light-bloom-glow)"/>
+  <path class="light-path" stroke="url(#light-stem-ink)" d="M510 576 C500 487 435 463 432 391 S333 315 373 223"/>
+  <g class="light-leaf" fill="#b3d6a4" opacity=".95">
+    <path d="M451 426 Q389 372 358 415 Q392 453 451 426Z"/>
+    <path d="M429 373 Q474 314 524 342 Q505 394 429 373Z"/>
+    <path d="M391 311 Q342 285 310 319 Q349 344 391 311Z"/>
+    <path d="M372 264 Q400 224 452 236 Q426 273 372 264Z"/>
+  </g>
+  <g class="light-flower">
+    <g fill="#fff1cf" stroke="#f1c88f" stroke-opacity=".45" stroke-width="2">
+      <ellipse cx="373" cy="190" rx="18" ry="42" transform="rotate(0 373 216)"/>
+      <ellipse cx="373" cy="190" rx="18" ry="42" transform="rotate(60 373 216)"/>
+      <ellipse cx="373" cy="190" rx="18" ry="42" transform="rotate(120 373 216)"/>
+      <ellipse cx="373" cy="190" rx="18" ry="42" transform="rotate(180 373 216)"/>
+      <ellipse cx="373" cy="190" rx="18" ry="42" transform="rotate(240 373 216)"/>
+      <ellipse cx="373" cy="190" rx="18" ry="42" transform="rotate(300 373 216)"/>
+    </g>
+    <circle cx="373" cy="216" r="18" fill="#f1b866"/>
+    <circle cx="373" cy="216" r="8" fill="#fff6d4"/>
+  </g>
+  <circle class="light-fleck" cx="292" cy="150" r="4.5" fill="#fff8d1"/>
+  <circle class="light-fleck" cx="500" cy="180" r="3" fill="#fff8d1"/>
+  <circle class="light-fleck" cx="305" cy="375" r="4" fill="#fff8d1"/>
+</svg>
+</div>
+<button class="light-seed" id="light-seed" type="button" aria-label="Find a little secret in the garden" aria-expanded="false" aria-controls="light-note">
+  <span class="light-seed-core" aria-hidden="true"></span><span class="light-seed-label" aria-hidden="true">Psst… a little light</span>
+</button>
+<div class="light-note" id="light-note" hidden aria-live="polite">
+  <p class="light-note-kicker">A note for the curious</p>
+  <strong class="light-note-title">Oh, you found it.</strong>
+  <p>Sometimes I make things simply because they might give someone a little moment of joy. I'm glad you were curious.</p>
+  <div class="light-note-actions"><a href="#human">Come on in ↘</a><button type="button" id="light-close" aria-label="Close the little secret">Keep wandering ×</button></div>
+</div>
 <div class="eyebrow"><span class="dot"></span>Beyond the CV · A little more of the human</div>
 <h1>A life,<br>still <em>becoming.</em></h1>
 <p class="lede">I’m Michael. I build things, make up little worlds, ask far too many questions, and love a dinner that lasts until nobody notices the time. This is the part of me a CV can’t quite hold. Make yourself at home.</p>
@@ -264,5 +305,6 @@ modal.addEventListener('click',event=>{if(event.target===modal)modal.close()});
 modal.addEventListener('close',()=>{document.body.classList.remove('mia-playing');frame.src='about:blank';btn.focus({preventScroll:true})});
 })();
 </script>
+<script src="./little-light.js" defer></script>
 </body>
 </html>
