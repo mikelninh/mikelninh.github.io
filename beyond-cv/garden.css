@@ -495,3 +495,61 @@ dialog::backdrop{background:#020b08d9}
   .garden-extra-experiences>summary,
   .garden-extra-human>summary{transition:none}
 }
+
+
+/* PURNAM Objects gallery — one curated project, not a new wall of cards. */
+.crea-case-gallery{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin:12px 0 21px;
+}
+.crea-case-gallery a{
+  position:relative;
+  display:block;
+  min-width:0;
+  aspect-ratio:.91;
+  background:#314334;
+  overflow:hidden;
+  border:1px solid #9db28c4f;
+  color:#f0e8db;
+}
+.crea-case-gallery a:hover,.crea-case-gallery a:focus-visible{border-color:#d8b990}
+.crea-case-gallery img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:center;
+  transition:transform .5s cubic-bezier(.22,1,.36,1);
+}
+.crea-case-gallery a:hover img{transform:scale(1.07)}
+.crea-case-gallery a::after{
+  content:"";
+  position:absolute;
+  inset:45% 0 0;
+  background:linear-gradient(0deg,#0c1a12bb,transparent);
+  pointer-events:none;
+}
+.crea-case-gallery span{
+  position:absolute;
+  bottom:9px;
+  left:9px;
+  right:5px;
+  z-index:2;
+  font:700 9px/1.5 ui-monospace,monospace;
+  letter-spacing:.045em;
+  color:#f8eee0;
+  text-shadow:0 1px 7px #101a14;
+}
+.crea-case-body h3{max-width:19ch}
+.crea-case-visual img{filter:saturate(.89)}
+@media(max-width:540px){
+  .crea-case-gallery{gap:6px}
+  .crea-case-gallery span{font-size:8px;left:6px;bottom:6px;letter-spacing:0}
+  .crea-case-gallery a{aspect-ratio:.9}
+}
+@media(prefers-reduced-motion:reduce){
+  .crea-case-gallery img{transition:none}
+  .crea-case-gallery a:hover img{transform:none}
+}
