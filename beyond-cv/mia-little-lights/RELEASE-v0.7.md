@@ -25,4 +25,4 @@ The stage still offers its sleeping lantern, flower bridge, moonwind, air kick, 
 
 **Asset note:** The game uses procedural Canvas art, synthesised sound and the existing in-project AI-assisted skyline. No external asset packs were introduced. No login or analytics are required.
 
-**Known portfolio visual limitation:** The Beyond the CV card currently uses an accurately labelled screenshot from the earlier SkyDance version; the game behind its play links is v0.7. A fresh v0.7 gameplay thumbnail remains a follow-up.
+**Portfolio visual verified:** Beyond the CV now uses `skyloop-preview.svg`, built from an actual v0.7 gameplay screenshot captured during the charged dive-and-release flight sequence.
