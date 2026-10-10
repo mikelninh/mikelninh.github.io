@@ -1,0 +1,180 @@
+/* BEYOND THE CV · DAYLIGHT GARDEN
+   An intentional warm editorial layer over the original twilight garden.
+   Cinematic moments belong to the worlds and final exhale, not every paragraph.
+   Keeps original art, accessibility and zero-tracker principles intact. */
+:root{
+  color-scheme:light;
+  --bg:#f7f2e8;--ink:#2d3e33;--muted:#667469;--line:#dcd4c3;
+  --accent:#996a50;--orange:#ba7f5f;--sun:#f4d69e;--paper:#fffbf2;--r:4px;
+}
+body{
+  background:radial-gradient(ellipse 65% 24% at 95% 16%,#f0dfca9c,transparent 78%),
+             radial-gradient(ellipse 75% 26% at 0 71%,#dce8d64f,transparent 80%),var(--bg);
+  color:var(--ink);line-height:1.75;
+}
+body:before{opacity:.1;mix-blend-mode:multiply}
+::selection{background:#efd4a8;color:#284034}
+a:hover{color:#93674d}
+a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible,input:focus-visible{outline-color:#a97654}
+h2 em{color:#aa7457}
+.kicker{color:#98694d;letter-spacing:.17em;font-weight:600}
+.wrap{width:min(1110px,calc(100% - 52px))}
+section{padding:clamp(68px,8vw,111px) 0}
+.section-head{margin-bottom:35px}
+.section-head h2{max-width:780px}
+.text-link{color:#865a42;border-color:#aa9078}
+.text-link:hover{color:#563c31;border-color:#563c31}
+.button{border-radius:4px;background:#405a47;border-color:#405a47;color:#fff9ed}
+.button:hover{background:#526d56;border-color:#526d56;color:#fff9ed;transform:translateY(-1px)}
+.button.outline{color:#405546;border-color:#afb9a9;background:transparent}
+.button.outline:hover{background:#e7ecdf;color:#293d30}
+.chip{background:#f9f4e9;border-color:#ded7c7;color:#536554}
+.topline span{background:#b88566}
+.nav-shell{background:#faf6eded;border-bottom:1px solid #ded6c8c9;backdrop-filter:blur(18px)}
+nav{min-height:71px}
+.brand{color:#2e4035}
+.brand span{color:#8b8577}
+.nav-links a{color:#516154}
+.nav-links .pill{color:#435c49;border:1px solid #c2b9a5;border-radius:999px}
+.nav-links .pill:hover{background:#e9dfcb;color:#324a3a}
+.hero{
+  min-height:min(730px,82svh);margin-top:18px;
+  background:#3d574d;border:1px solid #b0b4a389;
+  box-shadow:0 30px 76px #50483826;
+}
+.garden-visual{background:radial-gradient(ellipse at 72% 30%,#c7b99d,#506b5b 72%)}
+.garden-visual svg{filter:saturate(.90) sepia(.09) brightness(1.16)}
+.garden-visual:after{
+  background:linear-gradient(90deg,#13231bc9 0%,#26352974 47%,#4d453108 94%),
+             linear-gradient(0deg,#12251cdb 0%,#29291a18 61%,#00000008 100%);
+}
+.garden-visual:before{opacity:.11}
+.garden-film-tag,.hero .chips{display:none!important}
+.hero h1{font-size:clamp(57px,8.1vw,109px)}
+.hero h1 em{color:#f7d3a2}
+.hero .eyebrow{letter-spacing:.13em;color:#f5d8b3}
+.hero .lede{max-width:585px;color:#f8efe0;text-shadow:0 2px 14px #10251b99}
+.hero-bottom{margin-top:30px}
+.hero .button{background:#f4d6ad;border-color:#f4d6ad;color:#2a4031}
+.hero .button:hover{background:#fff0d2;border-color:#fff0d2;color:#243b2e}
+.hero .button.outline{background:#203a32a8;color:#fff5e5;border-color:#f3e2c78a}
+.hero .button.outline:hover{background:#335247;color:#fff}
+.hero .text-link{color:#fff2da}
+.intro-note{color:#687368;border-color:#dcd4c5;padding:38px 0;gap:35px}
+.intro-note strong{color:#354a3b;font:normal 23px/1.3 Georgia,serif}
+.garden-paths{border-color:#d7cebd;margin:21px 0 22px;padding:19px 0}
+.garden-paths a{color:#354a39;border-right-color:#ded5c6}
+.garden-paths .path-n{color:#a57a5c}
+.garden-paths strong{font-size:26px}
+.garden-paths small{font-size:12px;color:#788073}
+.garden-paths a:after{color:#9a704f;opacity:.68}
+.garden-paths a:hover{background:#f1e7d62e;color:#36553e}
+#human{padding-top:80px}
+.grid{gap:15px;background:transparent;border:0}
+.card,.card.dark,.card.sun,.card.red{
+  border:1px solid #e2d9ca;border-radius:3px;min-height:255px;padding:clamp(27px,3.3vw,38px);
+  background:#fffbf4;color:#2f4134;box-shadow:0 12px 32px #64543b0a;
+}
+.card.dark{background:#edf1e8}
+.card.sun{background:#f6e8cf}
+.card.red{background:#f4e6df}
+.card-number,.dark .card-number{color:#987659;letter-spacing:.08em}
+.card p,.card.dark p,.card.red p,.card.sun p{font-size:14px;color:#617165}
+.card.red p{color:#796b62}
+.card.sun p{color:#7a6d5c}
+.scribble{color:#b98a69;opacity:.5}
+.card:hover{background:#fffaf0;box-shadow:0 14px 35px #7563441a;transform:translateY(-2px)!important}
+.more{border-color:#dcd3c3}
+.more summary{color:#435445}
+.more-inner h3{color:#3d5542}
+#worlds{padding-top:85px}
+.grail-footnote{color:#738071}
+.story-thread{border-block-color:#ded5c5}
+.story-thread p{color:#677367}
+#thoughts{border-top:1px solid #ded4c4;padding-top:95px}
+.thought-intro p{color:#647267}
+.thought-grid{border:1px solid #e0d6c5;box-shadow:0 18px 50px #69563c0b}
+.seed-note{background:linear-gradient(158deg,#fffbf4,#f8f1e7);border-right-color:#e6dcca;padding:34px 30px 36px}
+.seed-note:nth-child(2){background:linear-gradient(158deg,#f6f0e4,#efe8d8)}
+.seed-note .seed-head{color:#9b755a;letter-spacing:.12em}
+.seed-note h3{color:#2e4436}
+.seed-note .seed-excerpt{color:#88684f}
+.seed-note .seed-details{border-top-color:#d6cabb}
+.seed-note .seed-details summary{color:#4c6a51}
+.seed-note .seed-details summary:after{color:#a67953}
+.seed-note .seed-details p{color:#5b6a5f;font-size:14px}
+.thought-note{color:#788273}
+.future{border-color:#d9d0c0}
+.future-intro p,.future-list details p{color:#677466}
+.margin-note{color:#a77f5e!important}
+.future-list details,.future-list details:last-child{border-color:#d8cfbf}
+.future-list summary{color:#344b3a}
+.future-list summary span{color:#ab8166}
+.future-list summary:after{color:#aa8669}
+.tomorrow-feature{background:#edf1e5;color:#314a37;border-color:#cad5c2;border-radius:3px}
+.tomorrow-feature .tomorrow-kicker{color:#7b895e}
+.tomorrow-feature h3{color:#2e4a35}
+.tomorrow-feature p{color:#5a705e}
+.tomorrow-feature .tomorrow-link{color:#3d6547}
+.vision-line{background:#eee9db;color:#354b3a;border-color:#d9d3c0}
+.vision-line p{color:#687668}
+.conversation{border-top-color:#dbd3c3}
+.conversation p{color:#657466}
+.question-card{background:#f0ddb9;color:#324a37;border-color:#d6c39f;box-shadow:13px 14px 0 #e6ddcb;border-radius:3px}
+.question-card .round-button{color:#324a37;border-color:#324a37}
+.question-card .round-button:hover{background:#324a37;color:#fffaf0}
+/* The self-reflection gift and the playable worlds stay as evening-lit rooms. */
+.gift .button.outline{color:#f9f1df;border-color:#b4baa6;background:#233b2f}
+.gift .button.outline:hover{background:#405c4a;color:#fff}
+.recruiter{border-color:#dcd2c1}
+.recruiter p{color:#647366}
+.footer{color:#7b8578;border-color:#dcd2c2}
+.footer a:hover{color:#805741}
+.privacy{color:#858c80}
+/* Ending at dusk: a deliberate contrast to the daylight reading experience. */
+.savasana{
+  border:1px solid #6c8070;border-radius:3px;
+  background:radial-gradient(ellipse at 50% 22%,#435e53 0%,#29463c 45%,#142922 90%);
+  margin-top:40px;
+}
+.savasana:before{background:radial-gradient(ellipse,#d7b17d30 0%,#77977d2b 38%,transparent 70%)}
+.savasana h2{color:#f0ead9}
+.savasana h2 em{color:#ecc99a}
+.savasana p{color:#d6e0d2}
+.savasana small{color:#bed0b9}
+.ways-note{border-block-color:#dcd2c2}
+.ways-copy h3{color:#2f4839}
+.ways-copy h3 em{color:#ab7956}
+.ways-copy p{color:#5b705f}
+.ways-copy .ways-disclaimer{color:#7b897a}
+.ways-copy .text-link{color:#895c43}
+.garden-extra-experiences,.garden-extra-human{border-color:#d8cdbc}
+.garden-extra-experiences>summary,.garden-extra-human>summary{color:#314838}
+.garden-extra-experiences>summary:hover,.garden-extra-human>summary:hover{background-color:#e4eadc77}
+.garden-extras-number{color:#a3775b}
+.garden-extras-action{color:#718071}
+.garden-extra-experiences[open]>summary,.garden-extra-human[open]>summary{border-bottom-color:#d8cdbb}
+@media(max-width:760px){
+  .wrap{width:calc(100% - 34px)}
+  .garden-paths a,.garden-paths a:first-child{border-bottom-color:#dfd3c1}
+  .seed-note{border-bottom-color:#e3d9c8}
+  .garden-extra-experiences>summary,.garden-extra-human>summary{gap:9px}
+}
+@media(max-width:600px){
+  .hero{min-height:76svh;padding:33px 25px 45px}
+  .hero h1{font-size:clamp(49px,11.6vw,73px)}
+  .hero .lede{font-size:16px}
+  .garden-paths a{padding-block:18px}
+  .card,.card.wide{min-height:185px}
+  .question-card{box-shadow:8px 9px 0 #e6ddcb}
+  .savasana{min-height:460px}
+}
+@media(prefers-reduced-motion:reduce){
+  .garden-visual svg{animation:none!important}
+  .card:hover{transform:none!important}
+}
+@media print{
+  body{background:#fff;color:#222}
+  .savasana{background:#fff;color:#222}
+  .savasana h2,.savasana p{color:#222}
+}
