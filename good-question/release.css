@@ -1,0 +1,76 @@
+/* GOOD QUESTION / Volume 01. Editorial release — Oct 2026 */
+:root{--clay:#bc7351;--deep:#213b2e;--pale-paper:#fffdf5;--sand:#e7d5b8}
+body{font-kerning:normal}
+.site-head{background:rgba(249,248,240,.94)}
+.site-head .nav{max-width:1390px}
+.hero{min-height:690px;padding-top:78px}
+.hero h1{font-size:clamp(63px,5.9vw,92px)}
+.hero-bottom-bar{border-bottom:1px solid #dce3d5}
+.hero::before{content:'ISSUE 001  /  OCTOBER 2026';position:absolute;right:0;top:90px;font:10px var(--mono);letter-spacing:.15em;color:#91a08c}
+.magazine-issue{padding:86px 0 105px;position:relative}
+.issue-rule{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 0;border-top:2px solid #314737;border-bottom:1px solid #becbbb;color:#647d66;font:10px var(--mono);letter-spacing:.15em;text-transform:uppercase}
+.issue-rule .issue-stamp{border:1px solid #bcc7b5;padding:9px 12px;border-radius:100px;color:#47674c}
+.magazine-heading{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:55px;align-items:end;padding:58px 0 48px}
+.magazine-heading h2{font:600 clamp(54px,6.15vw,93px)/.99 var(--serif);letter-spacing:-.079em;margin:0;max-width:940px}
+.magazine-heading h2 em{font-style:italic;color:#78966a}
+.magazine-heading aside{border-left:1px solid #cbd5c5;padding-left:22px}
+.magazine-heading aside .tiny-kicker{font:10px var(--mono);letter-spacing:.12em;color:#bd835d;display:block;margin-bottom:20px;text-transform:uppercase}
+.magazine-heading aside p{font:15px/1.7 var(--sans);color:#617566;margin:0}
+.issue-stories{display:grid;grid-template-columns:1.23fr .93fr .93fr;gap:14px}
+.issue-story{border:1px solid #dbe1d1;min-height:380px;padding:26px;display:flex;flex-direction:column;position:relative;overflow:hidden;background:#f4f3e8;transition:transform .24s ease,box-shadow .24s ease,border .24s ease}
+.issue-story:hover{transform:translateY(-5px);box-shadow:0 18px 48px #35533a13;border-color:#a5b79e}
+.issue-story:focus-visible{outline:3px solid #b78b67;outline-offset:3px}
+.issue-story.hero-story{background:#dbe6ce}
+.issue-story.warm{background:#efdfc9}
+.issue-story.cream{background:#f4eecf}
+.issue-story .story-index{font:10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#627764;position:relative;z-index:1}
+.issue-story .story-number{margin:auto 0 8px;font:600 105px/.8 var(--serif);letter-spacing:-.08em;color:#99b78e;position:relative;z-index:1}
+.issue-story .story-number.soy{color:#c6946b}
+.issue-story .story-number.soft{color:#b0bd77}
+.issue-story h3{font:600 clamp(28px,2.5vw,40px)/1.07 var(--serif);letter-spacing:-.055em;max-width:310px;margin:0 0 14px;z-index:1}
+.issue-story p{font:13px/1.6 var(--sans);color:#607464;margin:0 0 22px;max-width:350px;z-index:1}
+.issue-story .story-link{font:11px var(--mono);text-transform:uppercase;letter-spacing:.045em;margin-top:auto;color:#2b513a;display:inline-flex;justify-content:space-between;width:100%;position:relative;z-index:1}
+.issue-story .decor{position:absolute;top:40px;right:-47px;width:168px;height:168px;border-radius:50%;border:38px solid #bdd0a8;opacity:.5}
+.issue-story.warm .decor{border-color:#d7b394}.issue-story.cream .decor{border-color:#d2d4aa}
+.editor-note{padding:28px 0 0;display:flex;align-items:center;justify-content:space-between;gap:25px;color:#718574}
+.editor-note .note-mark{font:italic 24px var(--serif);letter-spacing:-.06em;color:#395945}
+.editor-note .note-body{font:12px/1.6 var(--sans);margin:0;max-width:500px}
+.editor-note .note-source{font:10px var(--mono);color:#7b927d}
+.magazine-issue+.mini-manifesto{border-top:0}
+.audit-section{background:#e6e8db;padding:115px 0;border-top:1px solid #d1ddc9;border-bottom:1px solid #d1ddc9}
+.audit-intro{display:grid;grid-template-columns:1.14fr .86fr;gap:90px;align-items:end;margin-bottom:44px}
+.audit-intro h2{font:600 clamp(48px,5vw,77px)/1.03 var(--serif);letter-spacing:-.075em;margin:14px 0 0}
+.audit-intro h2 em{color:#78966a;font-style:italic}
+.audit-intro p{font:15px/1.8 var(--sans);color:#617366;margin:0 0 7px}
+.audit-ledger{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:26px}
+.audit-case{background:#fbfaf4;border:1px solid #cfd9c9;padding:26px;min-height:246px;display:flex;flex-direction:column}
+.audit-case-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}
+.audit-case-top>span:first-child{font:10px var(--mono);letter-spacing:.11em;color:#789178}
+.audit-verified{border:1px solid #c6dac4;color:#4b7958;background:#e5eee0;font:10px var(--mono);padding:7px 9px;border-radius:999px}
+.audit-case h3{font:600 28px/1.1 var(--serif);letter-spacing:-.045em;margin:0 0 12px}
+.audit-case p{font-size:13px;line-height:1.75;color:#667967;margin:0 0 21px}
+.audit-case a{font:11px var(--mono);letter-spacing:.025em;color:#376548;text-decoration:underline;text-underline-offset:4px;margin-top:auto}
+.audit-process{background:#294b37;color:#f6f6ed;padding:28px 31px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:18px;border-radius:3px}
+.audit-process b{display:block;font:11px var(--mono);letter-spacing:.065em;color:#d5e3c9;margin-bottom:11px}
+.audit-process p{font:12px/1.65 var(--sans);color:#c2d3c0;margin:0}
+.audit-footer{display:flex;align-items:center;gap:20px;justify-content:space-between;border-top:1px solid #ccd6c5;margin-top:25px;padding-top:19px}
+.audit-footer p{font:11px/1.55 var(--sans);color:#6b806e;max-width:620px;margin:0}
+.audit-footer a{font:11px var(--mono);color:#325a3f;text-decoration:underline;text-underline-offset:4px;white-space:nowrap}
+.audit-mini{background:#f5f3e9;border:1px solid #d9d8c5;margin-top:15px;padding:17px 17px 14px;border-radius:8px}
+.audit-mini .audit-mini-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.audit-mini b{font:11px var(--mono);text-transform:uppercase;letter-spacing:.045em;color:#42644b}
+.audit-mini .audit-state{font:10px var(--mono);white-space:nowrap;background:#e0ece0;color:#437650;padding:5px 8px;border-radius:4px}
+.audit-mini .audit-state.pending{background:#f3e9d7;color:#977443}
+.audit-mini p{font-size:12px;color:#60705d;line-height:1.65;margin:11px 0}
+.audit-mini .audit-links{display:flex;gap:10px;flex-wrap:wrap}
+.audit-mini a{color:#375943;font:11px var(--mono);text-decoration:underline;text-underline-offset:3px}
+.audit-mini small{display:block;color:#8b9b8a;font:10px var(--mono);margin-top:10px}
+.chart-foot-extra{padding:12px 18px;margin:17px 0 0;border-left:3px solid #86aa77;color:#657763;background:#e9eee3;font-size:11px;line-height:1.65}
+.magazine-signoff{padding:48px 0 10px;text-align:center;color:#79917d;font:italic 24px var(--serif);letter-spacing:-.045em}
+.magazine-signoff strong{color:#304c36}
+.site-head .top-links .editor-link{color:#9d6a4c}
+@media(max-width:1000px){.magazine-heading{grid-template-columns:1fr 240px;gap:24px}.issue-stories{grid-template-columns:1fr 1fr}.issue-story.hero-story{grid-column:span 2}.issue-story.hero-story{min-height:325px}.issue-story:not(.hero-story){min-height:345px}.audit-intro{gap:25px}}
+@media(max-width:700px){.hero::before{display:none}.magazine-issue{padding:42px 0 70px}.issue-rule{font-size:8px}.magazine-heading{grid-template-columns:1fr;gap:20px;padding:37px 0 28px}.magazine-heading h2{font-size:clamp(48px,11vw,68px)}.magazine-heading aside{border-left:0;border-top:1px solid #cbd5c5;padding:16px 0 0}.magazine-heading aside .tiny-kicker{margin-bottom:8px}.magazine-heading aside p{font-size:13px}.issue-stories{grid-template-columns:1fr;gap:10px}.issue-story.hero-story{grid-column:auto}.issue-story{min-height:310px;padding:21px}.issue-story h3{font-size:30px}.issue-story .story-number{font-size:85px}.editor-note{display:block}.editor-note .note-body{margin:8px 0}.audit-section{padding:78px 0}.audit-intro{grid-template-columns:1fr;margin-bottom:27px}.audit-intro h2{font-size:49px}.audit-intro p{font-size:13px}.audit-ledger{grid-template-columns:1fr;gap:9px}.audit-case{min-height:0;padding:20px}.audit-process{grid-template-columns:1fr 1fr;padding:22px}.audit-footer{display:block}.audit-footer a{display:inline-block;margin-top:12px}.magazine-signoff{font-size:20px}}
+@media(max-width:380px){.audit-process{grid-template-columns:1fr}.issue-story{min-height:290px}.audit-mini .audit-mini-head{align-items:flex-start;flex-direction:column}.magazine-heading h2{font-size:46px}}
+
+@media(max-width:870px){.site-head .top-links{overflow-x:auto;justify-content:flex-start;scrollbar-width:none;padding-bottom:8px}.site-head .top-links a{flex:0 0 auto;white-space:nowrap}.site-head .top-links::-webkit-scrollbar{display:none}}

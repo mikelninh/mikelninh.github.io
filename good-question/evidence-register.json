@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0",
+  "checked_at": "2026-10-11",
+  "audit_method": "AI-assisted source-to-claim comparison using publisher/official original pages; not independent expert review; not a formal GRADE assessment",
+  "updated_guidance": "DGE 2024 supersedes key recommendations from its 2016 paper",
+  "records": [
+    {
+      "id": "NUT-001",
+      "claim": "A well-planned vegan diet can be health-promoting for healthy adults with reliable vitamin B12 supplementation and adequate nutrient intake.",
+      "status": "original-guidance-checked",
+      "publisher": "German Nutrition Society (DGE)",
+      "publication_year": 2024,
+      "url": "https://www.dge.de/wissenschaft/stellungnahmen-und-positionspapiere/positionen/neubewertung-der-position-zu-veganer-ernaehrung/",
+      "limits": "Limited evidence for children, pregnant/breastfeeding individuals, adolescents and older adults. Counselling advised."
+    },
+    {
+      "id": "NUT-002",
+      "claim": "Unfortified plant foods do not naturally supply reliable vitamin B12; supplements and fortified foods are relevant.",
+      "status": "original-guidance-checked",
+      "publisher": "US NIH Office of Dietary Supplements",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+      "limits": "Nutritional guidance is not personalised medical advice."
+    },
+    {
+      "id": "ENV-001",
+      "claim": "In a UK dietary study vegan diets had 25.1% of the greenhouse gas impact of high meat diets; 95% uncertainty interval 15.1-37.0%.",
+      "status": "original-article-checked",
+      "publisher": "Nature Food",
+      "publication_year": 2023,
+      "doi": "10.1038/s43016-023-00795-w",
+      "url": "https://doi.org/10.1038/s43016-023-00795-w",
+      "study_n": 55504,
+      "limits": "Modelled environmental footprints of study groups, not individual proof or worldwide universal effect."
+    },
+    {
+      "id": "ENV-002",
+      "claim": "A majority of global soy production is used as livestock feed; Our World in Data reports 77%.",
+      "status": "secondary-analysis-checked",
+      "publisher": "Our World in Data",
+      "url": "https://ourworldindata.org/drivers-of-deforestation",
+      "limits": "Underlying agricultural data and allocation methods have not been independently re-analysed here."
+    }
+  ]
+}
