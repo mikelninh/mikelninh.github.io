@@ -108,7 +108,7 @@
     clearInterval(tick);tick=null;
     game.step=next;
     stageName.textContent=labels[next];
-    progress.style.width=phases[next]+"%";
+    progress.style.width=phases[next]+"%";document.querySelector(".gameprogress").setAttribute("aria-valuenow",String(phases[next]));
     wrap.scrollTop=0;
     render();
     soundCue(next==="final"?830:520);
@@ -125,7 +125,7 @@
   function render(){
     if(!game)return;
     stageName.textContent=labels[game.step];
-    progress.style.width=phases[game.step]+"%";
+    progress.style.width=phases[game.step]+"%";document.querySelector(".gameprogress").setAttribute("aria-valuenow",String(phases[game.step]));
     let html="";
     if(game.step==="brief")html=briefMarkup();
     if(game.step==="baseline"||game.step==="palace")html=encodeMarkup(game.step);
@@ -147,7 +147,7 @@
       '<p class="stage-lead">A real memory technique is hiding behind this door. First, try an honest challenge. Then learn the trick. Finally, face a new list and see what changes.</p>'+
       '<div class="brief-numbers"><span>08 OBJECTS</span><span>60 SEC TO STUDY</span><span>NO LOGIN</span></div>'+
       actionSet(["baseline-start","Start the first challenge →"],["game-exit","Maybe later"],"No leaderboard. No punishment. One run does not measure your intelligence. Normal short-term memory varies a lot.")+
-      '</div><div class="brief-art" aria-hidden="true"><span class="orb-small">POWER #001</span><span class="orb">✦</span><span class="orb-bottom">ORDINARY HUMAN / EXTRAORDINARY TRICKS</span></div></div>';
+      '</div><div class="brief-art" aria-hidden="true"><span class="orb-small">POWER #001</span><div class="mini-palace">'+document.querySelector(".palace-art").outerHTML+'</div><span class="orb-bottom">ORDINARY HUMAN / EXTRAORDINARY TRICKS</span></div></div>';
   }
   function encodeMarkup(mode){
     const advanced=mode==="palace";
@@ -318,7 +318,7 @@
     const headline=b>=7?"Look what your mind <em>can do.</em>":b>=5?"Your palace is <em>taking shape.</em>":"You have found <em>the doorway.</em>";
     const msg=delta>0?"You recalled "+delta+" more item"+(delta===1?"":"s")+" on the second, location-aided challenge.":
       delta<0?"You recalled "+Math.abs(delta)+" fewer objects this time. That happens. Try again later — learning is not a straight line.":
-      "You recalled the same number of objects in both rounds. Try making the images even stranger next time.";
+      "You recalled the same number of objects in both rounds. Your original-order score went from "+game.scores.baseline.ordered+"/8 to "+game.scores.palace.ordered+"/8. One attempt is not a verdict — try another route later.";
     return '<div class="final-hero">'+
       '<div>'+tag("MISSION COMPLETE / POWER DISCOVERED")+
       '<h2>'+headline+'</h2>'+
@@ -363,12 +363,30 @@
     copyText(SITE).then(()=>announce("Game link copied! Share the power.")).catch(()=>announce("Copy the URL from your address bar."));
   }
   function feedback(){
-    const a=game?.scores?.baseline?.correct, b=game?.scores?.palace?.correct;
-    const subject="CHEATS · Honest MVP feedback";
-    const body="Hey! I tried CHEATS Memory Palace.\n\nWhat delighted me:\n\nWhat confused me:\n\nOne thing I would change:\n\n"+
-      ((Number.isFinite(a)&&Number.isFinite(b))?"Optional session scores: "+a+"/8 before, "+b+"/8 after.\n\n":"")+"Sent only if I choose to send this email.";
-    location.href="mailto:mikel_ninh@yahoo.de?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+    const current=document.getElementById("cheatsFeedbackDialog");if(current)current.remove();
+    const dialog=document.createElement("dialog");dialog.id="cheatsFeedbackDialog";dialog.className="cheats-utility-dialog";
+    dialog.innerHTML='<div class="utility-head"><span>CHEATS / PLAYER FEEDBACK</span><button type="button" class="utility-close" aria-label="Close feedback">×</button></div>'+
+      '<h2>Help make the next power better.</h2><p>What felt magical? What felt confusing? A sentence is plenty. We will only receive anything if you choose to open your mail app and send it.</p>'+
+      '<label for="feedbackDraft">Your editable feedback</label><textarea id="feedbackDraft" rows="7"></textarea>'+
+      '<div class="utility-actions"><button type="button" class="stage-btn" id="copyFeedback">Copy feedback</button><a class="stage-alt utility-link" id="emailFeedback" href="#">Open email app ↗</a></div>'+
+      '<p class="utility-note">If you have no mail app set up, copy the message and send it however you prefer. Nothing is submitted directly by this website.</p>';
+    document.body.appendChild(dialog);
+    const a=game?.scores?.baseline?.correct,b=game?.scores?.palace?.correct;
+    dialog.querySelector("textarea").value="What delighted me:\n\nWhat confused me:\n\nOne thing I would change:\n\n"+
+      ((Number.isFinite(a)&&Number.isFinite(b))?"Optional scores — before: "+a+"/8, after: "+b+"/8.\n\n":"");
+    const link=dialog.querySelector("#emailFeedback");
+    const setMail=()=>{link.href="mailto:mikel_ninh@yahoo.de?subject="+encodeURIComponent("CHEATS · Honest MVP feedback")+
+      "&body="+encodeURIComponent(dialog.querySelector("textarea").value);};
+    setMail();
+    link.addEventListener("click",()=>{setMail();announce("Opening your mail app. Please review before sending.");});
+    dialog.querySelector("#copyFeedback").addEventListener("click",()=>{
+      copyText(dialog.querySelector("textarea").value).then(()=>announce("Feedback copied. Thank you!")).catch(()=>announce("Select and copy your note above."));
+    });
+    dialog.querySelector(".utility-close").addEventListener("click",()=>dialog.close());
+    dialog.addEventListener("close",()=>dialog.remove());
+    dialog.showModal();
   }
+
   function drawCard(){
     if(!game||game.step!=="final")return;
     const c=document.createElement("canvas"),ctx=c.getContext("2d");
@@ -393,15 +411,26 @@
     ctx.fillStyle="#1b152a";ctx.fillRect(95,603,1010,2);
     ctx.font="650 21px monospace";ctx.fillText("TRY THE FREE CHALLENGE: "+SITE,100,640);
     try{
-      c.toBlob(blob=>{
-        if(!blob){announce("Could not export the card.");return;}
-        const url=URL.createObjectURL(blob);
-        const a=document.createElement("a");a.href=url;a.download="cheats-memory-palace-card.png";
-        document.body.appendChild(a);a.click();a.remove();
-        setTimeout(()=>URL.revokeObjectURL(url),30000);
-        announce("Power card saved. Keep training!");
-      },"image/png");
+      const uri=c.toDataURL("image/png");
+      const current=document.getElementById("cheatsCardDialog");if(current)current.remove();
+      const dialog=document.createElement("dialog");
+      dialog.id="cheatsCardDialog";dialog.className="cheats-utility-dialog card-preview-dialog";
+      dialog.innerHTML='<div class="utility-head"><span>YOUR POWER CARD / READY TO KEEP</span><button type="button" class="utility-close" aria-label="Close power card">×</button></div>'+
+        '<h2>A little proof of play.</h2><p>Your real scores are on the card. You decide whether to save or share it.</p>'+
+        '<img class="preview-image" alt="CHEATS Memory Palace completion card showing your actual before and after recall scores.">'+
+        '<div class="utility-actions"><a class="stage-btn utility-link" id="cardDownload" download="cheats-memory-palace-card.png">Download PNG ↓</a>'+
+        '<button class="stage-alt" type="button" id="cardDone">Done</button></div>'+
+        '<p class="utility-note">On mobile, you can also press and hold the preview image to save it. No upload takes place.</p>';
+      document.body.appendChild(dialog);
+      dialog.querySelector("img").src=uri;
+      dialog.querySelector("#cardDownload").href=uri;
+      dialog.querySelector("#cardDownload").addEventListener("click",()=>announce("Power card download requested!"));
+      dialog.querySelector("#cardDone").addEventListener("click",()=>dialog.close());
+      dialog.querySelector(".utility-close").addEventListener("click",()=>dialog.close());
+      dialog.addEventListener("close",()=>dialog.remove());
+      dialog.showModal();
     }catch(_){announce("Card export isn't supported in this browser.");}
+
   }
 
   // One delegated control path keeps changes of scene deliberate.
