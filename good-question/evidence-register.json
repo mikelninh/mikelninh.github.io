@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "checked_at": "2026-10-11",
   "audit_method": "AI-assisted source-to-claim comparison using publisher/official original pages; not independent expert review; not a formal GRADE assessment",
   "updated_guidance": "DGE 2024 supersedes key recommendations from its 2016 paper",
@@ -40,5 +40,8 @@
       "url": "https://ourworldindata.org/drivers-of-deforestation",
       "limits": "Underlying agricultural data and allocation methods have not been independently re-analysed here."
     }
-  ]
+  ],
+  "issue02_register": "./issue02-evidence.json",
+  "issue02_article_count": 10,
+  "issue02_external_expert_review": "not_completed"
 }

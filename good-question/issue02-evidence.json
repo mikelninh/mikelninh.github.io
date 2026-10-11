@@ -1,0 +1,260 @@
+{
+  "edition": "02",
+  "issued": "2026-10-11",
+  "last_editorial_check": "2026-10-11",
+  "audit_type": "AI-assisted manual claim-to-source check; not original-data reanalysis",
+  "external_subject_matter_review": "NOT COMPLETED",
+  "formal_grade_assessment": "NOT PERFORMED",
+  "source_count": 13,
+  "article_count": 10,
+  "source_registry": {
+    "dge": {
+      "title": "Deutsche Gesellschaft für Ernährung · Position zur veganen Ernährung (2024)",
+      "url": "https://www.dge.de/wissenschaft/stellungnahmen-und-positionspapiere/positionen/neubewertung-der-position-zu-veganer-ernaehrung/",
+      "year": 2024,
+      "type": "Guideline / position",
+      "check": "Original position landing page and summary reviewed"
+    },
+    "dgepress": {
+      "title": "DGE · Erläuterung zu kritischen Nährstoffen (2024)",
+      "url": "https://www.dge.de/presse/meldungen/2024/positionspapier-zu-veganer-ernaehrung/",
+      "year": 2024,
+      "type": "Professional society explainer",
+      "check": "Original DGE explainer reviewed"
+    },
+    "nih": {
+      "title": "NIH Office of Dietary Supplements · Vitamin B12",
+      "url": "https://ods.od.nih.gov/factsheets/vitaminb12-consumer/",
+      "year": 2024,
+      "type": "Government fact sheet",
+      "check": "Official fact sheet reviewed"
+    },
+    "nhs": {
+      "title": "NHS · The vegan diet",
+      "url": "https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/the-vegan-diet/",
+      "year": 2024,
+      "type": "Public health guidance",
+      "check": "Official guidance reviewed"
+    },
+    "protein": {
+      "title": "Hevia-Larraín et al. · Protein-matched vegan vs omnivorous resistance training",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33599941/",
+      "doi": "10.1007/s40279-021-01434-9",
+      "year": 2021,
+      "type": "Small clinical trial · n=38",
+      "check": "PubMed abstract and reported outcomes checked"
+    },
+    "climate": {
+      "title": "Scarborough et al. · Environmental impacts of UK diets",
+      "url": "https://www.nature.com/articles/s43016-023-00795-w",
+      "doi": "10.1038/s43016-023-00795-w",
+      "year": 2023,
+      "type": "Dietary cohort + life-cycle modelling · n=55,504",
+      "check": "Publisher article abstract and methods summary reviewed"
+    },
+    "poore": {
+      "title": "Poore & Nemecek · Environmental impacts of food",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29853680/",
+      "doi": "10.1126/science.aaq0216",
+      "year": 2018,
+      "type": "Large food-life-cycle synthesis",
+      "check": "PubMed abstract checked; original study has a published 2019 erratum"
+    },
+    "soy": {
+      "title": "Our World in Data · Drivers of deforestation",
+      "url": "https://ourworldindata.org/drivers-of-deforestation",
+      "year": 2021,
+      "type": "Secondary data analysis · 2018 global soy allocation",
+      "check": "Data explanation and cited breakdown reviewed; raw underlying production data not independently reanalysed"
+    },
+    "upf": {
+      "title": "NHS · Processed foods",
+      "url": "https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/what-are-processed-foods/",
+      "year": 2024,
+      "type": "Public health guidance",
+      "check": "Official guidance reviewed"
+    },
+    "upfstudy": {
+      "title": "NutriNet-Santé · Plant-based diet quality, processing and cardiovascular risk",
+      "url": "https://doi.org/10.1016/j.lanepe.2025.101470",
+      "doi": "10.1016/j.lanepe.2025.101470",
+      "year": 2025,
+      "type": "Prospective observational cohort · n=63,835",
+      "check": "Original published abstract and findings reviewed"
+    },
+    "animal": {
+      "title": "New York Declaration on Animal Consciousness",
+      "url": "https://sites.google.com/nyu.edu/nydeclaration",
+      "year": 2024,
+      "type": "Expert declaration · not a scientific systematic review",
+      "check": "Original declaration wording reviewed"
+    },
+    "field": {
+      "title": "Fischer & Lamey · Field Deaths in Plant Agriculture",
+      "url": "https://agris.fao.org/search/en/providers/122535/records/65de5e227c7033e84beab3bb",
+      "doi": "10.1007/s10806-018-9733-8",
+      "year": 2018,
+      "type": "Philosophical/scientific literature analysis",
+      "check": "FAO-indexed abstract reviewed, not full methods"
+    },
+    "cost": {
+      "title": "Springmann et al. · Costs of healthy and sustainable dietary patterns",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8581186/",
+      "doi": "10.1016/S2542-5196(21)00251-5",
+      "year": 2021,
+      "type": "Modelling study · 150 countries",
+      "check": "Open-access original article summary, design and limitations reviewed"
+    }
+  },
+  "claims": [
+    {
+      "id": "ISS02-01",
+      "article_id": "healthy",
+      "claim": "A well-planned vegan diet can be health-promoting for healthy adults, with B12 supplementation and sufficient nutrients.",
+      "qualitative_editorial_assessment": "guidance-strong",
+      "source_keys": [
+        "dge",
+        "nhs"
+      ],
+      "source_check": "Accessible original publisher pages, abstracts, institutional statements and/or secondary analyses compared; see per-source check details",
+      "limitations": "Not every vegan diet is automatically healthy; evidence and recommendations differ for vulnerable groups.",
+      "checked_on": "2026-10-11",
+      "independent_expert_review": "not_completed",
+      "formal_grade_assessment": false
+    },
+    {
+      "id": "ISS02-02",
+      "article_id": "b12",
+      "claim": "Reliable vitamin B12 intake is necessary for vegan diets; unfortified plants are not dependable natural sources.",
+      "qualitative_editorial_assessment": "guidance-strong",
+      "source_keys": [
+        "dge",
+        "nih"
+      ],
+      "source_check": "Accessible original publisher pages, abstracts, institutional statements and/or secondary analyses compared; see per-source check details",
+      "limitations": "Supplementation schedules and lab interpretation depend on the individual; no dose is prescribed here.",
+      "checked_on": "2026-10-11",
+      "independent_expert_review": "not_completed",
+      "formal_grade_assessment": false
+    },
+    {
+      "id": "ISS02-03",
+      "article_id": "protein",
+      "claim": "In one small resistance-training study, protein-matched high-protein vegan and omnivorous diets supported similar gains in untrained young men.",
+      "qualitative_editorial_assessment": "limited-trial",
+      "source_keys": [
+        "protein",
+        "dge"
+      ],
+      "source_check": "Accessible original publisher pages, abstracts, institutional statements and/or secondary analyses compared; see per-source check details",
+      "limitations": "Small n=38, young men only, protein matched at ~1.6 g/kg/day with supplements; findings cannot be generalised to all diets, ages or athletes.",
+      "checked_on": "2026-10-11",
+      "independent_expert_review": "not_completed",
+      "formal_grade_assessment": false
+    },
+    {
+      "id": "ISS02-04",
+      "article_id": "climate",
+      "claim": "In a modelled UK-group comparison, vegan diets had 25.1% of high-meat diets' greenhouse-gas emissions, with a 95% uncertainty interval of 15.1–37.0%.",
+      "qualitative_editorial_assessment": "multi-study",
+      "source_keys": [
+        "climate",
+        "poore"
+      ],
+      "source_check": "Accessible original publisher pages, abstracts, institutional statements and/or secondary analyses compared; see per-source check details",
+      "limitations": "Modelled group averages in a UK cohort; not a person's carbon footprint, causal intervention or a worldwide constant.",
+      "checked_on": "2026-10-11",
+      "independent_expert_review": "not_completed",
+      "formal_grade_assessment": false
+    },
+    {
+      "id": "ISS02-05",
+      "article_id": "soy",
+      "claim": "OWID reports that 77% of global soy (2018 allocation) was used as feed for livestock; 7% was directly eaten as tofu, soy milk and similar foods.",
+      "qualitative_editorial_assessment": "secondary-data",
+      "source_keys": [
+        "soy"
+      ],
+      "source_check": "Accessible original publisher pages, abstracts, institutional statements and/or secondary analyses compared; see per-source check details",
+      "limitations": "Secondary synthesis using historical commodity allocation; an individual tofu's supply chain still needs tracing.",
+      "checked_on": "2026-10-11",
+      "independent_expert_review": "not_completed",
+      "formal_grade_assessment": false
+    },
+    {
+      "id": "ISS02-06",
+      "article_id": "processed",
+      "claim": "A plant-based label does not guarantee health; nutritional quality and processing both matter, supported by public guidance and observational cohort research.",
+      "qualitative_editorial_assessment": "observational",
+      "source_keys": [
+        "upf",
+        "upfstudy"
+      ],
+      "source_check": "Accessible original publisher pages, abstracts, institutional statements and/or secondary analyses compared; see per-source check details",
+      "limitations": "Observational associations are not proof that processing alone causes disease. Not all processed products are unhealthy.",
+      "checked_on": "2026-10-11",
+      "independent_expert_review": "not_completed",
+      "formal_grade_assessment": false
+    },
+    {
+      "id": "ISS02-07",
+      "article_id": "family",
+      "claim": "DGE 2024 neither universally recommends nor opposes vegan diets for children, pregnancy, breastfeeding, adolescents and older adults, due to limited evidence and higher consequences of inadequacy.",
+      "qualitative_editorial_assessment": "guidance-caution",
+      "source_keys": [
+        "dge",
+        "dgepress",
+        "nhs"
+      ],
+      "source_check": "Accessible original publisher pages, abstracts, institutional statements and/or secondary analyses compared; see per-source check details",
+      "limitations": "Specialist care, energy sufficiency and individual nutrients are essential; this is not an individual health recommendation.",
+      "checked_on": "2026-10-11",
+      "independent_expert_review": "not_completed",
+      "formal_grade_assessment": false
+    },
+    {
+      "id": "ISS02-08",
+      "article_id": "ethics",
+      "claim": "Animal consciousness has strong scientific support for mammals and birds; deciding what welfare and moral status require is an ethical rather than purely empirical question.",
+      "qualitative_editorial_assessment": "ethics-values",
+      "source_keys": [
+        "animal"
+      ],
+      "source_check": "Accessible original publisher pages, abstracts, institutional statements and/or secondary analyses compared; see per-source check details",
+      "limitations": "The New York Declaration is an expert statement, not a moral consensus or proof that all species experience life alike.",
+      "checked_on": "2026-10-11",
+      "independent_expert_review": "not_completed",
+      "formal_grade_assessment": false
+    },
+    {
+      "id": "ISS02-09",
+      "article_id": "harvest",
+      "claim": "Animals are harmed during crop production, but published analysis notes that robust total counts and simple diet-level comparisons are not currently established.",
+      "qualitative_editorial_assessment": "evidence-gap",
+      "source_keys": [
+        "field",
+        "poore"
+      ],
+      "source_check": "Accessible original publisher pages, abstracts, institutional statements and/or secondary analyses compared; see per-source check details",
+      "limitations": "No reliable universal vegan-versus-omnivorous animal-death count; ethical comparisons depend on the species, effects and farming context.",
+      "checked_on": "2026-10-11",
+      "independent_expert_review": "not_completed",
+      "formal_grade_assessment": false
+    },
+    {
+      "id": "ISS02-10",
+      "article_id": "cost",
+      "claim": "A 150-country modelling study found nutritious sustainable dietary patterns often cost less in high-income countries but more in lower-income countries; access is context-dependent.",
+      "qualitative_editorial_assessment": "model-not-universal",
+      "source_keys": [
+        "cost"
+      ],
+      "source_check": "Accessible original publisher pages, abstracts, institutional statements and/or secondary analyses compared; see per-source check details",
+      "limitations": "Modelled 2017 average food-price data, not real-time supermarket prices, and not proof that every vegan diet or household is cheaper.",
+      "checked_on": "2026-10-11",
+      "independent_expert_review": "not_completed",
+      "formal_grade_assessment": false
+    }
+  ],
+  "limitations": "A citation alone is not proof; this register records the scope of checks actually performed. Ethical conclusions cannot be assigned a purely scientific confidence score."
+}
