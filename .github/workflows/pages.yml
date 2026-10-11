@@ -104,8 +104,8 @@ jobs:
             return 1
           }
 
-          fetch_until_ready "$base/" "AI Engineer"
-          fetch_until_ready "$base/beyond-cv/" 'id="work-proof"'
+          fetch_until_ready "$base/" "I build useful things."
+          fetch_until_ready "$base/beyond-cv/" 'id="state-bridge"'
           fetch_until_ready "$base/beyond-cv/dksr/" "Was braucht eine Stadt"
           fetch_until_ready "$base/beyond-cv/dksr/case.js" "var sources="
           fetch_until_ready "$base/beyond-cv/dksr/case.css" "--paper:#f6f2e9"
