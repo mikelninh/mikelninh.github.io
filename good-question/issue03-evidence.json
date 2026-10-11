@@ -1,0 +1,202 @@
+{
+  "version": "3.0.0",
+  "edition": "03",
+  "retrieved_at": "2026-10-11",
+  "verification": {
+    "method": "AI-assisted editorial comparison, not an independent human reviewer",
+    "independent_expert_review": false,
+    "native_language_review": false,
+    "formal_GRADE": false,
+    "systematic_review": false,
+    "raw_data_reanalysis": false,
+    "original_field_reporting": false
+  },
+  "claims": [
+    {
+      "id": "ENV-003",
+      "claim": "The five relative environmental impacts and uncertainty intervals in our chart. High-meat group = 100%.",
+      "limits": "Not an individual causal forecast or a claim about this specific recipe. A group model, not an experimental diet switch.",
+      "url": "https://www.nature.com/articles/s43016-023-00795-w",
+      "doi": "10.1038/s43016-023-00795-w",
+      "source_type": "Dietary cohort + food life-cycle modelling",
+      "read_level": "Publisher full-text page accessible; abstract figures and methods description compared. No raw-data reanalysis.",
+      "locator": "Abstract; Results; Methods. Relative impacts and 95% uncertainty intervals as reported in the abstract."
+    },
+    {
+      "id": "NUT-003",
+      "claim": "A well-planned vegan diet can be health-promoting for healthy adults under the stated conditions.",
+      "limits": "Not an individual diet plan or a blanket assurance for children, pregnancy or medical conditions.",
+      "url": "https://www.dge.de/wissenschaft/stellungnahmen-und-positionspapiere/positionen/neubewertung-der-position-zu-veganer-ernaehrung/",
+      "doi": null,
+      "source_type": "Professional society position",
+      "read_level": "Official position landing page and summary read. Linked full PDF not newly appraised in Issue 03.",
+      "locator": "Position summary: healthy adults, B12 supplementation, adequate critical nutrients; limitations for vulnerable groups."
+    },
+    {
+      "id": "COST-003",
+      "claim": "The default lentil-pasta base has an allocated ingredient cost of €0.6918478 per portion; three full packs cost €3.35.",
+      "limits": "Reference prices, not live offers. Not a complete meal; extra ingredients, energy, water and delivery excluded. One retailer is not a representative market.",
+      "url": "https://www.dm.de/p/d/1490004/dmbio-rote-linsen",
+      "doi": null,
+      "source_type": "Retailer-labelled prices + deterministic calculation",
+      "read_level": "Six original retailer product pages opened via web retrieval; may be cached. Price, quantity and drained-weight basis extracted. No checkout or in-store purchase.",
+      "locator": "Each product URL appears in the interactive calculation and in products[]."
+    }
+  ],
+  "chart": {
+    "source": "ENV-003",
+    "population": "55,504 UK participants; study published 2023",
+    "reference": "High-meat group >=100 g meat/day = 100 for each indicator",
+    "unit": "Vegan group as percent of high-meat reference",
+    "uncertainty": "95% uncertainty intervals, not a confidence score for the article",
+    "domain": [
+      0,
+      100
+    ],
+    "add_indicators": false,
+    "data": [
+      {
+        "id": "ghg",
+        "estimate": 25.1,
+        "low": 15.1,
+        "high": 37.0,
+        "label": {
+          "de": "Treibhausgase",
+          "en": "Greenhouse gases",
+          "vi": "Khí nhà kính"
+        }
+      },
+      {
+        "id": "land",
+        "estimate": 25.1,
+        "low": 7.1,
+        "high": 44.5,
+        "label": {
+          "de": "Flächenbedarf",
+          "en": "Land use",
+          "vi": "Sử dụng đất"
+        }
+      },
+      {
+        "id": "water",
+        "estimate": 46.4,
+        "low": 21.0,
+        "high": 81.0,
+        "label": {
+          "de": "Wasser",
+          "en": "Water use",
+          "vi": "Sử dụng nước"
+        }
+      },
+      {
+        "id": "eutrophication",
+        "estimate": 27.0,
+        "low": 19.4,
+        "high": 40.4,
+        "label": {
+          "de": "Eutrophierung",
+          "en": "Eutrophication",
+          "vi": "Phú dưỡng"
+        }
+      },
+      {
+        "id": "biodiversity",
+        "estimate": 34.3,
+        "low": 12.0,
+        "high": 65.3,
+        "label": {
+          "de": "Biodiversitätswirkung",
+          "en": "Biodiversity impact",
+          "vi": "Tác động đa dạng sinh học"
+        }
+      }
+    ]
+  },
+  "retail_reference": {
+    "region": "Germany",
+    "merchant": "dm.de",
+    "retrieved_at": "2026-10-11",
+    "method": "Original retailer pages opened via web retrieval; responses may be cached. No live price API, checkout or in-store purchase.",
+    "products": [
+      {
+        "id": "pasta",
+        "product": "dmBio · Vollkorn-Spaghetti",
+        "pack_g": 500,
+        "price_eur": 0.85,
+        "url": "https://www.dm.de/p/d/1439640/dmbio-nudeln-spaghetti-aus-vollkorn-no-3"
+      },
+      {
+        "id": "lentils",
+        "product": "dmBio · Rote Linsen",
+        "pack_g": 500,
+        "price_eur": 1.45,
+        "url": "https://www.dm.de/p/d/1490004/dmbio-rote-linsen"
+      },
+      {
+        "id": "passata",
+        "product": "dmBio · Tomaten Passata",
+        "pack_g": 690,
+        "price_eur": 1.05,
+        "url": "https://www.dm.de/p/d/1446418/dmbio-tomaten-fein-passiert-passata"
+      },
+      {
+        "id": "tofu",
+        "product": "dmBio · Tofu natur",
+        "pack_g": 200,
+        "price_eur": 0.95,
+        "url": "https://www.dm.de/p/d/1457962/dmbio-tofu-natur"
+      },
+      {
+        "id": "rice",
+        "product": "dmBio · Basmatireis weiß",
+        "pack_g": 1000,
+        "price_eur": 3.15,
+        "url": "https://www.dm.de/p/d/1457820/dmbio-basmatireis-weiss"
+      },
+      {
+        "id": "chickpeas",
+        "product": "dmBio · Kichererbsen",
+        "pack_g": 220,
+        "price_eur": 0.85,
+        "url": "https://www.dm.de/p/d/1469738/dmbio-kichererbsen"
+      }
+    ],
+    "drained_weight": "Chickpeas: 220 g drained, not 350 g gross fill."
+  },
+  "calculation": {
+    "consumed_cost": "grams_per_portion * portions / pack_g * price_eur, sum over ingredients",
+    "checkout": "ceil(grams_per_portion * portions / pack_g) * price_eur, sum over unowned ingredients",
+    "pantry": "Owned ingredients reduce checkout cost, not allocated consumed cost. Amount of existing pantry stock is not tracked.",
+    "rounding": "Round final display totals only. CSV also includes unrounded quantities and costs to six decimal places.",
+    "default_ingredients_g": {
+      "pasta": 100,
+      "lentils": 75,
+      "passata": 200
+    },
+    "default_per_portion_eur": 0.6918478260869565,
+    "default_checkout_eur": 3.35,
+    "exclusions": [
+      "Extra vegetables",
+      "Oil",
+      "Seasonings",
+      "Energy",
+      "Water",
+      "Delivery"
+    ],
+    "limits": [
+      "Recipe bases, not complete meals or nutrition plans",
+      "Not kitchen-tested",
+      "One retailer is not representative of a whole market",
+      "No meat-based comparison was priced",
+      "No payment for product inclusion or active affiliate links"
+    ]
+  },
+  "corrections": "feature.html#corrections opens a prefilled public GitHub issue draft; nothing auto-submitted.",
+  "photo": {
+    "url": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1400&q=85",
+    "credit": "Anna Pelzer / Unsplash",
+    "source": "https://unsplash.com/photos/bowl-of-vegetable-salads-IGfIGP5ONV0",
+    "license": "https://unsplash.com/license",
+    "use": "Illustrative stock photo; not a product test or photograph of the priced recipe. Original SVG illustration is the offline fallback."
+  }
+}

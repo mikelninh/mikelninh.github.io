@@ -1,46 +1,44 @@
-# GOOD QUESTION — Issue 02 · A magazine for the curious
+# GOOD QUESTION — Issue 03 / Food & the future
 
-A trilingual veganism publication (DE · EN · VI) with ten evidence-led stories, a searchable interactive editorial index, source trail, and links to the complementary vegan-food project **Plant Table**.
+Original trilingual editorial magazine by Michael Ninh. Built for curiosity, compassion and inspectable claims, not to imitate another publication's identity.
 
-**Public:** https://mikelninh.github.io/good-question/  
-**Evidence register:** https://mikelninh.github.io/good-question/issue02-evidence.json  
-**Plant Table:** https://mikelninh.github.io/vegan/
+- Front page: https://mikelninh.github.io/good-question/
+- Cover story: https://mikelninh.github.io/good-question/feature.html?lang=en
+- Evidence: https://mikelninh.github.io/good-question/issue03-evidence.json
+- Companion: https://mikelninh.github.io/vegan/
 
-## Editorial standards
+## What changed
 
-- Each article presents a charitable version of the objection, the available evidence, methodological limits, ethical distinctions and an actionable next step.
-- No synthetic certainty percentages. Scientific study design is identified. A philosophical claim is not given a scientific confidence score.
-- Source type, publisher, live external URL and scope of editorial checking are stored in `stories.json`, with a public claim-level record in `issue02-evidence.json`.
-- AI-assisted source-to-claim editorial comparisons have been conducted; **no independent academic, dietetic or medical expert review, original-data reanalysis, full systematic review or formal GRADE assessment has been completed.** No claim should be described as medically certified or independently peer-reviewed.
-- Children, pregnancy, breastfeeding, older people, special medical conditions: the site gives background, **not personalised medical or nutrition advice**. For these populations specialist medical and dietetic support is essential.
-- No affiliate tracking, paid rankings or sponsorship on Issue 02. A future paid partnership must be clearly labelled separately from scientific information.
+A new editorial front page and original cover story, **The price of a plate**, in DE / EN / VI. One language at a time. An open price calculator separates the allocated cost of food consumed from buying whole packs at checkout. Six original retailer pages, three recipe bases, adjustable prices, portions, quantities and pantry flags. Copy a shopping list or export the actual calculation as CSV.
 
-## What is shipped
+An accessible environmental comparison displays five indicators with the original study's 95% uncertainty intervals, a common zero-to-100 domain and an explicit high-meat reference group. Source data are downloadable. Unlike indicators are never added into a score.
 
-- 10 essays × three locales = 30 independently linkable and search-indexable reading pages.
-- The homepage retains the original argument explorer, food coach and curated pantry; the new magazine is progressive enhancement.
-- Editorial typography, illustrations and interactive filters designed for phones and desktops.
-- Original-source cards, limitations and AI-review methodology; public JSON audit trail.
-- Two original-source-based diagrams; the figures are study-level comparisons, not universal individual projections.
+Search, topic filters, local-device reading list, keyboard-accessible dialogs, a corrections draft and three RSS feeds are functional. Existing 30 static article pages are preserved; the former front page and prototype tools remain at `archive-02.html`.
 
-## Updating an article
+## Boundaries that must remain visible
 
-1. Amend the corresponding article in `stories.json` for `de`, `en`, `vi`, the `ref` source keys and English canonical `claim`/`limit`.
-2. Verify original source, date, population, study design, comparable outcomes and contraindications. Update `sources[k].check`. If independent review has not occurred, do not label it completed.
-3. Run `python generate_issue02.py` to rebuild `stories.js`, 30 article pages, `issue02-evidence.json` and `sitemap.xml`.
-4. Run `python audit_issue02.py` with BeautifulSoup and Playwright installed; visually review narrow phones and desktops with `python qa_magazine.py`.
-5. Confirm scientific and linguistic text is correct **before publishing**, not just that tests pass. Invite qualified human reviewers, using `REVIEW_CHECKLIST.md` to document actual sign-off.
+**Technical release, not independent scientific certification.** Source-to-claim comparisons are AI-assisted. Independent subject-matter and native-language reviews, formal GRADE assessment, a systematic review and raw-data reanalysis have not been completed. The new feature is desk research, not original field reporting.
 
-## Files
+Retail prices are reference values retrieved on 11 October 2026 from retailer pages which may be cached, not guaranteed live offers. One merchant is not a representative survey. Recipe bases exclude extra vegetables, oil, seasonings, cooking energy, water and delivery. They are not kitchen-tested recipes or complete nutrition plans. No meat-based basket was tested. No invented taste tests or paid product rankings.
 
-- `index.html`, `app.js`, `style.css`, `release.js`, `release.css` — original site.
-- `issue02.js`, `issue02.css` — editorial homepage layer.
-- `reader.css`, `read/<slug>/<locale>/index.html` — longform editorial stories.
-- `stories.json` — canonical editorial text and source metadata (10 × 3 locales).
-- `generate_issue02.py` — static article and audit build.
-- `issue02-evidence.json`, `evidence-register.json` — evidence register and legacy bridge.
-- `audit_issue02.py` — machine-testable multilingual, internal-link and responsive smoke tests.
+No active affiliate links, newsletter email collection, payment checkout, personal clinical nutrition service or cross-device account is present. Reading lists and Plant Table favourites are not synced. B12 and nutrition information must retain scope and medical-care caveats.
 
-## AI-generated content and reviewers
+## Data and maintenance
 
-Issue 02 is written with AI assistance. All authorship and editorial checking assertions should accurately reflect the work completed. Specialist review is **pending**, not implied by publication.
+`edition03-data.js` is canonical Issue 03 editorial copy, all three UI translations, reference prices, source metadata and chart data. `edition03.js` implements interactions; `edition03.css` defines the original visual system. German semantic fallback content in `index.html` and `feature.html` remains readable without JavaScript; JavaScript activates the new multilingual interface and calculator. The previous edition still has 30 separately linkable static locale pages.
+
+Run `python build_issue03.py` to export `issue03.json`, `issue03-evidence.json` and the DE / EN / VI RSS feeds. It does not check sources or renew dates. After editorial changes, update the German HTML fallback and source notes consistently. Do not label human review as completed without actual named sign-off.
+
+Issue 02 content remains canonical in `stories.json`; its original generator and review checklist are retained.
+
+## Verification
+
+Install `playwright` and `beautifulsoup4`, provide Chromium, then run `python qa_issue03.py`. The release test run passes **174 technical checks**, including 24 viewport/language/page combinations, arithmetic, edge cases, CSV, search, bookmarks, source dialogs, correction-draft behaviour, 30 preserved reading pages, feeds and local links. Full results: `qa-issue03.json`.
+
+Offline tests use local HTML via Playwright `set_content` with external requests blocked. They do not verify deployed HTTP, remote-photo loading, real-origin cross-reload storage, current checkout prices, full WCAG compliance or scientific truth. A live browser smoke test should supplement them.
+
+## Privacy and credits
+
+No analytics code or server-side reader database. Reading preferences use localStorage when available; when storage is unavailable the UI clearly reports session-only saving. External cover photography is credited to Anna Pelzer / Unsplash and fetched from Unsplash, which receives a network request. An original inline SVG is the fallback; the image is illustrative, not a tested dish. Source and licence are in the evidence file.
+
+Corrections open a **prefilled public GitHub issue draft**. Nothing is automatically sent; a GitHub account is required to submit. Never include personal health information. Commercial relationships must be disclosed and must not influence science claims.
