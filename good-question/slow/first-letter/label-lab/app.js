@@ -1,7 +1,7 @@
 /* GOOD QUESTION / Label Detective: finite sourced exploration; never a nutrition label certification */
 (()=>{
  'use strict';
- const $=s=>document.querySelector(s),$=s=>[...document.querySelectorAll(s)];
+ const $=s=>document.querySelector(s), allNodes=s=>Array.from(document.querySelectorAll(s));
  const langFrom=()=>{let x=new URLSearchParams(location.search).get('lang');if(!['en','de','vi'].includes(x)){try{x=localStorage.getItem('gq-letter-lang')}catch{}}return ['en','de','vi'].includes(x)?x:'en'};
  let locale=langFrom(),index=0,chosen=-1;
  const T={
@@ -34,7 +34,7 @@
   $('#title').innerHTML=locale==='en'?'Don’t trust the label. <em>Read it.</em>':locale==='de'?'Glaub nicht nur dem Etikett. <em>Lies es.</em>':'Đừng chỉ tin nhãn. <em>Hãy đọc kỹ.</em>';
   $('#deck').textContent=x.deck;$('#start').textContent=x.start;$('#feedback-title').textContent=x.feedbackTitle;$('#feedback-deck').textContent=x.feedbackDeck;
   $('label[for="feedback"]').textContent=x.feedbackLabel;$('#send').textContent=x.feedbackSubmit;$('#copy').textContent=x.feedbackCopy;$('#feedback-note').textContent=x.feedbackPrivacy;
-  $$('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===locale)));
+  allNodes('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===locale)));
   render();
  }
  function render(){
@@ -53,7 +53,7 @@
  $('#next').addEventListener('click',()=>{if(answered[index]>=0){index++;render()}});
  $('#prev').addEventListener('click',()=>{if(index>0){index--;render()}});
  $('#again').addEventListener('click',()=>{index=0;answered=Array(Q.length).fill(-1);render()});
- $$('[data-lang]').forEach(b=>b.addEventListener('click',()=>{locale=b.dataset.lang;const url=new URL(location.href);url.searchParams.set('lang',locale);try{history.replaceState({},'',url)}catch{};retext()}));
+ allNodes('[data-lang]').forEach(b=>b.addEventListener('click',()=>{locale=b.dataset.lang;const url=new URL(location.href);url.searchParams.set('lang',locale);try{history.replaceState({},'',url)}catch{};retext()}));
  const feedback=()=>$('#feedback').value.trim();
  $('#send').addEventListener('click',()=>{const txt=feedback();if(!txt){$('#feedback').focus();return}
   const u='https://github.com/mikelninh/mikelninh.github.io/issues/new?title='+encodeURIComponent('GOOD QUESTION · Label Detective reader question')+'&body='+encodeURIComponent('An idea from Label Detective 001\nSource page: '+location.href+'\n\n'+txt+'\n\nNo private personal information; this draft is not submitted automatically.');
