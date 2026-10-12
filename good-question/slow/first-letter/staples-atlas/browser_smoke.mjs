@@ -14,13 +14,13 @@ for(const size of [390,768,1440]){
   const p=await ctx.newPage();p.on('pageerror',e=>errors.push(size+'/'+locale+': '+String(e)));
   await p.goto(base+'?lang='+locale,{waitUntil:'domcontentloaded'});await p.locator('.product-card').first().waitFor();
   check(await p.locator('html').getAttribute('lang')===locale, size+'/'+locale+' language');
-  check(await p.locator('.product-card').count()===24,size+'/'+locale+' first 24 products');
+  check(await p.locator('.product-card').count()===(size<=620?12:24),size+'/'+locale+' initial batch');
   check(await p.locator('h1').count()===1,size+'/'+locale+' one headline');
   check(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),size+'/'+locale+' no horizontal page overflow');
-  check(await p.locator('.product-image img').count()===24,size+'/'+locale+' 24 source photo nodes');
+  check(await p.locator('.product-image img').count()===(size<=620?12:24),size+'/'+locale+' image nodes for initial batch');
   check(await p.locator('#warning-product .warning-card').count()===1,size+'/'+locale+' non-vegan warning separate');
-  if(locale==='de'&&size===390)await p.screenshot({path:shots+'/mobile.png',fullPage:true});
-  if(locale==='en'&&size===1440)await p.screenshot({path:shots+'/desktop.png',fullPage:true});
+  if(locale==='de'&&size===390){await p.locator('.product-image img').evaluateAll(imgs=>imgs.forEach(img=>img.loading='eager'));await p.waitForTimeout(5000);await p.screenshot({path:shots+'/mobile.png',fullPage:true});}
+  if(locale==='en'&&size===1440){await p.locator('.product-image img').evaluateAll(imgs=>imgs.forEach(img=>img.loading='eager'));await p.waitForTimeout(5000);await p.screenshot({path:shots+'/desktop.png',fullPage:true});}
   await ctx.close();
  }
 }
