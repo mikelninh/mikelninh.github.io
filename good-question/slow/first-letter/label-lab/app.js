@@ -1,7 +1,7 @@
 /* GOOD QUESTION / Label Detective: finite sourced exploration; never a nutrition label certification */
 (()=>{
  'use strict';
- const $=s=>document.querySelector(s);
+ const $=s=>document.querySelector(s),$=s=>[...document.querySelectorAll(s)];
  const langFrom=()=>{let x=new URLSearchParams(location.search).get('lang');if(!['en','de','vi'].includes(x)){try{x=localStorage.getItem('gq-letter-lang')}catch{}}return ['en','de','vi'].includes(x)?x:'en'};
  let locale=langFrom(),index=0,chosen=-1;
  const T={
