@@ -22,7 +22,7 @@ create table if not exists public.gt_ratings (
   product_id text not null references public.gt_products(id) on delete cascade,
   tier text not null check(tier in ('S','A','B','C','D')),
   note text not null default '' check(char_length(note)<=200),
-  is_public boolean not null default true,
+  is_public boolean not null default false,
   updated_at timestamptz not null default now(),
   primary key(user_id,product_id)
 );
