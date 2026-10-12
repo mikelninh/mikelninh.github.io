@@ -34,13 +34,7 @@ function relabel(){
   $$('[data-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.lang===lang)));
   document.title=t('hero')+' '+t('heroEm')+' — WUNDERPOST 001 · Mikel & Huong';
 }
-function productArt(p){
- const photo=p.photo?.src;
- const usable=photo&&/\.(png|jpg|jpeg|webp)(?:\?|$)/i.test(photo);
- const safePhoto=usable?esc(photo):'';
- const imageBlock=usable?`<img class="real-packshot" src="${safePhoto}" alt="${esc(p.brand+' '+p.name+' — product packaging photo; check actual pack before purchase')}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.parentElement.classList.add('image-unavailable')">`:'';
- return `<div class="product-art photo-art" style="--tile:${esc(p.tone)}">${imageBlock}<span class="photo-fallback" aria-hidden="true">${esc(p.brand+' '+p.name)}</span><a class="photo-credit" href="${esc(p.photo?.url||p.source)}" target="_blank" rel="noopener noreferrer">Image/source ↗</a></div>`;
-}
+function productArt(p){const title=p.kind==='ramen'?'RAMYUN':p.kind==='drink'?'SOY':p.kind==='tub'?'GREEK':p.kind==='bag'?'LENTILS':'TOFU';const shape=p.kind==='ramen'?'ramen':p.kind==='drink'?'drink':p.kind==='tub'?'tub':p.kind==='bag'?'bag':'box';return `<div class="product-art" style="--tile:${esc(p.tone)}"><div class="shape ${shape}"><span>${title}<br><small style="font:11px sans-serif;letter-spacing:1.5px">${esc(p.brand.toUpperCase())}</small></span></div></div>`}
 function options(selected){
   const labels=[t('noGrade'),t('sTier'),t('aTier'),t('bTier'),t('cTier')];
   return ranks.map((value,i)=>`<option value="${value}" ${selected===value?'selected':''}>${esc(labels[i])}</option>`).join('');
@@ -80,8 +74,7 @@ $('#share-letter').addEventListener('click',()=>{const u=new URL(location.href);
 $('#share-tiers').addEventListener('click',()=>shareLink(makeShareURL(),'Mikel & Huong — Good Things Tier List'));
 $('#copy-share-url').addEventListener('click',async()=>{const x=$('#share-url');try{await navigator.clipboard.writeText(x.value);announce(t('copied'))}catch{x.focus();x.select()}});
 $('#reset-tiers').addEventListener('click',()=>{if(!window.confirm(lang==='de'?'Alle Bewertungen dieses Entwurfs löschen?':lang==='vi'?'Xóa mọi điểm trong bản nháp này?':'Remove all grades in this local draft?'))return;ratings={mikel:{},huong:{}};safeSet(storageKey,JSON.stringify(ratings));snapshot=false;$('#snapshot-note').hidden=true;$('#share-output').hidden=true;makeCards();updateComparison()});
-$$('[data-lang]').forEach(btn=>btn.addEventListener('click',()=>{lang=validLang(btn.dataset.lang);safeSet('gq-letter-lang',lang);const u=new URL(location.href);u.searchParams.set('lang',lang);try{history.replaceState({},'',u)}catch(e){}const feedback=$('#send-feedback');if(feedback)feedback.addEventListener('click',()=>{const value=$('#reader-feedback').value.trim();if(value.length<8){announce('Please write at least a short thought (8 characters).');return;}const title='GOOD QUESTION · Reader idea for WUNDERPOST';const body='Question or feedback:\\n'+value+'\\n\\nThis is a public GitHub issue draft. No message has been sent automatically.';window.open('https://github.com/mikelninh/mikelninh.github.io/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body),'_blank','noopener,noreferrer');});
-relabel();makeCards();updateComparison();window.dispatchEvent(new Event('gq:language-changed'))}));
+$$('[data-lang]').forEach(btn=>btn.addEventListener('click',()=>{lang=validLang(btn.dataset.lang);safeSet('gq-letter-lang',lang);const u=new URL(location.href);u.searchParams.set('lang',lang);try{history.replaceState({},'',u)}catch(e){}relabel();makeCards();updateComparison();window.dispatchEvent(new Event('gq:language-changed'))}));
 relabel();makeCards();updateComparison();$('#snapshot-note').hidden=!snapshot;
 window.GQ_LETTER_TEST={getRatings:()=>structuredClone(ratings),getLanguage:()=>lang,shareURL:makeShareURL,productIds:()=>[...validIds],getSnapshot:()=>snapshot};
 })();
