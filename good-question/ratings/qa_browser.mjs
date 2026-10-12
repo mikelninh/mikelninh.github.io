@@ -84,7 +84,11 @@ try{
  const reply=await other.evaluate(()=>window.__lastShare);
  await p.goto(reply,{waitUntil:'domcontentloaded'});await p.waitForSelector('#share-import:not([hidden])');
  await p.locator('#import-snapshot').click();
- check(await p.evaluate(id=>window.GQ_RATING_TEST.score(id,'huong').grade,id)==='A','Huong snapshot imported on first phone');
+ check(await p.evaluate(id=>window.GQ_RATING_TEST.score(id,'huong').grade,id)==='B','safe merge preserves existing Huong B without consent');
+ await p.goto(reply,{waitUntil:'domcontentloaded'});await p.waitForSelector('#share-import:not([hidden])');
+ p.once('dialog',dialog=>dialog.accept());
+ await p.locator('#replace-snapshot').click();
+ check(await p.evaluate(id=>window.GQ_RATING_TEST.score(id,'huong').grade,id)==='A','explicit consent replaces Huong B with latest shared Huong A');
  check(await p.evaluate(id=>window.GQ_RATING_TEST.score(id,'mikel').grade,id)==='S','Mikel score unaffected by receiving Huong');
  // Add custom product with self-reported nutrition and no image.
  await p.locator('#add-product').click();await p.locator('#custom-dialog[open]').waitFor();
