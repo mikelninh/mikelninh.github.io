@@ -58,7 +58,8 @@ check('No copied newspaper brand assets','nytimes' not in page.lower() and 'wash
 check('All local script and stylesheet files exist', all((BASE/x).exists() if not x.startswith('../') else (BASE/x).resolve().exists() for x in ['data.js','photos.js','app.js','release11.js','style.css','release11.css','../audio-v11.js','label-lab/index.html','label-lab/app.js','label-lab/style.css']))
 check('Magazine homepage links to founding letter', 'first-letter/' in (SLOW/'index.html').read_text())
 check('Magazine story reader imports narration', 'src="./audio-v11.js"' in (SLOW/'index.html').read_text())
-\nphotos_js=(BASE/'photos.js').read_text()
+
+photos_js=(BASE/'photos.js').read_text()
 manifest=json.loads(photos_js[len('window.GQ_PHOTOS='):].strip().rstrip(';'))
 check('Exactly seven sourced authentic product photos',set(manifest['products'])=={p['id'] for p in data['products']})
 check('Every photo uses an original HTTPS source and explicitly credits its provider',all(p.get('url','').startswith('https://') and p.get('photoPage','').startswith('https://') and p.get('credit') for p in manifest['products'].values()))
