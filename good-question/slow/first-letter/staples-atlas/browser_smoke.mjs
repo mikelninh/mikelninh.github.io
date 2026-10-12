@@ -12,7 +12,7 @@ for(const size of [390,768,1440]){
  for(const locale of ['de','en','vi']){
   const ctx=await browser.newContext({viewport:{width:size,height:880},reducedMotion:'reduce'});
   const p=await ctx.newPage();p.on('pageerror',e=>errors.push(size+'/'+locale+': '+String(e)));
-  await p.goto(base+'?lang='+locale,{waitUntil:'domcontentloaded'});await p.locator('.product-card').first().waitFor();
+  await p.goto(base+'?lang='+locale,{waitUntil:'domcontentloaded'});await p.locator('.product-card').first().waitFor();await p.locator('#warning-product .warning-card').waitFor({timeout:8000});
   check(await p.locator('html').getAttribute('lang')===locale, size+'/'+locale+' language');
   check(await p.locator('.product-card').count()===(size<=620?12:24),size+'/'+locale+' initial batch');
   check(await p.locator('h1').count()===1,size+'/'+locale+' one headline');
