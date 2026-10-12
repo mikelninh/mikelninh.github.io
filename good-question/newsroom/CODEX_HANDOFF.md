@@ -93,3 +93,13 @@ Scientific/conservation: marine ecologists, NOAA-linked researchers, local invas
 ## Suggested Codex starting prompt
 
 > Read `good-question/AGENTS.md` and `good-question/newsroom/CODEX_HANDOFF.md`. Act as QUILL, our Editor-in-Chief. Inspect the live and local publication, run the checks, read the existing backlog, and select ONE highest-value item we can finish today. Work on a branch, preserve Issue 03, keep public claims conservative, draft and verify with PROOF, make the interface lovely with ATELIER, and present a working link/diff plus QA report and a concise human approval checklist. Do not publish or claim professional review without my approval. Keep the next WUNDERPOST at four pages. Remember: it won't and can't be perfect; it can be honest and useful.
+
+
+## THE MAKING OF — public founder's journal (new pilot, human approval pending)
+
+- Draft review path: `good-question/slow/studio/index.html`, created in branch `good-question-studio-diary-001`. It is linked from the Slow Edition newsroom on that branch, **not approved to publish yet**.
+- Post 001: *I'm building a small media company with AI. Not an article factory.* Human first-person editor's log in EN, plus AI-assisted DE and VI translations awaiting native review. The visible disclosure must remain.
+- Publisher review: check first-person accuracy, exact timeline, wording of the lionfish ethical dilemma, dates/links, 120/120 **technical** tests vs independent source verification, product-label uncertainty, no invented revenue or affiliate deals. Flag any false implication that QUILL, PROOF and ATELIER are continuously running agents.
+- Cadence: update the notebook approximately monthly **only when something substantive changed**. Each entry includes date, what shipped (commit/test proof), what failed, what remains unknown, readers' feedback with consent, a precise next action, and provenance. No made-up audience analytics.
+- Maintain a single article page with a stable permalink; add RSS and a WUNDERPOST excerpt only once a human approves and merges the final article. Keep source text reviewable in the PR; do not programmatically submit a newsletter or sponsored endorsement.
+- Run `python3 good-question/slow/studio/qa_blog.py` and the existing Slow Edition QA before requesting approval. CI syntax/accessibility checks are not an editorial or fact-check sign-off.
