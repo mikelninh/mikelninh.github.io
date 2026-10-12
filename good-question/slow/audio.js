@@ -6,7 +6,7 @@
  const supported=typeof window.speechSynthesis!=='undefined'&&typeof window.SpeechSynthesisUtterance!=='undefined';
  const synth=supported?window.speechSynthesis:null;
  const langMap={en:'en-GB',de:'de-DE',vi:'vi-VN'};
- let active=null,speed=1,generation=0,preferredVoice='';
+ let active=null,speed=1,generation=0;
  const css=document.createElement('style');
  css.textContent=`.gq-listen{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:12px 0;padding:11px 0;border-block:1px solid #ccd0c7;font:12px/1.5 Arial,sans-serif;color:#193229}.gq-listen button,.gq-listen select{min-height:42px;border:1px solid #b1bbb0;background:#fffdf6;color:#17362c;padding:8px 12px;font:700 12px Arial,sans-serif;cursor:pointer}.gq-listen button.gq-play{color:#fff;background:#273b96;border-color:#273b96}.gq-listen .gq-status{flex-basis:100%;font:11px/1.55 Arial,sans-serif;color:#647368;margin-top:2px}.gq-listen button:focus-visible,.gq-listen select:focus-visible{outline:3px solid #ec9062;outline-offset:2px}.gq-listen button:disabled{opacity:.48;cursor:not-allowed}.gq-listen label{display:flex;gap:8px;align-items:center;font-weight:700}.gq-listen--dialog{margin:8px 18px;padding:6px 0}.gq-listen--dialog .gq-status{max-width:610px}.gq-listen select{max-width:110px}@media(max-width:390px){.gq-listen button{padding:8px 9px}}`;
  document.head.appendChild(css);
@@ -51,7 +51,7 @@
   if(index>=player.chunks.length){active=null;resetUi(player);player.status.textContent=txt('done');return}
   const u=new SpeechSynthesisUtterance(player.chunks[index]);
   const voiceLang=langMap[locale()]||'en-GB';u.lang=voiceLang;u.rate=speed;u.pitch=1;u.volume=1;
-  const voices=synth.getVoices()||[];const voice=voices.find(v=>v.voiceURI===preferredVoice&&v.lang.toLowerCase().startsWith(locale()))||getVoice(voiceLang);if(voice)u.voice=voice;
+  const voice=getVoice(voiceLang);if(voice)u.voice=voice;
   u.onend=()=>{if(token===generation)narrate(player,index+1,token)};
   u.onerror=e=>{if(token!==generation)return;
    if(e.error==='interrupted'||e.error==='canceled')return;
@@ -76,11 +76,11 @@
   mount.dataset.gqAudioAttached='true';
   const el=document.createElement('div');el.className='gq-listen'+(dialog?' gq-listen--dialog':'');
   el.setAttribute('role','group');el.setAttribute('aria-label','Article audio playback controls');
-  el.innerHTML=`<button type="button" class="gq-play" data-say-play></button><button type="button" data-say-pause disabled></button><button type="button" data-say-stop disabled></button><label><span data-say-rate-label></span><select data-say-rate aria-label="Audio playback speed"><option value="1">1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label><label><span data-say-voice-label>Voice</span><select data-say-voice aria-label="Voice"><option value="">Auto</option></select></label><span class="gq-status" data-say-status role="status" aria-live="polite"></span>`;
+  el.innerHTML=`<button type="button" class="gq-play" data-say-play></button><button type="button" data-say-pause disabled></button><button type="button" data-say-stop disabled></button><label><span data-say-rate-label></span><select data-say-rate aria-label="Audio playback speed"><option value="1">1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label><span class="gq-status" data-say-status role="status" aria-live="polite"></span>`;
   mount.appendChild(el);
-  const player={target,play:el.querySelector('[data-say-play]'),pause:el.querySelector('[data-say-pause]'),stop:el.querySelector('[data-say-stop]'),status:el.querySelector('[data-say-status]'),rate:el.querySelector('[data-say-rate]'),rateLabel:el.querySelector('[data-say-rate-label]'),voiceSelect:el.querySelector('[data-say-voice]')};
+  const player={target,play:el.querySelector('[data-say-play]'),pause:el.querySelector('[data-say-pause]'),stop:el.querySelector('[data-say-stop]'),status:el.querySelector('[data-say-status]'),rate:el.querySelector('[data-say-rate]'),rateLabel:el.querySelector('[data-say-rate-label]')};
   const applyLabels=()=>{player.play.textContent=txt('play');player.pause.textContent=txt('pause');player.stop.textContent=txt('stop');player.rateLabel.textContent=txt('speed');player.status.textContent=supported?txt('ready'):txt('unavailable')};
-  applyLabels();const refreshVoices=()=>{if(!supported)return;const list=(synth.getVoices()||[]).filter(v=>v.lang.toLowerCase().startsWith(locale()));player.voiceSelect.replaceChildren(new Option('Auto',''),...list.map(v=>new Option(v.name+' · '+v.lang,v.voiceURI)));player.voiceSelect.value=list.some(v=>v.voiceURI===preferredVoice)?preferredVoice:'';};refreshVoices();if(supported)synth.addEventListener?.('voiceschanged',refreshVoices);player.voiceSelect.addEventListener('change',()=>{preferredVoice=player.voiceSelect.value;stop();player.status.textContent=txt('ready');});player.rate.value=String(speed);if(!supported)player.play.disabled=true;
+  applyLabels();player.rate.value=String(speed);if(!supported)player.play.disabled=true;
   player.play.addEventListener('click',()=>play(player));
   player.pause.addEventListener('click',()=>{if(active!==player||!supported)return;
    if(synth.paused){try{synth.resume()}catch(e){};player.pause.textContent=txt('pause');player.status.textContent=txt('busy')}
@@ -88,7 +88,7 @@
   });
   player.stop.addEventListener('click',stop);
   player.rate.addEventListener('change',()=>{speed=Number(player.rate.value)||1;const was=active===player;stop();document.querySelectorAll('[data-say-rate]').forEach(s=>s.value=String(speed));player.status.textContent=was?txt('switched'):txt('ready')});
-  document.addEventListener('gq:language-changed',()=>{stop();applyLabels();refreshVoices()});
+  document.addEventListener('gq:language-changed',()=>{stop();applyLabels()});
   return player
  }
  document.querySelectorAll('[data-audio-target]').forEach(mount=>createPlayer(mount,mount.dataset.audioTarget,false));
