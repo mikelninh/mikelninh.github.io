@@ -1,0 +1,27 @@
+name: GOOD QUESTION — studio-audio release gate
+on:
+  pull_request:
+    paths:
+      - 'good-question/slow/first-letter/audio-manifest.js'
+      - 'good-question/slow/first-letter/studio-player.js'
+      - 'good-question/slow/first-letter/qa_studio_audio.py'
+      - 'good-question/slow/first-letter/index.html'
+      - '.github/workflows/good-question-studio-audio.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'good-question/slow/first-letter/audio-manifest.js'
+      - 'good-question/slow/first-letter/studio-player.js'
+      - 'good-question/slow/first-letter/index.html'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audio-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check audio only announced for real files
+        run: python3 good-question/slow/first-letter/qa_studio_audio.py
+      - name: Preserve original publication integrity
+        run: python3 good-question/slow/first-letter/qa_release.py
