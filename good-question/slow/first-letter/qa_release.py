@@ -13,7 +13,7 @@ assert data_js.startswith('window.GQ_LETTER=') and data_js.rstrip().endswith(';'
 data=json.loads(data_js[len('window.GQ_LETTER='):].strip().rstrip(';'))
 page=(BASE/'index.html').read_text()
 app=(BASE/'app.js').read_text()
-audio=(SLOW/'audio.js').read_text()
+audio=(SLOW/'audio-v11.js').read_text()
 passed=0
 def check(desc,test):
  global passed
@@ -55,10 +55,20 @@ check('Rank serialization is constrained to valid products', 'validIds.has(m[1])
 check('URL snapshots do not transmit free-text reviews','u.searchParams.set(\'tiers\'' in app and 'localStorage' in app)
 check('No ads, trackers or analytics',not any(x in page.lower() for x in ['google-analytics','googletagmanager','facebook.net','meta-pixel','adservice']))
 check('No copied newspaper brand assets','nytimes' not in page.lower() and 'washingtonpost' not in page.lower())
-check('All local script and stylesheet files exist', all((BASE/x).exists() if not x.startswith('../') else (BASE/x).resolve().exists() for x in ['data.js','app.js','style.css','../audio.js']))
+check('All local script and stylesheet files exist', all((BASE/x).exists() if not x.startswith('../') else (BASE/x).resolve().exists() for x in ['data.js','photos.js','app.js','release11.js','style.css','release11.css','../audio-v11.js','label-lab/index.html','label-lab/app.js','label-lab/style.css']))
 check('Magazine homepage links to founding letter', 'first-letter/' in (SLOW/'index.html').read_text())
-check('Magazine story reader imports narration', 'src="./audio.js"' in (SLOW/'index.html').read_text())
-for f in ['data.js','app.js','../audio.js']:
+check('Magazine story reader imports narration', 'src="./audio-v11.js"' in (SLOW/'index.html').read_text())
+
+photos_js=(BASE/'photos.js').read_text()
+manifest=json.loads(photos_js[len('window.GQ_PHOTOS='):].strip().rstrip(';'))
+check('Exactly seven sourced authentic product photos',set(manifest['products'])=={p['id'] for p in data['products']})
+check('Every photo uses an original HTTPS source and explicitly credits its provider',all(p.get('url','').startswith('https://') and p.get('photoPage','').startswith('https://') and p.get('credit') for p in manifest['products'].values()))
+check('Toomba image matches exact flagged variant EAN', '8801043017022' in manifest['products']['toomba']['url'] and '8801043017022' in manifest['products']['toomba']['page'])
+check('Game and reader-feedback widgets are integrated','release11.js' in page and 'photos.js' in page and 'audio-v11.js' in page)
+check('No fabricated game outcomes','NO SCORE' in (BASE/'label-lab/index.html').read_text())
+check('Original creative prototype links present',all(x in (BASE/'release11.js').read_text() for x in ['mia-little-lights','tiny-tactics-friends','#play']))
+
+for f in ['data.js','photos.js','app.js','release11.js','../audio-v11.js','label-lab/app.js']:
  p=(BASE/f).resolve()
  run=subprocess.run(['node','--check',str(p)],capture_output=True,text=True)
  check('JavaScript parse '+f,run.returncode==0)

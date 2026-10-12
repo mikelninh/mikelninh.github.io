@@ -4,14 +4,14 @@ on:
     branches: [main]
     paths:
       - 'good-question/slow/first-letter/**'
-      - 'good-question/slow/audio.js'
+      - 'good-question/slow/audio-v11.js'
       - 'good-question/slow/index.html'
       - 'good-question/newsroom/**'
       - '.github/workflows/good-question-wunderpost-qa.yml'
   pull_request:
     paths:
       - 'good-question/slow/first-letter/**'
-      - 'good-question/slow/audio.js'
+      - 'good-question/slow/audio-v11.js'
       - 'good-question/slow/index.html'
       - 'good-question/newsroom/**'
       - '.github/workflows/good-question-wunderpost-qa.yml'
