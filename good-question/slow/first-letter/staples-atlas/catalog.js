@@ -90,12 +90,15 @@ window.GQ_TIER_CATALOG={
       "brand": "Alpro",
       "name": "This Is Not M*lk Whole",
       "store": "Supermärkte",
-      "img": "https://cdn.mafrservices.com/sys-master-root/hae/h21/34771965247518/1834395_main.jpg",
+      "img": "https://bf1af2.a-cdn.akinoncloud.com/products/2024/09/12/82904/b7b2ebae-0e83-4c49-b823-2175bbb4a174.jpg",
       "source": "https://www.carrefouruae.com/mafuae/ar/organic-milk/alpro-not-milk-whole-1l/p/1834395",
       "region": "AE",
-      "note": "",
+      "note": "Alternative aus anderer Marktverpackung; Originalquelle auf Lulu UAE dokumentiert",
       "review": "unrated",
-      "vegan": "check-pack"
+      "vegan": "check-pack",
+      "imgAlternates": [
+        "https://cdn.mafrservices.com/sys-master-root/hae/h21/34771965247518/1834395_main.jpg"
+      ]
     },
     {
       "id": "taifun-bio-tofu-natur-200-g",
@@ -194,12 +197,15 @@ window.GQ_TIER_CATALOG={
       "brand": "dmBio",
       "name": "Räuchertofu 200 g",
       "store": "dm",
-      "img": "https://duitsedrogisterij.nl/cdn/shop/products/64b2b0e6c985236be3f78dc0a2e649e3.webp?v=1675020323",
+      "img": "https://www.fresh-store.eu/29493-medium_default/dmbio-tofu-smoked-tofu-200-g.jpg",
       "source": "https://duitsedrogisterij.nl/products/dmbio-tofu-gerookte-tofu-200-g",
       "region": "NL",
-      "note": "",
+      "note": "Älteres Bild möglich; aktuelles dm-Etikett kontrollieren",
       "review": "unrated",
-      "vegan": "check-pack"
+      "vegan": "check-pack",
+      "imgAlternates": [
+        "https://duitsedrogisterij.nl/cdn/shop/products/64b2b0e6c985236be3f78dc0a2e649e3.webp?v=1675020323"
+      ]
     },
     {
       "id": "alnatura-tofu-natur-200-g",
@@ -207,12 +213,15 @@ window.GQ_TIER_CATALOG={
       "brand": "Alnatura",
       "name": "Tofu Natur 200 g",
       "store": "Bio / Supermärkte",
-      "img": "https://gladen.bg/storage/products/b117f312694d7a49bfd458db187ab9967605d6cf1bd02a6383cbb07af3e2276b_500.jpg",
-      "source": "https://gladen.bg/product/alnatura-bio-tofu-naturalno",
-      "region": "BG",
-      "note": "",
+      "img": "https://www.edeka24.de/out/pictures/generated/product/1/400_400_90/alnatura_bio_alntofu_natur_200g.jpg",
+      "source": "https://www.edeka24.de/Alnatura-Bio-Tofu-Natur-200G.html",
+      "region": "DE",
+      "note": "Händlerfoto; aktuelles Etikett prüfen",
       "review": "unrated",
-      "vegan": "check-pack"
+      "vegan": "check-pack",
+      "imgAlternates": [
+        "https://gladen.bg/storage/products/b117f312694d7a49bfd458db187ab9967605d6cf1bd02a6383cbb07af3e2276b_500.jpg"
+      ]
     },
     {
       "id": "tempehmanufaktur-bio-tempeh-natur-200-g",
@@ -220,12 +229,15 @@ window.GQ_TIER_CATALOG={
       "brand": "Tempehmanufaktur",
       "name": "Bio Tempeh Natur 200 g",
       "store": "Bio",
-      "img": "https://pi.nice-cdn.com/upload/image/product/large/default/tempehmanufaktur-tempeh-naturalny-bio-200-g-1190849-pl.jpg",
-      "source": "https://www.piccantino.pl/tempehmanufaktur/tempeh-naturalny-bio",
-      "region": "PL",
-      "note": "",
+      "img": "https://image.migros.ch/d/original/o-af-1-t.clr-fff/b326c6c074ef8d4ae9263fd1085337919da743ab/tempehmanufaktur-bio-tempeh-nature.jpg",
+      "source": "https://migipedia.migros.ch/de/bio-tempehmanufaktur-tempeh-nature?id=441b78d0-97c4-11ef-9313-d346e9c6b8f2",
+      "region": "CH",
+      "note": "Schweizer Packshot; deutsche Version kann abweichen",
       "review": "unrated",
-      "vegan": "check-pack"
+      "vegan": "check-pack",
+      "imgAlternates": [
+        "https://pi.nice-cdn.com/upload/image/product/large/default/tempehmanufaktur-tempeh-naturalny-bio-200-g-1190849-pl.jpg"
+      ]
     },
     {
       "id": "alpro-greek-style-natur-400-g",
@@ -792,12 +804,15 @@ window.GQ_TIER_CATALOG={
       "brand": "Ritter Sport",
       "name": "Vegan Salted Caramel",
       "store": "REWE / Supermärkte",
-      "img": "https://sweetsbysvea.com/cdn/shop/files/RitterSportSaltedCaramelVegan.jpg?v=1736042250&width=1080",
-      "source": "https://shop.ritter-sport.de/cat/index/sCategory/42",
-      "region": "US",
-      "note": "Exportpackung, EU-Zutaten/Packung prüfen",
+      "img": "https://www.veganleben.de/media/66/63/0d/1756999893/schokolade_ritter_sport_vegan_salted_caramel_100_g_426164_1.webp?ts=1756999893",
+      "source": "https://www.veganleben.de/schokolade-ritter-sport-vegan-salted-caramel-100g/426164",
+      "region": "DE",
+      "note": "Packshot Händler; Rezeptur bitte am aktuellen Etikett prüfen",
       "review": "unrated",
-      "vegan": "check-pack"
+      "vegan": "check-pack",
+      "imgAlternates": [
+        "https://sweetsbysvea.com/cdn/shop/files/RitterSportSaltedCaramelVegan.jpg?v=1736042250&width=1080"
+      ]
     },
     {
       "id": "lindt-vegan-hazelnut-classic-recipe",
@@ -883,12 +898,15 @@ window.GQ_TIER_CATALOG={
       "brand": "Nongshim",
       "name": "Shin Ramyun 120 g DE",
       "store": "Go Asia / Supermärkte",
-      "img": "https://goasia.net/19037-large_default/nongshim-shin-ramyun-instant-nudeln-120g.jpg",
-      "source": "https://goasia.net/de/instantnudeln/6621-nongshim-shin-ramyun-instant-nudeln-120g.html",
+      "img": "https://pi.nice-cdn.com/upload/image/product/large/default/170056_e4c12329.512x512.jpg",
+      "source": "https://www.piccantino.de/nongshim/instantnudeln-shin-ramyun-sehr-scharf",
       "region": "DE",
-      "note": "Deutsche Vegane Packungsvariante, nicht global verallgemeinern",
+      "note": "Deutscher vegane Packshot, andere Import-Rezepturen können abweichen",
       "review": "unrated",
-      "vegan": "check-pack"
+      "vegan": "check-pack",
+      "imgAlternates": [
+        "https://goasia.net/19037-large_default/nongshim-shin-ramyun-instant-nudeln-120g.jpg"
+      ]
     },
     {
       "id": "nongshim-soon-veggie-ramyun-112-g",
