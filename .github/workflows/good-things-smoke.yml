@@ -1,0 +1,24 @@
+name: GOOD THINGS 1.3 smoke tests
+on:
+  push:
+    paths:
+      - 'good-things/**'
+      - '.github/workflows/good-things-smoke.yml'
+  pull_request:
+    paths:
+      - 'good-things/**'
+      - '.github/workflows/good-things-smoke.yml'
+  workflow_dispatch:
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run offline smoke tests
+        run: node --test good-things/tests/smoke.mjs
