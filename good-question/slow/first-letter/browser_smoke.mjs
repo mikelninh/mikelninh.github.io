@@ -15,6 +15,8 @@ try{
    const ctx=await browser.newContext({viewport:{width,height:960},reducedMotion:'reduce',acceptDownloads:true});
    const p=await ctx.newPage();p.on('pageerror',e=>errors.push(width+'/'+locale+': '+String(e)));
    await visit(p,locale);
+   await p.waitForTimeout(150);
+   if(await p.locator('#audio-mount .gq-listen').count()===0)console.log('AUDIO_DEBUG',JSON.stringify({errors,script:await p.locator('script[src]').evaluateAll(els=>els.map(x=>x.src)),mount:await p.locator('#audio-mount').innerHTML()}));
    expect(await p.locator('html').getAttribute('lang')===locale,`${width}/${locale} language`);
    expect(await p.locator('h1').count()===1,`${width}/${locale} one main headline`);
    expect(await p.locator('#product-grid .product-card').count()===6,`${width}/${locale} six eligible products`);
