@@ -93,3 +93,21 @@ Scientific/conservation: marine ecologists, NOAA-linked researchers, local invas
 ## Suggested Codex starting prompt
 
 > Read `good-question/AGENTS.md` and `good-question/newsroom/CODEX_HANDOFF.md`. Act as QUILL, our Editor-in-Chief. Inspect the live and local publication, run the checks, read the existing backlog, and select ONE highest-value item we can finish today. Work on a branch, preserve Issue 03, keep public claims conservative, draft and verify with PROOF, make the interface lovely with ATELIER, and present a working link/diff plus QA report and a concise human approval checklist. Do not publish or claim professional review without my approval. Keep the next WUNDERPOST at four pages. Remember: it won't and can't be perfect; it can be honest and useful.
+
+
+## WUNDERPOST 001 — Mikel & Huong / usable release (12 October 2026)
+
+The first *full shareable letter* lives at `good-question/slow/first-letter/` and is linked from the Slow Edition homepage. This is separate from the old 4-page WUNDERPOST preview but follows the same four-page philosophy: one idea, one pantry experiment, one gentle ritual, and the next question.
+
+- Audience: ordinary curious people, not followers of an ideology; three languages DE/EN/VI.
+- People: **Mikel & Huong**. Do not infer personal ratings or quotations simply because the names label columns. The initial tier lists are intentionally blank. Any grades supplied via a shared URL are **unverified user-entered snapshots** until both publishers explicitly approve named ratings.
+- Six shortlisted plant-based products and one conspicuous Toomba label warning. Do not represent the linked German Toomba cup as vegan when its retailer listing contains animal ingredients.
+- Live affiliate status **none**; discount codes **none**. KoRo DE's Awin merchant profile is a real lead, not an accepted deal. Partner rules and approved SKU checks in `newsroom/PARTNERS.md`.
+- Audio: `good-question/slow/audio.js` adds browser text-to-speech to the letter and story modals with 1×/1.25×/1.5×/2× plus pause/resume/stop. It is not a mastered audio file, podcast, offline download or guaranteed background playback. Improve only with real recordings/licenses and native voice QA.
+- `good-question/slow/first-letter/data.js` is the source for translations and product provenance; `app.js` holds local ratings and shareable tier URL parsing, with zero rating API/accounts. `style.css` holds the original editorial visual system. Do not add tracking or an email field until data protection and real consent are implemented.
+- Test before release: `python3 good-question/slow/first-letter/qa_release.py`, Slow Edition regressions, 390px and desktop browser interactions, cross-language share-list roundtrip, Android TTS reality check. Do not claim passed checks that are not actually run.
+- To add new products: keep original exact SKU/country/source/date, manufacturer vs third-party evidence, actual first-hand tests and commercial status separate in data; never preassign S/A/B/C as somebody else's opinion.
+- First WUNDERPOST commercial experiment: Apply to **one** eligible partner, obtain real terms, then put one clearly disclosed link behind a product personally tested and reviewed. A conversion is only counted after merchant confirmation. Reader discounts exist only when real and valid.
+- Publish when the user clearly authorises a shareable release, but not fabricated human reviews. A content release is not medical or ecological expert certification.
+
+Remember that it won't and can't be perfect: ship one charming, useful, honest edition rather than a thousand half-truths.
