@@ -1,7 +1,7 @@
 window.GQ_PHOTOS={
   "version": "1.1.0",
   "checked": "2026-10-12",
-  "status": "Externally hosted retailer/manufacturer packshots for editorial identification only. Copyright stays with their owners; permission to reproduce or rehost is not assumed. Foreign packaging may differ. All direct photo-source links provided.",
+  "status": "Externally hosted source-attributed images. Photo access is not a redistribution licence; seek permission to self-host, check market packaging, and fall back to sourced page if an image fails.",
   "products": {
     "soy": {
       "url": "https://www.coursesu.com/dw/image/v2/BBQX_PRD/on/demandware.static/-/Sites-digitalu-master-catalog/default/dw0509cc56/5411188115472_A1R1_6154702_S18.png?sh=388&sm=fit&sw=388",
@@ -32,7 +32,7 @@ window.GQ_PHOTOS={
     },
     "veggie": {
       "url": "https://www.carrefour.it/on/demandware.static/-/Sites-carrefour-master-catalog-IT/default/dwd29281fe/large/VEGGIERAMYUNNOODLESPAC-8801043022705-1.png",
-      "alternate": "https://static.y-mart.de/media/193a1dcd78e9018c9e9322aa85b02235/8801043022705-800.webp",
+      "alternate": null,
       "page": "https://www.rewe.de/shop/p/nongshim-veggie-ramyun-nudelsuppe-vegan-560g/3587537",
       "photoPage": "https://www.carrefour.it/p/veggie-ramyun-noodles-pac/8801043022705.html",
       "credit": "Carrefour Italia · Soon Veggie product packshot",
