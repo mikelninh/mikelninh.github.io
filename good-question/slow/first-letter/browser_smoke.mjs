@@ -37,6 +37,7 @@ try{
        await p.locator('#ingredient-warning img').evaluate(e=>e.loading='eager');
        await p.waitForTimeout(4000);
        const state=await p.locator('.product-art img.gq-photo').evaluateAll(els=>els.map(e=>({id:e.closest('.product-card')?.dataset.product,loaded:e.complete&&e.naturalWidth>64,src:e.currentSrc})));
+       const warning=p.locator('#ingredient-warning img');
        const warnState=await warning.evaluate(e=>({loaded:e.complete&&e.naturalWidth>64,src:e.currentSrc}));
        console.log('PHOTO_REPORT',JSON.stringify({state,warnState}));
        expect(state.every(x=>x.loaded)&&warnState.loaded,`all seven real product photos loaded at ${width}px`);
