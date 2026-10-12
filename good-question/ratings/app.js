@@ -208,6 +208,18 @@ for(const [id,grade,tried,rebuy]of items){if(state.profiles[who][id]){skipped++;
 state.profiles[who][id]={tried:tried||Boolean(grade),grade,rebuy,notes:'',store:'',updated:new Date().toISOString()};added++}
 persist();pendingLink=null;$('#share-import').hidden=true;history.replaceState({},'',location.pathname+location.search);
 render();toast(`${added} freie Einträge importiert, ${skipped} bestehende geschützt.`)}
+function replaceSnapshot(){
+ if(!pendingLink)return;
+ const {who,items}=pendingLink;
+ const count=items.filter(([id])=>Boolean(state.profiles[who][id])).length;
+ const message=`Der Link behauptet, von ${names[who]} zu stammen. Es gibt keine Identitätsprüfung. Willst du ${items.length} Bewertungen in ${names[who]}s Spalte übernehmen (davon ${count} bestehende Bewertungen ändern)? Deine privaten Textnotizen bleiben erhalten.`;
+ if(!window.confirm(message))return;
+ for(const [id,grade,tried,rebuy] of items){
+  const previous=score(id,who);
+  state.profiles[who][id]={...previous,tried:tried||Boolean(grade),grade,rebuy,updated:new Date().toISOString()};
+ }
+ persist();pendingLink=null;$('#share-import').hidden=true;history.replaceState({},'',location.pathname+location.search);render();toast(`${items.length} Bewertungen bewusst aktualisiert. Lokale Textnotizen bleiben erhalten.`);
+}
 function download(filename,dataText){const blob=new Blob([dataText],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),15000)}
 function exportData(){download('GOOD_THINGS_Mikel_Huong_'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({kind:'good-things-v1',exported_at:new Date().toISOString(),...state},null,2)+'\n');toast('Deine vollständige private JSON-Datei ist exportiert.')}
 function openFile(ev){const file=ev.target.files?.[0];ev.target.value='';if(!file)return;if(file.size>1000000){toast('Importdatei zu groß (max. 1 MB).');return}
@@ -239,6 +251,7 @@ $('#import-list').addEventListener('click',()=>$('#import-file').click());$('#im
 $('#add-product').addEventListener('click',()=>openDialog($('#custom-dialog')));$('#custom-form').addEventListener('submit',customForm);
 $('#confirm-import').addEventListener('click',importFile);
 $('#import-snapshot').addEventListener('click',consumeSnapshot);
+$('#replace-snapshot').addEventListener('click',replaceSnapshot);
 $('#dismiss-snapshot').addEventListener('click',()=>{$('#share-import').hidden=true;pendingLink=null;history.replaceState({},'',location.pathname+location.search)});
 $('#load-more').addEventListener('click',()=>{pageLimit+=24;renderGrid()});
 $('#search-products').addEventListener('input',e=>{filters.query=e.target.value.trim();pageLimit=24;renderGrid()});
