@@ -1,0 +1,12 @@
+# GOOD THINGS · Mikel & Huong Tasting Studio
+
+- Public after publication: https://mikelninh.github.io/good-question/tier-studio/
+- Canonical dataset: `products.json` — **102 candidates across ten categories**. Each has exact name/brand, retailer-category/source URL, image fields, vegan verification scope, empty Mikel and Huong ratings, notes and date fields.
+- Dynamic photos: Visible cards attempt a source-constrained Open Food Facts community photo search. The algorithm requires the original brand and at least one distinctive product-name token. This is **not** exact SKU matching and may miss legitimate products or misidentify near variants; users must check pack images and labels. If no plausible match, the card shows its brand/name and a retailer source link — not an invented photo. Photos are lazy-loaded in batches of three. External API availability, image permissions and CORS may differ. For a final commercial publication, replace tentative community-photo lookups with editorially approved, licensed, SKU-specific images embedded in the catalog and add dated provenance.
+- Ratings: two separate columns, S/A/B/C/D or blank. User-entered values are saved to localStorage on that device, or exported as portable JSON. Shared URL encodes a **snapshot only**, not a verifiable statement by either named person. A reader can change both columns. Do not publish "Huong's favourites" as authenticated until Huong signs off.
+- Controls: search, category/store/status filters, pagination, compared tiers, clipboard copy, local JSON export/import, short share URL (only products with entered tiers).
+- Honest boundaries: a retailer's vegan-category placement is not independent vegan certification; exact SKUs/markets, allergens, ingredients, prices and availability can vary. Some Lidl/Vemondo items are **category-level candidates**, not verified current SKUs. No affiliate links, paid rankings, real-time price or automatic feedback collection.
+- Source collection: REWE tofu, plant-milk, yogurt, cheese, spreads, deli, meat alternatives, chips and vegan chocolate category listings, plus Lidl Vemondo brand range.
+- Recommendation: First taste the same five products separately (Tofu Natur, Räuchertofu, oat milk, soy milk, Greek-style yogurt), date the pack photos and provide honest notes. Then expand categories and partnerships.
+
+**It won't and can't be perfect. Only genuine favourites should become public endorsements.**
