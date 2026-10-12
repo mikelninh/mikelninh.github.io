@@ -23,6 +23,8 @@ try{
    expect(await p.locator('#playdesk .gq-game-card').count()===4,`${width}/${locale} four finite game links`);
    expect(await p.locator('#reader-feedback form').count()===1,`${width}/${locale} reader feedback control`);
    expect(await p.locator('#audio-mount .gq-audio').count()===1,`${width}/${locale} audio player present`);
+   expect(await p.locator('#audio-mount select[data-voice]').count()===1,`${width}/${locale} voice chooser present`);
+   expect(await p.locator('#audio-mount progress').count()===1,`${width}/${locale} sentence progress available`);
    expect((await p.locator('#audio-mount [data-speed] option').allTextContents()).includes('2×'),`${width}/${locale} 2x option`);
    if(locale==='en'){
      expect((await p.locator('[data-tier-product=soy]').evaluateAll(els=>els.map(el=>el.value))).every(v=>v===''),`${width} ratings empty by default`);
@@ -85,6 +87,14 @@ try{
    // Cancel via the engine rather than racing a temporarily enabled UI button.
    await p.evaluate(()=>{try{window.speechSynthesis?.cancel()}catch(e){}});
  }else{console.log('NOTE browser speech synthesis not available in headless Chromium')}
+ // Feedback is an intentionally manual GitHub issue draft; never an automatic server post.
+ await p.evaluate(()=>{window.__gqDraft=null;window.open=(url)=>window.__gqDraft=url});
+ await p.locator('#gq-feedback-rating').selectOption('useful');
+ await p.locator('#gq-feedback-question').fill('Please test a specific soy yogurt packet.');
+ await p.locator('#gq-feedback-form button[type=submit]').click();
+ const feedbackURL=await p.evaluate(()=>window.__gqDraft);
+ expect(feedbackURL?.startsWith('https://github.com/mikelninh/mikelninh.github.io/issues/new?'),'Reader Desk opens public draft only');
+ expect(feedbackURL?.includes('Please%20test%20a%20specific%20soy%20yogurt%20packet.'),'Reader Desk preserves actual text');
  await p.goto(base+'?story=reef&lang=en',{waitUntil:'domcontentloaded'});
  await p.waitForSelector('#article-dialog[open]',{timeout:12000});
  expect(await p.locator('#article-dialog .gq-audio').count()===1,'existing Slow Edition story has narration controls');
@@ -104,6 +114,12 @@ try{
  await p.locator('[data-lang=de]').click();
  expect(await p.locator('#game-title').innerText().then(t=>t.includes('Shin Ramyun')),'game content German');
  expect(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'game no horizontal overflow on mobile');
+ await p.locator('#feedback').fill('Can we verify exact German Soy and ramen ingredients?');
+ await p.evaluate(()=>{window.__gqDraft=null;window.open=(url)=>window.__gqDraft=url});
+ await p.locator('#send').click();
+ expect((await p.evaluate(()=>window.__gqDraft))?.startsWith('https://github.com/mikelninh/mikelninh.github.io/issues/new?'),'Label Detective suggestion opens a voluntary issue draft');
+ await p.locator('[data-lang=vi]').click();
+ expect(await p.locator('html').getAttribute('lang')==='vi','Label Detective supports Vietnamese');
  expect(errors.length===0,'no JavaScript page exceptions: '+errors.join('; '));
  await ctx.close();
  console.log('TOTAL',checks,'browser checks passed');
