@@ -1,0 +1,29 @@
+name: GOOD QUESTION · Studio Journal QA
+on:
+  pull_request:
+    paths:
+      - 'good-question/slow/studio/**'
+      - 'good-question/slow/index.html'
+      - 'good-question/newsroom/**'
+      - '.github/workflows/good-question-studio-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-journal:
+    name: Validate essay, translations and public source trail
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Static blog and language checks (no external dependencies)
+        run: python3 good-question/slow/studio/qa_blog.py
+      - name: Verify editorial claim/status metadata
+        run: python3 good-question/newsroom/check_content.py
+      - name: Check the canonical Slow Edition content was not silently diverged
+        run: python3 good-question/slow/build_content.py --check
+      - name: Declare QA scope
+        run: |
+          echo 'Technical checks passed. This does not verify sources, translations, product labels or the publisher approval gate.'
+          echo 'The article remains a draft until explicitly approved by the human publisher.'
