@@ -261,13 +261,13 @@ function openProduct(id,tier,persona){
  if(!getProduct(id))return;
  st.selected=id;if(persona)st.persona=persona;
  const r=st.user?accountRating(id):guestRating(id,st.persona);
- st.draftTier=tier||r?.tier||'';st.draftNote=r?.note||'';st.draftPublic=r?.is_public!==false;
+ st.draftTier=tier||r?.tier||'';st.draftNote=r?.note||'';st.draftPublic=r?.is_public===true;
  $('#drawer').innerHTML=drawerHtml();openOverlay('drawerOverlay');
 }
 function changePersona(who){
  if(!['you','mikel','huong'].includes(who))return;
  st.persona=who;const r=guestRating(st.selected,who);
- st.draftTier=r?.tier||'';st.draftNote=r?.note||'';st.draftPublic=r?.is_public!==false;
+ st.draftTier=r?.tier||'';st.draftNote=r?.note||'';st.draftPublic=r?.is_public===true;
  $('#drawer').innerHTML=drawerHtml();
 }
 async function saveRating(){
@@ -406,7 +406,7 @@ function showLink(link){
 }
 function shareShelf(){
  if(st.user&&st.profile)return copyLink(URL_BASE+'?u='+encodeURIComponent(st.profile.handle));
- const own=selfRatings().filter(r=>r.is_public!==false);
+ const own=selfRatings();
  if(!own.length)return toast('Rate something first to share a shelf.');
  copyLink(snapshotUrl(own));
 }
