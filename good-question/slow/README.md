@@ -31,3 +31,12 @@ Human expert review, verified SKU photographs, formal taste tests, a subscriber 
 ## Status
 
 Local browser QA: run `qa_slow.py`. It tests four viewport widths in three languages and key interactions. Source truth, actual brand labels and professional review require further human work. This is a **pilot to share and improve**, not a claim of 10/10 perfection.
+
+
+## WUNDERPOST's first full letter / dual pantry (12 October 2026)
+
+`./first-letter/` is the separate, shareable Mikel & Huong four-part editorial letter: genuine product shortlist, dual S/A/B/C **unverified local editor** inputs (blank by default), shareable URL snapshot, external brand/retailer source links, conspicuous market-specific Toomba warning and no live affiliate/discount claims. Its own `README.md` documents release and authenticity safeguards.
+
+`./audio.js` adds browser-generated speech to the Slow Edition article dialog and letter; it offers 1×/1.25×/1.5×/2× and pause/resume/stop. Reading aloud is contingent on browser voice support; locking the screen may interrupt. Audio files, actual translations vetted by native speakers, human-written subtitles for future video and offline playback are later features, not current facts.
+
+Run `python3 good-question/slow/first-letter/qa_release.py` alongside the pre-existing 120/120 technical QA suite and check the new link on the live origin after merge. Personal tier grades are not authenticated or publicly verified.
