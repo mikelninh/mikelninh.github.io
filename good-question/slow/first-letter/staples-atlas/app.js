@@ -116,7 +116,7 @@ function list(){
  box.setAttribute('aria-busy','false');
  $('#empty-state').hidden=arr.length>0;$('#empty-state').textContent=T('emptyText');
  $('#pagination').innerHTML=arr.length>limit?'<button type="button" id="load-more">'+esc(T('more'))+' ('+(arr.length-limit)+')</button>':'';
- $('img',box).forEach(img=>{
+ $$('img',box).forEach(img=>{
    const p=products.find(p=>p.id===img.closest('[data-product]')?.dataset.product);
    const alternates=(p?.imgAlternates||[]).filter(url=>/^https:\/\//.test(url));
    let attempt=0;
