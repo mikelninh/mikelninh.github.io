@@ -18,7 +18,7 @@ const attr=esc;
 const validUrl=(s)=>{try{let u=new URL(s);return u.protocol==='https:'?u.href:''}catch(_){return''}};
 const getProduct=(id)=>ALL.find((p)=>p.id===id);
 const tryRead=(key,fallback)=>{try{const d=JSON.parse(localStorage.getItem(key)||'null');return d&&typeof d==='object'?d:fallback}catch(_){return fallback}};
-const st={view:'discover',category:'all',store:'all',sort:'name',query:'',ratedOnly:false,persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
+const st={view:'discover',category:'all',store:'all',sort:'name',query:'',ratedOnly:false,persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
 let sb=null;
 function safeGuest(raw){
  const ret={mikel:{},huong:{},you:{}};
@@ -95,14 +95,20 @@ function renderDiscover(){
  +'<div id="productResults">'+(a.length?'<div class="product-grid">'+a.map(productCard).join('')+'</div>':empty('⌕','No matches','Try another brand, category or search term.'))+'</div>';
 }
 function ourPreview(){
- const a=st.guest.mikel,b=st.guest.huong;let ids=[...new Set([...Object.keys(a),...Object.keys(b)])].filter(getProduct);
- return {a,b,ids,both:ids.filter(id=>a[id]&&b[id]),agree:ids.filter(id=>a[id]&&b[id]&&a[id].tier===b[id].tier)};
+ const curatorByRole={mikel:st.curators.find(c=>c.role==='mikel')?.user_id,huong:st.curators.find(c=>c.role==='huong')?.user_id};
+ const ready=Boolean(curatorByRole.mikel&&curatorByRole.huong);
+ const published=ready&&st.ourMode!=='demo';
+ const toMap=who=>Object.fromEntries(st.allRatings.filter(r=>r.user_id===curatorByRole[who]&&r.is_public).map(r=>[r.product_id,r]));
+ const a=published?toMap('mikel'):st.guest.mikel;
+ const b=published?toMap('huong'):st.guest.huong;
+ const ids=[...new Set([...Object.keys(a),...Object.keys(b)])].filter(getProduct);
+ return {a,b,ids,published,ready,curatorByRole,both:ids.filter(id=>a[id]&&b[id]),agree:ids.filter(id=>a[id]&&b[id]&&a[id].tier===b[id].tier)};
 }
-function tierMiniCards(who){
- const arr=Object.entries(st.guest[who]||{}).filter(([id])=>getProduct(id)).sort((x,y)=>TIER_SCORE[y[1].tier]-TIER_SCORE[x[1].tier]);
+function tierMiniCards(who,ratings,published){
+ const arr=Object.entries(ratings||{}).filter(([id])=>getProduct(id)).sort((x,y)=>TIER_SCORE[y[1].tier]-TIER_SCORE[x[1].tier]);
  return arr.length?arr.slice(0,8).map(([id,r])=>{
   const p=getProduct(id);return '<div class="review-row"><span style="font-size:26px">'+esc(p.emoji)+'</span><div style="flex:1"><h4>'+esc(p.brand+' '+p.name)+'</h4><p>'+esc(r.note||'No taste note yet.')+'</p></div>'+tierBadge(r.tier)+'</div>';
- }).join(''):empty('♡','An empty shelf is a promise','Add a rating to begin your own little taste adventure.','<button class="button button-lime button-small" data-action="open-random" data-persona="'+who+'">Rate something ↗</button>');
+ }).join(''):published?empty('♡','No public opinions yet','Ratings stay off this public shelf until their real author chooses to share them.'):empty('♡','An empty preview shelf','Add a local practice rating to begin.','<button class="button button-lime button-small" data-action="open-random" data-persona="'+who+'">Rate something ↗</button>');
 }
 function renderOurs(){
  const m=ourPreview();
@@ -110,14 +116,18 @@ function renderOurs(){
  if(m.both.length){
   cmp=m.both.slice(0,5).map(id=>{const p=getProduct(id);return '<div class="rating-item"><div class="product-tile">'+esc(p.emoji)+'</div><div><h4>'+esc(p.brand+' '+p.name)+'</h4><small>'+esc(p.category)+'</small></div><div class="gap12">'+tierBadge(m.a[id].tier)+'<span class="muted">vs</span>'+tierBadge(m.b[id].tier)+'</div></div>'}).join('');
  }
- return head('THE FIRST TWO SHELVES','Two people.<br><em>Many opinions.</em>','A private co-rating playground for Mikel & Huong. Our published opinions appear only after both accounts are linked.','OUR LITTLE CORNER')
- +'<div class="inline-notice">♧ <strong>Private preview:</strong> these two demo shelves are saved only in your browser, not official or public reviews. Signed-in people rate under their own verified account, never as Mikel or Huong. &nbsp; <button class="navlink" data-action="import-json" style="display:inline;text-decoration:underline">Import Release 1.0 JSON ↗</button></div>'
+ const intro=m.published?'Real public opinions from two manually verified independent accounts. Private ratings are never displayed.':'A private co-rating playground for Mikel & Huong. Our public opinions will appear here once both verified creator accounts are linked.';
+ const notice=m.published?'<div class="inline-notice">✓ <strong>Verified curators:</strong> these ratings come from the account owners. Public ratings only. <button class="navlink" data-action="toggle-our-mode" style="display:inline;text-decoration:underline">Open the private demo ↗</button></div>':
+ '<div class="inline-notice">♧ <strong>Private preview:</strong> these two demo shelves are saved only in this browser, not official or public reviews. Signed-in people rate under their own account, never as Mikel or Huong. &nbsp; <button class="navlink" data-action="import-json" style="display:inline;text-decoration:underline">Import Release 1.0 JSON ↗</button>'+(m.ready?' &nbsp; <button class="navlink" data-action="toggle-our-mode" style="display:inline;text-decoration:underline">See verified public shelves ↗</button>':'')+'</div>';
+ const curatorButton=who=>m.published?'<button class="button button-small button-ghost" data-action="view-user" data-id="'+attr(m.curatorByRole[who])+'">View ↗</button>':'<button class="button button-small button-ghost" data-action="open-random" data-persona="'+who+'">+ Rate</button>';
+ return head('THE FIRST TWO SHELVES','Two people.<br><em>Many opinions.</em>',intro,'OUR LITTLE CORNER')
+ +notice
  +'<div class="profile-banner"><div><div class="eyebrow">OUR SHARED EXPERIMENT</div><h3>Same planet. Different tastes.</h3><p class="small muted" style="max-width:480px">Taste your way through tofu, chocolate, plant milks and life’s more delicious disagreements.</p></div><div class="difference">♡</div></div>'
- +'<div class="stat-row"><div><strong>'+Object.keys(m.a).length+'</strong><span>Mikel’s picks</span></div><div><strong>'+Object.keys(m.b).length+'</strong><span>Huong’s picks</span></div><div><strong>'+m.agree.length+'/'+m.both.length+'</strong><span>Matching ratings</span></div></div>'
- +'<div class="cards-row"><div class="surface"><div class="spaced"><div class="person"><div class="avatar sky">M</div><div><strong>Mikel’s shelf</strong><small>Curious taste-tester</small></div></div><button class="button button-small button-ghost" data-action="open-random" data-persona="mikel">+ Rate</button></div><hr class="rule">'+tierMiniCards('mikel')+'</div>'
- +'<div class="surface"><div class="spaced"><div class="person"><div class="avatar peach">H</div><div><strong>Huong’s shelf</strong><small>The other half of our taste lab</small></div></div><button class="button button-small button-ghost" data-action="open-random" data-persona="huong">+ Rate</button></div><hr class="rule">'+tierMiniCards('huong')+'</div></div>'
- +(cmp?'<div style="margin-top:22px">'+head('TASTE MATCH','The same products.','A comparison of things you both rated in this private preview.','TOGETHER')+'<div class="rating-list">'+cmp+'</div></div>':'')
- +'<div style="margin-top:20px" class="callout"><h3>Got a wonderfully different opinion?</h3><p>Rate a product as Mikel, then as Huong in this preview. Only their real accounts can publish their views.</p><button class="button button-dark button-small" data-nav="discover">Explore things ↗</button></div>';
+ +'<div class="stat-row"><div><strong>'+Object.keys(m.a).length+'</strong><span>Mikel’s '+(m.published?'public reviews':'preview picks')+'</span></div><div><strong>'+Object.keys(m.b).length+'</strong><span>Huong’s '+(m.published?'public reviews':'preview picks')+'</span></div><div><strong>'+m.agree.length+'/'+m.both.length+'</strong><span>Matching ratings</span></div></div>'
+ +'<div class="cards-row"><div class="surface"><div class="spaced"><div class="person"><div class="avatar sky">M</div><div><strong>Mikel’s shelf</strong><small>'+(m.published?'Verified curator':'Local preview')+'</small></div></div>'+curatorButton('mikel')+'</div><hr class="rule">'+tierMiniCards('mikel',m.a,m.published)+'</div>'
+ +'<div class="surface"><div class="spaced"><div class="person"><div class="avatar peach">H</div><div><strong>Huong’s shelf</strong><small>'+(m.published?'Verified curator':'Local preview')+'</small></div></div>'+curatorButton('huong')+'</div><hr class="rule">'+tierMiniCards('huong',m.b,m.published)+'</div></div>'
+ +(cmp?'<div style="margin-top:22px">'+head('TASTE MATCH','The same products.',m.published?'A comparison of products both curators publicly reviewed.':'A comparison of products both rated in this private preview.','TOGETHER')+'<div class="rating-list">'+cmp+'</div></div>':'')
+ +(!m.published?'<div style="margin-top:20px" class="callout"><h3>Got a wonderfully different opinion?</h3><p>Practise rating a product as Mikel, then as Huong in this browser. Only their identity-verified accounts can publish their opinions.</p><button class="button button-dark button-small" data-nav="discover">Explore things ↗</button></div>':'');
 }
 function yourInitials(){return st.profile?.display_name||st.user?.email?.split('@')[0]||'You'}
 function ratingRows(arr,readOnly){
@@ -473,17 +483,19 @@ async function toggleFollow(id){
 }
 async function loadRemote(){
  if(!sb)return;
- const [pr,ra,fo,li]=await Promise.all([
+ const [pr,ra,fo,li,cu]=await Promise.all([
   sb.from('gt_profiles').select('id,handle,display_name,bio,accent,created_at').limit(400),
   sb.from('gt_ratings').select('user_id,product_id,tier,note,is_public,updated_at').order('updated_at',{ascending:false}).limit(3000),
   sb.from('gt_follows').select('follower_id,following_id,created_at').limit(3000),
-  sb.from('gt_lists').select('id,user_id,title,slug,description,product_ids,is_public,created_at').limit(500)
+  sb.from('gt_lists').select('id,user_id,title,slug,description,product_ids,is_public,created_at').limit(500),
+  sb.from('gt_curators').select('role,user_id,verified_at').limit(2)
  ]);
  if(!pr.error){st.profiles=pr.data||[];st.profile=st.profiles.find(p=>p.id===st.user?.id)||null}
  if(!ra.error)st.allRatings=ra.data||[];
  if(!fo.error)st.follows=fo.data||[];
  if(!li.error)st.lists=li.data||[];
- const errors=[pr,ra,fo,li].filter(r=>r.error).map(r=>r.error.message);
+ if(!cu.error)st.curators=cu.data||[];
+ const errors=[pr,ra,fo,li,cu].filter(r=>r.error).map(r=>r.error.message);
  st.cloud=errors.length?'offline':'online';
  if(errors.length)toast('Community is temporarily unavailable: '+errors[0].slice(0,65));
  render();
@@ -567,6 +579,7 @@ document.addEventListener('click',async(event)=>{
  case 'open-feedback':feedbackModal();break;
  case 'toggle-follow':await toggleFollow(id);break;
  case 'view-user':await openPublicUser(id);break;
+ case 'toggle-our-mode':st.ourMode=st.ourMode==='demo'?'published':'demo';render();break;
  case 'select-link':$('#manualShare')?.select();break;
  }
  }catch(err){toast('That did not work: '+String(err.message||err).slice(0,120))}
