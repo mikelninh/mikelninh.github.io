@@ -111,7 +111,7 @@ function renderOurs(){
   cmp=m.both.slice(0,5).map(id=>{const p=getProduct(id);return '<div class="rating-item"><div class="product-tile">'+esc(p.emoji)+'</div><div><h4>'+esc(p.brand+' '+p.name)+'</h4><small>'+esc(p.category)+'</small></div><div class="gap12">'+tierBadge(m.a[id].tier)+'<span class="muted">vs</span>'+tierBadge(m.b[id].tier)+'</div></div>'}).join('');
  }
  return head('THE FIRST TWO SHELVES','Two people.<br><em>Many opinions.</em>','A private co-rating playground for Mikel & Huong. Our published opinions appear only after both accounts are linked.','OUR LITTLE CORNER')
- +'<div class="inline-notice">♧ <strong>Private preview:</strong> these two demo shelves are saved only in your browser, not official or public reviews. Signed-in people rate under their own verified account, never as Mikel or Huong.</div>'
+ +'<div class="inline-notice">♧ <strong>Private preview:</strong> these two demo shelves are saved only in your browser, not official or public reviews. Signed-in people rate under their own verified account, never as Mikel or Huong. &nbsp; <button class="navlink" data-action="import-json" style="display:inline;text-decoration:underline">Import Release 1.0 JSON ↗</button></div>'
  +'<div class="profile-banner"><div><div class="eyebrow">OUR SHARED EXPERIMENT</div><h3>Same planet. Different tastes.</h3><p class="small muted" style="max-width:480px">Taste your way through tofu, chocolate, plant milks and life’s more delicious disagreements.</p></div><div class="difference">♡</div></div>'
  +'<div class="stat-row"><div><strong>'+Object.keys(m.a).length+'</strong><span>Mikel’s picks</span></div><div><strong>'+Object.keys(m.b).length+'</strong><span>Huong’s picks</span></div><div><strong>'+m.agree.length+'/'+m.both.length+'</strong><span>Matching ratings</span></div></div>'
  +'<div class="cards-row"><div class="surface"><div class="spaced"><div class="person"><div class="avatar sky">M</div><div><strong>Mikel’s shelf</strong><small>Curious taste-tester</small></div></div><button class="button button-small button-ghost" data-action="open-random" data-persona="mikel">+ Rate</button></div><hr class="rule">'+tierMiniCards('mikel')+'</div>'
@@ -120,10 +120,10 @@ function renderOurs(){
  +'<div style="margin-top:20px" class="callout"><h3>Got a wonderfully different opinion?</h3><p>Rate a product as Mikel, then as Huong in this preview. Only their real accounts can publish their views.</p><button class="button button-dark button-small" data-nav="discover">Explore things ↗</button></div>';
 }
 function yourInitials(){return st.profile?.display_name||st.user?.email?.split('@')[0]||'You'}
-function ratingRows(arr){
+function ratingRows(arr,readOnly){
  return arr.sort((a,b)=>TIER_SCORE[b.tier]-TIER_SCORE[a.tier]).map(r=>{
  const p=getProduct(r.product_id);if(!p)return '';
- return '<div class="rating-item"><div class="product-tile">'+esc(p.emoji)+'</div><div><h4>'+esc(p.brand+' · '+p.name)+'</h4><small>'+esc(r.note||p.category)+' · '+(r.is_public===false?'Private':'Public')+'</small></div><div class="gap12">'+tierBadge(r.tier)+'<button class="button button-small button-ghost" data-action="open-product" data-id="'+attr(p.id)+'">Edit</button></div></div>';
+ return '<div class="rating-item"><div class="product-tile">'+esc(p.emoji)+'</div><div><h4>'+esc(p.brand+' · '+p.name)+'</h4><small>'+esc(r.note||p.category)+' · '+(r.is_public===false?'Private':'Public')+'</small></div><div class="gap12">'+tierBadge(r.tier)+'<button class="button button-small button-ghost" data-action="open-product" data-id="'+attr(p.id)+'"'+'>'+(readOnly?'View':'Edit')+'</button></div></div>';
  }).join('');
 }
 function renderMy(){
@@ -134,7 +134,7 @@ function renderMy(){
  +welcome
  +'<div class="profile-banner"><div class="person"><div class="avatar '+(st.profile?.accent||'lime')+'" style="width:72px;height:72px;font-size:30px">'+esc(yourInitials().substring(0,1).toUpperCase())+'</div><div><div class="eyebrow">YOUR CORNER OF GOOD THINGS</div><h3>'+esc(yourInitials())+'</h3><p class="small muted" style="margin:3px 0">'+(st.profile?'@'+esc(st.profile.handle):'Create your own taste universe')+'</p></div></div><button class="button button-small button-white" data-action="'+(st.user?'edit-profile':'open-auth')+'">'+(st.user?'Edit profile ↗':'Join ↗')+'</button></div>'
  +'<div class="callout"><div class="spaced"><div><div class="eyebrow">FIRST FIVE CHALLENGE</div><h3>'+((completed===5)?'Five out of five! ✳':'Five little discoveries.')+'</h3><p>'+((completed===5)?'You did it. Your shelf is officially growing.':'Rate '+(5-completed)+' more product'+(5-completed===1?'':'s')+' to finish your first challenge.')+'</p></div><strong style="font:600 40px Fraunces,serif">'+completed+'/5</strong></div><div class="challenge-bar">'+[0,1,2,3,4].map(i=>'<span class="'+(i<completed?'filled':'')+'"></span>').join('')+'</div></div>'
- +'<div class="spaced" style="margin:20px 0 12px"><h3 style="font:600 30px Fraunces,serif;margin:0">What you have tasted</h3><div class="gap12"><button class="button button-small button-ghost" data-action="export-json">Export JSON ↓</button><button class="button button-small button-lime" data-action="share-shelf">Share ↗</button></div></div>'
+ +'<div class="spaced" style="margin:20px 0 12px"><h3 style="font:600 30px Fraunces,serif;margin:0">What you have tasted</h3><div class="gap12"><button class="button button-small button-ghost" data-action="import-json">Import ↑</button><button class="button button-small button-ghost" data-action="export-json">Export JSON ↓</button><button class="button button-small button-lime" data-action="share-shelf">Share ↗</button></div></div>'
  +(arr.length?'<div class="rating-list">'+ratingRows(arr)+'</div>':empty('✳','Your shelf is a blank canvas','The next time a tofu knocks your socks off, come back and give it an S.','<button class="button button-lime" data-nav="discover">Find a first favourite ↗</button>'))
  +'<div class="surface" style="margin-top:18px"><div class="spaced"><div><h3>Make a collection</h3><p>Give your favourites a name and share a beautiful shortlist. Public collections are visible to anyone with the link.</p></div><button class="button button-dark button-small" data-action="create-list">+ New list</button></div>'
  +(st.user&&st.lists.filter(l=>l.user_id===st.user.id).length?st.lists.filter(l=>l.user_id===st.user.id).map(l=>'<div class="review-row"><div style="flex:1"><h4>'+esc(l.title)+'</h4><p>'+l.product_ids.length+' picks · '+(l.is_public?'Public':'Private')+'</p></div><button class="button button-small button-ghost" data-action="share-list" data-id="'+attr(l.id)+'">Open ↗</button></div>').join(''):'<p class="small muted">No collections yet. Your first one could be “The snack drawer of dreams”.</p>')+'</div>'
@@ -195,7 +195,7 @@ function snapshotUrl(ratings){
 }
 function renderShared(){
  return head('SHARED WITH YOU','A shelf from a friend.','A frozen snapshot of a friend’s favourite things. No personal notes are included.',String(st.shareData?.length||0)+' PICKS')
- +(st.shareData?.length?'<div class="rating-list">'+ratingRows(st.shareData)+'</div>':empty('⌁','This link could not be opened','It may have expired, been shortened or become damaged.'))
+ +(st.shareData?.length?'<div class="rating-list">'+ratingRows(st.shareData,true)+'</div>':empty('⌁','This link could not be opened','It may have expired, been shortened or become damaged.'))
  +'<div style="margin-top:18px"><button class="button button-lime" data-nav="discover">Make your own shelf ↗</button></div>';
 }
 function renderProfileView(){
@@ -206,7 +206,7 @@ function renderProfileView(){
  return head('GOOD THINGS / PEOPLE','Someone good.','Every shelf is personal. Compare only publicly shared reviews.','@'+u.handle)
  +'<div class="profile-banner"><div class="person">'+avatar(u,true)+'<div><h3>'+esc(u.display_name)+'</h3><p>@'+esc(u.handle)+' · '+followers+' followers</p><p>'+esc(u.bio||'A shelf with a little heart.')+'</p></div></div>'+(st.user&&st.user.id!==u.id?'<button class="button button-lime button-small" data-action="toggle-follow" data-id="'+attr(u.id)+'">'+(st.follows.some(f=>f.follower_id===st.user.id&&f.following_id===u.id)?'Following ✓':'+ Follow')+'</button>':'')+'</div>'
  +(match?'<div class="callout"><h3>'+((match.n)?match.score+'% taste match':'Discover your taste match')+'</h3><p>'+((match.n)?'Based on '+match.n+' products you both rated. This is a playful similarity, not a scientific personality test.':'Rate some of the same products to compare your taste.')+'</p></div>':'')
- +(arr.length?'<div class="rating-list">'+ratingRows(arr)+'</div>':empty('♡','No public reviews yet','This person may be new or keeping their reviews private.'))+'<p><button class="button button-ghost" data-nav="community">← Community</button></p>';
+ +(arr.length?'<div class="rating-list">'+ratingRows(arr,true)+'</div>':empty('♡','No public reviews yet','This person may be new or keeping their reviews private.'))+'<p><button class="button button-ghost" data-nav="community">← Community</button></p>';
 }
 function renderListView(){
  const l=st.shareList;if(!l)return empty('⌕','Collection not found','The list is private, removed or the link is incorrect.');
@@ -410,6 +410,37 @@ function shareShelf(){
  if(!own.length)return toast('Rate something first to share a shelf.');
  copyLink(snapshotUrl(own));
 }
+
+function canonical(s){return String(s||'').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]/g,'')}
+function importTier(value){
+ const v=typeof value==='object'&&value?value.tier||value.rating||value.value:value;
+ const tier=String(v||'').trim().toUpperCase();return TIERS.includes(tier)?tier:null;
+}
+async function importJson(file){
+ if(!file||file.size>2000000)return toast('Use a JSON file smaller than 2 MB.');
+ let data;try{data=JSON.parse(await file.text())}catch(_){return toast('This is not valid JSON. Nothing was imported.')}
+ const rows=Array.isArray(data)?data:Array.isArray(data?.products)?data.products:Array.isArray(data?.ratings)?data.ratings:[];
+ if(!rows.length)return toast('No product or rating rows found in this JSON file.');
+ let touched=0,rowsFound=0;
+ for(const x of rows){
+  if(!x||typeof x!=='object')continue;
+  const product=ALL.find(p=>p.id===(x.product_id||x.id))||ALL.find(p=>canonical(p.name)===canonical(x.name||x.product_name)&&canonical(p.brand)===canonical(x.brand));
+  if(!product)continue;rowsFound++;
+  const ratings=[
+   ['mikel',x.ratings?.mikel??x.mikel??x.mikel_rating??x.ratingMikel],
+   ['huong',x.ratings?.huong??x.huong??x.huong_rating??x.ratingHuong],
+   ['you',x.tier??x.rating??x.my_rating]
+  ];
+  for(const [who,v] of ratings){
+   const tier=importTier(v);if(!tier)continue;
+   const note=typeof v==='object'&&v?String(v.note||'').slice(0,200):'';
+   st.guest[who][product.id]={tier,note,is_public:true};touched++;
+  }
+ }
+ if(!touched)return toast('Matched '+rowsFound+' products, but no S–D ratings. Your current shelf is unchanged.');
+ persist();render();toast('Imported '+touched+' ratings from '+rowsFound+' matching products. Check the results before sharing.');
+}
+
 function exportJson(){
  const content={title:'GOOD THINGS',version:'1.3',exported_at:new Date().toISOString(),ratings:selfRatings().map(r=>({product_id:r.product_id,tier:r.tier,note:r.note,is_public:r.is_public}))};
  const blob=new Blob([JSON.stringify(content,null,2)],{type:'application/json'});
@@ -532,6 +563,7 @@ document.addEventListener('click',async(event)=>{
  }
  case 'share-shelf':shareShelf();break;
  case 'export-json':exportJson();break;
+ case 'import-json':{let file=$('#importJsonFile');if(!file){file=document.createElement('input');file.type='file';file.id='importJsonFile';file.accept='application/json,.json';file.style.display='none';document.body.appendChild(file)}file.value='';file.click();break}
  case 'open-feedback':feedbackModal();break;
  case 'toggle-follow':await toggleFollow(id);break;
  case 'view-user':await openPublicUser(id);break;
@@ -544,6 +576,7 @@ document.addEventListener('input',e=>{
  if(e.target.id==='ratingNote')st.draftNote=e.target.value.slice(0,200);
 });
 document.addEventListener('change',e=>{
+ if(e.target.id==='importJsonFile'){importJson(e.target.files?.[0]);return}
  if(e.target.id==='storeSelect'){st.store=e.target.value;refreshProducts()}
  if(e.target.id==='sortSelect'){st.sort=e.target.value;refreshProducts()}
  if(e.target.id==='ratedOnly'){st.ratedOnly=e.target.checked;refreshProducts()}
