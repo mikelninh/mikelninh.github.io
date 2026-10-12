@@ -115,9 +115,21 @@ function list(){
  box.setAttribute('aria-busy','false');
  $('#empty-state').hidden=arr.length>0;$('#empty-state').textContent=T('emptyText');
  $('#pagination').innerHTML=arr.length>limit?'<button type="button" id="load-more">'+esc(T('more'))+' ('+(arr.length-limit)+')</button>':'';
- $$('img',box).forEach(img=>{
-   img.addEventListener('error',()=>img.parentElement.classList.add('missing'),{once:true});
-   if(img.complete&&!img.naturalWidth)img.parentElement.classList.add('missing');
+ $('img',box).forEach(img=>{
+   const p=products.find(p=>p.id===img.closest('[data-product]')?.dataset.product);
+   const alternates=(p?.imgAlternates||[]).filter(url=>/^https:\/\//.test(url));
+   let attempt=0;
+   const onFail=()=>{
+     if(attempt<alternates.length){
+       const next=alternates[attempt++];
+       img.closest('.product-image').classList.remove('missing');
+       img.src=next;
+       const credit=img.closest('.product-image').querySelector('.image-ref');
+       if(credit){credit.href=next;credit.textContent=T('photo')+': '+imageHost(next)+' ↗'}
+     }else img.closest('.product-image').classList.add('missing');
+   };
+   img.addEventListener('error',onFail);
+   if(img.complete&&!img.naturalWidth)onFail();
  });
  renderSummary();
 }
