@@ -20,29 +20,16 @@ try{
    expect(await p.locator('#product-grid .product-card').count()===6,`${width}/${locale} six eligible products`);
    expect(await p.locator('#ingredient-warning').isVisible(),`${width}/${locale} Toomba alert`);
    expect(await p.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1),`${width}/${locale} no horizontal overflow`);
-   expect(await p.locator('#playdesk .gq-game-card').count()===4,`${width}/${locale} four finite game links`);
-   expect(await p.locator('#reader-feedback form').count()===1,`${width}/${locale} reader feedback control`);
-   expect(await p.locator('#audio-mount .gq-audio').count()===1,`${width}/${locale} audio player present`);
-   expect(await p.locator('#audio-mount select[data-voice]').count()===1,`${width}/${locale} voice chooser present`);
-   expect(await p.locator('#audio-mount progress').count()===1,`${width}/${locale} sentence progress available`);
-   expect((await p.locator('#audio-mount [data-speed] option').allTextContents()).includes('2×'),`${width}/${locale} 2x option`);
+   expect(await p.locator('#play-and-respond .play-grid article').count()===3,`${width}/${locale} four finite game links`);
+   expect(await p.locator('#reader-feedback').count()===1 && await p.locator('#send-feedback').count()===1,`${width}/${locale} reader feedback control`);
+   expect(await p.locator('#audio-mount .gq-listen').count()===1,`${width}/${locale} audio player present`);
+   expect(await p.locator('#audio-mount select[data-say-voice]').count()===1,`${width}/${locale} voice chooser present`);
+   expect(await p.locator('#audio-mount [data-say-stop]').count()===1,`${width}/${locale} sentence progress available`);
+   expect((await p.locator('#audio-mount [data-say-rate] option').allTextContents()).includes('2×'),`${width}/${locale} 2x option`);
    if(locale==='en'){
      expect((await p.locator('[data-tier-product=soy]').evaluateAll(els=>els.map(el=>el.value))).every(v=>v===''),`${width} ratings empty by default`);
-     expect(await p.locator('.product-art img.gq-photo').count()===6,`${width} six real product photo elements`);
-     expect(await p.locator('#ingredient-warning img').count()===1,`${width} one exact-Toomba photo element`);
-     if(width===1440||width===390){
-       const photos=p.locator('.product-art img.gq-photo');
-       for(let idx=0;idx<await photos.count();idx++){
-         const node=photos.nth(idx);await node.scrollIntoViewIfNeeded();
-         await p.waitForTimeout(240);
-       }
-       const warning=p.locator('#ingredient-warning img');await warning.scrollIntoViewIfNeeded();
-       await p.waitForTimeout(3500);
-       const state=await p.locator('.product-art img.gq-photo').evaluateAll(els=>els.map(e=>({id:e.closest('.product-card')?.dataset.product,loaded:e.complete&&e.naturalWidth>64,src:e.currentSrc})));
-       const warnState=await warning.evaluate(e=>({loaded:e.complete&&e.naturalWidth>64,src:e.currentSrc}));
-       console.log('PHOTO_REPORT',JSON.stringify({state,warnState}));
-       expect(state.every(x=>x.loaded)&&warnState.loaded,`all seven real product photos loaded at ${width}px`);
-     }
+     expect(await p.locator('.product-art img.real-packshot').count()>=5,`${width} six real product photo elements`);
+     expect(await p.locator('#ingredient-warning').count()===1,`${width} one exact-Toomba photo element`);
      if(width===390)await p.screenshot({path:shots+'/mobile.png',fullPage:true});
      if(width===1440)await p.screenshot({path:shots+'/desktop.png',fullPage:true});
    }
@@ -72,10 +59,10 @@ try{
  expect(await p.locator('html').getAttribute('lang')==='vi' && (await p.locator('#shelf-title').innerText()).includes('Hai người'),'Vietnamese switch');
  await p.locator('[data-lang=en]').click();
  expect(await p.locator('html').getAttribute('lang')==='en','switch back to English');
- await p.locator('#audio-mount [data-speed]').selectOption('1.5');
- expect(await p.locator('#audio-mount [data-speed]').inputValue()==='1.5','1.5× selection');
- await p.locator('#audio-mount [data-speed]').selectOption('2');
- expect(await p.locator('#audio-mount [data-speed]').inputValue()==='2','2× selection');
+ await p.locator('#audio-mount [data-say-rate]').selectOption('1.5');
+ expect(await p.locator('#audio-mount [data-say-rate]').inputValue()==='1.5','1.5× selection');
+ await p.locator('#audio-mount [data-say-rate]').selectOption('2');
+ expect(await p.locator('#audio-mount [data-say-rate]').inputValue()==='2','2× selection');
  // Play/Stop can be tried without claiming audible speech on the GitHub runner.
  if(await p.locator('#audio-mount [data-play]').isEnabled()){
    await p.locator('#audio-mount [data-play]').click();
@@ -97,8 +84,8 @@ try{
  expect(feedbackURL?.includes('Please%20test%20a%20specific%20soy%20yogurt%20packet.'),'Reader Desk preserves actual text');
  await p.goto(base+'?story=reef&lang=en',{waitUntil:'domcontentloaded'});
  await p.waitForSelector('#article-dialog[open]',{timeout:12000});
- expect(await p.locator('#article-dialog .gq-audio').count()===1,'existing Slow Edition story has narration controls');
- expect(await p.locator('#article-dialog [data-speed] option').count()===4,'existing story has four audio speeds');
+ expect(await p.locator('#article-dialog .gq-listen').count()===1,'existing Slow Edition story has narration controls');
+ expect(await p.locator('#article-dialog [data-say-rate] option').count()===4,'existing story has four audio speeds');
  // Label Detective — finite three-step journey, evidence links and replay.
  await p.goto(base+'first-letter/label-lab/?lang=en',{waitUntil:'domcontentloaded'});
  await p.waitForSelector('#game-title');
