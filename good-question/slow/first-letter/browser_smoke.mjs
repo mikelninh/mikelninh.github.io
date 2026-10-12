@@ -20,10 +20,27 @@ try{
    expect(await p.locator('#product-grid .product-card').count()===6,`${width}/${locale} six eligible products`);
    expect(await p.locator('#ingredient-warning').isVisible(),`${width}/${locale} Toomba alert`);
    expect(await p.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1),`${width}/${locale} no horizontal overflow`);
-   expect(await p.locator('#audio-mount .gq-listen').count()===1,`${width}/${locale} audio player present`);
-   expect((await p.locator('#audio-mount [data-say-rate] option').allTextContents()).includes('2×'),`${width}/${locale} 2x option`);
+   expect(await p.locator('#playdesk .gq-game-card').count()===4,`${width}/${locale} four finite game links`);
+   expect(await p.locator('#reader-feedback form').count()===1,`${width}/${locale} reader feedback control`);
+   expect(await p.locator('#audio-mount .gq-audio').count()===1,`${width}/${locale} audio player present`);
+   expect((await p.locator('#audio-mount [data-speed] option').allTextContents()).includes('2×'),`${width}/${locale} 2x option`);
    if(locale==='en'){
      expect((await p.locator('[data-tier-product=soy]').evaluateAll(els=>els.map(el=>el.value))).every(v=>v===''),`${width} ratings empty by default`);
+     expect(await p.locator('.product-art img.gq-photo').count()===6,`${width} six real product photo elements`);
+     expect(await p.locator('#ingredient-warning img').count()===1,`${width} one exact-Toomba photo element`);
+     if(width===1440){
+       const photos=p.locator('.product-art img.gq-photo');
+       for(let idx=0;idx<await photos.count();idx++){
+         const node=photos.nth(idx);await node.scrollIntoViewIfNeeded();
+         await p.waitForTimeout(240);
+       }
+       const warning=p.locator('#ingredient-warning img');await warning.scrollIntoViewIfNeeded();
+       await p.waitForTimeout(3500);
+       const state=await p.locator('.product-art img.gq-photo').evaluateAll(els=>els.map(e=>({id:e.closest('.product-card')?.dataset.product,loaded:e.complete&&e.naturalWidth>64,src:e.currentSrc})));
+       const warnState=await warning.evaluate(e=>({loaded:e.complete&&e.naturalWidth>64,src:e.currentSrc}));
+       console.log('PHOTO_REPORT',JSON.stringify({state,warnState}));
+       expect(state.every(x=>x.loaded)&&warnState.loaded,'all seven source product photos loaded on desktop');
+     }
      if(width===390)await p.screenshot({path:shots+'/mobile.png',fullPage:true});
      if(width===1440)await p.screenshot({path:shots+'/desktop.png',fullPage:true});
    }
@@ -53,25 +70,40 @@ try{
  expect(await p.locator('html').getAttribute('lang')==='vi' && (await p.locator('#shelf-title').innerText()).includes('Hai người'),'Vietnamese switch');
  await p.locator('[data-lang=en]').click();
  expect(await p.locator('html').getAttribute('lang')==='en','switch back to English');
- await p.locator('#audio-mount [data-say-rate]').selectOption('1.5');
- expect(await p.locator('#audio-mount [data-say-rate]').inputValue()==='1.5','1.5× selection');
- await p.locator('#audio-mount [data-say-rate]').selectOption('2');
- expect(await p.locator('#audio-mount [data-say-rate]').inputValue()==='2','2× selection');
+ await p.locator('#audio-mount [data-speed]').selectOption('1.5');
+ expect(await p.locator('#audio-mount [data-speed]').inputValue()==='1.5','1.5× selection');
+ await p.locator('#audio-mount [data-speed]').selectOption('2');
+ expect(await p.locator('#audio-mount [data-speed]').inputValue()==='2','2× selection');
  // Play/Stop can be tried without claiming audible speech on the GitHub runner.
- if(await p.locator('#audio-mount [data-say-play]').isEnabled()){
-   await p.locator('#audio-mount [data-say-play]').click();
+ if(await p.locator('#audio-mount [data-play]').isEnabled()){
+   await p.locator('#audio-mount [data-play]').click();
    // In headless Chromium, speech output may error/cancel immediately, disabling Stop.
    // Assert that Play is safe without pretending the runner can hear the voice.
    await p.waitForTimeout(350);
-   const audioState=await p.locator('#audio-mount [data-say-status]').innerText();
+   const audioState=await p.locator('#audio-mount [data-status]').innerText();
    expect(Boolean(audioState.trim()),'speech activation produces a visible status (hardware availability unverified)');
    // Cancel via the engine rather than racing a temporarily enabled UI button.
    await p.evaluate(()=>{try{window.speechSynthesis?.cancel()}catch(e){}});
  }else{console.log('NOTE browser speech synthesis not available in headless Chromium')}
  await p.goto(base+'?story=reef&lang=en',{waitUntil:'domcontentloaded'});
  await p.waitForSelector('#article-dialog[open]',{timeout:12000});
- expect(await p.locator('#article-dialog .gq-listen').count()===1,'existing Slow Edition story has narration controls');
- expect(await p.locator('#article-dialog [data-say-rate] option').count()===4,'existing story has four audio speeds');
+ expect(await p.locator('#article-dialog .gq-audio').count()===1,'existing Slow Edition story has narration controls');
+ expect(await p.locator('#article-dialog [data-speed] option').count()===4,'existing story has four audio speeds');
+ // Label Detective — finite three-step journey, evidence links and replay.
+ await p.goto(base+'first-letter/label-lab/?lang=en',{waitUntil:'domcontentloaded'});
+ await p.waitForSelector('#game-title');
+ expect((await p.locator('#game-title').innerText()).includes('Shin Ramyun'),'label lab shows first factual case');
+ for(const n of [1,2,1]){
+   await p.locator('[data-choice="'+n+'"]').click();
+   expect(await p.locator('#answer a[href^="https"]').count()===1,'game reveals primary source');
+   await p.locator('#next').click();
+ }
+ expect(await p.locator('#finish').isVisible(),'short game reaches explicit finish');
+ await p.locator('#again').click();
+ expect(await p.locator('#finish').isHidden(),'game replay restores first clue');
+ await p.locator('[data-lang=de]').click();
+ expect(await p.locator('#game-title').innerText().then(t=>t.includes('Shin Ramyun')),'game content German');
+ expect(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'game no horizontal overflow on mobile');
  expect(errors.length===0,'no JavaScript page exceptions: '+errors.join('; '));
  await ctx.close();
  console.log('TOTAL',checks,'browser checks passed');
