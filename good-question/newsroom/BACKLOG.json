@@ -4,25 +4,407 @@
   "target_cadence_days": 14,
   "newsletter_pages": 4,
   "editorial_owner": "Human publisher — Michael Ninh",
-  "status_legend": ["idea", "pitched", "researching", "sources_checked", "draft", "copy_edit", "translation_review", "human_approved", "scheduled", "published", "needs_correction"],
+  "status_legend": [
+    "idea",
+    "pitched",
+    "researching",
+    "sources_checked",
+    "draft",
+    "copy_edit",
+    "translation_review",
+    "human_approved",
+    "scheduled",
+    "published",
+    "needs_correction"
+  ],
   "items": [
-    {"id":"GQ-001","title":"Can eating a lionfish protect the reef?","type":"interactive investigation","pillar":"nature","status":"published","priority":1,"size":"M","owner":"QUILL + PROOF + ATELIER","issue":"slow-001","human_review":"pending expert ecology/ethics","sources_needed":["lionfish field study","NOAA control","ahimsa scholarship","filmmaker scene verification"],"next_action":"Commission actual ecologist interview; retain evidence limits"},
-    {"id":"GQ-002","title":"Before we say vegan: what do we mean?","type":"editorial glossary","pillar":"mind","status":"published","priority":1,"size":"S","owner":"QUILL + PROOF","issue":"slow-001","human_review":"pending","sources_needed":["Vegan Society original definition","Yoga Sutras scholarship"],"next_action":"Invite human philosopher/editor to review interpretation and DE/VI translations"},
-    {"id":"GQ-003","title":"The foods we genuinely love and repurchase","type":"editorial product shelf","pillar":"food","status":"published","priority":1,"size":"M","owner":"QUILL + PROOF","issue":"slow-001","human_review":"label audits pending","sources_needed":["exact German SKU ingredient photos","manufacturer updates","repeat taste notes"],"next_action":"Photograph current Toomba packaging; compare variants, no vegan endorsement until verified"},
-    {"id":"GQ-004","title":"How I am using AI to run a small media company","type":"founder diary","pillar":"studio","status":"published","priority":1,"size":"S","owner":"QUILL + HUMAN","issue":"slow-001","human_review":"publisher sign-off pending","sources_needed":["repo changelog","actual QA logs","real tracked costs only"],"next_action":"Write week-1 diary with dated measured steps and corrections"},
-    {"id":"GQ-005","title":"A five-minute tea practice","type":"quiet ritual","pillar":"mind","status":"published","priority":2,"size":"S","owner":"QUILL","issue":"slow-001","human_review":"pending","sources_needed":[],"next_action":"Photograph tea ritual; avoid unsupported health claims"},
-    {"id":"GQ-006","title":"One reef, three futures — a game with no score","type":"interactive journalism","pillar":"culture","status":"published","priority":1,"size":"M","owner":"ATELIER + PROOF","issue":"slow-001","human_review":"pending","sources_needed":["NOAA","field study","qualitative scenario audit"],"next_action":"Test with users and ecology expert; never imply predictive science"},
-    {"id":"GQ-007","title":"The exact German Shin Ramyun / Toomba ingredient check","type":"field-test editorial","pillar":"food","status":"pitched","priority":1,"size":"S","owner":"PROOF","issue":"slow-002","human_review":"required","sources_needed":["pack photos, lot/date, full ingredients, allergen list"],"next_action":"Buy or photograph exact German SKU; update variant-aware vegan status"},
-    {"id":"GQ-008","title":"Yoga ethics beyond the yoga mat: ahimsa, satya and action","type":"essay","pillar":"mind","status":"pitched","priority":2,"size":"M","owner":"QUILL + PROOF","issue":"slow-002","human_review":"philosophy scholar recommended","sources_needed":["Yoga Sutras translations","interpretations across traditions"],"next_action":"Outline opposing interpretations; avoid single authoritative yoga doctrine"},
-    {"id":"GQ-009","title":"A short comic about the one question nobody asked","type":"original 3–8 panel comic","pillar":"culture","status":"idea","priority":2,"size":"M","owner":"ATELIER","issue":"wunderpost-002","human_review":"required","sources_needed":["original IP/licensing"],"next_action":"Storyboard 3 panels; preserve expressive cobalt character style"},
-    {"id":"GQ-010","title":"How to find the best soy milk for your own breakfast","type":"evidence-based guide + taste test","pillar":"food","status":"pitched","priority":2,"size":"M","owner":"PROOF + QUILL","issue":"slow-002","human_review":"required","sources_needed":["German product labels","nutrients per 100 ml","independent test protocol"],"next_action":"Select 3 available variants and define repeatable blinded taste protocol"},
-    {"id":"GQ-011","title":"Does invasive-species management really work?","type":"reported interview","pillar":"nature","status":"idea","priority":2,"size":"L","owner":"QUILL + PROOF","issue":"later","human_review":"expert interview needed","sources_needed":["field ecologist","managed-site case reports","regional legal framework"],"next_action":"Prepare five neutral interview questions; obtain consent before attribution"},
-    {"id":"GQ-012","title":"What tea ceremony teaches us about attention","type":"culture and reflective essay","pillar":"mind","status":"idea","priority":3,"size":"S","owner":"QUILL","issue":"later","human_review":"cultural review recommended","sources_needed":["historical and living tea traditions"],"next_action":"Interview tea practitioner with attribution"},
-    {"id":"GQ-013","title":"A playing field for ideas: could an article be a game?","type":"media design experiment","pillar":"culture","status":"pitched","priority":2,"size":"M","owner":"ATELIER","issue":"slow-002","human_review":"required","sources_needed":["playtest feedback","accessibility checks"],"next_action":"Produce 90-second playable slice, test five readers"},
-    {"id":"GQ-014","title":"Berlin's greener future, explained without a miracle cure","type":"environmental urban feature","pillar":"nature","status":"idea","priority":3,"size":"L","owner":"QUILL + PROOF","issue":"later","human_review":"required","sources_needed":["Berlin plans","urban ecology research","municipal data"],"next_action":"Find original city sources and interview a local planning expert"},
-    {"id":"GQ-015","title":"The founder's notebook: what the agents did and got wrong","type":"transparent newsroom diary","pillar":"studio","status":"pitched","priority":1,"size":"S","owner":"HUMAN + QUILL","issue":"wunderpost-002","human_review":"required","sources_needed":["actual commits","QA results","measured time and costs"],"next_action":"Log dated decisions and corrections; do not fabricate efficiency claims"},
-    {"id":"GQ-016","title":"Readers' letters: the best disagreement of the fortnight","type":"community contribution","pillar":"studio","status":"idea","priority":3,"size":"S","owner":"QUILL","issue":"wunderpost-002","human_review":"privacy and consent required","sources_needed":["real opted-in reader letters"],"next_action":"Build safe submission workflow with explicit publishing consent"},
-    {"id":"GQ-017","title":"A world without the infinite feed","type":"technology and philosophy essay","pillar":"studio","status":"pitched","priority":2,"size":"M","owner":"QUILL + ATELIER","issue":"slow-002","human_review":"required","sources_needed":["peer-reviewed attention literature","reader feedback"],"next_action":"Review research and avoid claiming a proven wellbeing benefit"},
-    {"id":"GQ-018","title":"Interview with a vegan nutrition professional about B12","type":"expert Q&A","pillar":"food","status":"idea","priority":2,"size":"M","owner":"PROOF + QUILL","issue":"later","human_review":"credentialed expert required","sources_needed":["DGE position","NIH B12 materials","real consenting interview"],"next_action":"Identify credentialed nutrition professional; draft questions and disclosures"}
+    {
+      "id": "GQ-001",
+      "title": "Can eating a lionfish protect the reef?",
+      "type": "interactive investigation",
+      "pillar": "nature",
+      "status": "published",
+      "priority": 1,
+      "size": "M",
+      "owner": "QUILL + PROOF + ATELIER",
+      "issue": "slow-001",
+      "human_review": "pending expert ecology/ethics",
+      "sources_needed": [
+        "lionfish field study",
+        "NOAA control",
+        "ahimsa scholarship",
+        "filmmaker scene verification"
+      ],
+      "next_action": "Commission actual ecologist interview; retain evidence limits"
+    },
+    {
+      "id": "GQ-002",
+      "title": "Before we say vegan: what do we mean?",
+      "type": "editorial glossary",
+      "pillar": "mind",
+      "status": "published",
+      "priority": 1,
+      "size": "S",
+      "owner": "QUILL + PROOF",
+      "issue": "slow-001",
+      "human_review": "pending",
+      "sources_needed": [
+        "Vegan Society original definition",
+        "Yoga Sutras scholarship"
+      ],
+      "next_action": "Invite human philosopher/editor to review interpretation and DE/VI translations"
+    },
+    {
+      "id": "GQ-003",
+      "title": "The foods we genuinely love and repurchase",
+      "type": "editorial product shelf",
+      "pillar": "food",
+      "status": "published",
+      "priority": 1,
+      "size": "M",
+      "owner": "QUILL + PROOF",
+      "issue": "slow-001",
+      "human_review": "label audits pending",
+      "sources_needed": [
+        "exact German SKU ingredient photos",
+        "manufacturer updates",
+        "repeat taste notes"
+      ],
+      "next_action": "Photograph current Toomba packaging; compare variants, no vegan endorsement until verified"
+    },
+    {
+      "id": "GQ-004",
+      "title": "How I am using AI to run a small media company",
+      "type": "founder diary",
+      "pillar": "studio",
+      "status": "published",
+      "priority": 1,
+      "size": "S",
+      "owner": "QUILL + HUMAN",
+      "issue": "slow-001",
+      "human_review": "publisher sign-off pending",
+      "sources_needed": [
+        "repo changelog",
+        "actual QA logs",
+        "real tracked costs only"
+      ],
+      "next_action": "Write week-1 diary with dated measured steps and corrections"
+    },
+    {
+      "id": "GQ-005",
+      "title": "A five-minute tea practice",
+      "type": "quiet ritual",
+      "pillar": "mind",
+      "status": "published",
+      "priority": 2,
+      "size": "S",
+      "owner": "QUILL",
+      "issue": "slow-001",
+      "human_review": "pending",
+      "sources_needed": [],
+      "next_action": "Photograph tea ritual; avoid unsupported health claims"
+    },
+    {
+      "id": "GQ-006",
+      "title": "One reef, three futures — a game with no score",
+      "type": "interactive journalism",
+      "pillar": "culture",
+      "status": "published",
+      "priority": 1,
+      "size": "M",
+      "owner": "ATELIER + PROOF",
+      "issue": "slow-001",
+      "human_review": "pending",
+      "sources_needed": [
+        "NOAA",
+        "field study",
+        "qualitative scenario audit"
+      ],
+      "next_action": "Test with users and ecology expert; never imply predictive science"
+    },
+    {
+      "id": "GQ-007",
+      "title": "The exact German Shin Ramyun / Toomba ingredient check",
+      "type": "field-test editorial",
+      "pillar": "food",
+      "status": "pitched",
+      "priority": 1,
+      "size": "S",
+      "owner": "PROOF",
+      "issue": "slow-002",
+      "human_review": "required",
+      "sources_needed": [
+        "pack photos, lot/date, full ingredients, allergen list"
+      ],
+      "next_action": "Buy or photograph exact German SKU; update variant-aware vegan status"
+    },
+    {
+      "id": "GQ-008",
+      "title": "Yoga ethics beyond the yoga mat: ahimsa, satya and action",
+      "type": "essay",
+      "pillar": "mind",
+      "status": "pitched",
+      "priority": 2,
+      "size": "M",
+      "owner": "QUILL + PROOF",
+      "issue": "slow-002",
+      "human_review": "philosophy scholar recommended",
+      "sources_needed": [
+        "Yoga Sutras translations",
+        "interpretations across traditions"
+      ],
+      "next_action": "Outline opposing interpretations; avoid single authoritative yoga doctrine"
+    },
+    {
+      "id": "GQ-009",
+      "title": "A short comic about the one question nobody asked",
+      "type": "original 3–8 panel comic",
+      "pillar": "culture",
+      "status": "idea",
+      "priority": 2,
+      "size": "M",
+      "owner": "ATELIER",
+      "issue": "wunderpost-002",
+      "human_review": "required",
+      "sources_needed": [
+        "original IP/licensing"
+      ],
+      "next_action": "Storyboard 3 panels; preserve expressive cobalt character style"
+    },
+    {
+      "id": "GQ-010",
+      "title": "How to find the best soy milk for your own breakfast",
+      "type": "evidence-based guide + taste test",
+      "pillar": "food",
+      "status": "pitched",
+      "priority": 2,
+      "size": "M",
+      "owner": "PROOF + QUILL",
+      "issue": "slow-002",
+      "human_review": "required",
+      "sources_needed": [
+        "German product labels",
+        "nutrients per 100 ml",
+        "independent test protocol"
+      ],
+      "next_action": "Select 3 available variants and define repeatable blinded taste protocol"
+    },
+    {
+      "id": "GQ-011",
+      "title": "Does invasive-species management really work?",
+      "type": "reported interview",
+      "pillar": "nature",
+      "status": "idea",
+      "priority": 2,
+      "size": "L",
+      "owner": "QUILL + PROOF",
+      "issue": "later",
+      "human_review": "expert interview needed",
+      "sources_needed": [
+        "field ecologist",
+        "managed-site case reports",
+        "regional legal framework"
+      ],
+      "next_action": "Prepare five neutral interview questions; obtain consent before attribution"
+    },
+    {
+      "id": "GQ-012",
+      "title": "What tea ceremony teaches us about attention",
+      "type": "culture and reflective essay",
+      "pillar": "mind",
+      "status": "idea",
+      "priority": 3,
+      "size": "S",
+      "owner": "QUILL",
+      "issue": "later",
+      "human_review": "cultural review recommended",
+      "sources_needed": [
+        "historical and living tea traditions"
+      ],
+      "next_action": "Interview tea practitioner with attribution"
+    },
+    {
+      "id": "GQ-013",
+      "title": "A playing field for ideas: could an article be a game?",
+      "type": "media design experiment",
+      "pillar": "culture",
+      "status": "pitched",
+      "priority": 2,
+      "size": "M",
+      "owner": "ATELIER",
+      "issue": "slow-002",
+      "human_review": "required",
+      "sources_needed": [
+        "playtest feedback",
+        "accessibility checks"
+      ],
+      "next_action": "Produce 90-second playable slice, test five readers"
+    },
+    {
+      "id": "GQ-014",
+      "title": "Berlin's greener future, explained without a miracle cure",
+      "type": "environmental urban feature",
+      "pillar": "nature",
+      "status": "idea",
+      "priority": 3,
+      "size": "L",
+      "owner": "QUILL + PROOF",
+      "issue": "later",
+      "human_review": "required",
+      "sources_needed": [
+        "Berlin plans",
+        "urban ecology research",
+        "municipal data"
+      ],
+      "next_action": "Find original city sources and interview a local planning expert"
+    },
+    {
+      "id": "GQ-015",
+      "title": "The founder's notebook: what the agents did and got wrong",
+      "type": "transparent newsroom diary",
+      "pillar": "studio",
+      "status": "pitched",
+      "priority": 1,
+      "size": "S",
+      "owner": "HUMAN + QUILL",
+      "issue": "wunderpost-002",
+      "human_review": "required",
+      "sources_needed": [
+        "actual commits",
+        "QA results",
+        "measured time and costs"
+      ],
+      "next_action": "Log dated decisions and corrections; do not fabricate efficiency claims"
+    },
+    {
+      "id": "GQ-016",
+      "title": "Readers' letters: the best disagreement of the fortnight",
+      "type": "community contribution",
+      "pillar": "studio",
+      "status": "idea",
+      "priority": 3,
+      "size": "S",
+      "owner": "QUILL",
+      "issue": "wunderpost-002",
+      "human_review": "privacy and consent required",
+      "sources_needed": [
+        "real opted-in reader letters"
+      ],
+      "next_action": "Build safe submission workflow with explicit publishing consent"
+    },
+    {
+      "id": "GQ-017",
+      "title": "A world without the infinite feed",
+      "type": "technology and philosophy essay",
+      "pillar": "studio",
+      "status": "pitched",
+      "priority": 2,
+      "size": "M",
+      "owner": "QUILL + ATELIER",
+      "issue": "slow-002",
+      "human_review": "required",
+      "sources_needed": [
+        "peer-reviewed attention literature",
+        "reader feedback"
+      ],
+      "next_action": "Review research and avoid claiming a proven wellbeing benefit"
+    },
+    {
+      "id": "GQ-018",
+      "title": "Interview with a vegan nutrition professional about B12",
+      "type": "expert Q&A",
+      "pillar": "food",
+      "status": "idea",
+      "priority": 2,
+      "size": "M",
+      "owner": "PROOF + QUILL",
+      "issue": "later",
+      "human_review": "credentialed expert required",
+      "sources_needed": [
+        "DGE position",
+        "NIH B12 materials",
+        "real consenting interview"
+      ],
+      "next_action": "Identify credentialed nutrition professional; draft questions and disclosures"
+    },
+    {
+      "id": "GQ-021",
+      "title": "WUNDERPOST 001 — The Little Things We Return To",
+      "type": "4-page multimedia web letter",
+      "pillar": "food",
+      "status": "draft",
+      "priority": 1,
+      "size": "M",
+      "owner": "QUILL + ATELIER + HUMAN",
+      "issue": "wunderpost-001",
+      "human_review": "founder approval for article voice/translation and release before publication",
+      "sources_needed": [
+        "Alpro Germany Soy Original",
+        "Danone Alpro Greek Style Aug 2026",
+        "Nongshim Germany Shin Ramyun",
+        "REWE Veggie",
+        "dm product pages",
+        "German Toomba 113g retailer ingredients"
+      ],
+      "next_action": "Verify exact package warnings, mobile/audio operation and publish with founder consent; no invented discount."
+    },
+    {
+      "id": "GQ-022",
+      "title": "Mikel & Huong — real blind or openly documented Staples taste test",
+      "type": "dual tasting protocol + attributable product ratings",
+      "pillar": "food",
+      "status": "pitched",
+      "priority": 1,
+      "size": "M",
+      "owner": "HUMAN + PROOF",
+      "issue": "wunderpost-002",
+      "human_review": "explicit independent Mikel and Huong sign-off required",
+      "sources_needed": [
+        "actual SKU photos",
+        "date, country, EAN or importer",
+        "ingredients and allergen label",
+        "both people's tasting notes",
+        "honest price/location"
+      ],
+      "next_action": "Get each person's S/A/B/C decisions, favourite uses and repurchase intent; date it before publishing any attributed review."
+    },
+    {
+      "id": "GQ-023",
+      "title": "Affiliate pilot — programme application, terms and reader-value policy",
+      "type": "publisher business development",
+      "pillar": "studio",
+      "status": "pitched",
+      "priority": 1,
+      "size": "S",
+      "owner": "HUMAN + QUILL",
+      "issue": "wunderpost-002",
+      "human_review": "commercial offer and legal disclosure review required",
+      "sources_needed": [
+        "KoRo DE Awin advertiser 107808 live programme terms",
+        "Danone Alpro and Nongshim authorised contacts",
+        "German affiliate disclosures",
+        "discount code terms"
+      ],
+      "next_action": "Apply for one real partner, confirm commission and voucher acceptance, test one destination URL and only then transparently label a qualifying link."
+    },
+    {
+      "id": "GQ-024",
+      "title": "Narrated articles as dependable listen-later audio",
+      "type": "audio journalism + accessibility",
+      "pillar": "culture",
+      "status": "pitched",
+      "priority": 2,
+      "size": "M",
+      "owner": "ATELIER + HUMAN",
+      "issue": "future",
+      "human_review": "voice, pronunciation and rights sign-off required",
+      "sources_needed": [
+        "DE EN VI verified scripts",
+        "licensed TTS/voice rights",
+        "background playback & offline QA",
+        "caption transcript for video if added"
+      ],
+      "next_action": "Current browser voices support speed controls but may stop with screen lock. Produce pre-generated audio files and podcast feed for true bike commute listening."
+    }
   ]
 }
