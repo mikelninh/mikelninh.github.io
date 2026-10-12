@@ -34,7 +34,13 @@ function relabel(){
   $$('[data-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.lang===lang)));
   document.title=t('hero')+' '+t('heroEm')+' — WUNDERPOST 001 · Mikel & Huong';
 }
-function productArt(p){const title=p.kind==='ramen'?'RAMYUN':p.kind==='drink'?'SOY':p.kind==='tub'?'GREEK':p.kind==='bag'?'LENTILS':'TOFU';const shape=p.kind==='ramen'?'ramen':p.kind==='drink'?'drink':p.kind==='tub'?'tub':p.kind==='bag'?'bag':'box';return `<div class="product-art" style="--tile:${esc(p.tone)}"><div class="shape ${shape}"><span>${title}<br><small style="font:11px sans-serif;letter-spacing:1.5px">${esc(p.brand.toUpperCase())}</small></span></div></div>`}
+function productArt(p){
+ const photo=p.photo?.src;
+ const usable=photo&&/\.(png|jpg|jpeg|webp)(?:\?|$)/i.test(photo);
+ const safePhoto=usable?esc(photo):'';
+ const imageBlock=usable?`<img class="real-packshot" src="${safePhoto}" alt="${esc(p.brand+' '+p.name+' — product packaging photo; check actual pack before purchase')}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.parentElement.classList.add('image-unavailable')">`:'';
+ return `<div class="product-art photo-art" style="--tile:${esc(p.tone)}">${imageBlock}<span class="photo-fallback" aria-hidden="true">${esc(p.brand+' '+p.name)}</span><a class="photo-credit" href="${esc(p.photo?.url||p.source)}" target="_blank" rel="noopener noreferrer">Image/source ↗</a></div>`;
+}
 function options(selected){
   const labels=[t('noGrade'),t('sTier'),t('aTier'),t('bTier'),t('cTier')];
   return ranks.map((value,i)=>`<option value="${value}" ${selected===value?'selected':''}>${esc(labels[i])}</option>`).join('');
