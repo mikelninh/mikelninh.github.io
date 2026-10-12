@@ -44,7 +44,7 @@ for locale in locales:
     check(locale + " stable chapter ids",
           [x.get("id") for x in parts] == ["experiment", "newsroom", "real", "missing", "next"])
     check(locale + " human accountability disclosure",
-          "AI" in d.get("notice", "") and len(d.get("notice", "")) > 130)
+          (("KI" if locale == "de" else "AI") in d.get("notice", "")) and len(d.get("notice", "")) > 130)
     check(locale + " future and limitations stated",
           bool(d.get("closing")) and len(d.get("title", "")) > 15)
 check("Open Studio has a canonical URL",
@@ -75,7 +75,7 @@ if script:
         check("Browser script syntax accepted by Node", False, str(e))
 check("English article has no duplicate lead", 
       DATA["en"]["sections"][0]["paras"][0] in DOC and
-      DOC.count(DATA["en"]["sections"][0]["paras"][0]) == 1)
+      DOC.split('<script id="story-data"', 1)[0].count(DATA["en"]["sections"][0]["paras"][0]) == 1)
 
 class Links(html.parser.HTMLParser):
     def __init__(self):
