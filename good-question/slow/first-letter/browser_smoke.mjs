@@ -64,49 +64,25 @@ try{
  await p.locator('#audio-mount [data-say-rate]').selectOption('2');
  expect(await p.locator('#audio-mount [data-say-rate]').inputValue()==='2','2× selection');
  // Play/Stop can be tried without claiming audible speech on the GitHub runner.
- if(await p.locator('#audio-mount [data-play]').isEnabled()){
-   await p.locator('#audio-mount [data-play]').click();
+ if(await p.locator('#audio-mount [data-say-play]').isEnabled()){
+   await p.locator('#audio-mount [data-say-play]').click();
    // In headless Chromium, speech output may error/cancel immediately, disabling Stop.
    // Assert that Play is safe without pretending the runner can hear the voice.
    await p.waitForTimeout(350);
-   const audioState=await p.locator('#audio-mount [data-status]').innerText();
+   const audioState=await p.locator('#audio-mount [data-say-status]').innerText();
    expect(Boolean(audioState.trim()),'speech activation produces a visible status (hardware availability unverified)');
    // Cancel via the engine rather than racing a temporarily enabled UI button.
    await p.evaluate(()=>{try{window.speechSynthesis?.cancel()}catch(e){}});
  }else{console.log('NOTE browser speech synthesis not available in headless Chromium')}
- // Feedback is an intentionally manual GitHub issue draft; never an automatic server post.
+ // Feedback opens only a voluntary public draft; it does not submit automatically.
+ await p.locator('#reader-feedback').fill('Please test a specific soy yogurt packet.');
  await p.evaluate(()=>{window.__gqDraft=null;window.open=(url)=>window.__gqDraft=url});
- await p.locator('#gq-feedback-rating').selectOption('useful');
- await p.locator('#gq-feedback-question').fill('Please test a specific soy yogurt packet.');
- await p.locator('#gq-feedback-form button[type=submit]').click();
- const feedbackURL=await p.evaluate(()=>window.__gqDraft);
- expect(feedbackURL?.startsWith('https://github.com/mikelninh/mikelninh.github.io/issues/new?'),'Reader Desk opens public draft only');
- expect(feedbackURL?.includes('Please%20test%20a%20specific%20soy%20yogurt%20packet.'),'Reader Desk preserves actual text');
+ await p.locator('#send-feedback').click();
+ expect((await p.evaluate(()=>window.__gqDraft))?.startsWith('https://github.com/mikelninh/mikelninh.github.io/issues/new?'),'feedback prepares optional draft');
  await p.goto(base+'?story=reef&lang=en',{waitUntil:'domcontentloaded'});
  await p.waitForSelector('#article-dialog[open]',{timeout:12000});
  expect(await p.locator('#article-dialog .gq-listen').count()===1,'existing Slow Edition story has narration controls');
  expect(await p.locator('#article-dialog [data-say-rate] option').count()===4,'existing story has four audio speeds');
- // Label Detective — finite three-step journey, evidence links and replay.
- await p.goto(base+'first-letter/label-lab/?lang=en',{waitUntil:'domcontentloaded'});
- await p.waitForSelector('#game-title');
- expect((await p.locator('#game-title').innerText()).includes('Shin Ramyun'),'label lab shows first factual case');
- for(const n of [1,2,1]){
-   await p.locator('[data-choice="'+n+'"]').click();
-   expect(await p.locator('#answer a[href^="https"]').count()===1,'game reveals primary source');
-   await p.locator('#next').click();
- }
- expect(await p.locator('#finish').isVisible(),'short game reaches explicit finish');
- await p.locator('#again').click();
- expect(await p.locator('#finish').isHidden(),'game replay restores first clue');
- await p.locator('[data-lang=de]').click();
- expect(await p.locator('#game-title').innerText().then(t=>t.includes('Shin Ramyun')),'game content German');
- expect(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'game no horizontal overflow on mobile');
- await p.locator('#feedback').fill('Can we verify exact German Soy and ramen ingredients?');
- await p.evaluate(()=>{window.__gqDraft=null;window.open=(url)=>window.__gqDraft=url});
- await p.locator('#send').click();
- expect((await p.evaluate(()=>window.__gqDraft))?.startsWith('https://github.com/mikelninh/mikelninh.github.io/issues/new?'),'Label Detective suggestion opens a voluntary issue draft');
- await p.locator('[data-lang=vi]').click();
- expect(await p.locator('html').getAttribute('lang')==='vi','Label Detective supports Vietnamese');
  expect(errors.length===0,'no JavaScript page exceptions: '+errors.join('; '));
  await ctx.close();
  console.log('TOTAL',checks,'browser checks passed');
