@@ -112,10 +112,10 @@ function renderOurs(){
  }
  return head('THE FIRST TWO SHELVES','Two people.<br><em>Many opinions.</em>','A private co-rating playground for Mikel & Huong. Our published opinions appear only after both accounts are linked.','OUR LITTLE CORNER')
  +'<div class="inline-notice">♧ <strong>Private preview:</strong> these two demo shelves are saved only in your browser, not official or public reviews. Signed-in people rate under their own verified account, never as Mikel or Huong.</div>'
- +'<div class="profile-banner"><div><div class="eyebrow">OUR SHARED EXPERIMENT</div><h3>Same planet. Different tastes.</h3><p class="small muted" style="max-width:480px">Taste your way through tofu, chocolate, plant milks and life's more delicious disagreements.</p></div><div class="difference">♡</div></div>'
- +'<div class="stat-row"><div><strong>'+Object.keys(m.a).length+'</strong><span>Mikel's picks</span></div><div><strong>'+Object.keys(m.b).length+'</strong><span>Huong's picks</span></div><div><strong>'+m.agree.length+'/'+m.both.length+'</strong><span>Matching ratings</span></div></div>'
- +'<div class="cards-row"><div class="surface"><div class="spaced"><div class="person"><div class="avatar sky">M</div><div><strong>Mikel's shelf</strong><small>Curious taste-tester</small></div></div><button class="button button-small button-ghost" data-action="open-random" data-persona="mikel">+ Rate</button></div><hr class="rule">'+tierMiniCards('mikel')+'</div>'
- +'<div class="surface"><div class="spaced"><div class="person"><div class="avatar peach">H</div><div><strong>Huong's shelf</strong><small>The other half of our taste lab</small></div></div><button class="button button-small button-ghost" data-action="open-random" data-persona="huong">+ Rate</button></div><hr class="rule">'+tierMiniCards('huong')+'</div></div>'
+ +'<div class="profile-banner"><div><div class="eyebrow">OUR SHARED EXPERIMENT</div><h3>Same planet. Different tastes.</h3><p class="small muted" style="max-width:480px">Taste your way through tofu, chocolate, plant milks and life’s more delicious disagreements.</p></div><div class="difference">♡</div></div>'
+ +'<div class="stat-row"><div><strong>'+Object.keys(m.a).length+'</strong><span>Mikel’s picks</span></div><div><strong>'+Object.keys(m.b).length+'</strong><span>Huong’s picks</span></div><div><strong>'+m.agree.length+'/'+m.both.length+'</strong><span>Matching ratings</span></div></div>'
+ +'<div class="cards-row"><div class="surface"><div class="spaced"><div class="person"><div class="avatar sky">M</div><div><strong>Mikel’s shelf</strong><small>Curious taste-tester</small></div></div><button class="button button-small button-ghost" data-action="open-random" data-persona="mikel">+ Rate</button></div><hr class="rule">'+tierMiniCards('mikel')+'</div>'
+ +'<div class="surface"><div class="spaced"><div class="person"><div class="avatar peach">H</div><div><strong>Huong’s shelf</strong><small>The other half of our taste lab</small></div></div><button class="button button-small button-ghost" data-action="open-random" data-persona="huong">+ Rate</button></div><hr class="rule">'+tierMiniCards('huong')+'</div></div>'
  +(cmp?'<div style="margin-top:22px">'+head('TASTE MATCH','The same products.','A comparison of things you both rated in this private preview.','TOGETHER')+'<div class="rating-list">'+cmp+'</div></div>':'')
  +'<div style="margin-top:20px" class="callout"><h3>Got a wonderfully different opinion?</h3><p>Rate a product as Mikel, then as Huong in this preview. Only their real accounts can publish their views.</p><button class="button button-dark button-small" data-nav="discover">Explore things ↗</button></div>';
 }
@@ -334,7 +334,7 @@ function authHtml(mode){
 function openAuth(mode){if(st.user)return openProfileEdit();if(!sb)return modal('<button class="close" data-action="close-modal">×</button><h2>Demo shelf is ready</h2><p>Live accounts could not connect. You can still explore 102 products and use the local tasting shelf.</p><button class="button button-lime" data-action="close-modal">Continue exploring</button>');modal(authHtml(mode||'signup'))}
 async function submitAuth(form){
  if(!sb)return toast('Account service unavailable. Try the local demo.');
- const email=form.email.value.trim(),password=form.password.value,mode=form.mode.value;
+ const email=form.elements.namedItem('email').value.trim(),password=form.elements.namedItem('password').value,mode=form.elements.namedItem('mode').value;
  const button=form.querySelector('button[type=submit]');button.disabled=true;button.textContent='Connecting…';
  try{
   let r;
@@ -363,7 +363,7 @@ function openProfileEdit(){
 }
 async function saveProfile(form){
  if(!st.user)return;
- const handle=form.handle.value.trim().toLowerCase(),display_name=form.name.value.trim(),bio=form.bio.value.trim(),accent=form.accent.value;
+ const handle=form.elements.namedItem('handle').value.trim().toLowerCase(),display_name=form.elements.namedItem('name').value.trim(),bio=form.elements.namedItem('bio').value.trim(),accent=form.elements.namedItem('accent').value;
  if(!/^[a-z0-9][a-z0-9_-]{2,23}$/.test(handle)||!display_name)return toast('Check your display name and username.');
  const {data,error}=await sb.from('gt_profiles').upsert({id:st.user.id,handle,display_name,bio,accent},{onConflict:'id'}).select().single();
  if(error)return toast('Profile: '+error.message.slice(0,120));
@@ -391,8 +391,8 @@ function openListModal(){
 function slug(s){return String(s).toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,47)||'good-picks'}
 async function saveList(form){
  if(!st.user)return;
- const title=form.title.value.trim(),description=form.description.value.trim(),product_ids=selfRatings().slice(0,40).map(r=>r.product_id);
- const obj={user_id:st.user.id,title,description,slug:slug(title)+'-'+Math.random().toString(36).slice(2,6),product_ids,is_public:form.is_public.checked};
+ const title=form.elements.namedItem('title').value.trim(),description=form.elements.namedItem('description').value.trim(),product_ids=selfRatings().slice(0,40).map(r=>r.product_id);
+ const obj={user_id:st.user.id,title,description,slug:slug(title)+'-'+Math.random().toString(36).slice(2,6),product_ids,is_public:form.elements.namedItem('is_public').checked};
  const {data,error}=await sb.from('gt_lists').insert(obj).select().single();
  if(error)return toast('Collection: '+error.message);
  st.lists.unshift(data);closeAll();render();toast('Collection created ♡');await copyLink(URL_BASE+'?list='+data.id);
@@ -424,7 +424,7 @@ function feedbackModal(){
 }
 async function submitFeedback(form){
  if(!st.user)return openAuth();
- const score=Number(form.score.value),message=form.message.value.trim();
+ const score=Number(form.elements.namedItem('score').value),message=form.elements.namedItem('message').value.trim();
  if(message.length<5||!Number.isInteger(score)||score<1||score>5)return toast('Write a little more about your experience.');
  const {error}=await sb.from('gt_feedback').insert({user_id:st.user.id,score,message});
  if(error)return toast(error.code==='23505'?'Thanks! You have already shared feedback today.':'Feedback: '+error.message);
