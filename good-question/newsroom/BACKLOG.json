@@ -445,6 +445,61 @@
         "affiliate relationship disclosure"
       ],
       "next_action": "Start with two chips and two chocolate products each; keep restaurant favourites separate from shopping-affiliate tier lists. Request Huong's consent for attribution; write one short real review per item."
+    },
+    {
+      "id": "GQ-027",
+      "title": "GOOD THINGS 123-product personal Mikel & Huong rating studio",
+      "type": "web experience",
+      "pillar": "food",
+      "status": "tested",
+      "priority": 1,
+      "size": "M",
+      "owner": "ATELIER + PROOF + HUMAN",
+      "issue": "good-things-001",
+      "human_review": "Founder signoff and real first-person grades only",
+      "sources_needed": [
+        "Exact REWE product photos and article IDs",
+        "12 original-sourced nutrition labels",
+        "Cross-device rating browser QA"
+      ],
+      "next_action": "Gather 12 genuinely tasted products and personal ratings from Mikel and Huong; use shared links or JSON export. Verify product variant and ingredient facts."
+    },
+    {
+      "id": "GQ-028",
+      "title": "Good Things label research: protein sugar and origins for 25 exact packs",
+      "type": "fact-checking",
+      "pillar": "food",
+      "status": "idea",
+      "priority": 1,
+      "size": "M",
+      "owner": "PROOF",
+      "issue": "good-things-002",
+      "human_review": "Expert/original-label check prior to public factual assertions",
+      "sources_needed": [
+        "Exact German packaging photos and SKUs",
+        "Original protein/sugar per 100g/ml",
+        "Manufacturer origin and ingredient provenance",
+        "Allergen declarations"
+      ],
+      "next_action": "Verify 25 products with exact dated package/source citations, populate canonical JSON, keep unknown fields null."
+    },
+    {
+      "id": "GQ-029",
+      "title": "Mikel & Huong product photography and chip/chocolate tasting",
+      "type": "original media",
+      "pillar": "food",
+      "status": "idea",
+      "priority": 2,
+      "size": "M",
+      "owner": "ATELIER + HUMAN",
+      "issue": "good-things-002",
+      "human_review": "Both founders confirm any quote/grade and image rights",
+      "sources_needed": [
+        "Own product photos",
+        "Independent tasting dates and criteria",
+        "Taste/texture and buy-again notes"
+      ],
+      "next_action": "Photograph 20 beloved staples and test selected crisps/chocolate; replace third-party hotlinked images with owned/licensed assets."
     }
   ]
 }
