@@ -28,7 +28,7 @@ try{
      expect((await p.locator('[data-tier-product=soy]').evaluateAll(els=>els.map(el=>el.value))).every(v=>v===''),`${width} ratings empty by default`);
      expect(await p.locator('.product-art img.gq-photo').count()===6,`${width} six real product photo elements`);
      expect(await p.locator('#ingredient-warning img').count()===1,`${width} one exact-Toomba photo element`);
-     if(width===1440){
+     if(width===1440||width===390){
        const photos=p.locator('.product-art img.gq-photo');
        for(let idx=0;idx<await photos.count();idx++){
          const node=photos.nth(idx);await node.scrollIntoViewIfNeeded();
@@ -39,7 +39,7 @@ try{
        const state=await p.locator('.product-art img.gq-photo').evaluateAll(els=>els.map(e=>({id:e.closest('.product-card')?.dataset.product,loaded:e.complete&&e.naturalWidth>64,src:e.currentSrc})));
        const warnState=await warning.evaluate(e=>({loaded:e.complete&&e.naturalWidth>64,src:e.currentSrc}));
        console.log('PHOTO_REPORT',JSON.stringify({state,warnState}));
-       expect(state.every(x=>x.loaded)&&warnState.loaded,'all seven source product photos loaded on desktop');
+       expect(state.every(x=>x.loaded)&&warnState.loaded,`all seven real product photos loaded at ${width}px`);
      }
      if(width===390)await p.screenshot({path:shots+'/mobile.png',fullPage:true});
      if(width===1440)await p.screenshot({path:shots+'/desktop.png',fullPage:true});
