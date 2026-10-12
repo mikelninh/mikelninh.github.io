@@ -60,8 +60,16 @@ try{
  // Play/Stop can be tried without claiming audible speech on the GitHub runner.
  if(await p.locator('#audio-mount [data-say-play]').isEnabled()){
    await p.locator('#audio-mount [data-say-play]').click();
-   await p.locator('#audio-mount [data-say-stop]').click();
-   expect(true,'browser speech play/stop controls handle interactions');
+   // Headless Chromium often cannot instantiate a real speech output device.
+   // In that case the player must show a graceful unavailable state and disable Stop.
+   const stopButton=p.locator('#audio-mount [data-say-stop]');
+   if(await stopButton.isEnabled()){
+     await stopButton.click();
+     expect(await stopButton.isDisabled(),'active speech can be stopped');
+   }else{
+     const msg=await p.locator('#audio-mount [data-say-status]').innerText();
+     expect(/unavailable|not available|nicht verfügbar|không hỗ trợ/i.test(msg),'unavailable speech device handled honestly: '+msg);
+   }
  }else{console.log('NOTE browser speech synthesis not available in headless Chromium')}
  await p.goto(base+'?story=reef&lang=en',{waitUntil:'domcontentloaded'});
  await p.waitForSelector('#article-dialog[open]',{timeout:12000});
