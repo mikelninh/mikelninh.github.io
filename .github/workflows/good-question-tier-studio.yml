@@ -1,0 +1,23 @@
+name: GOOD THINGS — 102 product catalogue gate
+on:
+  pull_request:
+    paths:
+      - 'good-question/tier-studio/**'
+      - '.github/workflows/good-question-tier-studio.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'good-question/tier-studio/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate source-backed catalogue and first-run state
+        run: python3 good-question/tier-studio/qa.py
