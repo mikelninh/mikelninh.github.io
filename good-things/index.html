@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f7f7f0">
+  <meta name="description" content="GOOD THINGS — a warm, playful home for things worth sharing. Mikel & Huong's vegan picks, honest tier lists, discover and rate 102 products, create your own shelf, follow friends and compare your tastes.">
+  <meta property="og:title" content="GOOD THINGS · A home for things worth sharing">
+  <meta property="og:description" content="One shelf. Two opinions. A whole world of good things. Discover, rate, compare & share.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mikelninh.github.io/good-things/">
+  <link rel="canonical" href="https://mikelninh.github.io/good-things/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23dff179'/%3E%3Ctext x='50' y='72' font-family='serif' font-size='75' fill='%23263d32' text-anchor='middle'%3E✳%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <title>GOOD THINGS — Mikel & Huong</title>
+  <script defer src="./catalog.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+<header class="masthead wrap">
+ <a class="brand" href="./" aria-label="GOOD THINGS home"><span class="brand-icon">✳</span><span>GOOD<br>THINGS<span style="color:#84a567">.</span></span></a>
+ <nav class="desktopnav" aria-label="Main navigation">
+   <button class="navlink active" data-nav="discover">Discover</button>
+   <button class="navlink" data-nav="ours">Mikel &amp; Huong</button>
+   <button class="navlink" data-nav="my">My shelf</button>
+   <button class="navlink" data-nav="community">Community</button>
+ </nav>
+ <div class="navright">
+   <span class="small muted" id="authStatus" aria-live="polite"><span class="dot"></span> Local tasting shelf</span>
+   <button class="button button-dark button-small signin" id="authButton" data-action="open-auth">Join the shelf ↗</button>
+ </div>
+</header>
+<main>
+  <div class="wrap">
+    <section class="hero" aria-label="Welcome to Good Things">
+      <div>
+        <div class="eyebrow"><span class="dot"></span>&nbsp; Mikel & Huong present · Berlin, planet Earth</div>
+        <h1>A little more <em>good.</em></h1>
+        <p>Some things are simply worth sharing. The snacks we adore. The tofu we disagree about. And the discoveries that make everyday life just a little lovelier.</p>
+        <div class="hero-actions">
+          <button class="button button-lime" data-nav="discover">Explore 102 things <span aria-hidden="true">↗</span></button>
+          <button class="button button-white" data-nav="ours">Meet our shelf ♡</button>
+        </div>
+        <div class="hero-foot">
+          <span><strong>102</strong> products to explore</span>
+          <span><strong>10</strong> tasty categories</span>
+          <span><strong>0</strong> paid verdicts</span>
+        </div>
+      </div>
+      <div class="hero-art" role="img" aria-label="Illustrated vegan pantry with tofu, oat milk and a chocolate bar">
+        <div class="art-circle"></div><div class="art-scribble">the good stuff!</div><div class="art-star">✳</div>
+        <div class="mock-package package-a"><small>THE GOOD<br>STUFF</small><strong>tofu<br>for two</strong><span>🍱</span></div>
+        <div class="mock-package package-b"><small>YOUR DAILY<br>DOSE OF JOY</small><strong>oat<br>milk</strong><span>🥛</span></div>
+        <div class="mock-package package-c"><small>SMALL<br>PLEASURES</small><strong>oh,<br>choc!</strong><span>🍫</span></div>
+        <div class="art-desk"></div><div class="art-stamp">100%<br>opinion<br>0% perfect</div>
+      </div>
+    </section>
+  </div>
+  <div class="ticker"><div class="wrap ticker-inner"><span>✳ Taste is personal. Kindness is universal.</span><span><i>✺</i> One shelf · Two opinions</span><span><i>✺</i> Good things grow together</span></div></div>
+  <div class="workspace wrap" id="workspace">
+    <aside class="left-rail" aria-label="Discover navigation">
+      <div class="rail-panel">
+        <div class="rail-heading">The neighbourhood</div>
+        <nav class="rail-nav">
+          <button class="rail-link active" data-nav="discover"><span>✺ &nbsp; Discover</span><span class="count">102</span></button>
+          <button class="rail-link" data-nav="ours"><span>♡ &nbsp; Our shelf</span><span class="count">2</span></button>
+          <button class="rail-link" data-nav="my"><span>✳ &nbsp; Your shelf</span><span class="count" id="myCount">0</span></button>
+          <button class="rail-link" data-nav="community"><span>♧ &nbsp; People</span><span class="count" id="communityCount">0</span></button>
+        </nav>
+      </div>
+      <div class="rail-panel rail-challenge" id="sidebarChallenge">
+        <span class="eyebrow" style="color:#c0da9f">OUR FIRST CHALLENGE</span>
+        <h3>Five good things.</h3>
+        <p>Rate your first five products. Unlock a little celebration and a shelf worth sharing.</p>
+        <div class="progress"><div class="progress-fill" style="width:0%" id="sidebarProgress"></div></div>
+        <div class="small" id="sidebarProgressText">0 / 5 rated</div>
+        <button class="button button-small" style="margin-top:15px" data-nav="discover">Let's find them ↗</button>
+      </div>
+      <div class="rail-panel">
+        <div class="rail-heading">A small promise</div>
+        <div style="font:italic 21px/1.27 'Fraunces',serif;letter-spacing:-.025em">No paid scores.<br>No pretending.<br>Just our tastes.</div>
+        <p class="small muted">Product and photo verification is ongoing. Unverified items are labelled clearly.</p>
+      </div>
+    </aside>
+    <div class="content" id="contentView" aria-live="polite"><div class="empty"><span class="big">✳</span><strong>Making room for good things…</strong></div></div>
+  </div>
+</main>
+<footer class="foot wrap">
+ <div class="foot-grid">
+  <div><strong>More good. Together. ✳</strong><p>Made with curiosity, compassion &amp; an unreasonable love of tofu.</p></div>
+  <div><a href="https://mikelninh.github.io/vegan/" target="_blank" rel="noopener">Plant Table ↗</a><a href="https://mikelninh.github.io/ramen/" target="_blank" rel="noopener">Ramen Passport ↗</a><button class="navlink" style="color:#d7e8d2" data-action="open-feedback">Send feedback ♡</button></div>
+ </div>
+</footer>
+<nav class="mobile-nav" aria-label="Mobile navigation">
+  <button class="active" data-nav="discover"><span>✺</span>Discover</button>
+  <button data-nav="ours"><span>♡</span>Our shelf</button>
+  <button data-nav="my"><span>✳</span>My shelf</button>
+  <button data-nav="community"><span>♧</span>People</button>
+</nav>
+<div class="overlay" id="drawerOverlay" aria-hidden="true"><div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Product detail"></div></div>
+<div class="overlay" id="modalOverlay" aria-hidden="true"><div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Good Things dialog"></div></div>
+<div class="toaster" id="toaster" role="status" aria-live="polite"></div>
+<noscript><p class="wrap">Enable JavaScript to explore and rate products. All ratings remain your own choices.</p></noscript>
+</body>
+</html>
