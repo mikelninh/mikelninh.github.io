@@ -1,0 +1,52 @@
+name: GOOD QUESTION / fortnightly editorial planning
+on:
+  schedule:
+    # Weekly check: script opens a brief only every 14 days from 2026-10-12.
+    - cron: '17 7 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: good-question-editorial-planning
+  cancel-in-progress: false
+jobs:
+  planning:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check anchor and prepare deterministic brief
+        id: brief
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/gq
+          flags=""
+          if [ "$EVENT" = 'workflow_dispatch' ]; then flags="--force"; fi
+          if python3 good-question/newsroom/brief.py $flags --output /tmp/gq/brief.md; then
+            echo 'due=true' >> "$GITHUB_OUTPUT"
+          else
+            code=$?
+            if [ "$code" -eq 3 ]; then
+              echo 'due=false' >> "$GITHUB_OUTPUT"
+            else
+              exit "$code"
+            fi
+          fi
+      - name: Open planning issue only if not already present
+        if: steps.brief.outputs.due == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          stamp="$(date -u +%G-W%V)"
+          title="GOOD QUESTION / editorial brief / $stamp"
+          existing="$(gh issue list --repo "$REPO" --state all --json title --limit 250 --jq ".[] | select(.title == \"$title\") | .title" || true)"
+          if [ -n "$existing" ]; then
+            echo "Existing brief found: $title. Skipping."
+          else
+            gh issue create --repo "$REPO" --title "$title" --body-file /tmp/gq/brief.md
+            echo 'Created **planning issue only**. No public article or email was sent.'
+          fi
