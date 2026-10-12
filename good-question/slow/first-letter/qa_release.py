@@ -64,7 +64,7 @@ check('Exactly seven sourced authentic product photos',set(manifest['products'])
 check('Every photo uses an original HTTPS source and explicitly credits its provider',all(p.get('url','').startswith('https://') and p.get('photoPage','').startswith('https://') and p.get('credit') for p in manifest['products'].values()))
 check('Toomba image matches exact flagged variant EAN', '8801043017022' in manifest['products']['toomba']['url'] and '8801043017022' in manifest['products']['toomba']['page'])
 check('Game and reader-feedback widgets are integrated','release11.js' in page and 'photos.js' in page and 'audio-v11.js' in page)
-check('No fabricated game outcomes','no score' in (BASE/'label-lab/app.js').read_text().lower())
+check('No fabricated game outcomes','NO SCORE' in (BASE/'label-lab/index.html').read_text())
 check('Original creative prototype links present',all(x in (BASE/'release11.js').read_text() for x in ['mia-little-lights','tiny-tactics-friends','#play']))
 
 for f in ['data.js','photos.js','app.js','release11.js','../audio-v11.js','label-lab/app.js']:
