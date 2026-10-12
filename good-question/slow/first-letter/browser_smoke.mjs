@@ -31,14 +31,13 @@ try{
      expect(await p.locator('.product-art img.gq-photo').count()===6,`${width} six real product photo elements`);
      expect(await p.locator('#ingredient-warning img').count()===1,`${width} one exact-Toomba photo element`);
      if(width===1440||width===390){
-       const photos=p.locator('.product-art img.gq-photo');
-       for(let idx=0;idx<await photos.count();idx++){
-         const node=photos.nth(idx);await node.scrollIntoViewIfNeeded();
-         await p.waitForTimeout(240);
-       }
-       const warning=p.locator('#ingredient-warning img');await warning.scrollIntoViewIfNeeded();
-       await p.waitForTimeout(3500);
+       // Eager load without scrollIntoView: broken remote photos become hidden,
+       // which makes scrollIntoViewIfNeeded hang before we can report the cause.
+       await p.locator('.product-art img.gq-photo').evaluateAll(els=>els.forEach(e=>e.loading='eager'));
+       await p.locator('#ingredient-warning img').evaluate(e=>e.loading='eager');
+       await p.waitForTimeout(4000);
        const state=await p.locator('.product-art img.gq-photo').evaluateAll(els=>els.map(e=>({id:e.closest('.product-card')?.dataset.product,loaded:e.complete&&e.naturalWidth>64,src:e.currentSrc})));
+       const warning=p.locator('#ingredient-warning img');
        const warnState=await warning.evaluate(e=>({loaded:e.complete&&e.naturalWidth>64,src:e.currentSrc}));
        console.log('PHOTO_REPORT',JSON.stringify({state,warnState}));
        expect(state.every(x=>x.loaded)&&warnState.loaded,`all seven real product photos loaded at ${width}px`);
