@@ -43,7 +43,7 @@ A home for things worth sharing. The personal *Our shelf* and the community *You
 1. **Auth email redirect:** in Supabase project \`htffcvdopavknnylbowl\` → Authentication → URL Configuration, add \`https://mikelninh.github.io/good-things/\` to allowed Redirect URLs, and ensure the project email confirmation settings and SMTP fit a public site. This configuration is not exposed by the current connected management tools and therefore was **not automatically changed**. Signup email confirmation may fail until this is completed.
 2. **Separate environment:** \`gt_*\` tables live in the already-active Supabase project \`company-01\` (EU central). No existing tables were modified. Before a broad launch move to a dedicated project with its own auth/SMTP domain and security quotas.
 3. **Catalogue trust:** the original v1.0 102-product JSON was not accessible. We reconstructed 102 *candidates* with the stated category counts rather than claiming to have restored exact SKUs. Validate barcodes, precise vegan ingredients, images, retailers and availability before listing them as verified.
-4. **Official curators:** Mikel and Huong each need an account and an explicit one-time owner verification/assignment process before the public Our Shelf displays actual linked curator opinions. The existing local demo **never** speaks for them publicly.
+4. **Official curators:** Mikel and Huong each need an account. The operator then verifies each account owner and enters the corresponding UUIDs in `gt_curators` (see `curator-linking.sql`). Only after **both** are linked does Our Shelf switch to their real public ratings. The private demo can still be toggled; it **never** speaks for them publicly.
 5. **Legal/release:** add a complete German Impressum and DSGVO privacy notice, account deletion request process, moderation/reporting and abuse protection before actively inviting a large public community.
 6. **Scale:** the v1.3 client currently fetches at most 3,000 recent public ratings and 400 profiles; replace full-client aggregation with paginated aggregate RPCs/materialised views before meaningful traffic.
 7. **Verification:** schema installed, 102 product count checked, JavaScript parser and simulated guest flow passed. A full external click-through browser test was unavailable because the connected browser automation account had insufficient funds. Do not count that test as passed.
@@ -57,7 +57,7 @@ A home for things worth sharing. The personal *Our shelf* and the community *You
 - \`gt_follows\`: public, owner-only followed relationships.
 - \`gt_feedback\`: owner-readable feedback, write limited to one per day.
 
-Six tables with row-level security enabled, 17 per-operation RLS policies, explicit Data API grants.
+Seven tables with row-level security enabled, 18 per-operation RLS policies, explicit Data API grants; the operator-verified curator mapping is read-only for regular users.
 All are prefixed to avoid collisions with unrelated existing applications.
 
 ### Metric snapshots for weekly review (run in SQL editor, not in the browser)
@@ -77,7 +77,7 @@ select count(*) as first_five_completed from (select user_id from public.gt_rati
 
 1. Visit the [live website](https://mikelninh.github.io/good-things/), then Discover.
 2. Find a tofu, rate it S–D, add a note and press Save.
-3. Under Our Shelf, use the **private** Mikel and Huong demo personas; ratings are stored on your device only.
+3. Under Our Shelf, use the **private** Mikel and Huong demo personas; ratings are stored on your device only until both curator identities are manually verified and linked.
 4. Under Your Shelf, make five ratings, export/share a snapshot or create an account to persist across devices.
 5. When Auth is configured, make two **separate** verified accounts; each can publish its own ratings, follow friends and build lists.
 6. The Community feed and rankings show only real public opinions; when empty, they stay honest.
