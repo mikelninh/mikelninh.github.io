@@ -35,6 +35,21 @@ jobs:
         run: |
           python3 good-question/newsroom/check_content.py
           python3 good-question/slow/build_content.py --check
+      - name: Install Chromium browser test dependencies
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Run mobile, language, tier-share and audio browser tests
+        run: |
+          python3 -m http.server 8099 --directory good-question/slow >/tmp/gq-http.log 2>&1 &
+          sleep 2
+          node good-question/slow/first-letter/browser_smoke.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wunderpost-001-browser-screenshots
+          path: good-question/slow/first-letter/browser-shots/
+          if-no-files-found: ignore
       - name: QA limits
         run: |
           echo 'Passing QA does not establish expert review, independent ingredient verification, validated audio background playback, authenticated personal ratings, an approved affiliate agreement or a real discount.'
