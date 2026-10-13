@@ -3,6 +3,7 @@ create table if not exists public.gt_products (
   id text primary key, name text not null, brand text not null, store text not null,
   category_id text not null, category text not null, source_url text,
   verified boolean not null default false, image_url text,
+  image_status text, image_source_url text, retailer_sku text, photo_attribution text,
   created_at timestamptz not null default now()
 );
 create table if not exists public.gt_profiles (
