@@ -134,7 +134,7 @@ function boardTrayProducts(){
 function renderBoard(){
  const entries=boardEntries(),rated=new Set(entries.map(r=>r.product_id));
  const photos=ALL.filter(p=>p.image_status==='retailer').length;
- const who=st.user?(st.profile?.display_name||'You'):(st.persona==='you'?'Your':st.persona==='mikel?'?'Mikel':'Huong');
+ const who=st.user?(st.profile?.display_name||'You'):(st.persona==='you'?'Your':st.persona==='mikel'?'Mikel':'Huong');
  const personToggle=st.user?'<span class="board-status">🔒 Rating as your verified account</span>':
  '<div class="board-personas" aria-label="Choose local board"><button data-action="board-persona" data-value="you" class="'+(st.persona==='you'?'active':'')+'">You</button><button data-action="board-persona" data-value="mikel" class="'+(st.persona==='mikel'?'active':'')+'">Mikel</button><button data-action="board-persona" data-value="huong" class="'+(st.persona==='huong'?'active':'')+'">Huong</button></div>';
  const rows=TIERS.map(t=>{
