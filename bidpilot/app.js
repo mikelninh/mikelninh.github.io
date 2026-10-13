@@ -1,4 +1,4 @@
-/* BIDPILOT 1.1 — source-first, local-first decision desk. No eligibility or win predictions. */
+/* BIDPILOT 1.2 — calm daily brief with evidence-first ranking; no eligibility or win predictions. */
 (function () {
   'use strict';
   const $ = id => document.getElementById(id);
@@ -52,7 +52,8 @@
     const s=clean(n.title),result=[];
     if(/miniwettbewerb|einzelabruf|abruf aus|aus rahmenvertrag/.test(s))result.push({level:'high',text:'Framework call-off: participation may be limited to existing suppliers. Check access.'});
     else if(/rahmenvertrag|rahmenvereinbarung|dynamische[srn]? beschaffungssystem/.test(s))result.push({level:'medium',text:'Framework / purchasing system: verify how suppliers can join.'});
-    if(/lizenz|licen[sc]|subscription|handelspartner|reseller/.test(s))result.push({level:'medium',text:'Licensing / reseller terms: verify required partner or supplier status.'});
+    if(/lizenz|licen[sc]|subscription|handelspartner|reseller|vertriebspartnerschaft/.test(s))result.push({level:'medium',text:'Licensing / reseller terms: verify required partner or supplier status.'});
+    if(/strategische partnerschaft|vertriebspartnerschaft/.test(s))result.push({level:'medium',text:'Partnership scope: check minimum supplier capacity, references and participation conditions.'});
     if(stage(n)!=='competition')result.push({level:'high',text:'Not verified as a competition notice. Do not assume bidding is open.'});
     if(deadlinesState(n)==='unknown')result.push({level:'medium',text:'No deadline in this feed. Check the current notice and all lots.'});
     if(deadlinesState(n)==='past')result.push({level:'high',text:'All dates extracted into this feed have passed. Verify latest notice changes.'});
@@ -95,6 +96,7 @@
     $('resultsCount').textContent=rows.length+' matches';
     $('summary').textContent='Ranked against '+notices.length+' TED notices · Text relevance, not qualification · '+(profile.company||'Your studio');
     updateStats();
+    updateDashboard();
     const root=$('results');root.replaceChildren();
     if(!rows.length){
       const block=e('div','empty');block.append(e('div','emoji','✳'),e('h3','',notices.length?'No results for these filters.':'No source notices loaded yet.'),p(notices.length?'Try another notice type, a lower relevance threshold or fewer exclusions.':'The source import has not produced verified records. No demo tenders will be shown.'));
@@ -212,8 +214,8 @@
       if(!payload||!Array.isArray(payload.notices))throw Error('Invalid feed');
       feed=payload;notices=payload.notices.filter(validNotice);
       const checked=payload.fetched_at?new Date(payload.fetched_at):null;
-      $('lastRefresh').textContent='Data checked: '+(checked&&!Number.isNaN(checked.getTime())?checked.toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'}):'Awaiting first import');
-      $('bigCount').textContent=notices.length.toLocaleString('en-GB');
+      $('lastRefresh').textContent='Checked: '+(checked&&!Number.isNaN(checked.getTime())?checked.toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'}):'Awaiting first import');
+      if($('bigCount'))$('bigCount').textContent=notices.length.toLocaleString('en-GB');
       const age=checked?Date.now()-checked.getTime():Infinity;
       if(payload.schema!==2){$('typeFilter').value='all';setNotice('Legacy feed: notice types not yet verified. Do not assume these notices are open for bidding.',true)}
       else if(!checked)setNotice('No completed feed import; do not assume the displayed data is current.',true);
@@ -222,9 +224,111 @@
       else setNotice('',false);
       render();
     }catch(err){
-      notices=[];$('bigCount').textContent='—';$('lastRefresh').textContent='Feed unavailable';
+      notices=[];feed=null;if($('bigCount'))$('bigCount').textContent='—';$('lastRefresh').textContent='Feed unavailable';
       setNotice('Official TED feed could not be loaded. No fabricated notices will be shown. '+String(err.message||err),true);render();
     }
   }
+  /* Homepage shortlist. Deterministic, source-linked and independent of browse filters. */
+  function updateDashboard(){
+    const root=$('focusList');
+    if(!root)return; // Existing tests may use only the v1.1 full-feed DOM.
+    const engine=typeof globalThis!=='undefined'?globalThis.BidPilotPriority:null;
+    const profileName=profile.company||'Your studio';
+    const customised=!!localStorage.getItem(KEY);
+    $('profileHeadline').textContent=customised?profileName:'Example studio profile · '+profileName;
+    $('profileDescription').textContent=(terms(profile.keywords).slice(0,3).join(' · ')||'Add your services')+
+      (customised?' · Saved only on this device':' · Customise it for recommendations relevant to you');
+    const fetched=feed?.fetched_at?new Date(feed.fetched_at):null;
+    const validFetched=fetched&&!Number.isNaN(fetched.getTime());
+    const age=validFetched?Date.now()-fetched.getTime():Infinity;
+    const stale=age>3*86400000;
+    $('sourceStatus').textContent=validFetched?
+      ('TED data · '+fetched.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})+(stale?' · needs refresh':'')):
+      'Source freshness unverified';
+    $('focusSubtitle').textContent=customised?
+      'A focused selection from real published competition notices. Not an eligibility assessment.':
+      'Using an example software studio profile. Change it to see opportunities relevant to your business.';
+    root.replaceChildren();
+    root.setAttribute('aria-busy','false');
+    let picks=[];
+    if(engine&&feed?.schema===2){
+      const threshold=Math.max(40,Number(profile.scoreMin)||0);
+      picks=engine.selectShortlist(notices,{
+        currentDate:today(),
+        fitFor:n=>{const fit=explain(n);return fit.score<threshold?{...fit,excluded:true}:fit},
+        riskFor:riskSignals,decisions
+      });
+    }
+    $('topCount').textContent=String(picks.length).padStart(2,'0')+' / 03';
+    if(!picks.length){
+      const empty=e('div','spotlight-empty');
+      empty.append(e('span','empty-star','✳'),e('h3','','No verified recommendations yet.'));
+      empty.append(p(feed?.schema!==2?
+        'The source feed has not confirmed notice types. The full feed remains available for manual checks.':
+        notices.length?'No competition notices meet the published-date and relevance rules for this profile. Try adjusting your keywords or view the full feed.':
+        'We could not load verified tender notices. Explore the official TED website while the feed is unavailable.','empty-note'));
+      root.append(empty);
+    } else {
+      for(let index=0;index<picks.length;index++)root.append(renderSpotlight(picks[index],index));
+    }
+    const action=engine?engine.nextAction(picks[0],stale):{heading:'Verify the source feed first',detail:'Ranking is unavailable until the source-backed engine has loaded.',cta:'Explore all',kind:'profile'};
+    const dest=$('nextAction');
+    dest.replaceChildren(e('p','action-kicker','One considered next step'),e('h3','',action.heading),p(action.detail,'action-description'));
+    const buttonArea=e('div','action-controls');
+    if(action.kind==='source'&&picks.length){
+      buttonArea.append(link(action.cta+' ↗',picks[0].notice.url,'btn btn-light'));
+    }else{
+      const button=e('button','btn btn-light',action.cta+' ↗');
+      button.type='button';
+      button.addEventListener('click',()=>action.kind==='brief'&&picks.length?openBrief(picks[0].notice.id):openExplorer(true));
+      buttonArea.append(button);
+    }
+    dest.append(buttonArea);
+    const foot=e('p','action-context',picks.length?'For: '+picks[0].notice.title:'No synthetic opportunities are generated.');
+    dest.append(foot);
+  }
+  function renderSpotlight(item,index){
+    const n=item.notice,card=e('article','focus-card'),top=e('div','focus-card-top');
+    top.append(e('span','focus-number',String(index+1).padStart(2,'0')));
+    const meta=e('div','focus-top-meta');
+    meta.append(e('span','focus-category','PUBLISHED COMPETITION'),e('span','focus-date',item.days+' days until published date'));
+    top.append(meta);card.append(top);
+    const h=e('h3','focus-title');h.append(link(n.title,n.url));card.append(h);
+    card.append(p((n.buyer||'Buyer not specified')+' · TED '+n.id,'focus-buyer'));
+    const details=e('div','focus-details'),fit=e('span','focus-fit',item.fit.score+'/100 text match');
+    details.append(fit,e('span','focus-separator','·'),e('span','focus-deadline','Date '+readable(item.deadline.date)));
+    if(item.risks.some(r=>r.level==='medium'))details.append(e('span','focus-flag','Check conditions'));
+    card.append(details);
+    const evidence=e('p','focus-evidence',
+      item.fit.reasons.length?'Why it surfaced: '+item.fit.reasons.slice(0,2).join(' · '):
+      'Only a basic CPV or buyer signal was matched.');
+    card.append(evidence);
+    const row=e('div','focus-actions');
+    const open=e('button','focus-review','Inspect opportunity ↗');
+    open.type='button';open.addEventListener('click',()=>openBrief(n.id));
+    row.append(open,link('TED source ↗',n.url,'focus-source'));card.append(row);
+    return card;
+  }
+  function openExplorer(focusProfile=false){
+    const area=$('explorer');if(!area)return;
+    area.open=true;
+    const target=focusProfile?$('company'):$('workspace');
+    if(target&&typeof target.scrollIntoView==='function')target.scrollIntoView({behavior:'smooth',block:'start'});
+    if(focusProfile&&$('company')&&typeof $('company').focus==='function')$('company').focus({preventScroll:true});
+  }
+  function openBrief(id){
+    expanded=id;view='all';
+    $('typeFilter').value='opportunities';$('deadlineFilter').value='all';$('riskFilter').value='all';
+    $('search').value='';$('allFilter').classList.add('active');$('savedFilter').classList.remove('active');
+    // The shortlist respects the profile threshold, so the notice will appear in the full feed.
+    openExplorer(false);render();
+    const section=$('brief-'+id);
+    if(section&&typeof section.scrollIntoView==='function')section.scrollIntoView({behavior:'smooth',block:'start'});
+    if(section&&typeof section.focus==='function')section.focus({preventScroll:true});
+  }
+  if($('showAll'))$('showAll').addEventListener('click',()=>openExplorer(false));
+  if($('editProfile'))$('editProfile').addEventListener('click',()=>openExplorer(true));
+  if($('editProfileTop'))$('editProfileTop').addEventListener('click',()=>openExplorer(true));
+
   init();
 })();
