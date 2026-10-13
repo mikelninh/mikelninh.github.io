@@ -29,7 +29,8 @@
     if(!safeDate(currentDate)||typeof fitFor!=='function'||typeof riskFor!=='function')return [];
     const candidates=[];
     for(const notice of notices||[]) {
-      if(!notice||notice.stage!=='competition'||!notice.id||!notice.url)continue;
+      if(!notice||notice.stage!=='competition'||!/^[0-9]{1,8}-[0-9]{4}$/.test(String(notice.id||''))||
+        notice.url!=='https://ted.europa.eu/en/notice/-/detail/'+notice.id)continue;
       if(decisions[notice.id]?.status==='no-bid')continue;
       const fit=fitFor(notice);
       if(!fit||fit.excluded||fit.score<40)continue;
