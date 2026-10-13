@@ -381,31 +381,49 @@ function cleanDragIndicator(){
 }
 function cancelBoardDrag(){
  if(!boardDrag)return;
+ if(boardDrag.holdTimer)clearTimeout(boardDrag.holdTimer);
  boardDrag.ghost?.remove();
  boardDrag.source?.classList.remove('drag-active');
  cleanDragIndicator();boardDrag=null;
 }
+function beginBoardDrag(d){
+ if(!d||d.started||boardDrag!==d)return;
+ d.started=true;if(d.holdTimer)clearTimeout(d.holdTimer);
+ const rect=d.source.getBoundingClientRect();
+ d.ghost=d.source.cloneNode(true);d.ghost.classList.add('drag-ghost');d.ghost.setAttribute('aria-hidden','true');
+ d.ghost.style.width=rect.width+'px';d.ghost.style.height=rect.height+'px';
+ d.source.classList.add('drag-active');
+ d.offsetX=Math.min(rect.width,Math.max(10,d.startX-rect.left));
+ d.offsetY=Math.min(rect.height,Math.max(10,d.startY-rect.top));
+ document.body.appendChild(d.ghost);
+ suppressBoardClickUntil=Date.now()+600;
+}
 document.addEventListener('pointerdown',e=>{
  const el=e.target.closest?.('[data-drag-id]');
  if(!el||st.view!=='board'||e.isPrimary===false||(e.pointerType==='mouse'&&e.button!==0)||st.boardBusy)return;
- boardDrag={id:el.dataset.dragId,source:el,pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,started:false,ghost:null,targetTier:null,targetIndex:0,dropZone:null};
+ const d={id:el.dataset.dragId,source:el,pointerId:e.pointerId,pointerType:e.pointerType,startX:e.clientX,startY:e.clientY,started:false,ghost:null,targetTier:null,targetIndex:0,dropZone:null,holdTimer:null};
+ boardDrag=d;
+ // Touch requires a deliberate long press; an immediate swipe stays normal tray/page scrolling.
+ if(e.pointerType!=='mouse')d.holdTimer=setTimeout(()=>beginBoardDrag(d),240);
 },{passive:true});
 document.addEventListener('pointermove',e=>{
  const d=boardDrag;
  if(!d||e.pointerId!==d.pointerId)return;
- if(!d.started&&Math.hypot(e.clientX-d.startX,e.clientY-d.startY)<7)return;
+ const travel=Math.hypot(e.clientX-d.startX,e.clientY-d.startY);
  if(!d.started){
-  d.started=true;const rect=d.source.getBoundingClientRect();
-  d.ghost=d.source.cloneNode(true);d.ghost.classList.add('drag-ghost');d.ghost.setAttribute('aria-hidden','true');
-  d.ghost.style.width=rect.width+'px';d.ghost.style.height=rect.height+'px';
-  d.source.classList.add('drag-active');
-  d.offsetX=Math.min(rect.width,Math.max(10,d.startX-rect.left));
-  d.offsetY=Math.min(rect.height,Math.max(10,d.startY-rect.top));
-  document.body.appendChild(d.ghost);
-  suppressBoardClickUntil=Date.now()+550;
+  if(d.pointerType!=='mouse'){
+   if(travel>11){cancelBoardDrag();return}
+   return;
+  }
+  if(travel<7)return;
+  beginBoardDrag(d);
  }
+ if(!d.started)return;
  e.preventDefault();
  d.ghost.style.left=(e.clientX-d.offsetX)+'px';d.ghost.style.top=(e.clientY-d.offsetY)+'px';
+ // Gently scroll long boards while dragging; works for desktop and touch.
+ if(e.clientY<80)window.scrollBy?.(0,-15);
+ else if(e.clientY>window.innerHeight-90)window.scrollBy?.(0,15);
  cleanDragIndicator();
  const zone=boardDropTarget(e.clientX,e.clientY);
  d.dropZone=zone;d.targetTier=zone?.dataset.dropTier||null;
