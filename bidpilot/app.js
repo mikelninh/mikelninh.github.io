@@ -3,7 +3,7 @@
 (function(){'use strict';
 const $=id=>document.getElementById(id);
 const KEY='bidpilot_profile_v1',SAVED='bidpilot_saved_v1',VOTES='bidpilot_feedback_v1';
-const defaults={company:'Berlin AI Studio',keywords:'artificial intelligence, software, automation, data analysis',exclude:'',scoreMin:'0'};
+const defaults={company:'Berlin AI Studio',keywords:'artificial intelligence, software, automation, data analysis',exclude:'hardware, lizenz, licensing, wartungsverlängerung, server',scoreMin:'40'};
 let profile=load(KEY,defaults),saved=load(SAVED,{}),votes=load(VOTES,{}),feed=null,notices=[],view='all';
 function load(key,fallback){try{const v=JSON.parse(localStorage.getItem(key)||'null');return v&&typeof v==='object'&&!Array.isArray(v)?v:fallback}catch(_){return fallback}}
 function store(key,v){try{localStorage.setItem(key,JSON.stringify(v));return true}catch(_){return false}}
@@ -14,7 +14,14 @@ function date(v){if(!v)return'';const d=String(v).slice(0,10);return /^\d{4}-\d{
 function timestamp(v){const d=date(v);return d?Date.parse(d+'T00:00:00Z'):0}
 function readable(v){const d=date(v);if(!d)return'Not provided';return new Intl.DateTimeFormat('en-GB',{dateStyle:'medium'}).format(new Date(d+'T12:00:00Z'))}
 function validNotice(x){return x&&/^[0-9]{1,8}-[0-9]{4}$/.test(String(x.id||''))&&typeof x.title==='string'&&x.title.length>=3&&typeof x.url==='string'&&x.url.startsWith('https://ted.europa.eu/')}
-function explain(n){const txt=clean(n.title),buyer=clean(n.buyer),cpv=Array.isArray(n.cpv)?n.cpv.map(String):[],words=terms(profile.keywords),banned=terms(profile.exclude);const excluded=banned.find(t=>txt.includes(t)||buyer.includes(t));if(excluded)return{score:0,reasons:['Excluded term: '+excluded],excluded:true};let score=0,reasons=[];for(const word of words){if(txt.includes(word)){score+=28;reasons.push('Title: '+word)}else if(buyer.includes(word)){score+=9;reasons.push('Buyer: '+word)}}if(cpv.some(c=>c.startsWith('72'))){score+=18;reasons.push('IT-services CPV classification')}else if(cpv.some(c=>c.startsWith('48'))){score+=10;reasons.push('Software CPV classification')}if(n.buyer_country==='DEU'){score+=5;reasons.push('German buyer')}return{score:Math.min(score,100),reasons,excluded:false}}
+const SYNONYMS={
+ 'artificial intelligence':['artificial intelligence','machine learning','generative ki','kunstliche intelligenz','ki','llm'],
+ 'software':['software','software development','softwareentwicklung','it services','programmierung'],
+ 'automation':['automation','automatisierung','automatisiert'],
+ 'data analysis':['data analysis','datenanalyse','datenverarbeitung','data science','datenauswertung']
+};
+function hasWord(txt,word){return word==='ki'?/(^|[^a-z])ki([^a-z]|$)/.test(txt):txt.includes(word)}
+function explain(n){const txt=clean(n.title),buyer=clean(n.buyer),cpv=Array.isArray(n.cpv)?n.cpv.map(String):[],words=terms(profile.keywords),banned=terms(profile.exclude);const excluded=banned.find(t=>hasWord(txt,t)||hasWord(buyer,t));if(excluded)return{score:0,reasons:['Excluded term: '+excluded],excluded:true};let score=0,reasons=[];for(const word of words){const aliases=SYNONYMS[word]||[word];const inTitle=aliases.find(w=>hasWord(txt,clean(w))),inBuyer=aliases.find(w=>hasWord(buyer,clean(w)));if(inTitle){score+=28;reasons.push('Title: '+inTitle+(inTitle===word?'':' (related to '+word+')'))}else if(inBuyer){score+=9;reasons.push('Buyer: '+inBuyer)}}if(cpv.some(c=>c.startsWith('72'))){score+=18;reasons.push('IT-services CPV classification')}else if(cpv.some(c=>c.startsWith('48'))){score+=10;reasons.push('Software CPV classification')}if(n.buyer_country==='DEU'){score+=5;reasons.push('German buyer')}return{score:Math.min(score,100),reasons,excluded:false}}
 function getRows(){const q=clean($('search').value),min=Number(profile.scoreMin)||0;let rows=notices.map(n=>({n,fit:explain(n)})).filter(x=>!x.fit.excluded&&x.fit.score>=min&&(view==='all'||saved[x.n.id])&&(!q||clean([x.n.title,x.n.buyer,(x.n.cpv||[]).join(' '),x.n.id].join(' ')).includes(q)));const sort=$('sort').value;rows.sort((a,b)=>sort==='newest'?timestamp(b.n.published)-timestamp(a.n.published):sort==='deadline'?(timestamp(a.n.deadline)||Infinity)-(timestamp(b.n.deadline)||Infinity):b.fit.score-a.fit.score||timestamp(b.n.published)-timestamp(a.n.published));return rows}
 function p(text,cls){return e('p',cls,text)}
 function link(text,url,cls){const a=e('a',cls,text);a.href=url;a.target='_blank';a.rel='noopener noreferrer';return a}
