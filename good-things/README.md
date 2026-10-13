@@ -1,6 +1,6 @@
 # ✳ GOOD THINGS — Mikel & Huong
 
-**Build:** 1.4.0 (interactive tier-board community beta)  
+**Build:** 1.4.1 (board-first interactive tier-list beta)  
 **Website:** https://mikelninh.github.io/good-things/  
 **Source:** /good-things on the \`mikelninh.github.io\` GitHub Pages repository  
 **Architecture:** GitHub Pages HTML/CSS/vanilla JS + Supabase email/password Auth and PostgreSQL/RLS in an isolated namespace in the existing EU Frankfurt project.
@@ -38,11 +38,13 @@ A home for things worth sharing. The S–D interactive tier board, personal *Our
 
 ### 1.4 — Tier Board & sourced product photography
 
-- TierMaker-style S–D drag-and-drop mat, searchable unranked tray, pointer/touch dragging, keyboard arrows, and cross-tier reorder.
-- Independent local demo Mikel/Huong/You boards; signed-in users persist each rating and numerical position to Supabase. Sharing exports a snapshot with product scores and order only.
-- **41 / 102 source-matched product photos** from retailer SKU, official brand pages, or one exact barcode. These are image-to-product matches, not independent vegan certification. The other 61 use neutral illustrations until an exact packet photo can be confirmed.
+- TierMaker-style **full-width S–D board first**, product tray underneath, fast searchable filters, source-photo filter, pointer dragging, deliberate touch long-press, quick tap-to-rank, keyboard arrows, and accurate wrapped-row reorder.
+- Independent local demo Mikel/Huong/You boards; signed-in users persist each rating and numerical position to Supabase. **Undo** restores notes, score, privacy and position; **Reset** requires explicit confirmation. Sharing exports a snapshot with product scores/order only, and **Save PNG** creates a branded image (packshots where cross-origin permissions allow; text/emoji fallback otherwise).
+- **45 / 102 source-matched product photos** from retailer SKU, official brand pages, or one exact barcode. These are image-to-product matches, not independent vegan certification. The other 57 use neutral illustrations until an exact packet photo can be confirmed.
 - Excluded two confirmed dairy-containing entries: Pringles Sweet Paprika (whey) and funny-frisch Linsen Chips Paprika (sour-cream powder). Two ingredient-checked plant-based products were added to keep 102 eligible products. The public catalogue retains the rejected records only for a transparent audit.
-- Product images show their source. Before a broad commercial launch, check image copyrights and third-party CDN hotlink stability.
+- Product images show their source. Fuzzy Open Food Facts guesses are **never automatically shown in public catalogue/board cards**; they can only be previewed unverified in the detail drawer. Exact source claims are based on a matching retailer SKU, maker listing or barcode, not on image similarity alone.
+- Logged-in users can privately report wrong, outdated, missing or incorrect-variant photos. The reports enter `gt_photo_reports` (row-level permissions, no public read), **not** an unmoderated public image swap. Images must be reviewed by a human before updating the catalogue.
+- Before a broad commercial launch, check image copyrights, CDN hotlink policies and packaging changes. Host licensed images under our control where allowed.
 
 ## Important release gates
 
@@ -50,11 +52,11 @@ A home for things worth sharing. The S–D interactive tier board, personal *Our
 
 1. **Auth email redirect:** in Supabase project \`htffcvdopavknnylbowl\` → Authentication → URL Configuration, add \`https://mikelninh.github.io/good-things/\` to allowed Redirect URLs, and ensure the project email confirmation settings and SMTP fit a public site. This configuration is not exposed by the current connected management tools and therefore was **not automatically changed**. Signup email confirmation may fail until this is completed.
 2. **Separate environment:** \`gt_*\` tables live in the already-active Supabase project \`company-01\` (EU central). No existing tables were modified. Before a broad launch move to a dedicated project with its own auth/SMTP domain and security quotas.
-3. **Catalogue trust:** the original v1.0 file was not available. We reconstructed candidates. 41 / 102 rankable items now have source-linked retailer/brand/barcode packshots; the other 61 deliberately display illustrations. Two confirmed dairy-containing products are rejected from ranking. Verify each remaining recipe, barcode, variant, availability and image rights before commercial launch.
+3. **Catalogue trust:** the original v1.0 file was not available. We reconstructed candidates. 45 / 102 rankable items now have source-linked retailer/brand/barcode packshots; the other 57 deliberately display illustrations. Two confirmed dairy-containing products are rejected from ranking. Verify each remaining recipe, barcode, variant, availability and image rights before commercial launch.
 4. **Official curators:** Mikel and Huong each need an account. The operator then verifies each account owner and enters the corresponding UUIDs in `gt_curators` (see `curator-linking.sql`). Only after **both** are linked does Our Shelf switch to their real public ratings. The private demo can still be toggled; it **never** speaks for them publicly.
 5. **Legal/release:** add a complete German Impressum and DSGVO privacy notice, account deletion request process, moderation/reporting and abuse protection before actively inviting a large public community.
 6. **Scale:** the v1.4 client currently fetches at most 3,000 recent public ratings and 400 profiles; replace full-client aggregation with paginated aggregate RPCs/materialised views before meaningful traffic.
-7. **Verification:** database migrated and audited (104 records, 102 rankable, two rejected, 41 matched photos). Simulated JavaScript tests verified tier placement, order, unranking, private curator separation and HTML escaping. Full external browser drag/signup testing remains unverified because the browser-automation wallet lacks credit.
+7. **Verification:** database migrated and audited (104 records, 102 rankable, two rejected, 45 source-matched photos, photo-report RLS). Simulated JavaScript tests verified tier placement, wrapped-row reorder, undo/reset, image filtering, quick-tap menus, PNG-export path, private curator separation and HTML escaping. Full external browser drag/signup testing remains unverified because the browser-automation wallet lacks credit.
 
 ## Database
 
@@ -65,7 +67,7 @@ A home for things worth sharing. The S–D interactive tier board, personal *Our
 - \`gt_follows\`: public, owner-only followed relationships.
 - \`gt_feedback\`: owner-readable feedback, write limited to one per day.
 
-Seven tables with row-level security enabled, 18 per-operation RLS policies, explicit Data API grants; the operator-verified curator mapping is read-only for regular users.
+Eight tables with row-level security enabled, 21 per-operation RLS policies, explicit Data API grants; the operator-verified curator mapping is read-only for regular users.
 All are prefixed to avoid collisions with unrelated existing applications.
 
 ### Metric snapshots for weekly review (run in SQL editor, not in the browser)
@@ -84,11 +86,11 @@ select count(*) as first_five_completed from (select user_id from public.gt_rati
 ## How to try it
 
 1. Visit the [live website](https://mikelninh.github.io/good-things/), which opens the **Tier Board** first.
-2. Drag a tofu from the unranked tray to an S–D tier; reorder or drag back to unrank. Tap for tasting notes.
+2. Drag a tofu from the **bottom product tray** to an S–D row. Reorder it, hit **↶ Undo**, or return it to the tray. On mobile, tap once for a quick S–D picker or hold briefly to drag. Save a PNG or share a snapshot link.
 3. Under Our Shelf, use the **private** Mikel and Huong demo personas; ratings are stored on your device only until both curator identities are manually verified and linked.
 4. Under Your Shelf, make five ratings, export/share a snapshot or create an account to persist across devices.
 5. When Auth is configured, make two **separate** verified accounts; each can publish its own ratings, follow friends and build lists.
-6. The Community feed and rankings show only real public opinions; when empty, they stay honest.
+6. Tap any packshot in the product details to check its source or report an issue (account required). The Community feed and rankings show only real public opinions; when empty, they stay honest.
 
 ## Known privacy boundaries
 
