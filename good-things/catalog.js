@@ -1,4 +1,4 @@
-// GOOD THINGS 1.4 · Product catalogue candidates. Photos match retailer SKUs; vegan status and current availability still require individual verification.
+// GOOD THINGS v1.4 · 104 catalogue records, 2 flagged NON-VEGAN, 102 rankable candidates. Photos only from product-matched sources.
 window.GT_CATALOG=[
   {
     "id": "tofu-01",
@@ -1088,7 +1088,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "mains-08",
-    "name": "Vegane Fischstäbchen",
+    "name": "Green Cuisine \"Fischstäbchen\" vegan 12 Stück 336g",
     "brand": "Iglo Green Cuisine",
     "store": "REWE",
     "category": "Meat alternatives",
@@ -1096,8 +1096,14 @@ window.GT_CATALOG=[
     "emoji": "🍔",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Iglo%20Green%20Cuisine%20Vegane%20Fischst%C3%A4bchen"
+    "image_url": "https://img.rewe-static.de/7893313/33042603_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/iglo-green-cuisine-fischstaebchen-vegan-12-stueck-336g/7893313",
+    "vegan_status": "source_checked",
+    "vegan_source_url": "https://www.rewe.de/shop/p/iglo-green-cuisine-fischstaebchen-vegan-12-stueck-336g/7893313",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/iglo-green-cuisine-fischstaebchen-vegan-12-stueck-336g/7893313",
+    "retailer_sku": "7893313",
+    "photo_attribution": "REWE"
   },
   {
     "id": "snacks-01",
@@ -1127,7 +1133,9 @@ window.GT_CATALOG=[
     "tone": "peach",
     "verified": false,
     "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Pringles%20Sweet%20Paprika"
+    "source_url": "https://www.pringles.com/de/products/40g/pringles-sweet-paprika-40g-product.html",
+    "vegan_status": "non_vegan",
+    "vegan_issue": "Contains milk whey powder (Süßmolkenpulver). Not vegan under current German recipe."
   },
   {
     "id": "snacks-03",
@@ -1187,7 +1195,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "snacks-07",
-    "name": "Erdnussflips",
+    "name": "Erdnuss Flippies Classic 175g",
     "brand": "Funny-frisch",
     "store": "REWE",
     "category": "Chips & snacks",
@@ -1195,8 +1203,14 @@ window.GT_CATALOG=[
     "emoji": "🍿",
     "tone": "peach",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Funny-frisch%20Erdnussflips"
+    "image_url": "https://img.rewe-static.de/8162755/29337321_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/funny-frisch-erdnuss-flippies-classic-175g/8162755",
+    "vegan_status": "source_checked",
+    "vegan_source_url": "https://www.funny-frisch.de/produkte/flips/erdnuss-flippies.html",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/funny-frisch-erdnuss-flippies-classic-175g/8162755",
+    "retailer_sku": "8162755",
+    "photo_attribution": "REWE"
   },
   {
     "id": "snacks-08",
@@ -1209,7 +1223,9 @@ window.GT_CATALOG=[
     "tone": "peach",
     "verified": false,
     "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=funny-frisch%20Linsen%20Chips%20Paprika"
+    "source_url": "https://www.funny-frisch.de/produkte/linsen-chips/linsen-chips-paprika.html",
+    "vegan_status": "non_vegan",
+    "vegan_issue": "Contains dairy sour-cream powder (Trockenmilcherzeugnis aus Sauerrahm). Not vegan."
   },
   {
     "id": "chocolate-01",
@@ -1470,6 +1486,44 @@ window.GT_CATALOG=[
     "verified": false,
     "image_url": null,
     "source_url": "https://www.lidl.de/"
+  },
+  {
+    "id": "snacks-09",
+    "name": "Naturland Kesselchips Meersalz 125g",
+    "brand": "REWE Bio",
+    "store": "REWE",
+    "category": "Chips & snacks",
+    "category_id": "snacks",
+    "emoji": "🍿",
+    "tone": "peach",
+    "verified": false,
+    "vegan_status": "source_checked",
+    "vegan_source_url": "https://www.rewe.de/shop/p/rewe-bio-naturland-kesselchips-meersalz-125g/8915125",
+    "image_status": "retailer",
+    "image_url": "https://img.rewe-static.de/8915125/39850955_digital-image.png?imwidth=304&impolicy=kues",
+    "image_source_url": "https://www.rewe.de/shop/p/rewe-bio-naturland-kesselchips-meersalz-125g/8915125",
+    "source_url": "https://www.rewe.de/shop/p/rewe-bio-naturland-kesselchips-meersalz-125g/8915125",
+    "retailer_sku": "8915125",
+    "photo_attribution": "REWE"
+  },
+  {
+    "id": "snacks-10",
+    "name": "Donuts Erdnuss 110g",
+    "brand": "Funny-frisch",
+    "store": "REWE",
+    "category": "Chips & snacks",
+    "category_id": "snacks",
+    "emoji": "🍿",
+    "tone": "peach",
+    "verified": false,
+    "vegan_status": "source_checked",
+    "vegan_source_url": "https://www.rewe.de/shop/p/funny-frisch-donuts-erdnuss-110g/8110457",
+    "image_status": "retailer",
+    "image_url": "https://img.rewe-static.de/8110457/29337321_digital-image.png?imwidth=304&impolicy=kues",
+    "image_source_url": "https://www.rewe.de/shop/p/funny-frisch-donuts-erdnuss-110g/8110457",
+    "source_url": "https://www.rewe.de/shop/p/funny-frisch-donuts-erdnuss-110g/8110457",
+    "retailer_sku": "8110457",
+    "photo_attribution": "REWE"
   }
 ];
 window.GT_GROUPS=[
@@ -1527,7 +1581,7 @@ window.GT_GROUPS=[
     "label": "Chips & snacks",
     "emoji": "🍿",
     "tone": "peach",
-    "count": 8
+    "count": 10
   },
   {
     "id": "chocolate",
