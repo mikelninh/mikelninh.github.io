@@ -21,7 +21,7 @@ const rankableProduct=p=>Boolean(p&&p.vegan_status!=='non_vegan');
 const RANKABLE=ALL.filter(rankableProduct);
 const FLAGGED=ALL.filter(p=>!rankableProduct(p));
 const tryRead=(key,fallback)=>{try{const d=JSON.parse(localStorage.getItem(key)||'null');return d&&typeof d==='object'?d:fallback}catch(_){return fallback}};
-const st={view:'board',boardQuery:'',boardCategory:'all',category:'all',store:'all',sort:'name',query:'',ratedOnly:false,persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
+const st={view:'board',boardQuery:'',boardCategory:'all',boardPhotoFilter:'all',boardHistory:[],boardBusy:false,boardModalProduct:null,boardUndoing:false,category:'all',store:'all',sort:'name',query:'',ratedOnly:false,persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
 let sb=null;
 function safeGuest(raw){
  const ret={mikel:{},huong:{},you:{}};
@@ -135,7 +135,7 @@ function boardPiece(p){
  const matched=matchedPhoto(p),candidate=st.imageCache[p.id]?.kind==='off';
  const img=matched||candidate;
  const label=p.brand+' '+p.name;
- return '<button type="button" draggable="false" class="board-piece" data-drag-id="'+attr(p.id)+'" data-photo="'+(img?'yes':'none')+'" data-action="open-product" data-id="'+attr(p.id)+'" title="'+attr(label)+' — drag to rank; press to add a note; arrow keys move between tiers" aria-label="'+attr(label)+' — draggable, use arrow keys to change its tier or click to rate">'
+ return '<button type="button" draggable="false" class="board-piece" data-drag-id="'+attr(p.id)+'" data-photo="'+(img?'yes':'none')+'" data-action="board-pick" data-id="'+attr(p.id)+'" title="'+attr(label)+' — drag to rank; tap to choose S–D; arrow keys to move" aria-label="'+attr(label)+' — draggable, tap to rank, arrow keys to change tiers">'
  +boardPhoto(p)+(matched?'<span class="verified-indicator" title="Photo matched to this exact retailer SKU or barcode; recipe still needs checking" aria-hidden="true"></span>':'')
  +'<strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+'</small></button>';
 }
@@ -144,6 +144,7 @@ function boardTrayProducts(){
  const query=st.boardQuery.toLocaleLowerCase().trim();
  return RANKABLE.filter(p=>!rated.has(p.id)
  &&(st.boardCategory==='all'||p.category_id===st.boardCategory)
+ &&(st.boardPhotoFilter==='all'||(st.boardPhotoFilter==='matched'&&matchedPhoto(p))||(st.boardPhotoFilter==='missing'&&!matchedPhoto(p)))
  &&(!query||(p.brand+' '+p.name+' '+p.category+' '+p.store).toLocaleLowerCase().includes(query)))
  .sort((a,b)=>a.brand.localeCompare(b.brand,'de')||a.name.localeCompare(b.name,'de'));
 }
@@ -161,19 +162,19 @@ function renderBoard(){
  }).join('');
  return head('GOOD THINGS / THE TIER BOARD','Pick it up.<br><em>Place your verdict.</em>',
  'Grab a real product, drop it into your tier and rearrange whenever your taste changes. On mobile, press and drag; or tap a pack to pick S–D.',entries.length+' RANKED')
- +'<div class="board-intro">'+personToggle+'<div class="gap12"><button class="button button-small button-white" data-action="share-board">Share board ↗</button><button class="button button-small button-ghost" data-nav="ours">Compare with Huong ♡</button></div></div>'
+ +'<div class="board-intro">'+personToggle+'<div class="gap12"><button class="button button-small button-ghost" data-action="undo-board" '+(!st.boardHistory.length?'disabled':'')+' title="Undo last move">↶ Undo</button><button class="button button-small button-white" data-action="export-board-png">↓ Save PNG</button><button class="button button-small button-lime" data-action="share-board">Share ↗</button><button class="button button-small button-ghost" data-action="reset-board" '+(!entries.length?'disabled':'')+'>Reset</button></div></div>'
  +(!st.user?'<div class="inline-notice">✳ <strong>Local preview:</strong> switching Mikel/Huong changes only this device’s demo board. Sign in to sync your own honest scores — nobody can post as someone else.</div>':'<div class="inline-notice">♡ Your board is tied to your account. Changes sync to Supabase; each new rating is private until you explicitly publish it.</div>')
  +'<div class="board-layout"><section class="board-pantry" aria-label="Unranked products">'
  +'<div class="board-panel-label"><span>✳ The unranked shelf</span><span id="boardTrayCount">'+boardTrayProducts().length+' left</span></div>'
  +'<div class="board-filter-row"><input type="search" id="boardSearch" class="board-filter" aria-label="Search unranked products" placeholder="Find chocolate, tofu…" value="'+attr(st.boardQuery)+'"><select class="board-filter" id="boardCategory" aria-label="Filter board by category">'
- +'<option value="all">All categories</option>'+GROUPS.map(g=>'<option value="'+attr(g.id)+'" '+(st.boardCategory===g.id?'selected':'')+'>'+esc(g.emoji)+' '+esc(g.label)+'</option>').join('')+'</select></div>'
+ +'<option value="all">All categories</option>'+GROUPS.map(g=>'<option value="'+attr(g.id)+'" '+(st.boardCategory===g.id?'selected':'')+'>'+esc(g.emoji)+' '+esc(g.label)+'</option>').join('')+'</select><select class="board-filter" id="boardPhotoFilter" aria-label="Photo quality"><option value="all">All photos</option><option value="matched" '+(st.boardPhotoFilter==='matched'?'selected':'')+'>✓ Source-matched</option><option value="missing" '+(st.boardPhotoFilter==='missing'?'selected':'')+'>Needs a packshot</option></select></div>'
  +'<div class="board-tray" id="boardTray" data-drop-tier="unranked" aria-label="Unranked product tray">'+boardTrayProducts().map(boardPiece).join('')+'</div>'
  +'<div class="board-photo-progress" title="Sourced exact retailer photo coverage"><span style="width:'+photos/RANKABLE.length*100+'%"></span></div>'
  +'<div class="board-legend"><span>'+photos+' / '+RANKABLE.length+' source-matched packshots</span><span>Drop here to unrank ↶</span></div>'
  +'</section><section class="board-mat" aria-label="Your S through D tier ranking">'
  +'<div class="board-mat-head"><div><strong>'+esc(who)+' taste board</strong><small style="display:block;margin-top:6px">One opinion at a time. Rearrange as you please.</small></div><small>'+entries.length+' ranked · '+(RANKABLE.length-rated.size)+' to discover</small></div>'
  +rows+'</section></div>'
- +'<div class="board-mobile-hint">↕ <strong>Drag & drop</strong> to rank or reorder. Tap a product for tasting notes. With a keyboard, focus a product and use ↑ ↓ to change tier, ← → to reorder.</div>'
+ +'<div class="board-mobile-hint">↕ <strong>Drag & drop</strong> to rank or reorder. On mobile, hold briefly to drag or tap a product to choose S–D. Keyboard: ↑ ↓ moves tiers, ← → reorders. <button class="navlink" data-action="open-photo-info" style="display:inline;text-decoration:underline">About our photos ↗</button></div>'
  +'<div class="board-scoreboard"><div><strong>'+entries.length+' good things judged.</strong><span>'+Math.min(5,entries.length)+'/5 first-five challenge · '+(RANKABLE.length-rated.size)+' still a mystery</span></div><div class="gap12"><button class="button button-lime button-small" data-nav="my">See my shelf ↗</button><button class="button button-ghost button-small" data-nav="discover">See all products</button></div></div>';
 }
 function refreshBoardTray(){
