@@ -1,4 +1,31 @@
-# BIDPILOT 1.1 — source-first opportunity & decision desk
+# BID✳PILOT 1.2 — Calm opportunity desk
+
+**Live site:** https://mikelninh.github.io/bidpilot/ (updated when v1.2 merges)
+
+The first screen now offers up to **three actual source-linked competition notices** and **one next-best verification action**, instead of requiring users to sift through 550+ source notices and many filters. No invented leads, eligibility claims, or win probability.
+
+## Release 1.2 improvements
+
+- Editorial landing dashboard with a profile summary, up to three real top-ranked opportunities, explicit source links and one next best action.
+- Source-backed deterministic shortlist uses notice type, published upcoming lot/participation date, local keyword matching, risk flags and saved no-bid decisions. Hard excludes prevent results, call-offs and expired/missing/far-out dates from appearing as recommended opportunities.
+- Honest sample profile indicator until saved; responsive tablet/mobile layout and native disclosure for the full legacy workflow.
+- Prior settings, favourites, notes, decisions and CSV exports are preserved. Everything stays in browser localStorage.
+- All ranking terms, confidence boundaries, empty/stale/loading states, accessibility requirements and pilot release gates are in [the UX specification](./UX-SPEC-1.2.md).
+- Added pure JavaScript ranking module `priority.js` with unit tests and browser-less dashboard smoke tests.
+
+**Run tests:**
+~~~bash
+python -m unittest discover -s bidpilot -p "test_*.py" -v
+node --check bidpilot/app.js
+node --check bidpilot/priority.js
+node --test bidpilot/test_*.cjs
+~~~
+
+**Important:** text relevance and title-based warnings are not legal participation checks. No attachments are analysed or bids submitted. The source feed is bounded and updates twice daily; verify all official TED notice amendments and exact times.
+
+---
+
+## Release 1.1 history
 
 **Live site:** https://mikelninh.github.io/bidpilot/
 
