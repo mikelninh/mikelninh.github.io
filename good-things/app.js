@@ -487,14 +487,14 @@ function ourPreview(){
  const curatorByRole={mikel:st.curators.find(c=>c.role==='mikel')?.user_id,huong:st.curators.find(c=>c.role==='huong')?.user_id};
  const ready=Boolean(curatorByRole.mikel&&curatorByRole.huong);
  const published=ready&&st.ourMode!=='demo';
- const toMap=who=>Object.fromEntries(st.allRatings.filter(r=>r.user_id===curatorByRole[who]&&r.is_public).map(r=>[r.product_id,r]));
+ const toMap=who=>Object.fromEntries(st.allRatings.filter(r=>r.user_id===curatorByRole[who]&&r.is_public&&isGraded(r)).map(r=>[r.product_id,r]));
  const a=published?toMap('mikel'):st.guest.mikel;
  const b=published?toMap('huong'):st.guest.huong;
- const ids=[...new Set([...Object.keys(a),...Object.keys(b)])].filter(getProduct);
- return {a,b,ids,published,ready,curatorByRole,both:ids.filter(id=>a[id]&&b[id]),agree:ids.filter(id=>a[id]&&b[id]&&a[id].tier===b[id].tier)};
+ const ids=[...new Set([...Object.keys(a),...Object.keys(b)])].filter(id=>getProduct(id)&&isGraded(a[id]||b[id]));
+ return {a,b,ids,published,ready,curatorByRole,both:ids.filter(id=>isGraded(a[id])&&isGraded(b[id])),agree:ids.filter(id=>isGraded(a[id])&&isGraded(b[id])&&a[id].tier===b[id].tier)};
 }
 function tierMiniCards(who,ratings,published){
- const arr=Object.entries(ratings||{}).filter(([id])=>getProduct(id)).sort((x,y)=>TIER_SCORE[y[1].tier]-TIER_SCORE[x[1].tier]);
+ const arr=Object.entries(ratings||{}).filter(([id,r])=>getProduct(id)&&isGraded(r)).sort((x,y)=>TIER_SCORE[y[1].tier]-TIER_SCORE[x[1].tier]);
  return arr.length?arr.slice(0,8).map(([id,r])=>{
   const p=getProduct(id);return '<div class="review-row"><span style="font-size:26px">'+esc(p.emoji)+'</span><div style="flex:1"><h4>'+esc(p.brand+' '+p.name)+'</h4><p>'+esc(r.note||'No taste note yet.')+'</p></div>'+tierBadge(r.tier)+'</div>';
  }).join(''):published?empty('♡','No public opinions yet','Ratings stay off this public shelf until their real author chooses to share them.'):empty('♡','An empty preview shelf','Add a local practice rating to begin.','<button class="button button-lime button-small" data-action="open-random" data-persona="'+who+'">Rate something ↗</button>');
@@ -512,7 +512,7 @@ function renderOurs(){
  return head('THE FIRST TWO SHELVES','Two people.<br><em>Many opinions.</em>',intro,'OUR LITTLE CORNER')
  +notice
  +'<div class="profile-banner"><div><div class="eyebrow">OUR SHARED EXPERIMENT</div><h3>Same planet. Different tastes.</h3><p class="small muted" style="max-width:480px">Taste your way through tofu, chocolate, plant milks and life’s more delicious disagreements.</p></div><div class="difference">♡</div></div>'
- +'<div class="stat-row"><div><strong>'+Object.keys(m.a).length+'</strong><span>Mikel’s '+(m.published?'public reviews':'preview picks')+'</span></div><div><strong>'+Object.keys(m.b).length+'</strong><span>Huong’s '+(m.published?'public reviews':'preview picks')+'</span></div><div><strong>'+m.agree.length+'/'+m.both.length+'</strong><span>Matching ratings</span></div></div>'
+ +'<div class="stat-row"><div><strong>'+Object.values(m.a).filter(isGraded).length+'</strong><span>Mikel’s '+(m.published?'public reviews':'preview picks')+'</span></div><div><strong>'+Object.values(m.b).filter(isGraded).length+'</strong><span>Huong’s '+(m.published?'public reviews':'preview picks')+'</span></div><div><strong>'+m.agree.length+'/'+m.both.length+'</strong><span>Matching ratings</span></div></div>'
  +'<div class="cards-row"><div class="surface"><div class="spaced"><div class="person"><div class="avatar sky">M</div><div><strong>Mikel’s shelf</strong><small>'+(m.published?'Verified curator':'Local preview')+'</small></div></div>'+curatorButton('mikel')+'</div><hr class="rule">'+tierMiniCards('mikel',m.a,m.published)+'</div>'
  +'<div class="surface"><div class="spaced"><div class="person"><div class="avatar peach">H</div><div><strong>Huong’s shelf</strong><small>'+(m.published?'Verified curator':'Local preview')+'</small></div></div>'+curatorButton('huong')+'</div><hr class="rule">'+tierMiniCards('huong',m.b,m.published)+'</div></div>'
  +(cmp?'<div style="margin-top:22px">'+head('TASTE MATCH','The same products.',m.published?'A comparison of products both curators publicly reviewed.':'A comparison of products both rated in this private preview.','TOGETHER')+'<div class="rating-list">'+cmp+'</div></div>':'')
@@ -540,13 +540,13 @@ function renderMy(){
  +(!st.user&&Object.keys(st.guest.you).length?'<div class="small muted" style="margin-top:18px">Tip: after signing in, you can transfer your guest ratings to your account from Edit profile.</div>':'');
 }
 function scoreFor(userId){
- const mine=selfRatings();
- const theirs=st.allRatings.filter(r=>r.user_id===userId&&r.is_public);
+ const mine=gradedRatings();
+ const theirs=st.allRatings.filter(r=>r.user_id===userId&&r.is_public&&isGraded(r));
  const common=mine.filter(r=>theirs.some(t=>t.product_id===r.product_id));
  if(!common.length)return {n:0,score:null};
  return {n:common.length,score:Math.round(100*common.reduce((sum,r)=>sum+(1-Math.abs(TIER_SCORE[r.tier]-TIER_SCORE[theirs.find(t=>t.product_id===r.product_id).tier])/4),0)/common.length)};
 }
-function publicRated(){return st.allRatings.filter(r=>r.is_public&&rankableProduct(getProduct(r.product_id)))}
+function publicRated(){return st.allRatings.filter(r=>r.is_public&&isGraded(r)&&rankableProduct(getProduct(r.product_id)))}
 function leaderboard(){
  const g={};
  for(const r of publicRated()){if(!g[r.product_id])g[r.product_id]={sum:0,n:0};g[r.product_id].sum+=TIER_SCORE[r.tier];g[r.product_id].n++}
@@ -622,8 +622,8 @@ function render(){
  else if(st.view==='list')content.innerHTML=renderListView();
  else content.innerHTML=renderDiscover();
  $$('[data-nav]').forEach(n=>n.classList.toggle('active',n.dataset.nav===st.view));
- const num=selfRatings().length;
- $('#myCount').textContent=String(num);
+ const num=gradedRatings().length;
+ $('#myCount').textContent=String(selfRatings().length);
  $('#communityCount').textContent=String(st.profiles.length);
  $('#sidebarProgress').style.width=Math.min(num,5)*20+'%';
  $('#sidebarProgressText').textContent=Math.min(num,5)+' / 5 rated';
@@ -790,9 +790,9 @@ async function saveProfile(form){
 }
 async function importGuest(){
  if(!st.user)return openAuth();
- const entries=Object.entries(st.guest.you).filter(([id,r])=>getProduct(id)&&TIERS.includes(r.tier));
+ const entries=Object.entries(st.guest.you).filter(([id,r])=>rankableProduct(getProduct(id))&&(isGraded(r)||isNotTried(r)));
  if(!entries.length)return toast('No guest ratings to import.');
- const rows=entries.map(([product_id,r])=>({user_id:st.user.id,product_id,tier:r.tier,note:r.note||'',is_public:r.is_public!==false}));
+ const rows=entries.map(([product_id,r])=>({user_id:st.user.id,product_id,status:isNotTried(r)?'not_tried':'rated',tier:isNotTried(r)?null:r.tier,note:r.note||'',position:isNotTried(r)?0:Number(r.position)||0,is_public:!isNotTried(r)&&r.is_public===true}));
  const {error}=await sb.from('gt_ratings').upsert(rows,{onConflict:'user_id,product_id'});
  if(error)return toast('Import failed: '+error.message);
  st.guest.you={};persist();await loadRemote();closeAll();toast(rows.length+' guest ratings moved into your account ♡');
@@ -800,7 +800,7 @@ async function importGuest(){
 function openListModal(){
  if(!st.user)return openAuth();
  if(!st.profile)return openProfileEdit();
- if(!selfRatings().length)return toast('Rate a product before making a list.');
+ if(!gradedRatings().length)return toast('Rate a product before making a list.');
  modal('<button class="close" data-action="close-modal">×</button><div class="eyebrow">MAKE A LITTLE COLLECTION</div><h2>Give it a name.</h2><p class="small muted">A public link can be shared with friends. Your list will include your first 40 rated products (products only; private tasting notes are never copied).</p>'
  +'<form id="listForm"><div class="field"><label>Collection name</label><input class="control" name="title" placeholder="The snack drawer of dreams" maxlength="70" minlength="2" required></div>'
  +'<div class="field"><label>Short introduction</label><textarea class="control" name="description" maxlength="240" rows="3" placeholder="A few discoveries worth making space for."></textarea></div>'
@@ -809,7 +809,7 @@ function openListModal(){
 function slug(s){return String(s).toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,47)||'good-picks'}
 async function saveList(form){
  if(!st.user)return;
- const title=form.elements.namedItem('title').value.trim(),description=form.elements.namedItem('description').value.trim(),product_ids=selfRatings().slice(0,40).map(r=>r.product_id);
+ const title=form.elements.namedItem('title').value.trim(),description=form.elements.namedItem('description').value.trim(),product_ids=gradedRatings().slice(0,40).map(r=>r.product_id);
  const obj={user_id:st.user.id,title,description,slug:slug(title)+'-'+Math.random().toString(36).slice(2,6),product_ids,is_public:form.elements.namedItem('is_public').checked};
  const {data,error}=await sb.from('gt_lists').insert(obj).select().single();
  if(error)return toast('Collection: '+error.message);
@@ -824,7 +824,7 @@ function showLink(link){
 }
 function shareShelf(){
  if(st.user&&st.profile)return copyLink(URL_BASE+'?u='+encodeURIComponent(st.profile.handle));
- const own=selfRatings().filter(r=>rankableProduct(getProduct(r.product_id)));
+ const own=gradedRatings().filter(r=>rankableProduct(getProduct(r.product_id)));
  if(!own.length)return toast('Rate something first to share a shelf.');
  copyLink(snapshotUrl(own));
 }
@@ -860,7 +860,7 @@ async function importJson(file){
 }
 
 function exportJson(){
- const content={title:'GOOD THINGS',version:'1.3',exported_at:new Date().toISOString(),ratings:selfRatings().map(r=>({product_id:r.product_id,tier:r.tier,note:r.note,is_public:r.is_public,position:r.position||0}))};
+ const content={title:'GOOD THINGS',version:'1.5',exported_at:new Date().toISOString(),ratings:selfRatings().map(r=>({product_id:r.product_id,status:isNotTried(r)?'not_tried':'rated',tier:isNotTried(r)?null:r.tier,note:r.note,is_public:!isNotTried(r)&&r.is_public===true,position:isNotTried(r)?0:Number(r.position)||0}))};
  const blob=new Blob([JSON.stringify(content,null,2)],{type:'application/json'});
  const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='good-things-my-shelf.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);
  toast('JSON export ready. Your data stays yours.');
