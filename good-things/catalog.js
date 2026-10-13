@@ -1203,7 +1203,7 @@ window.GT_CATALOG=[
     "emoji": "🍿",
     "tone": "peach",
     "verified": false,
-    "image_url": "https://img.rewe-static.de/8162755/29337321_digital-image.png?imwidth=304&impolicy=kues",
+    "image_url": "https://img.rewe-static.de/8162755/49896537_digital-image.png?imwidth=304&impolicy=kues",
     "source_url": "https://www.rewe.de/shop/p/funny-frisch-erdnuss-flippies-classic-175g/8162755",
     "vegan_status": "source_checked",
     "vegan_source_url": "https://www.funny-frisch.de/produkte/flips/erdnuss-flippies.html",
