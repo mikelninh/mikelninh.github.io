@@ -2,7 +2,9 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
-const engine=require('./priority.js');
+const rankingContext={};
+vm.runInNewContext(fs.readFileSync(__dirname+'/priority.js','utf8'),rankingContext,{filename:'priority.js'});
+const engine=rankingContext.BidPilotPriority;
 const source=fs.readFileSync(__dirname+'/app.js','utf8');
 function dateOffset(days){
   const d=new Date();d.setDate(d.getDate()+days);
