@@ -1,0 +1,44 @@
+name: BIDPILOT official TED feed
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "12 6,18 * * *"
+  push:
+    paths:
+      - "bidpilot/ingest.py"
+      - "bidpilot/test_ingest.py"
+      - ".github/workflows/bidpilot-feed.yml"
+permissions:
+  contents: write
+concurrency:
+  group: bidpilot-feed
+  cancel-in-progress: false
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run normalisation tests
+        run: python -m unittest discover -s bidpilot -p "test_*.py" -v
+      - name: Fetch official TED notices (never synthetic)
+        run: python bidpilot/ingest.py
+      - name: Publish refreshed data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add bidpilot/notices.json
+          if git diff --cached --quiet; then
+            echo "No data changes"
+            exit 0
+          fi
+          git commit -m "data(bidpilot): refresh official TED notice feed"
+          git pull --rebase origin main
+          git push origin HEAD:main
