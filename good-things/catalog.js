@@ -1,4 +1,4 @@
-// GOOD THINGS 1.4 · Product catalogue candidates. Images labelled RETAILER are matched to retailer SKUs; product vegan status remains unverified.
+// GOOD THINGS 1.4 · Candidate products; pictured retailer variants are matched to real SKUs, not blanket vegan verifications.
 window.GT_CATALOG=[
   {
     "id": "tofu-01",
@@ -457,8 +457,12 @@ window.GT_CATALOG=[
     "emoji": "🥣",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Alpro%20Skyr%20Style%20Vanille"
+    "image_url": "https://img.rewe-static.de/8089133/33917640_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/alpro-skyr-alternative-vanille-vegan-400g/8089133",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/alpro-skyr-alternative-vanille-vegan-400g/8089133",
+    "retailer_sku": "8089133",
+    "photo_attribution": "REWE"
   },
   {
     "id": "yogurts-03",
@@ -470,8 +474,12 @@ window.GT_CATALOG=[
     "emoji": "🥣",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Alpro%20Soja%20Natur%20Ohne%20Zucker"
+    "image_url": "https://img.rewe-static.de/8936874/39489332_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/alpro-joghurtalternative-soja-natur-ohne-zucker-400g/8936874",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/alpro-joghurtalternative-soja-natur-ohne-zucker-400g/8936874",
+    "retailer_sku": "8936874",
+    "photo_attribution": "REWE"
   },
   {
     "id": "yogurts-04",
@@ -483,8 +491,12 @@ window.GT_CATALOG=[
     "emoji": "🥣",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Alpro%20Soja%20Natur"
+    "image_url": "https://img.rewe-static.de/7681825/39314906_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/alpro-joghurtalternative-soja-natur-vegan-400g/7681825",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/alpro-joghurtalternative-soja-natur-vegan-400g/7681825",
+    "retailer_sku": "7681825",
+    "photo_attribution": "REWE"
   },
   {
     "id": "yogurts-05",
@@ -496,8 +508,12 @@ window.GT_CATALOG=[
     "emoji": "🥣",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Alpro%20Soja%20Heidelbeere"
+    "image_url": "https://img.rewe-static.de/7679422/39182733_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/alpro-joghurtalternative-soja-heidelbeere-400g/7679422",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/alpro-joghurtalternative-soja-heidelbeere-400g/7679422",
+    "retailer_sku": "7679422",
+    "photo_attribution": "REWE"
   },
   {
     "id": "yogurts-06",
@@ -509,8 +525,12 @@ window.GT_CATALOG=[
     "emoji": "🥣",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Alpro%20Soja%20Mango"
+    "image_url": "https://img.rewe-static.de/7211978/42671460_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/alpro-joghurtalternative-soja-mango-ohne-zuckerzusatz-vegan-400g/7211978",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/alpro-joghurtalternative-soja-mango-ohne-zuckerzusatz-vegan-400g/7211978",
+    "retailer_sku": "7211978",
+    "photo_attribution": "REWE"
   },
   {
     "id": "yogurts-07",
@@ -777,8 +797,12 @@ window.GT_CATALOG=[
     "emoji": "🥪",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=R%C3%BCgenwalder%20M%C3%BChle%20Veganer%20Schinken%20Spicker"
+    "image_url": "https://img.rewe-static.de/7785273/35912579_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/ruegenwalder-muehle-veganer-schinken-spicker-mortadella-80g/7785273",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/ruegenwalder-muehle-veganer-schinken-spicker-mortadella-80g/7785273",
+    "retailer_sku": "7785273",
+    "photo_attribution": "REWE"
   },
   {
     "id": "deli-02",
@@ -816,8 +840,12 @@ window.GT_CATALOG=[
     "emoji": "🥪",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Billie%20Green%20Vegane%20Salami"
+    "image_url": "https://img.rewe-static.de/7780891/36494940_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/billie-green-vegane-salami-klassik-70g/7780891",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/billie-green-vegane-salami-klassik-70g/7780891",
+    "retailer_sku": "7780891",
+    "photo_attribution": "REWE"
   },
   {
     "id": "deli-05",
@@ -829,8 +857,12 @@ window.GT_CATALOG=[
     "emoji": "🥪",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Billie%20Green%20Vegane%20Salami%20Pfeffer"
+    "image_url": "https://img.rewe-static.de/7780402/36494939_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/billie-green-vegane-salami-mit-pfeffer-70g/7780402",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/billie-green-vegane-salami-mit-pfeffer-70g/7780402",
+    "retailer_sku": "7780402",
+    "photo_attribution": "REWE"
   },
   {
     "id": "deli-06",
@@ -842,8 +874,12 @@ window.GT_CATALOG=[
     "emoji": "🥪",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Billie%20Green%20Veganer%20Bacon"
+    "image_url": "https://img.rewe-static.de/8778253/36494897_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/billie-green-veganer-bacon-90g/8778253",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/billie-green-veganer-bacon-90g/8778253",
+    "retailer_sku": "8778253",
+    "photo_attribution": "REWE"
   },
   {
     "id": "deli-07",
