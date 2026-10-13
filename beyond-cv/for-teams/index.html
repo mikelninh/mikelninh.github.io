@@ -103,6 +103,18 @@ footer{padding:28px 0;border-top:1px solid var(--line);font-size:11px;color:#7c8
 @media(max-width:950px){nav{gap:13px}nav a.hide-small{display:none}.hero{grid-template-columns:1fr .7fr;gap:25px}.portrait{min-height:450px}.proof-grid,.cards{grid-template-columns:1fr 1fr}.human-gallery{grid-template-columns:repeat(2,1fr)}.work-card:last-child{grid-column:1/-1;min-height:220px}}
 @media(max-width:700px){.wrap{width:min(100% - 36px,520px)}.topbar-inner{min-height:65px}nav a.hide-mobile{display:none}.mark{font-size:12px}.mark-symbol{font-size:23px}nav .nav-cta{padding:10px 12px}.hero{grid-template-columns:1fr;padding:52px 0 55px}.hero h1{font-size:58px}.portrait{min-height:300px;border-radius:170px 170px 12px 12px}.orbit{width:160px;height:160px}.flower{font-size:91px}.portrait-note{font-size:17px}.ribbon-content{align-items:start;flex-direction:column;gap:9px}.cards,.proof-grid,.story-grid,.human-gallery{grid-template-columns:1fr}.work-card:last-child{grid-column:auto}.section-head{display:block}section{padding:67px 0}.card h3{margin-top:14px}.belief{align-items:start;flex-direction:column}.hello-box{grid-template-columns:1fr;padding:27px}.prompt q{min-height:60px}.foot{display:block}.foot a{display:inline-block;margin-top:10px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+
+/* Extra context shown only for direct HTGF application visitors. Generic hiring-manager view remains unchanged. */
+.htgfHello[hidden]{display:none!important}
+.htgfHello{margin:-35px auto 58px;background:#fffefa;border:1px solid #d1e0cd;border-radius:20px;padding:31px 35px;display:grid;grid-template-columns:64px 1fr;gap:20px;box-shadow:0 14px 45px #194e3210}
+.htgfHelloEmblem{height:52px;width:52px;display:grid;place-items:center;border-radius:50%;background:#e8f3dd;color:#4d8055;font:37px Georgia,serif}
+.htgfHello h2{font:400 clamp(29px,3.5vw,43px)/1.1 var(--serif);margin:13px 0 15px;letter-spacing:-.034em}
+.htgfHello .eyebrow{font-size:9px}
+.htgfHello p{font-size:13px;line-height:1.75;max-width:860px;margin:0 0 10px;color:#5f7065}
+.htgfHello p strong{color:#294e37}
+.htgfHelloLinks{display:flex;gap:22px;flex-wrap:wrap;margin-top:16px}
+.htgfHelloLinks a{font-size:12px;font-weight:800;color:#3a7351;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:700px){.htgfHello{margin:-15px auto 32px;padding:22px;grid-template-columns:1fr;gap:12px}.htgfHelloEmblem{width:40px;height:40px;font-size:27px}}
 </style>
 </head>
 <body>
@@ -126,6 +138,15 @@ footer{padding:28px 0;border-top:1px solid var(--line);font-size:11px;color:#7c8
 <div class="portrait-bottom"><span>MAKE SOMETHING REAL</span><span>MAKE IT MEAN SOMETHING</span></div>
 </div>
 </div>
+<aside id="htgf-hello" class="htgfHello wrap" aria-label="A personal note to the HTGF team" hidden>
+<div class="htgfHelloEmblem" aria-hidden="true">✳</div>
+<div class="htgfHelloText"><span class="eyebrow">A NOTE FOR THE HTGF TEAM</span>
+<h2>We’ve crossed paths before. <em>Sort of.</em></h2>
+<p>I first heard about HTGF back in 2014/15 in a university course on technology-oriented entrepreneurship. We pitched medtech ideas, sketched business models, and tried to make things happen on tiny budgets. I loved it. A Business Model Canvas, a very small budget, and an almost unreasonable amount of enthusiasm.</p>
+<p>After building a small business and finding my way into AI engineering, I’m still excited by the same question: <strong>How do we help a promising idea become something real?</strong></p>
+<div class="htgfHelloLinks"><a href="https://mikelninh.github.io/venture-intelligence/?demo=investigation">Try the tiny investigation again ↗</a><a href="#human">Meet the rest of the human ↓</a></div>
+</div>
+</aside>
 <div class="ribbon"><div class="wrap ribbon-content"><p><b>A small promise:</b> I won't pretend a synthetic demo is a production system, or that curiosity is experience. I'll show you the work, the evidence, and where I'm still learning.</p><small>Honest by design / 2026</small></div></div>
 <section id="how"><div class="wrap"><div class="section-head"><div><div class="eyebrow">01 / What it's like to build with me</div><h2>Curious enough to start.<br><em>Careful enough to check.</em></h2></div><p class="section-intro">I don't have all the answers. I like turning unclear problems into small, testable steps with the people who actually live with the result.</p></div>
 <div class="cards">
@@ -168,6 +189,7 @@ footer{padding:28px 0;border-top:1px solid var(--line);font-size:11px;color:#7c8
 </main>
 <footer><div class="wrap foot"><span>Made with care in Berlin · 2026 · No trackers, no gatekeeping, no perfect-human claims.</span><span><a href="../">Beyond the CV</a> · <a href="https://mikelninh.github.io/">Portfolio</a> · <a href="https://github.com/mikelninh">GitHub</a></span></div></footer>
 <script>
+if(new URLSearchParams(window.location.search).get('hello')==='htgf'){document.getElementById('htgf-hello').hidden=false;}
 const questions=[
 '“What would you build if the first version only had to help one person?”',
 '“What have your users taught you that your roadmap did not?”',
