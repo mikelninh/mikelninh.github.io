@@ -293,3 +293,38 @@ body:has(.board-layout) .hero .package-c{transform:scale(.7) rotate(13deg)}
  .quick-rank-button strong{font-size:30px}
  .quick-rank-button small{font-size:8px}
 }
+
+
+/* 1.5 · "Not tried yet" is an answered state, not an S–D grade. */
+.not-tried-shelf{order:2;overflow:hidden;background:#f7f4eb;border:1px solid #dbd8c9;border-radius:19px}
+.not-tried-header{display:flex;align-items:center;justify-content:space-between;gap:13px;padding:18px 21px 15px;border-bottom:1px solid #e2decb}
+.not-tried-header strong{font:600 27px/1.12 'Fraunces',Georgia,serif;letter-spacing:-.035em;color:#405044}
+.not-tried-header p{margin:6px 0 0;font-size:12px;color:#788374;max-width:580px}
+.not-tried-header>span{font-size:11px;font-weight:800;color:#687b60;background:#fffefa;border-radius:99px;border:1px solid #dedfd1;padding:7px 12px;white-space:nowrap}
+.not-tried-dropzone{min-height:113px;padding:13px 18px;display:flex;flex-wrap:wrap;align-content:start;align-items:flex-start;gap:9px;border:2px dashed transparent;transition:background .15s,border-color .15s}
+.not-tried-dropzone .board-piece{width:91px;flex:0 0 91px;min-height:108px;background:#fffefa}
+.not-tried-dropzone .board-piece img,.not-tried-dropzone .board-piece .board-emoji{height:62px}
+.not-tried-dropzone .drop-hint{margin:auto;font-size:16px;text-align:center}
+.not-tried-dropzone[data-drag-hover="1"]{background:#e9f2de;border-color:#99b175}
+.not-tried-pill{display:inline-flex;align-items:center;gap:5px;border-radius:99px;background:#f5f0dc;border:1px solid #ded6af;padding:5px 10px;color:#786c48;font-size:11px;font-weight:800;line-height:1.25;max-width:max-content}
+.not-tried-choice{width:100%;display:grid;grid-template-columns:39px 1fr auto;align-items:center;gap:13px;padding:14px 16px;text-align:left;border-radius:14px;border:1px solid #d7d8c7;background:#f5f2e7;color:#3b4a3e;margin:17px 0 14px;transition:background .15s,border-color .15s,transform .15s}
+.not-tried-choice>span:first-child{font:600 31px 'Fraunces',serif;color:#718463}
+.not-tried-choice strong{display:block;font-size:15px;font-weight:800}
+.not-tried-choice small{display:block;color:#737c6d;font-size:11px;font-weight:500}
+.not-tried-choice>span:last-child{font-size:20px;color:#7b8b72}
+.not-tried-choice:hover,.not-tried-choice.selected{background:#eaf2de;border-color:#a2bb87;transform:translateY(-1px)}
+.not-tried-shelf-list .not-tried-item{background:#faf8f0;border-color:#e4decf}
+.not-tried-shelf-list .not-tried-item .product-tile{background:#eeeadb}
+.not-tried-shelf-list .rating-item button{white-space:nowrap}
+@media(max-width:780px){
+ .not-tried-shelf{width:100%}
+ .not-tried-dropzone{min-height:107px;padding:10px;gap:7px;overflow-x:auto;flex-wrap:nowrap;scroll-snap-type:x proximity}
+ .not-tried-dropzone .board-piece{width:78px;flex:0 0 78px;scroll-snap-align:start}
+ .not-tried-dropzone .board-piece img,.not-tried-dropzone .board-piece .board-emoji{height:50px}
+ .not-tried-header{padding:14px}
+ .not-tried-header strong{font-size:22px}
+ .not-tried-header p{font-size:11px}
+ .not-tried-item{grid-template-columns:45px 1fr auto}
+ .not-tried-item button{font-size:10px;padding:8px}
+}
+@media(prefers-reduced-motion:reduce){.not-tried-choice{transition:none}.not-tried-dropzone{transition:none}}
