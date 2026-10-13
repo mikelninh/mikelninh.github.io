@@ -28,8 +28,9 @@ function safeGuest(raw){
  for(const who of Object.keys(ret)){
   const entries=raw&&typeof raw[who]==='object'?Object.entries(raw[who]):[];
   for(const [id,r] of entries){
-   if(!getProduct(id)||!r||!TIERS.includes(r.tier))continue;
-   ret[who][id]={tier:r.tier,note:String(r.note||'').slice(0,200),is_public:r.is_public===true,position:Number.isFinite(Number(r.position))?Number(r.position):0};
+   if(!rankableProduct(getProduct(id))||!r||!(TIERS.includes(r.tier)||r.status==='not_tried'))continue;
+   const skip=r.status==='not_tried';
+   ret[who][id]={status:skip?'not_tried':'rated',tier:skip?null:r.tier,note:String(r.note||'').slice(0,200),is_public:!skip&&r.is_public===true,position:skip?0:Number.isFinite(Number(r.position))?Number(r.position):0};
   }
  }return ret;
 }
@@ -39,7 +40,11 @@ function persist(){try{localStorage.setItem(STORE_KEY,JSON.stringify(st.guest))}
 function persistImages(){try{localStorage.setItem(IMG_KEY,JSON.stringify(st.imageCache))}catch(_){}}
 function toast(message){const t=$('#toaster');t.textContent=message;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),4100)}
 function accountRating(id){return st.allRatings.find(r=>r.user_id===st.user?.id&&r.product_id===id)}
-function selfRatings(){return st.user?st.allRatings.filter(r=>r.user_id===st.user.id):Object.entries(st.guest.you).map(([product_id,r])=>({product_id,tier:r.tier,note:r.note,is_public:r.is_public,position:r.position||0}))}
+function selfRatings(){return st.user?st.allRatings.filter(r=>r.user_id===st.user.id):Object.entries(st.guest.you).map(([product_id,r])=>({product_id,tier:r.tier,status:r.status||'rated',note:r.note,is_public:r.is_public,position:r.position||0}))}
+function isNotTried(r){return Boolean(r&&r.status==='not_tried')}
+function isGraded(r){return Boolean(r&&r.status!=='not_tried'&&TIERS.includes(r.tier))}
+function gradedRatings(){return selfRatings().filter(isGraded)}
+function notTriedRatings(){return selfRatings().filter(isNotTried)}
 function guestRating(id,who){return st.guest[who]?.[id]||null}
 function showRating(id){return st.user?accountRating(id):guestRating(id,'you')}
 function avatar(profile,large){
@@ -92,7 +97,7 @@ function productCard(p){
 function filteredProducts(){
  let a=RANKABLE.filter(p=>(st.category==='all'||p.category_id===st.category)&&(st.store==='all'||p.store===st.store));
  const q=st.query.trim().toLowerCase();if(q)a=a.filter(p=>(p.name+' '+p.brand+' '+p.store+' '+p.category).toLowerCase().includes(q));
- if(st.ratedOnly)a=a.filter(p=>!!showRating(p.id));
+ if(st.ratedOnly)a=a.filter(p=>isGraded(showRating(p.id)));
  if(st.sort==='brand')a.sort((a,b)=>a.brand.localeCompare(b.brand,'de')||a.name.localeCompare(b.name,'de'));
  else if(st.sort==='rated')a.sort((a,b)=>(TIER_SCORE[showRating(b.id)?.tier]||0)-(TIER_SCORE[showRating(a.id)?.tier]||0)||a.name.localeCompare(b.name,'de'));
  else a.sort((a,b)=>a.name.localeCompare(b.name,'de'));
@@ -100,10 +105,12 @@ function filteredProducts(){
 }
 
 // ----- Interactive TierMaker-style rating board --------------------------------
-function boardEntries(){
+function boardAnswers(){
  return st.user?st.allRatings.filter(r=>r.user_id===st.user.id&&rankableProduct(getProduct(r.product_id))):
- Object.entries(st.guest[st.persona]||{}).filter(([id])=>rankableProduct(getProduct(id))).map(([product_id,r])=>({product_id,tier:r.tier,note:r.note,is_public:r.is_public,position:r.position||0}));
+ Object.entries(st.guest[st.persona]||{}).filter(([id])=>rankableProduct(getProduct(id))).map(([product_id,r])=>({product_id,tier:r.tier,status:r.status||'rated',note:r.note,is_public:r.is_public,position:r.position||0}));
 }
+function boardEntries(){return boardAnswers().filter(isGraded)}
+function boardNotTried(){return boardAnswers().filter(isNotTried).sort((a,b)=>a.product_id.localeCompare(b.product_id))}
 function boardSorted(tier,excludeId){
  return boardEntries().filter(r=>r.tier===tier&&r.product_id!==excludeId&&getProduct(r.product_id))
  .sort((a,b)=>(Number(a.position)||0)-(Number(b.position)||0)||a.product_id.localeCompare(b.product_id));
@@ -137,7 +144,7 @@ function boardPiece(p){
  +'<strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+'</small></button>';
 }
 function boardTrayProducts(){
- const rated=new Set(boardEntries().map(r=>r.product_id));
+ const rated=new Set(boardAnswers().map(r=>r.product_id));
  const query=st.boardQuery.toLocaleLowerCase().trim();
  return RANKABLE.filter(p=>!rated.has(p.id)
  &&(st.boardCategory==='all'||p.category_id===st.boardCategory)
