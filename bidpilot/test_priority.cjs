@@ -1,6 +1,10 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
-const priority=require('./priority.js');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const rankingContext={};
+vm.runInNewContext(fs.readFileSync(__dirname+'/priority.js','utf8'),rankingContext,{filename:'priority.js'});
+const priority=rankingContext.BidPilotPriority;
 
 const TODAY='2026-10-13';
 const notice=(id,{stage='competition',title='Softwareentwicklung und Automatisierung',buyer='Public buyer',deadline='2026-11-04',published='2026-10-12'}={})=>({
