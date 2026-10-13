@@ -17,6 +17,9 @@ const esc=(s)=>String(s==null?'':s).replace(/[&<>"']/g,(c)=>({'&':'&amp;','<':'&
 const attr=esc;
 const validUrl=(s)=>{try{let u=new URL(s);return u.protocol==='https:'?u.href:''}catch(_){return''}};
 const getProduct=(id)=>ALL.find((p)=>p.id===id);
+const rankableProduct=p=>Boolean(p&&p.vegan_status!=='non_vegan');
+const RANKABLE=ALL.filter(rankableProduct);
+const FLAGGED=ALL.filter(p=>!rankableProduct(p));
 const tryRead=(key,fallback)=>{try{const d=JSON.parse(localStorage.getItem(key)||'null');return d&&typeof d==='object'?d:fallback}catch(_){return fallback}};
 const st={view:'board',boardQuery:'',boardCategory:'all',category:'all',store:'all',sort:'name',query:'',ratedOnly:false,persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
 let sb=null;
@@ -87,7 +90,7 @@ function productCard(p){
  return '<article class="product-card">'+productArt(p)+'<div class="card-topline"><span class="micro">'+esc(p.category)+'</span><span class="storetag">'+esc(p.store)+'</span></div><div><p class="brandname">'+esc(p.brand)+'</p><h3>'+esc(p.name)+'</h3></div><div class="card-bottom"><div class="tier-row" aria-label="Your rating for '+attr(p.name)+'">'+TIERS.map(t=>'<button class="tier '+(r?.tier===t?'active':'')+'" data-tier="'+t+'" title="Rate '+t+'" aria-label="Rate '+attr(p.name)+' '+t+'" data-action="rate-product" data-id="'+attr(p.id)+'" data-value="'+t+'">'+t+'</button>').join('')+'</div><button class="round-add" title="Details and notes" aria-label="Open '+attr(p.name)+'" data-action="open-product" data-id="'+attr(p.id)+'">↗</button></div></article>';
 }
 function filteredProducts(){
- let a=ALL.filter(p=>(st.category==='all'||p.category_id===st.category)&&(st.store==='all'||p.store===st.store));
+ let a=RANKABLE.filter(p=>(st.category==='all'||p.category_id===st.category)&&(st.store==='all'||p.store===st.store));
  const q=st.query.trim().toLowerCase();if(q)a=a.filter(p=>(p.name+' '+p.brand+' '+p.store+' '+p.category).toLowerCase().includes(q));
  if(st.ratedOnly)a=a.filter(p=>!!showRating(p.id));
  if(st.sort==='brand')a.sort((a,b)=>a.brand.localeCompare(b.brand,'de')||a.name.localeCompare(b.name,'de'));
@@ -98,8 +101,8 @@ function filteredProducts(){
 
 // ----- Interactive TierMaker-style rating board --------------------------------
 function boardEntries(){
- return st.user?st.allRatings.filter(r=>r.user_id===st.user.id):
- Object.entries(st.guest[st.persona]||{}).map(([product_id,r])=>({product_id,tier:r.tier,note:r.note,is_public:r.is_public,position:r.position||0}));
+ return st.user?st.allRatings.filter(r=>r.user_id===st.user.id&&rankableProduct(getProduct(r.product_id))):
+ Object.entries(st.guest[st.persona]||{}).filter(([id])=>rankableProduct(getProduct(id))).map(([product_id,r])=>({product_id,tier:r.tier,note:r.note,is_public:r.is_public,position:r.position||0}));
 }
 function boardSorted(tier,excludeId){
  return boardEntries().filter(r=>r.tier===tier&&r.product_id!==excludeId&&getProduct(r.product_id))
@@ -138,14 +141,14 @@ function boardPiece(p){
 function boardTrayProducts(){
  const rated=new Set(boardEntries().map(r=>r.product_id));
  const query=st.boardQuery.toLocaleLowerCase().trim();
- return ALL.filter(p=>!rated.has(p.id)
+ return RANKABLE.filter(p=>!rated.has(p.id)
  &&(st.boardCategory==='all'||p.category_id===st.boardCategory)
  &&(!query||(p.brand+' '+p.name+' '+p.category+' '+p.store).toLocaleLowerCase().includes(query)))
  .sort((a,b)=>a.brand.localeCompare(b.brand,'de')||a.name.localeCompare(b.name,'de'));
 }
 function renderBoard(){
  const entries=boardEntries(),rated=new Set(entries.map(r=>r.product_id));
- const photos=ALL.filter(matchedPhoto).length;
+ const photos=RANKABLE.filter(matchedPhoto).length;
  const who=st.user?(st.profile?.display_name||'You'):(st.persona==='you'?'Your':st.persona==='mikel'?'Mikel':'Huong');
  const personToggle=st.user?'<span class="board-status">🔒 Rating as your verified account</span>':
  '<div class="board-personas" aria-label="Choose local board"><button data-action="board-persona" data-value="you" class="'+(st.persona==='you'?'active':'')+'">You</button><button data-action="board-persona" data-value="mikel" class="'+(st.persona==='mikel'?'active':'')+'">Mikel</button><button data-action="board-persona" data-value="huong" class="'+(st.persona==='huong'?'active':'')+'">Huong</button></div>';
@@ -164,20 +167,20 @@ function renderBoard(){
  +'<div class="board-filter-row"><input type="search" id="boardSearch" class="board-filter" aria-label="Search unranked products" placeholder="Find chocolate, tofu…" value="'+attr(st.boardQuery)+'"><select class="board-filter" id="boardCategory" aria-label="Filter board by category">'
  +'<option value="all">All categories</option>'+GROUPS.map(g=>'<option value="'+attr(g.id)+'" '+(st.boardCategory===g.id?'selected':'')+'>'+esc(g.emoji)+' '+esc(g.label)+'</option>').join('')+'</select></div>'
  +'<div class="board-tray" id="boardTray" data-drop-tier="unranked" aria-label="Unranked product tray">'+boardTrayProducts().map(boardPiece).join('')+'</div>'
- +'<div class="board-photo-progress" title="Sourced exact retailer photo coverage"><span style="width:'+photos/ALL.length*100+'%"></span></div>'
- +'<div class="board-legend"><span>'+photos+' / '+ALL.length+' source-matched packshots</span><span>Drop here to unrank ↶</span></div>'
+ +'<div class="board-photo-progress" title="Sourced exact retailer photo coverage"><span style="width:'+photos/RANKABLE.length*100+'%"></span></div>'
+ +'<div class="board-legend"><span>'+photos+' / '+RANKABLE.length+' source-matched packshots</span><span>Drop here to unrank ↶</span></div>'
  +'</section><section class="board-mat" aria-label="Your S through D tier ranking">'
- +'<div class="board-mat-head"><div><strong>'+esc(who)+' taste board</strong><small style="display:block;margin-top:6px">One opinion at a time. Rearrange as you please.</small></div><small>'+entries.length+' ranked · '+(ALL.length-rated.size)+' to discover</small></div>'
+ +'<div class="board-mat-head"><div><strong>'+esc(who)+' taste board</strong><small style="display:block;margin-top:6px">One opinion at a time. Rearrange as you please.</small></div><small>'+entries.length+' ranked · '+(RANKABLE.length-rated.size)+' to discover</small></div>'
  +rows+'</section></div>'
  +'<div class="board-mobile-hint">↕ <strong>Drag & drop</strong> to rank or reorder. Tap a product for tasting notes. With a keyboard, focus a product and use ↑ ↓ to change tier, ← → to reorder.</div>'
- +'<div class="board-scoreboard"><div><strong>'+entries.length+' good things judged.</strong><span>'+Math.min(5,entries.length)+'/5 first-five challenge · '+(ALL.length-rated.size)+' still a mystery</span></div><div class="gap12"><button class="button button-lime button-small" data-nav="my">See my shelf ↗</button><button class="button button-ghost button-small" data-nav="discover">See all products</button></div></div>';
+ +'<div class="board-scoreboard"><div><strong>'+entries.length+' good things judged.</strong><span>'+Math.min(5,entries.length)+'/5 first-five challenge · '+(RANKABLE.length-rated.size)+' still a mystery</span></div><div class="gap12"><button class="button button-lime button-small" data-nav="my">See my shelf ↗</button><button class="button button-ghost button-small" data-nav="discover">See all products</button></div></div>';
 }
 function refreshBoardTray(){
  const tray=$('#boardTray');if(tray)tray.innerHTML=boardTrayProducts().map(boardPiece).join('');
  if($('#boardTrayCount'))$('#boardTrayCount').textContent=boardTrayProducts().length+' left';
 }
 async function boardMove(id,tier,index){
- if(!getProduct(id)||!(TIERS.includes(tier)||tier==='unranked'))return false;
+ if(!rankableProduct(getProduct(id))||!(TIERS.includes(tier)||tier==='unranked'))return false;
  const old=st.user?accountRating(id):st.guest[st.persona]?.[id];
  if(tier==='unranked'&&!old)return true;
  if(st.boardBusy)return false;
@@ -205,6 +208,10 @@ async function boardMove(id,tier,index){
   toast(tier==='unranked'?'Back on the unranked shelf.':p.name+' → '+tier+' tier. Nice!');
   return true;
  }finally{st.boardBusy=false}
+}
+function viewExclusions(){
+ const rows=FLAGGED.map(p=>'<div class="review-row"><span style="font-size:23px">⚠️</span><div style="flex:1"><h4>'+esc(p.brand+' '+p.name)+'</h4><p>'+esc(p.vegan_issue||'Product uses animal ingredients')+'</p><a href="'+attr(validUrl(p.source_url))+'" target="_blank" rel="noopener noreferrer" class="small">Ingredients & source ↗</a></div></div>').join('');
+ modal('<button class="close" data-action="close-modal">×</button><div class="eyebrow">PRODUCT QUALITY / REAL INGREDIENTS</div><h2>Not vegan.<br>Not on the board.</h2><p class="small muted">We excluded these products after checking manufacturer ingredients. Recipes may change; the actual packet always decides.</p>'+rows+'<p class="small muted">Two ingredient-checked alternatives have been added in their place, keeping 102 rankable products.</p><button class="button button-lime" data-action="close-modal">Back to the good stuff ↗</button>');
 }
 function shareBoard(){
  const own=boardEntries().filter(r=>TIERS.includes(r.tier))
@@ -309,13 +316,13 @@ document.addEventListener('keydown',e=>{
 
 function renderDiscover(){
  const a=filteredProducts();
- return head('GOOD THINGS / DISCOVER','Find your next <em>favourite.</em>','102 catalogue candidates. Rate what you actually tried; uncertain products and photos remain clearly labelled.',a.length+' THINGS')
- +'<div class="inline-notice">✳ <strong>Care over certainty:</strong> these are catalogue candidates, not 102 verified retailer listings. Packaging and vegan status may change. Check labels before purchasing.</div>'
+ return head('GOOD THINGS / DISCOVER','Find your next <em>favourite.</em>','S–D tier lists built from ingredient-eligible candidates. Photo matches are sourced, and uncertain claims remain unverified.',a.length+' THINGS')
+ +'<div class="inline-notice">✳ <strong>Care over certainty:</strong> '+RANKABLE.length+' rankable product candidates, not '+RANKABLE.length+' certified vegan products. Packaging and ingredients may change. <button class="navlink" style="display:inline;text-decoration:underline" data-action="view-exclusions">'+FLAGGED.length+' dairy-containing products excluded ↗</button></div>'
  +'<div class="inline-notice" style="background:#ecf4d5"><strong>New: Product Detective ✳</strong> Look up an exact barcode, inspect community nutrition and connect a real product photograph. <a href="./lookup.html">Open the detective ↗</a></div>'
  +'<div class="toolbar"><label class="search"><span aria-hidden="true">⌕</span><input type="search" id="productSearch" placeholder="Search brands, products and stores…" autocomplete="off" aria-label="Search products" value="'+attr(st.query)+'"></label>'
  +'<select id="storeSelect" class="control" aria-label="Select store">'+['all','REWE','Lidl','Online'].map(x=>'<option value="'+x+'" '+(st.store===x?'selected':'')+'>'+(x==='all'?'All stores':x)+'</option>').join('')+'</select>'
  +'<select id="sortSelect" class="control" aria-label="Sort products"><option value="name" '+(st.sort==='name'?'selected':'')+'>By name</option><option value="brand" '+(st.sort==='brand'?'selected':'')+'>By brand</option><option value="rated" '+(st.sort==='rated'?'selected':'')+'>My favourites first</option></select></div>'
- +'<div class="chips" aria-label="Categories"><button class="chip '+(st.category==='all'?'active':'')+'" data-action="set-category" data-id="all">✳ All 102</button>'+GROUPS.map(g=>'<button class="chip '+(st.category===g.id?'active':'')+'" data-action="set-category" data-id="'+attr(g.id)+'">'+esc(g.emoji)+' '+esc(g.label)+' <small>'+g.count+'</small></button>').join('')+'</div>'
+ +'<div class="chips" aria-label="Categories"><button class="chip '+(st.category==='all'?'active':'')+'" data-action="set-category" data-id="all">✳ All '+RANKABLE.length+'</button>'+GROUPS.map(g=>'<button class="chip '+(st.category===g.id?'active':'')+'" data-action="set-category" data-id="'+attr(g.id)+'">'+esc(g.emoji)+' '+esc(g.label)+' <small>'+g.count+'</small></button>').join('')+'</div>'
  +'<div class="spaced" style="margin-bottom:15px"><span class="filter-summary" id="resultCount">'+a.length+' products · '+selfRatings().length+' rated by you</span><label class="toggle"><input id="ratedOnly" type="checkbox" '+(st.ratedOnly?'checked':'')+'> Rated only</label></div>'
  +'<div id="productResults">'+(a.length?'<div class="product-grid">'+a.map(productCard).join('')+'</div>':empty('⌕','No matches','Try another brand, category or search term.'))+'</div>';
 }
@@ -382,7 +389,7 @@ function scoreFor(userId){
  if(!common.length)return {n:0,score:null};
  return {n:common.length,score:Math.round(100*common.reduce((sum,r)=>sum+(1-Math.abs(TIER_SCORE[r.tier]-TIER_SCORE[theirs.find(t=>t.product_id===r.product_id).tier])/4),0)/common.length)};
 }
-function publicRated(){return st.allRatings.filter(r=>r.is_public)}
+function publicRated(){return st.allRatings.filter(r=>r.is_public&&rankableProduct(getProduct(r.product_id)))}
 function leaderboard(){
  const g={};
  for(const r of publicRated()){if(!g[r.product_id])g[r.product_id]={sum:0,n:0};g[r.product_id].sum+=TIER_SCORE[r.tier];g[r.product_id].n++}
@@ -419,7 +426,7 @@ function decodeSnapshot(raw){
   const str=decodeURIComponent(Array.from(atob(raw.replace(/-/g,'+').replace(/_/g,'/')),c=>'%'+c.charCodeAt(0).toString(16).padStart(2,'0')).join(''));
   const val=JSON.parse(str);
   if(val.v!==1||!Array.isArray(val.ratings))return null;
-  return val.ratings.filter(x=>getProduct(x[0])&&TIERS.includes(x[1])).slice(0,102).map(x=>({product_id:x[0],tier:x[1],note:'',is_public:true}));
+  return val.ratings.filter(x=>rankableProduct(getProduct(x[0]))&&TIERS.includes(x[1])).slice(0,RANKABLE.length).map(x=>({product_id:x[0],tier:x[1],note:'',is_public:true}));
  }catch(_){return null}
 }
 function snapshotUrl(ratings){
@@ -491,7 +498,7 @@ function drawerHtml(){
  +(!matchedPhoto(p)?'<button class="button button-white button-small" data-action="lookup-image">Find possible photo ⌕</button>':'<a class="button button-white button-small" target="_blank" rel="noopener noreferrer" href="'+attr(validUrl(p.image_source_url||p.source_url))+'">Photo source ↗</a>')+'</div><p class="small muted" id="photoHint">Images are only shown when a plausible Open Food Facts match can be found, and remain labelled unverified until checked.</p>';
 }
 function openProduct(id,tier,persona){
- if(!getProduct(id))return;
+ if(!rankableProduct(getProduct(id)))return toast('This product contains animal ingredients under its current recipe and is excluded from the vegan tier list.');
  st.selected=id;if(persona)st.persona=persona;
  const r=st.user?accountRating(id):guestRating(id,st.persona);
  st.draftTier=tier||r?.tier||'';st.draftNote=r?.note||'';st.draftPublic=r?.is_public===true;
@@ -639,7 +646,7 @@ function showLink(link){
 }
 function shareShelf(){
  if(st.user&&st.profile)return copyLink(URL_BASE+'?u='+encodeURIComponent(st.profile.handle));
- const own=selfRatings();
+ const own=selfRatings().filter(r=>rankableProduct(getProduct(r.product_id)));
  if(!own.length)return toast('Rate something first to share a shelf.');
  copyLink(snapshotUrl(own));
 }
@@ -783,10 +790,11 @@ document.addEventListener('click',async(event)=>{
  case 'set-category':st.category=id;render();break;
  case 'board-persona':if(!st.user&&['you','mikel','huong'].includes(val)){st.persona=val;render()}break;
  case 'share-board':shareBoard();break;
+ case 'view-exclusions':viewExclusions();break;
  case 'board-unrank':await boardMove(id,'unranked',0);break;
  case 'lookup-image':await photoLookup();break;
  case 'open-random':{
-  const p=ALL[Math.floor(Math.random()*ALL.length)];
+  const p=RANKABLE[Math.floor(Math.random()*RANKABLE.length)];
   openProduct(p.id,'',btn.dataset.persona||'you');break;
  }
  case 'open-auth':openAuth();break;
@@ -838,7 +846,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){cancelBoardDrag();c
 window.addEventListener('focus',()=>{if(st.user&&sb)loadRemote()});
 window.addEventListener('popstate',()=>{openShareLink().then(render)});
 (async()=>{
- if(ALL.length!==102||GROUPS.length!==10)toast('Catalog is incomplete; please report this.');
+ if(RANKABLE.length!==102||GROUPS.length!==10)toast('Catalog is incomplete; please report this.');
  await openShareLink();render();await initCloud();await openShareLink();render();
  const requested=new URL(location.href).searchParams.get('product');if(requested&&getProduct(requested))openProduct(requested);
 })();
