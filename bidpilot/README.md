@@ -1,58 +1,61 @@
-# BIDPILOT 1.0 — source-linked European tender discovery
+# BIDPILOT 1.1 — source-first opportunity & decision desk
 
-**Site:** https://mikelninh.github.io/bidpilot/
+**Live site:** https://mikelninh.github.io/bidpilot/
 
-BIDPILOT makes a focused, real-data-only shortlist of publicly available EU procurement notices from **TED** (Tenders Electronic Daily). It is a beta, not a paid SaaS service or tender-submission tool.
+BIDPILOT discovers a *bounded* shortlist of genuine TED notices and provides an **explainable, local-only first-pass screening** for small European software/AI studios. This is not a qualification engine, legal opinion, bid-writing service, or award prediction.
 
-## User journey
+## What shipped in 1.1
 
-1. Enter company name, relevant keywords and exclusions.
-2. A scheduled GitHub Action calls the **official TED Search API v3**, which requires no login for public notices, and publishes a compact JSON feed.
-3. The browser deterministically computes **relevance** from title matches, buyer matches and CPV IT/software classifications. The score is **not** an AI score, eligibility probability or win prediction.
-4. Search and sort the shortlist, open original notices, save promising items, vote useful/not for us and export as CSV.
-5. Local profiles, saved items and feedback stay in browser localStorage. No account, analytics or billing backend has been configured.
+- **Notice stages:** official `notice-type` field is preserved, with competition, planning, results/awards, other and unknown. The default view includes **competition only**. An unclassified or legacy notice is **never** automatically treated as an open opportunity.
+- **Deadline evidence:** published submission/participation dates preserved by lot and type; the source can omit these. A passed date is a warning, not proof a procedure is legally closed.
+- **Decision desk:** headline metrics, notice-stage/deadline/warning filters, textual fit scores, explicit risk signals (e.g. mini-competition under a framework, reseller licences), and a per-notice **evidence brief** with outstanding verification questions.
+- **Local review workflow:** mark "Review" / "No bid", add private notes, save, give feedback and export shortlisted records. Data stays on the browser. No account or analytics.
+- **Safer feed:** up to three pages of 100 records per query (previously one); three German-focused IT/software/AI searches, 60-day window, ACTIVE search scope, no synthetic records. Both total and partial query errors are surfaced; the feed is explicitly incomplete.
+- **Quality checks:** Python tests validate normalization, classification, lot deadlines and paging. Browser-less Node tests exercise loading, stage/deadline filters and decision notes.
 
-## Data source and coverage
+## Source and confidence
 
-- Source: https://docs.ted.europa.eu/api/latest/search.html
-- Endpoint: POST https://api.ted.europa.eu/v3/notices/search
-- Queries: German buyers + IT services (72000000), software products (48000000), or artificial intelligence in full text.
-- Window: latest 60 days, active TED scope, up to 100 records per query, deduplicated by publication number.
-- Refresh: GitHub Action twice daily at 06:12 and 18:12 UTC (plus manual dispatch).
-- Official notice URLs only. Missing values remain missing; nothing is invented.
-- Scope is **not comprehensive**: smaller national/regional German tenders not on TED are excluded, and amendments may supersede feed data.
-- When *all* queries fail, ingestion raises and retains the last good feed; it never replaces it with synthetic records. On partial failure, the UI flags incompleteness.
+**Source:** https://docs.ted.europa.eu/api/latest/search.html
 
-## Local development
+POST https://api.ted.europa.eu/v3/notices/search
 
-No Node, API key or paid model is required for the public client.
+Search fields: https://docs.ted.europa.eu/ODS/latest/reuse/field-list.html
+
+Notice-type codes: https://docs.ted.europa.eu/eforms/latest/reference/code-lists/notice-type.html
+
+TED says **ACTIVE** includes planning notices, competition notices *and* result notices — it does **not** guarantee every item is an available bid. The app therefore defaults to source-coded competitions, and still requires checking the official notice. Some records have no tender deadline or a separate participation deadline; all dates are **date-only**, and the exact time and later modifications must be checked at TED.
+
+Data is **not comprehensive** (not all German national/regional notices, not all IT/AI notices and not all historical pages). No claims about unique opportunities, current availability, contract budgets, supplier eligibility or probability of winning.
+
+**Text relevance ≠ eligibility.** Keyword, buyer and CPV matching is deterministic in-browser, not an LLM score. Some risk flags are keyword heuristics and may be false positives or miss constraints in tender attachments.
+
+## Privacy and security
+
+- No documents uploaded, sent to AI or used to train models.
+- Firm settings, bookmarks, votes, review status and notes use browser localStorage only; not shared across devices and cleared if browser storage is cleared.
+- Display public source text using textContent and constrain source links to a TED publication URL.
+- CSV guards against spreadsheet formula injection.
+- The "Request pilot" button is a **public GitHub form**: don't submit confidential documents. There is no payment checkout and no private pilot onboarding yet.
+
+## Development / release gates
+
+Run locally (no secrets, paid model or dependencies):
 
 ~~~bash
 python -m unittest discover -s bidpilot -p "test_*.py" -v
-python bidpilot/ingest.py
+node --check bidpilot/app.js
+node --test bidpilot/test_ui.cjs
 python -m http.server 8000
 ~~~
 
-Visit http://localhost:8000/bidpilot/.
+Open http://localhost:8000/bidpilot/. GitHub workflow `.github/workflows/bidpilot-ci.yml` runs tests on PRs and main. `bidpilot-feed.yml` runs twice daily on **main** (plus manual dispatch) and fails closed on total TED query failure.
 
-To test offline, inspect bidpilot/notices.json; it remains empty until official ingestion succeeds. **Do not seed fictional contracts into production.**
+## Next, not yet implemented
 
-## Security / trust
+1. Verify production refresh and TED stage/deadline semantics against **actual eForms notices**, including multiple lots and corrections.
+2. Integrate German Bekanntmachungsservice and reliable update/duplicate tracking.
+3. Secure private pilot onboarding, user accounts, consented alerts and GDPR flows.
+4. Attachment parsing + citations, formal criteria extraction, human-reviewed bid/no-bid matrices and tender versioning.
+5. Pilot with five real studios and measure precision of top ten, minutes saved, return use, and willingness to pay.
 
-- Original links are pinned to https://ted.europa.eu.
-- Titles and other public data enter the UI via textContent, avoiding HTML injection.
-- CSV output is escaped, including spreadsheet formula-leading text.
-- No secret credentials in browser.
-- User profile and saved notices are local only, with no cloud sync or account promises.
-- Never claim eligibility based on title + CPV. Human review of full documents is mandatory.
-
-## Commercial release gates (NOT COMPLETE)
-
-1. Verify first GitHub Action run and actual TED response, then browser-test production on mobile and desktop.
-2. Create a genuine pilot signup channel with privacy notice and anti-spam.
-3. Interview five potential customers and measure match usefulness and time saved.
-4. Add genuine alerts (server-side, per-user and permissioned), owner/team accounts, GDPR retention/deletion, data freshness monitoring and support.
-5. Activate billing only after the owner completes merchant/KYC setup and approves prices.
-6. Add attachments/full text parsing, notice version tracking, qualification evidence and German state portals.
-
-EU Publications Office/TED, independent third-party beta. No EU endorsement or affiliation.
+© Independent beta, not affiliated with the EU Publications Office.
