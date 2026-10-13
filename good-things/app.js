@@ -132,10 +132,11 @@ function boardPhoto(p){
  '<span class="board-emoji">'+esc(p.emoji)+'</span>';
 }
 function boardPiece(p){
- const img=matchedPhoto(p)||st.imageCache[p.id]?.kind==='off';
+ const matched=matchedPhoto(p),candidate=st.imageCache[p.id]?.kind==='off';
+ const img=matched||candidate;
  const label=p.brand+' '+p.name;
  return '<button type="button" draggable="false" class="board-piece" data-drag-id="'+attr(p.id)+'" data-photo="'+(img?'yes':'none')+'" data-action="open-product" data-id="'+attr(p.id)+'" title="'+attr(label)+' — drag to rank; press to add a note; arrow keys move between tiers" aria-label="'+attr(label)+' — draggable, use arrow keys to change its tier or click to rate">'
- +boardPhoto(p)+(img?'<span class="verified-indicator" aria-hidden="true"></span>':'')
+ +boardPhoto(p)+(matched?'<span class="verified-indicator" title="Photo matched to this exact retailer SKU or barcode; recipe still needs checking" aria-hidden="true"></span>':'')
  +'<strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+'</small></button>';
 }
 function boardTrayProducts(){
