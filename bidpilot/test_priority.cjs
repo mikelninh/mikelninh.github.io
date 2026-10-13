@@ -33,6 +33,11 @@ test('top three are actual, dated, qualified *for triage*, unique source notices
   assert.deepEqual(new Set(result.map(x=>x.notice.id)),new Set(['100001-2026','100002-2026','100003-2026']));
   result.forEach(x=>{assert.ok(x.deadline.date>=TODAY);assert.equal(x.notice.stage,'competition');assert.ok(x.why.some(v=>v.startsWith('Matched:')))});
 });
+test('ranker rejects a source URL that is not a valid official TED link',()=>{
+  const fake=notice('100001-2026');
+  fake.url='https://example.com/fabricated-tender';
+  assert.equal(priority.selectShortlist([fake],{currentDate:TODAY,fitFor,riskFor}).length,0);
+});
 test('never invent notices when there is one valid match or none',()=>{
   const records=[notice('100001-2026'),notice('100002-2026',{stage:'result'})];
   const params={currentDate:TODAY,fitFor,riskFor};
