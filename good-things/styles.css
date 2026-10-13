@@ -259,7 +259,7 @@ body:has(.board-layout) .hero .package-c{transform:scale(.7) rotate(13deg)}
 .quick-rank-button:hover{transform:translateY(-3px);box-shadow:0 6px 15px #31493125}
 .quick-rank-button:active{transform:translateY(0)}
 /* Let visitors swipe the unranked tray without accidentally dragging a tile. */
-.board-tray .board-piece{touch-action:pan-x pan-y}
+.board-tray .board-piece{touch-action:pan-x} /* Native horizontal tray swipes; vertical long-press drags remain possible. */
 .tier-dropzone .board-piece{touch-action:none}
 @media(max-width:1100px){
  .board-layout{display:flex;flex-direction:column}
