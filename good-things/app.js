@@ -525,16 +525,23 @@ function ratingRows(arr,readOnly){
  return '<div class="rating-item"><div class="product-tile">'+esc(p.emoji)+'</div><div><h4>'+esc(p.brand+' · '+p.name)+'</h4><small>'+esc(r.note||p.category)+' · '+(r.is_public===false?'Private':'Public')+'</small></div><div class="gap12">'+tierBadge(r.tier)+'<button class="button button-small button-ghost" data-action="open-product" data-id="'+attr(p.id)+'"'+'>'+(readOnly?'View':'Edit')+'</button></div></div>';
  }).join('');
 }
+function notTriedRows(arr){
+ return arr.filter(r=>rankableProduct(getProduct(r.product_id))).sort((a,b)=>getProduct(a.product_id).name.localeCompare(getProduct(b.product_id).name,'de')).map(r=>{
+  const p=getProduct(r.product_id);
+  return '<div class="rating-item not-tried-item"><div class="product-tile">'+esc(p.emoji)+'</div><div><h4>'+esc(p.brand+' · '+p.name)+'</h4><small>◌ Not tried yet · answered · no grade · private</small></div><button class="button button-small button-ghost" data-action="open-product" data-id="'+attr(p.id)+'">Tried it? Rate ↗</button></div>';
+ }).join('');
+}
 function renderMy(){
- const arr=selfRatings();
+ const arr=gradedRatings(),untried=notTriedRatings();
  const completed=Math.min(arr.length,5);
  const welcome=st.user?'<div class="inline-notice">✓ Synced to your account. Public ratings appear in the community; private ratings are visible only to you.</div>':'<div class="inline-notice">♧ Guest shelf · Ratings below are stored only on this device. <button class="navlink" data-action="open-auth" style="display:inline;text-decoration:underline">Make an account</button> to keep a separate, synced shelf across devices.</div>';
- return head('GOOD THINGS / YOUR SHELF','Your taste.<br><em>Your rules.</em>','No one else decides what deserves an S. Start a shelf, give it character and share only what you choose.',arr.length+' REVIEWS')
+ return head('GOOD THINGS / YOUR SHELF','Your taste.<br><em>Your rules.</em>','No one else decides what deserves an S. Start a shelf, give it character and share only what you choose.',arr.length+' GRADES · '+untried.length+' NOT TRIED')
  +welcome
  +'<div class="profile-banner"><div class="person"><div class="avatar '+(st.profile?.accent||'lime')+'" style="width:72px;height:72px;font-size:30px">'+esc(yourInitials().substring(0,1).toUpperCase())+'</div><div><div class="eyebrow">YOUR CORNER OF GOOD THINGS</div><h3>'+esc(yourInitials())+'</h3><p class="small muted" style="margin:3px 0">'+(st.profile?'@'+esc(st.profile.handle):'Create your own taste universe')+'</p></div></div><button class="button button-small button-white" data-action="'+(st.user?'edit-profile':'open-auth')+'">'+(st.user?'Edit profile ↗':'Join ↗')+'</button></div>'
  +'<div class="callout"><div class="spaced"><div><div class="eyebrow">FIRST FIVE CHALLENGE</div><h3>'+((completed===5)?'Five out of five! ✳':'Five little discoveries.')+'</h3><p>'+((completed===5)?'You did it. Your shelf is officially growing.':'Rate '+(5-completed)+' more product'+(5-completed===1?'':'s')+' to finish your first challenge.')+'</p></div><strong style="font:600 40px Fraunces,serif">'+completed+'/5</strong></div><div class="challenge-bar">'+[0,1,2,3,4].map(i=>'<span class="'+(i<completed?'filled':'')+'"></span>').join('')+'</div></div>'
- +'<div class="spaced" style="margin:20px 0 12px"><h3 style="font:600 30px Fraunces,serif;margin:0">What you have tasted</h3><div class="gap12"><button class="button button-small button-ghost" data-action="import-json">Import ↑</button><button class="button button-small button-ghost" data-action="export-json">Export JSON ↓</button><button class="button button-small button-lime" data-action="share-shelf">Share ↗</button></div></div>'
- +(arr.length?'<div class="rating-list">'+ratingRows(arr)+'</div>':empty('✳','Your shelf is a blank canvas','The next time a tofu knocks your socks off, come back and give it an S.','<button class="button button-lime" data-nav="discover">Find a first favourite ↗</button>'))
+ +'<div class="spaced" style="margin:20px 0 12px"><h3 style="font:600 30px Fraunces,serif;margin:0">What you have tasted ('+arr.length+')</h3><div class="gap12"><button class="button button-small button-ghost" data-action="import-json">Import ↑</button><button class="button button-small button-ghost" data-action="export-json">Export JSON ↓</button><button class="button button-small button-lime" data-action="share-shelf">Share ↗</button></div></div>'
+ +(arr.length?'<div class="rating-list">'+ratingRows(arr)+'</div>':empty('✳','No graded products yet','Products you have not tasted can be marked separately without inventing a grade.','<button class="button button-lime" data-nav="board">Open the tier board ↗</button>'))
+ +'<div class="surface not-tried-shelf-list" style="margin-top:18px"><div class="spaced"><div><h3>◌ Not tried yet ('+untried.length+')</h3><p>These are answered without a grade. They stay off your S–D tier list and public taste statistics.</p></div><button class="button button-small button-ghost" data-nav="board">Open board ↗</button></div>'+(untried.length?'<div class="rating-list">'+notTriedRows(untried)+'</div>':'<p class="small muted">No products marked yet. Tap an unfamiliar item and choose Not tried yet.</p>')+'</div>'
  +'<div class="surface" style="margin-top:18px"><div class="spaced"><div><h3>Make a collection</h3><p>Give your favourites a name and share a beautiful shortlist. Public collections are visible to anyone with the link.</p></div><button class="button button-dark button-small" data-action="create-list">+ New list</button></div>'
  +(st.user&&st.lists.filter(l=>l.user_id===st.user.id).length?st.lists.filter(l=>l.user_id===st.user.id).map(l=>'<div class="review-row"><div style="flex:1"><h4>'+esc(l.title)+'</h4><p>'+l.product_ids.length+' picks · '+(l.is_public?'Public':'Private')+'</p></div><button class="button button-small button-ghost" data-action="share-list" data-id="'+attr(l.id)+'">Open ↗</button></div>').join(''):'<p class="small muted">No collections yet. Your first one could be “The snack drawer of dreams”.</p>')+'</div>'
  +(!st.user&&Object.keys(st.guest.you).length?'<div class="small muted" style="margin-top:18px">Tip: after signing in, you can transfer your guest ratings to your account from Edit profile.</div>':'');
@@ -831,8 +838,9 @@ function shareShelf(){
 
 function canonical(s){return String(s||'').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]/g,'')}
 function importTier(value){
+ if(value&&typeof value==='object'&&value.status==='not_tried')return 'not_tried';
  const v=typeof value==='object'&&value?value.tier||value.rating||value.value:value;
- const tier=String(v||'').trim().toUpperCase();return TIERS.includes(tier)?tier:null;
+ const tier=String(v||'').trim().toUpperCase();return ['NOT_TRIED','NOT TRIED','NOT TRIED YET'].includes(tier)?'not_tried':TIERS.includes(tier)?tier:null;
 }
 async function importJson(file){
  if(!file||file.size>2000000)return toast('Use a JSON file smaller than 2 MB.');
@@ -847,16 +855,16 @@ async function importJson(file){
   const ratings=[
    ['mikel',x.ratings?.mikel??x.mikel??x.mikel_rating??x.ratingMikel],
    ['huong',x.ratings?.huong??x.huong??x.huong_rating??x.ratingHuong],
-   ['you',x.tier??x.rating??x.my_rating]
+   ['you',x.status==='not_tried'?{status:'not_tried',note:x.note}:x.tier??x.rating??x.my_rating]
   ];
   for(const [who,v] of ratings){
    const tier=importTier(v);if(!tier)continue;
    const note=typeof v==='object'&&v?String(v.note||'').slice(0,200):'';
-   st.guest[who][product.id]={tier,note,is_public:true};touched++;
+   st.guest[who][product.id]={status:tier==='not_tried'?'not_tried':'rated',tier:tier==='not_tried'?null:tier,note,is_public:tier!=='not_tried',position:0};touched++;
   }
  }
- if(!touched)return toast('Matched '+rowsFound+' products, but no S–D ratings. Your current shelf is unchanged.');
- persist();render();toast('Imported '+touched+' ratings from '+rowsFound+' matching products. Check the results before sharing.');
+ if(!touched)return toast('Matched '+rowsFound+' products, but no S–D grades or explicit not-tried answers. Your shelf is unchanged.');
+ persist();render();toast('Imported '+touched+' ratings/answers from '+rowsFound+' matching products. Check before sharing.');
 }
 
 function exportJson(){
