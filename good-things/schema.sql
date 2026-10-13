@@ -4,6 +4,8 @@ create table if not exists public.gt_products (
   category_id text not null, category text not null, source_url text,
   verified boolean not null default false, image_url text,
   image_status text, image_source_url text, retailer_sku text, photo_attribution text,
+  vegan_status text check(vegan_status is null or vegan_status in ('non_vegan','source_checked')),
+  vegan_issue text, vegan_source_url text, barcode text,
   created_at timestamptz not null default now()
 );
 create table if not exists public.gt_profiles (
@@ -24,6 +26,7 @@ create table if not exists public.gt_ratings (
   tier text not null check(tier in ('S','A','B','C','D')),
   note text not null default '' check(char_length(note)<=200),
   is_public boolean not null default false,
+  position numeric(18,6) not null default 0,
   updated_at timestamptz not null default now(),
   primary key(user_id,product_id)
 );
