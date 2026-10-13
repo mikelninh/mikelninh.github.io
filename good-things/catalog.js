@@ -1,4 +1,4 @@
-// GOOD THINGS 1.4 · Candidate products; pictured retailer variants are matched to real SKUs, not blanket vegan verifications.
+// GOOD THINGS 1.4 · Candidate products and SKU-linked images; product label / vegan status can change.
 window.GT_CATALOG=[
   {
     "id": "tofu-01",
@@ -164,8 +164,12 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Berief%20Bio%20Tofu%20Natur"
+    "image_url": "https://img.rewe-static.de/0354687/2888410_digital-image.png?imwidth=420&impolicy=pdp",
+    "source_url": "https://www.rewe.de/shop/p/berief-bio-tofu-natur-2x200g/354687",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/berief-bio-tofu-natur-2x200g/354687",
+    "retailer_sku": "354687",
+    "photo_attribution": "REWE"
   },
   {
     "id": "tofu-12",
@@ -177,8 +181,12 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Berief%20Bio%20R%C3%A4uchertofu"
+    "image_url": "https://img.rewe-static.de/0368882/22808536_digital-image.png?imwidth=420&impolicy=pdp",
+    "source_url": "https://www.rewe.de/shop/p/berief-bio-tofu-geraeuchert-2x175g/368882",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/berief-bio-tofu-geraeuchert-2x175g/368882",
+    "retailer_sku": "368882",
+    "photo_attribution": "REWE"
   },
   {
     "id": "tofu-13",
@@ -594,8 +602,12 @@ window.GT_CATALOG=[
     "emoji": "🧀",
     "tone": "peach",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Simply%20V%20Genuss%20Scheiben%20Mild"
+    "image_url": "https://img.rewe-static.de/3025153/26162618_digital-image.png?imwidth=420&impolicy=pdp",
+    "source_url": "https://www.rewe.de/shop/p/simply-v-kaesealternative-milde-geniesserscheiben-vegan-150g/3025153",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/simply-v-kaesealternative-milde-geniesserscheiben-vegan-150g/3025153",
+    "retailer_sku": "3025153",
+    "photo_attribution": "REWE"
   },
   {
     "id": "cheese-02",
@@ -607,11 +619,11 @@ window.GT_CATALOG=[
     "emoji": "🧀",
     "tone": "peach",
     "verified": false,
-    "image_url": "https://img.rewe-static.de/9406376/56490371_digital-image.png?imwidth=304&impolicy=kues",
-    "source_url": "https://www.rewe.de/shop/p/simplyv-wuerzig-150g/9406376",
+    "image_url": "https://img.rewe-static.de/7255641/27809633_digital-image.png?imwidth=420&impolicy=pdp",
+    "source_url": "https://www.rewe.de/shop/p/simply-v-kaesealternative-geniesserscheiben-wuerzig-vegan-150g/7255641",
     "image_status": "retailer",
-    "image_source_url": "https://www.rewe.de/shop/p/simplyv-wuerzig-150g/9406376",
-    "retailer_sku": "9406376",
+    "image_source_url": "https://www.rewe.de/shop/p/simply-v-kaesealternative-geniesserscheiben-wuerzig-vegan-150g/7255641",
+    "retailer_sku": "7255641",
     "photo_attribution": "REWE"
   },
   {
@@ -650,8 +662,12 @@ window.GT_CATALOG=[
     "emoji": "🧀",
     "tone": "peach",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=bedda%20Scheiben%20Classic"
+    "image_url": "https://img.rewe-static.de/2467494/24156203_digital-image.png?imwidth=420&impolicy=pdp",
+    "source_url": "https://www.rewe.de/shop/p/bedda-scheiben-classic-vegan-150g/2467494",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/bedda-scheiben-classic-vegan-150g/2467494",
+    "retailer_sku": "2467494",
+    "photo_attribution": "REWE"
   },
   {
     "id": "cheese-06",
@@ -1081,8 +1097,12 @@ window.GT_CATALOG=[
     "emoji": "🍿",
     "tone": "peach",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Pringles%20Original"
+    "image_url": "https://img.rewe-static.de/9214490/45801461_digital-image.png?imwidth=420&impolicy=pdp",
+    "source_url": "https://www.rewe.de/shop/p/pringles-original-200g/9214490",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/pringles-original-200g/9214490",
+    "retailer_sku": "9214490",
+    "photo_attribution": "REWE"
   },
   {
     "id": "snacks-02",
