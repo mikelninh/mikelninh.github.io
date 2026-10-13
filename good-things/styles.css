@@ -199,3 +199,15 @@ select.control,textarea.control,input.control{border:1px solid var(--edge);paddi
 @media(max-width:1100px){.board-layout{grid-template-columns:minmax(176px,.68fr) minmax(0,2fr)}.tier-lane{grid-template-columns:64px minmax(0,1fr)}.lane-tag strong{font-size:42px}.tier-dropzone .board-piece{width:69px;flex-basis:69px}.board-placeholder{width:69px;flex-basis:69px}}
 @media(max-width:780px){.board-layout{display:flex;flex-direction:column}.board-pantry{width:100%;padding:12px}.board-filter-row{flex-direction:row;align-items:center}.board-filter-row>*{min-width:0;flex:1}.board-tray{display:flex;overflow-x:auto;overflow-y:hidden;max-height:none;min-height:120px;scroll-snap-type:x proximity}.board-tray .board-piece{width:88px;flex:0 0 88px;scroll-snap-align:start}.board-mat{width:100%}.tier-lane{grid-template-columns:60px minmax(0,1fr)}.tier-dropzone{min-height:117px}.lane-tag strong{font-size:40px}.board-mat-head strong{font-size:22px}.board-photo-progress{margin:8px 0}}
 @media(max-width:480px){.board-tray .board-piece{flex-basis:76px;width:76px}.board-piece{padding:4px}.tier-dropzone .board-piece{width:60px;flex-basis:60px;min-height:83px;padding:3px}.tier-dropzone .board-piece img{height:48px}.tier-dropzone .board-piece .board-emoji{height:48px;font-size:28px}.board-piece strong{font-size:9px}.tier-lane{grid-template-columns:49px minmax(0,1fr);min-height:110px}.tier-dropzone{min-height:109px;padding:7px 5px;gap:4px}.lane-tag strong{font-size:33px}.lane-tag small{font-size:8px}.board-placeholder{width:60px;flex-basis:60px;height:82px}.board-personas button{padding:8px 10px}.board-mat-head{padding:12px}.board-mat-head small{max-width:95px;text-align:right}}
+
+
+/* Photo provenance and image-failure hygiene */
+[hidden]{display:none!important}
+.product-art{overflow:hidden}
+.product-art img{object-fit:contain;padding:10px;background:transparent}
+.product-art .art-label-small{left:8px;right:auto;bottom:8px;z-index:3;letter-spacing:.055em;background:#ffffffe8;color:#45634c;max-width:calc(100% - 16px)}
+.product-art .photo-credit{position:absolute;right:8px;top:8px;z-index:3;background:#fffffff0;padding:4px 7px;border:1px solid #d9e1d6;border-radius:5px;font-size:9px;font-weight:800;text-decoration:none;color:#375642}
+.product-art .photo-credit:hover{text-decoration:underline}
+.board-piece[data-photo="yes"]{background:linear-gradient(#fffdfa,#fff)}
+.board-piece .verified-indicator{background:#91bd67}
+.drawer-art img{max-height:100%;max-width:100%;object-fit:contain;padding:10px}
