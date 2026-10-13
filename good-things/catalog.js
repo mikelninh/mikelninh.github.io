@@ -1,4 +1,4 @@
-// GOOD THINGS v1.4 · 104 catalogue records; 102 rankable, 2 explicitly excluded for dairy. Exact product packshots have provenance.
+// GOOD THINGS v1.4.1 · 104 catalogue records; 102 rankable, 2 explicitly excluded for dairy. Exact product packshots have provenance.
 window.GT_CATALOG=[
   {
     "id": "tofu-01",
@@ -331,8 +331,14 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Oatly%20Haferdrink%20Deluxe"
+    "image_url": "https://cdn.knuspr.de/images/grocery/products/506/506-1776869193825.jpg",
+    "source_url": "https://www.rewe.de/suche/produkte?search=Oatly%20Haferdrink%20Deluxe",
+    "image_status": "retailer",
+    "image_source_url": "https://www.knuspr.de/en-DE/506-oatly-oat-drink-deluxe",
+    "photo_attribution": "Knuspr",
+    "retailer_sku": "506",
+    "photo_match_method": "exact_named_listing",
+    "photo_reviewed_at": "2026-10-13"
   },
   {
     "id": "milks-07",
@@ -344,8 +350,13 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=vly%20Barista"
+    "image_url": "https://www.vlyfoods.com/cdn/shop/files/Whitescreen_Barista_1c1eb6ce-916f-4dea-b216-e18dc13c625c.png?v=1747228835&width=2000",
+    "source_url": "https://www.rewe.de/suche/produkte?search=vly%20Barista",
+    "image_status": "brand",
+    "image_source_url": "https://www.vlyfoods.com/products/barista",
+    "photo_attribution": "vly Foods",
+    "photo_match_method": "official_brand_page",
+    "photo_reviewed_at": "2026-10-13"
   },
   {
     "id": "milks-08",
@@ -671,7 +682,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "cheese-06",
-    "name": "Mozzarella Style",
+    "name": "Mozzarella Style Minis vegan 125g",
     "brand": "bedda",
     "store": "REWE",
     "category": "Cheese alternatives",
@@ -679,8 +690,14 @@ window.GT_CATALOG=[
     "emoji": "🧀",
     "tone": "peach",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=bedda%20Mozzarella%20Style"
+    "image_url": "https://cdn.knuspr.de/images/grocery/products/100502/100502-1743595983206.jpg",
+    "source_url": "https://www.rewe.de/shop/p/bedda-mozzarella-style-minis-vegan-125g/7594222",
+    "image_status": "retailer",
+    "image_source_url": "https://www.knuspr.de/100502-bedda-mozzarella-style-minis-vegan",
+    "photo_attribution": "Knuspr",
+    "retailer_sku": "100502",
+    "photo_match_method": "exact_named_listing",
+    "photo_reviewed_at": "2026-10-13"
   },
   {
     "id": "spreads-01",
@@ -1011,7 +1028,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "mains-03",
-    "name": "Vegane Mühlen Bratwurst",
+    "name": "Vegane Mühlen Rostbratwürstchen 180g",
     "brand": "Rügenwalder Mühle",
     "store": "REWE",
     "category": "Meat alternatives",
@@ -1019,8 +1036,14 @@ window.GT_CATALOG=[
     "emoji": "🍔",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=R%C3%BCgenwalder%20M%C3%BChle%20Vegane%20M%C3%BChlen%20Bratwurst"
+    "image_url": "https://www.ruegenwalder.de/website/produkte/vegan/408/image-thumb__408__product-detail-description/Vegane%20M%C3%BChlen%20Rostbratw%C3%BCrstchen%20180g%204000405001523%402x.png",
+    "source_url": "https://www.rewe.de/shop/p/ruegenwalder-muehle-vegane-muehlen-rostbratwuerstchen-180g/7895319",
+    "image_status": "brand",
+    "image_source_url": "https://www.ruegenwalder.de/de/produkte/vegane-produkte/vegane-pfannen-grillprodukte/vegane-wuerste/rostbratwuerstchen",
+    "photo_attribution": "Rügenwalder Mühle",
+    "barcode": "4000405001523",
+    "photo_match_method": "brand_gtin",
+    "photo_reviewed_at": "2026-10-13"
   },
   {
     "id": "mains-04",
