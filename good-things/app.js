@@ -918,7 +918,16 @@ document.addEventListener('click',async(event)=>{
  case 'save-rating':await saveRating();break;
  case 'delete-rating':await deleteRating();break;
  case 'set-category':st.category=id;render();break;
- case 'board-persona':if(!st.user&&['you','mikel','huong'].includes(val)){st.persona=val;render()}break;
+ case 'board-persona':if(!st.user&&['you','mikel','huong'].includes(val)){st.persona=val;st.boardHistory=[];render()}break;
+ case 'board-pick':quickRank(id);break;
+ case 'quick-rank':{const pid=st.boardModalProduct;if(pid){const ok=await boardMove(pid,val,boardSorted(val,pid).length);if(ok)closeOverlay('modalOverlay')}break}
+ case 'quick-detail':{const pid=st.boardModalProduct;closeOverlay('modalOverlay');if(pid)openProduct(pid);break}
+ case 'quick-unrank':{const pid=st.boardModalProduct;if(pid){const ok=await boardMove(pid,'unranked',0);if(ok)closeOverlay('modalOverlay')}break}
+ case 'undo-board':await undoBoard();break;
+ case 'reset-board':askResetBoard();break;
+ case 'confirm-reset-board':await resetBoard();break;
+ case 'export-board-png':await exportBoardPng();break;
+ case 'open-photo-info':photoInformation();break;
  case 'share-board':shareBoard();break;
  case 'view-exclusions':viewExclusions();break;
  case 'board-unrank':await boardMove(id,'unranked',0);break;
@@ -958,6 +967,7 @@ document.addEventListener('change',e=>{
  if(e.target.id==='storeSelect'){st.store=e.target.value;refreshProducts()}
  if(e.target.id==='sortSelect'){st.sort=e.target.value;refreshProducts()}
  if(e.target.id==='boardCategory'){st.boardCategory=e.target.value;refreshBoardTray()}
+ if(e.target.id==='boardPhotoFilter'){st.boardPhotoFilter=e.target.value;refreshBoardTray()}
  if(e.target.id==='ratedOnly'){st.ratedOnly=e.target.checked;refreshProducts()}
  if(e.target.id==='ratingPublic')st.draftPublic=e.target.checked;
 });
