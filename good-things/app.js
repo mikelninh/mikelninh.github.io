@@ -18,7 +18,7 @@ const attr=esc;
 const validUrl=(s)=>{try{let u=new URL(s);return u.protocol==='https:'?u.href:''}catch(_){return''}};
 const getProduct=(id)=>ALL.find((p)=>p.id===id);
 const tryRead=(key,fallback)=>{try{const d=JSON.parse(localStorage.getItem(key)||'null');return d&&typeof d==='object'?d:fallback}catch(_){return fallback}};
-const st={view:'discover',category:'all',store:'all',sort:'name',query:'',ratedOnly:false,persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
+const st={view:'board',boardQuery:'',boardCategory:'all',category:'all',store:'all',sort:'name',query:'',ratedOnly:false,persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
 let sb=null;
 function safeGuest(raw){
  const ret={mikel:{},huong:{},you:{}};
@@ -26,7 +26,7 @@ function safeGuest(raw){
   const entries=raw&&typeof raw[who]==='object'?Object.entries(raw[who]):[];
   for(const [id,r] of entries){
    if(!getProduct(id)||!r||!TIERS.includes(r.tier))continue;
-   ret[who][id]={tier:r.tier,note:String(r.note||'').slice(0,200),is_public:r.is_public!==false};
+   ret[who][id]={tier:r.tier,note:String(r.note||'').slice(0,200),is_public:r.is_public===true,position:Number.isFinite(Number(r.position))?Number(r.position):0};
   }
  }return ret;
 }
@@ -36,7 +36,7 @@ function persist(){try{localStorage.setItem(STORE_KEY,JSON.stringify(st.guest))}
 function persistImages(){try{localStorage.setItem(IMG_KEY,JSON.stringify(st.imageCache))}catch(_){}}
 function toast(message){const t=$('#toaster');t.textContent=message;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),4100)}
 function accountRating(id){return st.allRatings.find(r=>r.user_id===st.user?.id&&r.product_id===id)}
-function selfRatings(){return st.user?st.allRatings.filter(r=>r.user_id===st.user.id):Object.entries(st.guest.you).map(([product_id,r])=>({product_id,tier:r.tier,note:r.note,is_public:r.is_public}))}
+function selfRatings(){return st.user?st.allRatings.filter(r=>r.user_id===st.user.id):Object.entries(st.guest.you).map(([product_id,r])=>({product_id,tier:r.tier,note:r.note,is_public:r.is_public,position:r.position||0}))}
 function guestRating(id,who){return st.guest[who]?.[id]||null}
 function showRating(id){return st.user?accountRating(id):guestRating(id,'you')}
 function avatar(profile,large){
@@ -53,7 +53,7 @@ function empty(emoji,heading,body,button){
  return '<div class="empty"><div class="big">'+esc(emoji)+'</div><strong>'+esc(heading)+'</strong><p>'+esc(body)+'</p>'+(button||'')+'</div>';
 }
 function setView(view,extra){
- if(!['discover','ours','my','community','shared','profile','list'].includes(view))view='discover';
+ if(!['board','discover','ours','my','community','shared','profile','list'].includes(view))view='board';
  st.view=view;
  if(view!=='shared'&&view!=='profile'&&view!=='list'){
   const u=new URL(URL_BASE);u.searchParams.set('view',view);history.replaceState(null,'',u.toString());
@@ -83,6 +83,218 @@ function filteredProducts(){
  else a.sort((a,b)=>a.name.localeCompare(b.name,'de'));
  return a;
 }
+
+// ----- Interactive TierMaker-style rating board --------------------------------
+function boardEntries(){
+ return st.user?st.allRatings.filter(r=>r.user_id===st.user.id):
+ Object.entries(st.guest[st.persona]||{}).map(([product_id,r])=>({product_id,tier:r.tier,note:r.note,is_public:r.is_public,position:r.position||0}));
+}
+function boardSorted(tier,excludeId){
+ return boardEntries().filter(r=>r.tier===tier&&r.product_id!==excludeId&&getProduct(r.product_id))
+ .sort((a,b)=>(Number(a.position)||0)-(Number(b.position)||0)||a.product_id.localeCompare(b.product_id));
+}
+function boardNextPosition(tier,excludeId){
+ const peer=boardSorted(tier,excludeId);
+ return peer.length?(Number(peer[peer.length-1].position)||0)+100:100;
+}
+function boardPositionBetween(tier,excludeId,index){
+ const arr=boardSorted(tier,excludeId);
+ const i=Math.max(0,Math.min(arr.length,Number(index)||0));
+ const lo=i>0?Number(arr[i-1].position)||0:null;
+ const hi=i<arr.length?Number(arr[i].position)||0:null;
+ if(lo===null&&hi===null)return 100;
+ if(lo===null)return hi-100;
+ if(hi===null)return lo+100;
+ if(hi-lo>0.00001)return (lo+hi)/2;
+ return lo+0.000001;
+}
+function boardPhoto(p){
+ const cache=st.imageCache[p.id];
+ const verified=Boolean(validUrl(p.image_url)&&p.image_status==='retailer');
+ const image=verified?validUrl(p.image_url):validUrl(cache?.url);
+ const shown=Boolean(verified||cache?.kind==='off');
+ return shown&&image?'<img loading="lazy" draggable="false" src="'+attr(image)+'" alt="'+attr(p.brand+' '+p.name)+' packaging" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':
+ '<span class="board-emoji">'+esc(p.emoji)+'</span>';
+}
+function boardPiece(p){
+ const img=p.image_status==='retailer'||st.imageCache[p.id]?.kind==='off';
+ const label=p.brand+' '+p.name;
+ return '<button type="button" draggable="false" class="board-piece" data-drag-id="'+attr(p.id)+'" data-photo="'+(img?'yes':'none')+'" data-action="open-product" data-id="'+attr(p.id)+'" title="'+attr(label)+' — drag to rank; press to add a note; arrow keys move between tiers" aria-label="'+attr(label)+' — draggable, use arrow keys to change its tier or click to rate">'
+ +boardPhoto(p)+(img?'<span class="verified-indicator" aria-hidden="true"></span>':'')
+ +'<strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+'</small></button>';
+}
+function boardTrayProducts(){
+ const rated=new Set(boardEntries().map(r=>r.product_id));
+ const query=st.boardQuery.toLocaleLowerCase().trim();
+ return ALL.filter(p=>!rated.has(p.id)
+ &&(st.boardCategory==='all'||p.category_id===st.boardCategory)
+ &&(!query||(p.brand+' '+p.name+' '+p.category+' '+p.store).toLocaleLowerCase().includes(query)))
+ .sort((a,b)=>a.brand.localeCompare(b.brand,'de')||a.name.localeCompare(b.name,'de'));
+}
+function renderBoard(){
+ const entries=boardEntries(),rated=new Set(entries.map(r=>r.product_id));
+ const photos=ALL.filter(p=>p.image_status==='retailer').length;
+ const who=st.user?(st.profile?.display_name||'You'):(st.persona==='you'?'Your':st.persona==='mikel?'?'Mikel':'Huong');
+ const personToggle=st.user?'<span class="board-status">🔒 Rating as your verified account</span>':
+ '<div class="board-personas" aria-label="Choose local board"><button data-action="board-persona" data-value="you" class="'+(st.persona==='you'?'active':'')+'">You</button><button data-action="board-persona" data-value="mikel" class="'+(st.persona==='mikel'?'active':'')+'">Mikel</button><button data-action="board-persona" data-value="huong" class="'+(st.persona==='huong'?'active':'')+'">Huong</button></div>';
+ const rows=TIERS.map(t=>{
+  const products=boardSorted(t).map(r=>getProduct(r.product_id)).filter(Boolean);
+  const msg={S:'Obsessed',A:'Brilliant',B:'Good',C:'Okay',D:'Not again'};
+  return '<div class="tier-lane" data-drop-tier="'+t+'"><div class="lane-tag"><strong>'+t+'</strong><small>'+msg[t]+'</small></div>'
+  +'<div class="tier-dropzone" data-drop-tier="'+t+'" aria-label="'+t+' tier, '+products.length+' products">'+(products.length?products.map(boardPiece).join(''):'<span class="drop-hint">Drop something good here…</span>')+'</div></div>';
+ }).join('');
+ return head('GOOD THINGS / THE TIER BOARD','Pick it up.<br><em>Place your verdict.</em>',
+ 'Grab a real product, drop it into your tier and rearrange whenever your taste changes. On mobile, press and drag; or tap a pack to pick S–D.',entries.length+' RANKED')
+ +'<div class="board-intro">'+personToggle+'<div class="gap12"><button class="button button-small button-white" data-action="share-board">Share board ↗</button><button class="button button-small button-ghost" data-nav="ours">Compare with Huong ♡</button></div></div>'
+ +(!st.user?'<div class="inline-notice">✳ <strong>Local preview:</strong> switching Mikel/Huong changes only this device’s demo board. Sign in to sync your own honest scores — nobody can post as someone else.</div>':'<div class="inline-notice">♡ Your board is tied to your account. Changes sync to Supabase; each new rating is private until you explicitly publish it.</div>')
+ +'<div class="board-layout"><section class="board-pantry" aria-label="Unranked products">'
+ +'<div class="board-panel-label"><span>✳ The unranked shelf</span><span id="boardTrayCount">'+boardTrayProducts().length+' left</span></div>'
+ +'<div class="board-filter-row"><input type="search" id="boardSearch" class="board-filter" aria-label="Search unranked products" placeholder="Find chocolate, tofu…" value="'+attr(st.boardQuery)+'"><select class="board-filter" id="boardCategory" aria-label="Filter board by category">'
+ +'<option value="all">All categories</option>'+GROUPS.map(g=>'<option value="'+attr(g.id)+'" '+(st.boardCategory===g.id?'selected':'')+'>'+esc(g.emoji)+' '+esc(g.label)+'</option>').join('')+'</select></div>'
+ +'<div class="board-tray" id="boardTray" data-drop-tier="unranked" aria-label="Unranked product tray">'+boardTrayProducts().map(boardPiece).join('')+'</div>'
+ +'<div class="board-photo-progress" title="Sourced exact retailer photo coverage"><span style="width:'+photos/ALL.length*100+'%"></span></div>'
+ +'<div class="board-legend"><span>'+photos+' / '+ALL.length+' retailer-matched packshots</span><span>Drop here to unrank ↶</span></div>'
+ +'</section><section class="board-mat" aria-label="Your S through D tier ranking">'
+ +'<div class="board-mat-head"><div><strong>'+esc(who)+' taste board</strong><small style="display:block;margin-top:6px">One opinion at a time. Rearrange as you please.</small></div><small>'+entries.length+' ranked · '+(ALL.length-rated.size)+' to discover</small></div>'
+ +rows+'</section></div>'
+ +'<div class="board-mobile-hint">↕ <strong>Drag & drop</strong> to rank or reorder. Tap a product for tasting notes. With a keyboard, focus a product and use ↑ ↓ to change tier, ← → to reorder.</div>'
+ +'<div class="board-scoreboard"><div><strong>'+entries.length+' good things judged.</strong><span>'+Math.min(5,entries.length)+'/5 first-five challenge · '+(ALL.length-rated.size)+' still a mystery</span></div><div class="gap12"><button class="button button-lime button-small" data-nav="my">See my shelf ↗</button><button class="button button-ghost button-small" data-nav="discover">See all products</button></div></div>';
+}
+function refreshBoardTray(){
+ const tray=$('#boardTray');if(tray)tray.innerHTML=boardTrayProducts().map(boardPiece).join('');
+ if($('#boardTrayCount'))$('#boardTrayCount').textContent=boardTrayProducts().length+' left';
+}
+async function boardMove(id,tier,index){
+ if(!getProduct(id)||!(TIERS.includes(tier)||tier==='unranked'))return false;
+ const old=st.user?accountRating(id):st.guest[st.persona]?.[id];
+ if(tier==='unranked'&&!old)return true;
+ if(st.boardBusy)return false;
+ st.boardBusy=true;
+ try{
+  if(st.user){
+   if(!sb){toast('Cloud is offline — could not save that move.');return false}
+   let result;
+   if(tier==='unranked'){
+    result=await sb.from('gt_ratings').delete().eq('user_id',st.user.id).eq('product_id',id);
+   }else{
+    const obj={user_id:st.user.id,product_id:id,tier,position:boardPositionBetween(tier,id,index),note:old?.note||'',is_public:old?.is_public===true,updated_at:new Date().toISOString()};
+    result=await sb.from('gt_ratings').upsert(obj,{onConflict:'user_id,product_id'});
+    if(!result.error){st.allRatings=st.allRatings.filter(x=>!(x.user_id===st.user.id&&x.product_id===id)).concat(obj)}
+   }
+   if(result.error){toast('Could not save rating: '+String(result.error.message).slice(0,90));return false}
+   if(tier==='unranked')st.allRatings=st.allRatings.filter(x=>!(x.user_id===st.user.id&&x.product_id===id));
+  }else{
+   if(tier==='unranked')delete st.guest[st.persona][id];
+   else st.guest[st.persona][id]={tier,position:boardPositionBetween(tier,id,index),note:old?.note||'',is_public:old?.is_public===true};
+   persist();
+  }
+  render();
+  const p=getProduct(id);
+  toast(tier==='unranked'?'Back on the unranked shelf.':p.name+' → '+tier+' tier. Nice!');
+  return true;
+ }finally{st.boardBusy=false}
+}
+function shareBoard(){
+ const own=boardEntries().filter(r=>TIERS.includes(r.tier))
+ .sort((a,b)=>TIERS.indexOf(a.tier)-TIERS.indexOf(b.tier)||Number(a.position||0)-Number(b.position||0));
+ if(!own.length)return toast('Rank a product first to share a board.');
+ copyLink(snapshotUrl(own));
+}
+function renderSharedBoard(){
+ const list=Array.isArray(st.shareData)?st.shareData:[];
+ const rows=TIERS.map(t=>{
+  const matches=list.filter(r=>r.tier===t).map(r=>getProduct(r.product_id)).filter(Boolean);
+  return '<div class="tier-lane" data-drop-tier="'+t+'"><div class="lane-tag"><strong>'+t+'</strong></div><div class="tier-dropzone" style="min-height:105px">'+(matches.length?matches.map(p=>'<div class="board-piece" style="width:77px;flex:0 0 77px;cursor:default">'+boardPhoto(p)+'<strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+'</small></div>').join(''):'<span class="drop-hint">Nothing here yet</span>')+'</div></div>';
+ }).join('');
+ return head('A FRIEND’S GOOD THINGS','One lovely tier list.','This is a frozen snapshot of product scores; no private notes or email addresses are shared.',list.length+' RANKED')
+ +'<div class="board-mat" style="max-width:980px"><div class="board-mat-head"><strong>Good Things Tier List</strong><small>Shared by a good human ♡</small></div>'+rows+'</div>'
+ +'<p style="margin:22px 0"><button class="button button-lime" data-nav="board">Build your own tier list ↗</button></p>';
+}
+let boardDrag=null, suppressBoardClickUntil=0;
+function boardDropTarget(x,y){
+ const el=document.elementFromPoint?.(x,y);if(!el)return null;
+ let zone=el.closest?.('.tier-dropzone,.board-tray');
+ if(!zone){const lane=el.closest?.('.tier-lane');zone=lane?.querySelector('.tier-dropzone')}
+ return zone||null;
+}
+function boardInsertionIndex(zone,x,y,id){
+ if(!zone||zone.dataset.dropTier==='unranked')return 0;
+ const others=Array.from(zone.querySelectorAll('.board-piece')).filter(el=>el.dataset.dragId!==id);
+ for(let i=0;i<others.length;i++){
+  const b=others[i].getBoundingClientRect();
+  if(y<b.top+b.height/2||y<b.bottom&&x<b.left+b.width/2)return i;
+ }
+ return others.length;
+}
+function cleanDragIndicator(){
+ document.querySelectorAll('.board-placeholder').forEach(x=>x.remove());
+ document.querySelectorAll('[data-drag-hover]').forEach(x=>x.removeAttribute('data-drag-hover'));
+}
+function cancelBoardDrag(){
+ if(!boardDrag)return;
+ boardDrag.ghost?.remove();
+ boardDrag.source?.classList.remove('drag-active');
+ cleanDragIndicator();boardDrag=null;
+}
+document.addEventListener('pointerdown',e=>{
+ const el=e.target.closest?.('[data-drag-id]');
+ if(!el||st.view!=='board'||e.isPrimary===false||(e.pointerType==='mouse'&&e.button!==0)||st.boardBusy)return;
+ boardDrag={id:el.dataset.dragId,source:el,pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,started:false,ghost:null,targetTier:null,targetIndex:0,dropZone:null};
+},{passive:true});
+document.addEventListener('pointermove',e=>{
+ const d=boardDrag;
+ if(!d||e.pointerId!==d.pointerId)return;
+ if(!d.started&&Math.hypot(e.clientX-d.startX,e.clientY-d.startY)<7)return;
+ if(!d.started){
+  d.started=true;const rect=d.source.getBoundingClientRect();
+  d.ghost=d.source.cloneNode(true);d.ghost.classList.add('drag-ghost');d.ghost.setAttribute('aria-hidden','true');
+  d.ghost.style.width=rect.width+'px';d.ghost.style.height=rect.height+'px';
+  d.source.classList.add('drag-active');
+  d.offsetX=Math.min(rect.width,Math.max(10,d.startX-rect.left));
+  d.offsetY=Math.min(rect.height,Math.max(10,d.startY-rect.top));
+  document.body.appendChild(d.ghost);
+  suppressBoardClickUntil=Date.now()+550;
+ }
+ e.preventDefault();
+ d.ghost.style.left=(e.clientX-d.offsetX)+'px';d.ghost.style.top=(e.clientY-d.offsetY)+'px';
+ cleanDragIndicator();
+ const zone=boardDropTarget(e.clientX,e.clientY);
+ d.dropZone=zone;d.targetTier=zone?.dataset.dropTier||null;
+ if(!zone)return;
+ zone.setAttribute('data-drag-hover','1');
+ d.targetIndex=boardInsertionIndex(zone,e.clientX,e.clientY,d.id);
+ if(d.targetTier==='unranked')return;
+ const existing=Array.from(zone.querySelectorAll('.board-piece')).filter(x=>x.dataset.dragId!==d.id);
+ const marker=document.createElement('div');
+ marker.className='board-placeholder';marker.setAttribute('aria-hidden','true');
+ const before=existing[d.targetIndex];
+ if(before)zone.insertBefore(marker,before);else zone.appendChild(marker);
+},{passive:false});
+document.addEventListener('pointerup',async e=>{
+ const d=boardDrag;if(!d||e.pointerId!==d.pointerId)return;
+ const started=d.started,selected=d.targetTier,index=d.targetIndex,id=d.id;
+ cancelBoardDrag();
+ if(started){suppressBoardClickUntil=Date.now()+650;if(selected)await boardMove(id,selected,index);else toast('Drag onto a tier row to rank a product.')}
+});
+document.addEventListener('pointercancel',cancelBoardDrag);
+document.addEventListener('click',e=>{
+ if(Date.now()<suppressBoardClickUntil&&e.target.closest?.('[data-drag-id]')){e.preventDefault();e.stopImmediatePropagation()}
+},true);
+document.addEventListener('keydown',e=>{
+ const piece=e.target.closest?.('[data-drag-id]');if(st.view!=='board'||!piece||!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))return;
+ e.preventDefault();
+ const id=piece.dataset.dragId,old=st.user?accountRating(id):st.guest[st.persona][id];
+ const idx=old?TIERS.indexOf(old.tier):-1;
+ if(e.key==='ArrowUp'||e.key==='ArrowDown'){
+  const next=e.key==='ArrowUp'?(idx<0?'D':TIERS[Math.max(0,idx-1)]):(idx<0?'S':TIERS[Math.min(4,idx+1)]);
+  boardMove(id,next,boardSorted(next,id).length);
+ }else if(old){
+  const peers=boardSorted(old.tier).map(x=>x.product_id);
+  const target=Math.min(peers.length-1,Math.max(0,peers.indexOf(id)+(e.key==='ArrowLeft'?-1:1)));
+  if(target!==peers.indexOf(id))boardMove(id,old.tier,target);
+ }
+});
+
 function renderDiscover(){
  const a=filteredProducts();
  return head('GOOD THINGS / DISCOVER','Find your next <em>favourite.</em>','102 catalogue candidates. Rate what you actually tried; uncertain products and photos remain clearly labelled.',a.length+' THINGS')
@@ -204,11 +416,7 @@ function snapshotUrl(ratings){
  let binary='';for(const b of bytes)binary+=String.fromCharCode(b);
  return URL_BASE+'?snapshot='+btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
-function renderShared(){
- return head('SHARED WITH YOU','A shelf from a friend.','A frozen snapshot of a friend’s favourite things. No personal notes are included.',String(st.shareData?.length||0)+' PICKS')
- +(st.shareData?.length?'<div class="rating-list">'+ratingRows(st.shareData,true)+'</div>':empty('⌁','This link could not be opened','It may have expired, been shortened or become damaged.'))
- +'<div style="margin-top:18px"><button class="button button-lime" data-nav="discover">Make your own shelf ↗</button></div>';
-}
+function renderShared(){return renderSharedBoard()}
 function renderProfileView(){
  const u=st.openedUser;if(!u)return empty('⌕','Profile not found','They may have renamed their handle or the profile is not available.');
  const arr=publicRated().filter(r=>r.user_id===u.id);
@@ -229,7 +437,8 @@ function renderListView(){
 }
 function render(){
  const content=$('#contentView');
- if(st.view==='ours')content.innerHTML=renderOurs();
+ if(st.view==='board')content.innerHTML=renderBoard();
+ else if(st.view==='ours')content.innerHTML=renderOurs();
  else if(st.view==='my')content.innerHTML=renderMy();
  else if(st.view==='community')content.innerHTML=renderCommunity();
  else if(st.view==='shared')content.innerHTML=renderShared();
@@ -288,12 +497,12 @@ async function saveRating(){
  const product_id=st.selected;
  if(st.user){
   if(!sb)return toast('Cloud unavailable. Your rating has not been saved.');
-  const obj={user_id:st.user.id,product_id,tier:st.draftTier,note,is_public:st.draftPublic,updated_at:new Date().toISOString()};
+  const prior=accountRating(product_id);const obj={user_id:st.user.id,product_id,tier:st.draftTier,note,is_public:st.draftPublic,position:prior?.tier===st.draftTier?(Number(prior.position)||0):boardNextPosition(st.draftTier,product_id),updated_at:new Date().toISOString()};
   const {error}=await sb.from('gt_ratings').upsert(obj,{onConflict:'user_id,product_id'});
   if(error)return toast('Could not save: '+error.message);
   st.allRatings=st.allRatings.filter(r=>!(r.user_id===st.user.id&&r.product_id===product_id));st.allRatings.push(obj);
  }else{
-  st.guest[st.persona][product_id]={tier:st.draftTier,note,is_public:st.draftPublic};persist();
+  const prior=st.guest[st.persona][product_id];st.guest[st.persona][product_id]={tier:st.draftTier,note,is_public:st.draftPublic,position:prior?.tier===st.draftTier?(Number(prior.position)||0):boardNextPosition(st.draftTier,product_id)};persist();
  }
  closeOverlay('drawerOverlay');render();toast('Saved. One more good thing on the shelf ♡');
 }
@@ -454,7 +663,7 @@ async function importJson(file){
 }
 
 function exportJson(){
- const content={title:'GOOD THINGS',version:'1.3',exported_at:new Date().toISOString(),ratings:selfRatings().map(r=>({product_id:r.product_id,tier:r.tier,note:r.note,is_public:r.is_public}))};
+ const content={title:'GOOD THINGS',version:'1.3',exported_at:new Date().toISOString(),ratings:selfRatings().map(r=>({product_id:r.product_id,tier:r.tier,note:r.note,is_public:r.is_public,position:r.position||0}))};
  const blob=new Blob([JSON.stringify(content,null,2)],{type:'application/json'});
  const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='good-things-my-shelf.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);
  toast('JSON export ready. Your data stays yours.');
@@ -487,7 +696,7 @@ async function loadRemote(){
  if(!sb)return;
  const [pr,ra,fo,li,cu]=await Promise.all([
   sb.from('gt_profiles').select('id,handle,display_name,bio,accent,created_at').limit(400),
-  sb.from('gt_ratings').select('user_id,product_id,tier,note,is_public,updated_at').order('updated_at',{ascending:false}).limit(3000),
+  sb.from('gt_ratings').select('user_id,product_id,tier,note,is_public,position,updated_at').order('updated_at',{ascending:false}).limit(3000),
   sb.from('gt_follows').select('follower_id,following_id,created_at').limit(3000),
   sb.from('gt_lists').select('id,user_id,title,slug,description,product_ids,is_public,created_at').limit(500),
   sb.from('gt_curators').select('role,user_id,verified_at').limit(2)
@@ -538,7 +747,7 @@ async function openShareLink(){
   }st.view='list';return;
  }
  const view=url.searchParams.get('view');
- st.view=['discover','ours','my','community'].includes(view)?view:'discover';
+ st.view=['board','discover','ours','my','community'].includes(view)?view:'board';
 }
 document.addEventListener('click',async(event)=>{
  const nav=event.target.closest('[data-nav]');
@@ -560,6 +769,9 @@ document.addEventListener('click',async(event)=>{
  case 'save-rating':await saveRating();break;
  case 'delete-rating':await deleteRating();break;
  case 'set-category':st.category=id;render();break;
+ case 'board-persona':if(!st.user&&['you','mikel','huong'].includes(val)){st.persona=val;render()}break;
+ case 'share-board':shareBoard();break;
+ case 'board-unrank':await boardMove(id,'unranked',0);break;
  case 'lookup-image':await photoLookup();break;
  case 'open-random':{
   const p=ALL[Math.floor(Math.random()*ALL.length)];
@@ -588,12 +800,14 @@ document.addEventListener('click',async(event)=>{
 });
 document.addEventListener('input',e=>{
  if(e.target.id==='productSearch'){st.query=e.target.value;refreshProducts()}
+ if(e.target.id==='boardSearch'){st.boardQuery=e.target.value;refreshBoardTray()}
  if(e.target.id==='ratingNote')st.draftNote=e.target.value.slice(0,200);
 });
 document.addEventListener('change',e=>{
  if(e.target.id==='importJsonFile'){importJson(e.target.files?.[0]);return}
  if(e.target.id==='storeSelect'){st.store=e.target.value;refreshProducts()}
  if(e.target.id==='sortSelect'){st.sort=e.target.value;refreshProducts()}
+ if(e.target.id==='boardCategory'){st.boardCategory=e.target.value;refreshBoardTray()}
  if(e.target.id==='ratedOnly'){st.ratedOnly=e.target.checked;refreshProducts()}
  if(e.target.id==='ratingPublic')st.draftPublic=e.target.checked;
 });
@@ -608,7 +822,7 @@ document.addEventListener('submit',async e=>{
  }catch(err){toast('Error: '+String(err.message||err))}
 });
 $$('.overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)closeOverlay(el.id)}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){cancelBoardDrag();closeAll()}});
 window.addEventListener('focus',()=>{if(st.user&&sb)loadRemote()});
 window.addEventListener('popstate',()=>{openShareLink().then(render)});
 (async()=>{
