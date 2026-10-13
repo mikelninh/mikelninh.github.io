@@ -76,8 +76,8 @@ function photoSourceLabel(p){
 function productArt(p){
  const cached=st.imageCache[p.id];
  const isMatched=matchedPhoto(p);
- const img=isMatched?validUrl(p.image_url):validUrl(cached?.url);
- const show=Boolean(img&&(isMatched||cached?.kind==='off'));
+ const img=isMatched?validUrl(p.image_url):'';
+ const show=Boolean(img&&isMatched);
  const fallback='<span class="art-emoji">'+esc(p.emoji||'✳')+'</span>';
  const link=isMatched?'<a class="photo-credit" target="_blank" rel="noopener noreferrer" href="'+attr(validUrl(p.image_source_url||p.source_url))+'" title="Product photo from '+attr(p.photo_attribution||'source')+'">↗ '+esc(p.photo_attribution||'Source')+'</a>':'';
  return '<div class="product-art tone-'+esc(p.tone||'mint')+'">'+
@@ -124,16 +124,13 @@ function boardPositionBetween(tier,excludeId,index){
  return lo+0.000001;
 }
 function boardPhoto(p){
- const cache=st.imageCache[p.id];
- const verified=matchedPhoto(p);
- const image=verified?validUrl(p.image_url):validUrl(cache?.url);
- const shown=Boolean(verified||cache?.kind==='off');
- return shown&&image?'<img loading="lazy" draggable="false" src="'+attr(image)+'" alt="'+attr(p.brand+' '+p.name)+' packaging" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':
+ const image=matchedPhoto(p)?validUrl(p.image_url):'';
+ return image?'<img loading="lazy" draggable="false" src="'+attr(image)+'" alt="'+attr(p.brand+' '+p.name)+' packaging" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':
  '<span class="board-emoji">'+esc(p.emoji)+'</span>';
 }
 function boardPiece(p){
- const matched=matchedPhoto(p),candidate=st.imageCache[p.id]?.kind==='off';
- const img=matched||candidate;
+ const matched=matchedPhoto(p);
+ const img=matched;
  const label=p.brand+' '+p.name;
  return '<button type="button" draggable="false" class="board-piece" data-drag-id="'+attr(p.id)+'" data-photo="'+(img?'yes':'none')+'" data-action="board-pick" data-id="'+attr(p.id)+'" title="'+attr(label)+' — drag to rank; tap to choose S–D; arrow keys to move" aria-label="'+attr(label)+' — draggable, tap to rank, arrow keys to change tiers">'
  +boardPhoto(p)+(matched?'<span class="verified-indicator" title="Photo matched to this exact retailer SKU or barcode; recipe still needs checking" aria-hidden="true"></span>':'')
@@ -642,7 +639,7 @@ function drawerHtml(){
  +'<div class="gap12"><button class="button button-lime" data-action="save-rating" data-id="'+attr(p.id)+'">Save my rating ♡</button>'+(r?'<button class="button button-ghost button-small" data-action="delete-rating">Remove rating</button>':'')+'</div>'
  +'<hr class="rule"><h3>See the real product</h3><p class="small muted">Catalog variants are candidates. Compare store listings and packaging before treating an item as verified.</p><div class="gap12">'
  +'<a class="button button-ghost button-small" href="'+attr(validUrl(p.source_url))+'" target="_blank" rel="noopener noreferrer">Check '+esc(p.store)+' ↗</a>'
- +'<a class="button button-lime button-small" href="./lookup.html?catalog='+encodeURIComponent(p.id)+'">Check exact barcode ↗</a>'
+ +'<a class="button button-lime button-small" href="./lookup.html?catalog='+encodeURIComponent(p.id)+'">Check exact barcode ↗</a><button class="button button-ghost button-small" data-action="report-photo">Wrong / missing image?</button>'
  +(!matchedPhoto(p)?'<button class="button button-white button-small" data-action="lookup-image">Find possible photo ⌕</button>':'<a class="button button-white button-small" target="_blank" rel="noopener noreferrer" href="'+attr(validUrl(p.image_source_url||p.source_url))+'">Photo source ↗</a>')+'</div><p class="small muted" id="photoHint">Images are only shown when a plausible Open Food Facts match can be found, and remain labelled unverified until checked.</p>';
 }
 function openProduct(id,tier,persona){
@@ -682,6 +679,27 @@ async function deleteRating(){
  }else{delete st.guest[st.persona][st.selected];persist()}
  closeOverlay('drawerOverlay');render();toast('Rating removed.');
 }
+
+function reportPhotoModal(){
+ const p=getProduct(st.selected);if(!p)return;
+ if(!st.user)return openAuth();
+ modal('<button class="close" data-action="close-modal" aria-label="Close">×</button><div class="eyebrow">PHOTO DETECTIVE / COMMUNITY</div><h2>Help us get it right.</h2><p>'+esc(p.brand)+' · '+esc(p.name)+'</p><p class="small muted">Your report is private. Nothing changes publicly until we independently check the evidence and update the catalogue.</p>'+
+  '<form id="photoReportForm"><div class="field"><label>What is wrong?</label><select class="control" name="issue" required><option value="wrong_image">Wrong product photo</option><option value="old_packaging">Outdated packaging</option><option value="missing_photo" '+(!matchedPhoto(p)?'selected':'')+'>No real photograph</option><option value="wrong_variant">Wrong variant or size</option></select></div>'+
+  '<div class="field"><label>Correct source URL (optional)</label><input class="control" type="url" name="suggested_url" placeholder="https://official-brand.example/product" maxlength="500"></div>'+
+  '<div class="field"><label>What should we verify?</label><textarea class="control" rows="3" name="note" maxlength="400" placeholder="Barcode, pack size, which detail looks wrong…"></textarea></div>'+
+  '<button class="button button-lime" type="submit">Submit correction ♡</button></form>');
+}
+async function submitPhotoReport(form){
+ if(!st.user||!sb)return openAuth();
+ const issue=form.elements.namedItem('issue').value,url=form.elements.namedItem('suggested_url').value.trim(),note=form.elements.namedItem('note').value.trim();
+ if(!['wrong_image','old_packaging','missing_photo','wrong_variant'].includes(issue))return toast('Choose what needs correcting.');
+ if(url&&!validUrl(url))return toast('Only HTTPS source links are supported.');
+ const row={reporter_id:st.user.id,product_id:st.selected,issue,suggested_url:url,note};
+ const {error}=await sb.from('gt_photo_reports').upsert(row,{onConflict:'reporter_id,product_id'});
+ if(error)return toast('Could not submit photo report: '+error.message.slice(0,110));
+ closeOverlay('modalOverlay');toast('Thank you! The correction is queued for human review ♡');
+}
+
 async function photoLookup(){
  const p=getProduct(st.selected);
  const hint=$('#photoHint');if(!p||!hint)return;
@@ -950,6 +968,7 @@ document.addEventListener('click',async(event)=>{
  case 'view-exclusions':viewExclusions();break;
  case 'board-unrank':await boardMove(id,'unranked',0);break;
  case 'lookup-image':await photoLookup();break;
+ case 'report-photo':reportPhotoModal();break;
  case 'open-random':{
   const p=RANKABLE[Math.floor(Math.random()*RANKABLE.length)];
   openProduct(p.id,'',btn.dataset.persona||'you');break;
@@ -990,13 +1009,14 @@ document.addEventListener('change',e=>{
  if(e.target.id==='ratingPublic')st.draftPublic=e.target.checked;
 });
 document.addEventListener('submit',async e=>{
- if(!['authForm','profileForm','listForm','feedbackForm'].includes(e.target.id))return;
+ if(!['authForm','profileForm','listForm','feedbackForm','photoReportForm'].includes(e.target.id))return;
  e.preventDefault();
  try{
  if(e.target.id==='authForm')await submitAuth(e.target);
  if(e.target.id==='profileForm')await saveProfile(e.target);
  if(e.target.id==='listForm')await saveList(e.target);
  if(e.target.id==='feedbackForm')await submitFeedback(e.target);
+ if(e.target.id==='photoReportForm')await submitPhotoReport(e.target);
  }catch(err){toast('Error: '+String(err.message||err))}
 });
 $$('.overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)closeOverlay(el.id)}));
