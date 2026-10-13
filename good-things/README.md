@@ -1,16 +1,16 @@
 # ✳ GOOD THINGS — Mikel & Huong
 
-**Build:** 1.3.0 (community beta)  
+**Build:** 1.4.0 (interactive tier-board community beta)  
 **Website:** https://mikelninh.github.io/good-things/  
 **Source:** /good-things on the \`mikelninh.github.io\` GitHub Pages repository  
 **Architecture:** GitHub Pages HTML/CSS/vanilla JS + Supabase email/password Auth and PostgreSQL/RLS in an isolated namespace in the existing EU Frankfurt project.
 
-A home for things worth sharing. The personal *Our shelf* and the community *Your shelf* are both intentional first-class views.
+A home for things worth sharing. The S–D interactive tier board, personal *Our shelf*, and community *Your shelf* are all first-class views.
 
 ## What is genuinely implemented
 
 ### 1.1 — Make it personal
-- 102 catalogue **candidates**, across exactly 10 vegan categories. Each entry has a stable ID, source/store link, category, brand, name and explicit \`verified:false\`.
+- 102 rankable catalogue **candidates**, across 10 categories, plus 2 rejected dairy-containing candidates retained for the audit (104 records total). Each entry has a stable ID, source/store link, category, brand, name and explicit \`verified:false\`.
 - Search, store filter, category chips, sort and rated-only filter.
 - A private local **Mikel / Huong / You** co-rating playground, with independent S–D scores and tasting notes. No invented opinions.
 - Public/private rating choice for authenticated account ratings.
@@ -36,23 +36,31 @@ A home for things worth sharing. The personal *Our shelf* and the community *You
 - Private feedback submissions, limited by SQL to one per account per UTC day.
 - A safe default when disconnected: no fake "cloud sync success" messages.
 
+### 1.4 — Tier Board & sourced product photography
+
+- TierMaker-style S–D drag-and-drop mat, searchable unranked tray, pointer/touch dragging, keyboard arrows, and cross-tier reorder.
+- Independent local demo Mikel/Huong/You boards; signed-in users persist each rating and numerical position to Supabase. Sharing exports a snapshot with product scores and order only.
+- **41 / 102 source-matched product photos** from retailer SKU, official brand pages, or one exact barcode. These are image-to-product matches, not independent vegan certification. The other 61 use neutral illustrations until an exact packet photo can be confirmed.
+- Excluded two confirmed dairy-containing entries: Pringles Sweet Paprika (whey) and funny-frisch Linsen Chips Paprika (sour-cream powder). Two ingredient-checked plant-based products were added to keep 102 eligible products. The public catalogue retains the rejected records only for a transparent audit.
+- Product images show their source. Before a broad commercial launch, check image copyrights and third-party CDN hotlink stability.
+
 ## Important release gates
 
 **This is an actual deployed beta, not yet a fully verified mass-market release.**
 
 1. **Auth email redirect:** in Supabase project \`htffcvdopavknnylbowl\` → Authentication → URL Configuration, add \`https://mikelninh.github.io/good-things/\` to allowed Redirect URLs, and ensure the project email confirmation settings and SMTP fit a public site. This configuration is not exposed by the current connected management tools and therefore was **not automatically changed**. Signup email confirmation may fail until this is completed.
 2. **Separate environment:** \`gt_*\` tables live in the already-active Supabase project \`company-01\` (EU central). No existing tables were modified. Before a broad launch move to a dedicated project with its own auth/SMTP domain and security quotas.
-3. **Catalogue trust:** the original v1.0 102-product JSON was not accessible. We reconstructed 102 *candidates* with the stated category counts rather than claiming to have restored exact SKUs. Validate barcodes, precise vegan ingredients, images, retailers and availability before listing them as verified.
+3. **Catalogue trust:** the original v1.0 file was not available. We reconstructed candidates. 41 / 102 rankable items now have source-linked retailer/brand/barcode packshots; the other 61 deliberately display illustrations. Two confirmed dairy-containing products are rejected from ranking. Verify each remaining recipe, barcode, variant, availability and image rights before commercial launch.
 4. **Official curators:** Mikel and Huong each need an account. The operator then verifies each account owner and enters the corresponding UUIDs in `gt_curators` (see `curator-linking.sql`). Only after **both** are linked does Our Shelf switch to their real public ratings. The private demo can still be toggled; it **never** speaks for them publicly.
 5. **Legal/release:** add a complete German Impressum and DSGVO privacy notice, account deletion request process, moderation/reporting and abuse protection before actively inviting a large public community.
-6. **Scale:** the v1.3 client currently fetches at most 3,000 recent public ratings and 400 profiles; replace full-client aggregation with paginated aggregate RPCs/materialised views before meaningful traffic.
-7. **Verification:** schema installed, 102 product count checked, JavaScript parser and simulated guest flow passed. A full external click-through browser test was unavailable because the connected browser automation account had insufficient funds. Do not count that test as passed.
+6. **Scale:** the v1.4 client currently fetches at most 3,000 recent public ratings and 400 profiles; replace full-client aggregation with paginated aggregate RPCs/materialised views before meaningful traffic.
+7. **Verification:** database migrated and audited (104 records, 102 rankable, two rejected, 41 matched photos). Simulated JavaScript tests verified tier placement, order, unranking, private curator separation and HTML escaping. Full external browser drag/signup testing remains unverified because the browser-automation wallet lacks credit.
 
 ## Database
 
-- \`gt_products\`: read-only catalogue for public users; no public writes.
+- \`gt_products\`: read-only catalogue with barcode/SKU image provenance and ingredient flags; no public writes.
 - \`gt_profiles\`: account-owned names and handles.
-- \`gt_ratings\`: one S/A/B/C/D rating per user and product; private ratings visible only to owner.
+- \`gt_ratings\`: one S/A/B/C/D rating per user and product, with an explicit numeric tier-order position; private ratings visible only to owner.
 - \`gt_lists\`: public/private collections per account.
 - \`gt_follows\`: public, owner-only followed relationships.
 - \`gt_feedback\`: owner-readable feedback, write limited to one per day.
@@ -75,8 +83,8 @@ select count(*) as first_five_completed from (select user_id from public.gt_rati
 
 ## How to try it
 
-1. Visit the [live website](https://mikelninh.github.io/good-things/), then Discover.
-2. Find a tofu, rate it S–D, add a note and press Save.
+1. Visit the [live website](https://mikelninh.github.io/good-things/), which opens the **Tier Board** first.
+2. Drag a tofu from the unranked tray to an S–D tier; reorder or drag back to unrank. Tap for tasting notes.
 3. Under Our Shelf, use the **private** Mikel and Huong demo personas; ratings are stored on your device only until both curator identities are manually verified and linked.
 4. Under Your Shelf, make five ratings, export/share a snapshot or create an account to persist across devices.
 5. When Auth is configured, make two **separate** verified accounts; each can publish its own ratings, follow friends and build lists.
