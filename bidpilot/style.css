@@ -254,3 +254,6 @@ a,button{ -webkit-tap-highlight-color:transparent }
   .focus-card,.text-button span,.summary-arrow,.btn{transition:none}
   .focus-card:hover,.btn:hover{transform:none}
 }
+
+/* 1.2 interaction hit areas: comfortably tappable on touch devices. */
+.focus-review,.focus-source,.text-button{display:inline-flex;align-items:center;min-height:40px}
