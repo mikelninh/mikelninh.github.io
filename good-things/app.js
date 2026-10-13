@@ -87,6 +87,7 @@ function renderDiscover(){
  const a=filteredProducts();
  return head('GOOD THINGS / DISCOVER','Find your next <em>favourite.</em>','102 catalogue candidates. Rate what you actually tried; uncertain products and photos remain clearly labelled.',a.length+' THINGS')
  +'<div class="inline-notice">✳ <strong>Care over certainty:</strong> these are catalogue candidates, not 102 verified retailer listings. Packaging and vegan status may change. Check labels before purchasing.</div>'
+ +'<div class="inline-notice" style="background:#ecf4d5"><strong>New: Product Detective ✳</strong> Look up an exact barcode, inspect community nutrition and connect a real product photograph. <a href="./lookup.html">Open the detective ↗</a></div>'
  +'<div class="toolbar"><label class="search"><span aria-hidden="true">⌕</span><input type="search" id="productSearch" placeholder="Search brands, products and stores…" autocomplete="off" aria-label="Search products" value="'+attr(st.query)+'"></label>'
  +'<select id="storeSelect" class="control" aria-label="Select store">'+['all','REWE','Lidl','Online'].map(x=>'<option value="'+x+'" '+(st.store===x?'selected':'')+'>'+(x==='all'?'All stores':x)+'</option>').join('')+'</select>'
  +'<select id="sortSelect" class="control" aria-label="Sort products"><option value="name" '+(st.sort==='name'?'selected':'')+'>By name</option><option value="brand" '+(st.sort==='brand'?'selected':'')+'>By brand</option><option value="rated" '+(st.sort==='rated'?'selected':'')+'>My favourites first</option></select></div>'
@@ -265,7 +266,8 @@ function drawerHtml(){
  +'<div class="gap12"><button class="button button-lime" data-action="save-rating" data-id="'+attr(p.id)+'">Save my rating ♡</button>'+(r?'<button class="button button-ghost button-small" data-action="delete-rating">Remove rating</button>':'')+'</div>'
  +'<hr class="rule"><h3>See the real product</h3><p class="small muted">Catalog variants are candidates. Compare store listings and packaging before treating an item as verified.</p><div class="gap12">'
  +'<a class="button button-ghost button-small" href="'+attr(validUrl(p.source_url))+'" target="_blank" rel="noopener noreferrer">Check '+esc(p.store)+' ↗</a>'
- +'<button class="button button-white button-small" data-action="lookup-image">Find community photo ⌕</button></div><p class="small muted" id="photoHint">Images are only shown when a plausible Open Food Facts match can be found, and remain labelled unverified until checked.</p>';
+ +'<a class="button button-lime button-small" href="./lookup.html?catalog='+encodeURIComponent(p.id)+'">Check exact barcode ↗</a>'
+ +'<button class="button button-white button-small" data-action="lookup-image">Find possible photo ⌕</button></div><p class="small muted" id="photoHint">Images are only shown when a plausible Open Food Facts match can be found, and remain labelled unverified until checked.</p>';
 }
 function openProduct(id,tier,persona){
  if(!getProduct(id))return;
@@ -612,5 +614,6 @@ window.addEventListener('popstate',()=>{openShareLink().then(render)});
 (async()=>{
  if(ALL.length!==102||GROUPS.length!==10)toast('Catalog is incomplete; please report this.');
  await openShareLink();render();await initCloud();await openShareLink();render();
+ const requested=new URL(location.href).searchParams.get('product');if(requested&&getProduct(requested))openProduct(requested);
 })();
 })();
