@@ -38,7 +38,8 @@
 <link rel="stylesheet" href="./daylight.css">
 <link rel="stylesheet" href="./little-light.css">
 <link rel="stylesheet" href="./featured-cake.css">
-<style>@media(max-width:750px){#state-bridge>div{grid-template-columns:1fr!important}.state-bridge-object{min-height:235px!important}.state-bridge-object>div{transform:rotate(-3deg) scale(.82)!important}}@media(prefers-reduced-motion:reduce){.state-bridge-object>div{transform:none!important}}</style>
+<link rel="stylesheet" href="./playable-experiments.css">
+
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -221,20 +222,44 @@
 </details>
 </section>
 
-<aside id="state-bridge" aria-labelledby="state-bridge-title" style="max-width:1220px;margin:0 auto 70px;padding:0 20px">
- <div style="background:#171a15;color:#f8f5e9;display:grid;grid-template-columns:1fr .7fr;gap:24px;align-items:center;overflow:hidden">
-  <div style="padding:clamp(24px,5vw,60px)">
-   <p style="font:700 11px/1.4 ui-monospace,monospace;color:#d9ff43;letter-spacing:.12em">A PLAYABLE EXPERIMENT / STATE 001</p>
-   <h2 id="state-bridge-title" style="font-size:clamp(34px,5vw,65px);line-height:1.01;letter-spacing:-.055em;margin:20px 0;color:#f8f5e9">A little less scrolling.<br><em style="color:#d9ff43">A little more living.</em></h2>
-   <p style="max-width:530px;color:#d6d7cb;line-height:1.6;margin-bottom:25px">I built a digital apothecary for human states. Its first free experiment helps you begin one meaningful task, notice what actually changed, and return to life.</p>
-   <a href="https://mikelninh.github.io/state-digital-apothecary/?start=focus&amp;preview=60" target="_blank" rel="noopener noreferrer" style="display:inline-block;background:#d9ff43;color:#151714;text-decoration:none;font-weight:750;padding:16px 20px">Try the 60-second dose ↗</a>
-   <p style="font:10px/1.6 ui-monospace,monospace;color:#b6bca8;margin-top:20px">Free beta · No account · Not medical care</p>
+
+<section id="playable-experiments" class="play-lab" aria-labelledby="playable-title">
+  <div class="play-lab-head">
+    <div>
+      <div class="play-lab-kicker">THE PLAYABLE EXPERIMENTS / TWO LITTLE DOORS</div>
+      <h2 id="playable-title">A little more play.<br><em>A little more life.</em></h2>
+    </div>
+    <p>Not every idea needs to be a company. Some simply deserve to be tried. Two small experiments in focus, memory, and the rather wonderful business of being human.</p>
   </div>
-  <div aria-hidden="true" class="state-bridge-object" style="display:grid;place-items:center;min-height:325px;padding:25px">
-   <div style="background:#e9e3d1;color:#171a15;width:205px;min-height:255px;padding:20px;transform:rotate(-6deg);box-shadow:18px 20px 0 #d9ff43;display:flex;flex-direction:column;justify-content:space-between"><small style="font:700 10px ui-monospace,monospace">STATE / FORMULA 001</small><strong style="font:950 40px system-ui;letter-spacing:-.08em">FOCUS</strong><b style="font:950 110px/.8 system-ui;letter-spacing:-.09em">25</b><small style="font:700 9px ui-monospace,monospace">RETURN TO LIFE STRONGER</small></div>
+  <div class="play-lab-grid">
+    <article id="state-bridge" class="play-card play-card--state" aria-labelledby="state-play-title">
+      <div class="play-card-copy">
+        <span class="play-card-index">001 / A DIGITAL RITUAL · FREE BETA</span>
+        <h3 id="state-play-title">STATE<span aria-hidden="true">.</span></h3>
+        <p class="play-card-desc">One real task. A little less friction. A deliberately finite focus experience that invites you back into life.</p>
+        <a class="play-card-link" href="https://mikelninh.github.io/state-digital-apothecary/?start=focus&amp;preview=60" target="_blank" rel="noopener noreferrer">Try a 60-second dose <span class="play-card-arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <div class="play-card-art" aria-hidden="true">
+        <div class="state-pack"><span>STATE / FORMULA 001</span><strong>FOCUS</strong><b>25</b><span>THEN GET ON WITH LIFE</span></div>
+      </div>
+    </article>
+    <article id="cheats-bridge" class="play-card play-card--cheats" aria-labelledby="cheats-play-title">
+      <div class="play-card-copy">
+        <span class="play-card-index">002 / A REAL-LIFE SUPERPOWER · FREE GAME</span>
+        <h3 id="cheats-play-title">CHEATS<span aria-hidden="true">.</span></h3>
+        <p class="play-card-desc">Eight objects. One imaginary palace. Learn a real memory technique through a tiny, playable challenge.</p>
+        <a class="play-card-link" href="https://mikelninh.github.io/cheats/?play=memory" target="_blank" rel="noopener noreferrer">Unlock Memory Palace <span class="play-card-arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <div class="play-card-art" aria-hidden="true">
+        <div class="cheats-sigil"><span>✦</span><small>POWER 001 / MEMORY</small></div>
+      </div>
+    </article>
   </div>
- </div>
-</aside>
+  <div class="play-lab-foot">
+    <span>Both are real, early-stage experiments — free to explore, with no account required.</span>
+    <span>A little less scrolling. A little more living.</span>
+  </div>
+</section>
 
 <section id="thoughts" aria-labelledby="thoughts-title">
 <div class="thought-intro"><div><div class="kicker">03 / The thought garden</div><h2 id="thoughts-title">Things worth<br><em>tending.</em></h2></div>
