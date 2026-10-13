@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Michael Ninh — Meet the person behind the projects</title>
+<meta name="description" content="A short, human introduction for hiring teams: how Michael Ninh works, what he has built, and what matters beyond the CV.">
+<meta name="theme-color" content="#172f28">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Michael Ninh — Meet the person behind the projects">
+<meta property="og:description" content="Engineer by training, founder by experience, curious human by default. A quick route from working demos to the life behind them.">
+<meta property="og:url" content="https://mikelninh.github.io/beyond-cv/for-teams/">
+<link rel="canonical" href="https://mikelninh.github.io/beyond-cv/for-teams/">
+<style>
+:root{--bg:#f5f5ed;--paper:#fffefa;--green:#183b30;--deep:#142f28;--mint:#cde2c7;--ink:#1b332b;--muted:#617169;--line:#d8e0d4;--amber:#c98250;--glow:#eef3e7;--serif:Georgia,'Times New Roman',serif;--sans:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button{font:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid #c98a5d;outline-offset:4px}
+.wrap{width:min(1160px,calc(100% - 64px));margin:auto}
+.skip{position:absolute;left:18px;top:-120px;background:#fff;padding:12px 16px;z-index:10}.skip:focus{top:12px}
+.topbar{position:sticky;top:0;background:rgba(245,245,237,.95);border-bottom:1px solid var(--line);backdrop-filter:blur(14px);z-index:5}
+.topbar-inner{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.mark{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:760;letter-spacing:-.02em}.mark-symbol{font-size:29px;color:#527b5a}.mark span:last-child{font-size:11px;font-weight:450;color:var(--muted);display:block;margin-top:2px}
+nav{display:flex;align-items:center;gap:22px;font-size:12px;font-weight:650}nav a{white-space:nowrap}nav a:hover,.bare-link:hover{text-decoration:underline;text-underline-offset:5px}
+nav .nav-cta{padding:12px 16px;border-radius:99px;border:1px solid #abc5ad}
+.hero{padding:90px 0 82px;display:grid;grid-template-columns:1.12fr .88fr;align-items:center;gap:50px}
+.eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:800;color:#608365;display:flex;align-items:center;gap:10px}.eyebrow:before{content:'';width:20px;height:2px;background:#b57c5b}
+h1,h2,h3,p{margin-top:0}
+.hero h1{font-family:var(--serif);font-weight:400;letter-spacing:-.064em;line-height:1.05;font-size:clamp(55px,6.2vw,91px);margin:23px 0 22px;max-width:720px}
+em{font-weight:400;color:#658c70}
+.hero p{line-height:1.79;font-size:16px;color:var(--muted);max-width:555px;margin-bottom:20px}
+.hero strong{color:var(--ink)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:11px;margin:29px 0 24px}
+.btn{border-radius:99px;padding:15px 19px;font-size:12px;font-weight:750;display:inline-flex;justify-content:center;align-items:center;gap:12px;transition:transform .2s ease,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-dark{background:var(--deep);color:#f5f7ec}.btn-dark:hover{background:#2b5544}
+.btn-light{background:#fffdf6;border:1px solid #c6d4c3}
+.tiny{color:#76877c;font-size:11px;line-height:1.75}
+.portrait{min-height:530px;background:linear-gradient(156deg,#d8e3d2 0%,#dce3d2 44%,#ebeadf 100%);border-radius:35% 35% 12px 12px / 29% 29% 12px 12px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid #d3dccd}
+.portrait:before{content:'';position:absolute;inset:50px 30px;background:radial-gradient(circle at 53% 37%,#fdfbe9 0,#e1e8d7 32%,transparent 58%);border-radius:50%}
+.orbit{width:260px;height:260px;border:1px solid #739a7850;border-radius:50%;position:relative;display:grid;place-items:center;transform:rotate(-16deg)}
+.orbit:before,.orbit:after{content:'';position:absolute;border:1px solid #739a787a;border-radius:50%;inset:24px;transform:rotate(60deg) scaleX(.55)}
+.orbit:after{inset:-45px;transform:rotate(28deg) scaleX(.7);opacity:.52}
+.flower{font-size:125px;line-height:1;color:#497a57;font-family:var(--serif);transform:rotate(17deg);filter:drop-shadow(0 12px 25px #648c5a45)}
+.portrait-bottom{position:absolute;left:31px;right:31px;bottom:29px;padding-top:17px;border-top:1px solid #a2b6a5;display:flex;justify-content:space-between;gap:20px;font-size:10px;letter-spacing:.13em;font-weight:760;color:#4a6e58}
+.portrait-note{position:absolute;top:34px;right:34px;font-family:var(--serif);font-size:24px;font-style:italic;color:#6d9974;transform:rotate(8deg)}
+.ribbon{background:var(--green);color:#e3eee0;padding:20px 0}
+.ribbon-content{display:flex;justify-content:space-between;gap:30px;align-items:center}
+.ribbon p{margin:0;font-size:13px;line-height:1.6}.ribbon b{font-weight:750;color:white}
+.ribbon small{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#c0d8c0}
+section{padding:91px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:32px}
+h2{font:400 clamp(40px,4.6vw,62px)/1.12 var(--serif);letter-spacing:-.047em;margin:14px 0 0;max-width:760px}
+.section-intro{font-size:14px;line-height:1.8;color:var(--muted);max-width:390px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.card{background:var(--paper);padding:27px;border:1px solid var(--line);border-radius:16px;box-shadow:0 14px 30px #273b2a07}
+.num{font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-weight:800;color:var(--amber)}
+.card h3{font:400 27px/1.18 var(--serif);margin:26px 0 11px;letter-spacing:-.03em}
+.card p{font-size:13px;color:var(--muted);line-height:1.76;margin-bottom:0}
+.proof{background:#e8eee4}
+.proof .section-intro{max-width:380px}
+.proof-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.work-card{background:#fffefa;border:1px solid #d7e1d2;border-radius:18px;padding:28px;display:flex;flex-direction:column;min-height:323px}
+.work-card:hover{box-shadow:0 18px 36px #1e43221c}
+.work-card .label{color:#6f8b75;font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:800}
+.work-card h3{font:400 32px/1.12 var(--serif);letter-spacing:-.038em;margin:28px 0 14px}
+.work-card p{color:var(--muted);line-height:1.72;font-size:13px;margin-bottom:17px}
+.work-card .line{height:1px;background:var(--line);margin-top:auto;margin-bottom:16px}
+.work-card .links{display:flex;justify-content:space-between;flex-wrap:wrap;gap:13px}
+.work-card a{font-size:12px;font-weight:800;color:#396f47}
+.work-card a:hover{text-decoration:underline;text-underline-offset:4px}
+.work-note{font-size:11px;line-height:1.8;color:#60776a;margin-top:21px;max-width:930px}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.story{background:white;border:1px solid var(--line);border-radius:16px;padding:29px;display:grid;grid-template-columns:50px 1fr;gap:15px}
+.story .ico{font:39px/1 var(--serif);color:#7aa27c}
+.story h3{font:400 24px var(--serif);letter-spacing:-.03em;margin:0 0 10px}
+.story p{font-size:13px;line-height:1.78;color:var(--muted);margin:0}
+.belief{margin-top:22px;padding:33px;background:var(--green);border-radius:18px;color:#e9f2e2;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.belief strong{font:400 clamp(25px,3.2vw,39px)/1.25 var(--serif);max-width:630px}
+.belief p{max-width:350px;font-size:13px;color:#c8ddcb;line-height:1.7;margin:0}
+.human{background:#f2ede5}
+.human-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.human-card{background:rgba(255,255,255,.72);border:1px solid #e6ddd2;border-radius:16px;padding:26px;min-height:235px}
+.human-card .symbol{font-size:30px;display:block;margin-bottom:33px}
+.human-card h3{font:400 25px var(--serif);margin:0 0 11px}
+.human-card p{font-size:13px;line-height:1.7;color:#706f65;margin:0}
+.open-garden{display:flex;justify-content:space-between;gap:25px;align-items:center;margin-top:26px;padding:21px 0;border-top:1px solid #ddd6c9}
+.open-garden p{color:#726f66;font-size:12px;margin:0}
+.open-garden a{font-size:13px;font-weight:750}
+.hello{padding:96px 0 85px}
+.hello-box{border:1px solid #d8e1d6;background:#fffefa;border-radius:22px;padding:54px;display:grid;grid-template-columns:1.15fr .85fr;gap:40px}
+.hello-box h2{margin-bottom:23px}
+.hello-box p{font-size:14px;color:var(--muted);line-height:1.78}
+.prompt{border:1px solid #d8e1d3;border-radius:16px;background:#f3f7ee;padding:25px;align-self:center}
+.prompt .num{margin-bottom:20px;display:block}
+.prompt q{quotes:none;font:400 26px/1.28 var(--serif);display:block;min-height:108px}
+.prompt button{margin-top:19px;border:1px solid #bcd3b9;background:#fff;padding:12px 16px;border-radius:99px;color:#315b40;font-size:11px;font-weight:800;cursor:pointer}
+.prompt button:hover{background:#e5efdf}
+footer{padding:28px 0;border-top:1px solid var(--line);font-size:11px;color:#7c8c81}
+.foot{display:flex;justify-content:space-between;gap:20px}
+.foot a{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:950px){nav{gap:13px}nav a.hide-small{display:none}.hero{grid-template-columns:1fr .7fr;gap:25px}.portrait{min-height:450px}.proof-grid,.cards{grid-template-columns:1fr 1fr}.human-gallery{grid-template-columns:repeat(2,1fr)}.work-card:last-child{grid-column:1/-1;min-height:220px}}
+@media(max-width:700px){.wrap{width:min(100% - 36px,520px)}.topbar-inner{min-height:65px}nav a.hide-mobile{display:none}.mark{font-size:12px}.mark-symbol{font-size:23px}nav .nav-cta{padding:10px 12px}.hero{grid-template-columns:1fr;padding:52px 0 55px}.hero h1{font-size:58px}.portrait{min-height:300px;border-radius:170px 170px 12px 12px}.orbit{width:160px;height:160px}.flower{font-size:91px}.portrait-note{font-size:17px}.ribbon-content{align-items:start;flex-direction:column;gap:9px}.cards,.proof-grid,.story-grid,.human-gallery{grid-template-columns:1fr}.work-card:last-child{grid-column:auto}.section-head{display:block}section{padding:67px 0}.card h3{margin-top:14px}.belief{align-items:start;flex-direction:column}.hello-box{grid-template-columns:1fr;padding:27px}.prompt q{min-height:60px}.foot{display:block}.foot a{display:inline-block;margin-top:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<div class="topbar"><div class="wrap topbar-inner">
+<a class="mark" href="../"><span class="mark-symbol">✳</span><span>Michael Ninh<span>Beyond the CV / for teams</span></span></a>
+<nav aria-label="Main navigation"><a class="hide-small" href="#how">How I work</a><a class="hide-small" href="#proof">Work you can try</a><a class="hide-mobile" href="#human">The human</a><a class="nav-cta" href="#hello">Say hello ↗</a></nav>
+</div></div>
+<main id="main">
+<div class="wrap hero">
+<div>
+<div class="eyebrow">An open door · a 90-second introduction</div>
+<h1>More than what I <em>do.</em><br>How I <em>care.</em></h1>
+<p>I'm Michael. <strong>Engineer by training, founder by experience, curious human by default.</strong> I love taking an early idea seriously — asking good questions, making something real, and finding out whether it genuinely helps.</p>
+<p>I build applied AI software in Python, FastAPI, RAG and MCP. I also love cooking for friends, learning martial arts, writing stories and making little worlds. I think the work is better when the person behind it stays human.</p>
+<div class="hero-actions"><a class="btn btn-dark" href="#proof">See what I've built <span aria-hidden="true">↘</span></a><a class="btn btn-light" href="../">Wander into the garden <span aria-hidden="true">✳</span></a></div>
+<div class="tiny">Berlin · German / English / Vietnamese · Open to curious, capable teams</div>
+</div>
+<div class="portrait" role="img" aria-label="Original abstract artwork: a small radiant flower at the centre of overlapping orbits">
+<div class="portrait-note">still becoming</div><div class="orbit"><span class="flower">✳</span></div>
+<div class="portrait-bottom"><span>MAKE SOMETHING REAL</span><span>MAKE IT MEAN SOMETHING</span></div>
+</div>
+</div>
+<div class="ribbon"><div class="wrap ribbon-content"><p><b>A small promise:</b> I won't pretend a synthetic demo is a production system, or that curiosity is experience. I'll show you the work, the evidence, and where I'm still learning.</p><small>Honest by design / 2026</small></div></div>
+<section id="how"><div class="wrap"><div class="section-head"><div><div class="eyebrow">01 / What it's like to build with me</div><h2>Curious enough to start.<br><em>Careful enough to check.</em></h2></div><p class="section-intro">I don't have all the answers. I like turning unclear problems into small, testable steps with the people who actually live with the result.</p></div>
+<div class="cards">
+<article class="card"><div class="num">01 / Understand</div><h3>Ask before automating.</h3><p>What hurts? Who experiences it? What would make their day better? E-commerce, restaurant operations and building products taught me that the real problem is rarely the first sentence in the brief.</p></article>
+<article class="card"><div class="num">02 / Make</div><h3>Ship something you can touch.</h3><p>I learn quickly by building. A working slice, a small user journey and a thoughtful interface are more useful to me than a sprawling concept nobody has tried.</p></article>
+<article class="card"><div class="num">03 / Verify</div><h3>Let reality argue back.</h3><p>Source links, missing-data states, automated tests and human review belong in the product. Especially when working with LLMs, I want to know what broke and why.</p></article>
+</div></div></section>
+<section id="proof" class="proof"><div class="wrap"><div class="section-head"><div><div class="eyebrow">02 / Open a tab and try one</div><h2>Less telling.<br><em>More showing.</em></h2></div><p class="section-intro">Three different proofs, one shared idea: help people make better decisions without hiding uncertainty.</p></div>
+<div class="proof-grid">
+<article class="work-card"><span class="label">01 · Venture analysis · 2026</span><h3>Venture Intelligence</h3><p>From a fictional pitch deck to an evidence-linked briefing. Spot contradictory traction claims and inspect the original lines. A separate evaluation covers 30 synthetic fixtures.</p><div class="line"></div><div class="links"><a href="https://mikelninh.github.io/venture-intelligence/">Try the public case studies ↗</a><a href="#method">Limits ↓</a></div></article>
+<article class="work-card"><span class="label">02 · Legal retrieval · 2026</span><h3>GitLaw</h3><p>Hybrid search across 5,936 German federal laws, with evidence references and API/MCP access. A practical lesson in why grounded answers need traceable sources.</p><div class="line"></div><div class="links"><a href="https://mikelninh.github.io/gitlaw/">Try the demo ↗</a><a href="https://github.com/mikelninh/gitlaw">Review code ↗</a></div></article>
+<article class="work-card"><span class="label">03 · Bounded agent workflows · 2026</span><h3>Digital Worker Factory</h3><p>A reusable experiment in permission boundaries, evidence requirements and human approval — because a helpful agent must also know when to stop.</p><div class="line"></div><div class="links"><a href="https://mikelninh.github.io/agents/">Try the workflow ↗</a><a href="https://github.com/mikelninh/digital-worker-factory">Review code ↗</a></div></article>
+</div>
+<p class="work-note" id="method"><strong>What these are, and what they aren't:</strong> These are independent prototypes and demonstrations, not deployments at HTGF, in court, or in customer production. Venture Intelligence's public showcase uses fictional cases and archived synthetic evaluation results. The local backend is a separate application. I'm continuing to learn LangGraph, observability and real-world evaluation.</p>
+</div></section>
+<section><div class="wrap"><div class="section-head"><div><div class="eyebrow">03 / Where I came from</div><h2>A few different worlds.<br><em>One useful thread.</em></h2></div><p class="section-intro">Good software rarely starts with software alone. These experiences changed how I think about responsibility, evidence and other people's time.</p></div>
+<div class="story-grid">
+<div class="story"><div class="ico">◉</div><div><h3>The engineering foundation</h3><p>B.Sc. Mechanical Engineering at TU Berlin. Biomedical Engineering master's studies (102/120 credits, no degree). At TU Berlin's IWF, I worked on research, measurement and small software projects; at BIOTRONIK, on quality and hardware validation for active implants.</p></div></div>
+<div class="story"><div class="ico">↗</div><div><h3>Building a business</h3><p>I founded and ran an e-commerce business. Product research, suppliers, customer questions, logistics, late surprises. It taught me that execution isn't just an idea with a nicer slide deck.</p></div></div>
+<div class="story"><div class="ico">◇</div><div><h3>Working with people</h3><p>At everphone I worked across marketplaces and partners. At Transit Restaurants I coordinated busy shifts and helped teams solve problems in real time. Clear communication matters when the clock is ticking.</p></div></div>
+<div class="story"><div class="ico">✳</div><div><h3>Learning something new</h3><p>In 2025–26 I completed AI & Software Engineering training, then kept building and evaluating my own tools. I bring a solid technical base and a beginner's willingness to be corrected.</p></div></div>
+</div>
+<div class="belief"><strong>What excites me? People who can see potential in an idea early — and help the people behind it actually make it happen.</strong><p>That might be an investor helping a founder, or a small engineering team making a useful tool. The part I love is enabling possibility.</p></div>
+</div></section>
+<section class="human" id="human"><div class="wrap"><div class="section-head"><div><div class="eyebrow">04 / Beyond the job title</div><h2>Yes, there is a<br><em>whole human here.</em></h2></div><p class="section-intro">None of these is a professional qualification. They're the things that make me someone you might actually enjoy sharing a project — or lunch — with.</p></div>
+<div class="human-gallery">
+<article class="human-card"><span class="symbol">✺</span><h3>A full table</h3><p>I love cooking plant-based food for people. A noisy table and somebody asking for seconds are lovely measures of success.</p></article>
+<article class="human-card"><span class="symbol">◌</span><h3>Beginner's mind</h3><p>Martial arts, meditation and learning instruments remind me to practise, stay flexible and not mistake confidence for progress.</p></article>
+<article class="human-card"><span class="symbol">✧</span><h3>Little worlds</h3><p>Comics, collectibles, playful interfaces and games. Some ideas should exist because they make somebody smile, not because they need an ARR target.</p></article>
+<article class="human-card"><span class="symbol">❋</span><h3>The bigger questions</h3><p>How do we reduce suffering, stay curious and make life a little kinder? I like serious conversations. Preferably with a little humour.</p></article>
+</div>
+<div class="open-garden"><p>This is the short introduction. The original Beyond the CV has the art, games, stories and garden paths.</p><a href="../">Explore the full garden ↗</a></div>
+</div></section>
+<section class="hello" id="hello"><div class="wrap"><div class="hello-box"><div>
+<div class="eyebrow">05 / Your turn</div><h2>What is your team<br><em>trying to make real?</em></h2>
+<p>If you're building something worthwhile, I'd love to hear about it. I'm interested in AI engineering, early-stage technology and teams that value good judgement as much as shipping speed.</p>
+<div class="hero-actions"><a class="btn btn-dark" href="mailto:mikel_ninh@yahoo.de?subject=Hello%20Michael%20%E2%80%94%20let%27s%20build%20something">Start a conversation ↗</a><a class="btn btn-light" href="https://www.linkedin.com/in/michael-ninh/">Find me on LinkedIn ↗</a><a class="btn btn-light" href="../../cv.html">See my CV ↗</a></div>
+</div><div class="prompt"><span class="num">A good conversation begins with a good question</span><q id="conversation-question" aria-live="polite">“What would you build if the first version only had to help one person?”</q><button id="another-question" type="button">Another question ↗</button></div>
+</div></div></section>
+</main>
+<footer><div class="wrap foot"><span>Made with care in Berlin · 2026 · No trackers, no gatekeeping, no perfect-human claims.</span><span><a href="../">Beyond the CV</a> · <a href="https://mikelninh.github.io/">Portfolio</a> · <a href="https://github.com/mikelninh">GitHub</a></span></div></footer>
+<script>
+const questions=[
+'“What would you build if the first version only had to help one person?”',
+'“What have your users taught you that your roadmap did not?”',
+'“What is the most interesting thing your team still doesn’t know?”',
+'“What kind of problem is worth staying curious about for years?”',
+'“What would make somebody’s workday quietly better?”'
+];
+let questionIndex=0;
+document.getElementById('another-question').addEventListener('click',()=>{
+ questionIndex=(questionIndex+1)%questions.length;
+ document.getElementById('conversation-question').textContent=questions[questionIndex];
+});
+</script>
+</body>
+</html>
