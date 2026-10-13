@@ -1,4 +1,4 @@
--- GOOD THINGS v1.3. All objects are isolated under gt_*; existing project data is untouched.
+-- GOOD THINGS v1.5. All objects are isolated under gt_*; existing project data is untouched.
 create table if not exists public.gt_products (
   id text primary key, name text not null, brand text not null, store text not null,
   category_id text not null, category text not null, source_url text,
@@ -23,12 +23,17 @@ create table if not exists public.gt_profiles (
 create table if not exists public.gt_ratings (
   user_id uuid not null references auth.users(id) on delete cascade,
   product_id text not null references public.gt_products(id) on delete cascade,
-  tier text not null check(tier in ('S','A','B','C','D')),
+  tier text check(tier in ('S','A','B','C','D')),
+  status text not null default 'rated',
   note text not null default '' check(char_length(note)<=200),
   is_public boolean not null default false,
   position numeric(18,6) not null default 0,
   updated_at timestamptz not null default now(),
-  primary key(user_id,product_id)
+  primary key(user_id,product_id),
+  constraint gt_ratings_experience_check check (
+    (status = 'rated' and tier in ('S','A','B','C','D'))
+    or (status = 'not_tried' and tier is null and is_public = false and position = 0)
+  )
 );
 create table if not exists public.gt_follows (
   follower_id uuid not null references auth.users(id) on delete cascade,
