@@ -1,0 +1,89 @@
+/* Beyond the CV · playable experiments · 2026 */
+.play-lab {
+  margin: 22px 0 clamp(64px, 8vw, 112px);
+  padding: clamp(20px, 3.1vw, 34px) 0 0;
+  border-top: 1px solid rgba(36, 40, 35, .25);
+  scroll-margin-top: 105px;
+}
+.play-lab .play-lab-head {
+  display: grid; grid-template-columns: minmax(0,1fr) minmax(240px,370px);
+  gap: clamp(14px,4vw,56px); align-items: end; margin: 0 0 27px;
+}
+.play-lab .play-lab-kicker {
+  font: 750 11px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace;
+  letter-spacing: .14em; text-transform: uppercase; color: #8c5e4e;
+}
+.play-lab .play-lab-head h2 {
+  font: 540 clamp(39px,5vw,68px)/1.03 Georgia,"Times New Roman",serif;
+  letter-spacing: -.055em; margin: 14px 0 0; color: #26231f;
+}
+.play-lab .play-lab-head h2 em { color: #bd593b; font-weight: 400; }
+.play-lab .play-lab-head>p { color: #575954; font-size: 15px; line-height: 1.65; margin: 0 0 3px; }
+.play-lab .play-lab-grid {
+  display: grid; grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: clamp(12px,2vw,23px);
+}
+.play-lab .play-card {
+  min-height: 342px; display: grid; grid-template-columns: minmax(0,1fr) 150px;
+  border: 1px solid rgba(24,22,28,.9); overflow: hidden;
+  position: relative; isolation: isolate;
+}
+.play-lab .play-card:focus-within { outline: 3px solid #7254a0; outline-offset: 3px; }
+.play-lab .play-card--state { background: #1b201c; color: #f8f7ed; }
+.play-lab .play-card--cheats { background: #d9cdfa; color: #241b36; }
+.play-lab .play-card-copy { z-index: 1; padding: clamp(24px,3.5vw,38px) 8px 29px clamp(23px,3.3vw,36px); display: flex; flex-direction: column; min-width: 0; }
+.play-lab .play-card-index {font: 750 10px/1.4 ui-monospace,Consolas,monospace; letter-spacing:.09em; text-transform:uppercase; opacity:.74; }
+.play-lab .play-card h3 { font: 860 clamp(34px,3.5vw,48px)/.98 system-ui,-apple-system,sans-serif; letter-spacing:-.075em; margin:28px 0 15px; }
+.play-lab .play-card--state h3 {color:#d9ff43}
+.play-lab .play-card--cheats h3 {color:#3c285a}
+.play-lab .play-card-desc { font-size: 14px; line-height: 1.56; max-width: 255px; margin: 0 0 22px; opacity: .9; }
+.play-lab .play-card-link { width: max-content; max-width: 100%; margin-top: auto; display: inline-flex; align-items: center; gap: 10px; padding-bottom: 5px; text-underline-offset: 5px; font-size: 13px; font-weight: 750; color: inherit; text-decoration-thickness:1px; }
+.play-lab .play-card-link:hover { text-decoration: none; }
+.play-lab .play-card-link:focus-visible { outline:3px solid currentColor; outline-offset: 4px; }
+.play-lab .play-card-link .play-card-arrow { display:inline-block; transition: transform .2s ease; }
+.play-lab .play-card-link:hover .play-card-arrow { transform: translate(3px,-3px); }
+.play-lab .play-card-art { z-index:0; position: relative; display:flex; justify-content:center; align-items:center; padding: 18px 15px 18px 0; pointer-events:none; }
+.play-lab .state-pack {
+  width: 115px; height: 171px; background: #f2ead6; color: #181b17;
+  border: 1px solid #1c1c1b; transform:rotate(7deg); box-shadow:11px 11px 0 #d9ff43;
+  padding: 12px; display:flex; flex-direction:column; justify-content:space-between;
+}
+.play-lab .state-pack span { font:700 7px/1.2 ui-monospace,monospace; letter-spacing:.04em;}
+.play-lab .state-pack strong { font:940 24px/1 system-ui,sans-serif;letter-spacing:-.075em; }
+.play-lab .state-pack b {font:930 64px/.8 system-ui,sans-serif;letter-spacing:-.13em;}
+.play-lab .cheats-sigil {
+  width: 133px; height: 176px; position: relative; display:grid;place-items:center;
+  transform:rotate(9deg); background: #b69cfa; border: 2px solid #392c59;
+  box-shadow: 9px 10px 0 #f6db88; border-radius: 9px;
+}
+.play-lab .cheats-sigil::before { content:"";width:86px;height:86px;border:2px dashed #6d56a7; border-radius:50%;position:absolute;}
+.play-lab .cheats-sigil span {font:700 91px/1 Georgia,serif;color:#2f2252;text-shadow:6px 7px 0 #ffea99; }
+.play-lab .cheats-sigil small {position:absolute;bottom:15px;font:750 8px ui-monospace,monospace;letter-spacing:.1em;color:#362358}
+.play-lab .play-lab-foot { display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; margin-top:17px; color:#77746c;font:11px/1.55 ui-monospace,monospace; }
+.play-lab .play-lab-foot a {font-weight:700;color:#665157;text-underline-offset:4px}
+@media(max-width:980px) {
+  .play-lab .play-card {grid-template-columns:minmax(0,1fr) 110px;min-height:320px}
+  .play-lab .play-card-art {padding-right:13px}
+  .play-lab .state-pack {width:92px;height:137px;padding:10px;box-shadow:7px 7px 0 #d9ff43}
+  .play-lab .state-pack strong {font-size:19px}
+  .play-lab .state-pack b {font-size:50px}
+  .play-lab .cheats-sigil {width:94px;height:137px;box-shadow:7px 7px 0 #f6db88}
+  .play-lab .cheats-sigil span {font-size:69px}
+  .play-lab .cheats-sigil::before {width:75px;height:75px}
+}
+@media(max-width:760px) {
+  .play-lab .play-lab-head { grid-template-columns:1fr; gap:12px }
+  .play-lab .play-lab-head>p {max-width:520px}
+  .play-lab .play-lab-grid {grid-template-columns:1fr}
+  .play-lab .play-card {min-height:235px;grid-template-columns:minmax(0,1fr) minmax(80px,130px)}
+  .play-lab .play-card h3 {margin:16px 0 10px}
+}
+@media(max-width:400px) {
+  .play-lab .play-card {grid-template-columns:minmax(0,1fr) 94px}
+  .play-lab .play-card-copy {padding:21px 5px 23px 20px}
+  .play-lab .play-card h3 {font-size:34px}
+  .play-lab .play-card-desc {font-size:13px}
+  .play-lab .state-pack {transform:rotate(5deg)}
+  .play-lab .cheats-sigil {transform:rotate(5deg)}
+}
+@media(prefers-reduced-motion:reduce) {.play-lab .play-card-link .play-card-arrow {transition:none}}
