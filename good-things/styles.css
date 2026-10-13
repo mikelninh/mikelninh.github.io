@@ -211,3 +211,85 @@ select.control,textarea.control,input.control{border:1px solid var(--edge);paddi
 .board-piece[data-photo="yes"]{background:linear-gradient(#fffdfa,#fff)}
 .board-piece .verified-indicator{background:#91bd67}
 .drawer-art img{max-height:100%;max-width:100%;object-fit:contain;padding:10px}
+
+
+/* ── 1.4.1 · Board first: the familiar online tier-list experience ── */
+body:has(.board-layout) .workspace{display:block;max-width:1530px;padding-top:32px}
+body:has(.board-layout) .left-rail{display:none}
+body:has(.board-layout) .hero{grid-template-columns:minmax(0,1fr) 320px;gap:28px;padding-top:24px;padding-bottom:22px}
+body:has(.board-layout) .hero h1{font-size:clamp(48px,5.6vw,74px);margin:11px 0}
+body:has(.board-layout) .hero p{font-size:14px;line-height:1.5;margin-bottom:10px;max-width:620px}
+body:has(.board-layout) .hero-art{height:210px}
+body:has(.board-layout) .hero .hero-foot{margin-top:13px}
+body:has(.board-layout) .hero .hero-actions{margin-top:13px}
+body:has(.board-layout) .hero .mock-package{transform:scale(.7) rotate(-8deg);transform-origin:center top}
+body:has(.board-layout) .hero .package-b{transform:scale(.7) rotate(9deg)}
+body:has(.board-layout) .hero .package-c{transform:scale(.7) rotate(13deg)}
+.board-layout{display:flex;flex-direction:column;gap:16px}
+.board-layout .board-mat{order:0;width:100%;min-width:0}
+.board-layout .board-pantry{order:1;width:100%;min-width:0;padding:20px}
+.board-tray{display:grid;grid-template-columns:repeat(auto-fill,minmax(102px,1fr));gap:9px;max-height:365px;overflow-y:auto;overflow-x:hidden;align-content:start;padding:10px 2px;scroll-snap-type:none}
+.board-tray .board-piece{min-height:122px}
+.board-tray .board-piece img{height:75px}
+.board-tray .board-piece .board-emoji{height:75px;font-size:43px}
+.board-filter-row{display:flex;flex-direction:row;gap:9px;align-items:stretch;flex-wrap:wrap}
+.board-filter-row input{flex:2 1 240px}
+.board-filter-row select{flex:1 1 164px}
+.board-filter-row .board-filter{width:auto;min-width:0}
+.tier-dropzone{min-height:135px;align-content:start}
+.tier-dropzone .board-piece{width:96px;flex:0 0 96px;min-height:115px}
+.tier-dropzone .board-piece img{height:70px}
+.tier-dropzone .board-piece .board-emoji{height:70px}
+.board-placeholder{width:96px;flex-basis:96px;height:110px}
+.board-intro{background:#edf3dd;border:1px solid #d1e0b6;padding:13px 16px;border-radius:15px;margin-bottom:18px}
+.board-intro .gap12{gap:7px}
+.board-intro .button{padding:10px 13px}
+.quick-rank-art{height:166px;display:grid;place-items:center;background:#edf1e6;border-radius:16px;margin:18px 0;padding:12px}
+.quick-rank-art img{height:100%;max-width:100%;object-fit:contain}
+.quick-rank-art .board-emoji{font-size:72px}
+.quick-rank-choices{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-top:12px}
+.quick-rank-button{border:1px solid #becbb0;border-radius:12px;background:#fff;padding:12px 4px 9px;color:#304332;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;transition:transform .12s,box-shadow .12s}
+.quick-rank-button strong{font:bold 36px/1 'DM Sans',sans-serif}
+.quick-rank-button small{font-size:9px;white-space:nowrap;letter-spacing:-.025em}
+.quick-rank-button[data-rank-tier="S"]{background:#d3ee97}
+.quick-rank-button[data-rank-tier="A"]{background:#e1efbc}
+.quick-rank-button[data-rank-tier="B"]{background:#d8edee}
+.quick-rank-button[data-rank-tier="C"]{background:#fae3b8}
+.quick-rank-button[data-rank-tier="D"]{background:#f6cbc3}
+.quick-rank-button:hover{transform:translateY(-3px);box-shadow:0 6px 15px #31493125}
+.quick-rank-button:active{transform:translateY(0)}
+/* Let visitors swipe the unranked tray without accidentally dragging a tile. */
+.board-tray .board-piece{touch-action:pan-x pan-y}
+.tier-dropzone .board-piece{touch-action:none}
+@media(max-width:1100px){
+ .board-layout{display:flex;flex-direction:column}
+ .tier-dropzone .board-piece{width:80px;flex-basis:80px}
+ .board-placeholder{width:80px;flex-basis:80px}
+}
+@media(max-width:780px){
+ body:has(.board-layout) .hero{display:block;padding-top:24px;padding-bottom:16px}
+ body:has(.board-layout) .hero-art{display:none}
+ body:has(.board-layout) .hero h1{font-size:clamp(48px,10vw,68px)}
+ body:has(.board-layout) .hero-foot{display:none}
+ body:has(.board-layout) .workspace{padding-top:24px}
+ .board-layout .board-pantry{order:1;padding:13px}
+ .board-filter-row{display:grid;grid-template-columns:1fr 1fr}
+ .board-filter-row input{grid-column:span 2}
+ .board-filter-row .board-filter{width:100%;font-size:12px}
+ .board-tray{display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;max-height:none;min-height:136px;scroll-snap-type:x proximity;padding:8px 2px 11px}
+ .board-tray .board-piece{width:95px;flex:0 0 95px;scroll-snap-align:start}
+ .board-intro{padding:12px}
+ .board-intro .gap12{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+ .board-intro .button{padding:9px 5px;font-size:10px}
+ .tier-dropzone .board-piece{width:70px;flex-basis:70px}
+ .board-placeholder{width:70px;flex-basis:70px}
+}
+@media(max-width:480px){
+ .tier-dropzone .board-piece{width:62px;flex-basis:62px;min-height:84px}
+ .tier-dropzone .board-piece img,.tier-dropzone .board-piece .board-emoji{height:52px}
+ .board-placeholder{width:62px;flex-basis:62px;height:84px}
+ .quick-rank-choices{gap:4px}
+ .quick-rank-button{padding:10px 1px}
+ .quick-rank-button strong{font-size:30px}
+ .quick-rank-button small{font-size:8px}
+}
