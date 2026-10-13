@@ -273,7 +273,8 @@
     }
     const action=engine?engine.nextAction(picks[0],stale):{heading:'Verify the source feed first',detail:'Ranking is unavailable until the source-backed engine has loaded.',cta:'Explore all',kind:'profile'};
     const dest=$('nextAction');
-    dest.replaceChildren(e('p','action-kicker','One considered next step'),e('h3','',action.heading),p(action.detail,'action-description'));
+    const actionHeading=e('h3','',action.heading);actionHeading.id='actionHeading';
+    dest.replaceChildren(e('p','action-kicker','One considered next step'),actionHeading,p(action.detail,'action-description'));
     const buttonArea=e('div','action-controls');
     if(action.kind==='source'&&picks.length){
       buttonArea.append(link(action.cta+' ↗',picks[0].notice.url,'btn btn-light'));
