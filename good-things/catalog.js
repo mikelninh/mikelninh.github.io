@@ -1,4 +1,4 @@
-// GOOD THINGS v1.4 · 104 catalogue records, 2 flagged NON-VEGAN, 102 rankable candidates. Photos only from product-matched sources.
+// GOOD THINGS v1.4 · 104 catalogue records; 102 rankable, 2 explicitly excluded for dairy. Exact product packshots have provenance.
 window.GT_CATALOG=[
   {
     "id": "tofu-01",
@@ -1237,11 +1237,12 @@ window.GT_CATALOG=[
     "emoji": "🍫",
     "tone": "rose",
     "verified": false,
-    "image_url": "https://lirp.cdn-website.com/a694c994/dms3rep/multi/opt/MildClassic_front-1920w.webp",
-    "source_url": "https://b2b.ritter-sport.com/standardprodukte/mild-classic",
-    "image_status": "brand",
-    "image_source_url": "https://b2b.ritter-sport.com/standardprodukte/mild-classic",
-    "photo_attribution": "Ritter Sport"
+    "image_url": "https://images.openfoodfacts.org/images/products/400/041/710/9101/front_en.13.400.jpg",
+    "source_url": "https://world.openfoodfacts.org/product/4000417109101",
+    "image_status": "barcode",
+    "image_source_url": "https://world.openfoodfacts.org/product/4000417109101",
+    "photo_attribution": "Open Food Facts",
+    "barcode": "4000417109101"
   },
   {
     "id": "chocolate-02",
