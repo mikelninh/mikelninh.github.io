@@ -153,7 +153,7 @@ function boardTrayProducts(){
  .sort((a,b)=>a.brand.localeCompare(b.brand,'de')||a.name.localeCompare(b.name,'de'));
 }
 function renderBoard(){
- const entries=boardEntries(),rated=new Set(entries.map(r=>r.product_id));
+ const entries=boardEntries(),skipped=boardNotTried(),answered=new Set(boardAnswers().map(r=>r.product_id));
  const photos=RANKABLE.filter(matchedPhoto).length;
  const who=st.user?(st.profile?.display_name||'You'):(st.persona==='you'?'Your':st.persona==='mikel'?'Mikel':'Huong');
  const personToggle=st.user?'<span class="board-status">🔒 Rating as your verified account</span>':
@@ -165,25 +165,25 @@ function renderBoard(){
   +'<div class="tier-dropzone" data-drop-tier="'+t+'" aria-label="'+t+' tier, '+products.length+' products">'+(products.length?products.map(boardPiece).join(''):'<span class="drop-hint">Drop something good here…</span>')+'</div></div>';
  }).join('');
  return head('GOOD THINGS / THE TIER BOARD','Pick it up.<br><em>Place your verdict.</em>',
- 'Grab a real product, drop it into your tier and rearrange whenever your taste changes. On mobile, press and drag; or tap a pack to pick S–D.',entries.length+' RANKED')
+ 'Drag a product into S–D if you’ve tried it. Otherwise choose Not tried yet — an explicit answer without a grade.',entries.length+' RANKED · '+skipped.length+' NOT TRIED')
  +'<div class="board-intro">'+personToggle+'<div class="gap12"><button class="button button-small button-ghost" data-action="undo-board" '+(!st.boardHistory.length?'disabled':'')+' title="Undo last move">↶ Undo</button><button class="button button-small button-white" data-action="export-board-png">↓ Save PNG</button><button class="button button-small button-lime" data-action="share-board">Share ↗</button><button class="button button-small button-ghost" data-action="reset-board" '+(!entries.length?'disabled':'')+'>Reset</button></div></div>'
  +(!st.user?'<div class="inline-notice">✳ <strong>Local preview:</strong> switching Mikel/Huong changes only this device’s demo board. Sign in to sync your own honest scores — nobody can post as someone else.</div>':'<div class="inline-notice">♡ Your board is tied to your account. Changes sync to Supabase; each new rating is private until you explicitly publish it.</div>')
  +'<div class="board-layout"><section class="board-pantry" aria-label="Unranked products">'
- +'<div class="board-panel-label"><span>✳ The unranked shelf</span><span id="boardTrayCount">'+boardTrayProducts().length+' left</span></div>'
+ +'<div class="board-panel-label"><span>✳ Not answered yet</span><span id="boardTrayCount">'+boardTrayProducts().length+' unanswered</span></div>'
  +'<div class="board-filter-row"><input type="search" id="boardSearch" class="board-filter" aria-label="Search unranked products" placeholder="Find chocolate, tofu…" value="'+attr(st.boardQuery)+'"><select class="board-filter" id="boardCategory" aria-label="Filter board by category">'
  +'<option value="all">All categories</option>'+GROUPS.map(g=>'<option value="'+attr(g.id)+'" '+(st.boardCategory===g.id?'selected':'')+'>'+esc(g.emoji)+' '+esc(g.label)+'</option>').join('')+'</select><select class="board-filter" id="boardPhotoFilter" aria-label="Photo quality"><option value="all">All photos</option><option value="matched" '+(st.boardPhotoFilter==='matched'?'selected':'')+'>✓ Source-matched</option><option value="missing" '+(st.boardPhotoFilter==='missing'?'selected':'')+'>Needs a packshot</option></select></div>'
- +'<div class="board-tray" id="boardTray" data-drop-tier="unranked" aria-label="Unranked product tray">'+boardTrayProducts().map(boardPiece).join('')+'</div>'
+ +'<div class="board-tray" id="boardTray" data-drop-tier="unranked" aria-label="Unanswered products. Drop here to remove a response.">'+boardTrayProducts().map(boardPiece).join('')+'</div>'
  +'<div class="board-photo-progress" title="Sourced exact retailer photo coverage"><span style="width:'+photos/RANKABLE.length*100+'%"></span></div>'
- +'<div class="board-legend"><span>'+photos+' / '+RANKABLE.length+' source-matched packshots</span><span>Drop here to unrank ↶</span></div>'
+ +'<div class="board-legend"><span>'+photos+' / '+RANKABLE.length+' source-matched packshots</span><span>Drop here to clear your answer ↶</span></div>'
  +'</section><section class="board-mat" aria-label="Your S through D tier ranking">'
- +'<div class="board-mat-head"><div><strong>'+esc(who)+' taste board</strong><small style="display:block;margin-top:6px">One opinion at a time. Rearrange as you please.</small></div><small>'+entries.length+' ranked · '+(RANKABLE.length-rated.size)+' to discover</small></div>'
- +rows+'</section></div>'
+ +'<div class="board-mat-head"><div><strong>'+esc(who)+' taste board</strong><small style="display:block;margin-top:6px">S–D is for products you have tasted.</small></div><small>'+entries.length+' ranked · '+skipped.length+' not tried · '+(RANKABLE.length-answered.size)+' unanswered</small></div>'
+ +rows+'</section><section class="not-tried-shelf" aria-label="Products explicitly marked not tried yet"><div class="not-tried-header"><div><strong>◌ Not tried yet</strong><p>Answered, but no grade. These products never enter S–D or your taste match.</p></div><span>'+skipped.length+' saved</span></div><div id="boardNotTried" class="not-tried-dropzone" data-drop-tier="not_tried" aria-label="Not tried yet, drop products here to record no grade">'+(skipped.length?skipped.map(r=>getProduct(r.product_id)).filter(Boolean).map(boardPiece).join(''):'<span class="drop-hint">Drag a product here or tap it and choose Not tried yet.</span>')+'</div></section></div>'
  +'<div class="board-mobile-hint">↕ <strong>Drag & drop</strong> to rank or reorder. On mobile, hold briefly to drag or tap a product to choose S–D. Keyboard: ↑ ↓ moves tiers, ← → reorders. <button class="navlink" data-action="open-photo-info" style="display:inline;text-decoration:underline">About our photos ↗</button></div>'
- +'<div class="board-scoreboard"><div><strong>'+entries.length+' good things judged.</strong><span>'+Math.min(5,entries.length)+'/5 first-five challenge · '+(RANKABLE.length-rated.size)+' still a mystery</span></div><div class="gap12"><button class="button button-lime button-small" data-nav="my">See my shelf ↗</button><button class="button button-ghost button-small" data-nav="discover">See all products</button></div></div>';
+ +'<div class="board-scoreboard"><div><strong>'+entries.length+' graded · '+skipped.length+' not tried.</strong><span>'+Math.min(5,entries.length)+'/5 first-five tasting challenge · '+(RANKABLE.length-answered.size)+' unanswered</span></div><div class="gap12"><button class="button button-lime button-small" data-nav="my">See my shelf ↗</button><button class="button button-ghost button-small" data-nav="discover">See all products</button></div></div>';
 }
 function refreshBoardTray(){
  const tray=$('#boardTray');if(tray)tray.innerHTML=boardTrayProducts().map(boardPiece).join('');
- if($('#boardTrayCount'))$('#boardTrayCount').textContent=boardTrayProducts().length+' left';
+ if($('#boardTrayCount'))$('#boardTrayCount').textContent=boardTrayProducts().length+' unanswered';
 }
 async function boardMove(id,tier,index){
  if(!rankableProduct(getProduct(id))||!(TIERS.includes(tier)||tier==='unranked'||tier==='not_tried'))return false;
@@ -261,7 +261,7 @@ async function undoBoard(){
  }finally{st.boardBusy=false}
 }
 function askResetBoard(){
- if(!boardEntries().length)return toast('Your board is already empty.');
+ if(!boardAnswers().length)return toast('Your board and answer shelf are already empty.');
  modal('<button class="close" data-action="close-modal" aria-label="Close">×</button><div class="eyebrow">START AGAIN</div><h2>Clear this tier list?</h2><p>Your ratings and notes on this board will be removed. This cannot be undone. Your saved community profile stays intact.</p><div class="gap12"><button class="button button-ghost" data-action="close-modal">Keep my board</button><button class="button button-dark" data-action="confirm-reset-board">Clear everything</button></div>');
 }
 async function resetBoard(){
@@ -360,12 +360,12 @@ function renderSharedBoard(){
 let boardDrag=null, suppressBoardClickUntil=0;
 function boardDropTarget(x,y){
  const el=document.elementFromPoint?.(x,y);if(!el)return null;
- let zone=el.closest?.('.tier-dropzone,.board-tray');
+ let zone=el.closest?.('.tier-dropzone,.board-tray,.not-tried-dropzone');
  if(!zone){const lane=el.closest?.('.tier-lane');zone=lane?.querySelector('.tier-dropzone')}
  return zone||null;
 }
 function boardInsertionIndex(zone,x,y,id){
- if(!zone||zone.dataset.dropTier==='unranked')return 0;
+ if(!zone||zone.dataset.dropTier==='unranked'||zone.dataset.dropTier==='not_tried')return 0;
  const others=Array.from(zone.querySelectorAll('.board-piece')).filter(el=>el.dataset.dragId!==id);
  const rows=[];
  others.forEach((el,index)=>{
@@ -436,7 +436,7 @@ document.addEventListener('pointermove',e=>{
  if(!zone)return;
  zone.setAttribute('data-drag-hover','1');
  d.targetIndex=boardInsertionIndex(zone,e.clientX,e.clientY,d.id);
- if(d.targetTier==='unranked')return;
+ if(d.targetTier==='unranked'||d.targetTier==='not_tried')return;
  const existing=Array.from(zone.querySelectorAll('.board-piece')).filter(x=>x.dataset.dragId!==d.id);
  const marker=document.createElement('div');
  marker.className='board-placeholder';marker.setAttribute('aria-hidden','true');
