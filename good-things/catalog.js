@@ -1,4 +1,4 @@
-// GOOD THINGS 1.4 · SKU / manufacturer sourced photos; no generic stock photography.
+// GOOD THINGS 1.4 · Product catalogue candidates. Photos match retailer SKUs; vegan status and current availability still require individual verification.
 window.GT_CATALOG=[
   {
     "id": "tofu-01",
@@ -1032,8 +1032,12 @@ window.GT_CATALOG=[
     "emoji": "🍔",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=LikeMeat%20Like%20Chicken"
+    "image_url": "https://img.rewe-static.de/7704499/38443403_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/like-chicken-vegan-180g/7704499",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/like-chicken-vegan-180g/7704499",
+    "retailer_sku": "7704499",
+    "photo_attribution": "REWE"
   },
   {
     "id": "mains-05",
@@ -1045,8 +1049,12 @@ window.GT_CATALOG=[
     "emoji": "🍔",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=LikeMeat%20Like%20Gyros"
+    "image_url": "https://img.rewe-static.de/8897837/38443404_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/like-gyros-vegan-180g/8897837",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/like-gyros-vegan-180g/8897837",
+    "retailer_sku": "8897837",
+    "photo_attribution": "REWE"
   },
   {
     "id": "mains-06",
@@ -1071,8 +1079,12 @@ window.GT_CATALOG=[
     "emoji": "🍔",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Beyond%20Meat%20Beyond%20Burger"
+    "image_url": "https://img.rewe-static.de/7815185/35453040_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/beyond-meat-beyond-burger-vegan-226g/7815185",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/beyond-meat-beyond-burger-vegan-226g/7815185",
+    "retailer_sku": "7815185",
+    "photo_attribution": "REWE"
   },
   {
     "id": "mains-08",
@@ -1166,8 +1178,12 @@ window.GT_CATALOG=[
     "emoji": "🍿",
     "tone": "peach",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Kettle%20Sea%20Salt%20Chips"
+    "image_url": "https://img.rewe-static.de/8902529/40249117_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/kettle-sea-salt-130g/8902529",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/kettle-sea-salt-130g/8902529",
+    "retailer_sku": "8902529",
+    "photo_attribution": "REWE"
   },
   {
     "id": "snacks-07",
@@ -1284,7 +1300,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "chocolate-07",
-    "name": "Bio Zartbitter 70%",
+    "name": "Bio Edel-Bitter Schokolade 70%",
     "brand": "REWE Bio",
     "store": "REWE",
     "category": "Chocolate",
@@ -1292,8 +1308,12 @@ window.GT_CATALOG=[
     "emoji": "🍫",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=REWE%20Bio%20Bio%20Zartbitter%2070%25"
+    "image_url": "https://img.rewe-static.de/8007642/31099227_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/rewe-bio-edel-bitter-schokolade-70-100g/8007642",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/rewe-bio-edel-bitter-schokolade-70-100g/8007642",
+    "retailer_sku": "8007642",
+    "photo_attribution": "REWE"
   },
   {
     "id": "vemondo-01",
