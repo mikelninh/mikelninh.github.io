@@ -1,6 +1,6 @@
 # ✳ GOOD THINGS — Mikel & Huong
 
-**Build:** 1.4.1 (board-first interactive tier-list beta)  
+**Build:** 1.5.0 (board-first tier list with explicit no-grade answers)  
 **Website:** https://mikelninh.github.io/good-things/  
 **Source:** /good-things on the \`mikelninh.github.io\` GitHub Pages repository  
 **Architecture:** GitHub Pages HTML/CSS/vanilla JS + Supabase email/password Auth and PostgreSQL/RLS in an isolated namespace in the existing EU Frankfurt project.
@@ -46,6 +46,17 @@ A home for things worth sharing. The S–D interactive tier board, personal *Our
 - Logged-in users can privately report wrong, outdated, missing or incorrect-variant photos. The reports enter `gt_photo_reports` (row-level permissions, no public read), **not** an unmoderated public image swap. Images must be reviewed by a human before updating the catalogue.
 - Before a broad commercial launch, check image copyrights, CDN hotlink policies and packaging changes. Host licensed images under our control where allowed.
 
+### 1.5 — Not tried yet is an answer, not an S–D grade
+
+- **Three exclusive states per product and person:** no row = unanswered, `status='rated'` with S/A/B/C/D tier = tried and graded, or `status='not_tried'` with `tier=NULL` = explicitly answered without a grade.
+- **New separate "Not tried yet" shelf** below S–D and the unanswered product tray. The user can drop a product into it or tap an item and choose **Not tried yet**. It never enters a tier row or image export of the tier list.
+- Not-tried answers persist locally for all three preview personas and in an authenticated user’s Supabase ratings row. They are **always private**, with a database constraint enforcing `is_public=false`, `tier IS NULL` and `position=0`.
+- Users can change the answer later to S–D, clear their answer back to unanswered, undo a state transition, or reset their own whole board (including no-grade answers).
+- Your Shelf lists the two groups separately. Discover can filter **All / Rated / Not tried yet / Unanswered**. Public statistics, shared rankings, taste compatibility, first-five tasting progress and share links only use actual S–D grades.
+- JSON import/export and explicit guest-to-account transfer preserve these statuses.
+- Migration source: `not-tried-v15.sql`. A data migration was applied to the existing project with a backwards-compatible default (`status='rated'`) so older ratings retain their grades. No other tables are modified.
+- Regression tests: no-grade privacy, unanswered-tray transitions, cross-state undo, public ranking exclusions and import semantics.
+
 ## Important release gates
 
 **This is an actual deployed beta, not yet a fully verified mass-market release.**
@@ -56,7 +67,7 @@ A home for things worth sharing. The S–D interactive tier board, personal *Our
 4. **Official curators:** Mikel and Huong each need an account. The operator then verifies each account owner and enters the corresponding UUIDs in `gt_curators` (see `curator-linking.sql`). Only after **both** are linked does Our Shelf switch to their real public ratings. The private demo can still be toggled; it **never** speaks for them publicly.
 5. **Legal/release:** add a complete German Impressum and DSGVO privacy notice, account deletion request process, moderation/reporting and abuse protection before actively inviting a large public community.
 6. **Scale:** the v1.4 client currently fetches at most 3,000 recent public ratings and 400 profiles; replace full-client aggregation with paginated aggregate RPCs/materialised views before meaningful traffic.
-7. **Verification:** database migrated and audited (104 records, 102 rankable, two rejected, 45 source-matched photos, photo-report RLS). Simulated JavaScript tests verified tier placement, wrapped-row reorder, undo/reset, image filtering, quick-tap menus, PNG-export path, private curator separation and HTML escaping. Full external browser drag/signup testing remains unverified because the browser-automation wallet lacks credit.
+7. **Verification:** database migrated and audited (104 records, 102 rankable, two rejected, 45 source-matched photos, photo-report RLS). Simulated JavaScript tests verified tier placement, wrapped-row reorder, undo/reset, image filtering, quick-tap menus, PNG-export path, private curator separation, explicit not-tried transitions and HTML escaping. Full external browser drag/signup testing remains unverified because the browser-automation wallet lacks credit.
 
 ## Database
 
@@ -86,7 +97,7 @@ select count(*) as first_five_completed from (select user_id from public.gt_rati
 ## How to try it
 
 1. Visit the [live website](https://mikelninh.github.io/good-things/), which opens the **Tier Board** first.
-2. Drag a tofu from the **bottom product tray** to an S–D row. Reorder it, hit **↶ Undo**, or return it to the tray. On mobile, tap once for a quick S–D picker or hold briefly to drag. Save a PNG or share a snapshot link.
+2. Drag a tofu from the **unanswered tray** to an S–D row if you tasted it; otherwise drag into **Not tried yet** or tap once and choose that no-grade answer. Reorder graded items, undo, clear an answer, or reset. Save a PNG or share a snapshot of graded items only.
 3. Under Our Shelf, use the **private** Mikel and Huong demo personas; ratings are stored on your device only until both curator identities are manually verified and linked.
 4. Under Your Shelf, make five ratings, export/share a snapshot or create an account to persist across devices.
 5. When Auth is configured, make two **separate** verified accounts; each can publish its own ratings, follow friends and build lists.
