@@ -46,7 +46,7 @@ function isGraded(r){return Boolean(r&&r.status!=='not_tried'&&TIERS.includes(r.
 function gradedRatings(){return selfRatings().filter(isGraded)}
 function notTriedRatings(){return selfRatings().filter(isNotTried)}
 function guestRating(id,who){return st.guest[who]?.[id]||null}
-function showRating(id){return st.user?accountRating(id):guestRating(id,st.persona)}
+function showRating(id){return st.user?accountRating(id):guestRating(id,'you')}
 function avatar(profile,large){
  const str=(profile?.display_name||profile?.handle||'?').trim();
  return '<div class="avatar '+(profile?.accent||'lime')+'"'+(large?' style="height:70px;width:70px;font-size:27px"':'')+'>'+esc(str.substring(0,1).toUpperCase())+'</div>';
