@@ -1,4 +1,4 @@
-// GOOD THINGS 1.4 · Candidate products and SKU-linked images; product label / vegan status can change.
+// GOOD THINGS 1.4 · SKU / manufacturer sourced photos; no generic stock photography.
 window.GT_CATALOG=[
   {
     "id": "tofu-01",
@@ -1197,7 +1197,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "chocolate-01",
-    "name": "Vegan Classic",
+    "name": "Mild Classic (vegan)",
     "brand": "Ritter Sport",
     "store": "REWE",
     "category": "Chocolate",
@@ -1205,12 +1205,15 @@ window.GT_CATALOG=[
     "emoji": "🍫",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Ritter%20Sport%20Vegan%20Classic"
+    "image_url": "https://lirp.cdn-website.com/a694c994/dms3rep/multi/opt/MildClassic_front-1920w.webp",
+    "source_url": "https://b2b.ritter-sport.com/standardprodukte/mild-classic",
+    "image_status": "brand",
+    "image_source_url": "https://b2b.ritter-sport.com/standardprodukte/mild-classic",
+    "photo_attribution": "Ritter Sport"
   },
   {
     "id": "chocolate-02",
-    "name": "Vegan Crunchy",
+    "name": "Crunchy Mandel (vegan)",
     "brand": "Ritter Sport",
     "store": "REWE",
     "category": "Chocolate",
@@ -1218,12 +1221,15 @@ window.GT_CATALOG=[
     "emoji": "🍫",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Ritter%20Sport%20Vegan%20Crunchy"
+    "image_url": "https://irp.cdn-website.com/6cb74a62/dms3rep/multi/opt/100g-vegan-crunchy-mandel-comp-1920w.webp",
+    "source_url": "https://b2b.ritter-sport.com/standardprodukte/crunchy-mandel",
+    "image_status": "brand",
+    "image_source_url": "https://b2b.ritter-sport.com/standardprodukte/crunchy-mandel",
+    "photo_attribution": "Ritter Sport"
   },
   {
     "id": "chocolate-03",
-    "name": "Vegan Salted Caramel",
+    "name": "Salted Caramel (vegan)",
     "brand": "Ritter Sport",
     "store": "REWE",
     "category": "Chocolate",
@@ -1231,8 +1237,11 @@ window.GT_CATALOG=[
     "emoji": "🍫",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Ritter%20Sport%20Vegan%20Salted%20Caramel"
+    "image_url": "https://irp.cdn-website.com/6cb74a62/dms3rep/multi/opt/100g-vegan-salted-caramel-comp-24-5cf0d7fb-1920w.webp",
+    "source_url": "https://b2b.ritter-sport.com/standardprodukte/salted-caramel",
+    "image_status": "brand",
+    "image_source_url": "https://b2b.ritter-sport.com/standardprodukte/salted-caramel",
+    "photo_attribution": "Ritter Sport"
   },
   {
     "id": "chocolate-04",
