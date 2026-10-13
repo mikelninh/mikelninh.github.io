@@ -1,0 +1,44 @@
+name: BIDPILOT pilot interest
+description: Apply to test BIDPILOT with a real software/AI consultancy. This creates a PUBLIC GitHub issue.
+title: "[BIDPILOT pilot] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping us shape BIDPILOT.
+        **Public form:** Never post private tenders, personal emails, phone numbers or confidential client information here. We can arrange private follow-up separately.
+  - type: input
+    id: company
+    attributes:
+      label: Company or studio
+      description: Public business name only, or leave this blank.
+      placeholder: My software studio
+    validations:
+      required: false
+  - type: textarea
+    id: problem
+    attributes:
+      label: What does finding public contracts currently cost you?
+      description: Tell us the difficulty you would most like solved.
+      placeholder: We spend hours reviewing unsuitable tenders...
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Which of these would help most?
+      options:
+        - Better matching and fewer irrelevant notices
+        - Private daily alerts
+        - Team review and bid/no-bid workflows
+        - Requirements extraction from documents
+        - Another problem
+    validations:
+      required: true
+  - type: input
+    id: region
+    attributes:
+      label: Countries you work in (optional)
+      placeholder: Germany
+    validations:
+      required: false
