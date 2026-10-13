@@ -186,12 +186,12 @@ function refreshBoardTray(){
  if($('#boardTrayCount'))$('#boardTrayCount').textContent=boardTrayProducts().length+' left';
 }
 async function boardMove(id,tier,index){
- if(!rankableProduct(getProduct(id))||!(TIERS.includes(tier)||tier==='unranked'))return false;
+ if(!rankableProduct(getProduct(id))||!(TIERS.includes(tier)||tier==='unranked'||tier==='not_tried'))return false;
  const old=st.user?accountRating(id):st.guest[st.persona]?.[id];
  if(tier==='unranked'&&!old)return true;
- const oldIndex=old?boardSorted(old.tier).findIndex(x=>x.product_id===id):-1;
- if(old?.tier===tier&&Number(index)===oldIndex)return true;
- const previous=old?{tier:old.tier,note:old.note||'',is_public:old.is_public===true,position:Number(old.position)||0}:null;
+ const oldIndex=isGraded(old)?boardSorted(old.tier).findIndex(x=>x.product_id===id):-1;
+ if((tier==='not_tried'&&isNotTried(old))||(isGraded(old)&&old.tier===tier&&Number(index)===oldIndex))return true;
+ const previous=old?{status:isNotTried(old)?'not_tried':'rated',tier:isNotTried(old)?null:old.tier,note:old.note||'',is_public:old.is_public===true,position:Number(old.position)||0}:null;
  if(st.boardBusy)return false;
  st.boardBusy=true;
  try{
@@ -201,7 +201,8 @@ async function boardMove(id,tier,index){
    if(tier==='unranked'){
     result=await sb.from('gt_ratings').delete().eq('user_id',st.user.id).eq('product_id',id);
    }else{
-    const obj={user_id:st.user.id,product_id:id,tier,position:boardPositionBetween(tier,id,index),note:old?.note||'',is_public:old?.is_public===true,updated_at:new Date().toISOString()};
+    const skip=tier==='not_tried';
+    const obj={user_id:st.user.id,product_id:id,status:skip?'not_tried':'rated',tier:skip?null:tier,position:skip?0:boardPositionBetween(tier,id,index),note:skip?(isNotTried(old)?old.note||'':''):old?.note||'',is_public:!skip&&old?.is_public===true,updated_at:new Date().toISOString()};
     result=await sb.from('gt_ratings').upsert(obj,{onConflict:'user_id,product_id'});
     if(!result.error){st.allRatings=st.allRatings.filter(x=>!(x.user_id===st.user.id&&x.product_id===id)).concat(obj)}
    }
@@ -209,13 +210,13 @@ async function boardMove(id,tier,index){
    if(tier==='unranked')st.allRatings=st.allRatings.filter(x=>!(x.user_id===st.user.id&&x.product_id===id));
   }else{
    if(tier==='unranked')delete st.guest[st.persona][id];
-   else st.guest[st.persona][id]={tier,position:boardPositionBetween(tier,id,index),note:old?.note||'',is_public:old?.is_public===true};
+   else {const skip=tier==='not_tried';st.guest[st.persona][id]={status:skip?'not_tried':'rated',tier:skip?null:tier,position:skip?0:boardPositionBetween(tier,id,index),note:skip?(isNotTried(old)?old.note||'':''):old?.note||'',is_public:!skip&&old?.is_public===true}};
    persist();
   }
   if(!st.boardUndoing){st.boardHistory.push({id,previous});if(st.boardHistory.length>25)st.boardHistory.shift()}
   render();
   const p=getProduct(id);
-  toast(tier==='unranked'?'Back on the unranked shelf.':p.name+' → '+tier+' tier. Nice!');
+  toast(tier==='unranked'?'Back on the unanswered shelf.':tier==='not_tried'?p.name+' marked as not tried yet — no grade saved.':p.name+' → '+tier+' tier. Nice!');
   return true;
  }finally{st.boardBusy=false}
 }
@@ -231,10 +232,11 @@ function quickRank(id){
  modal('<button class="close" data-action="close-modal" aria-label="Close">×</button>'+
   '<div class="eyebrow">QUICK RANK / '+esc(p.brand)+'</div><h2>'+esc(p.name)+'</h2>'+
   '<div class="quick-rank-art">'+boardPhoto(p)+'</div>'+
-  '<p class="small muted">Where does it belong on your tier list?</p>'+
+  '<p class="small muted">Tried it? Choose an S–D grade. Otherwise mark it as not tried yet — an answer without a score.</p>'+
   '<div class="quick-rank-choices">'+TIERS.map(t=>'<button type="button" class="quick-rank-button" data-rank-tier="'+t+'" data-action="quick-rank" data-value="'+t+'" aria-label="Place in '+t+' tier"><strong>'+t+'</strong><small>'+({S:'Obsessed',A:'Brilliant',B:'Good',C:'Okay',D:'Not again'}[t])+'</small></button>').join('')+'</div>'+
-  '<div class="gap12" style="margin-top:18px"><button class="button button-ghost button-small" data-action="quick-detail">Taste notes & details ↗</button>'+
-  (current?'<button class="button button-white button-small" data-action="quick-unrank">↶ Return to tray</button>':'')+'</div>');
+  '<button type="button" class="not-tried-choice '+(isNotTried(current)?'selected':'')+'" data-action="quick-not-tried" aria-pressed="'+(isNotTried(current)?'true':'false')+'"><span>◌</span><span><strong>Not tried yet</strong><small>Answered · no grade · stays off S–D</small></span><span>↗</span></button>'+ 
+ '<div class="gap12" style="margin-top:18px"><button class="button button-ghost button-small" data-action="quick-detail">Taste notes & details ↗</button>'+
+  (current?'<button class="button button-white button-small" data-action="quick-unrank">↶ Clear answer</button>':'')+'</div>');
 }
 async function undoBoard(){
  if(st.boardBusy)return;
@@ -246,7 +248,7 @@ async function undoBoard(){
    if(!sb){st.boardHistory.push(h);toast('Cannot undo while sync is offline.');return}
    let result;
    if(!previous)result=await sb.from('gt_ratings').delete().eq('user_id',st.user.id).eq('product_id',id);
-   else result=await sb.from('gt_ratings').upsert({user_id:st.user.id,product_id:id,tier:previous.tier,note:previous.note,is_public:previous.is_public,position:previous.position,updated_at:new Date().toISOString()},{onConflict:'user_id,product_id'});
+   else result=await sb.from('gt_ratings').upsert({user_id:st.user.id,product_id:id,status:previous.status||'rated',tier:previous.tier,note:previous.note,is_public:previous.is_public,position:previous.position,updated_at:new Date().toISOString()},{onConflict:'user_id,product_id'});
    if(result.error){st.boardHistory.push(h);toast('Could not undo: '+result.error.message);return}
    st.allRatings=st.allRatings.filter(r=>!(r.user_id===st.user.id&&r.product_id===id));
    if(previous)st.allRatings.push({user_id:st.user.id,product_id:id,...previous});
@@ -966,6 +968,7 @@ document.addEventListener('click',async(event)=>{
  case 'quick-rank':{const pid=st.boardModalProduct;if(pid){const ok=await boardMove(pid,val,boardSorted(val,pid).length);if(ok)closeOverlay('modalOverlay')}break}
  case 'quick-detail':{const pid=st.boardModalProduct;closeOverlay('modalOverlay');if(pid)openProduct(pid);break}
  case 'quick-unrank':{const pid=st.boardModalProduct;if(pid){const ok=await boardMove(pid,'unranked',0);if(ok)closeOverlay('modalOverlay')}break}
+ case 'quick-not-tried':{const pid=st.boardModalProduct;if(pid){const ok=await boardMove(pid,'not_tried',0);if(ok)closeOverlay('modalOverlay')}break}
  case 'undo-board':await undoBoard();break;
  case 'reset-board':askResetBoard();break;
  case 'confirm-reset-board':await resetBoard();break;
