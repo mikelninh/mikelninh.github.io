@@ -185,6 +185,9 @@ async function boardMove(id,tier,index){
  if(!rankableProduct(getProduct(id))||!(TIERS.includes(tier)||tier==='unranked'))return false;
  const old=st.user?accountRating(id):st.guest[st.persona]?.[id];
  if(tier==='unranked'&&!old)return true;
+ const oldIndex=old?boardSorted(old.tier).findIndex(x=>x.product_id===id):-1;
+ if(old?.tier===tier&&Number(index)===oldIndex)return true;
+ const previous=old?{tier:old.tier,note:old.note||'',is_public:old.is_public===true,position:Number(old.position)||0}:null;
  if(st.boardBusy)return false;
  st.boardBusy=true;
  try{
@@ -205,6 +208,7 @@ async function boardMove(id,tier,index){
    else st.guest[st.persona][id]={tier,position:boardPositionBetween(tier,id,index),note:old?.note||'',is_public:old?.is_public===true};
    persist();
   }
+  if(!st.boardUndoing){st.boardHistory.push({id,previous});if(st.boardHistory.length>25)st.boardHistory.shift()}
   render();
   const p=getProduct(id);
   toast(tier==='unranked'?'Back on the unranked shelf.':p.name+' → '+tier+' tier. Nice!');
@@ -241,9 +245,17 @@ function boardDropTarget(x,y){
 function boardInsertionIndex(zone,x,y,id){
  if(!zone||zone.dataset.dropTier==='unranked')return 0;
  const others=Array.from(zone.querySelectorAll('.board-piece')).filter(el=>el.dataset.dragId!==id);
- for(let i=0;i<others.length;i++){
-  const b=others[i].getBoundingClientRect();
-  if(y<b.top+b.height/2||y<b.bottom&&x<b.left+b.width/2)return i;
+ const rows=[];
+ others.forEach((el,index)=>{
+  const b=el.getBoundingClientRect();let row=rows.find(r=>Math.abs(r.top-b.top)<14);
+  if(!row){row={top:b.top,bottom:b.bottom,items:[]};rows.push(row)}
+  row.bottom=Math.max(row.bottom,b.bottom);row.items.push({box:b,index});
+ });
+ for(const row of rows){
+  if(y<=row.bottom+3){
+   for(const item of row.items)if(x<item.box.left+item.box.width/2)return item.index;
+   return row.items.at(-1).index+1;
+  }
  }
  return others.length;
 }
