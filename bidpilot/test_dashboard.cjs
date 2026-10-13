@@ -67,7 +67,7 @@ test('homepage lists exactly three real TED-source-linked notices and one next a
   assert.equal(app.ids.get('topCount').textContent,'03 / 03');
   assert.match(app.ids.get('profileHeadline').textContent,/Example studio profile/);
   assert.ok(app.allNodes().some(node=>node.tagName==='a'&&node.href?.startsWith('https://ted.europa.eu/en/notice/-/detail/')));
-  assert.ok(app.ids.get('nextAction').children.some(node=>node.tagName==='h3'));
+  assert.ok(app.ids.get('nextAction').children.some(node=>node.tagName==='h3'&&node.id==='actionHeading'));
   const cards=app.items().map(card=>JSON.stringify(card,(_,value)=>typeof value==='function'?undefined:value));
   assert.ok(cards.every(c=>c.includes('PUBLISHED COMPETITION')));
   assert.ok(cards.every(c=>!c.includes('awarded')));
