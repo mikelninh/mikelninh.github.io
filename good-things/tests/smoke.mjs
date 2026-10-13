@@ -33,7 +33,7 @@ function fixture(){
   console,Intl};
  vm.runInNewContext(catalog,context);
  const injected=source.replace("document.addEventListener('click',async(event)=>{",
- "window.__qa={render,renderBoard,renderDiscover,renderOurs,renderMy,renderCommunity,ourPreview,filteredProducts,boardMove,boardEntries,boardSorted,boardTrayProducts,boardInsertionIndex,undoBoard,resetBoard,matchedPhoto,saveRating,st,snapshotUrl,decodeSnapshot};document.addEventListener('click',async(event)=>{");
+ "window.__qa={render,renderBoard,renderDiscover,renderOurs,renderMy,renderCommunity,ourPreview,filteredProducts,boardMove,boardAnswers,boardEntries,boardNotTried,boardSorted,boardTrayProducts,boardInsertionIndex,undoBoard,resetBoard,matchedPhoto,saveRating,st,gradedRatings,notTriedRatings,selfRatings,publicRated,scoreFor,quickRank,importTier,importJson,snapshotUrl,decodeSnapshot};document.addEventListener('click',async(event)=>{");
  assert.ok(injected.includes('window.__qa={'),'Expected app injection point is missing');
  vm.runInNewContext(injected,context);
  return {context,t:window.__qa,localStorage};
@@ -152,4 +152,74 @@ test('Photo correction schema is private, constrained and RLS-protected',()=>{
  assert.match(photoReports,/to authenticated/i);
  assert.match(photoReports,/auth\.uid\(\)/);
  assert.doesNotMatch(photoReports,/grant .* to anon/i);
+});
+
+
+test('Not tried yet is a saved answer with no grade, a private state and a separate shelf',async()=>{
+ const {t,localStorage}=fixture();
+ assert.equal(t.boardTrayProducts().length,102);
+ assert.equal(await t.boardMove('tofu-01','not_tried',0),true);
+ const record=t.st.guest.you['tofu-01'];
+ assert.equal(record.status,'not_tried');
+ assert.equal(record.tier,null);
+ assert.equal(record.is_public,false);
+ assert.equal(record.position,0);
+ assert.equal(t.boardEntries().length,0);
+ assert.equal(t.boardNotTried().length,1);
+ assert.equal(t.boardTrayProducts().length,101);
+ assert.ok(t.renderBoard().includes('class="not-tried-shelf"'));
+ assert.ok(t.renderBoard().includes('data-drop-tier="not_tried"'));
+ assert.ok(t.renderMy().includes('Not tried yet (1)'));
+ assert.equal(t.publicRated().length,0);
+ assert.equal(t.gradedRatings().length,0);
+ assert.equal(t.notTriedRatings().length,1);
+ assert.ok(localStorage.getItem('goodthings_v13_guest'));
+ t.st.catalogStatus='not_tried';
+ assert.deepEqual(Array.from(t.filteredProducts(),p=>p.id),['tofu-01']);
+ t.st.catalogStatus='unanswered';
+ assert.equal(t.filteredProducts().length,101);
+});
+test('Not tried can turn into a real grade and undo restores the untried state',async()=>{
+ const {t}=fixture();
+ assert.equal(await t.boardMove('tofu-01','not_tried',0),true);
+ assert.equal(await t.boardMove('tofu-01','S',0),true);
+ assert.equal(t.boardEntries().length,1);
+ assert.equal(t.boardNotTried().length,0);
+ assert.equal(t.st.guest.you['tofu-01'].status,'rated');
+ assert.equal(t.st.guest.you['tofu-01'].tier,'S');
+ await t.undoBoard();
+ assert.equal(t.boardEntries().length,0);
+ assert.equal(t.boardNotTried().length,1);
+ assert.equal(t.st.guest.you['tofu-01'].tier,null);
+ assert.equal(t.st.guest.you['tofu-01'].is_public,false);
+ await t.undoBoard();
+ assert.equal(t.boardAnswers().length,0);
+ assert.equal(t.boardTrayProducts().length,102);
+});
+test('A graded product can become not tried without leaking any score or public flag',async()=>{
+ const {t}=fixture();
+ t.st.guest.you['tofu-01']={tier:'A',status:'rated',is_public:true,note:'Old tasting review',position:100};
+ await t.boardMove('tofu-01','not_tried',0);
+ const r=t.st.guest.you['tofu-01'];
+ assert.equal(r.tier,null);
+ assert.equal(r.status,'not_tried');
+ assert.equal(r.is_public,false);
+ assert.equal(r.note,'');
+ assert.ok(!t.renderBoard().includes('data-drop-tier="A" aria-label="A tier, 1 products"'));
+ await t.resetBoard();
+ assert.equal(t.boardAnswers().length,0);
+});
+test('Not tried is recognised when importing JSON and kept off public grade snapshots',()=>{
+ const {t}=fixture();
+ assert.equal(t.importTier({status:'not_tried'}),'not_tried');
+ assert.equal(t.importTier('not_tried'),'not_tried');
+ assert.equal(t.importTier({tier:'C'}),'C');
+ const skip={product_id:'tofu-01',tier:null,status:'not_tried',is_public:false};
+ assert.equal(t.gradedRatings().length,0);
+ assert.ok(!t.snapshotUrl([skip]).includes('not_tried'));
+});
+test('Schema enforces one private null-grade state without changing graded tier choices',()=>{
+ assert.match(schema,/status text not null default 'rated'/);
+ assert.match(schema,/status = 'not_tried' and tier is null and is_public = false and position = 0/);
+ assert.match(source,/select\('user_id,product_id,tier,status,note,is_public,position,updated_at'\)/);
 });
