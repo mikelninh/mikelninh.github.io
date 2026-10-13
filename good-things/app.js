@@ -219,6 +219,122 @@ function viewExclusions(){
  const rows=FLAGGED.map(p=>'<div class="review-row"><span style="font-size:23px">⚠️</span><div style="flex:1"><h4>'+esc(p.brand+' '+p.name)+'</h4><p>'+esc(p.vegan_issue||'Product uses animal ingredients')+'</p><a href="'+attr(validUrl(p.source_url))+'" target="_blank" rel="noopener noreferrer" class="small">Ingredients & source ↗</a></div></div>').join('');
  modal('<button class="close" data-action="close-modal">×</button><div class="eyebrow">PRODUCT QUALITY / REAL INGREDIENTS</div><h2>Not vegan.<br>Not on the board.</h2><p class="small muted">We excluded these products after checking manufacturer ingredients. Recipes may change; the actual packet always decides.</p>'+rows+'<p class="small muted">Two ingredient-checked alternatives have been added in their place, keeping 102 rankable products.</p><button class="button button-lime" data-action="close-modal">Back to the good stuff ↗</button>');
 }
+
+function quickRank(id){
+ const p=getProduct(id);if(!rankableProduct(p))return;
+ st.boardModalProduct=id;
+ const current=st.user?accountRating(id):guestRating(id,st.persona);
+ modal('<button class="close" data-action="close-modal" aria-label="Close">×</button>'+
+  '<div class="eyebrow">QUICK RANK / '+esc(p.brand)+'</div><h2>'+esc(p.name)+'</h2>'+
+  '<div class="quick-rank-art">'+boardPhoto(p)+'</div>'+
+  '<p class="small muted">Where does it belong on your tier list?</p>'+
+  '<div class="quick-rank-choices">'+TIERS.map(t=>'<button type="button" class="quick-rank-button" data-rank-tier="'+t+'" data-action="quick-rank" data-value="'+t+'" aria-label="Place in '+t+' tier"><strong>'+t+'</strong><small>'+({S:'Obsessed',A:'Brilliant',B:'Good',C:'Okay',D:'Not again'}[t])+'</small></button>').join('')+'</div>'+
+  '<div class="gap12" style="margin-top:18px"><button class="button button-ghost button-small" data-action="quick-detail">Taste notes & details ↗</button>'+
+  (current?'<button class="button button-white button-small" data-action="quick-unrank">↶ Return to tray</button>':'')+'</div>');
+}
+async function undoBoard(){
+ if(st.boardBusy)return;
+ const h=st.boardHistory.pop();if(!h){toast('Nothing to undo.');return}
+ const {id,previous}=h;
+ st.boardBusy=true;
+ try{
+  if(st.user){
+   if(!sb){st.boardHistory.push(h);toast('Cannot undo while sync is offline.');return}
+   let result;
+   if(!previous)result=await sb.from('gt_ratings').delete().eq('user_id',st.user.id).eq('product_id',id);
+   else result=await sb.from('gt_ratings').upsert({user_id:st.user.id,product_id:id,tier:previous.tier,note:previous.note,is_public:previous.is_public,position:previous.position,updated_at:new Date().toISOString()},{onConflict:'user_id,product_id'});
+   if(result.error){st.boardHistory.push(h);toast('Could not undo: '+result.error.message);return}
+   st.allRatings=st.allRatings.filter(r=>!(r.user_id===st.user.id&&r.product_id===id));
+   if(previous)st.allRatings.push({user_id:st.user.id,product_id:id,...previous});
+  }else{
+   if(previous)st.guest[st.persona][id]={...previous};
+   else delete st.guest[st.persona][id];
+   persist();
+  }
+  render();toast('Last move undone ↶');
+ }finally{st.boardBusy=false}
+}
+function askResetBoard(){
+ if(!boardEntries().length)return toast('Your board is already empty.');
+ modal('<button class="close" data-action="close-modal" aria-label="Close">×</button><div class="eyebrow">START AGAIN</div><h2>Clear this tier list?</h2><p>Your ratings and notes on this board will be removed. This cannot be undone. Your saved community profile stays intact.</p><div class="gap12"><button class="button button-ghost" data-action="close-modal">Keep my board</button><button class="button button-dark" data-action="confirm-reset-board">Clear everything</button></div>');
+}
+async function resetBoard(){
+ if(st.boardBusy)return;
+ st.boardBusy=true;
+ try{
+  if(st.user){
+   if(!sb)return toast('Cannot clear your account board while offline.');
+   const {error}=await sb.from('gt_ratings').delete().eq('user_id',st.user.id);
+   if(error)return toast('Could not reset: '+error.message);
+   st.allRatings=st.allRatings.filter(r=>r.user_id!==st.user.id);
+  }else{st.guest[st.persona]={};persist()}
+  st.boardHistory=[];closeOverlay('modalOverlay');render();toast('Fresh start. The shelf is yours ✳');
+ }finally{st.boardBusy=false}
+}
+function photoInformation(){
+ const count=RANKABLE.filter(matchedPhoto).length;
+ modal('<button class="close" data-action="close-modal" aria-label="Close">×</button><div class="eyebrow">PACKSHOT TRUST STANDARD</div><h2>Real packs. Real sources.</h2>'+
+ '<p><strong>'+count+' of '+RANKABLE.length+'</strong> products currently have a specific retailer, brand, or barcode-linked packshot. The remaining '+(RANKABLE.length-count)+' use illustrations, not arbitrary search images.</p>'+
+ '<p class="small muted">Source-matched means a traceable product record, not a promise that packaging has not changed. Check the barcode and ingredients against the packet before buying. No product gets a misleading green verified badge just for looking close.</p>'+
+ '<div class="gap12"><a class="button button-lime" href="./lookup.html">Open Product Detective ↗</a><button class="button button-ghost" data-action="close-modal">Got it</button></div>');
+}
+async function boardPhotoForCanvas(p){
+ if(!matchedPhoto(p)||typeof Image==='undefined')return null;
+ const url=validUrl(p.image_url);if(!url)return null;
+ return await new Promise(resolve=>{
+  const img=new Image();let done=false;
+  const finish=v=>{if(done)return;done=true;clearTimeout(timer);resolve(v)};
+  const timer=setTimeout(()=>finish(null),2400);
+  img.crossOrigin='anonymous';img.onload=()=>finish(img);img.onerror=()=>finish(null);img.src=url;
+ });
+}
+async function exportBoardPng(){
+ const rows=TIERS.map(t=>({tier:t,items:boardSorted(t).map(r=>getProduct(r.product_id)).filter(Boolean)}));
+ const count=rows.reduce((n,r)=>n+r.items.length,0);
+ if(!count)return toast('Rank something before exporting a PNG.');
+ if(typeof document.createElement!=='function')return toast('Image export needs a browser.');
+ const canvas=document.createElement('canvas');const W=1400,GAP=15,CARD=133,MAXCOL=9,TOP=170;
+ const H=TOP+rows.reduce((n,row)=>n+Math.max(142,Math.ceil(row.items.length/MAXCOL)*146+20)+8,0)+90;
+ canvas.width=W;canvas.height=H;
+ const ctx=canvas.getContext('2d');if(!ctx)return toast('Canvas export is not supported here.');
+ ctx.fillStyle='#f7f7f0';ctx.fillRect(0,0,W,H);
+ ctx.fillStyle='#263d31';ctx.font='bold 52px Georgia';ctx.fillText('GOOD THINGS',52,76);
+ ctx.fillStyle='#71836e';ctx.font='22px system-ui';ctx.fillText('A LITTLE MORE GOOD · MY TIER LIST',54,111);
+ ctx.textAlign='right';ctx.font='20px system-ui';ctx.fillText(count+' PRODUCTS RANKED',W-46,70);ctx.textAlign='left';
+ const all=rows.flatMap(r=>r.items),images=new Map();
+ const loaded=await Promise.all(all.map(boardPhotoForCanvas));
+ all.forEach((p,i)=>images.set(p.id,loaded[i]));
+ const colors={S:'#c8e881',A:'#d8ebac',B:'#d0e8e8',C:'#f3dfae',D:'#f2c3bb'};
+ let y=TOP;
+ const rounded=(x,yy,w,h,r)=>{ctx.beginPath();ctx.roundRect(x,yy,w,h,r);ctx.fill()};
+ for(const row of rows){
+  const rowH=Math.max(142,Math.ceil(row.items.length/MAXCOL)*146+20);
+  ctx.fillStyle='#fffefa';rounded(50,y,W-100,rowH,16);
+  ctx.fillStyle=colors[row.tier];rounded(50,y,115,rowH,16);
+  ctx.fillStyle='#20392d';ctx.font='bold 74px system-ui';ctx.textAlign='center';ctx.fillText(row.tier,107,y+Math.min(rowH/2+26,99));ctx.textAlign='left';
+  row.items.forEach((p,i)=>{
+   const x=182+(i%MAXCOL)*(CARD+GAP),yy=y+12+Math.floor(i/MAXCOL)*146;
+   ctx.fillStyle='#f3f6ed';rounded(x,yy,CARD,126,9);
+   const img=images.get(p.id);
+   if(img){try{const scale=Math.min(115/img.width,79/img.height);const ww=img.width*scale,hh=img.height*scale;ctx.drawImage(img,x+(CARD-ww)/2,yy+5,ww,hh)}catch(e){ctx.font='44px system-ui';ctx.fillText(p.emoji||'✳',x+40,yy+63)}}
+   else {ctx.font='43px system-ui';ctx.fillText(p.emoji||'✳',x+40,yy+63)}
+   const short=t=>t.length>20?t.slice(0,19)+'…':t;
+   ctx.fillStyle='#263d31';ctx.font='bold 13px system-ui';ctx.textAlign='center';ctx.fillText(short(p.name),x+CARD/2,yy+98);
+   ctx.fillStyle='#69786a';ctx.font='11px system-ui';ctx.fillText(short(p.brand),x+CARD/2,yy+115);ctx.textAlign='left';
+  });
+  y+=rowH+8;
+ }
+ ctx.fillStyle='#68816b';ctx.font='19px system-ui';ctx.fillText('Taste is personal. Kindness is universal. ✳',55,H-34);
+ ctx.textAlign='right';ctx.fillText('mikelninh.github.io/good-things',W-55,H-34);ctx.textAlign='left';
+ try{
+  const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
+  if(!blob)throw Error('PNG encoding unavailable');
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='good-things-tier-list.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2500);
+  toast('Your tier list PNG is ready ♡');
+ }catch(e){toast('Could not save PNG: '+String(e.message||e).slice(0,100))}
+}
+
 function shareBoard(){
  const own=boardEntries().filter(r=>TIERS.includes(r.tier))
  .sort((a,b)=>TIERS.indexOf(a.tier)-TIERS.indexOf(b.tier)||Number(a.position||0)-Number(b.position||0));
