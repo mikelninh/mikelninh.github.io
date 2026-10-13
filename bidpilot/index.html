@@ -1,30 +1,157 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5ef"><meta name="description" content="BIDPILOT helps small studios screen real public tenders, spot access and deadline risks, and prepare source-linked bid/no-bid decisions."><title>BIDPILOT 1.1 · Your opportunity decision desk</title><link rel="stylesheet" href="./style.css"><script defer src="./app.js"></script></head>
-<body><header><nav class="shell nav" aria-label="Main navigation"><a class="brand" href="./">BID<i>✳</i>PILOT<br><span style="font:10px monospace;letter-spacing:.16em;color:#737e70">OPPORTUNITY INTELLIGENCE</span></a><span class="badge"><span class="pulse"></span> OPEN DATA BETA · 1.1</span><div class="right"><a href="#how" class="slim">How it works</a><a href="#workspace" class="btn small dark">Explore opportunities ↗</a></div></nav></header>
-<main><section class="shell hero"><div><div class="eyebrow">PUBLIC PROCUREMENT, WITHOUT THE PROCUREMENT HEADACHE</div><h1>Find the work<br>worth <em>winning.</em></h1><p>European public contracts are out there. <strong>We make them easier to discover.</strong> Build a company profile, find opportunities in official TED data, spot warning signals and prepare your bid/no-bid review. No invented leads, no mysterious AI odds.</p><div class="btn-row" style="margin-top:25px"><a href="#workspace" class="btn dark">Find opportunities ↗</a><a href="https://ted.europa.eu/" target="_blank" rel="noopener noreferrer" class="btn ghost">Explore original TED data ↗</a></div></div><div class="hero-panel"><div class="panel-overline">THE DAILY OPPORTUNITY DESK / EU + GERMANY</div><div id="bigCount" class="big-count">—</div><p>Public procurement notices in our latest fetched shortlist. <strong style="color:#e3f2d6">Not all German contracts</strong> — this is a focused software-services feed.</p><div class="panel-foot"><span id="lastRefresh">Checking source…</span><span>OPEN TED DATA ↗</span></div></div></section>
-<div class="ticker"><div class="shell"><span>01 · Public data</span><span>02 · Explainable ranking</span><span>03 · You decide</span><span>04 · Save the shortlist</span></div></div>
-<section class="shell workspace" id="workspace">
-<aside class="side"><form id="profileForm" class="card"><div class="eyebrow">YOUR COMPANY PROFILE</div><h2>What should we look for?</h2><p>Matches are calculated on-device from notice titles, buyers, CPV codes and your keywords. Open each decision brief to see source fields, risks and questions. This is not an eligibility assessment.</p>
-<label class="label" for="company">Company name</label><input class="input" id="company" maxlength="80" placeholder="e.g. Berlin AI Studio" value="Berlin AI Studio">
-<label class="label" for="keywords">Keywords, comma-separated</label><textarea class="input" id="keywords" rows="3" maxlength="300" placeholder="automation, artificial intelligence, software, data analysis">artificial intelligence, software, automation, data analysis</textarea>
-<label class="label" for="exclude">Exclude keywords (optional)</label><input class="input" id="exclude" maxlength="200" placeholder="hardware, construction">
-<label class="label" for="scoreMin">Minimum relevance score</label><select id="scoreMin" class="select"><option value="0">Show everything</option><option value="20">20+ (possible)</option><option value="40">40+ (stronger)</option><option value="60">60+ (strongest)</option></select>
-<button type="submit" class="btn dark" style="width:100%;margin-top:19px">Update my matches ↗</button><p id="profileMessage" class="help" aria-live="polite">Your profile stays in this browser, not on a public server.</p></form>
-<div class="card" id="how"><div class="eyebrow">THE HONEST PROMISE</div><h2>Evidence before enthusiasm.</h2><p>Every listing links to the European Union's official TED notice. A score only describes <em>text relevance</em>, not qualification or your probability of winning. Notice type and deadline data are supplied by the source, and may change.</p><p>Missing deadline and value fields remain unknown. No documents are analysed yet. Always read the latest notice, amendments, procurement documents and eligibility requirements.</p><div class="btn-row"><a class="btn ghost small" href="https://docs.ted.europa.eu/api/latest/search.html" target="_blank" rel="noopener noreferrer">Source API ↗</a><a class="btn ghost small" href="./README.md" target="_blank" rel="noopener noreferrer">Methodology ↗</a></div></div>
-<div class="card"><div class="eyebrow">BUILD WITH US</div><h2>Join the pilot.</h2><p>For studios, software agencies and tender specialists. Help shape alerts, shared workspaces and better bid/no-bid reviews.</p><a id="pilotLink" class="btn dark" href="https://github.com/mikelninh/mikelninh.github.io/issues/new?template=bidpilot-pilot.yml" target="_blank" rel="noopener noreferrer" style="margin-top:8px">Request a pilot ↗</a><p class="help">Pilot enquiries use a public GitHub form (account required); do not share private data. No checkout yet.</p></div></aside>
-<div><div class="section-head"><div><div class="eyebrow">THE DECISION DESK / 1.1</div><h2>Less noise, <em style="font-weight:400;color:#a75d43">better decisions.</em></h2><p id="summary">Loading the latest public-data snapshot…</p></div><span id="resultsCount" class="badge">— results</span></div>
-<div class="desk-stats" aria-label="Source feed overview">
-<div class="stat"><strong id="totalCount">—</strong><span>Source notices</span></div>
-<div class="stat"><strong id="competitionCount">—</strong><span>Competition notices</span></div>
-<div class="stat"><strong id="soonCount">—</strong><span>Deadline ≤ 14 days</span></div>
-<div class="stat"><strong id="savedCount">—</strong><span>Saved locally</span></div>
-</div>
-<div id="feedWarning" class="notice warning hidden" role="status"></div>
-<div class="filterbar"><input id="search" class="input" type="search" placeholder="Search notice titles, buyers, CPV…" aria-label="Search tenders">
-<select id="typeFilter" class="select" aria-label="Notice stage"><option value="opportunities">Competitions only</option><option value="all">All notice types</option><option value="planning">Planning</option><option value="result">Results / awards</option><option value="unknown">Unknown type</option></select>
-<select id="deadlineFilter" class="select" aria-label="Deadline filter"><option value="all">Any deadline</option><option value="soon">Next 14 days</option><option value="dated">Has a date</option><option value="missing">Missing date</option><option value="past">Dates passed</option></select>
-<select id="riskFilter" class="select" aria-label="Warning signals"><option value="all">All risk signals</option><option value="flagged">Needs a check</option><option value="clear">No title warnings</option></select><select id="sort" class="select" aria-label="Sort opportunities"><option value="relevance">Highest relevance</option><option value="newest">Newest published</option><option value="deadline">Nearest deadline</option></select><button id="allFilter" type="button" class="btn ghost small active">All</button><button id="savedFilter" type="button" class="btn ghost small">Saved ♡</button><button id="export" type="button" class="btn ghost small">Export CSV ↗</button></div>
-<div id="results" class="list" aria-live="polite"><div class="empty"><span class="emoji">✳</span><h3>Gathering the evidence…</h3><p>Loading the latest structured procurement data.</p></div></div>
-<div class="notice" style="margin-top:24px">✳ <strong>Release 1.1:</strong> Source-first triage and private bid/no-bid notes. Scores are text matches, warnings are heuristics, and recorded dates may be incomplete. No attachment parsing, verified eligibility or automated bid submission. Read the live notice on TED.</div>
-</div></section></main>
-<footer class="foot"><div class="shell foot-inner"><div><strong>BID✳PILOT</strong><p>Less searching. More considered decisions.</p></div><div><p>Official source: <a href="https://ted.europa.eu/" target="_blank" rel="noopener noreferrer">Tenders Electronic Daily (TED)</a> · <a href="https://docs.ted.europa.eu/api/latest/search.html" target="_blank" rel="noopener noreferrer">Open API</a></p><p>Product beta · Independently built, not affiliated with the EU Publications Office.</p></div></div></footer>
-</body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f4ef">
+<meta name="description" content="BIDPILOT turns real European procurement notices into a focused, explainable daily decision briefing for independent studios.">
+<title>BID✳PILOT 1.2 — Your opportunity desk</title>
+<link rel="stylesheet" href="./style.css">
+<script defer src="./priority.js"></script>
+<script defer src="./app.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#shortlist">Skip to opportunities</a>
+<header class="topbar">
+  <nav class="shell nav" aria-label="Main navigation">
+    <a class="brand" href="./" aria-label="BIDPILOT home">BID<span class="brand-flower">✳</span>PILOT<span class="brand-sub">OPPORTUNITY INTELLIGENCE</span></a>
+    <span class="product-label"><span class="signal-dot"></span> Official TED feed <span class="version">/ 1.2 beta</span></span>
+    <div class="nav-right">
+      <a class="quiet-link" href="./UX-SPEC-1.2.md" target="_blank" rel="noopener noreferrer">Methodology ↗</a>
+      <button type="button" id="editProfileTop" class="btn btn-outline btn-small">Edit profile <span aria-hidden="true">↗</span></button>
+    </div>
+  </nav>
+</header>
+<main>
+  <section class="shell welcome" aria-labelledby="welcomeTitle">
+    <div class="welcome-text">
+      <p class="eyebrow"><span class="hairline"></span> YOUR DAILY OPPORTUNITY BRIEF</p>
+      <h1 id="welcomeTitle">Find the work<br><em>worth pursuing.</em></h1>
+      <p class="welcome-description">Less searching through public tenders. More time deciding which opportunities deserve your attention.</p>
+    </div>
+    <div class="welcome-aside">
+      <div class="aside-ornament" aria-hidden="true">✳</div>
+      <p class="eyebrow">A GOOD PLACE TO START</p>
+      <p>Three possibilities.<br>One thoughtful next move.</p>
+      <span class="asof" id="lastRefresh">Loading the official feed…</span>
+    </div>
+  </section>
+
+  <section class="shell" aria-label="Profile summary">
+    <div class="profile-strip">
+      <div class="profile-icon" aria-hidden="true">◎</div>
+      <div class="profile-copy">
+        <strong id="profileHeadline">Your matching profile</strong>
+        <span id="profileDescription">Preparing relevance signals…</span>
+      </div>
+      <button type="button" id="editProfile" class="text-button">Customise profile <span aria-hidden="true">↗</span></button>
+    </div>
+  </section>
+
+  <section id="shortlist" class="shell spotlight" aria-labelledby="shortlistTitle">
+    <div class="spotlight-heading">
+      <div>
+        <p class="eyebrow">THE SHORTLIST <span class="eyebrow-counter" id="topCount">01 / 03</span></p>
+        <h2 id="shortlistTitle">Worth a closer look<span class="accent-period">.</span></h2>
+        <p class="section-intro" id="focusSubtitle">Screening genuine competition notices against your profile and their published dates.</p>
+      </div>
+      <div class="source-note"><span class="source-dot"></span><span id="sourceStatus">Checking TED source data…</span></div>
+    </div>
+    <div class="spotlight-grid">
+      <section class="picks" aria-label="Top three opportunities">
+        <div id="focusList" class="focus-list" aria-live="polite" aria-busy="true">
+          <div class="focus-loading">
+            <span class="loader-mark" aria-hidden="true">✳</span>
+            <div><strong>Finding the strongest signals.</strong><p>Reading published notices. No invented matches.</p></div>
+          </div>
+        </div>
+        <div class="ranking-foot">
+          <p>Selected from published TED notices. Rankings reflect text relevance, dates and visible warning signals—not eligibility or winning odds.</p>
+          <button type="button" id="showAll" class="text-button">See the full shortlist <span aria-hidden="true">↗</span></button>
+        </div>
+      </section>
+      <aside class="action-pane" aria-labelledby="actionHeading">
+        <div class="action-topline"><span class="action-mark" aria-hidden="true">✳</span><span>NEXT BEST ACTION</span></div>
+        <div id="nextAction" aria-live="polite">
+          <p class="action-kicker">One thing at a time</p>
+          <h3 id="actionHeading">Find a promising notice first.</h3>
+          <p class="action-description">The next step will appear when the source-backed shortlist is ready.</p>
+        </div>
+        <div class="action-footer"><span class="action-asterisk">↗</span><span>Evidence first. You decide.</span></div>
+      </aside>
+    </div>
+    <div class="feed-warning hidden" id="feedWarning" role="status"></div>
+  </section>
+
+  <section class="shell below-fold" aria-label="Additional tools">
+    <div class="desk-overview">
+      <div class="mini-stat"><strong id="totalCount">—</strong><span>Notices in source feed</span></div>
+      <div class="mini-stat"><strong id="competitionCount">—</strong><span>Competition notices</span></div>
+      <div class="mini-stat"><strong id="soonCount">—</strong><span>Competition dates ≤ 14 days</span></div>
+      <div class="mini-stat"><strong id="savedCount">—</strong><span>Saved in this browser</span></div>
+    </div>
+    <details class="explorer" id="explorer">
+      <summary id="explorerSummary"><span><span class="eyebrow">GO DEEPER</span><strong>Explore all opportunities</strong><small>Search, filter, compare and keep private review notes.</small></span><span class="summary-arrow" aria-hidden="true">↗</span></summary>
+      <section class="workspace" id="workspace" aria-label="Explore full tender feed">
+        <aside class="side">
+          <form id="profileForm" class="card">
+            <div class="eyebrow">YOUR COMPANY PROFILE</div>
+            <h2>What are you looking for?</h2>
+            <p>Relevance is calculated locally from your keywords and public notice fields. A saved profile doesn't verify eligibility.</p>
+            <label class="label" for="company">Company name</label>
+            <input class="input" id="company" maxlength="80" autocomplete="organization" placeholder="e.g. Berlin AI Studio" value="Berlin AI Studio">
+            <label class="label" for="keywords">Skills and services <span class="label-quiet">(comma-separated)</span></label>
+            <textarea class="input" id="keywords" rows="3" maxlength="300" placeholder="AI, software, automation">artificial intelligence, software, automation, data analysis</textarea>
+            <label class="label" for="exclude">Exclude <span class="label-quiet">(optional)</span></label>
+            <input class="input" id="exclude" maxlength="200" placeholder="hardware, licenses, construction">
+            <label class="label" for="scoreMin">Minimum text match</label>
+            <select id="scoreMin" class="select"><option value="0">All matches</option><option value="20">20+</option><option value="40">40+ (recommended)</option><option value="60">60+</option></select>
+            <button type="submit" class="btn btn-primary btn-full">Update my shortlist <span aria-hidden="true">↗</span></button>
+            <p class="help" id="profileMessage" aria-live="polite">Your profile stays in this browser only.</p>
+          </form>
+          <div class="card how" id="how">
+            <div class="eyebrow">OUR PROMISE</div>
+            <h2>Sources, not guesses.</h2>
+            <p>These are genuine TED notices. A relevance score measures text overlap; it does not assess your legal eligibility, business capacity or chances of winning.</p>
+            <p>Critical facts, amendments, exact deadlines and attachments must be checked at the official source.</p>
+            <a href="https://docs.ted.europa.eu/api/latest/search.html" target="_blank" rel="noopener noreferrer" class="quiet-link">TED documentation ↗</a>
+            <a href="./UX-SPEC-1.2.md" target="_blank" rel="noopener noreferrer" class="quiet-link">How ranking works ↗</a>
+          </div>
+          <div class="card how">
+            <div class="eyebrow">JOIN THE PILOT</div><h2>Help us get it right.</h2>
+            <p>Building for independent studios and small teams. Early pilot enquiries currently use a public GitHub issue form—never share confidential information there.</p>
+            <a id="pilotLink" href="https://github.com/mikelninh/mikelninh.github.io/issues/new?template=bidpilot-pilot.yml" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Request a pilot ↗</a>
+          </div>
+        </aside>
+        <div class="explorer-main">
+          <div class="section-head">
+            <div><div class="eyebrow">THE FULL FEED</div><h2>Everything, <em>with context.</em></h2><p id="summary">Loading notices…</p></div>
+            <span class="results-pill" id="resultsCount">— matches</span>
+          </div>
+          <div class="filterbar">
+            <input id="search" class="input" type="search" placeholder="Search titles, buyers, CPV…" aria-label="Search tenders">
+            <select id="typeFilter" class="select" aria-label="Notice stage"><option value="opportunities">Competition notices</option><option value="all">All notice types</option><option value="planning">Planning</option><option value="result">Results / awards</option><option value="unknown">Unknown type</option></select>
+            <select id="deadlineFilter" class="select" aria-label="Deadline filter"><option value="all">All deadlines</option><option value="soon">Within 14 days</option><option value="dated">Has a date</option><option value="missing">Date missing</option><option value="past">Dates passed</option></select>
+            <select id="riskFilter" class="select" aria-label="Warning signals"><option value="all">All warnings</option><option value="flagged">Needs checking</option><option value="clear">No title warnings</option></select>
+            <select id="sort" class="select" aria-label="Sort opportunities"><option value="relevance">Text relevance</option><option value="newest">Newest published</option><option value="deadline">Nearest deadline</option></select>
+            <button id="allFilter" type="button" class="btn btn-outline btn-small active">All</button>
+            <button id="savedFilter" type="button" class="btn btn-outline btn-small">Saved ♡</button>
+            <button id="export" type="button" class="btn btn-outline btn-small">Export CSV ↗</button>
+          </div>
+          <div id="results" class="list" aria-live="polite"><div class="empty"><h3>Reading the source feed…</h3><p>Real published notices will appear here.</p></div></div>
+        </div>
+      </section>
+    </details>
+  </section>
+
+  <section class="shell closing" aria-label="Trust and methodology">
+    <div class="closing-mark" aria-hidden="true">✳</div>
+    <div><h2>A clearer decision starts with <em>good evidence.</em></h2><p>We don't invent tender opportunities, claim to verify participation requirements, or submit bids. Your preferences and notes stay in this browser.</p></div>
+    <a href="https://ted.europa.eu/" target="_blank" rel="noopener noreferrer" class="quiet-link">Visit official TED ↗</a>
+  </section>
+</main>
+<footer class="footer">
+  <div class="shell footer-content"><div><strong>BID✳PILOT</strong><p>Less searching. More considered decisions.</p></div><div><p>Independent beta · Data from <a href="https://ted.europa.eu/" target="_blank" rel="noopener noreferrer">Tenders Electronic Daily</a></p><p>Not affiliated with the EU Publications Office. Always verify the latest notice and submission requirements.</p></div></div>
+</footer>
+</body>
+</html>

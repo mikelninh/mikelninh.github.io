@@ -25,8 +25,8 @@ jobs:
         with:
           node-version: "22"
       - name: Check JavaScript syntax
-        run: node --check bidpilot/app.js
+        run: node --check bidpilot/app.js && node --check bidpilot/priority.js
       - name: Test TED ingestion, notice types, lot dates and pagination
         run: python -m unittest discover -s bidpilot -p "test_*.py" -v
-      - name: Test browser workflow without external dependencies
-        run: node --test bidpilot/test_ui.cjs
+      - name: Test shortlist ranking and browser workflow without external dependencies
+        run: node --test bidpilot/test_*.cjs
