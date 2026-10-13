@@ -64,11 +64,23 @@ function setView(view,extra){
 function head(k,title,subtitle,aside){
  return '<div class="section-head"><div><div class="eyebrow">'+esc(k)+'</div><h2>'+title+'</h2><p>'+esc(subtitle)+'</p></div><div class="section-stamp">'+esc(aside||'A LITTLE MORE GOOD')+'</div></div>';
 }
+function matchedPhoto(p){
+ return Boolean(validUrl(p.image_url)&&['retailer','brand'].includes(p.image_status));
+}
+function photoSourceLabel(p){
+ return p.image_status==='retailer'?'RETAILER PACKSHOT':p.image_status==='brand'?'BRAND PACKSHOT':'PHOTO CANDIDATE';
+}
 function productArt(p){
  const cached=st.imageCache[p.id];
- const img=validUrl(p.image_url)||validUrl(cached?.url);
- const ok=img&&(p.verified||cached?.kind==='off');
- return '<div class="product-art tone-'+esc(p.tone||'mint')+'">'+(ok?'<img loading="lazy" src="'+attr(img)+'" alt="Product photo candidate: '+attr(p.brand+' '+p.name)+'" referrerpolicy="no-referrer" onerror="this.remove()">':'<span class="art-emoji">'+esc(p.emoji||'✳')+'</span>')+'<span class="art-label-small">'+(p.verified?'VERIFIED':ok?'PHOTO CANDIDATE':'ILLUSTRATION')+'</span></div>';
+ const isMatched=matchedPhoto(p);
+ const img=isMatched?validUrl(p.image_url):validUrl(cached?.url);
+ const show=Boolean(img&&(isMatched||cached?.kind==='off'));
+ const fallback='<span class="art-emoji">'+esc(p.emoji||'✳')+'</span>';
+ const link=isMatched?'<a class="photo-credit" target="_blank" rel="noopener noreferrer" href="'+attr(validUrl(p.image_source_url||p.source_url))+'" title="Product photo from '+attr(p.photo_attribution||'source')+'">↗ '+esc(p.photo_attribution||'Source')+'</a>':'';
+ return '<div class="product-art tone-'+esc(p.tone||'mint')+'">'+
+ (show?'<img loading="lazy" src="'+attr(img)+'" alt="'+attr(p.brand+' '+p.name)+' product packaging" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false">'+
+ '<span class="art-emoji" hidden>'+esc(p.emoji||'✳')+'</span>':fallback)+
+ '<span class="art-label-small">'+(isMatched?photoSourceLabel(p):show?'PHOTO CANDIDATE':'NO CONFIRMED PHOTO')+'</span>'+link+'</div>';
 }
 function productCard(p){
  const r=showRating(p.id);
@@ -110,14 +122,14 @@ function boardPositionBetween(tier,excludeId,index){
 }
 function boardPhoto(p){
  const cache=st.imageCache[p.id];
- const verified=Boolean(validUrl(p.image_url)&&p.image_status==='retailer');
+ const verified=matchedPhoto(p);
  const image=verified?validUrl(p.image_url):validUrl(cache?.url);
  const shown=Boolean(verified||cache?.kind==='off');
  return shown&&image?'<img loading="lazy" draggable="false" src="'+attr(image)+'" alt="'+attr(p.brand+' '+p.name)+' packaging" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':
  '<span class="board-emoji">'+esc(p.emoji)+'</span>';
 }
 function boardPiece(p){
- const img=p.image_status==='retailer'||st.imageCache[p.id]?.kind==='off';
+ const img=matchedPhoto(p)||st.imageCache[p.id]?.kind==='off';
  const label=p.brand+' '+p.name;
  return '<button type="button" draggable="false" class="board-piece" data-drag-id="'+attr(p.id)+'" data-photo="'+(img?'yes':'none')+'" data-action="open-product" data-id="'+attr(p.id)+'" title="'+attr(label)+' — drag to rank; press to add a note; arrow keys move between tiers" aria-label="'+attr(label)+' — draggable, use arrow keys to change its tier or click to rate">'
  +boardPhoto(p)+(img?'<span class="verified-indicator" aria-hidden="true"></span>':'')
@@ -133,7 +145,7 @@ function boardTrayProducts(){
 }
 function renderBoard(){
  const entries=boardEntries(),rated=new Set(entries.map(r=>r.product_id));
- const photos=ALL.filter(p=>p.image_status==='retailer').length;
+ const photos=ALL.filter(matchedPhoto).length;
  const who=st.user?(st.profile?.display_name||'You'):(st.persona==='you'?'Your':st.persona==='mikel'?'Mikel':'Huong');
  const personToggle=st.user?'<span class="board-status">🔒 Rating as your verified account</span>':
  '<div class="board-personas" aria-label="Choose local board"><button data-action="board-persona" data-value="you" class="'+(st.persona==='you'?'active':'')+'">You</button><button data-action="board-persona" data-value="mikel" class="'+(st.persona==='mikel'?'active':'')+'">Mikel</button><button data-action="board-persona" data-value="huong" class="'+(st.persona==='huong'?'active':'')+'">Huong</button></div>';
@@ -153,7 +165,7 @@ function renderBoard(){
  +'<option value="all">All categories</option>'+GROUPS.map(g=>'<option value="'+attr(g.id)+'" '+(st.boardCategory===g.id?'selected':'')+'>'+esc(g.emoji)+' '+esc(g.label)+'</option>').join('')+'</select></div>'
  +'<div class="board-tray" id="boardTray" data-drop-tier="unranked" aria-label="Unranked product tray">'+boardTrayProducts().map(boardPiece).join('')+'</div>'
  +'<div class="board-photo-progress" title="Sourced exact retailer photo coverage"><span style="width:'+photos/ALL.length*100+'%"></span></div>'
- +'<div class="board-legend"><span>'+photos+' / '+ALL.length+' retailer-matched packshots</span><span>Drop here to unrank ↶</span></div>'
+ +'<div class="board-legend"><span>'+photos+' / '+ALL.length+' source-matched packshots</span><span>Drop here to unrank ↶</span></div>'
  +'</section><section class="board-mat" aria-label="Your S through D tier ranking">'
  +'<div class="board-mat-head"><div><strong>'+esc(who)+' taste board</strong><small style="display:block;margin-top:6px">One opinion at a time. Rearrange as you please.</small></div><small>'+entries.length+' ranked · '+(ALL.length-rated.size)+' to discover</small></div>'
  +rows+'</section></div>'
@@ -466,8 +478,8 @@ function drawerHtml(){
  const name=st.user?'Your account':st.persona.charAt(0).toUpperCase()+st.persona.slice(1)+' (on this device)';
  return '<button class="close" aria-label="Close product" data-action="close-drawer">×</button>'
  +'<div class="eyebrow">THE TASTING TABLE / '+esc(p.category)+'</div><h2>'+esc(p.name)+'</h2><p class="muted">'+esc(p.brand)+' · '+esc(p.store)+'</p>'
- +'<div class="drawer-art tone-'+esc(p.tone)+'">'+(st.imageCache[p.id]?.url?'<img src="'+attr(validUrl(st.imageCache[p.id].url))+'" alt="Unverified product photograph" referrerpolicy="no-referrer" onerror="this.remove()">':esc(p.emoji))+'</div>'
- +'<div class="inline-notice">'+(p.verified?'✓ Verified source record.':'ⓘ Product variant and vegan status are not independently verified. Please check the packaging.')+'</div>'
+ +'<div class="drawer-art tone-'+esc(p.tone)+'">'+(matchedPhoto(p)?'<img src="'+attr(validUrl(p.image_url))+'" alt="Product packaging from '+attr(p.photo_attribution||'the manufacturer')+'" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':st.imageCache[p.id]?.url?'<img src="'+attr(validUrl(st.imageCache[p.id].url))+'" alt="Unverified community photograph" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':esc(p.emoji))+'</div>'
+ +'<div class="inline-notice">'+(matchedPhoto(p)?'✓ Packshot linked to a specific '+(p.image_status==='brand'?'manufacturer':'retailer')+' product record. Packaging and ingredients can change; please check the actual packet.': 'ⓘ No confirmed front-pack photo yet. Variant and vegan status need checking before purchase.')+'</div>'
  +(!st.user?'<div class="field"><label>Who is rating? <span class="hint">(local demo only)</span></label><div class="segment">'+['you','mikel','huong'].map(w=>'<button data-action="set-persona" data-value="'+w+'" class="'+(st.persona===w?'active':'')+'">'+w.charAt(0).toUpperCase()+w.slice(1)+'</button>').join('')+'</div></div>':'<div class="small muted">Rating as '+esc(name)+'</div>')
  +'<div class="field"><label>What does '+esc(name)+' think?</label><div class="tier-picker" id="tierPicker">'+TIERS.map(t=>'<button class="tier '+(st.draftTier===t?'active':'')+'" data-tier="'+t+'" style="--tiercolor:'+({S:'#dcec8d',A:'#c6e6b4',B:'#c9e9f8',C:'#ffdfb0',D:'#f4bcbc'}[t])+'" data-action="select-tier" data-value="'+t+'">'+t+'</button>').join('')+'</div><span class="hint">S = love it · A = great · B = good · C = okay · D = not for me</span></div>'
  +'<div class="field"><label for="ratingNote">Your 200-character tasting note</label><textarea class="control" id="ratingNote" rows="3" maxlength="200" placeholder="Creamy, smoky, truly magical…">'+esc(st.draftNote)+'</textarea></div>'
@@ -476,7 +488,7 @@ function drawerHtml(){
  +'<hr class="rule"><h3>See the real product</h3><p class="small muted">Catalog variants are candidates. Compare store listings and packaging before treating an item as verified.</p><div class="gap12">'
  +'<a class="button button-ghost button-small" href="'+attr(validUrl(p.source_url))+'" target="_blank" rel="noopener noreferrer">Check '+esc(p.store)+' ↗</a>'
  +'<a class="button button-lime button-small" href="./lookup.html?catalog='+encodeURIComponent(p.id)+'">Check exact barcode ↗</a>'
- +'<button class="button button-white button-small" data-action="lookup-image">Find possible photo ⌕</button></div><p class="small muted" id="photoHint">Images are only shown when a plausible Open Food Facts match can be found, and remain labelled unverified until checked.</p>';
+ +(!matchedPhoto(p)?'<button class="button button-white button-small" data-action="lookup-image">Find possible photo ⌕</button>':'<a class="button button-white button-small" target="_blank" rel="noopener noreferrer" href="'+attr(validUrl(p.image_source_url||p.source_url))+'">Photo source ↗</a>')+'</div><p class="small muted" id="photoHint">Images are only shown when a plausible Open Food Facts match can be found, and remain labelled unverified until checked.</p>';
 }
 function openProduct(id,tier,persona){
  if(!getProduct(id))return;
