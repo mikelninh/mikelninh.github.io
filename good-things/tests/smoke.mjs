@@ -9,6 +9,7 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const source=fs.readFileSync(path.join(root,'app.js'),'utf8');
 const catalog=fs.readFileSync(path.join(root,'catalog.js'),'utf8');
 const schema=fs.readFileSync(path.join(root,'schema.sql'),'utf8');
+const photoReports=fs.readFileSync(path.join(root,'photo-reports.sql'),'utf8');
 const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const makeNode=()=>{
  const els=new Map();
@@ -32,7 +33,7 @@ function fixture(){
   console,Intl};
  vm.runInNewContext(catalog,context);
  const injected=source.replace("document.addEventListener('click',async(event)=>{",
- "window.__qa={render,renderBoard,renderDiscover,renderOurs,renderMy,renderCommunity,ourPreview,filteredProducts,boardMove,boardEntries,boardSorted,boardTrayProducts,saveRating,st,snapshotUrl,decodeSnapshot};document.addEventListener('click',async(event)=>{");
+ "window.__qa={render,renderBoard,renderDiscover,renderOurs,renderMy,renderCommunity,ourPreview,filteredProducts,boardMove,boardEntries,boardSorted,boardTrayProducts,boardInsertionIndex,undoBoard,resetBoard,matchedPhoto,saveRating,st,snapshotUrl,decodeSnapshot};document.addEventListener('click',async(event)=>{");
  assert.ok(injected.includes('window.__qa={'),'Expected app injection point is missing');
  vm.runInNewContext(injected,context);
  return {context,t:window.__qa,localStorage};
@@ -92,7 +93,7 @@ test('Sourced photos are product specific and link to traceable provenance',()=>
  const {context}=fixture();
  const a=context.window.GT_CATALOG;
  const matched=a.filter(x=>['retailer','brand','barcode'].includes(x.image_status));
- assert.ok(matched.length>=41);
+ assert.equal(matched.length,45);
  assert.ok(matched.every(x=>x.image_url?.startsWith('https://')&&x.image_source_url?.startsWith('https://')));
  assert.ok(matched.filter(x=>x.image_status==='retailer').every(x=>x.retailer_sku&&new URL(x.image_url).pathname.includes('/'+String(x.retailer_sku).padStart(7,'0')+'/')||x.retailer_sku&&new URL(x.image_url).pathname.includes('/'+x.retailer_sku+'/')));
 });
@@ -110,4 +111,45 @@ test('Drag-board state supports placing, reorder, unrank and blocks nonvegan pro
  assert.equal(await t.boardMove('tofu-01','unranked',0),true);
  assert.equal(t.boardTrayProducts().length,101);
  assert.ok(localStorage.getItem('goodthings_v13_guest'));
+});
+
+
+test('Correct packshots stay source-matched; fuzzy photo candidates never appear on public tiles',()=>{
+ const {t,context}=fixture();
+ const missing=context.window.GT_CATALOG.find(p=>p.id==='tofu-03');
+ assert.equal(t.matchedPhoto(missing),false);
+ t.st.imageCache['tofu-03']={url:'https://untrusted.example/fuzzy.png',kind:'off'};
+ assert.ok(!t.renderBoard().includes('https://untrusted.example/fuzzy.png'));
+ assert.ok(!t.renderDiscover().includes('https://untrusted.example/fuzzy.png'));
+ const filtered=t.st.boardPhotoFilter='matched';
+ assert.equal(t.boardTrayProducts().length,45);
+ t.st.boardPhotoFilter='missing';assert.equal(t.boardTrayProducts().length,57);
+ t.st.boardPhotoFilter='all';assert.equal(t.boardTrayProducts().length,102);
+});
+test('Undo restores old tier, notes and private status; reset clears guest board',async()=>{
+ const {t}=fixture();
+ t.st.guest.you['tofu-01']={tier:'C',note:'My private note',is_public:false,position:100};
+ assert.equal(await t.boardMove('tofu-01','S',0),true);
+ assert.equal(t.st.guest.you['tofu-01'].tier,'S');
+ await t.undoBoard();
+ assert.equal(t.st.guest.you['tofu-01'].tier,'C');
+ assert.equal(t.st.guest.you['tofu-01'].note,'My private note');
+ assert.equal(t.st.guest.you['tofu-01'].is_public,false);
+ await t.resetBoard();
+ assert.equal(t.boardEntries().length,0);
+ assert.equal(t.st.boardHistory.length,0);
+});
+test('Drag insertion uses x-coordinate correctly in wrapped flex row',()=>{
+ const {t}=fixture();
+ const items=[{left:10,top:10,width:60,height:80,bottom:90},{left:80,top:10,width:60,height:80,bottom:90},{left:150,top:10,width:60,height:80,bottom:90}];
+ const zone={dataset:{dropTier:'S'},querySelectorAll(){return items.map((b,i)=>({dataset:{dragId:'p'+i},getBoundingClientRect(){return b}}))}};
+ assert.equal(t.boardInsertionIndex(zone,115,36,'none'),2);
+ assert.equal(t.boardInsertionIndex(zone,12,36,'none'),0);
+ assert.equal(t.boardInsertionIndex(zone,220,36,'none'),3);
+});
+test('Photo correction schema is private, constrained and RLS-protected',()=>{
+ assert.match(photoReports,/enable row level security/i);
+ assert.match(photoReports,/to authenticated/i);
+ assert.match(photoReports,/auth\.uid\(\)/);
+ assert.doesNotMatch(photoReports,/grant .* to anon/i);
 });
