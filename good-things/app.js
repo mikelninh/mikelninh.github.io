@@ -21,7 +21,7 @@ const rankableProduct=p=>Boolean(p&&p.vegan_status!=='non_vegan');
 const RANKABLE=ALL.filter(rankableProduct);
 const FLAGGED=ALL.filter(p=>!rankableProduct(p));
 const tryRead=(key,fallback)=>{try{const d=JSON.parse(localStorage.getItem(key)||'null');return d&&typeof d==='object'?d:fallback}catch(_){return fallback}};
-const st={view:'board',boardQuery:'',boardCategory:'all',boardPhotoFilter:'all',boardHistory:[],boardBusy:false,boardModalProduct:null,boardUndoing:false,category:'all',store:'all',sort:'name',query:'',ratedOnly:false,persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
+const st={view:'board',boardQuery:'',boardCategory:'all',boardPhotoFilter:'all',boardHistory:[],boardBusy:false,boardModalProduct:null,boardUndoing:false,category:'all',store:'all',sort:'name',query:'',ratedOnly:false,catalogStatus:'all',persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
 let sb=null;
 function safeGuest(raw){
  const ret={mikel:{},huong:{},you:{}};
@@ -46,7 +46,7 @@ function isGraded(r){return Boolean(r&&r.status!=='not_tried'&&TIERS.includes(r.
 function gradedRatings(){return selfRatings().filter(isGraded)}
 function notTriedRatings(){return selfRatings().filter(isNotTried)}
 function guestRating(id,who){return st.guest[who]?.[id]||null}
-function showRating(id){return st.user?accountRating(id):guestRating(id,'you')}
+function showRating(id){return st.user?accountRating(id):guestRating(id,st.persona)}
 function avatar(profile,large){
  const str=(profile?.display_name||profile?.handle||'?').trim();
  return '<div class="avatar '+(profile?.accent||'lime')+'"'+(large?' style="height:70px;width:70px;font-size:27px"':'')+'>'+esc(str.substring(0,1).toUpperCase())+'</div>';
@@ -92,12 +92,15 @@ function productArt(p){
 }
 function productCard(p){
  const r=showRating(p.id);
- return '<article class="product-card">'+productArt(p)+'<div class="card-topline"><span class="micro">'+esc(p.category)+'</span><span class="storetag">'+esc(p.store)+'</span></div><div><p class="brandname">'+esc(p.brand)+'</p><h3>'+esc(p.name)+'</h3></div><div class="card-bottom"><div class="tier-row" aria-label="Your rating for '+attr(p.name)+'">'+TIERS.map(t=>'<button class="tier '+(r?.tier===t?'active':'')+'" data-tier="'+t+'" title="Rate '+t+'" aria-label="Rate '+attr(p.name)+' '+t+'" data-action="rate-product" data-id="'+attr(p.id)+'" data-value="'+t+'">'+t+'</button>').join('')+'</div><button class="round-add" title="Details and notes" aria-label="Open '+attr(p.name)+'" data-action="open-product" data-id="'+attr(p.id)+'">↗</button></div></article>';
+ return '<article class="product-card">'+productArt(p)+'<div class="card-topline"><span class="micro">'+esc(p.category)+'</span><span class="storetag">'+esc(p.store)+'</span></div><div><p class="brandname">'+esc(p.brand)+'</p><h3>'+esc(p.name)+'</h3></div>'+(isNotTried(r)?'<div class="not-tried-pill">◌ Not tried yet · no grade</div>':'')+'<div class="card-bottom"><div class="tier-row" aria-label="Your rating for '+attr(p.name)+'">'+TIERS.map(t=>'<button class="tier '+(r?.tier===t?'active':'')+'" data-tier="'+t+'" title="Rate '+t+'" aria-label="Rate '+attr(p.name)+' '+t+'" data-action="rate-product" data-id="'+attr(p.id)+'" data-value="'+t+'">'+t+'</button>').join('')+'</div><button class="round-add" title="Details and notes" aria-label="Open '+attr(p.name)+'" data-action="open-product" data-id="'+attr(p.id)+'">↗</button></div></article>';
 }
 function filteredProducts(){
  let a=RANKABLE.filter(p=>(st.category==='all'||p.category_id===st.category)&&(st.store==='all'||p.store===st.store));
  const q=st.query.trim().toLowerCase();if(q)a=a.filter(p=>(p.name+' '+p.brand+' '+p.store+' '+p.category).toLowerCase().includes(q));
  if(st.ratedOnly)a=a.filter(p=>isGraded(showRating(p.id)));
+ if(st.catalogStatus==='rated')a=a.filter(p=>isGraded(showRating(p.id)));
+ if(st.catalogStatus==='not_tried')a=a.filter(p=>isNotTried(showRating(p.id)));
+ if(st.catalogStatus==='unanswered')a=a.filter(p=>!showRating(p.id));
  if(st.sort==='brand')a.sort((a,b)=>a.brand.localeCompare(b.brand,'de')||a.name.localeCompare(b.name,'de'));
  else if(st.sort==='rated')a.sort((a,b)=>(TIER_SCORE[showRating(b.id)?.tier]||0)-(TIER_SCORE[showRating(a.id)?.tier]||0)||a.name.localeCompare(b.name,'de'));
  else a.sort((a,b)=>a.name.localeCompare(b.name,'de'));
@@ -475,9 +478,9 @@ function renderDiscover(){
  +'<div class="inline-notice" style="background:#ecf4d5"><strong>New: Product Detective ✳</strong> Look up an exact barcode, inspect community nutrition and connect a real product photograph. <a href="./lookup.html">Open the detective ↗</a></div>'
  +'<div class="toolbar"><label class="search"><span aria-hidden="true">⌕</span><input type="search" id="productSearch" placeholder="Search brands, products and stores…" autocomplete="off" aria-label="Search products" value="'+attr(st.query)+'"></label>'
  +'<select id="storeSelect" class="control" aria-label="Select store">'+['all','REWE','Lidl','Online'].map(x=>'<option value="'+x+'" '+(st.store===x?'selected':'')+'>'+(x==='all'?'All stores':x)+'</option>').join('')+'</select>'
- +'<select id="sortSelect" class="control" aria-label="Sort products"><option value="name" '+(st.sort==='name'?'selected':'')+'>By name</option><option value="brand" '+(st.sort==='brand'?'selected':'')+'>By brand</option><option value="rated" '+(st.sort==='rated'?'selected':'')+'>My favourites first</option></select></div>'
+ +'<select id="sortSelect" class="control" aria-label="Sort products"><option value="name" '+(st.sort==='name'?'selected':'')+'>By name</option><option value="brand" '+(st.sort==='brand'?'selected':'')+'>By brand</option><option value="rated" '+(st.sort==='rated'?'selected':'')+'>My favourites first</option></select><select id="catalogStatusFilter" class="control" aria-label="Filter by tried status"><option value="all">All statuses</option><option value="rated" '+(st.catalogStatus==='rated'?'selected':'')+'>✓ Rated</option><option value="not_tried" '+(st.catalogStatus==='not_tried'?'selected':'')+'>◌ Not tried yet</option><option value="unanswered" '+(st.catalogStatus==='unanswered'?'selected':'')+'>Unanswered</option></select></div>'
  +'<div class="chips" aria-label="Categories"><button class="chip '+(st.category==='all'?'active':'')+'" data-action="set-category" data-id="all">✳ All '+RANKABLE.length+'</button>'+GROUPS.map(g=>'<button class="chip '+(st.category===g.id?'active':'')+'" data-action="set-category" data-id="'+attr(g.id)+'">'+esc(g.emoji)+' '+esc(g.label)+' <small>'+RANKABLE.filter(p=>p.category_id===g.id).length+'</small></button>').join('')+'</div>'
- +'<div class="spaced" style="margin-bottom:15px"><span class="filter-summary" id="resultCount">'+a.length+' products · '+selfRatings().length+' rated by you</span><label class="toggle"><input id="ratedOnly" type="checkbox" '+(st.ratedOnly?'checked':'')+'> Rated only</label></div>'
+ +'<div class="spaced" style="margin-bottom:15px"><span class="filter-summary" id="resultCount">'+a.length+' products · '+gradedRatings().length+' graded · '+notTriedRatings().length+' not tried</span><span class="small muted">Unanswered means no selection</span></div>'
  +'<div id="productResults">'+(a.length?'<div class="product-grid">'+a.map(productCard).join('')+'</div>':empty('⌕','No matches','Try another brand, category or search term.'))+'</div>';
 }
 function ourPreview(){
@@ -631,7 +634,7 @@ function render(){
 function refreshProducts(){
  const a=filteredProducts();
  if($('#productResults'))$('#productResults').innerHTML=a.length?'<div class="product-grid">'+a.map(productCard).join('')+'</div>':empty('⌕','No matches','Try another category or remove your filter.');
- if($('#resultCount'))$('#resultCount').textContent=a.length+' products · '+selfRatings().length+' rated by you';
+ if($('#resultCount'))$('#resultCount').textContent=a.length+' products · '+gradedRatings().length+' graded · '+notTriedRatings().length+' not tried';
 }
 function drawerHtml(){
  const p=getProduct(st.selected);if(!p)return '';
@@ -642,10 +645,10 @@ function drawerHtml(){
  +'<div class="drawer-art tone-'+esc(p.tone)+'">'+(matchedPhoto(p)?'<img src="'+attr(validUrl(p.image_url))+'" alt="Product packaging from '+attr(p.photo_attribution||'the manufacturer')+'" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':st.imageCache[p.id]?.url?'<img src="'+attr(validUrl(st.imageCache[p.id].url))+'" alt="Unverified community photograph" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':esc(p.emoji))+'</div>'
  +'<div class="inline-notice">'+(matchedPhoto(p)?'✓ Packshot linked to a specific '+(p.image_status==='brand'?'manufacturer':p.image_status==='barcode'?'barcode-matched community':'retailer')+' product record. Packaging and ingredients can change; please check the actual packet.': 'ⓘ No confirmed front-pack photo yet. Variant and vegan status need checking before purchase.')+'</div>'
  +(!st.user?'<div class="field"><label>Who is rating? <span class="hint">(local demo only)</span></label><div class="segment">'+['you','mikel','huong'].map(w=>'<button data-action="set-persona" data-value="'+w+'" class="'+(st.persona===w?'active':'')+'">'+w.charAt(0).toUpperCase()+w.slice(1)+'</button>').join('')+'</div></div>':'<div class="small muted">Rating as '+esc(name)+'</div>')
- +'<div class="field"><label>What does '+esc(name)+' think?</label><div class="tier-picker" id="tierPicker">'+TIERS.map(t=>'<button class="tier '+(st.draftTier===t?'active':'')+'" data-tier="'+t+'" style="--tiercolor:'+({S:'#dcec8d',A:'#c6e6b4',B:'#c9e9f8',C:'#ffdfb0',D:'#f4bcbc'}[t])+'" data-action="select-tier" data-value="'+t+'">'+t+'</button>').join('')+'</div><span class="hint">S = love it · A = great · B = good · C = okay · D = not for me</span></div>'
+ +(isNotTried(r)?'<div class="not-tried-pill">◌ Already answered: Not tried yet · no grade</div>':'')+'<div class="field"><label>What does '+esc(name)+' think?</label><div class="tier-picker" id="tierPicker">'+TIERS.map(t=>'<button class="tier '+(st.draftTier===t?'active':'')+'" data-tier="'+t+'" style="--tiercolor:'+({S:'#dcec8d',A:'#c6e6b4',B:'#c9e9f8',C:'#ffdfb0',D:'#f4bcbc'}[t])+'" data-action="select-tier" data-value="'+t+'">'+t+'</button>').join('')+'</div><span class="hint">S = love it · A = great · B = good · C = okay · D = not for me</span></div>'
  +'<div class="field"><label for="ratingNote">Your 200-character tasting note</label><textarea class="control" id="ratingNote" rows="3" maxlength="200" placeholder="Creamy, smoky, truly magical…">'+esc(st.draftNote)+'</textarea></div>'
  +(st.user?'<label class="toggle" style="margin-bottom:19px"><input type="checkbox" id="ratingPublic" '+(st.draftPublic?'checked':'')+'> Share this rating publicly with the community</label>':'<p class="small muted">Guest ratings stay in this browser; they are not community reviews.</p>')
- +'<div class="gap12"><button class="button button-lime" data-action="save-rating" data-id="'+attr(p.id)+'">Save my rating ♡</button>'+(r?'<button class="button button-ghost button-small" data-action="delete-rating">Remove rating</button>':'')+'</div>'
+ +'<button class="not-tried-choice '+(isNotTried(r)?'selected':'')+'" data-action="mark-not-tried" data-id="'+attr(p.id)+'"><span>◌</span><span><strong>Not tried yet</strong><small>Save an answer without a tier grade</small></span><span>↗</span></button><div class="gap12"><button class="button button-lime" data-action="save-rating" data-id="'+attr(p.id)+'">Save my rating ♡</button>'+(r?'<button class="button button-ghost button-small" data-action="delete-rating">Remove rating</button>':'')+'</div>'
  +'<hr class="rule"><h3>See the real product</h3><p class="small muted">Catalog variants are candidates. Compare store listings and packaging before treating an item as verified.</p><div class="gap12">'
  +'<a class="button button-ghost button-small" href="'+attr(validUrl(p.source_url))+'" target="_blank" rel="noopener noreferrer">Check '+esc(p.store)+' ↗</a>'
  +'<a class="button button-lime button-small" href="./lookup.html?catalog='+encodeURIComponent(p.id)+'">Check exact barcode ↗</a><button class="button button-ghost button-small" data-action="report-photo">Wrong / missing image?</button>'
@@ -670,12 +673,12 @@ async function saveRating(){
  const product_id=st.selected;
  if(st.user){
   if(!sb)return toast('Cloud unavailable. Your rating has not been saved.');
-  const prior=accountRating(product_id);const obj={user_id:st.user.id,product_id,tier:st.draftTier,note,is_public:st.draftPublic,position:prior?.tier===st.draftTier?(Number(prior.position)||0):boardNextPosition(st.draftTier,product_id),updated_at:new Date().toISOString()};
+  const prior=accountRating(product_id);const obj={user_id:st.user.id,product_id,status:'rated',tier:st.draftTier,note,is_public:st.draftPublic,position:prior?.tier===st.draftTier?(Number(prior.position)||0):boardNextPosition(st.draftTier,product_id),updated_at:new Date().toISOString()};
   const {error}=await sb.from('gt_ratings').upsert(obj,{onConflict:'user_id,product_id'});
   if(error)return toast('Could not save: '+error.message);
   st.allRatings=st.allRatings.filter(r=>!(r.user_id===st.user.id&&r.product_id===product_id));st.allRatings.push(obj);
  }else{
-  const prior=st.guest[st.persona][product_id];st.guest[st.persona][product_id]={tier:st.draftTier,note,is_public:st.draftPublic,position:prior?.tier===st.draftTier?(Number(prior.position)||0):boardNextPosition(st.draftTier,product_id)};persist();
+  const prior=st.guest[st.persona][product_id];st.guest[st.persona][product_id]={status:'rated',tier:st.draftTier,note,is_public:st.draftPublic,position:prior?.tier===st.draftTier?(Number(prior.position)||0):boardNextPosition(st.draftTier,product_id)};persist();
  }
  closeOverlay('drawerOverlay');render();toast('Saved. One more good thing on the shelf ♡');
 }
@@ -890,7 +893,7 @@ async function loadRemote(){
  if(!sb)return;
  const [pr,ra,fo,li,cu]=await Promise.all([
   sb.from('gt_profiles').select('id,handle,display_name,bio,accent,created_at').limit(400),
-  sb.from('gt_ratings').select('user_id,product_id,tier,note,is_public,position,updated_at').order('updated_at',{ascending:false}).limit(3000),
+  sb.from('gt_ratings').select('user_id,product_id,tier,status,note,is_public,position,updated_at').order('updated_at',{ascending:false}).limit(3000),
   sb.from('gt_follows').select('follower_id,following_id,created_at').limit(3000),
   sb.from('gt_lists').select('id,user_id,title,slug,description,product_ids,is_public,created_at').limit(500),
   sb.from('gt_curators').select('role,user_id,verified_at').limit(2)
@@ -965,6 +968,7 @@ document.addEventListener('click',async(event)=>{
  case 'set-category':st.category=id;render();break;
  case 'board-persona':if(!st.user&&['you','mikel','huong'].includes(val)){st.persona=val;st.boardHistory=[];render()}break;
  case 'board-pick':quickRank(id);break;
+ case 'mark-not-tried':{const pid=id||st.selected;if(pid){const ok=await boardMove(pid,'not_tried',0);if(ok)closeOverlay('drawerOverlay')}break}
  case 'quick-rank':{const pid=st.boardModalProduct;if(pid){const ok=await boardMove(pid,val,boardSorted(val,pid).length);if(ok)closeOverlay('modalOverlay')}break}
  case 'quick-detail':{const pid=st.boardModalProduct;closeOverlay('modalOverlay');if(pid)openProduct(pid);break}
  case 'quick-unrank':{const pid=st.boardModalProduct;if(pid){const ok=await boardMove(pid,'unranked',0);if(ok)closeOverlay('modalOverlay')}break}
@@ -1016,6 +1020,7 @@ document.addEventListener('change',e=>{
  if(e.target.id==='boardCategory'){st.boardCategory=e.target.value;refreshBoardTray()}
  if(e.target.id==='boardPhotoFilter'){st.boardPhotoFilter=e.target.value;refreshBoardTray()}
  if(e.target.id==='ratedOnly'){st.ratedOnly=e.target.checked;refreshProducts()}
+ if(e.target.id==='catalogStatusFilter'){st.catalogStatus=e.target.value;refreshProducts()}
  if(e.target.id==='ratingPublic')st.draftPublic=e.target.checked;
 });
 document.addEventListener('submit',async e=>{
