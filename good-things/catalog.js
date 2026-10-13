@@ -1,4 +1,4 @@
-// GOOD THINGS 1.3 · Candidate catalogue. Do not interpret entries or artwork as verified listings.
+// GOOD THINGS 1.4 · Product catalogue candidates. Images labelled RETAILER are matched to retailer SKUs; product vegan status remains unverified.
 window.GT_CATALOG=[
   {
     "id": "tofu-01",
@@ -10,8 +10,12 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=REWE%20Bio%20Tofu%20Natur"
+    "image_url": "https://img.rewe-static.de/7905813/53787300_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/rewe-bio-pflanzlich-tofu-natur-2x200g/7905813",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/rewe-bio-pflanzlich-tofu-natur-2x200g/7905813",
+    "retailer_sku": "7905813",
+    "photo_attribution": "REWE"
   },
   {
     "id": "tofu-02",
@@ -23,8 +27,12 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=REWE%20Bio%20Tofu%20Ger%C3%A4uchert"
+    "image_url": "https://img.rewe-static.de/8583362/53924916_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/rewe-bio-pflanzlich-raeucher-tofu-2x175g/8583362",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/rewe-bio-pflanzlich-raeucher-tofu-2x175g/8583362",
+    "retailer_sku": "8583362",
+    "photo_attribution": "REWE"
   },
   {
     "id": "tofu-03",
@@ -49,8 +57,12 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Taifun%20Naturtofu"
+    "image_url": "https://img.rewe-static.de/8889635/48593230_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/taifun-bio-tofu-natur-200g/8889635",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/taifun-bio-tofu-natur-200g/8889635",
+    "retailer_sku": "8889635",
+    "photo_attribution": "REWE"
   },
   {
     "id": "tofu-05",
@@ -62,8 +74,12 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Taifun%20R%C3%A4uchertofu"
+    "image_url": "https://img.rewe-static.de/9472533/23685070_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/taifun-bio-raeuchertofu-klassik-200g/9472533",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/taifun-bio-raeuchertofu-klassik-200g/9472533",
+    "retailer_sku": "9472533",
+    "photo_attribution": "REWE"
   },
   {
     "id": "tofu-06",
@@ -88,8 +104,12 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Taifun%20Tofu%20Rosso"
+    "image_url": "https://img.rewe-static.de/8890005/48593229_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/taifun-bio-tofu-rosso-vegan-200g/8890005",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/taifun-bio-tofu-rosso-vegan-200g/8890005",
+    "retailer_sku": "8890005",
+    "photo_attribution": "REWE"
   },
   {
     "id": "tofu-08",
@@ -101,8 +121,12 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Taifun%20Black%20Forest%20Tofu"
+    "image_url": "https://img.rewe-static.de/7644037/51789658_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/taifun-bio-raeucher-tofu-black-forest-vegan-200g/7644037",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/taifun-bio-raeucher-tofu-black-forest-vegan-200g/7644037",
+    "retailer_sku": "7644037",
+    "photo_attribution": "REWE"
   },
   {
     "id": "tofu-09",
@@ -205,8 +229,12 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=REWE%20Bio%20Bio%20Tempeh%20Natur"
+    "image_url": "https://img.rewe-static.de/7310953/54123620_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/rewe-bio-tempeh-natur-vegan-200g/7310953",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/rewe-bio-tempeh-natur-vegan-200g/7310953",
+    "retailer_sku": "7310953",
+    "photo_attribution": "REWE"
   },
   {
     "id": "milks-01",
@@ -231,8 +259,12 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Alpro%20Soja%20Ohne%20Zucker"
+    "image_url": "https://img.rewe-static.de/2317807/39453334_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/alpro-soja-drink-ohne-zucker-vegan-1l/2317807",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/alpro-soja-drink-ohne-zucker-vegan-1l/2317807",
+    "retailer_sku": "2317807",
+    "photo_attribution": "REWE"
   },
   {
     "id": "milks-03",
@@ -244,8 +276,12 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Alpro%20Barista%20Hafer"
+    "image_url": "https://img.rewe-static.de/8358463/32623823_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/alpro-hafer-drink-barista-vegan-1l/8358463",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/alpro-hafer-drink-barista-vegan-1l/8358463",
+    "retailer_sku": "8358463",
+    "photo_attribution": "REWE"
   },
   {
     "id": "milks-04",
@@ -257,8 +293,12 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Oatly%20Haferdrink%20Barista"
+    "image_url": "https://img.rewe-static.de/9562991/50488192_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/oatly-haferdrink-barista-edition-1l/9562991",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/oatly-haferdrink-barista-edition-1l/9562991",
+    "retailer_sku": "9562991",
+    "photo_attribution": "REWE"
   },
   {
     "id": "milks-05",
@@ -361,8 +401,12 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Berief%20Bio%20Sojadrink"
+    "image_url": "https://img.rewe-static.de/7164869/28526431_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/berief-bio-soja-drink-naturell-vegan-1l/7164869",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/berief-bio-soja-drink-naturell-vegan-1l/7164869",
+    "retailer_sku": "7164869",
+    "photo_attribution": "REWE"
   },
   {
     "id": "milks-13",
@@ -543,8 +587,12 @@ window.GT_CATALOG=[
     "emoji": "🧀",
     "tone": "peach",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Simply%20V%20Genuss%20Scheiben%20W%C3%BCrzig"
+    "image_url": "https://img.rewe-static.de/9406376/56490371_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/simplyv-wuerzig-150g/9406376",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/simplyv-wuerzig-150g/9406376",
+    "retailer_sku": "9406376",
+    "photo_attribution": "REWE"
   },
   {
     "id": "cheese-03",
@@ -608,8 +656,12 @@ window.GT_CATALOG=[
     "emoji": "🥖",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=REWE%20Bio%20Bio%20Hummus%20Natur"
+    "image_url": "https://img.rewe-static.de/8774648/36959266_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/rewe-bio-pflanzlich-hummus-natur-200g/8774648",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/rewe-bio-pflanzlich-hummus-natur-200g/8774648",
+    "retailer_sku": "8774648",
+    "photo_attribution": "REWE"
   },
   {
     "id": "spreads-02",
@@ -881,8 +933,12 @@ window.GT_CATALOG=[
     "emoji": "🍔",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=R%C3%BCgenwalder%20M%C3%BChle%20Vegane%20M%C3%BChlen%20Schnitzel"
+    "image_url": "https://img.rewe-static.de/2363478/23598482_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/ruegenwalder-muehle-vegane-muehlen-schnitzel-180g/2363478",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/ruegenwalder-muehle-vegane-muehlen-schnitzel-180g/2363478",
+    "retailer_sku": "2363478",
+    "photo_attribution": "REWE"
   },
   {
     "id": "mains-02",
@@ -894,8 +950,12 @@ window.GT_CATALOG=[
     "emoji": "🍔",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=R%C3%BCgenwalder%20M%C3%BChle%20Vegane%20M%C3%BChlen%20Nuggets"
+    "image_url": "https://img.rewe-static.de/2363473/23598694_digital-image.png?imwidth=304&impolicy=kues",
+    "source_url": "https://www.rewe.de/shop/p/ruegenwalder-muehle-vegane-muehlen-nuggets-klassisch-180g/2363473",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/ruegenwalder-muehle-vegane-muehlen-nuggets-klassisch-180g/2363473",
+    "retailer_sku": "2363473",
+    "photo_attribution": "REWE"
   },
   {
     "id": "mains-03",
