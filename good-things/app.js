@@ -417,6 +417,30 @@ function duoStartPicker(local){
  '</div><p>'+(local.starter?'Start: '+(local.starter==='mikel'?'Mikel':'Huong')+'. In der nächsten Runde beginnt die andere Person.':'Ihr könnt die Startperson wählen. Ohne Auswahl entscheidet der Zufall.')+'</p></div>';
 }
 
+function duoHistoryPanel(history,remote){
+ const rows=(history||[]).map((round,i)=>{
+  const id=remote?round.product_id:round.productId;
+  const a=remote?round.host_choice:round.votes?.mikel,b=remote?round.partner_choice:round.votes?.huong;
+  const p=getProduct(id);if(!p)return '';
+  return '<div class="duo-history-row"><span class="duo-history-index">'+(remote?round.round_no:i+1)+'</span><div class="duo-history-product"><strong>'+esc(p.brand+' · '+p.name)+'</strong><small>'+esc(p.quantity||p.category)+'</small></div><div class="duo-history-scores"><span>'+esc(duoChoiceLabel(a))+'</span><span>×</span><span>'+esc(duoChoiceLabel(b))+'</span></div></div>';
+ }).filter(Boolean).reverse().slice(0,30).join('');
+ return '<section class="duo-history"><div class="duo-history-title"><div><div class="eyebrow">OUR TASTE JOURNAL</div><h3>Eure bisherigen Ergebnisse</h3><p>'+(remote?'In Supabase gespeichert, nur für die beiden Raumteilnehmer sichtbar.':'Auf diesem Gerät gespeichert. Browserdaten löschen entfernt die lokalen Ergebnisse; sichert sie bei Bedarf als JSON.')+'</p></div><button class="button button-small button-white" data-action="duo-export-history" '+(!(history||[]).length?'disabled':'')+'>↓ Verlauf exportieren</button></div>'+
+ (rows||'<p class="duo-history-empty">Hier erscheinen eure gemeinsam abgeschlossenen Runden.</p>')+'</section>';
+}
+function duoExportHistory(){
+ const remote=st.duo.mode==='remote',local=st.duo.local;
+ const rows=remote?(st.duo.history||[]):[...(local.history||[]),
+  ...(duoValidChoice(local.votes?.mikel)&&duoValidChoice(local.votes?.huong)?[{productId:local.productId,votes:{...local.votes}}]:[])];
+ if(!rows.length)return toast('Noch kein gemeinsames Ergebnis für den Export.');
+ const data={app:'GOOD THINGS',version:'1.9',mode:remote?'account-duo':'shared-device',exported_at:new Date().toISOString(),
+  rounds:rows.map((x,i)=>({round:remote?x.round_no:i+1,product_id:remote?x.product_id:x.productId,
+   person_one:remote?x.host_choice:x.votes.mikel,person_two:remote?x.partner_choice:x.votes.huong}))};
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download='good-things-duo-verlauf.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+ toast('Duo-Verlauf exportiert ♡');
+}
+
 function duoScoreTile(label,choice){
  return '<div class="duo-vote-revealed"><small>'+esc(label)+'</small><strong class="'+(choice==='F'?'duo-failure':'')+'">'+esc(choice==='not_tried'?'◌':choice)+'</strong><span>'+esc(duoChoiceLabel(choice))+'</span></div>';
 }
@@ -468,13 +492,14 @@ function renderDuo(){
  '<div class="duo-waiting">✓ Dein Urteil ist gespeichert. Wir warten auf die zweite Antwort.<button class="button button-white button-small" data-action="duo-refresh">Aktualisieren ↻</button></div>');
  const counter=remote?(st.duo.history||[]):duoLocalHistory();
  const pic=duoPhotoMarkup(p);
+ const historyWithCurrent=remote?counter:[...counter,...(done?[{productId:p.id,votes:{...snap.votes}}]:[])];
  return intro+controls+'<div class="duo-progress"><span>ROUND '+round+'</span><span>'+duoResultsSummary(counter)+'</span></div>'+
  '<div class="duo-stage"><div class="duo-product">'+pic+duoImageAuditBadge(p)+'<h3>'+esc(p.name)+'</h3><p>'+esc(p.brand)+' · '+esc(p.quantity||p.category)+'</p>'+
  (proteinNumber(p)!=null?'<span class="duo-protein">💪 '+proteinNumber(p)+' g Protein je 100 g/ml</span>':'')+
  '</div><div class="duo-decision">'+status+(remote?'':duoStartPicker(st.duo.local))+reveal+
  (remote?'<p class="small muted" style="text-align:center;margin:20px 0 0">Synchronisiert zwischen zwei getrennten Accounts. Ein unabhängiges Urteil pro Runde.</p>':
  '<p class="small muted" style="text-align:center;margin:20px 0 0">Private gemeinsame Vorschau auf diesem Gerät. Die tatsächlichen öffentlichen Profile werden nicht verändert.</p>')+
- '</div></div>';
+ '</div></div>'+duoHistoryPanel(historyWithCurrent,remote);
 }
 
 function renderBoard(){
@@ -1421,6 +1446,7 @@ document.addEventListener('click',async(event)=>{
  case 'duo-mode-remote':st.duo.mode='remote';st.duo.room=null;st.duo.error='';await duoLoadRooms();setView('duo');break;
  case 'duo-start-local':await duoLocalStart(false);break;
  case 'duo-set-starter':duoSetStarter(val);break;
+ case 'duo-export-history':duoExportHistory();break;
  case 'duo-vote':if(st.duo.mode==='remote')await duoRemoteVote(val);else duoLocalVote(val);break;
  case 'duo-next-local':await duoLocalStart(true);break;
  case 'duo-next-remote':await duoNextRemote();break;
