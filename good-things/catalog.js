@@ -208,7 +208,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "tofu-14",
-    "name": "Bio Tempeh Natur",
+    "name": "Soja-Tempeh Natur",
     "brand": "Tempehmanufaktur",
     "store": "REWE",
     "category": "Tofu & Tempeh",
@@ -216,8 +216,13 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Tempehmanufaktur%20Bio%20Tempeh%20Natur"
+    "image_url": "https://www.tempehmanufaktur.net/wp-content/uploads/1302_Soja_Natur_2.png",
+    "source_url": "https://www.tempehmanufaktur.net/unser-sortiment/",
+    "image_status": "brand",
+    "image_source_url": "https://www.tempehmanufaktur.net/unser-sortiment/",
+    "photo_attribution": "tempehmanufaktur (Hersteller)",
+    "photo_match_method": "exact_current_manufacturer_natur_packshot",
+    "photo_reviewed_at": "2026-10-14"
   },
   {
     "id": "tofu-15",
