@@ -410,6 +410,13 @@ function duoSharedLink(){
  if(!st.duo.room)return;
  copyLink(URL_BASE+'?view=duo&room='+encodeURIComponent(st.duo.room.id));
 }
+function duoStartPicker(local){
+ if(duoValidChoice(local?.votes?.mikel)||duoValidChoice(local?.votes?.huong))return '';
+ return '<div class="duo-start-picker"><span class="eyebrow">WER BEGINNT?</span><div class="duo-start-options">'+
+ ['mikel','huong'].map(role=>'<button type="button" data-action="duo-set-starter" data-value="'+role+'" class="'+(local.starter===role?'active':'')+'">'+(role==='mikel'?'Mikel':'Huong')+'</button>').join('')+
+ '</div><p>'+(local.starter?'Start: '+(local.starter==='mikel'?'Mikel':'Huong')+'. In der nächsten Runde beginnt die andere Person.':'Ihr könnt die Startperson wählen. Ohne Auswahl entscheidet der Zufall.')+'</p></div>';
+}
+
 function duoScoreTile(label,choice){
  return '<div class="duo-vote-revealed"><small>'+esc(label)+'</small><strong class="'+(choice==='F'?'duo-failure':'')+'">'+esc(choice==='not_tried'?'◌':choice)+'</strong><span>'+esc(duoChoiceLabel(choice))+'</span></div>';
 }
@@ -443,11 +450,11 @@ function renderDuo(){
   return intro+controls+'<div class="duo-welcome"><h3>Spielt auf zwei Geräten.</h3><p>Jede Person antwortet mit ihrem eigenen Konto. Die Stimmen bleiben verborgen, bis beide fertig sind. Die Bewertung landet auf dem eigenen, privaten Shelf.</p><form id="duoPartnerForm"><label class="small" for="duoPartner">Benutzername deiner Partnerperson</label><div class="gap12" style="margin-top:8px"><input class="control" name="partner" id="duoPartner" placeholder="@huong" required pattern="@?[a-z0-9][a-z0-9_-]{2,23}"><button class="button button-dark" type="submit">Duo starten ↗</button></div></form></div>'+
   '<div class="duo-room-list">'+(rooms||'<p class="small muted">Noch kein gemeinsamer Raum. Meldet euch getrennt an und ladet einander per Profilname ein.</p>')+'</div>';
  }
- if(!p)return intro+controls+'<div class="duo-welcome"><h3>Geschmack ist Teamwork.</h3><p>Keine erfundenen Bilder: wir zeigen nur Produktkandidaten mit quellenverknüpften Packshots und prüfen die tatsächliche Bildauflösung, bevor sie vorgeschlagen werden.</p><button class="button button-lime" data-action="duo-start-local" '+(st.duo.busy?'disabled':'')+'>Unser erstes Produkt ✳</button>'+
+ if(!p)return intro+controls+'<div class="duo-welcome"><h3>Geschmack ist Teamwork.</h3>'+duoStartPicker(st.duo.local)+'<p>Keine erfundenen Bilder: wir zeigen nur Produktkandidaten mit quellenverknüpften Packshots und prüfen die tatsächliche Bildauflösung, bevor sie vorgeschlagen werden.</p><button class="button button-lime" data-action="duo-start-local" '+(st.duo.busy?'disabled':'')+'>Unser erstes Produkt ✳</button>'+
  (st.duo.qualityMessage?'<p class="small muted">'+esc(st.duo.qualityMessage)+'</p>':'')+'</div>';
  let statusA=remote?(done?'Fertig':'Urteil noch verborgen'):answerA?'Antwort verborgen':'Noch offen';
  let statusB=remote?(done?'Fertig':'Urteil noch verborgen'):answerB?'Antwort verborgen':'Noch offen';
- const voteName=remote?st.profile?.display_name||'Du':snap.votes.mikel?'Huong':'Mikel';
+ const voteName=remote?st.profile?.display_name||'Du':(st.duo.local.activeRole==='huong'?'Huong':'Mikel');
  const needVote=remote?!st.duo.ownVote:!snap.complete;
  const waiting=remote?Boolean(st.duo.ownVote):Boolean(snap.votes.mikel&&!snap.votes.huong);
  const status='<div class="duo-status-grid"><div class="'+(answerA?'answered':'')+'"><span>① '+esc(labelA)+'</span><strong>'+statusA+'</strong></div><div class="'+(answerB?'answered':'')+'"><span>② '+esc(labelB)+'</span><strong>'+statusB+'</strong></div></div>';
@@ -456,7 +463,7 @@ function renderDuo(){
  duoScoreTile(labelA,remote?st.duo.reveal.host_choice:snap.votes.mikel)+
  '<div class="duo-versus">×</div>'+duoScoreTile(labelB,remote?st.duo.reveal.partner_choice:snap.votes.huong)+
  '</div><button class="button button-lime" data-action="'+(remote?'duo-next-remote':'duo-next-local')+'" '+(remote&&room.host_id!==st.user?.id?'disabled':'')+'>Nächstes Produkt ↗</button>'+
- (remote&&room.host_id!==st.user?.id?'<p class="small muted">Die Host-Person startet die nächste Runde.</p>':'')+'</div>':
+ (remote&&room.host_id!==st.user?.id?'<p class="small muted">Die Host-Person startet die nächste Runde.</p>':remote?'':'<p class="small muted">Als Nächstes beginnt '+(st.duo.local.starter==='mikel'?'Huong':'Mikel')+'.</p>')+'</div>':
  (needVote?'<div class="duo-choice"><p>Jetzt bewertet <strong>'+esc(voteName)+'</strong>. Welche Tier-Stufe verdient das Produkt?</p>'+duoVoteGrid()+'</div>':
  '<div class="duo-waiting">✓ Dein Urteil ist gespeichert. Wir warten auf die zweite Antwort.<button class="button button-white button-small" data-action="duo-refresh">Aktualisieren ↻</button></div>');
  const counter=remote?(st.duo.history||[]):duoLocalHistory();
@@ -464,7 +471,7 @@ function renderDuo(){
  return intro+controls+'<div class="duo-progress"><span>ROUND '+round+'</span><span>'+duoResultsSummary(counter)+'</span></div>'+
  '<div class="duo-stage"><div class="duo-product">'+pic+duoImageAuditBadge(p)+'<h3>'+esc(p.name)+'</h3><p>'+esc(p.brand)+' · '+esc(p.quantity||p.category)+'</p>'+
  (proteinNumber(p)!=null?'<span class="duo-protein">💪 '+proteinNumber(p)+' g Protein je 100 g/ml</span>':'')+
- '</div><div class="duo-decision">'+status+reveal+
+ '</div><div class="duo-decision">'+status+(remote?'':duoStartPicker(st.duo.local))+reveal+
  (remote?'<p class="small muted" style="text-align:center;margin:20px 0 0">Synchronisiert zwischen zwei getrennten Accounts. Ein unabhängiges Urteil pro Runde.</p>':
  '<p class="small muted" style="text-align:center;margin:20px 0 0">Private gemeinsame Vorschau auf diesem Gerät. Die tatsächlichen öffentlichen Profile werden nicht verändert.</p>')+
  '</div></div>';
@@ -1413,6 +1420,7 @@ document.addEventListener('click',async(event)=>{
  case 'duo-mode-local':st.duo.mode='local';st.duo.room=null;st.duo.error='';setView('duo');break;
  case 'duo-mode-remote':st.duo.mode='remote';st.duo.room=null;st.duo.error='';await duoLoadRooms();setView('duo');break;
  case 'duo-start-local':await duoLocalStart(false);break;
+ case 'duo-set-starter':duoSetStarter(val);break;
  case 'duo-vote':if(st.duo.mode==='remote')await duoRemoteVote(val);else duoLocalVote(val);break;
  case 'duo-next-local':await duoLocalStart(true);break;
  case 'duo-next-remote':await duoNextRemote();break;
