@@ -335,3 +335,12 @@ body:has(.board-layout) .hero .package-c{transform:scale(.7) rotate(13deg)}
 .quick-rank-choices{grid-template-columns:repeat(6,minmax(0,1fr))}
 .quick-rank-button[data-rank-tier="F"]{background:#e9abab;border-color:#cb8585;color:#652e2e}
 @media(max-width:480px){.quick-rank-choices{gap:3px}.quick-rank-button{padding:10px 0 8px}.quick-rank-button strong{font-size:26px}.quick-rank-button small{font-size:7px;max-width:100%;overflow:hidden;text-overflow:ellipsis}}
+
+/* v1.6: six grades remain usable on narrow phones, without cramped product cards. */
+.tier-picker{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;width:100%}
+.tier-picker .tier{width:100%;height:45px;min-width:0}
+@media(max-width:610px){
+ .product-card .tier-row{display:none}
+ .product-card .card-bottom:before{content:"Open to rank S–F";font-size:10px;line-height:1.2;color:#71816e;font-weight:700}
+ .quick-rank-choices{grid-template-columns:repeat(6,minmax(0,1fr))}
+}
