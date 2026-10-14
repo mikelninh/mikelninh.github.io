@@ -161,6 +161,267 @@ function boardTrayProducts(){
  &&(!query||(p.brand+' '+p.name+' '+p.category+' '+p.store).toLocaleLowerCase().includes(query)))
  .sort((a,b)=>a.brand.localeCompare(b.brand,'de')||a.name.localeCompare(b.name,'de'));
 }
+
+// ── GOOD THINGS DUO · One product. Two honest opinions. ────────────────────
+const DUO_KEY='goodthings_duo_v18';
+const duoDefault=()=>({mode:'local',local:{round:1,productId:null,votes:{},history:[],activeRole:'mikel'},rooms:[],room:null,ownVote:null,reveal:null,history:[],busy:false,error:'',loading:false,qualityMessage:''});
+const duoSafe=raw=>{
+ const base=duoDefault();
+ if(!raw||typeof raw!=='object'||!raw.local)return base;
+ const local=raw.local,history=Array.isArray(local.history)?local.history.filter(x=>getProduct(x.productId)&&x.votes).slice(-200):[];
+ base.local={round:Number.isInteger(local.round)&&local.round>0&&local.round<10000?local.round:1,productId:getProduct(local.productId)?local.productId:null,votes:{},history,activeRole:['mikel','huong'].includes(local.activeRole)?local.activeRole:'mikel'};
+ for(const name of ['mikel','huong'])if(TIERS.includes(local.votes?.[name])||local.votes?.[name]==='not_tried')base.local.votes[name]=local.votes[name];
+ return base;
+};
+st.duo=duoSafe(tryRead(DUO_KEY,null));
+const duoPersist=()=>{try{localStorage.setItem(DUO_KEY,JSON.stringify({local:st.duo.local}))}catch(_){}};
+const duoValidChoice=x=>TIERS.includes(x)||x==='not_tried';
+const duoPhotoCandidates=()=>RANKABLE.filter(p=>matchedPhoto(p)&&p.image_url&&!(p.photo_blocked));
+function duoHiResImage(p){
+ const url=validUrl(p?.image_url);if(!url)return '';
+ // Official Open Food Facts selected images expose an explicit .full variant.
+ // Do not upscale a thumbnail or invent a full URL for unrecognised hosts.
+ if(p?.source_type==='openfoodfacts'&&/\/front_[a-z]{2}\.\d+\.400\.jpg(?:\?.*)?$/.test(url))
+  return url.replace(/\.400\.jpg(?=\?|$)/,'.full.jpg');
+ return url;
+}
+function duoPhotoMarkup(p){
+ const url=duoHiResImage(p),fallback=validUrl(p.image_url);
+ return '<div class="duo-hero-photo"><img loading="eager" data-duo-image="true" data-fallback="'+attr(fallback)+'" src="'+attr(url)+'" alt="'+attr(p.brand+' '+p.name)+' — Produktverpackung" referrerpolicy="no-referrer"><div class="duo-photo-bottom"><span>PHOTO · '+esc(p.photo_attribution||'Product source')+'</span><span>'+esc(p.barcode?'EAN '+p.barcode:'Source-linked packshot')+'</span></div></div>';
+}
+const duoPhotoCheck=new Map();
+async function duoIsPhotoSharp(p){
+ if(!p||!matchedPhoto(p))return false;
+ if(duoPhotoCheck.has(p.id))return duoPhotoCheck.get(p.id);
+ if(typeof Image==='undefined')return true;
+ const variants=[duoHiResImage(p),validUrl(p.image_url)].filter((url,i,a)=>url&&a.indexOf(url)===i);
+ for(const url of variants){
+  const ok=await new Promise(resolve=>{
+   const img=new Image();let done=false;
+   const finish=v=>{if(done)return;done=true;clearTimeout(timeout);resolve(v)};
+   const timeout=setTimeout(()=>finish(false),3800);
+   img.onload=()=>finish(img.naturalWidth>=450&&img.naturalHeight>=450);
+   img.onerror=()=>finish(false);img.src=url;
+  });
+  if(ok){duoPhotoCheck.set(p.id,url);return url}
+ }
+ duoPhotoCheck.set(p.id,false);
+ return false;
+}
+async function duoPick(usedIds){
+ const used=new Set(usedIds||[]);
+ const list=duoPhotoCandidates().filter(p=>!used.has(p.id));
+ // Prefer products with a specific EAN and reliable source photography.
+ const picks=list.sort((a,b)=>(a.barcode?0:1)-(b.barcode?0:1)||a.name.localeCompare(b.name,'de'));
+ const start=picks.length?Math.floor(Math.random()*picks.length):0;
+ for(let i=0;i<Math.min(picks.length,28);i++){
+  const p=picks[(start+i)%picks.length];
+  const img=await duoIsPhotoSharp(p);
+  if(img)return p;
+ }
+ // No fake or unsharp image is displayed if validation fails.
+ return null;
+}
+const duoChoiceLabel=v=>v==='not_tried'?'◌ Noch nicht probiert':v==='F'?'F · Durchgefallen':v?'Tier '+v:'Noch nicht bewertet';
+function duoLocalHistory(){return st.duo.local.history||[]}
+function duoLocalReset(){
+ st.duo.mode='local';
+ st.duo.local={round:1,productId:null,votes:{},history:[],activeRole:'mikel'};
+ duoPersist();render();
+}
+async function duoLocalStart(forceNext){
+ if(st.duo.busy)return;
+ st.duo.busy=true;
+ try{
+  const local=st.duo.local;
+  const completed=duoValidChoice(local.votes.mikel)&&duoValidChoice(local.votes.huong);
+  if(local.productId&&!forceNext)return;
+  if(forceNext&&local.productId&&completed){
+   local.history.push({productId:local.productId,votes:{...local.votes}});
+   local.round++;
+  }
+  const used=local.history.map(x=>x.productId);
+  if(local.productId)used.push(local.productId);
+  for(const key of ['mikel','huong'])for(const id of Object.keys(st.guest[key]||{}))
+   if(st.guest.mikel[id]&&st.guest.huong[id])used.push(id);
+  const p=await duoPick(used);
+  if(!p){st.duo.qualityMessage='Keine weitere Packung mit ausreichender Bildauflösung gefunden. Die noch offenen Produkte brauchen bessere Fotos.';return}
+  local.productId=p.id;local.votes={};local.activeRole='mikel';
+  st.duo.qualityMessage='';duoPersist();
+ }finally{st.duo.busy=false;render()}
+}
+function duoSaveLocalAnswer(person,productId,choice){
+ if(!['mikel','huong'].includes(person)||!getProduct(productId)||!duoValidChoice(choice))return false;
+ const previous=st.guest[person]?.[productId];
+ const skip=choice==='not_tried';
+ st.guest[person][productId]={tier:skip?null:choice,status:skip?'not_tried':'rated',note:skip?'':previous?.note||'',is_public:false,position:skip?0:previous?.position||100};
+ persist();return true;
+}
+function duoLocalVote(choice){
+ if(!duoValidChoice(choice))return toast('Bitte eine Einstufung wählen.');
+ const local=st.duo.local;
+ if(!local.productId||duoValidChoice(local.votes[local.activeRole]))return;
+ const person=local.activeRole;local.votes[person]=choice;
+ duoSaveLocalAnswer(person,local.productId,choice);
+ local.activeRole=person==='mikel'?'huong':'mikel';
+ duoPersist();render();
+ if(duoValidChoice(local.votes.mikel)&&duoValidChoice(local.votes.huong))
+  toast('Beide haben entschieden. Reveal! ✳');
+ else toast('Gespeichert, aber verborgen. Jetzt ist '+(local.activeRole==='huong'?'Huong':'Mikel')+' dran ♡');
+}
+function duoResultsSummary(history){
+ const compared=(history||[]).filter(x=>TIERS.includes(x.host_choice||x.votes?.mikel)&&TIERS.includes(x.partner_choice||x.votes?.huong));
+ const same=compared.filter(x=>(x.host_choice||x.votes?.mikel)===(x.partner_choice||x.votes?.huong)).length;
+ return compared.length?same+' / '+compared.length+' gleiche Tier-Wertungen':'Noch keine gemeinsamen Tier-Wertungen';
+}
+function duoLocalSnapshot(){
+ const local=st.duo.local;const votes=local.votes||{};
+ return {product:getProduct(local.productId),round:local.round,mikel:duoValidChoice(votes.mikel),huong:duoValidChoice(votes.huong),votes,
+  complete:duoValidChoice(votes.mikel)&&duoValidChoice(votes.huong)};
+}
+async function duoRefresh(){
+ if(!sb||!st.user||!st.duo.room||st.duo.loading)return;
+ st.duo.loading=true;
+ try{
+  const id=st.duo.room.id;
+  const [roomResult,voteResult,revealResult]=await Promise.all([
+   sb.from('gt_duo_rooms').select('id,host_id,partner_id,current_product_id,round_no,updated_at').eq('id',id).maybeSingle(),
+   sb.from('gt_duo_votes').select('choice,user_id,round_no').eq('room_id',id).eq('round_no',st.duo.room.round_no),
+   sb.from('gt_duo_reveals').select('room_id,round_no,product_id,host_choice,partner_choice').eq('room_id',id).order('round_no',{ascending:false}).limit(50)
+  ]);
+  if(roomResult.error)throw roomResult.error;
+  if(!roomResult.data){st.duo.error='Dieser Raum ist für dein Konto nicht zugänglich.';return}
+  const room=roomResult.data,prevRound=st.duo.room.round_no;
+  st.duo.room=room;
+  if(room.round_no!==prevRound){
+   const fresh=await sb.from('gt_duo_votes').select('choice,user_id,round_no').eq('room_id',id).eq('round_no',room.round_no);
+   st.duo.ownVote=fresh.data?.find(x=>x.user_id===st.user.id)||null;
+  }else if(!voteResult.error)st.duo.ownVote=voteResult.data?.find(x=>x.user_id===st.user.id)||null;
+  if(!revealResult.error){
+   st.duo.history=revealResult.data||[];
+   st.duo.reveal=st.duo.history.find(x=>x.round_no===room.round_no)||null;
+  }
+  st.duo.error='';
+  if(st.view==='duo'&&st.duo.mode==='remote')render();
+ }catch(e){st.duo.error='Synchronisierung: '+String(e.message||e).slice(0,130)}
+ finally{st.duo.loading=false}
+}
+async function duoLoadRooms(){
+ if(!sb||!st.user)return;
+ const r=await sb.from('gt_duo_rooms').select('id,host_id,partner_id,current_product_id,round_no,updated_at').order('updated_at',{ascending:false}).limit(25);
+ if(r.error){st.duo.error=r.error.message;return}
+ st.duo.rooms=r.data||[];
+ if(st.duo.room){const matching=st.duo.rooms.find(x=>x.id===st.duo.room.id);if(matching)st.duo.room=matching}
+}
+async function duoOpenRoom(id){
+ if(!st.user||!sb)return openAuth();
+ const r=await sb.from('gt_duo_rooms').select('id,host_id,partner_id,current_product_id,round_no,updated_at').eq('id',id).maybeSingle();
+ if(r.error||!r.data)return toast('Dieser Duo-Raum gehört anderen Konten oder existiert nicht.');
+ st.duo.room=r.data;st.duo.mode='remote';st.duo.ownVote=null;st.duo.reveal=null;
+ const url=new URL(URL_BASE);url.searchParams.set('view','duo');url.searchParams.set('room',id);
+ history.replaceState(null,'',url.toString());
+ await duoRefresh();setView('duo',false);
+}
+async function duoCreateRoom(form){
+ if(!st.user||!sb)return openAuth();
+ const handle=form.elements.namedItem('partner').value.trim().toLowerCase().replace(/^@/,'');
+ const partner=st.profiles.find(x=>x.handle===handle);
+ if(!partner)return toast('Dieses Profil gibt es noch nicht. Huong muss erst ein eigenes Konto anlegen.');
+ if(partner.id===st.user.id)return toast('Du kannst dich nicht selbst herausfordern.');
+ const used=st.duo.history.map(x=>x.product_id);
+ const product=await duoPick(used);
+ if(!product)return toast('Noch kein hochauflösendes Produktfoto gefunden. Bitte erst Fotos prüfen.');
+ const res=await sb.from('gt_duo_rooms').insert({host_id:st.user.id,partner_id:partner.id,current_product_id:product.id}).select().single();
+ if(res.error)return toast('Raum konnte nicht erstellt werden: '+res.error.message);
+ closeAll();await duoLoadRooms();await duoOpenRoom(res.data.id);
+ toast('Duo-Raum angelegt. Teile den Link mit @'+partner.handle+' ♡');
+}
+async function duoRemoteVote(choice){
+ if(!duoValidChoice(choice)||!st.duo.room||!st.user||st.duo.ownVote)return;
+ const room=st.duo.room,choiceRow={room_id:room.id,round_no:room.round_no,user_id:st.user.id,choice};
+ const r=await sb.from('gt_duo_votes').insert(choiceRow);
+ if(r.error)return toast('Bewertung nicht gespeichert: '+r.error.message);
+ st.duo.ownVote=choiceRow;
+ // A security-definer trigger copies each participant's private grade to their shelf
+ // and writes a reveal only after *both* submitted.
+ await duoRefresh();
+ toast('Dein Urteil ist abgegeben und bleibt bis zur zweiten Antwort verborgen.');
+}
+async function duoNextRemote(){
+ if(!st.user||!st.duo.room||!st.duo.reveal)return;
+ const room=st.duo.room;
+ if(room.host_id!==st.user.id)return toast('Der Host wählt die nächste Runde.');
+ const used=new Set(st.duo.history.map(x=>x.product_id));used.add(room.current_product_id);
+ const product=await duoPick(used);
+ if(!product)return toast('Keine weiteren hochauflösenden Packshots verfügbar. Bitte Bilder verbessern.');
+ const r=await sb.from('gt_duo_rooms').update({current_product_id:product.id,round_no:room.round_no+1,updated_at:new Date().toISOString()}).eq('id',room.id).eq('round_no',room.round_no).select().single();
+ if(r.error)return toast('Nächste Runde blockiert: '+r.error.message);
+ st.duo.room=r.data;st.duo.ownVote=null;st.duo.reveal=null;await duoRefresh();
+}
+function duoSharedLink(){
+ if(!st.duo.room)return;
+ copyLink(URL_BASE+'?view=duo&room='+encodeURIComponent(st.duo.room.id));
+}
+function duoScoreTile(label,choice){
+ return '<div class="duo-vote-revealed"><small>'+esc(label)+'</small><strong class="'+(choice==='F'?'duo-failure':'')+'">'+esc(choice==='not_tried'?'◌':choice)+'</strong><span>'+esc(duoChoiceLabel(choice))+'</span></div>';
+}
+function duoVoteGrid(){
+ return '<div class="duo-vote-chooser">'+TIERS.map(t=>'<button class="duo-grade duo-grade-'+t+'" data-action="duo-vote" data-value="'+t+'" title="'+(t==='F'?'Durchgefallen':'Tier '+t)+'">'+t+'</button>').join('')+'</div>'+
+ '<button class="duo-untried-button" data-action="duo-vote" data-value="not_tried">◌ Noch nicht probiert <span>Antwort ohne Note</span></button>';
+}
+function duoImageAuditBadge(p){
+ return '<div class="duo-photo-credit">Packshot: '+esc(p.photo_attribution||'Quellenbild')+' · '+(p.barcode?'EAN '+esc(p.barcode):'Retailer / manufacturer')+
+ ' · <a href="'+attr(validUrl(p.image_source_url||p.source_url))+'" target="_blank" rel="noopener noreferrer">Quelle ↗</a></div>';
+}
+function renderDuo(){
+ const remote=st.duo.mode==='remote';
+ const room=remote?st.duo.room:null;
+ const snap=remote?null:duoLocalSnapshot();
+ const p=remote?getProduct(room?.current_product_id):snap.product;
+ const answerA=remote?Boolean(st.duo.reveal):snap.mikel,answerB=remote?Boolean(st.duo.reveal):snap.huong;
+ const done=remote?Boolean(st.duo.reveal):snap.complete;
+ const labelA=remote?st.profiles.find(x=>x.id===room?.host_id)?.display_name||'Person 1':'Mikel';
+ const labelB=remote?st.profiles.find(x=>x.id===room?.partner_id)?.display_name||'Person 2':'Huong';
+ const round=remote?room?.round_no||1:snap.round;
+ const controls='<div class="duo-controls"><div class="duo-switch"><button class="'+(!remote?'active':'')+'" data-action="duo-mode-local">Gemeinsam am Gerät</button><button class="'+(remote?'active':'')+'" data-action="duo-mode-remote">Zwei Konten / Geräte</button></div>'+
+ '<div class="gap12"><button class="button button-ghost button-small" data-nav="board">← Tier List</button>'+(remote&&room?'<button class="button button-white button-small" data-action="duo-copy-link">Link teilen ↗</button>':'')+'</div></div>';
+ const intro=head('GOOD THINGS / MIKEL × HUONG','One product.<br><em>Two opinions.</em>','Ihr entscheidet unabhängig. Erst wenn beide geantwortet haben, zeigen wir S–F oder „Nicht probiert“ nebeneinander.',remote?'ZWEI KONTEN':'SAME-DEVICE DEMO');
+ if(remote&&!st.user)return intro+controls+empty('♡','Zwei echte Konten','Meldet euch jeweils mit einem eigenen Konto an, um geräteübergreifend zu spielen. Am selben Gerät könnt ihr sofort starten.','<button class="button button-lime" data-action="open-auth">Anmelden ↗</button>');
+ if(remote&&!room){
+  const rooms=(st.duo.rooms||[]).map(r=>{
+   const partnerId=r.host_id===st.user?.id?r.partner_id:r.host_id,u=st.profiles.find(x=>x.id===partnerId);
+   return '<div class="duo-room"><div><strong>'+esc(u?.display_name||'Duo Partner')+'</strong><small>Runde '+r.round_no+' · '+esc(getProduct(r.current_product_id)?.name||'Produkt')+'</small></div><button class="button button-small button-lime" data-action="duo-open-room" data-id="'+attr(r.id)+'">Öffnen ↗</button></div>';
+  }).join('');
+  return intro+controls+'<div class="duo-welcome"><h3>Spielt auf zwei Geräten.</h3><p>Jede Person antwortet mit ihrem eigenen Konto. Die Stimmen bleiben verborgen, bis beide fertig sind. Die Bewertung landet auf dem eigenen, privaten Shelf.</p><form id="duoPartnerForm"><label class="small" for="duoPartner">Benutzername deiner Partnerperson</label><div class="gap12" style="margin-top:8px"><input class="control" name="partner" id="duoPartner" placeholder="@huong" required pattern="@?[a-z0-9][a-z0-9_-]{2,23}"><button class="button button-dark" type="submit">Duo starten ↗</button></div></form></div>'+
+  '<div class="duo-room-list">'+(rooms||'<p class="small muted">Noch kein gemeinsamer Raum. Meldet euch getrennt an und ladet einander per Profilname ein.</p>')+'</div>';
+ }
+ if(!p)return intro+controls+'<div class="duo-welcome"><h3>Geschmack ist Teamwork.</h3><p>Keine erfundenen Bilder: wir zeigen nur Produktkandidaten mit quellenverknüpften Packshots und prüfen die tatsächliche Bildauflösung, bevor sie vorgeschlagen werden.</p><button class="button button-lime" data-action="duo-start-local" '+(st.duo.busy?'disabled':'')+'>Unser erstes Produkt ✳</button>'+
+ (st.duo.qualityMessage?'<p class="small muted">'+esc(st.duo.qualityMessage)+'</p>':'')+'</div>';
+ let statusA=remote?(done?'Fertig':'Privat abgegeben / wartet'):answerA?'Antwort verborgen':'Noch offen';
+ let statusB=remote?(done?'Fertig':'Privat abgegeben / wartet'):answerB?'Antwort verborgen':'Noch offen';
+ const voteName=remote?st.profile?.display_name||'Du':snap.votes.mikel?'Huong':'Mikel';
+ const needVote=remote?!st.duo.ownVote:!snap.complete;
+ const waiting=remote?Boolean(st.duo.ownVote):Boolean(snap.votes.mikel&&!snap.votes.huong);
+ const status='<div class="duo-status-grid"><div class="'+(answerA?'answered':'')+'"><span>① '+esc(labelA)+'</span><strong>'+statusA+'</strong></div><div class="'+(answerB?'answered':'')+'"><span>② '+esc(labelB)+'</span><strong>'+statusB+'</strong></div></div>';
+ const reveal=done?'<div class="duo-reveal"><div class="eyebrow">BOTH ANSWERS ARE IN</div><h3>'+(
+  (remote?st.duo.reveal.host_choice: snap.votes.mikel)===(remote?st.duo.reveal.partner_choice:snap.votes.huong)?'Ihr seid euch einig! ✳':'Zwei Menschen. Zwei Geschmäcker. ♡')+'</h3><div class="duo-reveal-grid">'+
+ duoScoreTile(labelA,remote?st.duo.reveal.host_choice:snap.votes.mikel)+
+ '<div class="duo-versus">×</div>'+duoScoreTile(labelB,remote?st.duo.reveal.partner_choice:snap.votes.huong)+
+ '</div><button class="button button-lime" data-action="'+(remote?'duo-next-remote':'duo-next-local')+'" '+(remote&&room.host_id!==st.user?.id?'disabled':'')+'>Nächstes Produkt ↗</button>'+
+ (remote&&room.host_id!==st.user?.id?'<p class="small muted">Die Host-Person startet die nächste Runde.</p>':'')+'</div>':
+ (needVote?'<div class="duo-choice"><p>Jetzt bewertet <strong>'+esc(voteName)+'</strong>. Welche Tier-Stufe verdient das Produkt?</p>'+duoVoteGrid()+'</div>':
+ '<div class="duo-waiting">✓ Dein Urteil ist gespeichert. Wir warten auf die zweite Antwort.<button class="button button-white button-small" data-action="duo-refresh">Aktualisieren ↻</button></div>');
+ const counter=remote?(st.duo.history||[]):duoLocalHistory();
+ const pic=duoPhotoMarkup(p);
+ return intro+controls+'<div class="duo-progress"><span>ROUND '+round+'</span><span>'+duoResultsSummary(counter)+'</span></div>'+
+ '<div class="duo-stage"><div class="duo-product">'+pic+duoImageAuditBadge(p)+'<h3>'+esc(p.name)+'</h3><p>'+esc(p.brand)+' · '+esc(p.quantity||p.category)+'</p>'+
+ (proteinNumber(p)!=null?'<span class="duo-protein">💪 '+proteinNumber(p)+' g Protein je 100 g/ml</span>':'')+
+ '</div><div class="duo-decision">'+status+reveal+
+ (remote?'<p class="small muted" style="text-align:center;margin:20px 0 0">Synchronisiert zwischen zwei getrennten Accounts. Ein unabhängiges Urteil pro Runde.</p>':
+ '<p class="small muted" style="text-align:center;margin:20px 0 0">Private gemeinsame Vorschau auf diesem Gerät. Die tatsächlichen öffentlichen Profile werden nicht verändert.</p>')+
+ '</div></div>';
+}
+
 function renderBoard(){
  const entries=boardEntries(),skipped=boardNotTried(),answered=new Set(boardAnswers().map(r=>r.product_id));
  const photos=RANKABLE.filter(matchedPhoto).length;
