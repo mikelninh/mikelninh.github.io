@@ -5,8 +5,8 @@
 const ALL=Array.isArray(window.GT_CATALOG)?window.GT_CATALOG:[];
 const GROUPS=Array.isArray(window.GT_GROUPS)?window.GT_GROUPS:[];
 const URL_BASE=location.origin+location.pathname;
-const TIERS=['S','A','B','C','D'];
-const TIER_SCORE={S:5,A:4,B:3,C:2,D:1};
+const TIERS=['S','A','B','C','D','F'];
+const TIER_SCORE={S:6,A:5,B:4,C:3,D:2,F:1};
 const STORE_KEY='goodthings_v13_guest';
 const IMG_KEY='goodthings_v13_images';
 const SUPA_URL='https://htffcvdopavknnylbowl.supabase.co';
@@ -52,7 +52,7 @@ function avatar(profile,large){
  return '<div class="avatar '+(profile?.accent||'lime')+'"'+(large?' style="height:70px;width:70px;font-size:27px"':'')+'>'+esc(str.substring(0,1).toUpperCase())+'</div>';
 }
 function tierBadge(tier){
- return tier?'<span class="tier tier-display" data-tier="'+esc(tier)+'" style="--tiercolor:'+({S:'#dcec8d',A:'#c6e6b4',B:'#c9e9f8',C:'#ffdfb0',D:'#f4bcbc'}[tier]||'#fff')+'">'+esc(tier)+'</span>':'<span class="small muted">Not rated</span>';
+ return tier?'<span class="tier tier-display" data-tier="'+esc(tier)+'" style="--tiercolor:'+({S:'#dcec8d',A:'#c6e6b4',B:'#c9e9f8',C:'#ffdfb0',D:'#f4bcbc',F:'#e99898'}[tier]||'#fff')+'">'+esc(tier)+'</span>':'<span class="small muted">Not rated</span>';
 }
 function openOverlay(id){const x=$('#'+id);x.classList.add('open');x.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
 function closeOverlay(id){const x=$('#'+id);x.classList.remove('open');x.setAttribute('aria-hidden','true');if(!$('.overlay.open'))document.body.style.overflow=''}
@@ -163,7 +163,7 @@ function renderBoard(){
  '<div class="board-personas" aria-label="Choose local board"><button data-action="board-persona" data-value="you" class="'+(st.persona==='you'?'active':'')+'">You</button><button data-action="board-persona" data-value="mikel" class="'+(st.persona==='mikel'?'active':'')+'">Mikel</button><button data-action="board-persona" data-value="huong" class="'+(st.persona==='huong'?'active':'')+'">Huong</button></div>';
  const rows=TIERS.map(t=>{
   const products=boardSorted(t).map(r=>getProduct(r.product_id)).filter(Boolean);
-  const msg={S:'Obsessed',A:'Brilliant',B:'Good',C:'Okay',D:'Not again'};
+  const msg={S:'Obsessed',A:'Brilliant',B:'Good',C:'Okay',D:'Disappointing',F:'Durchgefallen'};
   return '<div class="tier-lane" data-drop-tier="'+t+'"><div class="lane-tag"><strong>'+t+'</strong><small>'+msg[t]+'</small></div>'
   +'<div class="tier-dropzone" data-drop-tier="'+t+'" aria-label="'+t+' tier, '+products.length+' products">'+(products.length?products.map(boardPiece).join(''):'<span class="drop-hint">Drop something good here…</span>')+'</div></div>';
  }).join('');
@@ -235,8 +235,8 @@ function quickRank(id){
  modal('<button class="close" data-action="close-modal" aria-label="Close">×</button>'+
   '<div class="eyebrow">QUICK RANK / '+esc(p.brand)+'</div><h2>'+esc(p.name)+'</h2>'+
   '<div class="quick-rank-art">'+boardPhoto(p)+'</div>'+
-  '<p class="small muted">Tried it? Choose an S–D grade. Otherwise mark it as not tried yet — an answer without a score.</p>'+
-  '<div class="quick-rank-choices">'+TIERS.map(t=>'<button type="button" class="quick-rank-button" data-rank-tier="'+t+'" data-action="quick-rank" data-value="'+t+'" aria-label="Place in '+t+' tier"><strong>'+t+'</strong><small>'+({S:'Obsessed',A:'Brilliant',B:'Good',C:'Okay',D:'Not again'}[t])+'</small></button>').join('')+'</div>'+
+  '<p class="small muted">Tried it? Choose an S–F grade. Otherwise mark it as not tried yet — an answer without a score.</p>'+
+  '<div class="quick-rank-choices">'+TIERS.map(t=>'<button type="button" class="quick-rank-button" data-rank-tier="'+t+'" data-action="quick-rank" data-value="'+t+'" aria-label="Place in '+t+' tier"><strong>'+t+'</strong><small>'+({S:'Obsessed',A:'Brilliant',B:'Good',C:'Okay',D:'Disappointing',F:'Durchgefallen'}[t])+'</small></button>').join('')+'</div>'+
   '<button type="button" class="not-tried-choice '+(isNotTried(current)?'selected':'')+'" data-action="quick-not-tried" aria-pressed="'+(isNotTried(current)?'true':'false')+'"><span>◌</span><span><strong>Not tried yet</strong><small>Answered · no grade · stays off S–D</small></span><span>↗</span></button>'+ 
  '<div class="gap12" style="margin-top:18px"><button class="button button-ghost button-small" data-action="quick-detail">Taste notes & details ↗</button>'+
   (current?'<button class="button button-white button-small" data-action="quick-unrank">↶ Clear answer</button>':'')+'</div>');
@@ -313,7 +313,7 @@ async function exportBoardPng(){
  const all=rows.flatMap(r=>r.items),images=new Map();
  const loaded=await Promise.all(all.map(boardPhotoForCanvas));
  all.forEach((p,i)=>images.set(p.id,loaded[i]));
- const colors={S:'#c8e881',A:'#d8ebac',B:'#d0e8e8',C:'#f3dfae',D:'#f2c3bb'};
+ const colors={S:'#c8e881',A:'#d8ebac',B:'#d0e8e8',C:'#f3dfae',D:'#f2c3bb',F:'#e4a2a2'};
  let y=TOP;
  const rounded=(x,yy,w,h,r)=>{ctx.beginPath();ctx.roundRect(x,yy,w,h,r);ctx.fill()};
  for(const row of rows){
@@ -462,7 +462,7 @@ document.addEventListener('keydown',e=>{
  const id=piece.dataset.dragId,old=st.user?accountRating(id):st.guest[st.persona][id];
  const idx=old?TIERS.indexOf(old.tier):-1;
  if(e.key==='ArrowUp'||e.key==='ArrowDown'){
-  const next=e.key==='ArrowUp'?(idx<0?'D':TIERS[Math.max(0,idx-1)]):(idx<0?'S':TIERS[Math.min(4,idx+1)]);
+  const next=e.key==='ArrowUp'?(idx<0?'F':TIERS[Math.max(0,idx-1)]):(idx<0?'S':TIERS[Math.min(TIERS.length-1,idx+1)]);
   boardMove(id,next,boardSorted(next,id).length);
  }else if(old){
   const peers=boardSorted(old.tier).map(x=>x.product_id);
@@ -535,7 +535,7 @@ function renderMy(){
  const arr=gradedRatings(),untried=notTriedRatings();
  const completed=Math.min(arr.length,5);
  const welcome=st.user?'<div class="inline-notice">✓ Synced to your account. Public ratings appear in the community; private ratings are visible only to you.</div>':'<div class="inline-notice">♧ Guest shelf · Ratings below are stored only on this device. <button class="navlink" data-action="open-auth" style="display:inline;text-decoration:underline">Make an account</button> to keep a separate, synced shelf across devices.</div>';
- return head('GOOD THINGS / YOUR SHELF','Your taste.<br><em>Your rules.</em>','No one else decides what deserves an S. Start a shelf, give it character and share only what you choose.',arr.length+' GRADES · '+untried.length+' NOT TRIED')
+ return head('GOOD THINGS / YOUR SHELF','Your taste.<br><em>Your rules.</em>','No one else decides what deserves an S — or an F. Start a shelf, give it character and share only what you choose.',arr.length+' GRADES · '+untried.length+' NOT TRIED')
  +welcome
  +'<div class="profile-banner"><div class="person"><div class="avatar '+(st.profile?.accent||'lime')+'" style="width:72px;height:72px;font-size:30px">'+esc(yourInitials().substring(0,1).toUpperCase())+'</div><div><div class="eyebrow">YOUR CORNER OF GOOD THINGS</div><h3>'+esc(yourInitials())+'</h3><p class="small muted" style="margin:3px 0">'+(st.profile?'@'+esc(st.profile.handle):'Create your own taste universe')+'</p></div></div><button class="button button-small button-white" data-action="'+(st.user?'edit-profile':'open-auth')+'">'+(st.user?'Edit profile ↗':'Join ↗')+'</button></div>'
  +'<div class="callout"><div class="spaced"><div><div class="eyebrow">FIRST FIVE CHALLENGE</div><h3>'+((completed===5)?'Five out of five! ✳':'Five little discoveries.')+'</h3><p>'+((completed===5)?'You did it. Your shelf is officially growing.':'Rate '+(5-completed)+' more product'+(5-completed===1?'':'s')+' to finish your first challenge.')+'</p></div><strong style="font:600 40px Fraunces,serif">'+completed+'/5</strong></div><div class="challenge-bar">'+[0,1,2,3,4].map(i=>'<span class="'+(i<completed?'filled':'')+'"></span>').join('')+'</div></div>'
@@ -551,7 +551,7 @@ function scoreFor(userId){
  const theirs=st.allRatings.filter(r=>r.user_id===userId&&r.is_public&&isGraded(r));
  const common=mine.filter(r=>theirs.some(t=>t.product_id===r.product_id));
  if(!common.length)return {n:0,score:null};
- return {n:common.length,score:Math.round(100*common.reduce((sum,r)=>sum+(1-Math.abs(TIER_SCORE[r.tier]-TIER_SCORE[theirs.find(t=>t.product_id===r.product_id).tier])/4),0)/common.length)};
+ return {n:common.length,score:Math.round(100*common.reduce((sum,r)=>sum+(1-Math.abs(TIER_SCORE[r.tier]-TIER_SCORE[theirs.find(t=>t.product_id===r.product_id).tier])/(TIERS.length-1)),0)/common.length)};
 }
 function publicRated(){return st.allRatings.filter(r=>r.is_public&&isGraded(r)&&rankableProduct(getProduct(r.product_id)))}
 function leaderboard(){
@@ -652,7 +652,7 @@ function drawerHtml(){
  +'<div class="drawer-art tone-'+esc(p.tone)+'">'+(matchedPhoto(p)?'<img src="'+attr(validUrl(p.image_url))+'" alt="Product packaging from '+attr(p.photo_attribution||'the manufacturer')+'" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':st.imageCache[p.id]?.url?'<img src="'+attr(validUrl(st.imageCache[p.id].url))+'" alt="Unverified community photograph" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':esc(p.emoji))+'</div>'
  +'<div class="inline-notice">'+(matchedPhoto(p)?'✓ Packshot linked to a specific '+(p.image_status==='brand'?'manufacturer':p.image_status==='barcode'?'barcode-matched community':'retailer')+' product record. Packaging and ingredients can change; please check the actual packet.': 'ⓘ No confirmed front-pack photo yet. Variant and vegan status need checking before purchase.')+'</div>'
  +(!st.user?'<div class="field"><label>Who is rating? <span class="hint">(local demo only)</span></label><div class="segment">'+['you','mikel','huong'].map(w=>'<button data-action="set-persona" data-value="'+w+'" class="'+(st.persona===w?'active':'')+'">'+w.charAt(0).toUpperCase()+w.slice(1)+'</button>').join('')+'</div></div>':'<div class="small muted">Rating as '+esc(name)+'</div>')
- +(isNotTried(r)?'<div class="not-tried-pill">◌ Already answered: Not tried yet · no grade</div>':'')+'<div class="field"><label>What does '+esc(name)+' think?</label><div class="tier-picker" id="tierPicker">'+TIERS.map(t=>'<button class="tier '+(st.draftTier===t?'active':'')+'" data-tier="'+t+'" style="--tiercolor:'+({S:'#dcec8d',A:'#c6e6b4',B:'#c9e9f8',C:'#ffdfb0',D:'#f4bcbc'}[t])+'" data-action="select-tier" data-value="'+t+'">'+t+'</button>').join('')+'</div><span class="hint">S = love it · A = great · B = good · C = okay · D = not for me</span></div>'
+ +(isNotTried(r)?'<div class="not-tried-pill">◌ Already answered: Not tried yet · no grade</div>':'')+'<div class="field"><label>What does '+esc(name)+' think?</label><div class="tier-picker" id="tierPicker">'+TIERS.map(t=>'<button class="tier '+(st.draftTier===t?'active':'')+'" data-tier="'+t+'" style="--tiercolor:'+({S:'#dcec8d',A:'#c6e6b4',B:'#c9e9f8',C:'#ffdfb0',D:'#f4bcbc',F:'#e99898'}[t])+'" data-action="select-tier" data-value="'+t+'">'+t+'</button>').join('')+'</div><span class="hint">S = obsessed · A = great · B = good · C = okay · D = disappointing · F = Durchgefallen</span></div>'
  +'<div class="field"><label for="ratingNote">Your 200-character tasting note</label><textarea class="control" id="ratingNote" rows="3" maxlength="200" placeholder="Creamy, smoky, truly magical…">'+esc(st.draftNote)+'</textarea></div>'
  +(st.user?'<label class="toggle" style="margin-bottom:19px"><input type="checkbox" id="ratingPublic" '+(st.draftPublic?'checked':'')+'> Share this rating publicly with the community</label>':'<p class="small muted">Guest ratings stay in this browser; they are not community reviews.</p>')
  +'<button class="not-tried-choice '+(isNotTried(r)?'selected':'')+'" data-action="mark-not-tried" data-id="'+attr(p.id)+'"><span>◌</span><span><strong>Not tried yet</strong><small>Save an answer without a tier grade</small></span><span>↗</span></button><div class="gap12"><button class="button button-lime" data-action="save-rating" data-id="'+attr(p.id)+'">Save my rating ♡</button>'+(r?'<button class="button button-ghost button-small" data-action="delete-rating">Remove rating</button>':'')+'</div>'
@@ -863,7 +863,7 @@ async function importJson(file){
    st.guest[who][product.id]={status:tier==='not_tried'?'not_tried':'rated',tier:tier==='not_tried'?null:tier,note,is_public:tier!=='not_tried',position:0};touched++;
   }
  }
- if(!touched)return toast('Matched '+rowsFound+' products, but no S–D grades or explicit not-tried answers. Your shelf is unchanged.');
+ if(!touched)return toast('Matched '+rowsFound+' products, but no S–F grades or explicit not-tried answers. Your shelf is unchanged.');
  persist();render();toast('Imported '+touched+' ratings/answers from '+rowsFound+' matching products. Check before sharing.');
 }
 
