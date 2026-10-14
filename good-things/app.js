@@ -179,7 +179,7 @@ const duoSafe=raw=>{
 st.duo=duoSafe(tryRead(DUO_KEY,null));
 const duoPersist=()=>{try{localStorage.setItem(DUO_KEY,JSON.stringify({local:st.duo.local}))}catch(_){}};
 const duoValidChoice=x=>TIERS.includes(x)||x==='not_tried';
-const duoPhotoCandidates=()=>RANKABLE.filter(p=>matchedPhoto(p)&&p.image_url&&!(p.photo_blocked));
+const duoPhotoCandidates=()=>RANKABLE.filter(p=>matchedPhoto(p)&&p.image_url&&!p.photo_blocked&&!duoPhotoBroken.has(p.id)&&duoPhotoCheck.get(p.id)!==false&&!(inspectedPhotoQuality[p.id]?.url===p.image_url&&inspectedPhotoQuality[p.id]?.status==='low'));
 function duoHiResImage(p){
  const url=validUrl(p?.image_url);if(!url)return '';
  // Official Open Food Facts selected images expose an explicit .full variant.
@@ -195,6 +195,9 @@ function duoPhotoMarkup(p){
 }
 const duoPhotoCheck=new Map();
 const duoPhotoBroken=new Set();
+let inspectedPhotoQuality={};
+try{inspectedPhotoQuality=JSON.parse(localStorage.getItem('goodthings_photo_audit_v18')||'{}').checked||{}}catch(_){}
+
 async function duoIsPhotoSharp(p){
  if(!p||!matchedPhoto(p))return false;
  if(duoPhotoCheck.has(p.id))return duoPhotoCheck.get(p.id);
@@ -218,11 +221,13 @@ async function duoPick(usedIds){
  const list=duoPhotoCandidates().filter(p=>!used.has(p.id));
  // Shuffle while preferring real barcode-linked records. Parallel verification means
  // the user does not wait for 28 sequential CDN timeouts on mobile.
- const picks=list.sort((a,b)=>(a.barcode?0:1)-(b.barcode?0:1)||a.name.localeCompare(b.name,'de'));
- const start=picks.length?Math.floor(Math.random()*picks.length):0;
- const tested=picks.slice(start).concat(picks.slice(0,start)).slice(0,32);
- for(let i=0;i<tested.length;i+=8){
-  const batch=tested.slice(i,i+8);
+ const priority=p=>inspectedPhotoQuality[p.id]?.status==='good'&&inspectedPhotoQuality[p.id]?.url===p.image_url?0:
+ p.source_type==='openfoodfacts'?2:1;
+ const shuffle=a=>a.map(p=>({p,k:Math.random()})).sort((x,y)=>x.k-y.k).map(x=>x.p);
+ const pools=[0,1,2].flatMap(level=>shuffle(list.filter(p=>priority(p)===level)));
+ const tested=pools.slice(0,72);
+ for(let i=0;i<tested.length;i+=12){
+  const batch=tested.slice(i,i+12);
   try{
    return await Promise.any(batch.map(async p=>{
     const result=await duoIsPhotoSharp(p);
