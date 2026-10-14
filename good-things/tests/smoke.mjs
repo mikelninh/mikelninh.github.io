@@ -10,6 +10,8 @@ const source=fs.readFileSync(path.join(root,'app.js'),'utf8');
 const catalogs=['catalog.js','catalog-extra-1.js','catalog-extra-2.js','catalog-extra-3.js','catalog-merge.js'].map(file=>fs.readFileSync(path.join(root,file),'utf8'));
 const schema=fs.readFileSync(path.join(root,'schema.sql'),'utf8');
 const photoReports=fs.readFileSync(path.join(root,'photo-reports.sql'),'utf8');
+const productRequests=fs.readFileSync(path.join(root,'product-requests-v17.sql'),'utf8');
+const nutritionMigration=fs.readFileSync(path.join(root,'nutrition-v17.sql'),'utf8');
 const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const makeNode=()=>{
  const els=new Map();
@@ -300,4 +302,24 @@ test('Original ratings IDs were preserved after expansion',()=>{
  const all=context.window.GT_CATALOG;
  assert.equal(all.find(p=>p.id==='tofu-01').name,'Tofu Natur');
  assert.ok(all.find(p=>p.id==='chocolate-05'));
+});
+
+
+test('User suggested products go to a private moderated queue rather than public catalogue writes',()=>{
+ assert.match(productRequests,/enable row level security/i);
+ assert.match(productRequests,/gt_requests_owner_read/);
+ assert.match(productRequests,/gt_requests_owner_submit/);
+ assert.doesNotMatch(productRequests,/grant\s+insert.*gt_products\s+to\s+authenticated/i);
+ assert.match(source,/function openProductSuggestion\(\)/);
+ assert.match(source,/function submitProductSuggestion\(form\)/);
+ assert.match(source,/gt_product_requests/);
+});
+test('Barcode nutrient columns and dated price UI are honest about missing data',()=>{
+ assert.match(nutritionMigration,/nutrition jsonb/);
+ assert.match(nutritionMigration,/stores_reported text/);
+ assert.match(source,/prices\.openfoodfacts\.org\/api\/v1\/prices/);
+ assert.match(source,/x\.currency==='EUR'/);
+ assert.match(source,/x\.location\?\.osm_address_country_code==='DE'/);
+ assert.match(source,/Beobachteter Preis, nicht Live-Angebot/);
+ assert.match(source,/Kein belegter Preis/);
 });
