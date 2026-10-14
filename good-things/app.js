@@ -167,12 +167,12 @@ function boardTrayProducts(){
 
 // ── GOOD THINGS DUO · One product. Two honest opinions. ────────────────────
 const DUO_KEY='goodthings_duo_v18';
-const duoDefault=()=>({mode:'local',local:{round:1,productId:null,votes:{},history:[],activeRole:'mikel'},rooms:[],room:null,ownVote:null,reveal:null,history:[],busy:false,error:'',loading:false,qualityMessage:''});
+const duoDefault=()=>({mode:'local',local:{round:1,productId:null,votes:{},history:[],activeRole:null,starter:null},rooms:[],room:null,ownVote:null,reveal:null,history:[],busy:false,error:'',loading:false,qualityMessage:''});
 const duoSafe=raw=>{
  const base=duoDefault();
  if(!raw||typeof raw!=='object'||!raw.local)return base;
  const local=raw.local,history=Array.isArray(local.history)?local.history.filter(x=>getProduct(x.productId)&&x.votes).slice(-200):[];
- base.local={round:Number.isInteger(local.round)&&local.round>0&&local.round<10000?local.round:1,productId:getProduct(local.productId)?local.productId:null,votes:{},history,activeRole:['mikel','huong'].includes(local.activeRole)?local.activeRole:'mikel'};
+ base.local={round:Number.isInteger(local.round)&&local.round>0&&local.round<10000?local.round:1,productId:getProduct(local.productId)?local.productId:null,votes:{},history,activeRole:['mikel','huong'].includes(local.activeRole)?local.activeRole:null,starter:['mikel','huong'].includes(local.starter)?local.starter:null};
  for(const name of ['mikel','huong'])if(TIERS.includes(local.votes?.[name])||local.votes?.[name]==='not_tried')base.local.votes[name]=local.votes[name];
  return base;
 };
@@ -242,7 +242,7 @@ const duoChoiceLabel=v=>v==='not_tried'?'◌ Noch nicht probiert':v==='F'?'F · 
 function duoLocalHistory(){return st.duo.local.history||[]}
 function duoLocalReset(){
  st.duo.mode='local';
- st.duo.local={round:1,productId:null,votes:{},history:[],activeRole:'mikel'};
+ st.duo.local={round:1,productId:null,votes:{},history:[],activeRole:null,starter:null};
  duoPersist();render();
 }
 async function duoLocalStart(forceNext){
@@ -255,16 +255,26 @@ async function duoLocalStart(forceNext){
   if(forceNext&&local.productId&&completed){
    local.history.push({productId:local.productId,votes:{...local.votes}});
    local.round++;
+   // Alternate automatically, irrespective of who began the previous round.
+   const prevStarter=local.starter||'mikel';local.starter=prevStarter==='mikel'?'huong':'mikel';
   }
+  if(!local.starter)local.starter=Math.random()<0.5?'mikel':'huong';
   const used=local.history.map(x=>x.productId);
   if(local.productId)used.push(local.productId);
   for(const key of ['mikel','huong'])for(const id of Object.keys(st.guest[key]||{}))
    if(st.guest.mikel[id]&&st.guest.huong[id])used.push(id);
   const p=await duoPick(used);
   if(!p){st.duo.qualityMessage='Keine weitere Packung mit ausreichender Bildauflösung gefunden. Die noch offenen Produkte brauchen bessere Fotos.';return}
-  local.productId=p.id;local.votes={};local.activeRole='mikel';
+  local.productId=p.id;local.votes={};local.activeRole=local.starter;
   st.duo.qualityMessage='';duoPersist();
  }finally{st.duo.busy=false;render()}
+}
+function duoSetStarter(person){
+ if(!['mikel','huong'].includes(person)||st.duo.mode!=='local')return;
+ const local=st.duo.local;
+ if(Object.keys(local.votes||{}).length)return toast('Diese Runde hat bereits eine Stimme. Nächste Runde wechselt automatisch.');
+ local.starter=person;local.activeRole=person;
+ duoPersist();render();
 }
 function duoSaveLocalAnswer(person,productId,choice){
  if(!['mikel','huong'].includes(person)||!getProduct(productId)||!duoValidChoice(choice))return false;
