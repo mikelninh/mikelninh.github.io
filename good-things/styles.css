@@ -432,3 +432,21 @@ body:has(.board-layout) .hero .package-c{transform:scale(.7) rotate(13deg)}
 .duo-room small{display:block;color:#7c897a}
 @media(max-width:850px){.duo-stage{grid-template-columns:1fr}.duo-hero-photo{height:330px}.duo-decision{min-height:0}.duo-product{padding:18px}.duo-decision{padding:18px}}
 @media(max-width:560px){.duo-controls{padding:10px}.duo-switch{width:100%}.duo-switch button{flex:1;font-size:10px;padding:9px 6px}.duo-grade{font-size:29px;min-height:55px;border-radius:9px}.duo-vote-chooser{gap:5px}.duo-untried-button{font-size:13px;flex-wrap:wrap}.duo-photo-bottom{font-size:8px;padding:9px}.duo-hero-photo{height:290px}.duo-product h3{font-size:32px}.duo-choice>p{font-size:21px}.duo-board-banner{flex-direction:column;align-items:stretch;padding:15px}.duo-board-banner strong{font-size:23px}.duo-board-banner .button{width:100%}.duo-reveal-grid{grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr)}.duo-vote-revealed strong{font-size:49px}.duo-vote-revealed span{font-size:9px}.duo-versus{font-size:25px}}
+
+/* 1.8: Give the independent-duo game a full-width, cinema-like stage. */
+body:has(.duo-stage) .workspace,body:has(.duo-welcome) .workspace{display:block;max-width:1440px;padding-top:34px}
+body:has(.duo-stage) .left-rail,body:has(.duo-welcome) .left-rail{display:none}
+body:has(.duo-stage) .hero,body:has(.duo-welcome) .hero{grid-template-columns:minmax(0,1fr) 280px;padding-top:26px;padding-bottom:23px;gap:25px}
+body:has(.duo-stage) .hero-art,body:has(.duo-welcome) .hero-art{height:190px}
+body:has(.duo-stage) .hero h1,body:has(.duo-welcome) .hero h1{font-size:clamp(52px,5.9vw,76px);margin:10px 0}
+body:has(.duo-stage) .hero p,body:has(.duo-welcome) .hero p{font-size:14px;margin:0}
+body:has(.duo-stage) .hero-foot,body:has(.duo-welcome) .hero-foot{display:none}
+.duo-photo-unavailable{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;text-align:center;padding:36px}
+.duo-photo-unavailable p{font:550 20px 'Fraunces',serif;color:#657667;line-height:1.4;max-width:350px}
+.duo-photo-problem{font:550 16px 'Fraunces',serif;line-height:1.45;color:#91645a;text-align:center}
+.duo-hero-photo:has(.duo-photo-problem){display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px}
+@media(max-width:780px){
+ body:has(.duo-stage) .hero,body:has(.duo-welcome) .hero{display:block}
+ body:has(.duo-stage) .hero-art,body:has(.duo-welcome) .hero-art{display:none}
+ body:has(.duo-stage) .workspace,body:has(.duo-welcome) .workspace{padding-top:20px}
+}
