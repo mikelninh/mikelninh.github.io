@@ -10,6 +10,8 @@ const source=fs.readFileSync(path.join(root,'app.js'),'utf8');
 const catalogs=['catalog.js','catalog-extra-1.js','catalog-extra-2.js','catalog-extra-3.js','catalog-merge.js'].map(file=>fs.readFileSync(path.join(root,file),'utf8'));
 const schema=fs.readFileSync(path.join(root,'schema.sql'),'utf8');
 const photoReports=fs.readFileSync(path.join(root,'photo-reports.sql'),'utf8');
+const duoSchema=fs.readFileSync(path.join(root,'duo-v18.sql'),'utf8');
+const duoPhotoGuard=fs.readFileSync(path.join(root,'duo-photo-guard-v18.sql'),'utf8');
 const productRequests=fs.readFileSync(path.join(root,'product-requests-v17.sql'),'utf8');
 const nutritionMigration=fs.readFileSync(path.join(root,'nutrition-v17.sql'),'utf8');
 const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
@@ -25,9 +27,9 @@ const makeNode=()=>{
   addEventListener(){},createElement(){return node('created')},node
  };
 };
-function fixture(){
+function fixture(seed={}){
  const window={addEventListener(){}},document=makeNode();
- const guest={};
+ const guest={...seed};
  const localStorage={getItem:k=>guest[k]||null,setItem:(k,v)=>{guest[k]=v}};
  const context={window,document,localStorage,history:{replaceState(){}},
   location:{origin:'https://mikelninh.github.io',pathname:'/good-things/',href:'https://mikelninh.github.io/good-things/'},
@@ -35,7 +37,7 @@ function fixture(){
   console,Intl};
  for(const catalog of catalogs)vm.runInNewContext(catalog,context);
  const injected=source.replace("document.addEventListener('click',async(event)=>{",
- "window.__qa={render,renderBoard,renderDiscover,renderOurs,renderMy,renderCommunity,ourPreview,productFacts,proteinNumber,filteredProducts,boardMove,boardAnswers,boardEntries,boardNotTried,boardSorted,boardTrayProducts,boardInsertionIndex,undoBoard,resetBoard,matchedPhoto,saveRating,st,gradedRatings,notTriedRatings,selfRatings,publicRated,scoreFor,quickRank,importTier,importJson,snapshotUrl,decodeSnapshot};document.addEventListener('click',async(event)=>{");
+ "window.__qa={render,renderBoard,renderDiscover,renderOurs,renderMy,renderCommunity,ourPreview,productFacts,proteinNumber,filteredProducts,duoLocalStart,duoLocalVote,duoLocalSnapshot,duoPhotoCandidates,duoHiResImage,duoPick,renderDuo,boardMove,boardAnswers,boardEntries,boardNotTried,boardSorted,boardTrayProducts,boardInsertionIndex,undoBoard,resetBoard,matchedPhoto,saveRating,st,gradedRatings,notTriedRatings,selfRatings,publicRated,scoreFor,quickRank,importTier,importJson,snapshotUrl,decodeSnapshot};document.addEventListener('click',async(event)=>{");
  assert.ok(injected.includes('window.__qa={'),'Expected app injection point is missing');
  vm.runInNewContext(injected,context);
  return {context,t:window.__qa,localStorage};
@@ -56,9 +58,9 @@ test('356 records, 354 eligible in 18 categories, with two dairy products exclud
  assert.equal(a.filter(x=>x.vegan_status==='non_vegan').length,2);
  assert.equal(a.filter(x=>x.vegan_status!=='non_vegan').length,354);
  assert.ok(a.every(x=>x.verified===false));
- assert.equal((t.renderDiscover().match(/class="product-card"/g)||[]).length,354);
+ assert.equal((t.renderDiscover().match(/class="product-card"/g)||[]).length,304);
  assert.ok(!t.renderDiscover().includes('Sweet Paprika</h3>'));
- assert.equal((t.renderBoard().match(/data-drag-id="/g)||[]).length,354);
+ assert.equal((t.renderBoard().match(/data-drag-id="/g)||[]).length,304);
  assert.equal((t.renderBoard().match(/class="tier-lane"/g)||[]).length,6);
 });
 test('Guest scores persist and public snippets escape notes',async()=>{
@@ -95,14 +97,14 @@ test('Sourced photos are product specific and link to traceable provenance',()=>
  const {context}=fixture();
  const a=context.window.GT_CATALOG;
  const matched=a.filter(x=>['retailer','brand','barcode'].includes(x.image_status));
- assert.equal(matched.length,303);
+ assert.equal(matched.length,304);
  assert.ok(matched.every(x=>x.image_url?.startsWith('https://')&&x.image_source_url?.startsWith('https://')));
  assert.ok(matched.filter(x=>x.image_status==='retailer').every(x=>x.image_source_url&&x.photo_attribution));
  assert.ok(matched.filter(x=>x.image_status==='retailer'&&x.retailer_sku).every(x=>x.image_source_url&&x.retailer_sku));
 });
 test('Drag-board state supports placing, reorder, unrank and blocks nonvegan products',async()=>{
  const {t,localStorage}=fixture();
- assert.equal(t.boardTrayProducts().length,354);
+ assert.equal(t.boardTrayProducts().length,304);
  assert.equal(await t.boardMove('snacks-02','S',0),false);
  assert.equal(t.boardEntries().length,0);
  assert.equal(await t.boardMove('tofu-01','S',0),true);
@@ -110,9 +112,9 @@ test('Drag-board state supports placing, reorder, unrank and blocks nonvegan pro
  assert.deepEqual(Array.from(t.boardSorted('S'),x=>x.product_id),['tofu-04','tofu-01']);
  assert.equal(await t.boardMove('tofu-01','D',0),true);
  assert.deepEqual(Array.from(t.boardSorted('D'),x=>x.product_id),['tofu-01']);
- assert.equal(t.boardTrayProducts().length,352);
+ assert.equal(t.boardTrayProducts().length,302);
  assert.equal(await t.boardMove('tofu-01','unranked',0),true);
- assert.equal(t.boardTrayProducts().length,353);
+ assert.equal(t.boardTrayProducts().length,303);
  assert.ok(localStorage.getItem('goodthings_v13_guest'));
 });
 
@@ -125,8 +127,8 @@ test('Correct packshots stay source-matched; fuzzy photo candidates never appear
  assert.ok(!t.renderBoard().includes('https://untrusted.example/fuzzy.png'));
  assert.ok(!t.renderDiscover().includes('https://untrusted.example/fuzzy.png'));
  const filtered=t.st.boardPhotoFilter='matched';
- assert.equal(t.boardTrayProducts().length,303);
- t.st.boardPhotoFilter='missing';assert.equal(t.boardTrayProducts().length,51);
+ assert.equal(t.boardTrayProducts().length,304);
+ t.st.boardPhotoFilter='missing';assert.equal(t.boardTrayProducts().length,50);
  t.st.boardPhotoFilter='all';assert.equal(t.boardTrayProducts().length,354);
 });
 test('Undo restores old tier, notes and private status; reset clears guest board',async()=>{
@@ -160,7 +162,7 @@ test('Photo correction schema is private, constrained and RLS-protected',()=>{
 
 test('Not tried yet is a saved answer with no grade, a private state and a separate shelf',async()=>{
  const {t,localStorage}=fixture();
- assert.equal(t.boardTrayProducts().length,354);
+ assert.equal(t.boardTrayProducts().length,304);
  assert.equal(await t.boardMove('tofu-01','not_tried',0),true);
  const record=t.st.guest.you['tofu-01'];
  assert.equal(record.status,'not_tried');
@@ -169,7 +171,7 @@ test('Not tried yet is a saved answer with no grade, a private state and a separ
  assert.equal(record.position,0);
  assert.equal(t.boardEntries().length,0);
  assert.equal(t.boardNotTried().length,1);
- assert.equal(t.boardTrayProducts().length,353);
+ assert.equal(t.boardTrayProducts().length,303);
  assert.ok(t.renderBoard().includes('class="not-tried-shelf"'));
  assert.ok(t.renderBoard().includes('data-drop-tier="not_tried"'));
  assert.ok(t.renderMy().includes('Not tried yet (1)'));
@@ -180,7 +182,7 @@ test('Not tried yet is a saved answer with no grade, a private state and a separ
  t.st.catalogStatus='not_tried';
  assert.deepEqual(Array.from(t.filteredProducts(),p=>p.id),['tofu-01']);
  t.st.catalogStatus='unanswered';
- assert.equal(t.filteredProducts().length,353);
+ assert.equal(t.filteredProducts().length,303);
 });
 test('Not tried can turn into a real grade and undo restores the untried state',async()=>{
  const {t}=fixture();
@@ -197,7 +199,7 @@ test('Not tried can turn into a real grade and undo restores the untried state',
  assert.equal(t.st.guest.you['tofu-01'].is_public,false);
  await t.undoBoard();
  assert.equal(t.boardAnswers().length,0);
- assert.equal(t.boardTrayProducts().length,354);
+ assert.equal(t.boardTrayProducts().length,304);
 });
 test('A graded product can become not tried without leaking any score or public flag',async()=>{
  const {t}=fixture();
@@ -266,8 +268,8 @@ test('F grade works in quick picker, share snapshots, public scores and comparis
  assert.equal(snapshot[0].tier,'F');
  const catalog=context.window.GT_CATALOG;
  const valid=catalog.filter(p=>p.vegan_status!=='non_vegan');
- assert.equal(valid.filter(p=>p.image_url&&['retailer','brand','barcode'].includes(p.image_status)).length,303);
- assert.equal(valid.filter(p=>!p.image_url).length,51);
+ assert.equal(valid.filter(p=>p.image_url&&['retailer','brand','barcode'].includes(p.image_status)).length,304);
+ assert.equal(valid.filter(p=>!p.image_url).length,50);
 });
 
 
@@ -322,4 +324,54 @@ test('Barcode nutrient columns and dated price UI are honest about missing data'
  assert.match(source,/x\.location\?\.osm_address_country_code==='DE'/);
  assert.match(source,/Beobachteter Preis, nicht Live-Angebot/);
  assert.match(source,/Kein belegter Preis/);
+});
+
+
+test('Duo preview uses real photos and hides the first person’s grade until both respond',async()=>{
+ const {t,localStorage}=fixture();
+ assert.equal(t.duoPhotoCandidates().length,304);
+ assert.ok(t.renderDuo().includes('Unser erstes Produkt'));
+ await t.duoLocalStart(false);
+ const first=t.duoLocalSnapshot();
+ assert.ok(first.product?.image_url?.startsWith('https://'));
+ assert.ok(first.product?.image_source_url);
+ t.duoLocalVote('S');
+ assert.equal(t.st.duo.local.votes.mikel,'S');
+ assert.equal(t.st.duo.local.votes.huong,undefined);
+ assert.ok(!t.renderDuo().includes('duo-vote-revealed'));
+ t.duoLocalVote('F');
+ assert.ok(t.renderDuo().includes('duo-vote-revealed'));
+ assert.equal(t.st.guest.mikel[first.product.id].tier,'S');
+ assert.equal(t.st.guest.huong[first.product.id].tier,'F');
+ assert.ok(localStorage.getItem('goodthings_duo_v18'));
+ await t.duoLocalStart(true);
+ assert.equal(t.st.duo.local.round,2);
+ assert.notEqual(t.st.duo.local.productId,first.product.id);
+ assert.equal(t.st.duo.local.history.length,1);
+});
+test('The Duo game explicitly supports no-grade answers separately from failures',async()=>{
+ const {t}=fixture();
+ await t.duoLocalStart(false);
+ const id=t.st.duo.local.productId;
+ t.duoLocalVote('not_tried');t.duoLocalVote('D');
+ assert.equal(t.st.guest.mikel[id].tier,null);
+ assert.equal(t.st.guest.mikel[id].status,'not_tried');
+ assert.equal(t.st.guest.huong[id].tier,'D');
+ assert.equal(t.st.guest.mikel[id].is_public,false);
+});
+test('Duo room membership and hidden votes are enforced in database schema',()=>{
+ assert.match(duoSchema,/create table if not exists public.gt_duo_rooms/);
+ assert.match(duoSchema,/create table if not exists public.gt_duo_votes/);
+ assert.match(duoSchema,/create table if not exists public.gt_duo_reveals/);
+ assert.match(duoSchema,/gt_duo_votes for select to authenticated\s+using\(user_id=/);
+ assert.match(duoSchema,/host_answer is not null and partner_answer is not null/);
+ assert.match(duoSchema,/duo_host_advance/);
+ assert.match(duoPhotoGuard,/gt_duo_create_photo_checked/);
+});
+test('All playable products have a traceable source photo, not an arbitrary lookalike',()=>{
+ const {t}=fixture();
+ for(const p of t.duoPhotoCandidates()){
+  assert.ok(p.image_source_url);
+  assert.ok(p.image_url?.startsWith('https://'));
+ }
 });
