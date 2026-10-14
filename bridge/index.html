@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#183f32">
+<meta name="description" content="BRIDGE: Vom Gründerproblem zur hilfreichen nächsten Verbindung. Interaktiver, unabhängiger Prototyp mit öffentlichen Ressourcen und menschlicher Prüfung.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BRIDGE — Gute Ideen brauchen die richtigen Verbindungen">
+<meta property="og:description" content="Eine echte Herausforderung. Drei überprüfbare Ressourcen. Ein guter nächster Schritt.">
+<meta property="og:url" content="https://mikelninh.github.io/bridge/">
+<link rel="canonical" href="https://mikelninh.github.io/bridge/">
+<title>BRIDGE — Vom Problem zum nächsten Schritt</title>
+<link rel="stylesheet" href="./style.css">
+<script src="./app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#workspace">Zum Inhalt springen</a>
+<header class="nav">
+  <div class="shell navline">
+    <a class="identity" href="#top" aria-label="BRIDGE Startseite"><span class="brandmark" aria-hidden="true">✳</span><span><b>bridge<span class="branddot">.</span></b><small>FOR IDEAS THAT DESERVE A CHANCE</small></span></a>
+    <div class="navlinks"><a href="#how">Wie es funktioniert</a><a href="#about">Über den Prototyp</a><a class="navgithub" href="https://github.com/mikelninh/venture-intelligence" target="_blank" rel="noopener noreferrer">Engineering ↗</a></div>
+  </div>
+</header>
+<main id="top">
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div class="herocopy">
+        <span class="eyebrow"><span class="live-dot"></span> FOUNDER SUPPORT INTELLIGENCE · EXPERIMENT 01</span>
+        <h1>Gute Ideen brauchen<br><em>die richtigen</em><br>Verbindungen<span class="warm-period">.</span></h1>
+        <p>Eine grosse Idee scheitert selten an einer einzigen Frage. Oft fehlt gerade ein Kontakt, ein Stück Wissen oder ein erster nächster Schritt. <strong>BRIDGE hilft, Unterstützung auffindbar und nachvollziehbar zu machen.</strong></p>
+        <div class="heroactions"><a class="primary" href="#workspace">Drei echte Anwendungsfälle erleben <span aria-hidden="true">↘</span></a><span class="micronote">3 Minuten · kostenlos · ohne Konto</span></div>
+      </div>
+      <div class="heroart" aria-label="Abstrakte Verbindung zwischen drei Startups und einem gemeinsamen Unterstützungspunkt" role="img">
+        <div class="artdecor" aria-hidden="true"><i class="artline al1"></i><i class="artline al2"></i><i class="artline al3"></i><div class="artorb artorb1"><span>✺</span></div><div class="artorb artorb2"><span>◌</span></div><div class="artorb artorb3"><span>⌘</span></div><div class="artcore"><span>✳</span></div></div>
+        <div class="artfoot"><span>FROM A QUESTION</span><span>TO A USEFUL NEXT STEP ↗</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="product" id="workspace">
+    <div class="shell">
+      <div class="sectioncap"><span>01 / EXPERIENCE</span><span class="separator"></span><span>AN INDEPENDENT PUBLIC PROTOTYPE</span></div>
+      <div class="product-heading"><div><h2>Wobei steckt euer Team gerade fest?</h2><p>Wähle einen fiktiven Fall. BRIDGE sucht dazu passende öffentliche Ressourcen und bereitet einen sinnvollen nächsten Schritt vor.</p></div><span class="pill"><span class="dot"></span> Kein Zugang zu HTGF-internen Daten</span></div>
+      <div class="workspace">
+        <div class="workspace-left">
+          <div class="stepnum"><span>01</span><span>Herausforderung verstehen</span></div>
+          <div class="scenarios" role="group" aria-label="Gründungsherausforderung wählen">
+            <button class="scenario selected" type="button" data-case="medtech" aria-pressed="true"><span class="case-icon">✚</span><span class="casetext"><strong>MedTech</strong><small>Klinische Pilotpartner &amp; regulatorische Fragen</small></span><span class="case-arrow">↗</span></button>
+            <button class="scenario" type="button" data-case="climate" aria-pressed="false"><span class="case-icon">↝</span><span class="casetext"><strong>Climate Tech</strong><small>Industriepartner &amp; erste Anwendungen</small></span><span class="case-arrow">↗</span></button>
+            <button class="scenario" type="button" data-case="saas" aria-pressed="false"><span class="case-icon">▧</span><span class="casetext"><strong>B2B Software</strong><small>Go-to-Market &amp; Kundenverständnis</small></span><span class="case-arrow">↗</span></button>
+          </div>
+          <label class="inputlabel" for="founder-question">Anfrage des Gründerteams <span>bearbeitbar, bleibt nur in diesem Browser-Tab</span></label>
+          <textarea id="founder-question" rows="5" maxlength="900" spellcheck="true" aria-describedby="privacy-inline"></textarea>
+          <div class="composer-bottom"><span id="privacy-inline">Keine Übertragung, kein LLM, kein Versand.</span><span id="wordcount">0/900</span></div>
+          <div class="runrow"><button type="button" id="match-btn" class="primary">Unterstützung finden <span aria-hidden="true">↗</span></button><button type="button" id="reset-btn" class="quiet">Zurücksetzen</button></div>
+        </div>
+        <div class="workspace-right" aria-live="polite" aria-atomic="false">
+          <div id="report-placeholder" class="report-placeholder">
+            <div class="placeholder-symbol">✳</div><span class="eyebrow">READY WHEN YOU ARE</span><h3>Die richtigen Fragen zuerst.</h3><p>Wähle eine Herausforderung und starte den kurzen Abgleich mit einer kuratierten Liste öffentlicher Hilfsangebote.</p>
+          </div>
+          <div id="report" hidden></div>
+        </div>
+      </div>
+      <div class="tiny-footer"><span>Alle Beispielunternehmen sind fiktiv. Ein Quellenlink bestätigt nur, dass die Ressource öffentlich beschrieben wird – nicht, dass ein konkreter Kontakt verfügbar ist.</span><span>BUILT TO LEARN, NOT TO PRETEND.</span></div>
+    </div>
+  </section>
+  <section class="how" id="how">
+    <div class="shell">
+      <div class="sectioncap"><span>02 / PRODUCT THINKING</span><span class="separator"></span><span>LESS DASHBOARD, MORE ACTION</span></div>
+      <h2>Es geht nicht darum, mehr Informationen zu sammeln.<br><em>Sondern besser weiterzukommen.</em></h2>
+      <div class="howgrid">
+        <article><div class="howicon">01</div><h3>Verstehen</h3><p>Was braucht das Gründerteam wirklich? Was fehlt? Eine gute Rückfrage ist oft hilfreicher als eine voreilige Empfehlung.</p></article>
+        <article><div class="howicon">02</div><h3>Verbinden</h3><p>Öffentliche Ressourcen mit Originalquellen, kurzer Begründung und Hinweisen auf Einschränkungen.</p></article>
+        <article><div class="howicon">03</div><h3>Prüfen</h3><p>Ein persönliches Briefing vorbereiten. Keine automatisierte Einführung und keine Weitergabe von Kontaktinformationen.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="about" id="about">
+    <div class="shell about-grid">
+      <div><div class="sectioncap"><span>03 / AN OPEN QUESTION</span></div><h2>Würdet ihr das<br><em>wirklich nutzen?</em></h2><p>BRIDGE ist ein unabhängiger Prototyp, inspiriert davon, wie Unterstützung für Gründer:innen besser zugänglich werden könnte. Er ist <strong>kein offizielles HTGF-Produkt</strong>, kein CRM und keine funktionierende automatische Netzwerkvermittlung.</p><p>Der nächste Schritt wäre nicht „noch mehr KI“, sondern ein kurzer Test mit echten Nutzer:innen: Welche Empfehlung hilft? Welche Frage fehlt? Spart der vorbereitete nächste Schritt tatsächlich Arbeit?</p></div>
+      <div class="aboutnote"><span class="eyebrow">A NOTE FROM THE MAKER</span><p>„Ich würde gern verstehen, wo ein Team heute wirklich Zeit verliert – und dann etwas Kleines bauen, ausprobieren und verbessern.“</p><div class="aboutbottom"><strong>Michael Ninh</strong><a href="https://mikelninh.github.io/beyond-cv/">Beyond the CV ↗</a></div><div class="micro-divider"></div><small>Eigenständige Produktidee · © 2026 · Keine personenbezogenen Daten an einen Server übertragen</small></div>
+    </div>
+  </section>
+</main>
+<footer class="footer"><div class="shell"><span>BRIDGE / GOOD IDEAS, WELL CONNECTED.</span><span>Ein unabhängiges Experiment – keine Verbindung zu HTGF.</span><a href="#top">Nach oben ↑</a></div></footer>
+</body></html>
