@@ -1,6 +1,6 @@
 # ✳ GOOD THINGS — Mikel & Huong
 
-**Build:** 1.6.0 (F Durchgefallen + source-photo expansion)  
+**Build:** 1.7.0 (354 products · 303 barcode/retailer packshots · nutrition & price evidence)  
 **Website:** https://mikelninh.github.io/good-things/  
 **Source:** /good-things on the \`mikelninh.github.io\` GitHub Pages repository  
 **Architecture:** GitHub Pages HTML/CSS/vanilla JS + Supabase email/password Auth and PostgreSQL/RLS in an isolated namespace in the existing EU Frankfurt project.
@@ -67,6 +67,21 @@ A home for things worth sharing. The S–F interactive tier board, personal *Our
 - Exact missing-photo acceptance criteria and the item-by-item backlog are maintained in [PHOTOS-NEEDED.md](./PHOTOS-NEEDED.md). Do not replace the unresolved half with guessed similar images.
 - F compatibility and packshot coverage have regression tests. Browser click-through, CDN rights and authenticated signup remain release gates.
 
+### 1.7 — Barcode products, nutrition, shopping and honest historical prices
+
+**Verified in the Supabase database (14 October 2026): 356 records total, 354 rankable, 303 with source-linked packshots, and 252 with community-submitted nutrition.**
+
+- Added **252 unique barcode-linked, vegan-tagged community grocery records** from Open Food Facts (OdBL), without changing any pre-existing product ID or existing rating.
+- Catalogue now supports **18 categories**, with barcodes and source-linked images, from stores reported to include REWE, Rossmann, dm, EDEKA, Kaufland and Alnatura. These are **crowdsourced buying hints**, not proof of today's stock.
+- Product drawer shows energy, **protein**, carbohydrates, sugar, fat, saturated fat, fibre, salt, reported quantity, source link, reported retailer and separate price evidence. Nutrient quantities are per 100g/100ml according to the original dataset, and may be incomplete/out of date. No placeholders are presented as nutrition facts.
+- Store links open official retailer sites; source/product evidence remains Open Food Facts for third-party records. Do not claim they are always in stock.
+- **Price lookup** is on demand per barcode via Open Prices API. It only displays observations with EUR currency, German location, source ID, date and amount. Old prices are explicitly labelled **observed, not live**, and missing price records are clearly described as unknown. Never invent a price.
+- Existing 51 older catalogue candidates without exact photos still show illustrations. Adding 252 barcode-backed images brings source-linked photo coverage from 51/102 to **303/354 = 85.6%**. The old 51 are listed in [PHOTOS-NEEDED.md](./PHOTOS-NEEDED.md).
+- Supply quality: automated filters reject some non-grocery entries, but Open Food Facts remains crowdsourced; verify actual package, ingredients and use rights before treating any listing as fully approved. Reconcile duplicate named products before a wider public rollout.
+- The three extra batches are checked into \`catalog-extra-{1,2,3}.js\` and merged by \`catalog-merge.js\`. The Supabase database has corresponding \`gt_products\` records and the \`nutrition-v17.sql\` schema additions.
+- Attribution/licensing: Open Food Facts / ODbL, plus attribution to Open Prices for price observations, is available in the page footer and privacy notice.
+- Tests cover all 354 products, unique IDs, 303 photo records, 252 nutrition profiles, high-protein sorting and independent F/no-grade state transitions.
+
 ## Important release gates
 
 **This is an actual deployed beta, not yet a fully verified mass-market release.**
@@ -106,12 +121,12 @@ select count(*) as first_five_completed from (select user_id from public.gt_rati
 
 ## How to try it
 
-1. Visit the [live website](https://mikelninh.github.io/good-things/), which opens the **Tier Board** first.
+1. Visit the [live website](https://mikelninh.github.io/good-things/), which opens the **Tier Board** first. **354 rankable products** across 18 categories are loaded from source-linked static catalogues.
 2. Drag a tofu from the **unanswered tray** to an S–F row if you tasted it; otherwise drag into **Not tried yet** or tap once and choose that no-grade answer. Reorder graded items, undo, clear an answer, or reset. Save a PNG or share a snapshot of graded items only.
 3. Under Our Shelf, use the **private** Mikel and Huong demo personas; ratings are stored on your device only until both curator identities are manually verified and linked.
 4. Under Your Shelf, make five ratings, export/share a snapshot or create an account to persist across devices.
 5. When Auth is configured, make two **separate** verified accounts; each can publish its own ratings, follow friends and build lists.
-6. Tap any packshot in the product details to check its source or report an issue (account required). The Community feed and rankings show only real public opinions; when empty, they stay honest.
+6. Open product details to see per-100g **protein, calories and other nutrients**, source links, reported stores and the last eligible evidence-backed Open Prices EUR observation (if available). Tap any packshot in the product details to check its source or report an issue (account required). The Community feed and rankings show only real public opinions; when empty, they stay honest.
 
 ## Known privacy boundaries
 
