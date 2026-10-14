@@ -188,10 +188,12 @@ function duoHiResImage(p){
  return url;
 }
 function duoPhotoMarkup(p){
+ if(duoPhotoBroken.has(p.id))return '<div class="duo-hero-photo duo-photo-unavailable"><p>Dieses Bild ist nicht scharf genug oder vorübergehend unerreichbar.</p><button class="button button-lime" data-action="duo-skip-photo">Anderes Produkt mit Foto ↗</button></div>';
  const selected=duoPhotoCheck.get(p.id);const url=typeof selected==='string'?selected:duoHiResImage(p),fallback=validUrl(p.image_url);
  return '<div class="duo-hero-photo"><img loading="eager" data-duo-image="true" data-fallback="'+attr(fallback)+'" src="'+attr(url)+'" alt="'+attr(p.brand+' '+p.name)+' — Produktverpackung" referrerpolicy="no-referrer"><div class="duo-photo-bottom"><span>PHOTO · '+esc(p.photo_attribution||'Product source')+'</span><span>'+esc(p.barcode?'EAN '+p.barcode:'Source-linked packshot')+'</span></div></div>';
 }
 const duoPhotoCheck=new Map();
+const duoPhotoBroken=new Set();
 async function duoIsPhotoSharp(p){
  if(!p||!matchedPhoto(p))return false;
  if(duoPhotoCheck.has(p.id))return duoPhotoCheck.get(p.id);
@@ -360,6 +362,28 @@ async function duoNextRemote(){
  if(r.error)return toast('Nächste Runde blockiert: '+r.error.message);
  st.duo.room=r.data;st.duo.ownVote=null;st.duo.reveal=null;await duoRefresh();
 }
+
+async function duoSkipPhoto(){
+ const remote=st.duo.mode==='remote';
+ const id=remote?st.duo.room?.current_product_id:st.duo.local.productId;
+ if(!id)return;
+ duoPhotoCheck.set(id,false);duoPhotoBroken.add(id);
+ if(!remote){
+  if(Object.keys(st.duo.local.votes).length)return toast('Eine Antwort ist schon abgegeben. Das Foto kannst du oben bei der Quelle prüfen.');
+  st.duo.local.productId=null;st.duo.local.votes={};
+  await duoLocalStart(false);return;
+ }
+ if(!st.user||!st.duo.room)return;
+ if(st.duo.room.host_id!==st.user.id)return toast('Bitte den Host um einen neuen Artikel.');
+ if(st.duo.ownVote)return toast('Deine Stimme ist schon abgegeben; nun muss die zweite Person entscheiden.');
+ const room=st.duo.room;
+ const next=await duoPick([id,...st.duo.history.map(x=>x.product_id)]);
+ if(!next)return toast('Noch keine weiteren hochauflösenden Produktfotos verfügbar.');
+ const r=await sb.from('gt_duo_rooms').update({current_product_id:next.id,updated_at:new Date().toISOString()}).eq('id',room.id).eq('round_no',room.round_no).select().single();
+ if(r.error)return toast('Die Runde kann nach einer abgegebenen Stimme nicht übersprungen werden.');
+ st.duo.room=r.data;st.duo.ownVote=null;await duoRefresh();
+}
+
 function duoSharedLink(){
  if(!st.duo.room)return;
  copyLink(URL_BASE+'?view=duo&room='+encodeURIComponent(st.duo.room.id));
@@ -748,10 +772,11 @@ document.addEventListener('pointerup',async e=>{
 function duoImageFallback(img,why){
  const parent=img.closest('.duo-hero-photo');
  if(!parent)return;
- img.hidden=true;
+ img.hidden=true;duoPhotoBroken.add(st.duo.mode==='remote'?st.duo.room?.current_product_id:st.duo.local.productId);
  const note=document.createElement('div');note.className='duo-photo-problem';
  note.textContent='Foto nicht in ausreichend guter Qualität verfügbar ('+why+'). Bitte Bildquelle prüfen, bevor ihr dieses Produkt bewertet.';
  parent.appendChild(note);
+ const retry=document.createElement('button');retry.className='button button-lime button-small';retry.dataset.action='duo-skip-photo';retry.textContent='Anderes Produkt mit gutem Foto ↗';parent.appendChild(retry);
 }
 document.addEventListener('error',e=>{
  const img=e.target;if(img?.dataset?.duoImage!=='true')return;
@@ -1372,6 +1397,7 @@ document.addEventListener('click',async(event)=>{
  case 'duo-copy-link':duoSharedLink();break;
  case 'duo-open-room':await duoOpenRoom(id);break;
  case 'duo-refresh':await duoRefresh();break;
+ case 'duo-skip-photo':await duoSkipPhoto();break;
  case 'board-persona':if(!st.user&&['you','mikel','huong'].includes(val)){st.persona=val;st.boardHistory=[];render()}break;
  case 'board-pick':quickRank(id);break;
  case 'mark-not-tried':{const pid=id||st.selected;if(pid){const ok=await boardMove(pid,'not_tried',0);if(ok)closeOverlay('drawerOverlay')}break}
