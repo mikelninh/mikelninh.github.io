@@ -1,6 +1,6 @@
 # ✳ GOOD THINGS — Mikel & Huong
 
-**Build:** 1.7.0 (354 products · 303 barcode/retailer packshots · nutrition & price evidence)  
+**Build:** 1.8.0 (Duo — independent two-person ranking · Photo Lab)  
 **Website:** https://mikelninh.github.io/good-things/  
 **Source:** /good-things on the \`mikelninh.github.io\` GitHub Pages repository  
 **Architecture:** GitHub Pages HTML/CSS/vanilla JS + Supabase email/password Auth and PostgreSQL/RLS in an isolated namespace in the existing EU Frankfurt project.
@@ -83,6 +83,17 @@ A home for things worth sharing. The S–F interactive tier board, personal *Our
 - Tests cover all 354 products, unique IDs, 303 photo records, 252 nutrition profiles, high-protein sorting and independent F/no-grade state transitions.
 - Missing product suggestions: verified users can submit a barcode, brand, product name and store hint. The `gt_product_requests` table is private, owner-readable and cannot be used to insert or modify the public catalogue. Additions require manual review and an explicit catalogue import. Schema: `product-requests-v17.sql`.
 - Real browser touch/drag, price CORS and signup confirmation are still unverified release gates; simulated script tests do not replace actual device testing.
+
+### 1.8 — Mikel × Huong surprise game and photo audit
+
+- **Together / Duo** is accessible from the homepage, desktop and mobile navigation or the link `?view=duo`. Both independently give S/A/B/C/D/F or Not tried yet for the same suggested product. F means Durchgefallen.
+- **Same-device demo** works without accounts; the first vote is hidden in the UI, the second person votes, and only then both scores appear. Scores are copied to the corresponding local Mikel and Huong shelves. A shared physical browser is not cryptographically private.
+- **Two-account mode**: two registered accounts can share a room link and vote on different devices. Per-user RLS limits vote visibility to the voting user. A server trigger creates the reveal only after both votes. Saved personal scores remain private until explicitly published. Only the host may advance the round. An actual two-login end-to-end browser test is still pending.
+- **High-res source-photo gate**: before suggesting a product, the browser tries its traceable packshot (or a full Open Food Facts image) and requires at least 450 pixels on each axis. Lower-resolution or missing photos are skipped; no lookalike imagery is substituted.
+- **Photo Lab** at [photos.html](./photos.html) audits all 354 product records: filters missing/uninspected/small images, checks resolution in batches of 30, saves browser-local results and exports CSV. Pixel counts alone do not verify the correct flavour, size, packaging generation or the photographer's reuse permission.
+- **Current photo coverage**: 304/354 have traceable source image links after adding an official Alpro Skyr unsweetened 400g packshot. 50 old catalogue entries remain without photos. The 304 existing links have NOT all been audited for their high-resolution quality, so do not claim 304 HD packshots.
+- **Server-backed Duo security**: Supabase tables for rooms, votes and reveals; private RLS rules and internal trigger functions. Schema sources: duo-v18.sql, duo-photo-guard-v18.sql, duo-private-v18.sql.
+- **Still to verify before public launch**: two-user signup redirects, actual multi-device session/reveal, mobile browser touch behaviour, image licensing, real product variant verification, full GDPR documentation and legal notice.
 
 ## Important release gates
 
