@@ -81,6 +81,8 @@ A home for things worth sharing. The S–F interactive tier board, personal *Our
 - The three extra batches are checked into \`catalog-extra-{1,2,3}.js\` and merged by \`catalog-merge.js\`. The Supabase database has corresponding \`gt_products\` records and the \`nutrition-v17.sql\` schema additions.
 - Attribution/licensing: Open Food Facts / ODbL, plus attribution to Open Prices for price observations, is available in the page footer and privacy notice.
 - Tests cover all 354 products, unique IDs, 303 photo records, 252 nutrition profiles, high-protein sorting and independent F/no-grade state transitions.
+- Missing product suggestions: verified users can submit a barcode, brand, product name and store hint. The `gt_product_requests` table is private, owner-readable and cannot be used to insert or modify the public catalogue. Additions require manual review and an explicit catalogue import. Schema: `product-requests-v17.sql`.
+- Real browser touch/drag, price CORS and signup confirmation are still unverified release gates; simulated script tests do not replace actual device testing.
 
 ## Important release gates
 
