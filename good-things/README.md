@@ -1,6 +1,6 @@
 # ✳ GOOD THINGS — Mikel & Huong
 
-**Build:** 1.8.0 (Duo — independent two-person ranking · Photo Lab)  
+**Build:** 1.9.0 (alternating Duo starter · persistent results journal · full photo-quality audit)  
 **Website:** https://mikelninh.github.io/good-things/  
 **Source:** /good-things on the \`mikelninh.github.io\` GitHub Pages repository  
 **Architecture:** GitHub Pages HTML/CSS/vanilla JS + Supabase email/password Auth and PostgreSQL/RLS in an isolated namespace in the existing EU Frankfurt project.
@@ -94,6 +94,17 @@ A home for things worth sharing. The S–F interactive tier board, personal *Our
 - **Current photo coverage**: 304/354 have traceable source image links after adding an official Alpro Skyr unsweetened 400g packshot. 50 old catalogue entries remain without photos. The 304 existing links have NOT all been audited for their high-resolution quality, so do not claim 304 HD packshots.
 - **Server-backed Duo security**: Supabase tables for rooms, votes and reveals; private RLS rules and internal trigger functions. Schema sources: duo-v18.sql, duo-photo-guard-v18.sql, duo-private-v18.sql.
 - **Still to verify before public launch**: two-user signup redirects, actual multi-device session/reveal, mobile browser touch behaviour, image licensing, real product variant verification, full GDPR documentation and legal notice.
+
+### 1.9 — Fair turn order, visible results and better packshot fitting
+
+- **Start order fixed:** previously every new local Duo round hard-coded Mikel as first voter. Now the first starter can be explicitly selected (Mikel or Huong), or random if no choice. The start person then alternates each round. The chosen starter is saved with the private local Duo session.
+- **Where rounds live:** shared-device Duo votes and rounds are stored on the current browser under `goodthings_duo_v18`, and each score is also stored under the corresponding Mikel/Huong demo shelf in `goodthings_v13_guest`. Both localStorage records remain after refresh but are lost if the browser storage is deleted. Local demo data is **not synced across devices**.
+- **Where account games live:** authenticated Duo rooms, private individual votes and completed reveals are in Supabase `gt_duo_rooms`, `gt_duo_votes`, `gt_duo_reveals`. Individual ratings are also on each participant's private `gt_ratings` shelf. No claims of verified cross-device delivery before a two-login real browser test.
+- **Visible outcomes:** the Duo view now shows a chronological results journal (Mikel vs Huong, product, S–F or Not tried) with the current completed round and previous rounds. The **Export JSON** control makes a local backup. Account rounds are already persisted by the database.
+- **Natumi image from the screenshot fixed:** `milks-14` uses the official Natumi Bio Hafer Natur product packshot, and exact EAN `4038375024396`. Portrait product images are now absolutely sized within the stage with `object-fit:contain`, so their native intrinsic dimensions cannot cause clipping at the bottom.
+- **Complete photo audit available:** Photo Lab at `photos.html` has a **scan all** control for all source-linked images, with batches, progress, stop, and CSV. The audit executes in the user's browser and checks true pixel dimensions, which is NOT visual proof of correct variant, packaging year, product contents, or image license.
+- **Observed catalogue audit:** 354 rankable product entries, 304 distinct source image URLs (no duplicate URLs), 50 original candidate items still without a sourced packshot. Four pairs of similarly named entries need product variant review. The other 304 have **not** been all manually or live-browser audited as HD. Broken or undersized candidates are skipped in Duo.
+- **QA:** code-level Duo round simulations passed first-person selection, first-vote secrecy, S-vs-F reveal, alternation, persistence, and a visible results journal. The mock Photo Lab full scan exercised all 304 image records; mock images were used and this is NOT a real network download or physical image review. External browser automation was blocked by insufficient wallet credit.
 
 ## Important release gates
 
