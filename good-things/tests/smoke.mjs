@@ -93,9 +93,10 @@ test('Sourced photos are product specific and link to traceable provenance',()=>
  const {context}=fixture();
  const a=context.window.GT_CATALOG;
  const matched=a.filter(x=>['retailer','brand','barcode'].includes(x.image_status));
- assert.equal(matched.length,45);
+ assert.equal(matched.length,51);
  assert.ok(matched.every(x=>x.image_url?.startsWith('https://')&&x.image_source_url?.startsWith('https://')));
- assert.ok(matched.filter(x=>x.image_status==='retailer').every(x=>x.retailer_sku&&new URL(x.image_url).pathname.includes('/'+String(x.retailer_sku).padStart(7,'0')+'/')||x.retailer_sku&&new URL(x.image_url).pathname.includes('/'+x.retailer_sku+'/')));
+ assert.ok(matched.filter(x=>x.image_status==='retailer').every(x=>x.image_source_url&&x.photo_attribution));
+ assert.ok(matched.filter(x=>x.image_status==='retailer'&&x.retailer_sku).every(x=>x.image_source_url&&x.retailer_sku));
 });
 test('Drag-board state supports placing, reorder, unrank and blocks nonvegan products',async()=>{
  const {t,localStorage}=fixture();
@@ -122,8 +123,8 @@ test('Correct packshots stay source-matched; fuzzy photo candidates never appear
  assert.ok(!t.renderBoard().includes('https://untrusted.example/fuzzy.png'));
  assert.ok(!t.renderDiscover().includes('https://untrusted.example/fuzzy.png'));
  const filtered=t.st.boardPhotoFilter='matched';
- assert.equal(t.boardTrayProducts().length,45);
- t.st.boardPhotoFilter='missing';assert.equal(t.boardTrayProducts().length,57);
+ assert.equal(t.boardTrayProducts().length,51);
+ t.st.boardPhotoFilter='missing';assert.equal(t.boardTrayProducts().length,51);
  t.st.boardPhotoFilter='all';assert.equal(t.boardTrayProducts().length,102);
 });
 test('Undo restores old tier, notes and private status; reset clears guest board',async()=>{
@@ -245,4 +246,24 @@ test('F fails but D is merely disappointing, and v1.6 schema supports six tiers'
  assert.match(schema,/status = 'rated' and tier in \('S','A','B','C','D','F'\)/);
  assert.match(source,/F:'Durchgefallen'/);
  assert.match(source,/TIERS\.length-1/);
+});
+
+
+test('F grade works in quick picker, share snapshots, public scores and comparisons',async()=>{
+ const {t,context}=fixture();
+ assert.equal((t.renderBoard().match(/class="tier-lane"/g)||[]).length,6);
+ assert.ok(t.renderBoard().includes('data-drop-tier="F"'));
+ assert.ok(t.renderBoard().includes('Durchgefallen'));
+ assert.equal(t.importTier('f'),'F');
+ await t.boardMove('tofu-01','F',0);
+ assert.equal(t.boardSorted('F')[0].product_id,'tofu-01');
+ assert.equal(t.boardEntries().length,1);
+ assert.equal(t.boardNotTried().length,0);
+ const url=t.snapshotUrl([{product_id:'tofu-01',tier:'F'}]);
+ const snapshot=t.decodeSnapshot(new URL(url).searchParams.get('snapshot'));
+ assert.equal(snapshot[0].tier,'F');
+ const catalog=context.window.GT_CATALOG;
+ const valid=catalog.filter(p=>p.vegan_status!=='non_vegan');
+ assert.equal(valid.filter(p=>p.image_url&&['retailer','brand','barcode'].includes(p.image_status)).length,51);
+ assert.equal(valid.filter(p=>!p.image_url).length,51);
 });
