@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f7f7f0">
-  <meta name="description" content="GOOD THINGS — a warm, playful home for things worth sharing. Mikel & Huong's vegan picks, honest tier lists, discover and rate 102 products, create your own shelf, follow friends and compare your tastes.">
+  <meta name="description" content="GOOD THINGS — a warm, playful home for things worth sharing. Mikel & Huong's vegan picks, honest tier lists, discover and rate hundreds of products, create your own shelf, follow friends and compare your tastes.">
   <meta property="og:title" content="GOOD THINGS · A home for things worth sharing">
   <meta property="og:description" content="One shelf. Two opinions. A whole world of good things. Discover, rate, compare & share.">
   <meta property="og:type" content="website">
@@ -14,6 +14,10 @@
   <link rel="stylesheet" href="./styles.css">
   <title>GOOD THINGS — Mikel & Huong</title>
   <script defer src="./catalog.js"></script>
+  <script defer src="./catalog-extra-1.js"></script>
+  <script defer src="./catalog-extra-2.js"></script>
+  <script defer src="./catalog-extra-3.js"></script>
+  <script defer src="./catalog-merge.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
   <script defer src="./app.js"></script>
 </head>
@@ -45,8 +49,8 @@
           <button class="button button-white" data-nav="ours">Meet our shelf ♡</button>
         </div>
         <div class="hero-foot">
-          <span><strong>102</strong> products to explore</span>
-          <span><strong>10</strong> tasty categories</span>
+          <span><strong id="catalogHeroCount">350+</strong> products to explore</span>
+          <span><strong id="catalogHeroGroups">18</strong> tasty categories</span>
           <span><strong>0</strong> paid verdicts</span>
         </div>
       </div>
@@ -66,7 +70,7 @@
         <div class="rail-heading">The neighbourhood</div>
         <nav class="rail-nav">
           <button class="rail-link active" data-nav="board"><span>✳ &nbsp; Tier board</span><span class="count">S–D</span></button>
-          <button class="rail-link" data-nav="discover"><span>✺ &nbsp; Discover</span><span class="count">102</span></button>
+          <button class="rail-link" data-nav="discover"><span>✺ &nbsp; Discover</span><span class="count" id="catalogNavCount">350+</span></button>
           <button class="rail-link" data-nav="ours"><span>♡ &nbsp; Our shelf</span><span class="count">2</span></button>
           <button class="rail-link" data-nav="my"><span>✳ &nbsp; Your shelf</span><span class="count" id="myCount">0</span></button>
           <button class="rail-link" data-nav="community"><span>♧ &nbsp; People</span><span class="count" id="communityCount">0</span></button>
