@@ -399,8 +399,8 @@ function renderDuo(){
  }
  if(!p)return intro+controls+'<div class="duo-welcome"><h3>Geschmack ist Teamwork.</h3><p>Keine erfundenen Bilder: wir zeigen nur Produktkandidaten mit quellenverknüpften Packshots und prüfen die tatsächliche Bildauflösung, bevor sie vorgeschlagen werden.</p><button class="button button-lime" data-action="duo-start-local" '+(st.duo.busy?'disabled':'')+'>Unser erstes Produkt ✳</button>'+
  (st.duo.qualityMessage?'<p class="small muted">'+esc(st.duo.qualityMessage)+'</p>':'')+'</div>';
- let statusA=remote?(done?'Fertig':'Privat abgegeben / wartet'):answerA?'Antwort verborgen':'Noch offen';
- let statusB=remote?(done?'Fertig':'Privat abgegeben / wartet'):answerB?'Antwort verborgen':'Noch offen';
+ let statusA=remote?(done?'Fertig':'Urteil noch verborgen'):answerA?'Antwort verborgen':'Noch offen';
+ let statusB=remote?(done?'Fertig':'Urteil noch verborgen'):answerB?'Antwort verborgen':'Noch offen';
  const voteName=remote?st.profile?.display_name||'Du':snap.votes.mikel?'Huong':'Mikel';
  const needVote=remote?!st.duo.ownVote:!snap.complete;
  const waiting=remote?Boolean(st.duo.ownVote):Boolean(snap.votes.mikel&&!snap.votes.huong);
@@ -744,6 +744,26 @@ document.addEventListener('pointerup',async e=>{
  cancelBoardDrag();
  if(started){suppressBoardClickUntil=Date.now()+650;if(selected)await boardMove(id,selected,index);else toast('Drag onto a tier row to rank a product.')}
 });
+
+function duoImageFallback(img,why){
+ const parent=img.closest('.duo-hero-photo');
+ if(!parent)return;
+ img.hidden=true;
+ const note=document.createElement('div');note.className='duo-photo-problem';
+ note.textContent='Foto nicht in ausreichend guter Qualität verfügbar ('+why+'). Bitte Bildquelle prüfen, bevor ihr dieses Produkt bewertet.';
+ parent.appendChild(note);
+}
+document.addEventListener('error',e=>{
+ const img=e.target;if(img?.dataset?.duoImage!=='true')return;
+ const fallback=img.dataset.fallback;
+ if(fallback&&img.src!==fallback){img.dataset.fallback='';img.src=fallback;return}
+ duoImageFallback(img,'Quelle nicht erreichbar');
+},true);
+document.addEventListener('load',e=>{
+ const img=e.target;if(img?.dataset?.duoImage!=='true')return;
+ if(img.naturalWidth<450||img.naturalHeight<450)duoImageFallback(img,'zu geringe Auflösung');
+},true);
+
 document.addEventListener('pointercancel',cancelBoardDrag);
 document.addEventListener('click',e=>{
  if(Date.now()<suppressBoardClickUntil&&e.target.closest?.('[data-drag-id]')){e.preventDefault();e.stopImmediatePropagation()}
