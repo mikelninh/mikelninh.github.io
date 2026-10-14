@@ -57,7 +57,7 @@ test('104 records in ten categories, with two proven dairy products excluded fro
  assert.equal((t.renderDiscover().match(/class="product-card"/g)||[]).length,102);
  assert.ok(!t.renderDiscover().includes('Sweet Paprika</h3>'));
  assert.equal((t.renderBoard().match(/data-drag-id="/g)||[]).length,102);
- assert.equal((t.renderBoard().match(/class="tier-lane"/g)||[]).length,5);
+ assert.equal((t.renderBoard().match(/class="tier-lane"/g)||[]).length,6);
 });
 test('Guest scores persist and public snippets escape notes',async()=>{
  const {t,localStorage}=fixture();
@@ -222,4 +222,27 @@ test('Schema enforces one private null-grade state without changing graded tier 
  assert.match(schema,/status text not null default 'rated'/);
  assert.match(schema,/status = 'not_tried' and tier is null and is_public = false and position = 0/);
  assert.match(source,/select\('user_id,product_id,tier,status,note,is_public,position,updated_at'\)/);
+});
+
+
+test('F Durchgefallen is a sixth score, survives reload and remains separate from not tried',async()=>{
+ const {t,localStorage}=fixture();
+ assert.equal((t.renderBoard().match(/class="tier-lane"/g)||[]).length,6);
+ assert.ok(t.renderBoard().includes('data-drop-tier="F"'));
+ assert.ok(t.renderBoard().includes('Durchgefallen'));
+ assert.equal(await t.boardMove('tofu-01','F',0),true);
+ assert.equal(t.boardSorted('F')[0].product_id,'tofu-01');
+ assert.equal(t.st.guest.you['tofu-01'].status,'rated');
+ assert.equal(t.st.guest.you['tofu-01'].tier,'F');
+ assert.equal(t.boardNotTried().length,0);
+ assert.ok(t.snapshotUrl([{product_id:'tofu-01',tier:'F'}]).includes('snapshot='));
+ assert.ok(localStorage.getItem('goodthings_v13_guest').includes('"F"'));
+ await t.undoBoard();
+ assert.equal(t.boardSorted('F').length,0);
+});
+test('F fails but D is merely disappointing, and v1.6 schema supports six tiers',()=>{
+ assert.match(schema,/tier text check\(tier in \('S','A','B','C','D','F'\)\)/);
+ assert.match(schema,/status = 'rated' and tier in \('S','A','B','C','D','F'\)/);
+ assert.match(source,/F:'Durchgefallen'/);
+ assert.match(source,/TIERS\.length-1/);
 });
