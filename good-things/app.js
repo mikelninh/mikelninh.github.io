@@ -175,7 +175,7 @@ function renderBoard(){
  }).join('');
  return head('GOOD THINGS / THE TIER BOARD','Pick it up.<br><em>Place your verdict.</em>',
  'Drag a product into S–F if you’ve tried it. Otherwise choose Not tried yet — an explicit answer without a grade.',entries.length+' RANKED · '+skipped.length+' NOT TRIED')
- +'<div class="board-intro">'+personToggle+'<div class="gap12"><button class="button button-small button-ghost" data-action="undo-board" '+(!st.boardHistory.length?'disabled':'')+' title="Undo last move">↶ Undo</button><button class="button button-small button-white" data-action="export-board-png">↓ Save PNG</button><button class="button button-small button-lime" data-action="share-board">Share ↗</button><button class="button button-small button-ghost" data-action="reset-board" '+(!entries.length&&!skipped.length?'disabled':'')+'>Reset</button></div></div>'
+ +'<div class="board-intro">'+personToggle+'<div class="gap12"><button class="button button-small button-ghost" data-action="undo-board" '+(!st.boardHistory.length?'disabled':'')+' title="Undo last move">↶ Undo</button><button class="button button-small button-white" data-action="export-board-png">↓ Save PNG</button><button class="button button-small button-lime" data-action="share-board">Share ↗</button><button class="button button-small button-ghost" data-action="suggest-product">+ Produkt fehlt?</button><button class="button button-small button-ghost" data-action="reset-board" '+(!entries.length&&!skipped.length?'disabled':'')+'>Reset</button></div></div>'
  +(!st.user?'<div class="inline-notice">✳ <strong>Local preview:</strong> switching Mikel/Huong changes only this device’s demo board. Sign in to sync your own honest scores — nobody can post as someone else.</div>':'<div class="inline-notice">♡ Your board is tied to your account. Changes sync to Supabase; each new rating is private until you explicitly publish it.</div>')
  +'<div class="board-layout"><section class="board-pantry" aria-label="Unranked products">'
  +'<div class="board-panel-label"><span>✳ Not answered yet</span><span id="boardTrayCount">'+boardTrayProducts().length+' unanswered</span></div>'
@@ -503,7 +503,7 @@ function renderDiscover(){
  const a=filteredProducts();
  return head('GOOD THINGS / DISCOVER','Find your next <em>favourite.</em>','S–F tier lists built from ingredient-eligible candidates. Photo matches are sourced, and uncertain claims remain unverified.',a.length+' THINGS')
  +'<div class="inline-notice">✳ <strong>Care over certainty:</strong> '+RANKABLE.length+' Produktkandidaten, davon '+(RANKABLE.length-ORIGINAL_RANKABLE.length)+' mit Barcode, Community-Packshot und Nährwertdaten. Das ist keine garantierte Vegan-Zertifizierung. Rezepturen und Packungen können sich ändern. <button class="navlink" style="display:inline;text-decoration:underline" data-action="view-exclusions">'+FLAGGED.length+' dairy-containing products excluded ↗</button></div>'
- +'<div class="inline-notice" style="background:#ecf4d5"><strong>New: Product Detective ✳</strong> Look up an exact barcode, inspect community nutrition and connect a real product photograph. <a href="./lookup.html">Open the detective ↗</a></div>'
+ +'<div class="inline-notice" style="background:#ecf4d5"><strong>Produkt fehlt? ✳</strong> Schlage es mit Barcode vor. Wir prüfen Sorte und Foto vor der Aufnahme. <button class="navlink" data-action="suggest-product" style="display:inline;text-decoration:underline">Produkt vorschlagen ↗</button> · <a href="./lookup.html">Barcode-Detektiv ↗</a></div>'
  +'<div class="toolbar"><label class="search"><span aria-hidden="true">⌕</span><input type="search" id="productSearch" placeholder="Search brands, products and stores…" autocomplete="off" aria-label="Search products" value="'+attr(st.query)+'"></label>'
  +'<select id="storeSelect" class="control" aria-label="Select store">'+['all',...new Set(RANKABLE.map(p=>String(p.store||'').toUpperCase()))].map(x=>'<option value="'+x+'" '+(String(st.store).toUpperCase()===x?'selected':'')+'>'+(x==='all'?'Alle Händler':esc(STORE_NAMES[x]||x))+'</option>').join('')+'</select>'
  +'<select id="sortSelect" class="control" aria-label="Sort products"><option value="name" '+(st.sort==='name'?'selected':'')+'>By name</option><option value="brand" '+(st.sort==='brand'?'selected':'')+'>By brand</option><option value="rated" '+(st.sort==='rated'?'selected':'')+'>My favourites first</option><option value="protein" '+(st.sort==='protein'?'selected':'')+'>Protein je 100 g ↓</option></select><select id="catalogStatusFilter" class="control" aria-label="Filter by tried status"><option value="all">All statuses</option><option value="rated" '+(st.catalogStatus==='rated'?'selected':'')+'>✓ Rated</option><option value="not_tried" '+(st.catalogStatus==='not_tried'?'selected':'')+'>◌ Not tried yet</option><option value="unanswered" '+(st.catalogStatus==='unanswered'?'selected':'')+'>Unanswered</option></select></div>'
@@ -572,6 +572,10 @@ function renderMy(){
  +'<div class="surface not-tried-shelf-list" style="margin-top:18px"><div class="spaced"><div><h3>◌ Not tried yet ('+untried.length+')</h3><p>These are answered without a grade. They stay off your S–F tier list and public taste statistics.</p></div><button class="button button-small button-ghost" data-nav="board">Open board ↗</button></div>'+(untried.length?'<div class="rating-list">'+notTriedRows(untried)+'</div>':'<p class="small muted">No products marked yet. Tap an unfamiliar item and choose Not tried yet.</p>')+'</div>'
  +'<div class="surface" style="margin-top:18px"><div class="spaced"><div><h3>Make a collection</h3><p>Give your favourites a name and share a beautiful shortlist. Public collections are visible to anyone with the link.</p></div><button class="button button-dark button-small" data-action="create-list">+ New list</button></div>'
  +(st.user&&st.lists.filter(l=>l.user_id===st.user.id).length?st.lists.filter(l=>l.user_id===st.user.id).map(l=>'<div class="review-row"><div style="flex:1"><h4>'+esc(l.title)+'</h4><p>'+l.product_ids.length+' picks · '+(l.is_public?'Public':'Private')+'</p></div><button class="button button-small button-ghost" data-action="share-list" data-id="'+attr(l.id)+'">Open ↗</button></div>').join(''):'<p class="small muted">No collections yet. Your first one could be “The snack drawer of dreams”.</p>')+'</div>'
+
+ +'<div class="surface" style="margin-top:18px"><div class="spaced"><div><h3>Neue Produkte entdecken</h3><p>Ein Produkt fehlt? Schlage es per EAN und Marke vor. Dein Vorschlag bleibt bis zur Prüfung privat.</p></div><button class="button button-small button-lime" data-action="suggest-product">+ Vorschlagen</button></div>'
+ +(st.requests.length?st.requests.slice(0,8).map(r=>'<div class="review-row"><div style="flex:1"><h4>'+esc(r.brand+' · '+r.product_name)+'</h4><p>EAN '+esc(r.barcode)+' · '+esc(r.store_hint||'Händler unbekannt')+'</p></div><span class="fact-tag">'+esc(r.status==='approved'?'Geprüft':r.status==='rejected'?'Nicht aufgenommen':'In Prüfung')+'</span></div>').join(''):'<p class="small muted">Noch keine eigenen Produktvorschläge.</p>')+'</div>'
+
  +(!st.user&&Object.keys(st.guest.you).length?'<div class="small muted" style="margin-top:18px">Tip: after signing in, you can transfer your guest ratings to your account from Edit profile.</div>':'');
 }
 function scoreFor(userId){
@@ -995,19 +999,21 @@ async function toggleFollow(id){
 }
 async function loadRemote(){
  if(!sb)return;
- const [pr,ra,fo,li,cu]=await Promise.all([
+ const [pr,ra,fo,li,cu,rq]=await Promise.all([
   sb.from('gt_profiles').select('id,handle,display_name,bio,accent,created_at').limit(400),
   sb.from('gt_ratings').select('user_id,product_id,tier,status,note,is_public,position,updated_at').order('updated_at',{ascending:false}).limit(3000),
   sb.from('gt_follows').select('follower_id,following_id,created_at').limit(3000),
   sb.from('gt_lists').select('id,user_id,title,slug,description,product_ids,is_public,created_at').limit(500),
-  sb.from('gt_curators').select('role,user_id,verified_at').limit(2)
+  sb.from('gt_curators').select('role,user_id,verified_at').limit(2),
+  st.user?sb.from('gt_product_requests').select('id,barcode,product_name,brand,store_hint,status,created_at').order('created_at',{ascending:false}).limit(50):Promise.resolve({data:[],error:null})
  ]);
  if(!pr.error){st.profiles=pr.data||[];st.profile=st.profiles.find(p=>p.id===st.user?.id)||null}
  if(!ra.error)st.allRatings=ra.data||[];
  if(!fo.error)st.follows=fo.data||[];
  if(!li.error)st.lists=li.data||[];
  if(!cu.error)st.curators=cu.data||[];
- const errors=[pr,ra,fo,li,cu].filter(r=>r.error).map(r=>r.error.message);
+ if(!rq.error)st.requests=rq.data||[];
+ const errors=[pr,ra,fo,li,cu,rq].filter(r=>r.error).map(r=>r.error.message);
  st.cloud=errors.length?'offline':'online';
  if(errors.length)toast('Community is temporarily unavailable: '+errors[0].slice(0,65));
  render();
