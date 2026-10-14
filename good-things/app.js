@@ -19,9 +19,13 @@ const validUrl=(s)=>{try{let u=new URL(s);return u.protocol==='https:'?u.href:''
 const getProduct=(id)=>ALL.find((p)=>p.id===id);
 const rankableProduct=p=>Boolean(p&&p.vegan_status!=='non_vegan');
 const RANKABLE=ALL.filter(rankableProduct);
+const ORIGINAL_RANKABLE=RANKABLE.filter(p=>p.source_type!=='openfoodfacts');
+const STORE_NAMES={DM:'dm',ROSSMANN:'Rossmann',REWE:'REWE',LIDL:'Lidl',KAUFLAND:'Kaufland',EDEKA:'EDEKA',ALNATURA:'Alnatura',ONLINE:'Online'};
+const STORE_URLS={DM:'https://www.dm.de/',ROSSMANN:'https://www.rossmann.de/',REWE:'https://www.rewe.de/',LIDL:'https://www.lidl.de/',KAUFLAND:'https://www.kaufland.de/',EDEKA:'https://www.edeka.de/',ALNATURA:'https://www.alnatura.de/'};
+const proteinNumber=p=>Number.isFinite(p?.nutrition?.protein)?Number(p.nutrition.protein):null;
 const FLAGGED=ALL.filter(p=>!rankableProduct(p));
 const tryRead=(key,fallback)=>{try{const d=JSON.parse(localStorage.getItem(key)||'null');return d&&typeof d==='object'?d:fallback}catch(_){return fallback}};
-const st={view:'board',boardQuery:'',boardCategory:'all',boardPhotoFilter:'all',boardHistory:[],boardBusy:false,boardModalProduct:null,boardUndoing:false,category:'all',store:'all',sort:'name',query:'',ratedOnly:false,catalogStatus:'all',persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
+const st={view:'board',boardQuery:'',boardCategory:'all',boardPhotoFilter:'all',boardHistory:[],boardBusy:false,boardModalProduct:null,boardUndoing:false,category:'all',store:'all',sort:'name',query:'',ratedOnly:false,highProtein:false,catalogStatus:'all',persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
 let sb=null;
 function safeGuest(raw){
  const ret={mikel:{},huong:{},you:{}};
@@ -92,16 +96,18 @@ function productArt(p){
 }
 function productCard(p){
  const r=showRating(p.id);
- return '<article class="product-card">'+productArt(p)+'<div class="card-topline"><span class="micro">'+esc(p.category)+'</span><span class="storetag">'+esc(p.store)+'</span></div><div><p class="brandname">'+esc(p.brand)+'</p><h3>'+esc(p.name)+'</h3></div>'+(isNotTried(r)?'<div class="not-tried-pill">◌ Not tried yet · no grade</div>':'')+'<div class="card-bottom"><div class="tier-row" aria-label="Your rating for '+attr(p.name)+'">'+TIERS.map(t=>'<button class="tier '+(r?.tier===t?'active':'')+'" data-tier="'+t+'" title="Rate '+t+'" aria-label="Rate '+attr(p.name)+' '+t+'" data-action="rate-product" data-id="'+attr(p.id)+'" data-value="'+t+'">'+t+'</button>').join('')+'</div><button class="round-add" title="Details and notes" aria-label="Open '+attr(p.name)+'" data-action="open-product" data-id="'+attr(p.id)+'">↗</button></div></article>';
+ return '<article class="product-card">'+productArt(p)+'<div class="card-topline"><span class="micro">'+esc(p.category)+'</span><span class="storetag">'+esc(p.store)+'</span></div><div><p class="brandname">'+esc(p.brand)+'</p><h3>'+esc(p.name)+'</h3></div>'+(proteinNumber(p)!==null?'<div class="product-nutri-teaser">💪 '+proteinNumber(p)+' g Protein* <span>je 100 g/ml</span></div>':'')+(isNotTried(r)?'<div class="not-tried-pill">◌ Not tried yet · no grade</div>':'')+'<div class="card-bottom"><div class="tier-row" aria-label="Your rating for '+attr(p.name)+'">'+TIERS.map(t=>'<button class="tier '+(r?.tier===t?'active':'')+'" data-tier="'+t+'" title="Rate '+t+'" aria-label="Rate '+attr(p.name)+' '+t+'" data-action="rate-product" data-id="'+attr(p.id)+'" data-value="'+t+'">'+t+'</button>').join('')+'</div><button class="round-add" title="Details and notes" aria-label="Open '+attr(p.name)+'" data-action="open-product" data-id="'+attr(p.id)+'">↗</button></div></article>';
 }
 function filteredProducts(){
- let a=RANKABLE.filter(p=>(st.category==='all'||p.category_id===st.category)&&(st.store==='all'||p.store===st.store));
+ let a=RANKABLE.filter(p=>(st.category==='all'||p.category_id===st.category)&&(st.store==='all'||String(p.store||'').toUpperCase()===String(st.store).toUpperCase()));
  const q=st.query.trim().toLowerCase();if(q)a=a.filter(p=>(p.name+' '+p.brand+' '+p.store+' '+p.category).toLowerCase().includes(q));
  if(st.ratedOnly)a=a.filter(p=>isGraded(showRating(p.id)));
+ if(st.highProtein)a=a.filter(p=>proteinNumber(p)!==null&&proteinNumber(p)>=15);
  if(st.catalogStatus==='rated')a=a.filter(p=>isGraded(showRating(p.id)));
  if(st.catalogStatus==='not_tried')a=a.filter(p=>isNotTried(showRating(p.id)));
  if(st.catalogStatus==='unanswered')a=a.filter(p=>!showRating(p.id));
- if(st.sort==='brand')a.sort((a,b)=>a.brand.localeCompare(b.brand,'de')||a.name.localeCompare(b.name,'de'));
+ if(st.sort==='protein')a.sort((a,b)=>(proteinNumber(b)??-1)-(proteinNumber(a)??-1)||a.name.localeCompare(b.name,'de'));
+ else if(st.sort==='brand')a.sort((a,b)=>a.brand.localeCompare(b.brand,'de')||a.name.localeCompare(b.name,'de'));
  else if(st.sort==='rated')a.sort((a,b)=>(TIER_SCORE[showRating(b.id)?.tier]||0)-(TIER_SCORE[showRating(a.id)?.tier]||0)||a.name.localeCompare(b.name,'de'));
  else a.sort((a,b)=>a.name.localeCompare(b.name,'de'));
  return a;
@@ -144,7 +150,7 @@ function boardPiece(p){
  const label=p.brand+' '+p.name;
  return '<button type="button" draggable="false" class="board-piece" data-drag-id="'+attr(p.id)+'" data-photo="'+(img?'yes':'none')+'" data-action="board-pick" data-id="'+attr(p.id)+'" title="'+attr(label)+' — drag to rank; tap to choose S–F; arrow keys to move" aria-label="'+attr(label)+' — draggable, tap to rank, arrow keys to change tiers">'
  +boardPhoto(p)+(matched?'<span class="verified-indicator" title="Photo from a traceable retailer, brand or barcode record; check current packaging and recipe" aria-hidden="true"></span>':'')
- +'<strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+'</small></button>';
+ +'<strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+'</small>'+(proteinNumber(p)!==null?'<span class="board-protein">'+proteinNumber(p)+' g Protein*</span>':'')+'</button>';
 }
 function boardTrayProducts(){
  const rated=new Set(boardAnswers().map(r=>r.product_id));
@@ -634,6 +640,9 @@ function render(){
  $('#communityCount').textContent=String(st.profiles.length);
  $('#sidebarProgress').style.width=Math.min(num,5)*20+'%';
  $('#sidebarProgressText').textContent=Math.min(num,5)+' / 5 rated';
+ if($('#catalogHeroCount'))$('#catalogHeroCount').textContent=String(RANKABLE.length);
+ if($('#catalogHeroGroups'))$('#catalogHeroGroups').textContent=String(GROUPS.length);
+ if($('#catalogNavCount'))$('#catalogNavCount').textContent=String(RANKABLE.length);
  $('#authStatus').innerHTML=st.user?'<span class="dot"></span> '+esc(st.profile?.handle?'@'+st.profile.handle:'Signed in'):st.cloud==='offline'?'<span class="dot" style="background:#deb075"></span> Demo mode':'<span class="dot"></span> Local tasting shelf';
  $('#authButton').textContent=st.user?'My account ↗':'Join the shelf ↗';
  $('#authButton').dataset.action=st.user?'edit-profile':'open-auth';
@@ -756,7 +765,7 @@ function authHtml(mode){
  +'<p class="small muted">Email confirmation may be required. Do not share your password. Your information is handled by the account service, not stored in this browser’s demo ratings.</p>'
  +'<hr class="rule"><button class="button button-ghost button-small" data-action="close-modal">Just browse for now</button>';
 }
-function openAuth(mode){if(st.user)return openProfileEdit();if(!sb)return modal('<button class="close" data-action="close-modal">×</button><h2>Demo shelf is ready</h2><p>Live accounts could not connect. You can still explore 102 products and use the local tasting shelf.</p><button class="button button-lime" data-action="close-modal">Continue exploring</button>');modal(authHtml(mode||'signup'))}
+function openAuth(mode){if(st.user)return openProfileEdit();if(!sb)return modal('<button class="close" data-action="close-modal">×</button><h2>Demo shelf is ready</h2><p>Live accounts could not connect. You can still explore our product catalogue and use the local tasting shelf.</p><button class="button button-lime" data-action="close-modal">Continue exploring</button>');modal(authHtml(mode||'signup'))}
 async function submitAuth(form){
  if(!sb)return toast('Account service unavailable. Try the local demo.');
  const email=form.elements.namedItem('email').value.trim(),password=form.elements.namedItem('password').value,mode=form.elements.namedItem('mode').value;
@@ -1047,7 +1056,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){cancelBoardDrag();c
 window.addEventListener('focus',()=>{if(st.user&&sb)loadRemote()});
 window.addEventListener('popstate',()=>{openShareLink().then(render)});
 (async()=>{
- if(RANKABLE.length!==102||GROUPS.length!==10)toast('Catalog is incomplete; please report this.');
+ if(RANKABLE.length<102||GROUPS.length<10)toast('Katalog unvollständig, bitte melden.');
  await openShareLink();render();await initCloud();await openShareLink();render();
  const requested=new URL(location.href).searchParams.get('product');if(requested&&getProduct(requested))openProduct(requested);
 })();
