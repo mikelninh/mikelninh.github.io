@@ -15,6 +15,8 @@ const duoPhotoGuard=fs.readFileSync(path.join(root,'duo-photo-guard-v18.sql'),'u
 const productRequests=fs.readFileSync(path.join(root,'product-requests-v17.sql'),'utf8');
 const nutritionMigration=fs.readFileSync(path.join(root,'nutrition-v17.sql'),'utf8');
 const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const photoLabScript=fs.readFileSync(path.join(root,'photo-lab.js'),'utf8');
+const allCSS=fs.readFileSync(path.join(root,'styles.css'),'utf8');
 const makeNode=()=>{
  const els=new Map();
  const node=id=>{
@@ -37,13 +39,14 @@ function fixture(seed={}){
   console,Intl};
  for(const catalog of catalogs)vm.runInNewContext(catalog,context);
  const injected=source.replace("document.addEventListener('click',async(event)=>{",
- "window.__qa={render,renderBoard,renderDiscover,renderOurs,renderMy,renderCommunity,ourPreview,productFacts,proteinNumber,filteredProducts,duoLocalStart,duoLocalVote,duoLocalSnapshot,duoPhotoCandidates,duoHiResImage,duoPick,renderDuo,boardMove,boardAnswers,boardEntries,boardNotTried,boardSorted,boardTrayProducts,boardInsertionIndex,undoBoard,resetBoard,matchedPhoto,saveRating,st,gradedRatings,notTriedRatings,selfRatings,publicRated,scoreFor,quickRank,importTier,importJson,snapshotUrl,decodeSnapshot};document.addEventListener('click',async(event)=>{");
+ "window.__qa={render,renderBoard,renderDiscover,renderOurs,renderMy,renderCommunity,ourPreview,productFacts,proteinNumber,filteredProducts,duoLocalStart,duoLocalVote,duoLocalSnapshot,duoSetStarter,duoStartPicker,duoHistoryPanel,duoPhotoCandidates,duoHiResImage,duoPick,renderDuo,boardMove,boardAnswers,boardEntries,boardNotTried,boardSorted,boardTrayProducts,boardInsertionIndex,undoBoard,resetBoard,matchedPhoto,saveRating,st,gradedRatings,notTriedRatings,selfRatings,publicRated,scoreFor,quickRank,importTier,importJson,snapshotUrl,decodeSnapshot};document.addEventListener('click',async(event)=>{");
  assert.ok(injected.includes('window.__qa={'),'Expected app injection point is missing');
  vm.runInNewContext(injected,context);
  return {context,t:window.__qa,localStorage};
 }
 test('Scripts parse, all public assets linked, and ratings default private in schema',()=>{
  assert.doesNotThrow(()=>new vm.Script(source));
+ assert.doesNotThrow(()=>new vm.Script(photoLabScript));
  for(const catalog of catalogs)assert.doesNotThrow(()=>new vm.Script(catalog));
  assert.ok(index.includes('./catalog.js')&&index.includes('./app.js')&&index.includes('./styles.css'));
  assert.match(schema,/is_public boolean not null default false,\s*\n\s*position numeric/);
@@ -329,6 +332,7 @@ test('Barcode nutrient columns and dated price UI are honest about missing data'
 
 test('Duo preview uses real photos and hides the first person’s grade until both respond',async()=>{
  const {t,localStorage}=fixture();
+ t.duoSetStarter('mikel');
  assert.equal(t.duoPhotoCandidates().length,304);
  assert.ok(t.renderDuo().includes('Unser erstes Produkt'));
  await t.duoLocalStart(false);
@@ -351,6 +355,7 @@ test('Duo preview uses real photos and hides the first person’s grade until bo
 });
 test('The Duo game explicitly supports no-grade answers separately from failures',async()=>{
  const {t}=fixture();
+ t.duoSetStarter('mikel');
  await t.duoLocalStart(false);
  const id=t.st.duo.local.productId;
  t.duoLocalVote('not_tried');t.duoLocalVote('D');
@@ -374,4 +379,56 @@ test('All playable products have a traceable source photo, not an arbitrary look
   assert.ok(p.image_source_url);
   assert.ok(p.image_url?.startsWith('https://'));
  }
+});
+
+
+test('Shared-device Duo starter can be chosen, automatically alternates, and retains results after reload',async()=>{
+ const {t,localStorage}=fixture();
+ assert.match(t.renderDuo(),/data-action="duo-set-starter"/);
+ t.duoSetStarter('huong');
+ await t.duoLocalStart(false);
+ assert.equal(t.st.duo.local.activeRole,'huong');
+ const first=t.duoLocalSnapshot().product.id;
+ t.duoLocalVote('F');
+ assert.equal(t.st.duo.local.votes.huong,'F');
+ assert.ok(!t.renderDuo().includes('duo-vote-revealed'));
+ t.duoLocalVote('S');
+ assert.equal(t.st.guest.huong[first].tier,'F');
+ assert.equal(t.st.guest.mikel[first].tier,'S');
+ assert.match(t.renderDuo(),/duo-history-row/);
+ assert.match(t.renderDuo(),/Eure bisherigen Ergebnisse/);
+ await t.duoLocalStart(true);
+ assert.equal(t.st.duo.local.starter,'mikel');
+ assert.equal(t.st.duo.local.activeRole,'mikel');
+ const second=t.duoLocalSnapshot().product.id;
+ t.duoLocalVote('D');t.duoLocalVote('A');
+ assert.equal(t.st.guest.mikel[second].tier,'D');
+ assert.equal(t.st.guest.huong[second].tier,'A');
+ assert.equal((t.renderDuo().match(/class="duo-history-row"/g)||[]).length,2);
+ const saved=JSON.parse(localStorage.getItem('goodthings_duo_v18'));
+ assert.equal(saved.local.history.length,1);
+ assert.equal(saved.local.starter,'mikel');
+ const reloaded=fixture({'goodthings_duo_v18':localStorage.getItem('goodthings_duo_v18'),
+ 'goodthings_v13_guest':localStorage.getItem('goodthings_v13_guest')});
+ assert.equal(reloaded.t.st.duo.local.votes.mikel,'D');
+ assert.equal(reloaded.t.st.duo.local.history.length,1);
+ assert.equal(reloaded.t.st.guest.huong[first].tier,'F');
+});
+test('The Natumi image has been replaced by the manufacturer artwork, and the layout cannot crop the bottom',()=>{
+ const {context}=fixture();
+ const product=context.window.GT_CATALOG.find(p=>p.id==='milks-14');
+ assert.equal(product.barcode,'4038375024396');
+ assert.equal(product.photo_attribution,'Natumi (Hersteller)');
+ assert.match(product.image_source_url,/natumi\.com\/produkte\/drinks\/bio-hafer-natur/);
+ assert.match(product.image_url,/width=1200/);
+ assert.match(allCSS,/\.duo-hero-photo>img\[data-duo-image\]\s*\{/);
+ assert.match(allCSS,/object-fit:contain/);
+ assert.match(allCSS,/position:absolute/);
+});
+test('Photo Lab audits linked images in batches and can inspect the full catalogue',()=>{
+ assert.match(photoLabScript,/function auditAll\(\)/);
+ assert.match(photoLabScript,/slice\(i,i\+8\)/);
+ assert.match(photoLabScript,/naturalWidth/);
+ assert.match(photoLabScript,/photo-audit\.csv/);
+ assert.match(photoLabScript,/status:'low'/);
 });
