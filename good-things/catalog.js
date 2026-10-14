@@ -476,7 +476,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "yogurts-01",
-    "name": "Skyr Style Natur",
+    "name": "Skyr Alternative Ohne Zucker 400g",
     "brand": "Alpro",
     "store": "REWE",
     "category": "Yoghurt & Skyr",
@@ -484,8 +484,13 @@ window.GT_CATALOG=[
     "emoji": "🥣",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Alpro%20Skyr%20Style%20Natur"
+    "image_url": "https://smartmedia.digital4danone.com/is/image/danonecs/B97CD2FD170D9D2B_Alpro_PBay_Skyr_Style_Plain_no_sugars_400g_DE_F_PL?qlt=82&wid=1200&ts=1767785502285&fit=wrap&fmt=png-alpha&dpr=off",
+    "source_url": "https://www.alpro.com/de-de/products/plant-based-alternative-to-yogurt/skyr-style-unsweetened-400g",
+    "image_status": "brand",
+    "image_source_url": "https://www.alpro.com/de-de/products/plant-based-alternative-to-yogurt/skyr-style-unsweetened-400g",
+    "photo_attribution": "Alpro",
+    "photo_reviewed_at": "2026-10-14",
+    "photo_match_method": "official_highres_1200_plain_unsweetened_400g"
   },
   {
     "id": "yogurts-02",
