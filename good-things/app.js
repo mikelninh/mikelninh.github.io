@@ -143,7 +143,7 @@ function boardPiece(p){
  const img=matched;
  const label=p.brand+' '+p.name;
  return '<button type="button" draggable="false" class="board-piece" data-drag-id="'+attr(p.id)+'" data-photo="'+(img?'yes':'none')+'" data-action="board-pick" data-id="'+attr(p.id)+'" title="'+attr(label)+' — drag to rank; tap to choose S–F; arrow keys to move" aria-label="'+attr(label)+' — draggable, tap to rank, arrow keys to change tiers">'
- +boardPhoto(p)+(matched?'<span class="verified-indicator" title="Photo matched to this exact retailer SKU or barcode; recipe still needs checking" aria-hidden="true"></span>':'')
+ +boardPhoto(p)+(matched?'<span class="verified-indicator" title="Photo from a traceable retailer, brand or barcode record; check current packaging and recipe" aria-hidden="true"></span>':'')
  +'<strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+'</small></button>';
 }
 function boardTrayProducts(){
