@@ -94,6 +94,8 @@ document.querySelectorAll(".scenario").forEach(btn=>btn.addEventListener("click"
 id("match-btn").addEventListener("click",run);
 id("reset-btn").addEventListener("click",()=>choose(choice));
 id("founder-question").addEventListener("input",e=>{e.target.setCustomValidity("");id("wordcount").textContent=e.target.value.length+"/900"});
-choose("medtech");
+let firstCase="medtech";
+try{const fromURL=new URLSearchParams(window.location.search).get("case");if(fromURL&&examples[fromURL])firstCase=fromURL;}catch{}
+choose(firstCase);
 window.BRIDGE_TEST={classify,scenarios:Object.keys(examples),resources:Object.keys(library),mode:"deterministic curated matching"};
 })();
