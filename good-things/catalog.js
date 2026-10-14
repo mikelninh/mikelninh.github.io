@@ -1,4 +1,4 @@
-// GOOD THINGS v1.4.1 · 104 catalogue records; 102 rankable, 2 explicitly excluded for dairy. Exact product packshots have provenance.
+// GOOD THINGS v1.6 · 104 catalogue records; 102 rankable, 2 explicitly excluded for dairy. Exact product packshots have provenance.
 window.GT_CATALOG=[
   {
     "id": "tofu-01",
@@ -83,7 +83,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "tofu-06",
-    "name": "Tofu Basilikum",
+    "name": "Tofu Basilico",
     "brand": "Taifun",
     "store": "REWE",
     "category": "Tofu & Tempeh",
@@ -91,8 +91,13 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Taifun%20Tofu%20Basilikum"
+    "image_url": "https://www.taifun-tofu.de/media/pages/produkte/tofu-basilico/80d185edfe-1763046622/tb-de-0126-660x-q75.png",
+    "source_url": "https://www.taifun-tofu.de/de/produkte/tofu-basilico",
+    "image_status": "brand",
+    "image_source_url": "https://www.taifun-tofu.de/de/produkte/tofu-basilico",
+    "photo_attribution": "Taifun",
+    "photo_reviewed_at": "2026-10-14",
+    "photo_match_method": "official_brand_current_2026_packshot"
   },
   {
     "id": "tofu-07",
@@ -368,12 +373,17 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=vly%20Unges%C3%BC%C3%9Ft"
+    "image_url": "https://www.vlyfoods.com/cdn/shop/files/Whitescreen_Ungesuesst_858c6c0a-87eb-4987-914f-1e3f24064b19.png?v=1747228868&width=1200",
+    "source_url": "https://www.vlyfoods.com/products/ungesuesst",
+    "image_status": "brand",
+    "image_source_url": "https://www.vlyfoods.com/products/ungesuesst",
+    "photo_attribution": "vly",
+    "photo_reviewed_at": "2026-10-14",
+    "photo_match_method": "official_brand_exact_variant"
   },
   {
     "id": "milks-09",
-    "name": "Bio Haferdrink",
+    "name": "Bio Hafer Drink Natur ohne Zucker 1l",
     "brand": "REWE Bio",
     "store": "REWE",
     "category": "Plant drinks",
@@ -381,8 +391,14 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=REWE%20Bio%20Bio%20Haferdrink"
+    "image_url": "https://img.hit.de/sortiment/4337/2565/7100/4337256571005_35532057_1024px.webp",
+    "source_url": "https://www.rewe.de/suche/produkte?search=REWE%20Bio%20Bio%20Haferdrink",
+    "image_status": "barcode",
+    "image_source_url": "https://www.hit.de/sortiment/kaese-eier-molkerei/pflanzliche-alternativen-pflanzliche-milchalternative-4261879/rewe-bio-vegan-hafer-drink-natur-ohne-zucker-000000000001139016ST?markt=043%3FinApp%3D1",
+    "photo_attribution": "HIT",
+    "barcode": "4337256571005",
+    "photo_reviewed_at": "2026-10-14",
+    "photo_match_method": "barcoded_retailer_photo"
   },
   {
     "id": "milks-10",
@@ -442,7 +458,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "milks-14",
-    "name": "Haferdrink Natur",
+    "name": "Bio Haferdrink Natural 1l",
     "brand": "Natumi",
     "store": "REWE",
     "category": "Plant drinks",
@@ -450,8 +466,13 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Natumi%20Haferdrink%20Natur"
+    "image_url": "https://plantful.de/media/image/product/5911/lg/natumi-haferdrink-natural-bio-1-l.jpg",
+    "source_url": "https://plantful.de/Natumi-Haferdrink-Natural-Bio-1-l",
+    "image_status": "retailer",
+    "image_source_url": "https://plantful.de/Natumi-Haferdrink-Natural-Bio-1-l",
+    "photo_attribution": "Plantful",
+    "photo_reviewed_at": "2026-10-14",
+    "photo_match_method": "exact_retailer_title_photo"
   },
   {
     "id": "yogurts-01",
@@ -757,7 +778,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "spreads-05",
-    "name": "Aufstrich Tomate Basilikum",
+    "name": "Bio Streich's drauf Basitom (Basilikum Tomate)",
     "brand": "Zwergenwiese",
     "store": "REWE",
     "category": "Spreads & dips",
@@ -765,8 +786,13 @@ window.GT_CATALOG=[
     "emoji": "🥖",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Zwergenwiese%20Aufstrich%20Tomate%20Basilikum"
+    "image_url": "https://www.greenist.de/media/image/87/86/3a/Zwergenwiese-Basitom.png",
+    "source_url": "https://www.greenist.de/zwergenwiese-bio-streich-s-drauf-basitom.html",
+    "image_status": "retailer",
+    "image_source_url": "https://www.greenist.de/zwergenwiese-bio-streich-s-drauf-basitom.html",
+    "photo_attribution": "Greenist",
+    "photo_reviewed_at": "2026-10-14",
+    "photo_match_method": "exact_retailer_named_variant"
   },
   {
     "id": "spreads-06",
@@ -1314,7 +1340,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "chocolate-05",
-    "name": "White Vanilla",
+    "name": "White Vanilla Bio 80g",
     "brand": "iChoc",
     "store": "REWE",
     "category": "Chocolate",
@@ -1322,8 +1348,13 @@ window.GT_CATALOG=[
     "emoji": "🍫",
     "tone": "rose",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=iChoc%20White%20Vanilla"
+    "image_url": "https://plantful.de/media/image/product/7618/lg/ichoc-white-vanilla-bio-80-g.jpg",
+    "source_url": "https://plantful.de/iChoc-White-Vanilla-Bio-80-g",
+    "image_status": "retailer",
+    "image_source_url": "https://plantful.de/iChoc-White-Vanilla-Bio-80-g",
+    "photo_attribution": "Plantful",
+    "photo_reviewed_at": "2026-10-14",
+    "photo_match_method": "exact_retailer_title_photo"
   },
   {
     "id": "chocolate-06",
