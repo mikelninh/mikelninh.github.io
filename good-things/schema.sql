@@ -23,7 +23,7 @@ create table if not exists public.gt_profiles (
 create table if not exists public.gt_ratings (
   user_id uuid not null references auth.users(id) on delete cascade,
   product_id text not null references public.gt_products(id) on delete cascade,
-  tier text check(tier in ('S','A','B','C','D')),
+  tier text check(tier in ('S','A','B','C','D','F')),
   status text not null default 'rated',
   note text not null default '' check(char_length(note)<=200),
   is_public boolean not null default false,
@@ -31,7 +31,7 @@ create table if not exists public.gt_ratings (
   updated_at timestamptz not null default now(),
   primary key(user_id,product_id),
   constraint gt_ratings_experience_check check (
-    (status = 'rated' and tier in ('S','A','B','C','D'))
+    (status = 'rated' and tier in ('S','A','B','C','D','F'))
     or (status = 'not_tried' and tier is null and is_public = false and position = 0)
   )
 );
