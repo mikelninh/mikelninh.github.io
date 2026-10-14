@@ -1,6 +1,6 @@
 # ✳ GOOD THINGS — Mikel & Huong
 
-**Build:** 1.9.0 (alternating Duo starter · persistent results journal · full photo-quality audit)  
+**Build:** 1.9.1 (alternating Duo starter · saved results journal · Natumi carton fix · full photo-resolution audit)  
 **Website:** https://mikelninh.github.io/good-things/  
 **Source:** /good-things on the \`mikelninh.github.io\` GitHub Pages repository  
 **Architecture:** GitHub Pages HTML/CSS/vanilla JS + Supabase email/password Auth and PostgreSQL/RLS in an isolated namespace in the existing EU Frankfurt project.
@@ -103,7 +103,8 @@ A home for things worth sharing. The S–F interactive tier board, personal *Our
 - **Visible outcomes:** the Duo view now shows a chronological results journal (Mikel vs Huong, product, S–F or Not tried) with the current completed round and previous rounds. The **Export JSON** control makes a local backup. Account rounds are already persisted by the database.
 - **Natumi image from the screenshot fixed:** `milks-14` uses the official Natumi Bio Hafer Natur product packshot, and exact EAN `4038375024396`. Portrait product images are now absolutely sized within the stage with `object-fit:contain`, so their native intrinsic dimensions cannot cause clipping at the bottom.
 - **Complete photo audit available:** Photo Lab at `photos.html` has a **scan all** control for all source-linked images, with batches, progress, stop, and CSV. The audit executes in the user's browser and checks true pixel dimensions, which is NOT visual proof of correct variant, packaging year, product contents, or image license.
-- **Observed catalogue audit:** 354 rankable product entries, 304 distinct source image URLs (no duplicate URLs), 50 original candidate items still without a sourced packshot. Four pairs of similarly named entries need product variant review. The other 304 have **not** been all manually or live-browser audited as HD. Broken or undersized candidates are skipped in Duo.
+- **Additional exact maker photograph:** `tofu-14` now uses the current Soja-Tempeh Natur front packshot from tempehmanufaktur's official product catalogue. The outstanding photo backlog is down to 49 without changing any rating ID.
+- **Observed catalogue audit:** 354 rankable product entries, 305 distinct source image URLs (no duplicate URLs), 49 original candidate items still without a sourced packshot. Four pairs of similarly named entries need product variant review. The other 305 have **not** been all manually or live-browser audited as HD. Broken or undersized candidates are skipped in Duo.
 - **QA:** code-level Duo round simulations passed first-person selection, first-vote secrecy, S-vs-F reveal, alternation, persistence, and a visible results journal. The mock Photo Lab full scan exercised all 304 image records; mock images were used and this is NOT a real network download or physical image review. External browser automation was blocked by insufficient wallet credit.
 
 ## Important release gates
