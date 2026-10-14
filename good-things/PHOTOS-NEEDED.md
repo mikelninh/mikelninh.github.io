@@ -2,6 +2,8 @@
 
 Updated 14 October 2026 · **51 of 102 source-matched; 51 remaining**. This list is a verification checklist, not a claim that products have been found. IDs preserve existing ratings.
 
+**Since the original 51-missing audit, 252 more barcode-linked Open Food Facts products were added with photo and nutrition records: the full shelf now has 303/354 source-linked packshots. The 51 unresolved items listed below are still unresolved; they have not been replaced by similar-product images.**
+
 **Acceptance rule:** match brand + variant + size + GTIN/EAN (or exact official manufacturer listing). Prefer an official product photograph with a stable source URL. Confirm recipe and availability independently. **Never** substitute another flavour, size or packaging year merely to make the board look full. Capture permission/license and any CDN reuse conditions before broad commercial release.
 
 Use the [Product Detective](https://mikelninh.github.io/good-things/lookup.html) with a barcode, or report a missing/incorrect photo from any product drawer with a signed-in account. Corrections are privately queued for manual approval.
