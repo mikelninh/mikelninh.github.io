@@ -39,11 +39,11 @@
 <main class="photo-lab">
  <div class="photo-hero"><div class="eyebrow">GOOD THINGS / PHOTO LAB</div><h1>Every pack.<br><em>The real one.</em></h1>
  <p>Wir prüfen Bilder nicht nach Bauchgefühl, sondern nach Originalquelle und tatsächlicher Auflösung. Ein Bild kann technisch scharf sein und trotzdem die falsche Sorte zeigen: Die finale Produktzuordnung muss separat geprüft werden.</p>
- <div class="gap12"><button class="button button-dark" id="auditNext">Nächste 30 Bilder prüfen ↗</button><button class="button button-white" id="exportAudit">Prüfbericht als CSV ↓</button><a class="button button-ghost" href="https://github.com/mikelninh/mikelninh.github.io/blob/main/good-things/PHOTOS-NEEDED.md" target="_blank" rel="noopener noreferrer">Fehlende Fotos ↗</a></div>
+ <div class="gap12"><button class="button button-dark" id="auditAll">Alle 304 Bildquellen prüfen ↗</button><button class="button button-white" id="auditNext">Nächste 30 prüfen</button><button class="button button-ghost" id="auditStop" hidden>Prüfung stoppen</button><button class="button button-white" id="exportAudit">Prüfbericht als CSV ↓</button><a class="button button-ghost" href="https://github.com/mikelninh/mikelninh.github.io/blob/main/good-things/PHOTOS-NEEDED.md" target="_blank" rel="noopener noreferrer">Fehlende Fotos ↗</a></div>
  </div>
  <div class="photo-stats" id="photoStats"></div>
  <div class="photo-progress"><div id="photoProgress"></div></div>
- <p class="small muted" id="photoHelp">Fotos werden nur geprüft, wenn du die Schaltfläche betätigst. Hersteller, Händler und Open Food Facts können die Bilder aktualisieren; die Prüfung ist eine Momentaufnahme in deinem Browser.</p>
+ <p class="small muted" id="photoHelp">Die Qualitätsprüfung startet nach einem Klick und misst alle verlinkten Bilder in deinem Browser. Hersteller, Händler und Open Food Facts können die Bilder aktualisieren; die Prüfung ist eine Momentaufnahme in deinem Browser.</p>
  <div class="photo-filters"><input class="control" id="photoSearch" type="search" placeholder="Suche nach Tofu, Marke, EAN…">
  <select class="control" id="photoCategory"><option value="all">Alle Kategorien</option></select>
  <select class="control" id="photoFilter"><option value="all">Alle Produkte</option><option value="missing">Ohne Bild</option><option value="low">Unscharf oder nicht erreichbar</option><option value="good">Auflösung geprüft</option><option value="unchecked">Noch nicht geprüft</option></select></div>
