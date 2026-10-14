@@ -613,7 +613,7 @@ function photoInformation(){
  modal('<button class="close" data-action="close-modal" aria-label="Close">×</button><div class="eyebrow">PACKSHOT TRUST STANDARD</div><h2>Real packs. Real sources.</h2>'+
  '<p><strong>'+count+' of '+RANKABLE.length+'</strong> products currently have a specific retailer, brand, or barcode-linked packshot. The remaining '+(RANKABLE.length-count)+' use illustrations, not arbitrary search images.</p>'+
  '<p class="small muted">Source-matched means a traceable product record, not a promise that packaging has not changed. Check the barcode and ingredients against the packet before buying. No product gets a misleading green verified badge just for looking close.</p>'+
- '<div class="gap12"><a class="button button-lime" href="./lookup.html">Open Product Detective ↗</a><button class="button button-ghost" data-action="close-modal">Got it</button></div>');
+ '<div class="gap12"><a class="button button-lime" href="./photos.html">Photo Lab & Qualität ↗</a><a class="button button-white" href="./lookup.html">Product Detective ↗</a><button class="button button-ghost" data-action="close-modal">Got it</button></div>');
 }
 async function boardPhotoForCanvas(p){
  if(!matchedPhoto(p)||typeof Image==='undefined')return null;
