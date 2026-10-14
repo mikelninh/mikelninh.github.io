@@ -344,3 +344,33 @@ body:has(.board-layout) .hero .package-c{transform:scale(.7) rotate(13deg)}
  .product-card .card-bottom:before{content:"Open to rank S–F";font-size:10px;line-height:1.2;color:#71816e;font-weight:700}
  .quick-rank-choices{grid-template-columns:repeat(6,minmax(0,1fr))}
 }
+
+/* GOOD THINGS · nutrition, protein comparison, buying information and sourced observations */
+.product-nutri-teaser{border-radius:8px;background:#edf5dc;padding:6px 8px;font-size:11px;color:#49623b;font-weight:800;line-height:1.25}
+.product-nutri-teaser span{font-weight:500;color:#65745c;font-size:9px}
+.board-protein{position:relative;z-index:1;display:block;border-radius:6px;background:#e4f0d5;padding:3px 5px;font-size:9px;color:#45633a;line-height:1.2;font-weight:800;margin-top:1px}
+.product-facts{padding:2px 0 8px}
+.product-facts h3{margin:0 0 10px}
+.fact-tag{font-size:10px;font-weight:800;color:#577550;background:#eaf1e3;border:1px solid #d5e4cf;padding:5px 8px;border-radius:999px;white-space:nowrap}
+.nutrition-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:12px 0}
+.nutrition-cell{border-radius:12px;background:#f3f5ee;border:1px solid #e0e5d9;min-width:0;padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+.nutrition-cell span{font-size:11px;color:#677768}
+.nutrition-cell strong{font-size:19px;line-height:1.25;font-weight:800;color:#293e2b}
+.nutrition-cell.protein-highlight{background:#e1edc8;border-color:#c5dcaa}
+.nutrition-cell.protein-highlight strong{color:#3d6a25}
+.product-info-empty{font-size:12px;line-height:1.6;color:#697565;border:1px dashed #d6ddcf;background:#fbfcf8;border-radius:11px;padding:14px}
+.facts-footnote{margin:7px 0 11px;color:#738071;font-size:11px;line-height:1.65}
+.facts-footnote a,.shopping-sources a,.observed-price a{color:#385a39;font-weight:700}
+.shopping-sources{border-radius:14px;background:#f9faf4;border:1px solid #e0e8d8;padding:13px}
+.shop-option{display:flex;align-items:center;gap:12px}
+.shop-option>span{font-size:27px}
+.shop-option>div{flex:1}
+.shop-option strong{display:block;font-size:14px}
+.shop-option small{display:block;font-size:11px;line-height:1.4;color:#6d7b6f}
+.shop-option>a{font-size:12px;text-decoration:none;padding:8px 12px;background:#dff179;border-radius:99px}
+.observed-price{display:flex;gap:17px;background:#eaf3db;border:1px solid #d1dfbd;border-radius:14px;padding:15px;align-items:center}
+.observed-price>strong{font:650 32px 'Fraunces',serif;letter-spacing:-.04em;color:#38562b;white-space:nowrap}
+.observed-price b{display:block;font-size:12px}
+.observed-price small{display:block;color:#667767;font-size:11px}
+.observed-price a{font-size:11px}
+@media(max-width:480px){.nutrition-cell strong{font-size:16px}.nutrition-grid{gap:6px}.board-protein{font-size:8px}.product-nutri-teaser{font-size:10px}}
