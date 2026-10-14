@@ -652,6 +652,69 @@ function refreshProducts(){
  if($('#productResults'))$('#productResults').innerHTML=a.length?'<div class="product-grid">'+a.map(productCard).join('')+'</div>':empty('⌕','No matches','Try another category or remove your filter.');
  if($('#resultCount'))$('#resultCount').textContent=a.length+' products · '+gradedRatings().length+' graded · '+notTriedRatings().length+' not tried';
 }
+
+// ---- Traceable per-barcode nutrition, store discovery and dated price evidence ----
+const priceMemory=new Map(),nutritionMemory=new Map();
+const decimals=v=>Number.isFinite(v)?new Intl.NumberFormat('de-DE',{maximumFractionDigits:1}).format(v):'—';
+function nutritionData(p){return p?.nutrition||nutritionMemory.get(p?.barcode)||null}
+function nutritionPanel(p){
+ const n=nutritionData(p),source=validUrl(p.nutrition_source_url||((p.barcode&&'https://world.openfoodfacts.org/product/'+p.barcode)||''));
+ if(!n)return '<div class="product-info-empty">Noch keine eindeutig zugeordneten Nährwerte. Für diesen alten Katalogeintrag brauchen wir den passenden Barcode (EAN/GTIN).</div>';
+ const rows=[['Energie',n.kcal,'kcal'],['Protein',n.protein,'g'],['Kohlenhydrate',n.carbs,'g'],['davon Zucker',n.sugar,'g'],['Fett',n.fat,'g'],['davon gesättigt',n.satFat,'g'],['Ballaststoffe',n.fiber,'g'],['Salz',n.salt,'g']];
+ return '<div class="nutrition-grid">'+rows.map(([name,v,unit])=>'<div class="nutrition-cell '+(name==='Protein'?'protein-highlight':'')+'"><span>'+name+'</span><strong>'+decimals(v)+' '+(Number.isFinite(v)?unit:'')+'</strong></div>').join('')+'</div>'+
+ '<p class="facts-footnote">Angaben laut Community-Datenbank, pro 100 g bzw. 100 ml (wie dort erfasst). Packungswerte haben Vorrang. '+(source?'<a target="_blank" rel="noopener noreferrer" href="'+attr(source)+'">Nährwertquelle ↗</a>':'')+'</p>';
+}
+function shoppingPanel(p){
+ const store=String(p.store||'').toUpperCase(),storeLink=STORE_URLS[store],sellerLabel=STORE_NAMES[store]||p.store;
+ const productUrl=validUrl(p.source_url||'');
+ const sourced=String(p.stores_reported||'').trim();
+ return '<div class="shopping-sources">'+
+ '<div class="shop-option"><span>🛒</span><div><strong>'+esc(sellerLabel)+'</strong><small>'+(p.source_type==='openfoodfacts'?'Als möglicher Kaufort gemeldet – Filialbestand nicht bestätigt.':'Im Ursprungskatalog zugeordneter Händler. Verfügbarkeit ortsabhängig.')+'</small></div>'+(storeLink?'<a href="'+attr(storeLink)+'" target="_blank" rel="noopener noreferrer">Shop ↗</a>':'')+'</div>'+
+ (sourced?'<div class="small muted" style="margin-top:8px">Weitere Community-Händlerangaben: '+esc(sourced.slice(0,160))+'</div>':'')+
+ (productUrl?'<a class="small" style="display:inline-block;margin-top:10px" target="_blank" rel="noopener noreferrer" href="'+attr(productUrl)+'">Produktdaten / ursprüngliche Quelle ansehen ↗</a>':'')+
+ '</div>';
+}
+function pricePanel(p){
+ if(!p.barcode)return '<p class="small muted">Kein belegter Preis: Für diesen Katalogeintrag fehlt der eindeutige Produktbarcode. Händlerpreise variieren nach Standort und Datum.</p>';
+ const result=priceMemory.get(p.barcode);
+ if(result==='loading')return '<p class="small muted">Suche nach belegten, datierten Ladenpreisen …</p>';
+ if(!result||!result.price)return '<p class="small muted">Zurzeit kein überprüfbarer EUR-Preis für diese EAN erfasst. Das bedeutet nicht, dass das Produkt kostenlos oder nicht erhältlich ist.</p><a href="https://prices.openfoodfacts.org/" target="_blank" rel="noopener noreferrer" class="small">Open Prices ↗</a>';
+ return '<div class="observed-price"><strong>'+decimals(result.price).replace(/(\d)$/,'$1')+' €</strong><div><b>Beobachteter Preis, nicht Live-Angebot</b><small>'+esc(result.store)+' · '+esc(result.date)+' · '+esc(result.city||'Deutschland')+'</small><a target="_blank" rel="noopener noreferrer" href="'+attr(result.source)+'">Preisnachweis ↗</a></div></div>';
+}
+function productFacts(p){
+ return '<hr class="rule"><section class="product-facts"><div class="eyebrow">PRODUKT-CHECK / INHALTSSTOFFE</div><div class="spaced"><h3>Nährwerte</h3><span class="fact-tag">'+esc(p.quantity||'je 100 g/ml')+'</span></div><div id="gtNutritionInfo">'+nutritionPanel(p)+'</div>'+
+ '<div class="spaced" style="margin-top:21px"><h3>Wo kaufen?</h3><span class="fact-tag">Händlerhinweise</span></div>'+shoppingPanel(p)+
+ '<div class="spaced" style="margin-top:24px"><h3>Preis</h3><span class="fact-tag">Nur belegte Werte</span></div><div id="gtPriceInfo">'+pricePanel(p)+'</div></section>';
+}
+async function loadNutrition(p){
+ if(!p.barcode||p.nutrition||nutritionMemory.has(p.barcode)||!window.fetch)return;
+ try{
+  const url='https://world.openfoodfacts.org/api/v2/product/'+encodeURIComponent(p.barcode)+'.json?fields=code,nutriments';
+  const res=await fetch(url,{headers:{Accept:'application/json'}});
+  if(!res.ok)return;
+  const data=await res.json();if(data.status!==1||String(data.code)!==String(p.barcode))return;
+  const n=data.product?.nutriments||{},safe=v=>Number.isFinite(v)&&v>=0&&v<10000?Math.round(v*100)/100:null;
+  const facts={kcal:safe(n['energy-kcal_100g']),protein:safe(n.proteins_100g),carbs:safe(n.carbohydrates_100g),sugar:safe(n.sugars_100g),fat:safe(n.fat_100g),satFat:safe(n['saturated-fat_100g']),fiber:safe(n.fiber_100g),salt:safe(n.salt_100g)};
+  if(facts.kcal===null&&facts.protein===null)return;
+  nutritionMemory.set(p.barcode,facts);
+  if(st.selected===p.id&&$('#gtNutritionInfo'))$('#gtNutritionInfo').innerHTML=nutritionPanel(p);
+ }catch(_){}
+}
+async function loadPrice(p){
+ if(!p.barcode||priceMemory.has(p.barcode)||!window.fetch)return;
+ priceMemory.set(p.barcode,'loading');
+ try{
+  const url='https://prices.openfoodfacts.org/api/v1/prices?product_code='+encodeURIComponent(p.barcode)+'&size=15&order_by=-date';
+  const res=await fetch(url,{headers:{Accept:'application/json'}});
+  if(!res.ok)throw Error('unavailable');
+  const data=await res.json();const current=new Date();
+  const prices=(data.items||[]).filter(x=>x?.type==='PRODUCT'&&x.currency==='EUR'&&Number.isFinite(x.price)&&x.price>0&&x.price<500&&x.location?.osm_address_country_code==='DE'&&/^\d{4}-\d\d-\d\d$/.test(String(x.date||''))&&new Date(x.date)<=current).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const x=prices[0];
+  priceMemory.set(p.barcode,x?{price:x.price,date:x.date,store:x.location.osm_brand||x.location.osm_name||'Händler',city:x.location.osm_address_city||'',source:'https://prices.openfoodfacts.org/api/v1/prices/'+x.id}:null);
+ }catch(_){priceMemory.set(p.barcode,null)}
+ if(st.selected===p.id&&$('#gtPriceInfo'))$('#gtPriceInfo').innerHTML=pricePanel(p);
+}
+
 function drawerHtml(){
  const p=getProduct(st.selected);if(!p)return '';
  const r=st.user?accountRating(p.id):guestRating(p.id,st.persona);
@@ -665,6 +728,7 @@ function drawerHtml(){
  +'<div class="field"><label for="ratingNote">Your 200-character tasting note</label><textarea class="control" id="ratingNote" rows="3" maxlength="200" placeholder="Creamy, smoky, truly magical…">'+esc(st.draftNote)+'</textarea></div>'
  +(st.user?'<label class="toggle" style="margin-bottom:19px"><input type="checkbox" id="ratingPublic" '+(st.draftPublic?'checked':'')+'> Share this rating publicly with the community</label>':'<p class="small muted">Guest ratings stay in this browser; they are not community reviews.</p>')
  +'<button class="not-tried-choice '+(isNotTried(r)?'selected':'')+'" data-action="mark-not-tried" data-id="'+attr(p.id)+'"><span>◌</span><span><strong>Not tried yet</strong><small>Save an answer without a tier grade</small></span><span>↗</span></button><div class="gap12"><button class="button button-lime" data-action="save-rating" data-id="'+attr(p.id)+'">Save my rating ♡</button>'+(r?'<button class="button button-ghost button-small" data-action="delete-rating">Remove rating</button>':'')+'</div>'
+ +productFacts(p)
  +'<hr class="rule"><h3>See the real product</h3><p class="small muted">Catalog variants are candidates. Compare store listings and packaging before treating an item as verified.</p><div class="gap12">'
  +'<a class="button button-ghost button-small" href="'+attr(validUrl(p.source_url))+'" target="_blank" rel="noopener noreferrer">Check '+esc(p.store)+' ↗</a>'
  +'<a class="button button-lime button-small" href="./lookup.html?catalog='+encodeURIComponent(p.id)+'">Check exact barcode ↗</a><button class="button button-ghost button-small" data-action="report-photo">Wrong / missing image?</button>'
@@ -676,6 +740,7 @@ function openProduct(id,tier,persona){
  const r=st.user?accountRating(id):guestRating(id,st.persona);
  st.draftTier=tier||r?.tier||'';st.draftNote=r?.note||'';st.draftPublic=r?.is_public===true;
  $('#drawer').innerHTML=drawerHtml();openOverlay('drawerOverlay');
+ loadNutrition(getProduct(id));loadPrice(getProduct(id));
 }
 function changePersona(who){
  if(!['you','mikel','huong'].includes(who))return;
