@@ -25,7 +25,7 @@ const STORE_URLS={DM:'https://www.dm.de/',ROSSMANN:'https://www.rossmann.de/',RE
 const proteinNumber=p=>Number.isFinite(p?.nutrition?.protein)?Number(p.nutrition.protein):null;
 const FLAGGED=ALL.filter(p=>!rankableProduct(p));
 const tryRead=(key,fallback)=>{try{const d=JSON.parse(localStorage.getItem(key)||'null');return d&&typeof d==='object'?d:fallback}catch(_){return fallback}};
-const st={view:'board',boardQuery:'',boardCategory:'all',boardPhotoFilter:'all',boardHistory:[],boardBusy:false,boardModalProduct:null,boardUndoing:false,category:'all',store:'all',sort:'name',query:'',ratedOnly:false,highProtein:false,catalogStatus:'all',persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],requests:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
+const st={view:'board',boardQuery:'',boardCategory:'all',boardPhotoFilter:'matched',boardHistory:[],boardBusy:false,boardModalProduct:null,boardUndoing:false,category:'all',store:'all',sort:'name',query:'',ratedOnly:false,highProtein:false,catalogStatus:'all',catalogPhotoFilter:true,persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],requests:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
 let sb=null;
 function safeGuest(raw){
  const ret={mikel:{},huong:{},you:{}};
@@ -103,6 +103,7 @@ function productCard(p){
 function filteredProducts(){
  let a=RANKABLE.filter(p=>(st.category==='all'||p.category_id===st.category)&&(st.store==='all'||String(p.store||'').toUpperCase()===String(st.store).toUpperCase()));
  const q=st.query.trim().toLowerCase();if(q)a=a.filter(p=>(p.name+' '+p.brand+' '+p.store+' '+p.category).toLowerCase().includes(q));
+ if(st.catalogPhotoFilter)a=a.filter(matchedPhoto);
  if(st.ratedOnly)a=a.filter(p=>isGraded(showRating(p.id)));
  if(st.highProtein)a=a.filter(p=>proteinNumber(p)!==null&&proteinNumber(p)>=15);
  if(st.catalogStatus==='rated')a=a.filter(p=>isGraded(showRating(p.id)));
@@ -215,15 +216,21 @@ async function duoIsPhotoSharp(p){
 async function duoPick(usedIds){
  const used=new Set(usedIds||[]);
  const list=duoPhotoCandidates().filter(p=>!used.has(p.id));
- // Prefer products with a specific EAN and reliable source photography.
+ // Shuffle while preferring real barcode-linked records. Parallel verification means
+ // the user does not wait for 28 sequential CDN timeouts on mobile.
  const picks=list.sort((a,b)=>(a.barcode?0:1)-(b.barcode?0:1)||a.name.localeCompare(b.name,'de'));
  const start=picks.length?Math.floor(Math.random()*picks.length):0;
- for(let i=0;i<Math.min(picks.length,28);i++){
-  const p=picks[(start+i)%picks.length];
-  const img=await duoIsPhotoSharp(p);
-  if(img)return p;
+ const tested=picks.slice(start).concat(picks.slice(0,start)).slice(0,32);
+ for(let i=0;i<tested.length;i+=8){
+  const batch=tested.slice(i,i+8);
+  try{
+   return await Promise.any(batch.map(async p=>{
+    const result=await duoIsPhotoSharp(p);
+    if(!result)throw Error('photo low-resolution');
+    return p;
+   }));
+  }catch(_){} // all eight images lacked a usable high-res source
  }
- // No fake or unsharp image is displayed if validation fails.
  return null;
 }
 const duoChoiceLabel=v=>v==='not_tried'?'◌ Noch nicht probiert':v==='F'?'F · Durchgefallen':v?'Tier '+v:'Noch nicht bewertet';
@@ -816,7 +823,7 @@ function renderDiscover(){
  +'<div class="toolbar"><label class="search"><span aria-hidden="true">⌕</span><input type="search" id="productSearch" placeholder="Search brands, products and stores…" autocomplete="off" aria-label="Search products" value="'+attr(st.query)+'"></label>'
  +'<select id="storeSelect" class="control" aria-label="Select store">'+['all',...new Set(RANKABLE.map(p=>String(p.store||'').toUpperCase()))].map(x=>'<option value="'+x+'" '+(String(st.store).toUpperCase()===x?'selected':'')+'>'+(x==='all'?'Alle Händler':esc(STORE_NAMES[x]||x))+'</option>').join('')+'</select>'
  +'<select id="sortSelect" class="control" aria-label="Sort products"><option value="name" '+(st.sort==='name'?'selected':'')+'>By name</option><option value="brand" '+(st.sort==='brand'?'selected':'')+'>By brand</option><option value="rated" '+(st.sort==='rated'?'selected':'')+'>My favourites first</option><option value="protein" '+(st.sort==='protein'?'selected':'')+'>Protein je 100 g ↓</option></select><select id="catalogStatusFilter" class="control" aria-label="Filter by tried status"><option value="all">All statuses</option><option value="rated" '+(st.catalogStatus==='rated'?'selected':'')+'>✓ Rated</option><option value="not_tried" '+(st.catalogStatus==='not_tried'?'selected':'')+'>◌ Not tried yet</option><option value="unanswered" '+(st.catalogStatus==='unanswered'?'selected':'')+'>Unanswered</option></select></div>'
- +'<label class="toggle" style="margin-bottom:13px"><input id="highProteinOnly" type="checkbox" '+(st.highProtein?'checked':'')+'> 💪 Mindestens 15 g Protein pro 100 g/ml (nur Artikel mit Nährwertangabe)</label><div class="chips" aria-label="Categories"><button class="chip '+(st.category==='all'?'active':'')+'" data-action="set-category" data-id="all">✳ All '+RANKABLE.length+'</button>'+GROUPS.map(g=>'<button class="chip '+(st.category===g.id?'active':'')+'" data-action="set-category" data-id="'+attr(g.id)+'">'+esc(g.emoji)+' '+esc(g.label)+' <small>'+RANKABLE.filter(p=>p.category_id===g.id).length+'</small></button>').join('')+'</div>'
+ +'<div class="gap12" style="margin-bottom:14px"><label class="toggle"><input id="catalogPhotoFilter" type="checkbox" '+(st.catalogPhotoFilter?'checked':'')+'> Nur echte Packshots ('+RANKABLE.filter(matchedPhoto).length+')</label><span class="small muted">Fehlende Fotos: '+RANKABLE.filter(p=>!matchedPhoto(p)).length+' · Filter deaktivieren, um alle zu sehen</span></div><label class="toggle" style="margin-bottom:13px"><input id="highProteinOnly" type="checkbox" '+(st.highProtein?'checked':'')+'> 💪 Mindestens 15 g Protein pro 100 g/ml (nur Artikel mit Nährwertangabe)</label><div class="chips" aria-label="Categories"><button class="chip '+(st.category==='all'?'active':'')+'" data-action="set-category" data-id="all">✳ All '+RANKABLE.length+'</button>'+GROUPS.map(g=>'<button class="chip '+(st.category===g.id?'active':'')+'" data-action="set-category" data-id="'+attr(g.id)+'">'+esc(g.emoji)+' '+esc(g.label)+' <small>'+RANKABLE.filter(p=>p.category_id===g.id).length+'</small></button>').join('')+'</div>'
  +'<div class="spaced" style="margin-bottom:15px"><span class="filter-summary" id="resultCount">'+a.length+' products · '+gradedRatings().length+' graded · '+notTriedRatings().length+' not tried</span><span class="small muted">Unanswered means no selection</span></div>'
  +'<div id="productResults">'+(a.length?'<div class="product-grid">'+a.map(productCard).join('')+'</div>':empty('⌕','No matches','Try another brand, category or search term.'))+'</div>';
 }
@@ -1454,6 +1461,7 @@ document.addEventListener('change',e=>{
  if(e.target.id==='boardPhotoFilter'){st.boardPhotoFilter=e.target.value;refreshBoardTray()}
  if(e.target.id==='ratedOnly'){st.ratedOnly=e.target.checked;refreshProducts()}
  if(e.target.id==='highProteinOnly'){st.highProtein=e.target.checked;refreshProducts()}
+ if(e.target.id==='catalogPhotoFilter'){st.catalogPhotoFilter=e.target.checked;refreshProducts()}
  if(e.target.id==='catalogStatusFilter'){st.catalogStatus=e.target.value;refreshProducts()}
  if(e.target.id==='ratingPublic')st.draftPublic=e.target.checked;
 });
