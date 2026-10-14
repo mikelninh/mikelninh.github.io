@@ -61,9 +61,9 @@ test('356 records, 354 eligible in 18 categories, with two dairy products exclud
  assert.equal(a.filter(x=>x.vegan_status==='non_vegan').length,2);
  assert.equal(a.filter(x=>x.vegan_status!=='non_vegan').length,354);
  assert.ok(a.every(x=>x.verified===false));
- assert.equal((t.renderDiscover().match(/class="product-card"/g)||[]).length,304);
+ assert.equal((t.renderDiscover().match(/class="product-card"/g)||[]).length,305);
  assert.ok(!t.renderDiscover().includes('Sweet Paprika</h3>'));
- assert.equal((t.renderBoard().match(/data-drag-id="/g)||[]).length,304);
+ assert.equal((t.renderBoard().match(/data-drag-id="/g)||[]).length,305);
  assert.equal((t.renderBoard().match(/class="tier-lane"/g)||[]).length,6);
 });
 test('Guest scores persist and public snippets escape notes',async()=>{
@@ -100,14 +100,14 @@ test('Sourced photos are product specific and link to traceable provenance',()=>
  const {context}=fixture();
  const a=context.window.GT_CATALOG;
  const matched=a.filter(x=>['retailer','brand','barcode'].includes(x.image_status));
- assert.equal(matched.length,304);
+ assert.equal(matched.length,305);
  assert.ok(matched.every(x=>x.image_url?.startsWith('https://')&&x.image_source_url?.startsWith('https://')));
  assert.ok(matched.filter(x=>x.image_status==='retailer').every(x=>x.image_source_url&&x.photo_attribution));
  assert.ok(matched.filter(x=>x.image_status==='retailer'&&x.retailer_sku).every(x=>x.image_source_url&&x.retailer_sku));
 });
 test('Drag-board state supports placing, reorder, unrank and blocks nonvegan products',async()=>{
  const {t,localStorage}=fixture();
- assert.equal(t.boardTrayProducts().length,304);
+ assert.equal(t.boardTrayProducts().length,305);
  assert.equal(await t.boardMove('snacks-02','S',0),false);
  assert.equal(t.boardEntries().length,0);
  assert.equal(await t.boardMove('tofu-01','S',0),true);
@@ -115,9 +115,9 @@ test('Drag-board state supports placing, reorder, unrank and blocks nonvegan pro
  assert.deepEqual(Array.from(t.boardSorted('S'),x=>x.product_id),['tofu-04','tofu-01']);
  assert.equal(await t.boardMove('tofu-01','D',0),true);
  assert.deepEqual(Array.from(t.boardSorted('D'),x=>x.product_id),['tofu-01']);
- assert.equal(t.boardTrayProducts().length,302);
- assert.equal(await t.boardMove('tofu-01','unranked',0),true);
  assert.equal(t.boardTrayProducts().length,303);
+ assert.equal(await t.boardMove('tofu-01','unranked',0),true);
+ assert.equal(t.boardTrayProducts().length,304);
  assert.ok(localStorage.getItem('goodthings_v13_guest'));
 });
 
@@ -130,8 +130,8 @@ test('Correct packshots stay source-matched; fuzzy photo candidates never appear
  assert.ok(!t.renderBoard().includes('https://untrusted.example/fuzzy.png'));
  assert.ok(!t.renderDiscover().includes('https://untrusted.example/fuzzy.png'));
  const filtered=t.st.boardPhotoFilter='matched';
- assert.equal(t.boardTrayProducts().length,304);
- t.st.boardPhotoFilter='missing';assert.equal(t.boardTrayProducts().length,50);
+ assert.equal(t.boardTrayProducts().length,305);
+ t.st.boardPhotoFilter='missing';assert.equal(t.boardTrayProducts().length,49);
  t.st.boardPhotoFilter='all';assert.equal(t.boardTrayProducts().length,354);
 });
 test('Undo restores old tier, notes and private status; reset clears guest board',async()=>{
@@ -165,7 +165,7 @@ test('Photo correction schema is private, constrained and RLS-protected',()=>{
 
 test('Not tried yet is a saved answer with no grade, a private state and a separate shelf',async()=>{
  const {t,localStorage}=fixture();
- assert.equal(t.boardTrayProducts().length,304);
+ assert.equal(t.boardTrayProducts().length,305);
  assert.equal(await t.boardMove('tofu-01','not_tried',0),true);
  const record=t.st.guest.you['tofu-01'];
  assert.equal(record.status,'not_tried');
@@ -174,7 +174,7 @@ test('Not tried yet is a saved answer with no grade, a private state and a separ
  assert.equal(record.position,0);
  assert.equal(t.boardEntries().length,0);
  assert.equal(t.boardNotTried().length,1);
- assert.equal(t.boardTrayProducts().length,303);
+ assert.equal(t.boardTrayProducts().length,304);
  assert.ok(t.renderBoard().includes('class="not-tried-shelf"'));
  assert.ok(t.renderBoard().includes('data-drop-tier="not_tried"'));
  assert.ok(t.renderMy().includes('Not tried yet (1)'));
@@ -185,7 +185,7 @@ test('Not tried yet is a saved answer with no grade, a private state and a separ
  t.st.catalogStatus='not_tried';
  assert.deepEqual(Array.from(t.filteredProducts(),p=>p.id),['tofu-01']);
  t.st.catalogStatus='unanswered';
- assert.equal(t.filteredProducts().length,303);
+ assert.equal(t.filteredProducts().length,304);
 });
 test('Not tried can turn into a real grade and undo restores the untried state',async()=>{
  const {t}=fixture();
@@ -202,7 +202,7 @@ test('Not tried can turn into a real grade and undo restores the untried state',
  assert.equal(t.st.guest.you['tofu-01'].is_public,false);
  await t.undoBoard();
  assert.equal(t.boardAnswers().length,0);
- assert.equal(t.boardTrayProducts().length,304);
+ assert.equal(t.boardTrayProducts().length,305);
 });
 test('A graded product can become not tried without leaking any score or public flag',async()=>{
  const {t}=fixture();
@@ -271,8 +271,8 @@ test('F grade works in quick picker, share snapshots, public scores and comparis
  assert.equal(snapshot[0].tier,'F');
  const catalog=context.window.GT_CATALOG;
  const valid=catalog.filter(p=>p.vegan_status!=='non_vegan');
- assert.equal(valid.filter(p=>p.image_url&&['retailer','brand','barcode'].includes(p.image_status)).length,304);
- assert.equal(valid.filter(p=>!p.image_url).length,50);
+ assert.equal(valid.filter(p=>p.image_url&&['retailer','brand','barcode'].includes(p.image_status)).length,305);
+ assert.equal(valid.filter(p=>!p.image_url).length,49);
 });
 
 
@@ -333,7 +333,7 @@ test('Barcode nutrient columns and dated price UI are honest about missing data'
 test('Duo preview uses real photos and hides the first person’s grade until both respond',async()=>{
  const {t,localStorage}=fixture();
  t.duoSetStarter('mikel');
- assert.equal(t.duoPhotoCandidates().length,304);
+ assert.equal(t.duoPhotoCandidates().length,305);
  assert.ok(t.renderDuo().includes('Unser erstes Produkt'));
  await t.duoLocalStart(false);
  const first=t.duoLocalSnapshot();
