@@ -93,21 +93,33 @@ function checkOne(p){
   attempt(direct,direct===p.image_url?'':safeUrl(p.image_url));
  });
 }
-async function auditNext(){
+async function auditBatch(allRemaining){
  if(view.auditing)return;
- view.auditing=true;
- const btn=$('auditNext');btn.disabled=true;btn.textContent='Prüfe gerade Packshots …';
- const todo=all.filter(p=>hasImage(p)&&getState(p)==='unchecked').slice(0,30);
- if(!todo.length){btn.textContent='Alle verlinkten Bilder geprüft';btn.disabled=false;view.auditing=false;return}
- for(let i=0;i<todo.length;i+=6){
-  const batch=todo.slice(i,i+6);
-  const checked=await Promise.all(batch.map(checkOne));
-  batch.forEach((p,j)=>{view.checked[p.id]={url:p.image_url,...checked[j],checkedAt:new Date().toISOString()}});
-  persist();render();
-  btn.textContent='Prüfe '+Math.min(todo.length,i+6)+' / '+todo.length+' …';
+ view.auditing=true;view.stopRequested=false;
+ const allBtn=$('auditAll'),nextBtn=$('auditNext'),stopBtn=$('auditStop');
+ allBtn.disabled=true;nextBtn.disabled=true;stopBtn.hidden=false;
+ const todo=all.filter(p=>hasImage(p)&&getState(p)==='unchecked').slice(0,allRemaining?all.length:30);
+ let finished=0;
+ try{
+  if(!todo.length){$('photoHelp').textContent='Alle verlinkten Produktfotos wurden in diesem Browser auf Auflösung geprüft.';return}
+  for(let i=0;i<todo.length;i+=8){
+   if(view.stopRequested)break;
+   const batch=todo.slice(i,i+8),checked=await Promise.all(batch.map(checkOne));
+   batch.forEach((p,j)=>{view.checked[p.id]={url:p.image_url,...checked[j],checkedAt:new Date().toISOString()};finished++});
+   persist();render();
+   allBtn.textContent='Prüfe Bilder: '+finished+' / '+todo.length+' …';
+   $('photoHelp').textContent='Auflösungscheck: '+finished+' / '+todo.length+' fertig. Falsche Varianten und zugeschnittene Motive müssen weiterhin visuell geprüft werden.';
+  }
+ }finally{
+  view.auditing=false;view.stopRequested=false;
+  allBtn.disabled=false;nextBtn.disabled=false;stopBtn.hidden=true;
+  allBtn.textContent='Alle vorhandenen Bildquellen prüfen ↗';
+  nextBtn.textContent='Nächste 30 prüfen';
+  render();
  }
- btn.disabled=false;btn.textContent='Nächste 30 Bilder prüfen ↗';view.auditing=false;
 }
+function auditNext(){return auditBatch(false)}
+function auditAll(){return auditBatch(true)}
 function exportAudit(){
  const cols=['id','brand','name','store','barcode','image_status','resolution_state','width','height','image_url','image_source_url'];
  const rows=[cols,...all.map(p=>{
@@ -125,6 +137,8 @@ $('photoCategory').addEventListener('change',e=>{view.category=e.target.value;vi
 $('photoFilter').addEventListener('change',e=>{view.filter=e.target.value;view.visible=48;render()});
 $('photosMore').addEventListener('click',()=>{view.visible+=48;render()});
 $('auditNext').addEventListener('click',auditNext);
+$('auditAll').addEventListener('click',auditAll);
+$('auditStop').addEventListener('click',()=>{view.stopRequested=true});
 $('exportAudit').addEventListener('click',exportAudit);
 render();
 })();
