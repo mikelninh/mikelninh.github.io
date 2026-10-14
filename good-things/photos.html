@@ -1,0 +1,53 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f7f0"><meta name="description" content="GOOD THINGS Foto-Qualitätscheck: 354 Produkte, genaue Verpackungsbilder, Bildauflösung und Nachweise.">
+<title>Photo Lab · GOOD THINGS</title>
+<link rel="stylesheet" href="./styles.css">
+<style>
+.photo-lab{max-width:1340px;margin:auto;padding:35px clamp(18px,5vw,70px) 100px}
+.photo-hero{background:#e6eed8;border:1px solid #cad9bf;border-radius:24px;padding:clamp(25px,5vw,54px);margin:20px 0}
+.photo-hero h1{font:600 clamp(43px,7vw,82px)/.96 'Fraunces',Georgia,serif;letter-spacing:-.06em;margin:13px 0 18px}
+.photo-hero h1 em{color:#679056}
+.photo-hero p{max-width:700px;font-size:15px;color:#5f765a;line-height:1.65}
+.photo-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:19px 0}
+.photo-stat{background:#fffefa;border:1px solid var(--edge);border-radius:13px;padding:15px}
+.photo-stat strong{display:block;font:600 35px 'Fraunces',serif}
+.photo-stat span{font-size:11px;color:#6d7c6c}
+.photo-filters{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+.photo-filters .control{width:auto;min-width:170px}
+.photo-filters input{flex:1;min-width:220px}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:12px}
+.photo-entry{background:#fffefa;border:1px solid #dce4d5;border-radius:17px;padding:12px;min-width:0}
+.photo-entry img{width:100%;height:155px;object-fit:contain;background:#f7f8f1;border-radius:10px;padding:8px}
+.photo-placeholder{height:155px;display:grid;place-items:center;background:#eef0e8;border-radius:10px;color:#798b79;font-size:38px}
+.photo-entry h3{margin:8px 0 3px;font-size:14px;line-height:1.25}
+.photo-entry p{margin:0;color:#687b6c;font-size:11px}
+.photo-entry .photo-status{font-size:10px;font-weight:800;background:#f0f0e9;border:1px solid #e1e3d8;color:#667363;display:inline-block;padding:4px 8px;border-radius:50px;margin:9px 0}
+.photo-entry .photo-status.good{background:#dfefc2;color:#45623f}
+.photo-entry .photo-status.bad{background:#f4d9d3;color:#87504d}
+.photo-entry .photo-status.missing{background:#eee8db;color:#857157}
+.photo-entry .photo-links{display:flex;gap:7px;align-items:center;margin:7px 0 0}
+.photo-entry a{font-size:11px;color:#45673e;text-decoration:underline}
+.photo-progress{height:9px;background:#e8ece0;border-radius:99px;overflow:hidden;margin:15px 0}
+.photo-progress>div{height:100%;background:#accd72;width:0;transition:width .2s}
+#photosMore{margin:20px 0}
+@media(max-width:620px){.photo-stats{grid-template-columns:repeat(2,1fr)}.photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.photo-entry{padding:8px}.photo-entry img,.photo-placeholder{height:120px}.photo-filters .control{width:100%}}
+</style>
+<script defer src="./catalog.js"></script><script defer src="./catalog-extra-1.js"></script><script defer src="./catalog-extra-2.js"></script><script defer src="./catalog-extra-3.js"></script><script defer src="./catalog-merge.js"></script><script defer src="./photo-lab.js"></script>
+</head><body>
+<header class="masthead wrap"><a class="brand" href="./"><span class="brand-icon">✳</span><span>GOOD<br>THINGS.</span></a><a class="button button-small button-dark" href="./?view=duo">♡ Together ↗</a></header>
+<main class="photo-lab">
+ <div class="photo-hero"><div class="eyebrow">GOOD THINGS / PHOTO LAB</div><h1>Every pack.<br><em>The real one.</em></h1>
+ <p>Wir prüfen Bilder nicht nach Bauchgefühl, sondern nach Originalquelle und tatsächlicher Auflösung. Ein Bild kann technisch scharf sein und trotzdem die falsche Sorte zeigen: Die finale Produktzuordnung muss separat geprüft werden.</p>
+ <div class="gap12"><button class="button button-dark" id="auditNext">Nächste 30 Bilder prüfen ↗</button><button class="button button-white" id="exportAudit">Prüfbericht als CSV ↓</button><a class="button button-ghost" href="https://github.com/mikelninh/mikelninh.github.io/blob/main/good-things/PHOTOS-NEEDED.md" target="_blank" rel="noopener noreferrer">Fehlende Fotos ↗</a></div>
+ </div>
+ <div class="photo-stats" id="photoStats"></div>
+ <div class="photo-progress"><div id="photoProgress"></div></div>
+ <p class="small muted" id="photoHelp">Fotos werden nur geprüft, wenn du die Schaltfläche betätigst. Hersteller, Händler und Open Food Facts können die Bilder aktualisieren; die Prüfung ist eine Momentaufnahme in deinem Browser.</p>
+ <div class="photo-filters"><input class="control" id="photoSearch" type="search" placeholder="Suche nach Tofu, Marke, EAN…">
+ <select class="control" id="photoCategory"><option value="all">Alle Kategorien</option></select>
+ <select class="control" id="photoFilter"><option value="all">Alle Produkte</option><option value="missing">Ohne Bild</option><option value="low">Unscharf oder nicht erreichbar</option><option value="good">Auflösung geprüft</option><option value="unchecked">Noch nicht geprüft</option></select></div>
+ <div class="photo-grid" id="photoResults"></div><button class="button button-ghost" id="photosMore">Weitere Bilder anzeigen ↓</button>
+ <p class="small muted">© Packshots der jeweiligen Rechteinhaber. Community-Bilddaten: Open Food Facts, CC BY-SA; Produktdaten: ODbL. Die Fotos werden nicht ohne Einwilligung als eigene Produktbilder angeboten. Quellenlinks sind bei jedem Eintrag sichtbar.</p>
+</main>
+</body></html>
