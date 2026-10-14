@@ -458,7 +458,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "milks-14",
-    "name": "Bio Haferdrink Natural 1l",
+    "name": "Bio Hafer Natur 1l",
     "brand": "Natumi",
     "store": "REWE",
     "category": "Plant drinks",
@@ -466,13 +466,14 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": "https://plantful.de/media/image/product/5911/lg/natumi-haferdrink-natural-bio-1-l.jpg",
-    "source_url": "https://plantful.de/Natumi-Haferdrink-Natural-Bio-1-l",
-    "image_status": "retailer",
-    "image_source_url": "https://plantful.de/Natumi-Haferdrink-Natural-Bio-1-l",
-    "photo_attribution": "Plantful",
+    "image_url": "https://www.natumi.com/media/jn5hbb1q/241220_natumi_de-gb-es-pl-el-it_bio-hafer-natur_3242_ecirgbv2.png?width=1200",
+    "source_url": "https://www.natumi.com/produkte/drinks/bio-hafer-natur/",
+    "image_status": "brand",
+    "image_source_url": "https://www.natumi.com/produkte/drinks/bio-hafer-natur/",
+    "photo_attribution": "Natumi (Hersteller)",
     "photo_reviewed_at": "2026-10-14",
-    "photo_match_method": "exact_retailer_title_photo"
+    "photo_match_method": "manufacturer_direct_product_packshot_with_exact_product_ean",
+    "barcode": "4038375024396"
   },
   {
     "id": "yogurts-01",
