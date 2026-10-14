@@ -65,10 +65,12 @@ function empty(emoji,heading,body,button){
  return '<div class="empty"><div class="big">'+esc(emoji)+'</div><strong>'+esc(heading)+'</strong><p>'+esc(body)+'</p>'+(button||'')+'</div>';
 }
 function setView(view,extra){
- if(!['board','discover','ours','my','community','shared','profile','list'].includes(view))view='board';
+ if(!['board','discover','ours','my','community','duo','shared','profile','list'].includes(view))view='board';
  st.view=view;
  if(view!=='shared'&&view!=='profile'&&view!=='list'){
-  const u=new URL(URL_BASE);u.searchParams.set('view',view);history.replaceState(null,'',u.toString());
+  const u=new URL(URL_BASE);u.searchParams.set('view',view);
+  if(view==='duo'&&st.duo.mode==='remote'&&st.duo.room?.id)u.searchParams.set('room',st.duo.room.id);
+  history.replaceState(null,'',u.toString());
  }
  render();
  if(extra!==false)document.querySelector('#workspace')?.scrollIntoView({block:'start',behavior:'smooth'});
@@ -186,7 +188,7 @@ function duoHiResImage(p){
  return url;
 }
 function duoPhotoMarkup(p){
- const url=duoHiResImage(p),fallback=validUrl(p.image_url);
+ const selected=duoPhotoCheck.get(p.id);const url=typeof selected==='string'?selected:duoHiResImage(p),fallback=validUrl(p.image_url);
  return '<div class="duo-hero-photo"><img loading="eager" data-duo-image="true" data-fallback="'+attr(fallback)+'" src="'+attr(url)+'" alt="'+attr(p.brand+' '+p.name)+' — Produktverpackung" referrerpolicy="no-referrer"><div class="duo-photo-bottom"><span>PHOTO · '+esc(p.photo_attribution||'Product source')+'</span><span>'+esc(p.barcode?'EAN '+p.barcode:'Source-linked packshot')+'</span></div></div>';
 }
 const duoPhotoCheck=new Map();
@@ -438,7 +440,8 @@ function renderBoard(){
  'Drag a product into S–F if you’ve tried it. Otherwise choose Not tried yet — an explicit answer without a grade.',entries.length+' RANKED · '+skipped.length+' NOT TRIED')
  +'<div class="board-intro">'+personToggle+'<div class="gap12"><button class="button button-small button-ghost" data-action="undo-board" '+(!st.boardHistory.length?'disabled':'')+' title="Undo last move">↶ Undo</button><button class="button button-small button-white" data-action="export-board-png">↓ Save PNG</button><button class="button button-small button-lime" data-action="share-board">Share ↗</button><button class="button button-small button-ghost" data-action="suggest-product">+ Produkt fehlt?</button><button class="button button-small button-ghost" data-action="reset-board" '+(!entries.length&&!skipped.length?'disabled':'')+'>Reset</button></div></div>'
  +(!st.user?'<div class="inline-notice">✳ <strong>Local preview:</strong> switching Mikel/Huong changes only this device’s demo board. Sign in to sync your own honest scores — nobody can post as someone else.</div>':'<div class="inline-notice">♡ Your board is tied to your account. Changes sync to Supabase; each new rating is private until you explicitly publish it.</div>')
- +'<div class="board-layout"><section class="board-pantry" aria-label="Unranked products">'
+ +'<div class="duo-board-banner"><div><span class="eyebrow">NEW · TOGETHER</span><strong>Ein Produkt. Zwei Urteile.</strong><p>Erst beide raten, dann werden die Tier-Stufen aufgedeckt. Nur echte Produktfotos.</p></div><button class="button button-dark" data-nav="duo">Gemeinsam spielen ↗</button></div>'+
+ '<div class="board-layout"><section class="board-pantry" aria-label="Unranked products">'
  +'<div class="board-panel-label"><span>✳ Not answered yet</span><span id="boardTrayCount">'+boardTrayProducts().length+' unanswered</span></div>'
  +'<div class="board-filter-row"><input type="search" id="boardSearch" class="board-filter" aria-label="Search unranked products" placeholder="Find chocolate, tofu…" value="'+attr(st.boardQuery)+'"><select class="board-filter" id="boardCategory" aria-label="Filter board by category">'
  +'<option value="all">All categories</option>'+GROUPS.map(g=>'<option value="'+attr(g.id)+'" '+(st.boardCategory===g.id?'selected':'')+'>'+esc(g.emoji)+' '+esc(g.label)+'</option>').join('')+'</select><select class="board-filter" id="boardPhotoFilter" aria-label="Photo quality"><option value="all">All photos</option><option value="matched" '+(st.boardPhotoFilter==='matched'?'selected':'')+'>✓ Source-matched</option><option value="missing" '+(st.boardPhotoFilter==='missing'?'selected':'')+'>Needs a packshot</option></select></div>'
@@ -913,7 +916,8 @@ function renderListView(){
 }
 function render(){
  const content=$('#contentView');
- if(st.view==='board')content.innerHTML=renderBoard();
+ if(st.view==='duo')content.innerHTML=renderDuo();
+ else if(st.view==='board')content.innerHTML=renderBoard();
  else if(st.view==='ours')content.innerHTML=renderOurs();
  else if(st.view==='my')content.innerHTML=renderMy();
  else if(st.view==='community')content.innerHTML=renderCommunity();
@@ -1289,6 +1293,7 @@ async function initCloud(){
    if(id!==st.user?.id){st.user=session?.user||null;if(!st.user)st.profile=null;setTimeout(()=>loadRemote(),0)}
   });
   await loadRemote();
+  if(st.user){await duoLoadRooms();const requested=new URL(location.href).searchParams.get('room');if(requested)await duoOpenRoom(requested)}
   if(st.user&&!st.profile)openProfileEdit();
  }catch(e){st.cloud='offline';render();toast('Cloud login unavailable, guest shelf still works.')}
 }
@@ -1315,6 +1320,7 @@ async function openShareLink(){
   }st.view='list';return;
  }
  const view=url.searchParams.get('view');
+ if(view==='duo'){st.view='duo';if(url.searchParams.get('room')){st.duo.mode='remote';st.duo.requestedRoom=url.searchParams.get('room')}return}
  st.view=['board','discover','ours','my','community'].includes(view)?view:'board';
 }
 document.addEventListener('click',async(event)=>{
@@ -1337,6 +1343,15 @@ document.addEventListener('click',async(event)=>{
  case 'save-rating':await saveRating();break;
  case 'delete-rating':await deleteRating();break;
  case 'set-category':st.category=id;render();break;
+ case 'duo-mode-local':st.duo.mode='local';st.duo.room=null;st.duo.error='';setView('duo');break;
+ case 'duo-mode-remote':st.duo.mode='remote';st.duo.room=null;st.duo.error='';await duoLoadRooms();setView('duo');break;
+ case 'duo-start-local':await duoLocalStart(false);break;
+ case 'duo-vote':if(st.duo.mode==='remote')await duoRemoteVote(val);else duoLocalVote(val);break;
+ case 'duo-next-local':await duoLocalStart(true);break;
+ case 'duo-next-remote':await duoNextRemote();break;
+ case 'duo-copy-link':duoSharedLink();break;
+ case 'duo-open-room':await duoOpenRoom(id);break;
+ case 'duo-refresh':await duoRefresh();break;
  case 'board-persona':if(!st.user&&['you','mikel','huong'].includes(val)){st.persona=val;st.boardHistory=[];render()}break;
  case 'board-pick':quickRank(id);break;
  case 'mark-not-tried':{const pid=id||st.selected;if(pid){const ok=await boardMove(pid,'not_tried',0);if(ok)closeOverlay('drawerOverlay')}break}
@@ -1397,7 +1412,7 @@ document.addEventListener('change',e=>{
  if(e.target.id==='ratingPublic')st.draftPublic=e.target.checked;
 });
 document.addEventListener('submit',async e=>{
- if(!['authForm','profileForm','listForm','feedbackForm','photoReportForm','productRequestForm'].includes(e.target.id))return;
+ if(!['authForm','profileForm','listForm','feedbackForm','photoReportForm','productRequestForm','duoPartnerForm'].includes(e.target.id))return;
  e.preventDefault();
  try{
  if(e.target.id==='authForm')await submitAuth(e.target);
@@ -1406,11 +1421,13 @@ document.addEventListener('submit',async e=>{
  if(e.target.id==='feedbackForm')await submitFeedback(e.target);
  if(e.target.id==='photoReportForm')await submitPhotoReport(e.target);
  if(e.target.id==='productRequestForm')await submitProductSuggestion(e.target);
+ if(e.target.id==='duoPartnerForm')await duoCreateRoom(e.target);
  }catch(err){toast('Error: '+String(err.message||err))}
 });
 $$('.overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)closeOverlay(el.id)}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){cancelBoardDrag();closeAll()}});
-window.addEventListener('focus',()=>{if(st.user&&sb)loadRemote()});
+window.addEventListener('focus',()=>{if(st.user&&sb){loadRemote();if(st.view==='duo'&&st.duo.mode==='remote')duoRefresh()}});
+if(typeof setInterval==='function')setInterval(()=>{if(st.view==='duo'&&st.duo.mode==='remote'&&st.user&&st.duo.room&&!(typeof document!=='undefined'&&document.hidden))duoRefresh()},8000);
 window.addEventListener('popstate',()=>{openShareLink().then(render)});
 (async()=>{
  if(RANKABLE.length<102||GROUPS.length<10)toast('Katalog unvollständig, bitte melden.');
