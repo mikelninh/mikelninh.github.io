@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const source=fs.readFileSync(path.join(root,'app.js'),'utf8');
-const catalog=fs.readFileSync(path.join(root,'catalog.js'),'utf8');
+const catalogs=['catalog.js','catalog-extra-1.js','catalog-extra-2.js','catalog-extra-3.js','catalog-merge.js'].map(file=>fs.readFileSync(path.join(root,file),'utf8'));
 const schema=fs.readFileSync(path.join(root,'schema.sql'),'utf8');
 const photoReports=fs.readFileSync(path.join(root,'photo-reports.sql'),'utf8');
 const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
@@ -31,32 +31,32 @@ function fixture(){
   location:{origin:'https://mikelninh.github.io',pathname:'/good-things/',href:'https://mikelninh.github.io/good-things/'},
   navigator:{},URL,TextEncoder,TextDecoder,atob,btoa,setTimeout:()=>0,clearTimeout:()=>{},
   console,Intl};
- vm.runInNewContext(catalog,context);
+ for(const catalog of catalogs)vm.runInNewContext(catalog,context);
  const injected=source.replace("document.addEventListener('click',async(event)=>{",
- "window.__qa={render,renderBoard,renderDiscover,renderOurs,renderMy,renderCommunity,ourPreview,filteredProducts,boardMove,boardAnswers,boardEntries,boardNotTried,boardSorted,boardTrayProducts,boardInsertionIndex,undoBoard,resetBoard,matchedPhoto,saveRating,st,gradedRatings,notTriedRatings,selfRatings,publicRated,scoreFor,quickRank,importTier,importJson,snapshotUrl,decodeSnapshot};document.addEventListener('click',async(event)=>{");
+ "window.__qa={render,renderBoard,renderDiscover,renderOurs,renderMy,renderCommunity,ourPreview,productFacts,proteinNumber,filteredProducts,boardMove,boardAnswers,boardEntries,boardNotTried,boardSorted,boardTrayProducts,boardInsertionIndex,undoBoard,resetBoard,matchedPhoto,saveRating,st,gradedRatings,notTriedRatings,selfRatings,publicRated,scoreFor,quickRank,importTier,importJson,snapshotUrl,decodeSnapshot};document.addEventListener('click',async(event)=>{");
  assert.ok(injected.includes('window.__qa={'),'Expected app injection point is missing');
  vm.runInNewContext(injected,context);
  return {context,t:window.__qa,localStorage};
 }
 test('Scripts parse, all public assets linked, and ratings default private in schema',()=>{
  assert.doesNotThrow(()=>new vm.Script(source));
- assert.doesNotThrow(()=>new vm.Script(catalog));
+ for(const catalog of catalogs)assert.doesNotThrow(()=>new vm.Script(catalog));
  assert.ok(index.includes('./catalog.js')&&index.includes('./app.js')&&index.includes('./styles.css'));
  assert.match(schema,/is_public boolean not null default false,\s*\n\s*position numeric/);
 });
-test('104 records in ten categories, with two proven dairy products excluded from 102 rankable choices',()=>{
+test('356 records, 354 eligible in 18 categories, with two dairy products excluded',()=>{
  const {context,t}=fixture();
  const a=context.window.GT_CATALOG,g=context.window.GT_GROUPS;
- assert.equal(a.length,104);assert.equal(g.length,10);
- assert.equal(new Set(a.map(x=>x.id)).size,104);
- assert.equal(g.reduce((sum,x)=>sum+x.count,0),104);
- assert.deepEqual(Array.from(g,x=>x.count),[16,14,10,6,9,12,8,10,7,12]);
+ assert.equal(a.length,356);assert.equal(g.length,18);
+ assert.equal(new Set(a.map(x=>x.id)).size,356);
+ assert.equal(g.reduce((sum,x)=>sum+x.count,0),354);
+ assert.ok(g.every(x=>x.count>0));
  assert.equal(a.filter(x=>x.vegan_status==='non_vegan').length,2);
- assert.equal(a.filter(x=>x.vegan_status!=='non_vegan').length,102);
+ assert.equal(a.filter(x=>x.vegan_status!=='non_vegan').length,354);
  assert.ok(a.every(x=>x.verified===false));
- assert.equal((t.renderDiscover().match(/class="product-card"/g)||[]).length,102);
+ assert.equal((t.renderDiscover().match(/class="product-card"/g)||[]).length,354);
  assert.ok(!t.renderDiscover().includes('Sweet Paprika</h3>'));
- assert.equal((t.renderBoard().match(/data-drag-id="/g)||[]).length,102);
+ assert.equal((t.renderBoard().match(/data-drag-id="/g)||[]).length,354);
  assert.equal((t.renderBoard().match(/class="tier-lane"/g)||[]).length,6);
 });
 test('Guest scores persist and public snippets escape notes',async()=>{
@@ -93,14 +93,14 @@ test('Sourced photos are product specific and link to traceable provenance',()=>
  const {context}=fixture();
  const a=context.window.GT_CATALOG;
  const matched=a.filter(x=>['retailer','brand','barcode'].includes(x.image_status));
- assert.equal(matched.length,51);
+ assert.equal(matched.length,303);
  assert.ok(matched.every(x=>x.image_url?.startsWith('https://')&&x.image_source_url?.startsWith('https://')));
  assert.ok(matched.filter(x=>x.image_status==='retailer').every(x=>x.image_source_url&&x.photo_attribution));
  assert.ok(matched.filter(x=>x.image_status==='retailer'&&x.retailer_sku).every(x=>x.image_source_url&&x.retailer_sku));
 });
 test('Drag-board state supports placing, reorder, unrank and blocks nonvegan products',async()=>{
  const {t,localStorage}=fixture();
- assert.equal(t.boardTrayProducts().length,102);
+ assert.equal(t.boardTrayProducts().length,354);
  assert.equal(await t.boardMove('snacks-02','S',0),false);
  assert.equal(t.boardEntries().length,0);
  assert.equal(await t.boardMove('tofu-01','S',0),true);
@@ -108,9 +108,9 @@ test('Drag-board state supports placing, reorder, unrank and blocks nonvegan pro
  assert.deepEqual(Array.from(t.boardSorted('S'),x=>x.product_id),['tofu-04','tofu-01']);
  assert.equal(await t.boardMove('tofu-01','D',0),true);
  assert.deepEqual(Array.from(t.boardSorted('D'),x=>x.product_id),['tofu-01']);
- assert.equal(t.boardTrayProducts().length,100);
+ assert.equal(t.boardTrayProducts().length,352);
  assert.equal(await t.boardMove('tofu-01','unranked',0),true);
- assert.equal(t.boardTrayProducts().length,101);
+ assert.equal(t.boardTrayProducts().length,353);
  assert.ok(localStorage.getItem('goodthings_v13_guest'));
 });
 
@@ -123,9 +123,9 @@ test('Correct packshots stay source-matched; fuzzy photo candidates never appear
  assert.ok(!t.renderBoard().includes('https://untrusted.example/fuzzy.png'));
  assert.ok(!t.renderDiscover().includes('https://untrusted.example/fuzzy.png'));
  const filtered=t.st.boardPhotoFilter='matched';
- assert.equal(t.boardTrayProducts().length,51);
+ assert.equal(t.boardTrayProducts().length,303);
  t.st.boardPhotoFilter='missing';assert.equal(t.boardTrayProducts().length,51);
- t.st.boardPhotoFilter='all';assert.equal(t.boardTrayProducts().length,102);
+ t.st.boardPhotoFilter='all';assert.equal(t.boardTrayProducts().length,354);
 });
 test('Undo restores old tier, notes and private status; reset clears guest board',async()=>{
  const {t}=fixture();
@@ -158,7 +158,7 @@ test('Photo correction schema is private, constrained and RLS-protected',()=>{
 
 test('Not tried yet is a saved answer with no grade, a private state and a separate shelf',async()=>{
  const {t,localStorage}=fixture();
- assert.equal(t.boardTrayProducts().length,102);
+ assert.equal(t.boardTrayProducts().length,354);
  assert.equal(await t.boardMove('tofu-01','not_tried',0),true);
  const record=t.st.guest.you['tofu-01'];
  assert.equal(record.status,'not_tried');
@@ -167,7 +167,7 @@ test('Not tried yet is a saved answer with no grade, a private state and a separ
  assert.equal(record.position,0);
  assert.equal(t.boardEntries().length,0);
  assert.equal(t.boardNotTried().length,1);
- assert.equal(t.boardTrayProducts().length,101);
+ assert.equal(t.boardTrayProducts().length,353);
  assert.ok(t.renderBoard().includes('class="not-tried-shelf"'));
  assert.ok(t.renderBoard().includes('data-drop-tier="not_tried"'));
  assert.ok(t.renderMy().includes('Not tried yet (1)'));
@@ -178,7 +178,7 @@ test('Not tried yet is a saved answer with no grade, a private state and a separ
  t.st.catalogStatus='not_tried';
  assert.deepEqual(Array.from(t.filteredProducts(),p=>p.id),['tofu-01']);
  t.st.catalogStatus='unanswered';
- assert.equal(t.filteredProducts().length,101);
+ assert.equal(t.filteredProducts().length,353);
 });
 test('Not tried can turn into a real grade and undo restores the untried state',async()=>{
  const {t}=fixture();
@@ -195,7 +195,7 @@ test('Not tried can turn into a real grade and undo restores the untried state',
  assert.equal(t.st.guest.you['tofu-01'].is_public,false);
  await t.undoBoard();
  assert.equal(t.boardAnswers().length,0);
- assert.equal(t.boardTrayProducts().length,102);
+ assert.equal(t.boardTrayProducts().length,354);
 });
 test('A graded product can become not tried without leaking any score or public flag',async()=>{
  const {t}=fixture();
@@ -264,6 +264,40 @@ test('F grade works in quick picker, share snapshots, public scores and comparis
  assert.equal(snapshot[0].tier,'F');
  const catalog=context.window.GT_CATALOG;
  const valid=catalog.filter(p=>p.vegan_status!=='non_vegan');
- assert.equal(valid.filter(p=>p.image_url&&['retailer','brand','barcode'].includes(p.image_status)).length,51);
+ assert.equal(valid.filter(p=>p.image_url&&['retailer','brand','barcode'].includes(p.image_status)).length,303);
  assert.equal(valid.filter(p=>!p.image_url).length,51);
+});
+
+
+test('Expanded barcode foods have distinct IDs, 252 sourced nutrition records and shopping facts',()=>{
+ const {context,t}=fixture();
+ const all=context.window.GT_CATALOG,external=all.filter(p=>p.source_type==='openfoodfacts');
+ assert.equal(external.length,252);
+ assert.ok(external.every(p=>/^\d{8,14}$/.test(p.barcode)&&p.id==='off-'+p.barcode));
+ assert.ok(external.every(p=>p.image_url?.startsWith('https://images.openfoodfacts.org/')));
+ assert.ok(external.every(p=>p.nutrition_source_url.endsWith(p.barcode)));
+ assert.ok(external.every(p=>Number.isFinite(p.nutrition.protein)));
+ assert.ok(external.every(p=>p.verified===false));
+ assert.ok(t.productFacts(external[0]).includes('Nährwerte'));
+ assert.ok(t.productFacts(external[0]).includes('Protein'));
+ assert.ok(t.productFacts(external[0]).includes('Wo kaufen?'));
+ assert.ok(t.productFacts(external[0]).includes('Preis'));
+ assert.equal(new Set(all.map(p=>p.id)).size,356);
+});
+test('Protein sorting and high-protein filter distinguish unknown values',()=>{
+ const {t}=fixture();
+ t.st.sort='protein';
+ const arr=t.filteredProducts();
+ assert.ok(arr[0].nutrition.protein>=arr[1].nutrition.protein);
+ t.st.highProtein=true;
+ const filtered=t.filteredProducts();
+ assert.ok(filtered.length>=30);
+ assert.ok(filtered.every(p=>t.proteinNumber(p)>=15));
+ assert.ok(filtered.every(p=>p.nutrition_source_url));
+});
+test('Original ratings IDs were preserved after expansion',()=>{
+ const {context}=fixture();
+ const all=context.window.GT_CATALOG;
+ assert.equal(all.find(p=>p.id==='tofu-01').name,'Tofu Natur');
+ assert.ok(all.find(p=>p.id==='chocolate-05'));
 });
