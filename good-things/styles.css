@@ -374,3 +374,61 @@ body:has(.board-layout) .hero .package-c{transform:scale(.7) rotate(13deg)}
 .observed-price small{display:block;color:#667767;font-size:11px}
 .observed-price a{font-size:11px}
 @media(max-width:480px){.nutrition-cell strong{font-size:16px}.nutrition-grid{gap:6px}.board-protein{font-size:8px}.product-nutri-teaser{font-size:10px}}
+
+/* GOOD THINGS 1.8 — A calm but playful two-person tasting ritual */
+.duo-board-banner{display:flex;align-items:center;justify-content:space-between;gap:18px;border:1px solid #cbdbb7;border-radius:18px;padding:19px 23px;background:linear-gradient(110deg,#e6f0d8,#f3eadf);margin:18px 0}
+.duo-board-banner strong{display:block;font:600 27px/1.13 'Fraunces',Georgia,serif;letter-spacing:-.04em;margin:7px 0 4px}
+.duo-board-banner p{margin:0;font-size:12px;color:#617362}
+.duo-controls{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:13px;padding:14px;background:#fffefa;border:1px solid #dde4d8;border-radius:16px;margin-bottom:22px}
+.duo-switch{display:flex;align-items:center;gap:5px;padding:4px;background:#f1f3eb;border-radius:99px;border:1px solid #e0e6db}
+.duo-switch button{padding:9px 15px;border:0;background:transparent;color:#788478;border-radius:99px;font-weight:800;font-size:12px;white-space:nowrap}
+.duo-switch button.active{background:#dff179;color:#293e2b;box-shadow:0 2px 6px #263d301c}
+.duo-progress{display:flex;justify-content:space-between;align-items:center;gap:13px;color:#687a6b;font-size:11px;letter-spacing:.1em;font-weight:800;text-transform:uppercase;margin:15px 0 13px}
+.duo-progress span:first-child{background:#e8efdd;border:1px solid #d2dfc7;border-radius:99px;padding:7px 13px}
+.duo-stage{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.04fr);gap:17px;align-items:start}
+.duo-product{background:#f5f2e8;border:1px solid #dfe3d4;border-radius:23px;padding:24px;min-width:0}
+.duo-product h3{font:650 clamp(27px,3.5vw,44px)/1.07 'Fraunces',Georgia,serif;letter-spacing:-.052em;margin:15px 0 5px}
+.duo-product>p{color:#718071;margin:0 0 14px;font-size:13px}
+.duo-hero-photo{height:350px;background:#fffefa;display:grid;place-items:center;border-radius:18px;border:1px solid #e7e4da;overflow:hidden;position:relative;padding:16px 23px 47px}
+.duo-hero-photo>img{height:100%;width:100%;object-fit:contain;filter:drop-shadow(0 12px 12px #273b2818);image-rendering:auto}
+.duo-photo-bottom{position:absolute;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:7px;border-top:1px solid #eee8dc;background:#fafaf5;padding:8px 14px;font-size:10px;color:#7c8a78;font-weight:800;letter-spacing:.055em}
+.duo-photo-credit{font-size:10px;color:#7a8878;line-height:1.5;margin:9px 0}
+.duo-photo-credit a{color:#3d633b;font-weight:700}
+.duo-protein{display:inline-flex;align-items:center;background:#e7f1d5;border:1px solid #cbdcaf;border-radius:50px;padding:8px 13px;font-size:12px;font-weight:800;color:#466437}
+.duo-decision{background:#fffef9;border:1px solid #dfe5d9;border-radius:23px;padding:24px;min-height:470px}
+.duo-status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.duo-status-grid>div{background:#f6f5ee;border:1px solid #e6e5db;border-radius:13px;padding:13px}
+.duo-status-grid>div.answered{background:#edf4df;border-color:#cbdcaf}
+.duo-status-grid span{font-size:11px;color:#697c68;display:block;font-weight:700}
+.duo-status-grid strong{display:block;font-size:13px;color:#2b4633;margin-top:4px}
+.duo-choice{text-align:center;margin:34px 0 17px}
+.duo-choice>p{font:600 24px/1.28 'Fraunces',Georgia,serif;letter-spacing:-.025em;margin:0 0 22px;color:#314537}
+.duo-choice>p strong{color:#567e47}
+.duo-vote-chooser{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px}
+.duo-grade{border:1px solid #d5d8c4;border-radius:13px;min-height:67px;font:800 35px 'DM Sans',sans-serif;display:grid;place-items:center;transition:transform .16s,box-shadow .16s;min-width:0;color:#2e4132}
+.duo-grade:hover{transform:translateY(-3px);box-shadow:0 6px 16px #273a2628}
+.duo-grade-S{background:#c8e881}.duo-grade-A{background:#d8ebac}.duo-grade-B{background:#d0e8e8}.duo-grade-C{background:#f3dfae}.duo-grade-D{background:#f2c3bb}.duo-grade-F{background:#e4a2a2;color:#5d2929}
+.duo-untried-button{display:flex;align-items:center;justify-content:center;gap:8px;margin:19px auto 0;width:100%;border-radius:12px;padding:14px;background:#f8f3e8;color:#566851;border:1px dashed #d0d9bd;font-weight:800;font-size:14px}
+.duo-untried-button:hover{background:#e9f3df}
+.duo-untried-button span{color:#80917e;font-size:10px;font-weight:600}
+.duo-reveal{text-align:center;margin:23px 0 8px}
+.duo-reveal .eyebrow{color:#8b9e65}.duo-reveal h3{font:600 28px 'Fraunces',serif;letter-spacing:-.05em;line-height:1.2;margin:6px 0 18px}
+.duo-reveal-grid{display:grid;grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);gap:6px;align-items:center;margin:10px 0 25px}
+.duo-vote-revealed{border:1px solid #d5e5c7;border-radius:16px;background:#eaf5db;min-height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px}
+.duo-vote-revealed small{font-size:11px;color:#68806b}
+.duo-vote-revealed strong{font:800 70px/1 'DM Sans',sans-serif;color:#395d3e;margin:10px 0}
+.duo-vote-revealed strong.duo-failure{color:#983838}
+.duo-vote-revealed span{font-size:11px;color:#6d7a65;white-space:nowrap}
+.duo-versus{font:650 42px/1 'Fraunces',serif;color:#a9b7a1}
+.duo-waiting{margin:52px auto 22px;text-align:center;max-width:400px;line-height:1.7;font:500 17px/1.5 'Fraunces',serif;color:#586f58}
+.duo-waiting .button{margin:20px auto;display:flex;max-width:220px}
+.duo-welcome{background:#e9f1dd;border:1px solid #d8e5cb;border-radius:22px;padding:clamp(22px,5vw,42px);max-width:800px;margin:20px auto}
+.duo-welcome h3{font:600 42px 'Fraunces',serif;letter-spacing:-.05em;margin:0}
+.duo-welcome p{font-size:14px;color:#647961;max-width:620px}
+.duo-welcome .control{min-width:220px;flex:1}
+.duo-room-list{max-width:800px;margin:20px auto}
+.duo-room{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#fffefa;padding:17px;border:1px solid var(--edge);border-radius:14px;margin-bottom:10px}
+.duo-room strong{display:block}
+.duo-room small{display:block;color:#7c897a}
+@media(max-width:850px){.duo-stage{grid-template-columns:1fr}.duo-hero-photo{height:330px}.duo-decision{min-height:0}.duo-product{padding:18px}.duo-decision{padding:18px}}
+@media(max-width:560px){.duo-controls{padding:10px}.duo-switch{width:100%}.duo-switch button{flex:1;font-size:10px;padding:9px 6px}.duo-grade{font-size:29px;min-height:55px;border-radius:9px}.duo-vote-chooser{gap:5px}.duo-untried-button{font-size:13px;flex-wrap:wrap}.duo-photo-bottom{font-size:8px;padding:9px}.duo-hero-photo{height:290px}.duo-product h3{font-size:32px}.duo-choice>p{font-size:21px}.duo-board-banner{flex-direction:column;align-items:stretch;padding:15px}.duo-board-banner strong{font-size:23px}.duo-board-banner .button{width:100%}.duo-reveal-grid{grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr)}.duo-vote-revealed strong{font-size:49px}.duo-vote-revealed span{font-size:9px}.duo-versus{font-size:25px}}
