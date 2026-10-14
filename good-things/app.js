@@ -25,7 +25,7 @@ const STORE_URLS={DM:'https://www.dm.de/',ROSSMANN:'https://www.rossmann.de/',RE
 const proteinNumber=p=>Number.isFinite(p?.nutrition?.protein)?Number(p.nutrition.protein):null;
 const FLAGGED=ALL.filter(p=>!rankableProduct(p));
 const tryRead=(key,fallback)=>{try{const d=JSON.parse(localStorage.getItem(key)||'null');return d&&typeof d==='object'?d:fallback}catch(_){return fallback}};
-const st={view:'board',boardQuery:'',boardCategory:'all',boardPhotoFilter:'all',boardHistory:[],boardBusy:false,boardModalProduct:null,boardUndoing:false,category:'all',store:'all',sort:'name',query:'',ratedOnly:false,highProtein:false,catalogStatus:'all',persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
+const st={view:'board',boardQuery:'',boardCategory:'all',boardPhotoFilter:'all',boardHistory:[],boardBusy:false,boardModalProduct:null,boardUndoing:false,category:'all',store:'all',sort:'name',query:'',ratedOnly:false,highProtein:false,catalogStatus:'all',persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],requests:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
 let sb=null;
 function safeGuest(raw){
  const ret={mikel:{},huong:{},you:{}};
@@ -286,6 +286,28 @@ async function resetBoard(){
   st.boardHistory=[];closeOverlay('modalOverlay');render();toast('Fresh start. The shelf is yours ✳');
  }finally{st.boardBusy=false}
 }
+
+function openProductSuggestion(){
+ if(!st.user)return openAuth();
+ modal('<button class="close" aria-label="Schliessen" data-action="close-modal">×</button><div class="eyebrow">WAS FEHLT NOCH?</div><h2>Ein Produkt vorschlagen ✳</h2><p class="small muted">Du kennst ein veganes Produkt, das hier fehlt? Schick uns Marke, Name und Barcode. Wir prüfen den Eintrag und das passende Foto vor der Veröffentlichung — deine Anfrage bleibt privat.</p>'+
+ '<form id="productRequestForm"><div class="field"><label>EAN / Barcode (8–14 Ziffern)</label><input name="barcode" class="control" type="text" inputmode="numeric" pattern="[0-9]{8,14}" maxlength="14" placeholder="z. B. 4012359113108" required></div>'+
+ '<div class="field"><label>Produktname</label><input name="product_name" class="control" maxlength="120" minlength="2" placeholder="z. B. Räuchertofu" required></div>'+
+ '<div class="field"><label>Marke</label><input name="brand" class="control" maxlength="80" minlength="2" placeholder="z. B. Taifun" required></div>'+
+ '<div class="field"><label>Wo gesehen? (optional)</label><input name="store_hint" class="control" maxlength="100" placeholder="REWE, Lidl, dm …"></div>'+
+ '<div class="field"><label>Hinweis (optional)</label><textarea name="notes" class="control" rows="2" maxlength="350" placeholder="Sorte, Packungsgrösse oder Zutatenhinweis"></textarea></div>'+
+ '<button type="submit" class="button button-lime" style="width:100%">Zur Prüfung einreichen ♡</button></form>');
+}
+async function submitProductSuggestion(form){
+ if(!st.user||!sb)return openAuth();
+ const pick=name=>form.elements.namedItem(name).value.trim();
+ const barcode=pick('barcode'),product_name=pick('product_name'),brand=pick('brand'),store_hint=pick('store_hint'),notes=pick('notes');
+ if(!/^\d{8,14}$/.test(barcode)||product_name.length<2||brand.length<2)return toast('Bitte Barcode, Produktname und Marke prüfen.');
+ if(getProduct('off-'+barcode)||RANKABLE.some(p=>p.barcode===barcode))return toast('Dieses Produkt ist bereits im Katalog. Suche nach dem Namen oder Barcode.');
+ const {data,error}=await sb.from('gt_product_requests').insert({user_id:st.user.id,barcode,product_name,brand,store_hint,notes}).select().single();
+ if(error)return toast(error.code==='23505'?'Du hast dieses Produkt bereits vorgeschlagen.':'Vorschlag konnte nicht gespeichert werden: '+error.message.slice(0,95));
+ st.requests=[data,...st.requests];closeOverlay('modalOverlay');render();toast('Vielen Dank! Dein Produkt ist jetzt in der Prüfwarteschlange ♡');
+}
+
 function photoInformation(){
  const count=RANKABLE.filter(matchedPhoto).length;
  modal('<button class="close" data-action="close-modal" aria-label="Close">×</button><div class="eyebrow">PACKSHOT TRUST STANDARD</div><h2>Real packs. Real sources.</h2>'+
@@ -1060,6 +1082,7 @@ document.addEventListener('click',async(event)=>{
  case 'confirm-reset-board':await resetBoard();break;
  case 'export-board-png':await exportBoardPng();break;
  case 'open-photo-info':photoInformation();break;
+ case 'suggest-product':openProductSuggestion();break;
  case 'share-board':shareBoard();break;
  case 'view-exclusions':viewExclusions();break;
  case 'board-unrank':await boardMove(id,'unranked',0);break;
@@ -1107,7 +1130,7 @@ document.addEventListener('change',e=>{
  if(e.target.id==='ratingPublic')st.draftPublic=e.target.checked;
 });
 document.addEventListener('submit',async e=>{
- if(!['authForm','profileForm','listForm','feedbackForm','photoReportForm'].includes(e.target.id))return;
+ if(!['authForm','profileForm','listForm','feedbackForm','photoReportForm','productRequestForm'].includes(e.target.id))return;
  e.preventDefault();
  try{
  if(e.target.id==='authForm')await submitAuth(e.target);
@@ -1115,6 +1138,7 @@ document.addEventListener('submit',async e=>{
  if(e.target.id==='listForm')await saveList(e.target);
  if(e.target.id==='feedbackForm')await submitFeedback(e.target);
  if(e.target.id==='photoReportForm')await submitPhotoReport(e.target);
+ if(e.target.id==='productRequestForm')await submitProductSuggestion(e.target);
  }catch(err){toast('Error: '+String(err.message||err))}
 });
 $$('.overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)closeOverlay(el.id)}));
