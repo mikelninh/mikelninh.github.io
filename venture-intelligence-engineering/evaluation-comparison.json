@@ -1,0 +1,24 @@
+{
+  "dataset": "30 synthetic labelled PDFs · same source fixtures · 17 fields each",
+  "before": {
+    "version": "v0.3",
+    "correct": 505,
+    "total": 510,
+    "abstentions": "95/95",
+    "conflicts": "5/5",
+    "unsupported_links": 0
+  },
+  "after": {
+    "version": "v0.5",
+    "correct": 510,
+    "total": 510,
+    "abstentions": "95/95",
+    "conflicts": "5/5",
+    "unsupported_links": 0
+  },
+  "root_cause": "Previously five unlabelled team fields were missed because they used 'Founding crew ·' instead of a recognised header and separator.",
+  "correction": "Added 'founding crew' to a strict anchored alias list and middle dot as a supported delimiter.",
+  "caution": "This 5/510 improvement was achieved after inspecting the SAME synthetic fixtures. It is in-sample error correction, NOT out-of-sample real-world accuracy. Scan-only PDFs, real layouts and novel synonyms remain unverified.",
+  "engine": "local-sequential tested; LangGraph StateGraph entrypoint implemented but runtime not installed in restricted sandbox",
+  "tests": "19 local pytest checks pass; one LangGraph-specific test skipped; Chromium browser smoke passes"
+}
