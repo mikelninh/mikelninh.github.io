@@ -1184,7 +1184,7 @@ async function submitAuth(form){
   else r=await sb.auth.signInWithPassword({email,password});
   if(r.error)throw r.error;
   if(r.data?.session?.user){
-   st.user=r.data.session.user;closeOverlay('modalOverlay');await loadRemote();if(!st.profile)openProfileEdit();
+   st.user=r.data.session.user;closeOverlay('modalOverlay');await loadRemote();await duoLoadRooms();if(st.duo.requestedRoom)await duoOpenRoom(st.duo.requestedRoom);if(!st.profile)openProfileEdit();
    toast('Welcome to the shelf ♡');
   }else{
    modal('<button class="close" data-action="close-modal">×</button><div class="eyebrow">JUST ONE MORE STEP</div><h2>Check your email ✉</h2><p>We sent a confirmation link if email verification is enabled. The project may need its allowed redirect URL updated before confirmation links land on this page.</p><button class="button button-lime" data-action="close-modal">Got it</button>');
@@ -1342,7 +1342,7 @@ async function initCloud(){
   const {data,error}=await sb.auth.getUser();if(!error&&data?.user)st.user=data.user;
   sb.auth.onAuthStateChange((event,session)=>{
    const id=session?.user?.id||null;
-   if(id!==st.user?.id){st.user=session?.user||null;if(!st.user)st.profile=null;setTimeout(()=>loadRemote(),0)}
+   if(id!==st.user?.id){st.user=session?.user||null;if(!st.user)st.profile=null;setTimeout(async()=>{await loadRemote();if(st.user){await duoLoadRooms();if(st.duo.requestedRoom)await duoOpenRoom(st.duo.requestedRoom)}},0)}
   });
   await loadRemote();
   if(st.user){await duoLoadRooms();const requested=new URL(location.href).searchParams.get('room');if(requested)await duoOpenRoom(requested)}
