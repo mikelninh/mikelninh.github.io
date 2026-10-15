@@ -167,12 +167,12 @@ function boardTrayProducts(){
 
 // ── GOOD THINGS DUO · One product. Two honest opinions. ────────────────────
 const DUO_KEY='goodthings_duo_v18';
-const duoDefault=()=>({mode:'local',local:{round:1,productId:null,votes:{},history:[],activeRole:null,starter:null},rooms:[],room:null,ownVote:null,reveal:null,history:[],busy:false,error:'',loading:false,qualityMessage:''});
+const duoDefault=()=>({mode:'local',local:{round:1,productId:null,votes:{},discussion:'',history:[],activeRole:null,starter:null},rooms:[],room:null,ownVote:null,reveal:null,history:[],comments:[],discussionDraft:'',busy:false,error:'',loading:false,qualityMessage:''});
 const duoSafe=raw=>{
  const base=duoDefault();
  if(!raw||typeof raw!=='object'||!raw.local)return base;
  const local=raw.local,history=Array.isArray(local.history)?local.history.filter(x=>getProduct(x.productId)&&x.votes).slice(-200):[];
- base.local={round:Number.isInteger(local.round)&&local.round>0&&local.round<10000?local.round:1,productId:getProduct(local.productId)?local.productId:null,votes:{},history,activeRole:['mikel','huong'].includes(local.activeRole)?local.activeRole:null,starter:['mikel','huong'].includes(local.starter)?local.starter:null};
+ base.local={round:Number.isInteger(local.round)&&local.round>0&&local.round<10000?local.round:1,productId:getProduct(local.productId)?local.productId:null,votes:{},history,discussion:String(local.discussion||'').slice(0,600),activeRole:['mikel','huong'].includes(local.activeRole)?local.activeRole:null,starter:['mikel','huong'].includes(local.starter)?local.starter:null};
  for(const name of ['mikel','huong'])if(TIERS.includes(local.votes?.[name])||local.votes?.[name]==='not_tried')base.local.votes[name]=local.votes[name];
  return base;
 };
@@ -242,7 +242,7 @@ const duoChoiceLabel=v=>v==='not_tried'?'◌ Noch nicht probiert':v==='F'?'F · 
 function duoLocalHistory(){return st.duo.local.history||[]}
 function duoLocalReset(){
  st.duo.mode='local';
- st.duo.local={round:1,productId:null,votes:{},history:[],activeRole:null,starter:null};
+ st.duo.local={round:1,productId:null,votes:{},discussion:'',history:[],activeRole:null,starter:null};
  duoPersist();render();
 }
 async function duoLocalStart(forceNext){
@@ -253,7 +253,7 @@ async function duoLocalStart(forceNext){
   const completed=duoValidChoice(local.votes.mikel)&&duoValidChoice(local.votes.huong);
   if(local.productId&&!forceNext)return;
   if(forceNext&&local.productId&&completed){
-   local.history.push({productId:local.productId,votes:{...local.votes}});
+   local.history.push({productId:local.productId,votes:{...local.votes},discussion:String(local.discussion||'').slice(0,600)});
    local.round++;
    // Alternate automatically, irrespective of who began the previous round.
    const prevStarter=local.starter||'mikel';local.starter=prevStarter==='mikel'?'huong':'mikel';
@@ -265,7 +265,7 @@ async function duoLocalStart(forceNext){
    if(st.guest.mikel[id]&&st.guest.huong[id])used.push(id);
   const p=await duoPick(used);
   if(!p){st.duo.qualityMessage='Keine weitere Packung mit ausreichender Bildauflösung gefunden. Die noch offenen Produkte brauchen bessere Fotos.';return}
-  local.productId=p.id;local.votes={};local.activeRole=local.starter;
+  local.productId=p.id;local.votes={};local.discussion='';local.activeRole=local.starter;
   st.duo.qualityMessage='';duoPersist();
  }finally{st.duo.busy=false;render()}
 }
@@ -343,7 +343,7 @@ async function duoOpenRoom(id){
  if(!st.user||!sb)return openAuth();
  const r=await sb.from('gt_duo_rooms').select('id,host_id,partner_id,current_product_id,round_no,updated_at').eq('id',id).maybeSingle();
  if(r.error||!r.data)return toast('Dieser Duo-Raum gehört anderen Konten oder existiert nicht.');
- st.duo.room=r.data;st.duo.mode='remote';st.duo.ownVote=null;st.duo.reveal=null;
+ st.duo.room=r.data;st.duo.mode='remote';st.duo.ownVote=null;st.duo.reveal=null;st.duo.comments=[];st.duo.discussionDraft='';
  const url=new URL(URL_BASE);url.searchParams.set('view','duo');url.searchParams.set('room',id);
  history.replaceState(null,'',url.toString());
  await duoRefresh();setView('duo',false);
@@ -382,7 +382,7 @@ async function duoNextRemote(){
  if(!product)return toast('Keine weiteren hochauflösenden Packshots verfügbar. Bitte Bilder verbessern.');
  const r=await sb.from('gt_duo_rooms').update({current_product_id:product.id,round_no:room.round_no+1,updated_at:new Date().toISOString()}).eq('id',room.id).eq('round_no',room.round_no).select().single();
  if(r.error)return toast('Nächste Runde blockiert: '+r.error.message);
- st.duo.room=r.data;st.duo.ownVote=null;st.duo.reveal=null;await duoRefresh();
+ st.duo.room=r.data;st.duo.ownVote=null;st.duo.reveal=null;st.duo.discussionDraft='';await duoRefresh();
 }
 
 async function duoSkipPhoto(){
