@@ -18,6 +18,12 @@ try{
      assert.equal(await page.locator('h1').count(),1,'One H1 '+path);
      const data=await page.evaluate(()=>({scrollWidth:document.documentElement.scrollWidth,innerWidth:innerWidth}));
      assert.ok(data.scrollWidth<=data.innerWidth+1,'Horizontal overflow '+label+' '+path+' '+JSON.stringify(data));
+     if(w<500 && (path==='folio/'||path==='curio/')){
+       const coverWidth=await page.locator('.hero-copy').evaluate(el=>el.getBoundingClientRect().width);
+       assert.ok(coverWidth>300,'Mobile hero must occupy full width: '+path+' width='+coverWidth);
+     }
+     const broken=await page.locator('img').evaluateAll(els=>els.filter(el=>!el.complete||el.naturalWidth===0).map(el=>el.src));
+     assert.deepEqual(broken,[],'All original cover illustrations load '+path);
      assert.equal(problems.length,0,problems.join(','));
      if(path.endsWith('/story/')){
        assert.ok((await page.locator('.prose p').count())>12,'Complete long essay '+path);

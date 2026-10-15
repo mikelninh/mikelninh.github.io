@@ -15,4 +15,4 @@ body{background:var(--paper)}::selection{background:#d9e2b8}
 .article-header h1{max-width:900px}.article-header h1 em{color:#3653a1}.feature-image{background:#3e588f}
 .article-grid .side-note strong{color:#3653a1}.prose p:first-of-type:first-letter{color:#3653a1}
 .prose blockquote{border-color:#3653a1;color:#3653a1}
-@media(max-width:700px){.story-grid{display:grid;grid-template-columns:1fr}.story-tile:first-child{border-right:0;padding-right:0}.hero-art{height:400px;min-height:0}.hero-art img{min-height:0}.more-issue{margin:0 0 70px;padding:25px}}
+@media(max-width:700px){.hero{grid-template-columns:1fr;gap:28px;padding-top:45px}.story-grid{display:grid;grid-template-columns:1fr}.story-tile:first-child{border-right:0;padding-right:0}.hero-art{height:400px;min-height:0}.hero-art img{min-height:0}.more-issue{margin:0 0 70px;padding:25px}}

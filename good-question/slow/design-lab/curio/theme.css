@@ -5,7 +5,7 @@ body{background:var(--paper)}::selection{background:#cbe3a1}
 .brand i{color:#dd6248}.topnav{border-bottom:3px solid var(--ink)}.site-links a{font-family:'Space Grotesk'}
 .edition-line{background:#e6efaf;box-shadow:0 0 0 20px #e6efaf;margin-top:20px;border-bottom:2px solid var(--ink);color:#2c3f2e}
 .hero{grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);gap:38px;align-items:center;padding:85px 0 55px}.hero-copy{max-width:700px}
-.hero h1{font-size:clamp(63px,6.4vw,104px);letter-spacing:-.075em;line-height:.98}.hero h1 em{color:#214bb1;text-decoration:underline;text-decoration-color:#e69a73;text-decoration-thickness:6px;text-underline-offset:9px}.hero .deck{font:500 clamp(19px,2vw,25px)/1.5 'Space Grotesk',sans-serif;color:#40534a}
+.hero h1{font-size:clamp(63px,6.4vw,104px);letter-spacing:-.075em;line-height:.98}.hero h1 em{color:#214bb1;text-decoration:none}.hero .deck{font:500 clamp(19px,2vw,25px)/1.5 'Space Grotesk',sans-serif;color:#40534a}
 .hero-art{min-height:470px;transform:rotate(1.25deg);box-shadow:16px 18px 0 #e5efaf;border:3px solid #202b28;background:#d1dbed}.hero-art img{min-height:467px}.hero-art figcaption{border-top:2px solid var(--ink);border-right:2px solid var(--ink)}
 .read-link{background:#214bb1;color:#fff;text-decoration:none;border:2px solid #214bb1;padding:13px 20px;margin-top:26px;gap:20px;box-shadow:5px 5px 0 #cad7a4}.read-link:hover{background:#123779}
 .stories-heading{border-top:3px solid var(--ink)}.stories-heading h2{font-size:clamp(35px,4vw,54px)}
@@ -25,5 +25,5 @@ body{background:var(--paper)}::selection{background:#cbe3a1}
 @keyframes ambient-drift{from{transform:translateX(-35px) scale(.88)}to{transform:translateX(35px) scale(1.13)}}
 .motion-off .ambient-art span{animation:none!important}.motion-toggle{font-size:12px;border:1px solid var(--ink);background:transparent;padding:7px 11px;min-height:44px}
 @media(max-width:900px){.article-grid{grid-template-columns:1fr}.hero-art{transform:none}}
-@media(max-width:700px){.hero{padding:65px 0}.hero-art{min-height:305px;margin-right:8px}.hero-art img{min-height:305px}.curio-experiment{margin-inline:0;padding:20px}.story-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.hero{grid-template-columns:1fr;gap:28px;padding:45px 0}.hero-art{min-height:305px;margin-right:8px}.hero-art img{min-height:305px}.curio-experiment{margin-inline:0;padding:20px}.story-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.ambient-art span{animation:none!important}}
