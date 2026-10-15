@@ -245,6 +245,7 @@ async function spin(task){
   overlay.querySelector('#gt-draw-title').textContent=booster?'PACK OPENED! ✳':'TA-DAAA! ✳';
   const revealer=overlay.querySelector('.gt-draw-reveal');
   revealer.hidden=false;
+  if(booster){overlay.classList.add('gt-draw-tear');await wait(470)}
   overlay.classList.add('gt-draw-winner');
   if(line)line.textContent='Jetzt bist du dran. S, A, B, C, D oder F?';
   if(!skipButton.disabled){
