@@ -92,7 +92,7 @@ function productArt(p){
  const fallback='<span class="art-emoji">'+esc(p.emoji||'✳')+'</span>';
  const link=isMatched?'<a class="photo-credit" target="_blank" rel="noopener noreferrer" href="'+attr(validUrl(p.image_source_url||p.source_url))+'" title="Product photo from '+attr(p.photo_attribution||'source')+'">↗ '+esc(p.photo_attribution||'Source')+'</a>':'';
  return '<div class="product-art tone-'+esc(p.tone||'mint')+'">'+
- (show?'<img loading="lazy" src="'+attr(img)+'" alt="'+attr(p.brand+' '+p.name)+' product packaging" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false">'+
+ (show?'<img data-pack-id="'+attr(p.id)+'" loading="lazy" src="'+attr(img)+'" alt="'+attr(p.brand+' '+p.name)+' product packaging" referrerpolicy="no-referrer" onerror="window.GT_EXTRAS.onPackError(this)">'+
  '<span class="art-emoji" hidden>'+esc(p.emoji||'✳')+'</span>':fallback)+
  '<span class="art-label-small">'+(isMatched?photoSourceLabel(p):show?'PHOTO CANDIDATE':'NO CONFIRMED PHOTO')+'</span>'+link+'</div>';
 }
@@ -144,7 +144,7 @@ function boardPositionBetween(tier,excludeId,index){
 }
 function boardPhoto(p){
  const image=matchedPhoto(p)?validUrl(p.image_url):'';
- return image?'<img loading="lazy" draggable="false" src="'+attr(image)+'" alt="'+attr(p.brand+' '+p.name)+' packaging" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':
+ return image?'<img data-pack-id="'+attr(p.id)+'" loading="lazy" draggable="false" src="'+attr(image)+'" alt="'+attr(p.brand+' '+p.name)+' packaging" referrerpolicy="no-referrer" onerror="window.GT_EXTRAS.onPackError(this)"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':
  '<span class="board-emoji">'+esc(p.emoji)+'</span>';
 }
 function boardPiece(p){
@@ -191,7 +191,7 @@ function duoHiResImage(p){
 function duoPhotoMarkup(p){
  if(duoPhotoBroken.has(p.id))return '<div class="duo-hero-photo duo-photo-unavailable"><p>Dieses Bild ist nicht scharf genug oder vorübergehend unerreichbar.</p><button class="button button-lime" data-action="duo-skip-photo">Anderes Produkt mit Foto ↗</button></div>';
  const selected=duoPhotoCheck.get(p.id);const url=typeof selected==='string'?selected:duoHiResImage(p),fallback=validUrl(p.image_url);
- return '<div class="duo-hero-photo"><img loading="eager" data-duo-image="true" data-fallback="'+attr(fallback)+'" src="'+attr(url)+'" alt="'+attr(p.brand+' '+p.name)+' — Produktverpackung" referrerpolicy="no-referrer"><div class="duo-photo-bottom"><span>PHOTO · '+esc(p.photo_attribution||'Product source')+'</span><span>'+esc(p.barcode?'EAN '+p.barcode:'Source-linked packshot')+'</span></div></div>';
+ return '<div class="duo-hero-photo"><img data-pack-id="'+attr(p.id)+'" loading="eager" data-duo-image="true" data-fallback="'+attr(fallback)+'" src="'+attr(url)+'" alt="'+attr(p.brand+' '+p.name)+' — Produktverpackung" referrerpolicy="no-referrer"><div class="duo-photo-bottom"><span>PHOTO · '+esc(p.photo_attribution||'Product source')+'</span><span>'+esc(p.barcode?'EAN '+p.barcode:'Source-linked packshot')+'</span></div></div>';
 }
 const duoPhotoCheck=new Map();
 const duoPhotoBroken=new Set();
@@ -513,7 +513,7 @@ function renderDuo(){
   return intro+controls+'<div class="duo-welcome"><h3>Spielt auf zwei Geräten.</h3><p>Jede Person antwortet mit ihrem eigenen Konto. Die Stimmen bleiben verborgen, bis beide fertig sind. Die Bewertung landet auf dem eigenen, privaten Shelf.</p><form id="duoPartnerForm"><label class="small" for="duoPartner">Benutzername deiner Partnerperson</label><div class="gap12" style="margin-top:8px"><input class="control" name="partner" id="duoPartner" placeholder="@huong" required pattern="@?[a-z0-9][a-z0-9_-]{2,23}"><button class="button button-dark" type="submit">Duo starten ↗</button></div></form></div>'+
   '<div class="duo-room-list">'+(rooms||'<p class="small muted">Noch kein gemeinsamer Raum. Meldet euch getrennt an und ladet einander per Profilname ein.</p>')+'</div>';
  }
- if(!p)return intro+controls+'<div class="duo-welcome"><h3>Geschmack ist Teamwork.</h3>'+duoStartPicker(st.duo.local)+'<p>Keine erfundenen Bilder: wir zeigen nur Produktkandidaten mit quellenverknüpften Packshots und prüfen die tatsächliche Bildauflösung, bevor sie vorgeschlagen werden.</p><button class="button button-lime" data-action="duo-start-local" '+(st.duo.busy?'disabled':'')+'>Unser erstes Produkt ✳</button>'+
+ if(!p)return intro+controls+'<div class="duo-welcome"><h3>Geschmack ist Teamwork.</h3>'+duoStartPicker(st.duo.local)+'<p>Keine erfundenen Bilder: wir zeigen nur Produktkandidaten mit quellenverknüpften Packshots und prüfen die tatsächliche Bildauflösung, bevor sie vorgeschlagen werden.</p><button class="button button-lime" data-action="duo-start-local" '+(st.duo.busy?'disabled':'')+'>🎰 Dreht die vegane Überraschung! ✳</button>'+
  (st.duo.qualityMessage?'<p class="small muted">'+esc(st.duo.qualityMessage)+'</p>':'')+'</div>';
  let statusA=remote?(done?'Fertig':'Urteil noch verborgen'):answerA?'Antwort verborgen':'Noch offen';
  let statusB=remote?(done?'Fertig':'Urteil noch verborgen'):answerB?'Antwort verborgen':'Noch offen';
@@ -525,7 +525,7 @@ function renderDuo(){
   (remote?st.duo.reveal.host_choice: snap.votes.mikel)===(remote?st.duo.reveal.partner_choice:snap.votes.huong)?'Ihr seid euch einig! ✳':'Zwei Menschen. Zwei Geschmäcker. ♡')+'</h3><div class="duo-reveal-grid">'+
  duoScoreTile(labelA,remote?st.duo.reveal.host_choice:snap.votes.mikel)+
  '<div class="duo-versus">×</div>'+duoScoreTile(labelB,remote?st.duo.reveal.partner_choice:snap.votes.huong)+
- '</div><button class="button button-lime" data-action="'+(remote?'duo-next-remote':'duo-next-local')+'" '+(remote&&room.host_id!==st.user?.id?'disabled':'')+'>Nächstes Produkt ↗</button>'+
+ '</div><button class="button button-lime" data-action="'+(remote?'duo-next-remote':'duo-next-local')+'" '+(remote&&room.host_id!==st.user?.id?'disabled':'')+'>🎰 Nächstes Mystery-Produkt ✳</button>'+
  (remote&&room.host_id!==st.user?.id?'<p class="small muted">Die Host-Person startet die nächste Runde.</p>':remote?'':'<p class="small muted">Als Nächstes beginnt '+(st.duo.local.starter==='mikel'?'Huong':'Mikel')+'.</p>')+'</div>':
  (needVote?'<div class="duo-choice"><p>Jetzt bewertet <strong>'+esc(voteName)+'</strong>. Welche Tier-Stufe verdient das Produkt?</p>'+duoVoteGrid()+'</div>':
  '<div class="duo-waiting">✓ Dein Urteil ist gespeichert. Wir warten auf die zweite Antwort.<button class="button button-white button-small" data-action="duo-refresh">Aktualisieren ↻</button></div>');
@@ -535,7 +535,7 @@ function renderDuo(){
  return intro+controls+'<div class="duo-progress"><span>ROUND '+round+'</span><span>'+duoResultsSummary(counter)+'</span></div>'+
  '<div class="duo-stage"><div class="duo-product">'+pic+duoImageAuditBadge(p)+'<h3>'+esc(p.name)+'</h3><p>'+esc(p.brand)+' · '+esc(p.quantity||p.category)+'</p>'+
  (proteinNumber(p)!=null?'<span class="duo-protein">💪 '+proteinNumber(p)+' g Protein je 100 g/ml</span>':'')+
- '</div><div class="duo-decision">'+status+(remote?'':duoStartPicker(st.duo.local))+reveal+
+ window.GT_EXTRAS.facts(p)+'</div><div class="duo-decision">'+status+(remote?'':duoStartPicker(st.duo.local))+reveal+
  (remote?'<p class="small muted" style="text-align:center;margin:20px 0 0">Synchronisiert zwischen zwei getrennten Accounts. Ein unabhängiges Urteil pro Runde.</p>':
  '<p class="small muted" style="text-align:center;margin:20px 0 0">Private gemeinsame Vorschau auf diesem Gerät. Die tatsächlichen öffentlichen Profile werden nicht verändert.</p>')+
  '</div></div>'+(done?duoDiscussionPanel(p,round,remote):'')+duoHistoryPanel(historyWithCurrent,remote);
@@ -559,7 +559,7 @@ function soloPhoto(p){
  if(duoPhotoBroken.has(p.id))return '<div class="duo-hero-photo duo-photo-unavailable"><p>Diese Aufnahme ist beschädigt oder unscharf.</p><button class="button button-lime" data-action="solo-next">Anderes Produkt ↗</button></div>';
  const selected=duoPhotoCheck.get(p.id);
  const source=typeof selected==='string'?selected:duoHiResImage(p),fallback=validUrl(p.image_url);
- return '<div class="duo-hero-photo"><img data-solo-image="true" data-fallback="'+attr(fallback)+'" loading="eager" src="'+attr(source)+'" referrerpolicy="no-referrer" alt="Original-Verpackung: '+attr(p.brand+' '+p.name)+'"><div class="duo-photo-bottom"><span>PACKSHOT · '+esc(p.photo_attribution||'Produktquelle')+'</span><span>'+esc(p.barcode?'EAN '+p.barcode:'Produktbild')+'</span></div></div>';
+ return '<div class="duo-hero-photo"><img data-pack-id="'+attr(p.id)+'" data-solo-image="true" data-fallback="'+attr(fallback)+'" loading="eager" src="'+attr(source)+'" referrerpolicy="no-referrer" alt="Original-Verpackung: '+attr(p.brand+' '+p.name)+'"><div class="duo-photo-bottom"><span>PACKSHOT · '+esc(p.photo_attribution||'Produktquelle')+'</span><span>'+esc(p.barcode?'EAN '+p.barcode:'Produktbild')+'</span></div></div>';
 }
 async function soloStart(next){
  if(st.solo.busy)return;
@@ -609,13 +609,13 @@ function soloRender(){
  const p=soloCurrent(),choice=st.solo.lastChoice;
  const header=head('GOOD THINGS / SOLO SHUFFLE','One product.<br><em>Your verdict.</em>','Zufälliges Produkt. S, A, B, C, D, F oder noch nicht probiert — und ab zum nächsten.',soloCount()+' BEWERTUNGEN');
  const intro='<div class="shuffle-mode-nav"><button class="active" data-nav="solo">✳ Solo Shuffle</button><button data-nav="duo">♡ Together Shuffle</button><button data-nav="board">Meine Tier List ↗</button></div>';
- if(!p)return header+intro+'<div class="shuffle-empty"><div class="shuffle-sticker">✳</div><h3>Bereit für eine Überraschung?</h3><p>Wir schlagen dir zufällig ein Produkt mit einem echten, ausreichend großen Packshot vor. Du entscheidest allein, wo es hingehört.</p><button class="button button-lime" data-action="solo-start" '+(st.solo.busy?'disabled':'')+'>Zufallsprodukt zeigen ↗</button>'+(st.solo.warning?'<p class="small muted">'+esc(st.solo.warning)+'</p>':'')+'</div>';
- const rated=choice?'<div class="solo-result"><div class="eyebrow">DEIN URTEIL</div><div class="solo-result-choice '+(choice==='F'?'fail':'')+'">'+esc(choice==='not_tried'?'◌':choice)+'</div><p>'+esc(duoChoiceLabel(choice))+'</p><div class="field"><label for="soloNote">Deine Geschmacksnotiz (optional)</label><textarea class="control" maxlength="200" rows="3" id="soloNote" placeholder="Was überzeugt dich? Würdest du es nochmal kaufen?">'+esc((st.user?accountRating(p.id):st.guest.you[p.id])?.note||'')+'</textarea></div><button class="button button-small button-white" data-action="solo-save-note">Notiz speichern ♡</button><button class="button button-lime" data-action="solo-next">Nächstes zufälliges Produkt ↗</button></div>':
+ if(!p)return header+intro+'<div class="shuffle-empty"><div class="shuffle-sticker">✳</div><h3>Bereit für eine Überraschung?</h3><p>Wir schlagen dir zufällig ein Produkt mit einem echten, ausreichend großen Packshot vor. Du entscheidest allein, wo es hingehört.</p><button class="button button-lime" data-action="solo-start" '+(st.solo.busy?'disabled':'')+'>🎰 VEGAN SURPRISE! ✳</button>'+(st.solo.warning?'<p class="small muted">'+esc(st.solo.warning)+'</p>':'')+'</div>';
+ const rated=choice?'<div class="solo-result"><div class="eyebrow">DEIN URTEIL</div><div class="solo-result-choice '+(choice==='F'?'fail':'')+'">'+esc(choice==='not_tried'?'◌':choice)+'</div><p>'+esc(duoChoiceLabel(choice))+'</p><div class="field"><label for="soloNote">Deine Geschmacksnotiz (optional)</label><textarea class="control" maxlength="200" rows="3" id="soloNote" placeholder="Was überzeugt dich? Würdest du es nochmal kaufen?">'+esc((st.user?accountRating(p.id):st.guest.you[p.id])?.note||'')+'</textarea></div><button class="button button-small button-white" data-action="solo-save-note">Notiz speichern ♡</button><button class="button button-lime" data-action="solo-next">🎰 Nächstes Überraschungsprodukt ✳</button></div>':
  '<div class="duo-choice"><h3>Wo gehört es hin?</h3><p>Du hast das letzte Wort.</p>'+duoVoteGrid().replaceAll('data-action="duo-vote"','data-action="solo-vote"')+'</div>';
  return header+intro+'<div class="duo-progress"><span>SOLO · '+(soloCount()+1)+' / SHUFFLE</span><span>'+soloCount()+' abgeschlossen</span></div>'+
  '<div class="duo-stage"><div class="duo-product">'+soloPhoto(p)+duoImageAuditBadge(p)+'<h3>'+esc(p.name)+'</h3><p>'+esc(p.brand)+' · '+esc(p.quantity||p.category)+'</p>'+
  (proteinNumber(p)!=null?'<span class="duo-protein">💪 '+proteinNumber(p)+' g Protein / 100 g/ml</span>':'')+
- '</div><div class="duo-decision">'+rated+
+ window.GT_EXTRAS.facts(p)+'</div><div class="duo-decision">'+rated+
  (!choice?'<button class="button button-ghost button-small" data-action="solo-next" style="margin-top:18px">Nicht das richtige Produkt? Weiter ↗</button>':'')+
  '</div></div>'+soloHistoryPanel();
 }
@@ -1254,7 +1254,7 @@ function drawerHtml(){
  const name=st.user?'Your account':st.persona.charAt(0).toUpperCase()+st.persona.slice(1)+' (on this device)';
  return '<button class="close" aria-label="Close product" data-action="close-drawer">×</button>'
  +'<div class="eyebrow">THE TASTING TABLE / '+esc(p.category)+'</div><h2>'+esc(p.name)+'</h2><p class="muted">'+esc(p.brand)+' · '+esc(p.store)+'</p>'
- +'<div class="drawer-art tone-'+esc(p.tone)+'">'+(matchedPhoto(p)?'<img src="'+attr(validUrl(p.image_url))+'" alt="Product packaging from '+attr(p.photo_attribution||'the manufacturer')+'" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':st.imageCache[p.id]?.url?'<img src="'+attr(validUrl(st.imageCache[p.id].url))+'" alt="Unverified community photograph" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':esc(p.emoji))+'</div>'
+ +'<div class="drawer-art tone-'+esc(p.tone)+'">'+(matchedPhoto(p)?'<img data-pack-id="'+attr(p.id)+'" src="'+attr(validUrl(p.image_url))+'" alt="Product packaging from '+attr(p.photo_attribution||'the manufacturer')+'" referrerpolicy="no-referrer" onerror="window.GT_EXTRAS.onPackError(this)"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':st.imageCache[p.id]?.url?'<img src="'+attr(validUrl(st.imageCache[p.id].url))+'" alt="Unverified community photograph" referrerpolicy="no-referrer" onerror="window.GT_EXTRAS.onPackError(this)"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':esc(p.emoji))+'</div>'
  +'<div class="inline-notice">'+(matchedPhoto(p)?'✓ Packshot linked to a specific '+(p.image_status==='brand'?'manufacturer':p.image_status==='barcode'?'barcode-matched community':'retailer')+' product record. Packaging and ingredients can change; please check the actual packet.': 'ⓘ No confirmed front-pack photo yet. Variant and vegan status need checking before purchase.')+'</div>'
  +(!st.user?'<div class="field"><label>Who is rating? <span class="hint">(local demo only)</span></label><div class="segment">'+['you','mikel','huong'].map(w=>'<button data-action="set-persona" data-value="'+w+'" class="'+(st.persona===w?'active':'')+'">'+w.charAt(0).toUpperCase()+w.slice(1)+'</button>').join('')+'</div></div>':'<div class="small muted">Rating as '+esc(name)+'</div>')
  +(isNotTried(r)?'<div class="not-tried-pill">◌ Already answered: Not tried yet · no grade</div>':'')+'<div class="field"><label>What does '+esc(name)+' think?</label><div class="tier-picker" id="tierPicker">'+TIERS.map(t=>'<button class="tier '+(st.draftTier===t?'active':'')+'" data-tier="'+t+'" style="--tiercolor:'+({S:'#dcec8d',A:'#c6e6b4',B:'#c9e9f8',C:'#ffdfb0',D:'#f4bcbc',F:'#e99898'}[t])+'" data-action="select-tier" data-value="'+t+'">'+t+'</button>').join('')+'</div><span class="hint">S = obsessed · A = great · B = good · C = okay · D = disappointing · F = Durchgefallen</span></div>'
@@ -1585,19 +1585,19 @@ document.addEventListener('click',async(event)=>{
  case 'save-rating':await saveRating();break;
  case 'delete-rating':await deleteRating();break;
  case 'set-category':st.category=id;render();break;
- case 'solo-start':await soloStart(false);break;
- case 'solo-next':await soloStart(true);break;
+ case 'solo-start':await window.GT_EXTRAS.spin(()=>soloStart(false));break;
+ case 'solo-next':await window.GT_EXTRAS.spin(()=>soloStart(true));break;
  case 'solo-vote':await soloVote(val);break;
  case 'solo-save-note':await soloSaveNote($('#soloNote')?.value||'');break;
  case 'duo-mode-local':st.duo.mode='local';st.duo.room=null;st.duo.error='';setView('duo');break;
  case 'duo-mode-remote':st.duo.mode='remote';st.duo.room=null;st.duo.error='';await duoLoadRooms();setView('duo');break;
- case 'duo-start-local':await duoLocalStart(false);break;
+ case 'duo-start-local':await window.GT_EXTRAS.spin(()=>duoLocalStart(false));break;
  case 'duo-set-starter':duoSetStarter(val);break;
  case 'duo-export-history':duoExportHistory();break;
  case 'duo-save-discussion':await duoSaveDiscussion();break;
  case 'duo-vote':if(st.duo.mode==='remote')await duoRemoteVote(val);else duoLocalVote(val);break;
- case 'duo-next-local':await duoLocalStart(true);break;
- case 'duo-next-remote':await duoNextRemote();break;
+ case 'duo-next-local':await window.GT_EXTRAS.spin(()=>duoLocalStart(true));break;
+ case 'duo-next-remote':await window.GT_EXTRAS.spin(()=>duoNextRemote());break;
  case 'duo-copy-link':duoSharedLink();break;
  case 'duo-open-room':await duoOpenRoom(id);break;
  case 'duo-refresh':await duoRefresh();break;
