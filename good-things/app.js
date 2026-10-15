@@ -502,6 +502,93 @@ function renderDuo(){
  '</div></div>'+duoHistoryPanel(historyWithCurrent,remote);
 }
 
+
+// ---- SOLO SHUFFLE: one surprise product, honest grade, next discovery ----
+const SOLO_KEY='goodthings_solo_v20';
+const soloRead=tryRead(SOLO_KEY,{});
+st.solo={
+ productId:getProduct(soloRead.productId)?soloRead.productId:null,
+ history:Array.isArray(soloRead.history)?soloRead.history.filter(x=>getProduct(x.product_id)&&duoValidChoice(x.choice)).slice(-300):[],
+ lastChoice:duoValidChoice(soloRead.lastChoice)?soloRead.lastChoice:null,
+ busy:false,warning:''
+};
+function soloPersist(){try{localStorage.setItem(SOLO_KEY,JSON.stringify({productId:st.solo.productId,history:st.solo.history,lastChoice:st.solo.lastChoice}))}catch(_){}}
+function soloHistory(){return st.solo.history||[]}
+function soloCount(){return soloHistory().length+(st.solo.productId&&st.solo.lastChoice?1:0)}
+function soloCurrent(){return getProduct(st.solo.productId)}
+function soloPhoto(p){
+ if(duoPhotoBroken.has(p.id))return '<div class="duo-hero-photo duo-photo-unavailable"><p>Diese Aufnahme ist beschädigt oder unscharf.</p><button class="button button-lime" data-action="solo-next">Anderes Produkt ↗</button></div>';
+ const selected=duoPhotoCheck.get(p.id);
+ const source=typeof selected==='string'?selected:duoHiResImage(p),fallback=validUrl(p.image_url);
+ return '<div class="duo-hero-photo"><img data-solo-image="true" data-fallback="'+attr(fallback)+'" loading="eager" src="'+attr(source)+'" referrerpolicy="no-referrer" alt="Original-Verpackung: '+attr(p.brand+' '+p.name)+'"><div class="duo-photo-bottom"><span>PACKSHOT · '+esc(p.photo_attribution||'Produktquelle')+'</span><span>'+esc(p.barcode?'EAN '+p.barcode:'Produktbild')+'</span></div></div>';
+}
+async function soloStart(next){
+ if(st.solo.busy)return;
+ if(st.solo.productId&&!next)return;
+ st.solo.busy=true;
+ try{
+  const old=st.solo.productId;
+  if(old&&st.solo.lastChoice&&!soloHistory().some(x=>x.product_id===old)){
+   st.solo.history.push({product_id:old,choice:st.solo.lastChoice});
+  }
+  const previously=[...new Set([...soloHistory().map(x=>x.product_id),...selfRatings().map(x=>x.product_id),old].filter(Boolean))];
+  const p=await duoPick(previously);
+  if(!p){st.solo.warning='Keine weiteren Produkte mit ausreichend gutem Bild gefunden. Bitte Foto-Qualität prüfen oder die Auswahl später erweitern.';return}
+  st.solo.productId=p.id;st.solo.lastChoice=null;st.solo.warning='';soloPersist();
+ }finally{st.solo.busy=false;render()}
+}
+async function soloVote(choice){
+ if(!st.solo.productId||st.solo.lastChoice||!duoValidChoice(choice))return;
+ const id=st.solo.productId,prior=st.user?accountRating(id):st.guest.you[id],skipped=choice==='not_tried';
+ const row={product_id:id,tier:skipped?null:choice,status:skipped?'not_tried':'rated',
+  note:skipped?'':prior?.note||'',position:skipped?0:prior?.position||100,
+  is_public:false,updated_at:new Date().toISOString()};
+ if(st.user){
+  if(!sb)return toast('Konto nicht verbunden. Die Solo-Bewertung wurde nicht gespeichert.');
+  const obj={...row,user_id:st.user.id};
+  const {error}=await sb.from('gt_ratings').upsert(obj,{onConflict:'user_id,product_id'});
+  if(error)return toast('Bewertung konnte nicht gespeichert werden: '+error.message);
+  st.allRatings=st.allRatings.filter(x=>!(x.user_id===st.user.id&&x.product_id===id)).concat(obj);
+ }else{st.guest.you[id]=row;persist()}
+ st.solo.lastChoice=choice;soloPersist();render();toast('Deine Bewertung ist gespeichert. Weiter zum nächsten Zufallsprodukt ♡');
+}
+async function soloSaveNote(note){
+ const id=st.solo.productId,choice=st.solo.lastChoice;
+ if(!id||!choice)return;
+ const content=String(note||'').trim().slice(0,200);
+ if(st.user){
+  if(!sb)return toast('Offline — dein Kommentar konnte nicht gespeichert werden.');
+  const {error}=await sb.from('gt_ratings').update({note:content,updated_at:new Date().toISOString()}).eq('user_id',st.user.id).eq('product_id',id);
+  if(error)return toast('Kommentar konnte nicht gespeichert werden: '+error.message);
+  st.allRatings=st.allRatings.map(x=>x.user_id===st.user.id&&x.product_id===id?{...x,note:content}:x);
+ }else{
+  if(st.guest.you[id]){st.guest.you[id].note=content;persist()}
+ }
+ toast('Notiz auf deinem Shelf gespeichert ✳');
+}
+function soloRender(){
+ const p=soloCurrent(),choice=st.solo.lastChoice;
+ const header=head('GOOD THINGS / SOLO SHUFFLE','One product.<br><em>Your verdict.</em>','Zufälliges Produkt. S, A, B, C, D, F oder noch nicht probiert — und ab zum nächsten.',soloCount()+' BEWERTUNGEN');
+ const intro='<div class="shuffle-mode-nav"><button class="active" data-nav="solo">✳ Solo Shuffle</button><button data-nav="duo">♡ Together Shuffle</button><button data-nav="board">Meine Tier List ↗</button></div>';
+ if(!p)return header+intro+'<div class="shuffle-empty"><div class="shuffle-sticker">✳</div><h3>Bereit für eine Überraschung?</h3><p>Wir schlagen dir zufällig ein Produkt mit einem echten, ausreichend großen Packshot vor. Du entscheidest allein, wo es hingehört.</p><button class="button button-lime" data-action="solo-start" '+(st.solo.busy?'disabled':'')+'>Zufallsprodukt zeigen ↗</button>'+(st.solo.warning?'<p class="small muted">'+esc(st.solo.warning)+'</p>':'')+'</div>';
+ const rated=choice?'<div class="solo-result"><div class="eyebrow">DEIN URTEIL</div><div class="solo-result-choice '+(choice==='F'?'fail':'')+'">'+esc(choice==='not_tried'?'◌':choice)+'</div><p>'+esc(duoChoiceLabel(choice))+'</p><div class="field"><label for="soloNote">Deine Geschmacksnotiz (optional)</label><textarea class="control" maxlength="200" rows="3" id="soloNote" placeholder="Was überzeugt dich? Würdest du es nochmal kaufen?">'+esc((st.user?accountRating(p.id):st.guest.you[p.id])?.note||'')+'</textarea></div><button class="button button-small button-white" data-action="solo-save-note">Notiz speichern ♡</button><button class="button button-lime" data-action="solo-next">Nächstes zufälliges Produkt ↗</button></div>':
+ '<div class="duo-choice"><h3>Wo gehört es hin?</h3><p>Du hast das letzte Wort.</p>'+duoVoteGrid().replaceAll('data-action="duo-vote"','data-action="solo-vote"')+'</div>';
+ return header+intro+'<div class="duo-progress"><span>SOLO · '+(soloCount()+1)+' / SHUFFLE</span><span>'+soloCount()+' abgeschlossen</span></div>'+
+ '<div class="duo-stage"><div class="duo-product">'+soloPhoto(p)+duoImageAuditBadge(p)+'<h3>'+esc(p.name)+'</h3><p>'+esc(p.brand)+' · '+esc(p.quantity||p.category)+'</p>'+
+ (proteinNumber(p)!=null?'<span class="duo-protein">💪 '+proteinNumber(p)+' g Protein / 100 g/ml</span>':'')+
+ '</div><div class="duo-decision">'+rated+
+ (!choice?'<button class="button button-ghost button-small" data-action="solo-next" style="margin-top:18px">Nicht das richtige Produkt? Weiter ↗</button>':'')+
+ '</div></div>'+soloHistoryPanel();
+}
+function soloHistoryPanel(){
+ const history=soloHistory().slice(-12).reverse();
+ if(!history.length)return '';
+ return '<div class="solo-history"><div class="eyebrow">MY SHUFFLE JOURNAL</div><h3>Zuletzt bewertet</h3>'+history.map(x=>{
+  const p=getProduct(x.product_id);
+  return '<div class="duo-history-row"><span class="duo-history-index">'+esc(x.choice==='not_tried'?'◌':x.choice)+'</span><div class="duo-history-product"><strong>'+esc(p.brand+' · '+p.name)+'</strong><small>'+esc(p.category)+'</small></div></div>';
+ }).join('')+'</div>';
+}
+
 function renderBoard(){
  const entries=boardEntries(),skipped=boardNotTried(),answered=new Set(boardAnswers().map(r=>r.product_id));
  const photos=RANKABLE.filter(matchedPhoto).length;
