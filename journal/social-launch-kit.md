@@ -1,9 +1,9 @@
 # THE JOURNAL — ISSUE 001 LAUNCH KIT
-Editorial identity: Wonder with Substance. Working title, not final brand.
-Canonical hub: https://mikelninh.github.io/journal/
-Feature 1: https://mikelninh.github.io/journal/the-breath-that-breathes-you/
-Feature 2: https://mikelninh.github.io/journal/breathing-under-pressure/
-Young minds: https://mikelninh.github.io/journal/for-curious-minds/
+Editorial identity: Wonder with Substance. Published within GOOD QUESTION / The Slow Edition; WUNDERPOST is not the final magazine name.
+Canonical hub: https://mikelninh.github.io/good-question/slow/breath/
+Feature 1: https://mikelninh.github.io/good-question/slow/breath/the-breath-that-breathes-you/
+Feature 2: https://mikelninh.github.io/good-question/slow/breath/breathing-under-pressure/
+Young minds: https://mikelninh.github.io/good-question/slow/breath/for-curious-minds/
 
 ## Distribution principle
 One genuinely good story, several different doors. Don't paste an essay into five platforms. Make a native invitation for each, and bring readers back to the magazine's own website.
@@ -27,7 +27,7 @@ And this morning, you can choose to notice a single breath.
 
 There's something worth exploring in that strange overlap between control and trust.
 
-We wrote about it: https://mikelninh.github.io/journal/the-breath-that-breathes-you/
+We wrote about it: https://mikelninh.github.io/good-question/slow/breath/the-breath-that-breathes-you/
 
 ## Short video — 30 seconds — Reels, TikTok and YouTube Shorts
 0–4 s: Quiet morning, natural sound. Narration: “Last night, you did something extraordinary.”
