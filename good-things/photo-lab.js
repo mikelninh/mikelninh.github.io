@@ -25,6 +25,9 @@ function photoFor(p){
  if(p.source_type==='openfoodfacts'&&/\/front_[a-z]{2}\.\d+\.400\.jpg(?:\?.*)?$/.test(url)){
   return url.replace(/\.400\.jpg(?=\?|$)/,'.full.jpg');
  }
+ if(new URL(url).hostname==='img.rewe-static.de'&&/[?&]imwidth=\d+/.test(url)){
+  const u=new URL(url);u.searchParams.set('imwidth','960');return u.href;
+ }
  return url;
 }
 const placeholder=p=>'<div class="photo-placeholder" aria-label="Kein gesichertes Produktbild">◌</div>';
@@ -83,7 +86,7 @@ function checkOne(p){
     if(finished)return;finished=true;clearTimeout(timer);
     const width=img.naturalWidth,height=img.naturalHeight;
     // A full 400px thumbnail is not adequate for a premium large packshot.
-    if(width>=450&&height>=450)resolve({status:'good',width,height});
+    if(Math.max(width,height)>=600&&Math.min(width,height)>=260)resolve({status:'good',width,height});
     else if(next)attempt(next,'');
     else resolve({status:'low',width,height});
    };
