@@ -1,6 +1,6 @@
 # GOOD THINGS — remaining product photos
 
-15 October 2026. **309 of 354** rankable products have source-linked image URLs; **45 lack a sourced packshot**. Four exact-EAN Open Food Facts front images have been added. Counts are source links, NOT completed image quality audits. This does NOT certify the 305 as current, variant-correct high-resolution photos.
+15 October 2026. **314 of 354** rankable products have source-linked image URLs; **40 lack a sourced packshot**. Nine exact-EAN Open Food Facts front images have been added. Counts are source links, NOT completed image quality audits. This does NOT certify the 305 as current, variant-correct high-resolution photos.
 
 [Photo Lab](https://mikelninh.github.io/good-things/photos.html): inspect **all** source images' actual pixel dimensions in the visitor's browser, filter low-resolution or missing assets, stop or export results as CSV. Manually inspect full pack visibility, correct variant, ingredient details and photo reuse rights. A high pixel resolution alone doesn't prove the right product.
 
@@ -10,14 +10,14 @@ Two repairs this release: Natumi `milks-14` uses the manufacturer's full-height 
 |---|---:|
 | Tofu & Tempeh | 3 |
 | Plant drinks | 4 |
-| Yoghurt & Skyr | 4 |
-| Cheese alternatives | 2 |
+| Yoghurt & Skyr | 2 |
+| Cheese alternatives | 1 |
 | Spreads & dips | 7 |
-| Deli slices & toppings | 8 |
+| Deli slices & toppings | 7 |
 | Meat alternatives | 1 |
 | Chips & snacks | 3 |
 | Chocolate | 2 |
-| Lidl / Vemondo | 11 |
+| Lidl / Vemondo | 10 |
 
 ## Confirmed EAN matches added on 15 October 2026
 
@@ -25,8 +25,13 @@ Two repairs this release: Natumi `milks-14` uses the manufacturer's full-height 
 - `tofu-10` · Tukan Bio Räuchertofu 200 g · EAN `4012359711106` · [Open Food Facts](https://world.openfoodfacts.org/product/4012359711106) · [manufacturer product photo](https://www.tukan-vegan.de/produkte/rauchertofu)
 - `milks-05` · Oatly Bio Haferdrink Original 1 l · EAN `7394376615894` · [Open Food Facts](https://world.openfoodfacts.org/product/7394376615894) · [retailer GTIN sheet](https://cdn.metro-group.com/de/de_fir_303659001001_de.pdf)
 - `vemondo-01` · Vemondo Bio Tofu Natur 400 g (2×200 g) · EAN `4056489616191` · [Open Food Facts](https://world.openfoodfacts.org/product/4056489616191). Specific variant is now explicit in catalogue, not an unspecified generic product.
+- `yogurts-07` · Sojade Bio Soja-Joghurtalternative Natur 400 g · EAN `3273227081023` · [Open Food Facts](https://world.openfoodfacts.org/product/3273227081023) · [retailer EAN](https://plantful.de/Sojade-Soja-Joghurtalternative-Natur-Bio-400-g)
+- `yogurts-08` · Sojade Bio Soja-Joghurtalternative Vanille 400 g · EAN `3273220184981` · [Open Food Facts](https://world.openfoodfacts.org/product/3273220184981) · [retailer EAN](https://shop.elbers-hof.de/produkt/962602/Sojade%2BVanille%2BJoghurtalternative)
+- `cheese-04` · Simply V Reibegenuss 200 g · EAN `4260444960292` · [Open Food Facts](https://world.openfoodfacts.org/product/4260444960292) · [manufacturer/retailer-confirmed quantity](https://www.handelshof.de/eigenmarken/produkte/3701677009/simply-v-veganer-reibegenuss-200g). Note: OFF's quantity field currently incorrectly reads 25 g; 200 g corroborated externally.
+- `deli-12` · Wheaty Chorizo Aufschnitt 80 g · EAN `4032277002704` · [Open Food Facts](https://world.openfoodfacts.org/product/4032277002704) · [retailer GTIN](https://plantful.de/Wheaty-Veganer-Aufschnitt-Chorizo-Bio-80-g)
+- `vemondo-04` · Vemondo Barista Hafer 1 l · EAN `4056489989363` · [Open Food Facts](https://world.openfoodfacts.org/product/4056489989363).
 
-The remaining 45 are *not* represented as confirmed. Some earlier names may be outdated or ambiguous; never equate them with a similar-looking variant. Use [Photo Rescue Lab](https://mikelninh.github.io/good-things/photos.html) to look up exact barcodes, confirm source and package identity, and export reviewable local fixes. A local approval does not update everyone's catalogue.
+The remaining 40 are *not* represented as confirmed. Some earlier names may be outdated or ambiguous; never equate them with a similar-looking variant. Use [Photo Rescue Lab](https://mikelninh.github.io/good-things/photos.html) to look up exact barcodes, confirm source and package identity, and export reviewable local fixes. A local approval does not update everyone's catalogue.
 
 ## Open image issues
 
@@ -48,15 +53,15 @@ The remaining 45 are *not* represented as confirmed. Some earlier names may be o
 
 ### Yoghurt & Skyr (4)
 
-- [ ] `yogurts-07` — **Sojade · Bio Soja Natur** (REWE): confirm current GTIN/variant and full-size original packshot
-- [ ] `yogurts-08` — **Sojade · Bio Soja Vanille** (REWE): confirm current GTIN/variant and full-size original packshot
+- [x] `yogurts-07` — **Sojade · Bio Soja Natur** (REWE): confirm current GTIN/variant and full-size original packshot
+- [x] `yogurts-08` — **Sojade · Bio Soja Vanille** (REWE): confirm current GTIN/variant and full-size original packshot
 - [ ] `yogurts-09` — **Oatly · Hafer Natur** (REWE): confirm current GTIN/variant and full-size original packshot
 - [ ] `yogurts-10` — **REWE Beste Wahl · Vegane Alternative Natur** (REWE): confirm current GTIN/variant and full-size original packshot
 
 ### Cheese alternatives (2)
 
 - [ ] `cheese-03` — **Simply V · Streichgenuss Natur** (REWE): confirm current GTIN/variant and full-size original packshot
-- [ ] `cheese-04` — **Simply V · Reibegenuss** (REWE): confirm current GTIN/variant and full-size original packshot
+- [x] `cheese-04` — **Simply V · Reibegenuss** (REWE): confirm current GTIN/variant and full-size original packshot
 
 ### Spreads & dips (7)
 
@@ -77,7 +82,7 @@ The remaining 45 are *not* represented as confirmed. Some earlier names may be o
 - [ ] `deli-09` — **REWE Beste Wahl · Pflanzlicher Aufschnitt Paprika** (REWE): confirm current GTIN/variant and full-size original packshot
 - [ ] `deli-10` — **The Vegetarian Butcher · Veganer Aufschnitt Natur** (REWE): confirm current GTIN/variant and full-size original packshot
 - [ ] `deli-11` — **Wheaty · Veganer Aufschnitt Mild** (REWE): confirm current GTIN/variant and full-size original packshot
-- [ ] `deli-12` — **Wheaty · Vegane Chorizo** (REWE): confirm current GTIN/variant and full-size original packshot
+- [x] `deli-12` — **Wheaty · Vegane Chorizo** (REWE): confirm current GTIN/variant and full-size original packshot
 
 ### Meat alternatives (1)
 
@@ -99,7 +104,7 @@ The remaining 45 are *not* represented as confirmed. Some earlier names may be o
 - [x] `vemondo-01` — **Vemondo · Tofu Natur** (Lidl): confirm current GTIN/variant and full-size original packshot
 - [ ] `vemondo-02` — **Vemondo · Räuchertofu** (Lidl): confirm current GTIN/variant and full-size original packshot
 - [ ] `vemondo-03` — **Vemondo · Bio Sojadrink** (Lidl): confirm current GTIN/variant and full-size original packshot
-- [ ] `vemondo-04` — **Vemondo · Haferdrink Barista** (Lidl): confirm current GTIN/variant and full-size original packshot
+- [x] `vemondo-04` — **Vemondo · Haferdrink Barista** (Lidl): confirm current GTIN/variant and full-size original packshot
 - [ ] `vemondo-05` — **Vemondo · Haferdrink Natur** (Lidl): confirm current GTIN/variant and full-size original packshot
 - [ ] `vemondo-06` — **Vemondo · Sojajoghurt Natur** (Lidl): confirm current GTIN/variant and full-size original packshot
 - [ ] `vemondo-07` — **Vemondo · Haferjoghurt Vanille** (Lidl): confirm current GTIN/variant and full-size original packshot
