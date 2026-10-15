@@ -73,6 +73,8 @@ try {
       const serious=axe.violations.filter(v=>v.impact==='serious'||v.impact==='critical');
       if(serious.length)accessibility.push({view,path: path||'homepage',issues:serious.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.slice(0,5).map(n=>n.target)}))});
       if(view!=='small'){
+        await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+        await page.waitForTimeout(100);
         const name=path?path.split('/').filter(Boolean).pop():'cover';
         await page.screenshot({path:screens+'/'+name+'-'+view+'.png',fullPage:true});
       }
