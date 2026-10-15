@@ -1,6 +1,6 @@
 # ✳ GOOD THINGS — Mikel & Huong
 
-**Build:** 1.9.1 (alternating Duo starter · saved results journal · Natumi carton fix · full photo-resolution audit)  
+**Build:** 2.0.0 (Solo Shuffle + Together Shuffle + tasting conversations)
 **Website:** https://mikelninh.github.io/good-things/  
 **Source:** /good-things on the \`mikelninh.github.io\` GitHub Pages repository  
 **Architecture:** GitHub Pages HTML/CSS/vanilla JS + Supabase email/password Auth and PostgreSQL/RLS in an isolated namespace in the existing EU Frankfurt project.
@@ -106,6 +106,15 @@ A home for things worth sharing. The S–F interactive tier board, personal *Our
 - **Additional exact maker photograph:** `tofu-14` now uses the current Soja-Tempeh Natur front packshot from tempehmanufaktur's official product catalogue. The outstanding photo backlog is down to 49 without changing any rating ID.
 - **Observed catalogue audit:** 354 rankable product entries, 305 distinct source image URLs (no duplicate URLs), 49 original candidate items still without a sourced packshot. Four pairs of similarly named entries need product variant review. The other 305 have **not** been all manually or live-browser audited as HD. Broken or undersized candidates are skipped in Duo.
 - **QA:** code-level Duo round simulations passed first-person selection, first-vote secrecy, S-vs-F reveal, alternation, persistence, and a visible results journal. The mock Photo Lab full scan exercised all 304 image records; mock images were used and this is NOT a real network download or physical image review. External browser automation was blocked by insufficient wallet credit.
+
+### 2.0 — Solo Shuffle and Together Shuffle
+
+- **Solo Shuffle:** visit `?view=solo` and draw a random product with a source-linked packshot (pixel-quality gate). Rate it S/A/B/C/D/F or `not_tried`, add an optional tasting note, and shuffle to the next product. Previously rated products are excluded from suggestions. Your choice is saved immediately to your private local shelf or signed-in Supabase `gt_ratings`. Browser-only progress is saved under `goodthings_solo_v20`.
+- **Together Shuffle:** visit `?view=duo`. Both people rate the **same** random product independently. The first grade is hidden; the reveal only happens after two answers, with F=Durchgefallen and `not_tried` distinct. On one device, Mikel and Huong alternate who starts; the two-person account mode supports different devices and private vote RLS.
+- **Post-reveal discussion:** a product-specific conversation prompt appears *only after both answers*. On one device, a jointly written note is saved alongside the round in `goodthings_duo_v18` localStorage. On separate devices, each participant can post/edit a private discussion note in Supabase `gt_duo_comments` (RLS restricts it to the two participants *after reveal*). Notes are escaped before rendering.
+- **Data ownership:** local mode is only in the browser until intentionally exported; account mode persists ratings, votes, discussions and room history in Supabase. Signup email verification and a genuine two-device walkthrough remain unverified.
+- **Image quality:** Solo and Duo use traceable product photos and require a minimum of 450×450 actual loaded pixels. Missing/broken images offer another random product instead of a misleading substitute. Photo Lab is at `photos.html`.
+- **Testing:** regression tests for each grading state, solo continuity, private discussion delayed reveal and escaping, and database RLS. Simulated client-side grading and discussions have passed. No completed real two-account E2E test.
 
 ## Important release gates
 
