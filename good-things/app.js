@@ -505,7 +505,7 @@ function renderDuo(){
  const labelB=remote?st.profiles.find(x=>x.id===room?.partner_id)?.display_name||'Person 2':'Huong';
  const round=remote?room?.round_no||1:snap.round;
  const controls='<div class="duo-controls"><div class="duo-switch"><button class="'+(!remote?'active':'')+'" data-action="duo-mode-local">Gemeinsam am Gerät</button><button class="'+(remote?'active':'')+'" data-action="duo-mode-remote">Zwei Konten / Geräte</button></div>'+
- '<div class="gap12"><button class="button button-ghost button-small" data-nav="solo">✳ Solo Shuffle</button><button class="button button-ghost button-small" data-nav="board">← Tier List</button>'+(remote&&room?'<button class="button button-white button-small" data-action="duo-copy-link">Link teilen ↗</button>':'')+'</div></div>';
+ '<div class="gap12"><button class="button button-ghost button-small" data-nav="solo">✳ Solo Shuffle</button><button class="button button-ghost button-small" data-nav="board">← Tier List</button>'+(remote&&room?'<button class="button button-white button-small" data-action="duo-copy-link">Link teilen ↗</button>':'')+'</div></div>'+window.GT_EXTRAS.motionControls();
  const intro=head('GOOD THINGS / MIKEL × HUONG','One product.<br><em>Two opinions.</em>','Ihr entscheidet unabhängig. Erst wenn beide geantwortet haben, zeigen wir S–F oder „Nicht probiert“ nebeneinander.',remote?'ZWEI KONTEN':'SAME-DEVICE DEMO');
  if(remote&&!st.user)return intro+controls+empty('♡','Zwei echte Konten','Meldet euch jeweils mit einem eigenen Konto an, um geräteübergreifend zu spielen. Am selben Gerät könnt ihr sofort starten.','<button class="button button-lime" data-action="open-auth">Anmelden ↗</button>');
  if(remote&&!room){
@@ -611,7 +611,7 @@ async function soloSaveNote(note){
 function soloRender(){
  const p=soloCurrent(),choice=st.solo.lastChoice;
  const header=head('GOOD THINGS / SOLO SHUFFLE','One product.<br><em>Your verdict.</em>','Zufälliges Produkt. S, A, B, C, D, F oder noch nicht probiert — und ab zum nächsten.',soloCount()+' BEWERTUNGEN');
- const intro='<div class="shuffle-mode-nav"><button class="active" data-nav="solo">✳ Solo Shuffle</button><button data-nav="duo">♡ Together Shuffle</button><button data-nav="board">Meine Tier List ↗</button></div>';
+ const intro='<div class="shuffle-mode-nav"><button class="active" data-nav="solo">✳ Solo Shuffle</button><button data-nav="duo">♡ Together Shuffle</button><button data-nav="board">Meine Tier List ↗</button></div>'+window.GT_EXTRAS.motionControls();
  if(!p)return header+intro+'<div class="shuffle-empty"><div class="shuffle-sticker">✳</div><h3>Bereit für eine Überraschung?</h3><p>Wir schlagen dir zufällig ein Produkt mit einem echten, ausreichend großen Packshot vor. Du entscheidest allein, wo es hingehört.</p><button class="button button-lime" data-action="solo-start" '+(st.solo.busy?'disabled':'')+'>🎰 VEGAN SURPRISE! ✳</button>'+(st.solo.warning?'<p class="small muted">'+esc(st.solo.warning)+'</p>':'')+'</div>';
  const rated=choice?'<div class="solo-result"><div class="eyebrow">DEIN URTEIL</div><div class="solo-result-choice '+(choice==='F'?'fail':'')+'">'+esc(choice==='not_tried'?'◌':choice)+'</div><p>'+esc(duoChoiceLabel(choice))+'</p><div class="field"><label for="soloNote">Deine Geschmacksnotiz (optional)</label><textarea class="control" maxlength="200" rows="3" id="soloNote" placeholder="Was überzeugt dich? Würdest du es nochmal kaufen?">'+esc((st.user?accountRating(p.id):st.guest.you[p.id])?.note||'')+'</textarea></div><button class="button button-small button-white" data-action="solo-save-note">Notiz speichern ♡</button><button class="button button-lime" data-action="solo-next">🎰 Nächstes Überraschungsprodukt ✳</button></div>':
  '<div class="duo-choice"><h3>Wo gehört es hin?</h3><p>Du hast das letzte Wort.</p>'+duoVoteGrid().replaceAll('data-action="duo-vote"','data-action="solo-vote"')+'</div>';
@@ -1607,6 +1607,7 @@ document.addEventListener('click',async(event)=>{
  case 'save-rating':await saveRating();break;
  case 'delete-rating':await deleteRating();break;
  case 'set-category':st.category=id;render();break;
+ case 'shuffle-motion':if(window.GT_EXTRAS.setMotion(val))render();break;
  case 'solo-start':await window.GT_EXTRAS.spin(()=>soloStart(false));break;
  case 'solo-next':await window.GT_EXTRAS.spin(()=>soloStart(true));break;
  case 'solo-vote':await soloVote(val);break;
