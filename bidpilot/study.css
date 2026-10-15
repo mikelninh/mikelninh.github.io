@@ -1,0 +1,28 @@
+
+/* BIDPILOT first-value usability pilot – optional, not an analytics claim */
+.study-section{padding-top:18px;padding-bottom:6px;scroll-margin-top:85px}
+.study-card{background:#f0f4ec;border:1px solid #d3e2d1;border-radius:14px;padding:25px 28px;display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:19px 32px}
+.study-kicker{font:800 10px/1.4 ui-monospace,SFMono-Regular,monospace;letter-spacing:1.1px;color:#4a7960}
+.study-intro h2{font:400 clamp(24px,3vw,33px)/1.14 Georgia,serif;letter-spacing:-.035em;margin:9px 0}
+.study-intro p,.study-disclaimer{font-size:12px;line-height:1.7;color:#667e6a;max-width:720px;margin:0}
+.study-controls{display:flex;flex-direction:column;justify-content:center;gap:8px;align-items:stretch}
+.study-controls label{font-size:11px;font-weight:760;color:#5b765e}
+.study-controls select{background:#fffcf6;border:1px solid #bbd3b9;border-radius:9px;padding:10px 12px;color:#315843;min-height:42px}
+.study-primary,.study-actions button,.study-result button{border:0;border-radius:9px;background:#29583e;color:#fff;font-size:11px;font-weight:800;padding:12px 15px;min-height:43px}
+.study-primary:hover,.study-actions button:hover,.study-result button:hover{background:#387a53}
+.study-text{border:0;background:transparent;color:#417452;text-decoration:underline;font-size:11px;font-weight:800;padding:6px}
+.study-live,.study-result{grid-column:1/-1;background:#fffefa;border:1px solid #d9e5d7;border-radius:12px;padding:19px;display:grid;gap:12px}
+.study-clock{display:flex;gap:15px;align-items:center}
+.study-clock span{font:normal 30px Georgia,serif;color:#2f6849}
+.study-clock small{font-size:11px;color:#718474}
+.study-steps{font-weight:750;font-size:12px;color:#3b6148;line-height:1.55}
+.study-status{font-size:12px;color:#6b7f6b;line-height:1.65}
+.study-actions{display:flex;flex-wrap:wrap;gap:9px}
+.study-actions button:nth-child(2){background:white;color:#4d6a55;border:1px solid #bed4bb}
+.study-actions button:disabled{opacity:.4;cursor:not-allowed}
+.study-result h3{font:400 24px Georgia,serif;color:#254831;margin:0}
+.study-result p{font-size:12px;margin:0;color:#687c6d}
+.study-result button{justify-self:start}
+.study-disclaimer{grid-column:1/-1;border-top:1px solid #dae4d6;padding-top:13px;font-size:10px;max-width:none}
+[hidden]{display:none!important}
+@media(max-width:770px){.study-card{grid-template-columns:1fr;padding:21px}.study-controls{max-width:430px}.study-section{padding-bottom:15px}}
