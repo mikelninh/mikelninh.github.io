@@ -14,7 +14,7 @@ const norm=s=>String(s||'').normalize('NFKD').toLowerCase().replace(/[\u0300-\u0
 const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(_){return {}}};
 const accepted=read();
 const reviewQueue=list.filter(p=>p.vegan_status!=='non_vegan'&&(!p.image_url||p.photo_blocked)&&!accepted[p.id]?.reviewed);
-let selected=null,candidate=null,busy=false;
+let selected=null,candidate=null,busy=false,searchBusy=false,searchSuggestions=[],searchError='';
 for(const p of list){
  const d=accepted[p.id];
  if(d?.reviewed!==true||!d.barcode||!safe(d.url)||p.image_url||p.barcode&&p.barcode!==d.barcode)continue;
@@ -42,7 +42,7 @@ function panel(){
 function close(){const el=$('#gtRescueOverlay');if(el)el.remove();document.body.classList.remove('gt-rescue-open');selected=null;candidate=null}
 function open(id){
  const p=list.find(x=>x.id===id),el=panel();if(!p){close();return}
- selected=p;candidate=null;document.body.classList.add('gt-rescue-open');
+ selected=p;candidate=null;searchSuggestions=[];searchError='';document.body.classList.add('gt-rescue-open');
  render();
  el.querySelector('[data-gt-rescue="close"]')?.focus({preventScroll:true});
 }
@@ -53,13 +53,52 @@ function render(){
  const confirmed=accepted[p.id]?.reviewed===true;
  b.innerHTML='<h2 id="gtRescueTitle">Rette dieses Produktfoto.</h2><p class="gt-rescue-product"><strong>'+esc(p.brand)+' · '+esc(p.name)+'</strong><small>'+esc(p.quantity||p.category||'')+' · '+esc(p.id)+'</small></p>'+
  '<p>Schritt 1: Finde den genauen Barcode auf der Verpackung oder einer belastbaren Hersteller-/Händlerseite. Wir prüfen dann den zugehörigen Datensatz und das Frontfoto. <strong>Ähnliche Produkte zählen nicht.</strong></p>'+
- '<div class="gt-rescue-guides"><a href="'+esc(src)+'" target="_blank" rel="noopener noreferrer">Open Food Facts durchsuchen ↗</a><a href="https://www.google.com/search?q='+encodeURIComponent(p.brand+' '+p.name+' EAN GTIN')+'" target="_blank" rel="noopener noreferrer">EAN im Web suchen ↗</a></div>'+
+ '<div class="gt-rescue-guides"><button type="button" class="button button-lime button-small" data-gt-rescue="search" '+(searchBusy?'disabled':'')+'>'+(searchBusy?'Suche …':'✳ EAN-Kandidaten automatisch finden')+'</button><a href="'+esc(src)+'" target="_blank" rel="noopener noreferrer">Open Food Facts ↗</a><a href="https://www.google.com/search?q='+encodeURIComponent(p.brand+' '+p.name+' EAN GTIN')+'" target="_blank" rel="noopener noreferrer">Alternative Suche ↗</a></div>'+ '<div class="gt-rescue-suggestions" id="gtRescueSuggestions">'+suggestionMarkup()+'</div>'+
  '<form id="gtRescueForm"><label for="gtRescueEAN">EAN / GTIN auf der echten Packung</label><div class="gt-rescue-formline"><input inputmode="numeric" autocomplete="off" pattern="[0-9]{8}|[0-9]{12,14}" maxlength="14" class="control" id="gtRescueEAN" placeholder="z. B. 4012359711106" value="'+esc(p.barcode||'')+'" required><button type="submit" class="button button-dark" '+(busy?'disabled':'')+'>'+(busy?'Prüfe …':'EAN prüfen →')+'</button></div></form>'+
  '<div id="gtRescueResult">'+(candidate?candidateView(candidate):'<p class="gt-rescue-note">Noch kein Bild zugeordnet. Ein ungelöster Eintrag bleibt ehrlich ohne Packshot.</p>')+'</div>'+
  '<div class="gt-rescue-foot"><small>Lokale Zuordnungen sind nur auf deinem Gerät sichtbar, bis sie unabhängig für den öffentlichen Katalog geprüft und veröffentlicht wurden. Bildrechte und Varianten werden nicht allein durch die EAN garantiert.</small>'+
  (confirmed?'<button class="button button-ghost button-small" data-gt-rescue="undo">Lokale Zuordnung zurücknehmen</button>':'')+
  '</div>';
  const form=$('#gtRescueForm');form?.addEventListener('submit',e=>{e.preventDefault();lookup($('#gtRescueEAN').value.trim())});
+}
+function suggestionMarkup(){
+ if(searchError)return '<div class="gt-rescue-warning">'+esc(searchError)+'</div>';
+ if(searchBusy)return '<p class="gt-rescue-note">Durchsuche Barcode-Datensätze …</p>';
+ if(!searchSuggestions.length)return '';
+ return '<div class="gt-rescue-suggestion-list"><strong>Kandidaten – noch NICHT bestätigt</strong><p>Sorten, Verpackungsgrößen und Länder können abweichen. Wähle nur eine tatsächlich passende EAN.</p>'+
+ searchSuggestions.map(v=>'<button type="button" data-gt-rescue="choose" data-barcode="'+esc(v.code)+'" class="gt-rescue-suggestion">'+
+ (v.image?'<img src="'+esc(v.image)+'" loading="lazy" referrerpolicy="no-referrer" alt="" onerror="this.hidden=true">':'<span>◌</span>')+
+ '<span><strong>'+esc(v.brand)+' · '+esc(v.name)+'</strong><small>'+esc(v.quantity||'Größe nicht angegeben')+' · EAN '+esc(v.code)+'</small></span><span>Prüfen ↗</span></button>').join('')+'</div>';
+}
+const searchWord=s=>String(s||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(x=>x.length>3&&!['vegan','vegane','veganer','bioland','pflanzlich','pflanzliche','alternative','original'].includes(x));
+const escapeLucene=s=>String(s||'').replace(/[+"\\]/g,' ').trim();
+async function searchCandidates(){
+ if(!selected||searchBusy)return;
+ const p=selected;
+ searchBusy=true;searchError='';searchSuggestions=[];render();
+ try{
+  const brand=escapeLucene(p.brand),tokens=searchWord(p.name);
+  const search=brand.includes(' ')?'brands:"'+brand+'" '+(tokens[0]||''): 'brands:'+brand+' '+(tokens[0]||'');
+  const endpoint='https://search.openfoodfacts.org/search?q='+encodeURIComponent(search)+'&page_size=60&page=1&fields=code,product_name,brands,quantity,image_front_url';
+  const ctrl=typeof AbortController!=='undefined'?new AbortController():null;
+  const timer=ctrl?setTimeout(()=>ctrl.abort(),9500):null;
+  let resp;
+  try{resp=await fetch(endpoint,{headers:{Accept:'application/json'},signal:ctrl?.signal})}
+  finally{if(timer)clearTimeout(timer)}
+  if(!resp.ok)throw Error('Suche momentan nicht verfügbar ('+resp.status+').');
+  const body=await resp.json(),hits=Array.isArray(body.hits)?body.hits:[];
+  const normName=x=>String(x||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+  const brandSlug=normName(p.brand);
+  searchSuggestions=hits.filter(h=>/^\d{8}$|^\d{12,14}$/.test(h.code||'')&&safe(h.image_front_url))
+   .filter(h=>(Array.isArray(h.brands)?h.brands:[h.brands]).some(b=>normName(b).includes(brandSlug)||brandSlug.includes(normName(b))&&normName(b).length>4))
+   .map(h=>{
+    const words=searchWord(h.product_name),overlap=tokens.filter(t=>words.some(w=>w.includes(t)||t.includes(w))).length,score=overlap/Math.max(tokens.length,1);
+    return {code:String(h.code),brand:(h.brands||[]).join(', '),name:String(h.product_name||''),quantity:String(h.quantity||''),image:safe(h.image_front_url),score};
+   })
+   .sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name,'de')).slice(0,18);
+  if(!searchSuggestions.length)searchError='Keine ausreichend passenden Kandidaten gefunden. Bitte EAN manuell recherchieren oder die Produktbezeichnung prüfen.';
+ }catch(e){searchError='Automatische Suche gerade nicht erreichbar. Nutze den direkten Open-Food-Facts-Link oder suche nach EAN: '+String(e.message||e).slice(0,100)}
+ finally{searchBusy=false;render()}
 }
 function candidateView(v){
  if(v.error)return '<div class="gt-rescue-warning" role="alert">'+esc(v.error)+'</div>';
@@ -140,6 +179,8 @@ document.addEventListener('click',e=>{
  else if(action==='open')open(btn.dataset.id);
  else if(action==='next')rescueNext();
  else if(action==='export')exportReviewed();
+ else if(action==='search')searchCandidates();
+ else if(action==='choose'){const id=String(btn.dataset.barcode||'');if(barcodeValid(id)){const field=$('#gtRescueEAN');if(field)field.value=id;lookup(id)}}
  else if(action==='approve')approve();
  else if(action==='undo')undo();
 });
