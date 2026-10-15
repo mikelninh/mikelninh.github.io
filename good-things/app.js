@@ -538,7 +538,7 @@ function renderDuo(){
  window.GT_EXTRAS.facts(p)+'</div><div class="duo-decision">'+status+(remote?'':duoStartPicker(st.duo.local))+reveal+
  (remote?'<p class="small muted" style="text-align:center;margin:20px 0 0">Synchronisiert zwischen zwei getrennten Accounts. Ein unabhängiges Urteil pro Runde.</p>':
  '<p class="small muted" style="text-align:center;margin:20px 0 0">Private gemeinsame Vorschau auf diesem Gerät. Die tatsächlichen öffentlichen Profile werden nicht verändert.</p>')+
- '</div></div>'+(done?duoDiscussionPanel(p,round,remote):'')+duoHistoryPanel(historyWithCurrent,remote);
+ '</div></div>'+(done?duoDiscussionPanel(p,round,remote):'')+inviteBanner()+duoHistoryPanel(historyWithCurrent,remote);
 }
 
 
@@ -617,7 +617,7 @@ function soloRender(){
  (proteinNumber(p)!=null?'<span class="duo-protein">💪 '+proteinNumber(p)+' g Protein / 100 g/ml</span>':'')+
  window.GT_EXTRAS.facts(p)+'</div><div class="duo-decision">'+rated+
  (!choice?'<button class="button button-ghost button-small" data-action="solo-next" style="margin-top:18px">Nicht das richtige Produkt? Weiter ↗</button>':'')+
- '</div></div>'+soloHistoryPanel();
+ '</div></div>'+inviteBanner()+soloHistoryPanel();
 }
 function soloHistoryPanel(){
  const history=soloHistory().slice(-12).reverse();
@@ -644,7 +644,7 @@ function renderBoard(){
  'Drag a product into S–F if you’ve tried it. Otherwise choose Not tried yet — an explicit answer without a grade.',entries.length+' RANKED · '+skipped.length+' NOT TRIED')
  +'<div class="board-intro">'+personToggle+'<div class="gap12"><button class="button button-small button-ghost" data-action="undo-board" '+(!st.boardHistory.length?'disabled':'')+' title="Undo last move">↶ Undo</button><button class="button button-small button-white" data-action="export-board-png">↓ Save PNG</button><button class="button button-small button-lime" data-action="share-board">Share ↗</button><button class="button button-small button-ghost" data-action="suggest-product">+ Produkt fehlt?</button><button class="button button-small button-ghost" data-action="reset-board" '+(!entries.length&&!skipped.length?'disabled':'')+'>Reset</button></div></div>'
  +(!st.user?'<div class="inline-notice">✳ <strong>Local preview:</strong> switching Mikel/Huong changes only this device’s demo board. Sign in to sync your own honest scores — nobody can post as someone else.</div>':'<div class="inline-notice">♡ Your board is tied to your account. Changes sync to Supabase; each new rating is private until you explicitly publish it.</div>')
- +'<div class="duo-board-banner"><div><span class="eyebrow">NEW · TOGETHER</span><strong>Ein Produkt. Zwei Urteile.</strong><p>Erst beide raten, dann werden die Tier-Stufen aufgedeckt. Nur echte Produktfotos.</p></div><button class="button button-dark" data-nav="duo">Gemeinsam spielen ↗</button></div>'+
+ +inviteBanner()+'<div class="duo-board-banner"><div><span class="eyebrow">NEW · TOGETHER</span><strong>Ein Produkt. Zwei Urteile.</strong><p>Erst beide raten, dann werden die Tier-Stufen aufgedeckt. Nur echte Produktfotos.</p></div><button class="button button-dark" data-nav="duo">Gemeinsam spielen ↗</button></div>'+
  '<div class="board-layout"><section class="board-pantry" aria-label="Unranked products">'
  +'<div class="board-panel-label"><span>✳ Not answered yet</span><span id="boardTrayCount">'+boardTrayProducts().length+' unanswered</span></div>'
  +'<div class="board-filter-row"><input type="search" id="boardSearch" class="board-filter" aria-label="Search unranked products" placeholder="Find chocolate, tofu…" value="'+attr(st.boardQuery)+'"><select class="board-filter" id="boardCategory" aria-label="Filter board by category">'
@@ -708,12 +708,12 @@ function quickRank(id){
  const current=st.user?accountRating(id):guestRating(id,st.persona);
  modal('<button class="close" data-action="close-modal" aria-label="Close">×</button>'+
   '<div class="eyebrow">QUICK RANK / '+esc(p.brand)+'</div><h2>'+esc(p.name)+'</h2>'+
-  '<div class="quick-rank-art">'+boardPhoto(p)+'</div>'+
+  '<div class="quick-rank-art">'+boardPhoto(p)+'</div>'+window.GT_EXTRAS.facts(p)+
   '<p class="small muted">Tried it? Choose an S–F grade. Otherwise mark it as not tried yet — an answer without a score.</p>'+
   '<div class="quick-rank-choices">'+TIERS.map(t=>'<button type="button" class="quick-rank-button" data-rank-tier="'+t+'" data-action="quick-rank" data-value="'+t+'" aria-label="Place in '+t+' tier"><strong>'+t+'</strong><small>'+({S:'Obsessed',A:'Brilliant',B:'Good',C:'Okay',D:'Disappointing',F:'Durchgefallen'}[t])+'</small></button>').join('')+'</div>'+
   '<button type="button" class="not-tried-choice '+(isNotTried(current)?'selected':'')+'" data-action="quick-not-tried" aria-pressed="'+(isNotTried(current)?'true':'false')+'"><span>◌</span><span><strong>Not tried yet</strong><small>Answered · no grade · stays off S–F</small></span><span>↗</span></button>'+ 
  '<div class="gap12" style="margin-top:18px"><button class="button button-ghost button-small" data-action="quick-detail">Taste notes & details ↗</button>'+
-  (current?'<button class="button button-white button-small" data-action="quick-unrank">↶ Clear answer</button>':'')+'</div>');
+  (current?'<button class="button button-white button-small" data-action="quick-unrank">↶ Clear answer</button>':'')+'</div>');window.GT_EXTRAS.afterRender(p);
 }
 async function undoBoard(){
  if(st.boardBusy)return;
@@ -840,6 +840,22 @@ async function exportBoardPng(){
  }catch(e){toast('Could not save PNG: '+String(e.message||e).slice(0,100))}
 }
 
+function inviteBanner(){
+ return '<aside class="gt-invite"><div class="gt-invite-symbol">✳</div><div><span class="eyebrow">BRING YOUR PEOPLE</span><h3>Dein Geschmack. Deine Tier List. Deine Freunde.</h3><p>Teile deine vegane S–F Liste, lad andere zum Raten ein und diskutiert eure F-Tier-Sünden. Kostenlos, ohne Werbe-Rankings.</p></div><button class="button button-lime" data-action="invite-friends">♡ Freunde herausfordern ↗</button></aside>';
+}
+async function inviteFriends(){
+ const own=boardEntries().filter(r=>TIERS.includes(r.tier)).sort((a,b)=>TIERS.indexOf(a.tier)-TIERS.indexOf(b.tier)||Number(a.position||0)-Number(b.position||0));
+ const snapshot=own.length?snapshotUrl(own):'';
+ const link=snapshot&&new URL(snapshot).searchParams.get('snapshot')?.length<8500?snapshot:URL_BASE+'?view=board';
+ const intro=own.length?'Meine vegane Tier List steht. 😈 Wie viele S- und F-Tier-Produkte haben wir gemeinsam?':'Ich baue gerade meine vegane Tier List. Mach deine eigene und zeig mir deine S- und F-Tiers! 🌱';
+ const message=intro+'\nMach mit auf GOOD THINGS ✳\n'+link;
+ if(navigator.share){
+  try{await navigator.share({title:'GOOD THINGS · Vegan Tier List Challenge',text:intro,url:link});return}catch(e){if(e?.name==='AbortError')return}
+ }
+ try{await navigator.clipboard.writeText(message);toast('Einladung mit Link kopiert! Teilen und freundlich streiten ♡')}
+ catch(_){modal('<button class="close" data-action="close-modal">×</button><h2>Invite your people ✳</h2><p>Kopiere diese Nachricht und schick sie deinen Lieblingsmenschen.</p><textarea class="control" readonly rows="5" id="manualShare">'+esc(message)+'</textarea><button class="button button-lime" data-action="select-link">Nachricht auswählen ↗</button>')}
+ if(snapshot&&link!==snapshot)toast('Dein Board ist für einen Link-Snapshot zu groß. Teile für die vollständige Liste den PNG-Export.');
+}
 function shareBoard(){
  const own=boardEntries().filter(r=>TIERS.includes(r.tier))
  .sort((a,b)=>TIERS.indexOf(a.tier)-TIERS.indexOf(b.tier)||Number(a.position||0)-Number(b.position||0));
@@ -1069,7 +1085,7 @@ function renderMy(){
  const completed=Math.min(arr.length,5);
  const welcome=st.user?'<div class="inline-notice">✓ Synced to your account. Public ratings appear in the community; private ratings are visible only to you.</div>':'<div class="inline-notice">♧ Guest shelf · Ratings below are stored only on this device. <button class="navlink" data-action="open-auth" style="display:inline;text-decoration:underline">Make an account</button> to keep a separate, synced shelf across devices.</div>';
  return head('GOOD THINGS / YOUR SHELF','Your taste.<br><em>Your rules.</em>','No one else decides what deserves an S — or an F. Start a shelf, give it character and share only what you choose.',arr.length+' GRADES · '+untried.length+' NOT TRIED')
- +welcome
+ +welcome+inviteBanner()
  +'<div class="profile-banner"><div class="person"><div class="avatar '+(st.profile?.accent||'lime')+'" style="width:72px;height:72px;font-size:30px">'+esc(yourInitials().substring(0,1).toUpperCase())+'</div><div><div class="eyebrow">YOUR CORNER OF GOOD THINGS</div><h3>'+esc(yourInitials())+'</h3><p class="small muted" style="margin:3px 0">'+(st.profile?'@'+esc(st.profile.handle):'Create your own taste universe')+'</p></div></div><button class="button button-small button-white" data-action="'+(st.user?'edit-profile':'open-auth')+'">'+(st.user?'Edit profile ↗':'Join ↗')+'</button></div>'
  +'<div class="callout"><div class="spaced"><div><div class="eyebrow">FIRST FIVE CHALLENGE</div><h3>'+((completed===5)?'Five out of five! ✳':'Five little discoveries.')+'</h3><p>'+((completed===5)?'You did it. Your shelf is officially growing.':'Rate '+(5-completed)+' more product'+(5-completed===1?'':'s')+' to finish your first challenge.')+'</p></div><strong style="font:600 40px Fraunces,serif">'+completed+'/5</strong></div><div class="challenge-bar">'+[0,1,2,3,4].map(i=>'<span class="'+(i<completed?'filled':'')+'"></span>').join('')+'</div></div>'
  +'<div class="spaced" style="margin:20px 0 12px"><h3 style="font:600 30px Fraunces,serif;margin:0">What you have tasted ('+arr.length+')</h3><div class="gap12"><button class="button button-small button-ghost" data-action="import-json">Import ↑</button><button class="button button-small button-ghost" data-action="export-json">Export JSON ↓</button><button class="button button-small button-lime" data-action="share-shelf">Share ↗</button></div></div>'
@@ -1168,6 +1184,8 @@ function render(){
  else if(st.view==='list')content.innerHTML=renderListView();
  else content.innerHTML=renderDiscover();
  $$('[data-nav]').forEach(n=>n.classList.toggle('active',n.dataset.nav===st.view));
+ if(st.view==='solo')window.GT_EXTRAS.afterRender(soloCurrent());
+ if(st.view==='duo')window.GT_EXTRAS.afterRender(st.duo.mode==='remote'?getProduct(st.duo.room?.current_product_id):duoLocalSnapshot().product);
  const num=gradedRatings().length;
  $('#myCount').textContent=String(selfRatings().length);
  $('#communityCount').textContent=String(st.profiles.length);
@@ -1256,12 +1274,12 @@ function drawerHtml(){
  +'<div class="eyebrow">THE TASTING TABLE / '+esc(p.category)+'</div><h2>'+esc(p.name)+'</h2><p class="muted">'+esc(p.brand)+' · '+esc(p.store)+'</p>'
  +'<div class="drawer-art tone-'+esc(p.tone)+'">'+(matchedPhoto(p)?'<img data-pack-id="'+attr(p.id)+'" src="'+attr(validUrl(p.image_url))+'" alt="Product packaging from '+attr(p.photo_attribution||'the manufacturer')+'" referrerpolicy="no-referrer" onerror="window.GT_EXTRAS.onPackError(this)"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':st.imageCache[p.id]?.url?'<img src="'+attr(validUrl(st.imageCache[p.id].url))+'" alt="Unverified community photograph" referrerpolicy="no-referrer" onerror="window.GT_EXTRAS.onPackError(this)"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':esc(p.emoji))+'</div>'
  +'<div class="inline-notice">'+(matchedPhoto(p)?'✓ Packshot linked to a specific '+(p.image_status==='brand'?'manufacturer':p.image_status==='barcode'?'barcode-matched community':'retailer')+' product record. Packaging and ingredients can change; please check the actual packet.': 'ⓘ No confirmed front-pack photo yet. Variant and vegan status need checking before purchase.')+'</div>'
+ +window.GT_EXTRAS.facts(p)
  +(!st.user?'<div class="field"><label>Who is rating? <span class="hint">(local demo only)</span></label><div class="segment">'+['you','mikel','huong'].map(w=>'<button data-action="set-persona" data-value="'+w+'" class="'+(st.persona===w?'active':'')+'">'+w.charAt(0).toUpperCase()+w.slice(1)+'</button>').join('')+'</div></div>':'<div class="small muted">Rating as '+esc(name)+'</div>')
  +(isNotTried(r)?'<div class="not-tried-pill">◌ Already answered: Not tried yet · no grade</div>':'')+'<div class="field"><label>What does '+esc(name)+' think?</label><div class="tier-picker" id="tierPicker">'+TIERS.map(t=>'<button class="tier '+(st.draftTier===t?'active':'')+'" data-tier="'+t+'" style="--tiercolor:'+({S:'#dcec8d',A:'#c6e6b4',B:'#c9e9f8',C:'#ffdfb0',D:'#f4bcbc',F:'#e99898'}[t])+'" data-action="select-tier" data-value="'+t+'">'+t+'</button>').join('')+'</div><span class="hint">S = obsessed · A = great · B = good · C = okay · D = disappointing · F = Durchgefallen</span></div>'
  +'<div class="field"><label for="ratingNote">Your 200-character tasting note</label><textarea class="control" id="ratingNote" rows="3" maxlength="200" placeholder="Creamy, smoky, truly magical…">'+esc(st.draftNote)+'</textarea></div>'
  +(st.user?'<label class="toggle" style="margin-bottom:19px"><input type="checkbox" id="ratingPublic" '+(st.draftPublic?'checked':'')+'> Share this rating publicly with the community</label>':'<p class="small muted">Guest ratings stay in this browser; they are not community reviews.</p>')
  +'<button class="not-tried-choice '+(isNotTried(r)?'selected':'')+'" data-action="mark-not-tried" data-id="'+attr(p.id)+'"><span>◌</span><span><strong>Not tried yet</strong><small>Save an answer without a tier grade</small></span><span>↗</span></button><div class="gap12"><button class="button button-lime" data-action="save-rating" data-id="'+attr(p.id)+'">Save my rating ♡</button>'+(r?'<button class="button button-ghost button-small" data-action="delete-rating">Remove rating</button>':'')+'</div>'
- +productFacts(p)
  +'<hr class="rule"><h3>See the real product</h3><p class="small muted">Catalog variants are candidates. Compare store listings and packaging before treating an item as verified.</p><div class="gap12">'
  +'<a class="button button-ghost button-small" href="'+attr(validUrl(p.source_url))+'" target="_blank" rel="noopener noreferrer">Check '+esc(p.store)+' ↗</a>'
  +'<a class="button button-lime button-small" href="./lookup.html?catalog='+encodeURIComponent(p.id)+'">Check exact barcode ↗</a><button class="button button-ghost button-small" data-action="report-photo">Wrong / missing image?</button>'
@@ -1273,13 +1291,14 @@ function openProduct(id,tier,persona){
  const r=st.user?accountRating(id):guestRating(id,st.persona);
  st.draftTier=tier||r?.tier||'';st.draftNote=r?.note||'';st.draftPublic=r?.is_public===true;
  $('#drawer').innerHTML=drawerHtml();openOverlay('drawerOverlay');
+ window.GT_EXTRAS.afterRender(getProduct(id));
  loadNutrition(getProduct(id));loadPrice(getProduct(id));
 }
 function changePersona(who){
  if(!['you','mikel','huong'].includes(who))return;
  st.persona=who;const r=guestRating(st.selected,who);
  st.draftTier=r?.tier||'';st.draftNote=r?.note||'';st.draftPublic=r?.is_public===true;
- $('#drawer').innerHTML=drawerHtml();
+ $('#drawer').innerHTML=drawerHtml();window.GT_EXTRAS.afterRender(getProduct(st.selected));
 }
 async function saveRating(){
  if(!st.selected||!st.draftTier)return toast('Choose a tier, then save your taste.');
@@ -1616,6 +1635,7 @@ document.addEventListener('click',async(event)=>{
  case 'open-photo-info':photoInformation();break;
  case 'suggest-product':openProductSuggestion();break;
  case 'share-board':shareBoard();break;
+ case 'invite-friends':await inviteFriends();break;
  case 'view-exclusions':viewExclusions();break;
  case 'board-unrank':await boardMove(id,'unranked',0);break;
  case 'lookup-image':await photoLookup();break;
