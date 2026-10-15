@@ -135,27 +135,125 @@ function ensure(p){
  }
 }
 function afterRender(p){if(p)ensure(p)}
-function wait(ms){return new Promise(r=>setTimeout(r,ms))}
+
+const MOTION_KEY='goodthings_shuffle_motion_v22';
+const MOTION_MODES=['arcade','quick','off'];
+function motionSetting(){
+ let stored;
+ try{stored=localStorage.getItem(MOTION_KEY)}catch(_){}
+ return MOTION_MODES.includes(stored)?stored:'arcade';
+}
+function reduceMotion(){return Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches)}
+function motionControls(){
+ const active=motionSetting(),reduced=reduceMotion();
+ return '<div class="gt-motion-controls" role="group" aria-label="Animation beim Zufallsprodukt wählen">'+
+ '<span class="gt-motion-label">✳ Reveal</span>'+
+ [['arcade','✨ Arcade'],['quick','⚡ Kurz'],['off','◌ Aus']].map(([mode,label])=>
+ '<button type="button" data-action="shuffle-motion" data-value="'+mode+'" aria-pressed="'+(active===mode)+'" class="gt-motion-option'+(active===mode?' is-selected':'')+'">'+label+'</button>').join('')+
+ (reduced?'<span class="gt-motion-os-note" title="Die Betriebssystem-Einstellung für weniger Bewegung hat Vorrang">System: reduziert</span>':'')+
+ '</div>';
+}
+function setMotion(mode){
+ if(!MOTION_MODES.includes(mode))return false;
+ try{localStorage.setItem(MOTION_KEY,mode)}catch(_){}
+ return true;
+}
+const drawEmojis=['🍫','🥛','🥑','🍱','🫘','🍜','🍪','🌱','🍓','🥜','🫛','🍿','🍋','🍕'];
+const drawLines=['Das Universum mischt die Snacks …','Eine ernsthafte Prüfung für deine Geschmacksknospen.','Was kommt jetzt – S-Tier oder kulinarischer Frevel?','Die Bohnen haben sich beraten …'];
+function wait(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
 async function spin(task){
- if(spinner)return;spinner=true;
- const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+ if(spinner)return;
+ spinner=true;
+ const motion=motionSetting();
+ if(motion==='off'||reduceMotion()){
+  try{return await task()}finally{spinner=false}
+ }
+ const fast=motion==='quick';
  const overlay=document.createElement('div');
- overlay.className='gt-spin-overlay'+(reduced?' gt-spin-reduced':'');
- overlay.innerHTML='<div class="gt-spin-card" role="status" aria-live="polite"><div class="eyebrow">GOOD THINGS ✳ SURPRISE EDITION</div><div class="gt-spin-slot" aria-hidden="true"><span id="gt-spin-emoji">🥑</span></div><div class="gt-spin-dots">✳ ✺ ♡</div><h2 id="gt-spin-line">Was verbirgt sich im veganen Universum?</h2><p>Kein Geld, kein Gewinn. Nur eventuell sehr kontroverser Tofu.</p></div>';
+ overlay.className='gt-spin-overlay gt-spin-v22'+(fast?' gt-spin-quick':'');
+ overlay.setAttribute('role','dialog');
+ overlay.setAttribute('aria-modal','true');
+ overlay.setAttribute('aria-label','Überraschungsprodukt wird gezogen');
+ const reel=(i)=>'<div class="gt-reel" data-gt-reel="'+i+'"><span>'+drawEmojis[(i*4)%drawEmojis.length]+'</span></div>';
+ overlay.innerHTML='<div class="gt-draw-card">'+
+ '<div class="gt-draw-corner">GOOD THINGS <span>✳</span> MYSTERY DRAW</div>'+
+ '<div class="gt-draw-orbit gt-draw-orbit-a" aria-hidden="true">✺</div><div class="gt-draw-orbit gt-draw-orbit-b" aria-hidden="true">✴</div>'+
+ '<div class="gt-draw-headline"><span class="gt-draw-badge">100% SURPRISE · 0% WAGER</span><h2 id="gt-draw-title">And the snack is...</h2></div>'+
+ '<div class="gt-draw-reel-frame"><div class="gt-draw-frame-top">✦ THE GREAT VEGAN MYSTERY ✦</div><div class="gt-draw-reels" aria-hidden="true">'+[0,1,2].map(reel).join('')+'</div>'+
+ '<div class="gt-draw-reveal" hidden><div class="gt-draw-reveal-halo"></div><div class="gt-draw-product-image">✳</div><div class="gt-draw-found-label">TODAY’S LITTLE DISCOVERY</div><strong id="gt-draw-product-name">Surprise!</strong><small id="gt-draw-product-brand"></small></div>'+
+ '<div class="gt-draw-frame-bottom">NO SPOILERS. JUST TASTE.</div></div>'+
+ '<div class="gt-draw-ticker" id="gt-draw-line" role="status" aria-live="polite">Das Universum mischt die Snacks …</div>'+
+ '<button type="button" class="gt-draw-skip" aria-label="Animation überspringen">Überspringen ↗</button>'+
+ '<div class="gt-draw-confetti" aria-hidden="true">'+Array.from({length:16},(_,i)=>'<i style="--i:'+i+'"></i>').join('')+'</div>'+
+ '</div>';
  document.body.appendChild(overlay);
- const items=['🍫','🥛','🥑','🍱','🫘','🍜','🍪','🌱','🍓','🥜'];
- const lines=['Die Snack-Götter entscheiden …','Vielleicht ein S-Tier. Vielleicht ein Verbrechen gegen Hummus.','Der Tofu hält die Luft an …'];
- let i=0;
- const timer=reduced?null:setInterval(()=>{const target=overlay.querySelector('#gt-spin-emoji');if(target)target.textContent=items[(i*7+3)%items.length];if(i%4===0){const h=overlay.querySelector('#gt-spin-line');if(h)h.textContent=lines[Math.floor(i/4)%lines.length]}i++},95);
+ const lastFocus=document.activeElement;
+ let ticks=0;
+ const reels=[...overlay.querySelectorAll('[data-gt-reel]')];
+ const timers=reels.map((el,j)=>setInterval(()=>{
+  if(!el.isConnected)return;
+  const symbol=el.querySelector('span');
+  if(symbol)symbol.textContent=drawEmojis[(ticks*(j+3)+j*5+drawEmojis.length)%drawEmojis.length];
+  ticks++;
+ },fast?75:92));
+ const messages=setInterval(()=>{
+  const label=overlay.querySelector('#gt-draw-line');
+  if(label)label.textContent=drawLines[Math.floor(ticks/17)%drawLines.length];
+ },fast?230:410);
+ let skipDelay=()=>{};
+ const skipped=new Promise(resolve=>{skipDelay=resolve});
+ const skipButton=overlay.querySelector('.gt-draw-skip');
+ skipButton.addEventListener('click',()=>{skipDelay();skipButton.disabled=true;skipButton.textContent='Produkt wird geladen …'});
+ const escape=e=>{if(e.key==='Escape'){e.stopPropagation();skipButton.click()}};
+ document.addEventListener('keydown',escape,true);
+ const stopReels=()=>timers.forEach(clearInterval);
+ const before=document.querySelector('#contentView .duo-product h3')?.textContent||'';
  try{
-  await wait(reduced?110:1320);
-  if(timer)clearInterval(timer);
-  const label=overlay.querySelector('#gt-spin-line');if(label)label.textContent='Tadaa! ✳';
-  await task();
-  overlay.classList.add('gt-spin-finish');
-  document.querySelector('.duo-product')?.classList.add('gt-product-entrance');
-  await wait(reduced?80:350);
- }finally{if(timer)clearInterval(timer);overlay.remove();spinner=false}
+  // Work happens while the reels run; the animation never delays the network request.
+  const job=Promise.resolve().then(task);
+  await Promise.race([wait(fast?510:1750),skipped]);
+  stopReels();
+  const line=overlay.querySelector('#gt-draw-line');
+  if(line)line.textContent='Wir prüfen noch das Produktfoto …';
+  await job;
+  const product=document.querySelector('#contentView .duo-product');
+  const name=product?.querySelector('h3')?.textContent||'';
+  if(!name||name===before){
+   overlay.classList.add('gt-draw-dismiss');
+   await wait(fast?70:180);
+   return;
+  }
+  const brand=product.querySelector('p')?.textContent||'';
+  const source=product.querySelector('.duo-hero-photo img');
+  const visual=overlay.querySelector('.gt-draw-product-image');
+  if(source?.complete&&source.naturalWidth>0&&source.naturalHeight>0){
+   const img=document.createElement('img');
+   img.src=source.currentSrc||source.src;
+   img.alt='';
+   img.referrerPolicy='no-referrer';
+   img.onerror=()=>{img.remove();visual.textContent='✳'};
+   visual.textContent='';visual.appendChild(img);
+  }else visual.textContent='✳';
+  overlay.querySelector('#gt-draw-product-name').textContent=name;
+  overlay.querySelector('#gt-draw-product-brand').textContent=brand;
+  overlay.querySelector('#gt-draw-title').textContent='TA-DAAA! ✳';
+  const revealer=overlay.querySelector('.gt-draw-reveal');
+  revealer.hidden=false;
+  overlay.classList.add('gt-draw-winner');
+  if(line)line.textContent='Jetzt bist du dran. S, A, B, C, D oder F?';
+  if(!skipButton.disabled){
+   await Promise.race([wait(fast?240:780),skipped]);
+  }
+  overlay.classList.add('gt-draw-dismiss');
+  await wait(fast?70:180);
+ }finally{
+  stopReels();clearInterval(messages);
+  document.removeEventListener('keydown',escape,true);
+  overlay.remove();spinner=false;
+  const product=document.querySelector('#contentView .duo-product');
+  if(product&&!reduceMotion())product.classList.add('gt-product-entrance');
+  if(lastFocus?.isConnected&&typeof lastFocus.focus==='function')lastFocus.focus({preventScroll:true});
+ }
 }
 const fallback=img=>{
  if(!img)return;
@@ -209,5 +307,5 @@ async function onPackError(img){
   if(!repaired)p.photo_blocked=true;
  }else p.photo_blocked=true;
 }
-window.GT_EXTRAS={facts,afterRender,spin,onPackError,repairImage,scoreBadge};
+window.GT_EXTRAS={facts,afterRender,spin,motionControls,setMotion,motionSetting,onPackError,repairImage,scoreBadge};
 })();
