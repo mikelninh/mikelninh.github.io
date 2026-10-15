@@ -19,6 +19,15 @@
   <script defer src="./content.js"></script>
   <script defer src="./app.js"></script>
   <script defer src="./audio-v11.js"></script>
+<style id="breath-issue-style">
+.breath-issue{display:grid;grid-template-columns:1.6fr .55fr;gap:25px;align-items:center;margin:32px auto 60px;padding:clamp(24px,5vw,52px);background:linear-gradient(118deg,#e3eee3,#f8f5e9);border:1px solid #b3cbb5;color:#254335}
+.breath-issue .over{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#477153}
+.breath-issue h2{font-family:Fraunces,Georgia,serif;font-size:clamp(30px,4.5vw,55px);font-weight:400;line-height:1.13;letter-spacing:-.035em;max-width:740px;margin:18px 0}
+.breath-issue p{max-width:650px;line-height:1.75;color:#526956;margin-bottom:22px}
+.breath-issue a{font-weight:800;font-size:13px;text-decoration:underline;text-underline-offset:5px}
+.breath-issue .symbol{text-align:center;font-family:Georgia,serif;font-size:clamp(100px,19vw,210px);color:rgba(57,109,72,.3);line-height:1}
+@media(max-width:620px){.breath-issue{grid-template-columns:1fr}.breath-issue .symbol{display:none}}
+</style>
 </head>
 <body>
 <a href="#main" class="skip">Skip to content</a>
@@ -38,6 +47,8 @@
     </div>
   </section>
   <section class="ticker"><div class="paper-width ticker-inner"><b data-i18n="tickerLeft">Inside the first issue</b><span>01 / AN ANIMAL · 02 / A WORD · 03 / A PANTRY · 04 / THE MACHINE · 05 / TEA · 06 / PLAY</span></div></section>
+  <section class="paper-width breath-issue" aria-labelledby="breath-issue-heading">
+<div><div class="over">NEW · THE ART OF BREATHING · THREE STORIES</div><h2 id="breath-issue-heading">We've been breathing all our lives. <em>What happens when we listen?</em></h2><p>A contemplative essay, a practical guide to composure, and a small experiment for curious younger minds. Our newest collection is meant to be read slowly — and shared generously.</p><a href="./breath/">Explore the breathing issue ↗</a></div><div class="symbol" aria-hidden="true">◯</div></section>
   <section class="paper-width editorial" id="stories"><div class="section-head"><div><span class="section-kicker">THE GOOD STUFF / VOL 001</span><h2 data-i18n="issueHeading">A small issue of big questions.</h2></div><p data-i18n="issueDescription">Four considered reads, one quiet ritual and a small game. Enough for today.</p></div><div id="story-grid" class="stories"></div></section>
   <section class="slow-section" id="slow-feed"><div class="paper-width"><div class="section-head"><div><span class="section-kicker">NO ALGORITHM OF OUTRAGE</span><h2 data-i18n="slowHeading">A feed with an ending.</h2></div><p data-i18n="slowDescription">Choose what you want more of. We'll show a finite, thoughtfully ordered edition. No infinite scroll, no streaks, no pressure.</p></div><p class="topic-intro" data-i18n="topicsPrompt">Pick your favourite worlds (one or more):</p><div class="topic-grid" id="topic-options" role="group" aria-label="Choose topics"></div><div class="myedition-bar"><div><span class="section-kicker" data-i18n="personalEdition">YOUR EDITION</span><h3 id="edition-summary" aria-live="polite">Your personal reading room</h3></div><div class="edition-actions"><button class="button button-outline" id="reset-topics" data-i18n="resetTopics">Reset</button><button class="button button-dark" id="share-topics"><span data-i18n="shareEdition">Share my edition</span> ↗</button></div></div><div class="feed-list" id="feed-list"></div><div class="the-end"><div class="the-end-symbol">❋</div><h3 data-i18n="endHeading">You've reached the end. Beautiful, isn't it?</h3><p data-i18n="endDescription">Close this tab. Have tea. Call someone. Come back when there is something genuinely worth sharing.</p></div></div></section>
   <section class="paper-width dilemma" id="play"><div class="dilemma-intro"><span class="section-kicker">A PLAYABLE EDITORIAL / 001</span><h2 data-i18n="gameHeading">One reef. Three futures.</h2><p data-i18n="gameDescription">You're responsible for a reef threatened by an invasive predator. There is no perfect answer, no score and no secret winning route. Which path would you explore first?</p></div><div class="dilemma-grid"><div class="dilemma-choices" id="game-choices"></div><div class="outcome" id="game-outcome" aria-live="polite"><span class="outcome-kicker">OBSERVE · QUESTION · RECONSIDER</span><p data-i18n="gameIdle">Choose a response. We'll show what it may protect, what it may harm, and what we still don't know.</p></div></div><p class="small-print"><span data-i18n="gameWarning">A philosophical thought experiment, not a predictive ecosystem simulation or instructions to harm animals.</span> <a href="https://www.nature.com/articles/s41598-026-54653-3" rel="noopener noreferrer" target="_blank">Scientific Reports (2026) ↗</a></p></section>
