@@ -710,7 +710,7 @@ body:has(.shuffle-mode-nav) .hero p{font-size:14px;margin:0}
 .gt-spin-booster .gt-booster-edition{position:absolute;bottom:27px;font:800 8px system-ui;letter-spacing:.03em}
 .gt-spin-booster .gt-booster-seal{position:absolute;bottom:0;left:0;right:0;border-top:1px dashed #fef1d1b8;background:#2f245ad0;font:800 8px system-ui;letter-spacing:.06em;padding:6px}
 .gt-spin-booster .gt-booster-shine{pointer-events:none;position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,#fff9dbaa 47%,transparent 55%);transform:translateX(-130%);animation:gtFoilSweep 1.15s ease-in-out infinite}
-.gt-spin-booster.gt-draw-winner .gt-booster-pack{animation:gtBoosterTear .55s cubic-bezier(.24,.67,.22,1) forwards}
+.gt-spin-booster.gt-draw-tear .gt-booster-pack{animation:gtBoosterTear .47s cubic-bezier(.24,.67,.22,1) forwards}
 .gt-spin-booster.gt-draw-winner .gt-booster-shine{animation:none}
 .gt-spin-booster .gt-draw-reveal{height:250px}
 .gt-spin-booster .gt-draw-product-image{height:124px;width:106px;background:#fffcf4;box-shadow:0 9px 23px #4e325443;border:2px solid #ecdbb6;transform:rotate(-3deg)}
