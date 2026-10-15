@@ -207,18 +207,19 @@ async function spin(task){
  const escape=e=>{if(e.key==='Escape'){e.stopPropagation();skipButton.click()}};
  document.addEventListener('keydown',escape,true);
  const stopReels=()=>timers.forEach(clearInterval);
- const before=document.querySelector('#contentView .duo-product h3')?.textContent||'';
+ const before=document.querySelector('#contentView .duo-product')?.dataset.gtProductId||'';
  try{
   // Work happens while the reels run; the animation never delays the network request.
-  const job=Promise.resolve().then(task);
+  const job=Promise.resolve().then(task).then(value=>({value}),error=>({error}));
   await Promise.race([wait(fast?510:1750),skipped]);
   stopReels();
   const line=overlay.querySelector('#gt-draw-line');
   if(line)line.textContent='Wir prüfen noch das Produktfoto …';
-  await job;
+  const done=await job;
+  if(done.error)throw done.error;
   const product=document.querySelector('#contentView .duo-product');
   const name=product?.querySelector('h3')?.textContent||'';
-  if(!name||name===before){
+  if(!name||product.dataset.gtProductId===before){
    overlay.classList.add('gt-draw-dismiss');
    await wait(fast?70:180);
    return;
