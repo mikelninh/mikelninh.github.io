@@ -1,6 +1,14 @@
 const test=require('node:test');
 const assert=require('node:assert/strict');
-const {StudySession}=require('./study.js');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const path=require('node:path');
+// Root package.json declares type:module. Execute the browser-friendly UMD file
+// in a Node VM with a CommonJS module shim to inspect its pure session class.
+const moduleShim={exports:{}};
+vm.runInNewContext(fs.readFileSync(path.join(__dirname,'study.js'),'utf8'),{module:moduleShim,globalThis:{}},{filename:'study.js'});
+const {StudySession}=moduleShim.exports;
+assert.equal(typeof StudySession,'function');
 
 test('a real inspection is required before a session may report first value',()=>{
  let time=1000;
