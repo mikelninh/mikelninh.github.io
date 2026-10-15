@@ -55,7 +55,7 @@ try {
         const before=await page.locator('.prose').evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
         await page.locator('[data-type-change="1"]').click();
         const after=await page.locator('.prose').evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
-        assert.ok(after>before,'Adjustable text sizing');
+        assert.ok(after>before,'Adjustable text sizing '+path+' before='+before+' after='+after+' inline='+await page.locator('.prose').getAttribute('style')+' script='+await page.evaluate(()=>Array.from(document.scripts).map(s=>s.src).join(',')));
         const headings=await page.locator('.prose h2[id]').count();
         assert.ok(headings>=3,'Meaningful anchor headings');
         await page.evaluate(()=>scrollTo(0,document.body.scrollHeight));
