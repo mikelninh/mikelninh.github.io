@@ -536,7 +536,7 @@ function renderDuo(){
  const pic=duoPhotoMarkup(p);
  const historyWithCurrent=remote?counter:[...counter,...(done?[{productId:p.id,votes:{...snap.votes},discussion:st.duo.local.discussion||''}]:[])];
  return intro+controls+'<div class="duo-progress"><span>ROUND '+round+'</span><span>'+duoResultsSummary(counter)+'</span></div>'+
- '<div class="duo-stage"><div class="duo-product">'+pic+duoImageAuditBadge(p)+'<h3>'+esc(p.name)+'</h3><p>'+esc(p.brand)+' · '+esc(p.quantity||p.category)+'</p>'+
+ '<div class="duo-stage"><div class="duo-product" data-gt-product-id="'+attr(p.id)+'">'+pic+duoImageAuditBadge(p)+'<h3>'+esc(p.name)+'</h3><p>'+esc(p.brand)+' · '+esc(p.quantity||p.category)+'</p>'+
  (proteinNumber(p)!=null?'<span class="duo-protein">💪 '+proteinNumber(p)+' g Protein je 100 g/ml</span>':'')+
  window.GT_EXTRAS.facts(p)+'</div><div class="duo-decision">'+status+(remote?'':duoStartPicker(st.duo.local))+reveal+
  (remote?'<p class="small muted" style="text-align:center;margin:20px 0 0">Synchronisiert zwischen zwei getrennten Accounts. Ein unabhängiges Urteil pro Runde.</p>':
@@ -616,7 +616,7 @@ function soloRender(){
  const rated=choice?'<div class="solo-result"><div class="eyebrow">DEIN URTEIL</div><div class="solo-result-choice '+(choice==='F'?'fail':'')+'">'+esc(choice==='not_tried'?'◌':choice)+'</div><p>'+esc(duoChoiceLabel(choice))+'</p><div class="field"><label for="soloNote">Deine Geschmacksnotiz (optional)</label><textarea class="control" maxlength="200" rows="3" id="soloNote" placeholder="Was überzeugt dich? Würdest du es nochmal kaufen?">'+esc((st.user?accountRating(p.id):st.guest.you[p.id])?.note||'')+'</textarea></div><button class="button button-small button-white" data-action="solo-save-note">Notiz speichern ♡</button><button class="button button-lime" data-action="solo-next">🎰 Nächstes Überraschungsprodukt ✳</button></div>':
  '<div class="duo-choice"><h3>Wo gehört es hin?</h3><p>Du hast das letzte Wort.</p>'+duoVoteGrid().replaceAll('data-action="duo-vote"','data-action="solo-vote"')+'</div>';
  return header+intro+'<div class="duo-progress"><span>SOLO · '+(soloCount()+1)+' / SHUFFLE</span><span>'+soloCount()+' abgeschlossen</span></div>'+
- '<div class="duo-stage"><div class="duo-product">'+soloPhoto(p)+duoImageAuditBadge(p)+'<h3>'+esc(p.name)+'</h3><p>'+esc(p.brand)+' · '+esc(p.quantity||p.category)+'</p>'+
+ '<div class="duo-stage"><div class="duo-product" data-gt-product-id="'+attr(p.id)+'">'+soloPhoto(p)+duoImageAuditBadge(p)+'<h3>'+esc(p.name)+'</h3><p>'+esc(p.brand)+' · '+esc(p.quantity||p.category)+'</p>'+
  (proteinNumber(p)!=null?'<span class="duo-protein">💪 '+proteinNumber(p)+' g Protein / 100 g/ml</span>':'')+
  window.GT_EXTRAS.facts(p)+'</div><div class="duo-decision">'+rated+
  (!choice?'<button class="button button-ghost button-small" data-action="solo-next" style="margin-top:18px">Nicht das richtige Produkt? Weiter ↗</button>':'')+
