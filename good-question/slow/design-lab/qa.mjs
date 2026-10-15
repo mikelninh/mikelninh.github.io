@@ -1,5 +1,5 @@
 import { chromium } from 'playwright';
-import { AxeBuilder } from '@axe-core/playwright';
+import AxeBuilder from '@axe-core/playwright';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const origin = 'http://127.0.0.1:8099/good-question/slow/design-lab/';
