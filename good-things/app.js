@@ -65,7 +65,7 @@ function empty(emoji,heading,body,button){
  return '<div class="empty"><div class="big">'+esc(emoji)+'</div><strong>'+esc(heading)+'</strong><p>'+esc(body)+'</p>'+(button||'')+'</div>';
 }
 function setView(view,extra){
- if(!['board','discover','ours','my','community','duo','solo','shared','profile','list'].includes(view))view='board';
+ if(!['board','discover','ours','my','community','awards','duo','solo','shared','profile','list'].includes(view))view='board';
  st.view=view;
  if(view!=='shared'&&view!=='profile'&&view!=='list'){
   const u=new URL(URL_BASE);u.searchParams.set('view',view);
@@ -1174,6 +1174,12 @@ function renderListView(){
  +'<p class="small muted">Curated by '+esc(u?.display_name||'a good human')+' · '+(l.is_public?'Public':'Your private preview')+'</p>'
  +'<div class="product-grid">'+arr.map(productCard).join('')+'</div><p><button class="button button-lime" data-nav="my">Make your own list ↗</button></p>';
 }
+function renderAwards(){
+ const scope=st.user?'account_'+st.user.id:'guest_'+st.persona;
+ const owner=st.user?(st.profile?.display_name||'Your'):st.persona==='you'?'Your':st.persona==='mikel'?'Mikel':'Huong';
+ const personas=st.awardsShared||st.user?'':'<div class="gt-awards-personas"><span>Local shelf:</span>'+['you','mikel','huong'].map(w=>'<button data-action="awards-persona" data-value="'+w+'" class="'+(st.persona===w?'active':'')+'">'+(w==='you'?'You':w==='mikel'?'Mikel':'Huong')+'</button>').join('')+'</div>';
+ return personas+window.GT_AWARDS.render({scope,name:owner,products:RANKABLE,ratings:boardAnswers(),publicReviews:publicRated().length,publicProfiles:st.profiles.length,shared:st.awardsShared||null});
+}
 function render(){
  const content=$('#contentView');
  if(st.view==='solo')content.innerHTML=soloRender();
@@ -1182,6 +1188,7 @@ function render(){
  else if(st.view==='ours')content.innerHTML=renderOurs();
  else if(st.view==='my')content.innerHTML=renderMy();
  else if(st.view==='community')content.innerHTML=renderCommunity();
+ else if(st.view==='awards')content.innerHTML=renderAwards();
  else if(st.view==='shared')content.innerHTML=renderShared();
  else if(st.view==='profile')content.innerHTML=renderProfileView();
  else if(st.view==='list')content.innerHTML=renderListView();
@@ -1567,6 +1574,10 @@ async function openPublicUser(id){
 }
 async function openShareLink(){
  const url=new URL(location.href);
+ if(url.searchParams.has('awards')){
+  st.awardsShared=window.GT_AWARDS.decode(url.searchParams.get('awards'),RANKABLE);
+  st.view='awards';return;
+ }
  if(url.searchParams.has('snapshot')){
   st.shareData=decodeSnapshot(url.searchParams.get('snapshot'));st.view='shared';return;
  }
@@ -1585,11 +1596,11 @@ async function openShareLink(){
  }
  const view=url.searchParams.get('view');
  if(view==='duo'){st.view='duo';if(url.searchParams.get('room')){st.duo.mode='remote';st.duo.requestedRoom=url.searchParams.get('room')}return}
- st.view=['board','discover','ours','my','community','solo'].includes(view)?view:'board';
+ st.view=['board','discover','ours','my','community','awards','solo'].includes(view)?view:'board';
 }
 document.addEventListener('click',async(event)=>{
  const nav=event.target.closest('[data-nav]');
- if(nav){event.preventDefault();closeAll();setView(nav.dataset.nav);return}
+ if(nav){event.preventDefault();closeAll();if(nav.dataset.nav==='awards')st.awardsShared=null;setView(nav.dataset.nav);return}
  const btn=event.target.closest('[data-action]');
  if(!btn)return;
  event.preventDefault();
@@ -1640,6 +1651,24 @@ document.addEventListener('click',async(event)=>{
  case 'suggest-product':openProductSuggestion();break;
  case 'share-board':shareBoard();break;
  case 'invite-friends':await inviteFriends();break;
+ case 'awards-persona':if(!st.user&&['you','mikel','huong'].includes(val)){st.persona=val;st.awardsShared=null;render()}break;
+ case 'awards-pick':{
+  if(!boardEntries().length){toast('Rate something you have actually tasted before choosing a winner.');setView('board');break}
+  modal(window.GT_AWARDS.picker(id,RANKABLE,boardEntries(),st.user?'account_'+st.user.id:'guest_'+st.persona));break;
+ }
+ case 'awards-select':
+ case 'awards-clear':{
+  const scope=st.user?'account_'+st.user.id:'guest_'+st.persona,choice=a==='awards-clear'?'':val;
+  if(!window.GT_AWARDS.save(scope,id,choice,boardEntries().map(r=>r.product_id))){toast('This pick could not be saved in the browser.');break}
+  closeOverlay('modalOverlay');render();toast(choice?'Winner selected. A well-deserved applause! ✳':'Award cleared.');break;
+ }
+ case 'awards-share':{
+  const scope=st.user?'account_'+st.user.id:'guest_'+st.persona;
+  const link=window.GT_AWARDS.shareLink(scope,RANKABLE,boardEntries(),URL_BASE);
+  if(!link){toast('Choose a winner first.');break}
+  await copyLink(link);break;
+ }
+ case 'awards-own':st.awardsShared=null;setView('awards');break;
  case 'view-exclusions':viewExclusions();break;
  case 'board-unrank':await boardMove(id,'unranked',0);break;
  case 'lookup-image':await photoLookup();break;
