@@ -1522,8 +1522,17 @@ window.GT_CATALOG=[
     "emoji": "🌿",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.lidl.de/"
+    "image_url": "https://images.openfoodfacts.org/images/products/405/648/998/9363/front_de.26.400.jpg",
+    "source_url": "https://world.openfoodfacts.org/product/4056489989363",
+    "barcode": "4056489989363",
+    "quantity": "1 l",
+    "image_status": "barcode",
+    "image_source_url": "https://world.openfoodfacts.org/product/4056489989363",
+    "source_type": "openfoodfacts",
+    "photo_attribution": "Open Food Facts · CC BY-SA",
+    "photo_match_method": "gtin_linked_vemondo_barista_1l",
+    "photo_reviewed_at": "2026-10-15",
+    "vegan_status": "source_checked"
   },
   {
     "id": "vemondo-05",
