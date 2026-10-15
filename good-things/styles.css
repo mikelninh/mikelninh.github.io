@@ -685,3 +685,44 @@ body:has(.shuffle-mode-nav) .hero p{font-size:14px;margin:0}
 @media(prefers-reduced-motion:reduce){
  .gt-spin-v22,.gt-draw-card:before,.gt-draw-orbit,.gt-reel span,.gt-draw-confetti i,.gt-draw-winner .gt-draw-reveal,.gt-draw-reveal-halo,.gt-draw-dismiss{animation:none!important;transition:none!important}
 }
+
+
+/* GOOD THINGS 2.3 — Two distinct, original reveal experiences: foil booster & party reels. */
+.gt-spin-booster{background:radial-gradient(circle at 50% 44%,rgba(84,51,91,.68),rgba(17,20,31,.96) 70%)}
+.gt-spin-booster .gt-draw-card{background:linear-gradient(146deg,#34334f 0%,#171e33 55%,#302a48 100%);border-color:#eddaa1;box-shadow:0 30px 120px #0009,0 0 75px #7d6ead33,inset 0 0 0 5px #fff7dd0b}
+.gt-spin-booster .gt-draw-card:after{background:linear-gradient(90deg,#b1e6ff,#edbde8,#fff3b2,#b1e6ff)}
+.gt-spin-booster .gt-draw-badge{background:#e9ddff;color:#544b76}
+.gt-spin-booster .gt-draw-corner{color:#d5c6eb}
+.gt-spin-booster .gt-draw-headline h2{color:#ffeeca}
+.gt-spin-booster .gt-draw-frame-top{color:#77669b}
+.gt-spin-booster .gt-draw-frame-bottom{color:#74648a}
+.gt-spin-booster .gt-draw-reel-frame{background:linear-gradient(145deg,#faf3ef,#e5daf7);border-color:#e4c78b;box-shadow:0 13px 0 #81639d99,0 30px 38px #05041577,inset 0 0 0 3px #fff5df}
+.gt-spin-booster .gt-draw-ticker{color:#efcddd}
+.gt-spin-booster .gt-draw-orbit{color:#efd1a5}
+.gt-spin-booster .gt-draw-winner .gt-draw-headline h2{color:#fae5ad}
+.gt-spin-booster .gt-booster-opening{position:relative;height:250px;display:grid;place-items:center;perspective:900px;overflow:hidden}
+.gt-spin-booster .gt-booster-pack{width:162px;height:218px;position:relative;display:flex;align-items:center;flex-direction:column;overflow:hidden;border:2px solid #f4dda5;border-radius:12px;background:linear-gradient(118deg,#644e8d,#ba77ad 22%,#f0ca9b 31%,#7c699f 44%,#a78ecc 60%,#f1d5ac 72%,#654c8c 95%);color:#fff8d3;box-shadow:0 0 0 5px #b59bcc23,inset 0 0 0 4px #fff6da2e,8px 13px 25px #33265c66;transform:rotate(-7deg) scale(1);animation:gtBoosterRock 1.5s ease-in-out infinite alternate}
+.gt-spin-booster .gt-booster-pack:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(105deg,transparent 0px,#fff7dc19 4px,transparent 8px);mix-blend-mode:screen}
+.gt-spin-booster .gt-booster-foil{position:absolute;top:6px;font-size:11px;letter-spacing:10px}
+.gt-spin-booster .gt-booster-mark{position:relative;margin-top:45px;font:800 25px/.92 'DM Sans',system-ui,sans-serif;letter-spacing:-.07em;color:#fffdf3;text-shadow:0 2px 6px #54385a8c}
+.gt-spin-booster .gt-booster-star{font-size:55px;line-height:1.15;color:#ffeab3;filter:drop-shadow(0 0 11px #ffe4a9);animation:gtFoilStar 2.2s ease-in-out infinite alternate}
+.gt-spin-booster .gt-booster-sub{font:800 7px system-ui;letter-spacing:.1em;z-index:1}
+.gt-spin-booster .gt-booster-edition{position:absolute;bottom:27px;font:800 8px system-ui;letter-spacing:.03em}
+.gt-spin-booster .gt-booster-seal{position:absolute;bottom:0;left:0;right:0;border-top:1px dashed #fef1d1b8;background:#2f245ad0;font:800 8px system-ui;letter-spacing:.06em;padding:6px}
+.gt-spin-booster .gt-booster-shine{pointer-events:none;position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,#fff9dbaa 47%,transparent 55%);transform:translateX(-130%);animation:gtFoilSweep 1.15s ease-in-out infinite}
+.gt-spin-booster.gt-draw-winner .gt-booster-pack{animation:gtBoosterTear .55s cubic-bezier(.24,.67,.22,1) forwards}
+.gt-spin-booster.gt-draw-winner .gt-booster-shine{animation:none}
+.gt-spin-booster .gt-draw-reveal{height:250px}
+.gt-spin-booster .gt-draw-product-image{height:124px;width:106px;background:#fffcf4;box-shadow:0 9px 23px #4e325443;border:2px solid #ecdbb6;transform:rotate(-3deg)}
+.gt-spin-booster .gt-draw-product-image img{padding:3px}
+.gt-spin-booster .gt-draw-found-label{color:#80618a}
+.gt-spin-booster .gt-draw-reveal strong{font-size:22px;color:#38354e}
+.gt-spin-booster .gt-draw-reveal-halo{background:radial-gradient(circle,#d7b3efcf,transparent 70%);height:220px;width:220px;left:calc(50% - 110px)}
+.gt-spin-booster.gt-draw-winner .gt-booster-opening{display:none}
+.gt-spin-booster .gt-motion-option.is-selected{background:#e4d1ee}
+@keyframes gtBoosterRock{from{transform:rotate(-9deg) translateY(5px)}to{transform:rotate(-2deg) translateY(-6px)}}
+@keyframes gtFoilStar{to{transform:scale(1.17) rotate(23deg);filter:drop-shadow(0 0 18px #f4ebad)}}
+@keyframes gtFoilSweep{to{transform:translateX(140%)}}
+@keyframes gtBoosterTear{0%{transform:rotate(-7deg) scale(1)}35%{transform:rotate(8deg) scale(1.13)}100%{transform:rotate(-15deg) translateY(-290px) scale(.68);opacity:0}}
+@media(max-width:650px){.gt-spin-booster .gt-booster-opening,.gt-spin-booster .gt-draw-reveal{height:215px}.gt-spin-booster .gt-booster-pack{transform:scale(.85)}.gt-spin-booster .gt-draw-product-image{width:90px;height:105px}.gt-spin-booster .gt-draw-reveal strong{font-size:17px}}
+@media(prefers-reduced-motion:reduce){.gt-spin-booster .gt-booster-pack,.gt-spin-booster .gt-booster-star,.gt-spin-booster .gt-booster-shine,.gt-spin-booster.gt-draw-winner .gt-booster-pack{animation:none!important}}
