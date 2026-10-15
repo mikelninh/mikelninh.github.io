@@ -34,13 +34,25 @@ function classify(txt){
  if(any(["klinisch","diagnos","regulator","patient","medizin","ivdr","gesundheit"]))return "medtech";
  if(any(["klima","climate","energie","batterie","industriepilo","co2","solar"]))return "climate";
  if(any(["b2b","saas","software","sales","vertrieb","conversion","produktmarkt","kundenaktivier"]))return "saas";
- return choice;
+ return null; // Honest abstention: never show a preset matching story as though the user's words were understood.
 }
 function run(){
  const text=id("founder-question").value.trim();
  if(text.length<18){id("founder-question").setCustomValidity("Bitte mindestens 18 Zeichen zum Anliegen eingeben.");id("founder-question").reportValidity();id("founder-question").focus();return}
  id("founder-question").setCustomValidity("");
- const topic=classify(text),scenario=examples[topic];
+ const topic=classify(text);
+ if(!topic){
+  answer=null;
+  id("report-placeholder").hidden=true;id("report").hidden=false;
+  id("report").innerHTML='<div class="report-header"><span class="report-tag">02 / EHRLICHER MATCHING-STATUS</span><span class="report-status">Bitte konkretisieren</span></div>'+ 
+   '<h3 class="report-heading">Dazu kenne ich noch keine passende Unterstützung.</h3>'+ 
+   '<p class="report-lead">Dein Anliegen lässt sich mit den drei aktuellen, kuratierten Beispielkategorien nicht sicher zuordnen. Statt unpassende Kontakte oder Ressourcen zu empfehlen, bitte ich um eine konkrete Rückfrage.</p>'+ 
+   '<div class="review"><b>Eine gute nächste Frage:</b><p class="need">Geht es vor allem um klinische Pilotpartner, Industriekunden oder B2B-Vertrieb – oder um ein ganz anderes Thema?</p></div>'+ 
+   '<p class="report-footer">Kein Matching durchgeführt · Keine Ressourcen erfunden · Der eingegebene Text bleibt in diesem Browser-Tab.</p>';
+  if(window.innerWidth<850)id("report").scrollIntoView({behavior:"smooth",block:"start"});
+  return;
+ }
+ const scenario=examples[topic];
  answer={topic,input:text,scenario,resources:scenario.resourceIds.map(key=>library[key]),note:""};
  id("report-placeholder").hidden=true;id("report").hidden=false;
  render();
