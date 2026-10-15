@@ -192,18 +192,22 @@ async function repairImage(img,p){
  img.dataset.gtRepairing='yes';fallback(img);
  const replacement=await exactBarcodePhoto(p,img.src);
  if(!replacement)return false;
- p.image_url=replacement;p.image_status='barcode';p.image_source_url='https://world.openfoodfacts.org/product/'+p.barcode;
+ p.image_url=replacement;p.photo_blocked=false;p.image_status='barcode';p.image_source_url='https://world.openfoodfacts.org/product/'+p.barcode;
  p.photo_attribution='Open Food Facts · EAN';
  saveCachedPhoto(p,replacement);
  img.onload=()=>{img.hidden=false;if(img.nextElementSibling?.hidden===false)img.nextElementSibling.hidden=true};
  img.src=replacement;
  return true;
 }
-function onPackError(img){
+async function onPackError(img){
  const id=img?.dataset?.packId;
  const p=(window.GT_CATALOG||[]).find(p=>p.id===id);
  fallback(img);
- if(p?.barcode)repairImage(img,p);
+ if(!p)return;
+ if(p.barcode){
+  const repaired=await repairImage(img,p);
+  if(!repaired)p.photo_blocked=true;
+ }else p.photo_blocked=true;
 }
 window.GT_EXTRAS={facts,afterRender,spin,onPackError,repairImage,scoreBadge};
 })();
