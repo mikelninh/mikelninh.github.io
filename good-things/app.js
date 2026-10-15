@@ -79,7 +79,7 @@ function head(k,title,subtitle,aside){
  return '<div class="section-head"><div><div class="eyebrow">'+esc(k)+'</div><h2>'+title+'</h2><p>'+esc(subtitle)+'</p></div><div class="section-stamp">'+esc(aside||'A LITTLE MORE GOOD')+'</div></div>';
 }
 function matchedPhoto(p){
- return Boolean(validUrl(p.image_url)&&['retailer','brand','barcode'].includes(p.image_status));
+ return Boolean(validUrl(p.image_url)&&!p.photo_blocked&&['retailer','brand','barcode'].includes(p.image_status));
 }
 function photoSourceLabel(p){
  return p.image_status==='retailer'?'RETAILER PACKSHOT':p.image_status==='brand'?'BRAND PACKSHOT':p.image_status==='barcode'?'BARCODE PACKSHOT':'PHOTO CANDIDATE';
@@ -186,6 +186,9 @@ function duoHiResImage(p){
  // Do not upscale a thumbnail or invent a full URL for unrecognised hosts.
  if(p?.source_type==='openfoodfacts'&&/\/front_[a-z]{2}\.\d+\.400\.jpg(?:\?.*)?$/.test(url))
   return url.replace(/\.400\.jpg(?=\?|$)/,'.full.jpg');
+ if(new URL(url).hostname==='img.rewe-static.de'&&/[?&]imwidth=\d+/.test(url)){
+  const upgraded=new URL(url);upgraded.searchParams.set('imwidth','960');return upgraded.href;
+ }
  return url;
 }
 function duoPhotoMarkup(p){
@@ -208,7 +211,7 @@ async function duoIsPhotoSharp(p){
    const img=new Image();let done=false;
    const finish=v=>{if(done)return;done=true;clearTimeout(timeout);resolve(v)};
    const timeout=setTimeout(()=>finish(false),3800);
-   img.onload=()=>finish(img.naturalWidth>=450&&img.naturalHeight>=450);
+   img.onload=()=>finish(Math.max(img.naturalWidth,img.naturalHeight)>=600&&Math.min(img.naturalWidth,img.naturalHeight)>=180);
    img.onerror=()=>finish(false);img.src=url;
   });
   if(ok){duoPhotoCheck.set(p.id,url);return url}
