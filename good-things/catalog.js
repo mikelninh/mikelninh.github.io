@@ -244,7 +244,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "tofu-15",
-    "name": "Tempeh Lupine",
+    "name": "Lupinen-Tempeh Wildkräuter",
     "brand": "Tempehmanufaktur",
     "store": "REWE",
     "category": "Tofu & Tempeh",
@@ -252,8 +252,17 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Tempehmanufaktur%20Tempeh%20Lupine"
+    "image_url": "https://images.openfoodfacts.org/images/products/426/039/782/1282/front_de.30.400.jpg",
+    "source_url": "https://world.openfoodfacts.org/product/4260397821282",
+    "quantity": "170 g",
+    "barcode": "4260397821282",
+    "image_status": "barcode",
+    "image_source_url": "https://world.openfoodfacts.org/product/4260397821282",
+    "source_type": "openfoodfacts",
+    "photo_attribution": "Open Food Facts · CC BY-SA",
+    "photo_match_method": "manufacturer_or_retailer_gtin_and_off_front_match",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_verification_note": "Former generic Lupinen Tempeh label disambiguated to Wildkräuter; GTIN confirmed by Alnatura and manufacturer product line."
   },
   {
     "id": "tofu-16",
@@ -477,7 +486,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "milks-13",
-    "name": "Sojadrink Ungesüßt",
+    "name": "Sojadrink Ohne Zucker",
     "brand": "Provamel",
     "store": "REWE",
     "category": "Plant drinks",
@@ -485,8 +494,17 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Provamel%20Sojadrink%20Unges%C3%BC%C3%9Ft"
+    "image_url": "https://images.openfoodfacts.org/images/products/541/118/851/3513/front_cs.106.400.jpg",
+    "source_url": "https://world.openfoodfacts.org/product/5411188513513",
+    "quantity": "1 l",
+    "barcode": "5411188513513",
+    "image_status": "barcode",
+    "image_source_url": "https://world.openfoodfacts.org/product/5411188513513",
+    "source_type": "openfoodfacts",
+    "photo_attribution": "Open Food Facts · CC BY-SA",
+    "photo_match_method": "manufacturer_or_retailer_gtin_and_off_front_match",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_verification_note": "GTIN crosschecked with ecoinform product record; Open Food Facts identifies Provamel unsweetened plain 1L."
   },
   {
     "id": "milks-14",
@@ -718,7 +736,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "cheese-03",
-    "name": "Streichgenuss Natur",
+    "name": "Streichgenuss Cremig-Mild",
     "brand": "Simply V",
     "store": "REWE",
     "category": "Cheese alternatives",
@@ -726,8 +744,17 @@ window.GT_CATALOG=[
     "emoji": "🧀",
     "tone": "peach",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Simply%20V%20Streichgenuss%20Natur"
+    "image_url": "https://images.openfoodfacts.org/images/products/400/246/818/0825/front_de.105.400.jpg",
+    "source_url": "https://world.openfoodfacts.org/product/4002468180825",
+    "quantity": "150 g",
+    "barcode": "4002468180825",
+    "image_status": "barcode",
+    "image_source_url": "https://world.openfoodfacts.org/product/4002468180825",
+    "source_type": "openfoodfacts",
+    "photo_attribution": "Open Food Facts · CC BY-SA",
+    "photo_match_method": "manufacturer_or_retailer_gtin_and_off_front_match",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_verification_note": "Current marketed name Cremig-Mild, EAN crosschecked manufacturer and Edeka Foodservice; original catalog generic Natur variant mapped to plain product."
   },
   {
     "id": "cheese-04",
@@ -877,7 +904,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "spreads-07",
-    "name": "Streichgenuss Natur",
+    "name": "Streichgenuss Cremig-Mild",
     "brand": "Simply V",
     "store": "REWE",
     "category": "Spreads & dips",
@@ -885,8 +912,18 @@ window.GT_CATALOG=[
     "emoji": "🥖",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Simply%20V%20Streichgenuss%20Natur"
+    "image_url": "https://images.openfoodfacts.org/images/products/400/246/818/0825/front_de.105.400.jpg",
+    "source_url": "https://world.openfoodfacts.org/product/4002468180825",
+    "quantity": "150 g",
+    "barcode": "4002468180825",
+    "image_status": "barcode",
+    "image_source_url": "https://world.openfoodfacts.org/product/4002468180825",
+    "source_type": "openfoodfacts",
+    "photo_attribution": "Open Food Facts · CC BY-SA",
+    "photo_match_method": "manufacturer_or_retailer_gtin_and_off_front_match",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_verification_note": "Existing duplicate listing of same unflavoured Simply V product in spreads category; retain ID for user ratings, flag canonical cheese-03.",
+    "canonical_product_id": "cheese-03"
   },
   {
     "id": "spreads-08",
