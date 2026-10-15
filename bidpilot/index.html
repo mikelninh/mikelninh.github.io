@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="./style.css">
 <script defer src="./priority.js"></script>
 <script defer src="./app.js"></script>
+<link rel="stylesheet" href="./study.css">
+<script defer src="./study.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#shortlist">Skip to opportunities</a>
@@ -48,7 +50,33 @@
     </div>
   </section>
 
-  <section id="shortlist" class="shell spotlight" aria-labelledby="shortlistTitle">
+  <section class="shell study-section" id="product-study" aria-labelledby="study-heading">
+  <div class="study-card">
+    <div class="study-intro">
+      <span class="study-kicker">A11 PRODUCT MANAGEMENT · RESEARCH PROTOTYPE</span>
+      <h2 id="study-heading">Can you find one opportunity worth pursuing?</h2>
+      <p>A short, voluntary product test using actual source-linked TED notices. We measure the time to your first <em>personally relevant</em> opportunity – no invented conversion rates.</p>
+    </div>
+    <div class="study-controls">
+      <label for="studyVariant">Pilot experience</label>
+      <select id="studyVariant" aria-label="Choose the pilot variant"><option value="guided">B · Guided</option><option value="baseline">A · Current experience</option></select>
+      <button type="button" id="studyStart" class="study-primary">Start 3-minute study ↗</button>
+      <button type="button" id="studyReset" class="study-text" hidden>Restart</button>
+    </div>
+    <div id="studyLive" class="study-live" hidden aria-live="polite">
+      <div class="study-clock"><span id="studyClock">0:00</span><small>Elapsed · target ≤ 3:00</small></div>
+      <div class="study-steps" id="studySteps"></div>
+      <div class="study-status" id="studyStatus">Explore a source-backed notice.</div>
+      <div class="study-actions">
+        <button id="studySuccess" type="button" disabled>Yes, this is worth reviewing</button>
+        <button id="studyNotFit" type="button">No useful opportunity found</button>
+      </div>
+    </div>
+    <div id="studyResult" class="study-result" hidden aria-live="polite"></div>
+    <div class="study-disclaimer">We never claim eligibility or a winning chance. The study stays in your browser; findings are shared only if you choose to export them. The two variants are a small usability pilot, not a statistically powered A/B test.</div>
+  </div>
+</section>
+<section id="shortlist" class="shell spotlight" aria-labelledby="shortlistTitle">
     <div class="spotlight-heading">
       <div>
         <p class="eyebrow">THE SHORTLIST <span class="eyebrow-counter" id="topCount">01 / 03</span></p>
