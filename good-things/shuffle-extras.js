@@ -139,7 +139,7 @@ function ensure(p){
 function afterRender(p){if(p)ensure(p)}
 
 const MOTION_KEY='goodthings_shuffle_motion_v22';
-const MOTION_MODES=['booster','party','off'];
+const MOTION_MODES=['booster','party','overdrive','off'];
 let inMemoryMotion=null;
 function motionSetting(){
  if(MOTION_MODES.includes(inMemoryMotion))return inMemoryMotion;
@@ -152,7 +152,7 @@ function motionControls(){
  const active=motionSetting(),reduced=reduceMotion();
  return '<div class="gt-motion-controls" role="group" aria-label="Animation beim Zufallsprodukt wählen">'+
  '<span class="gt-motion-label">✳ Reveal</span>'+
- [['booster','✨ Booster Pack'],['party','🎉 Party Surprise'],['off','◌ Aus']].map(([mode,label])=>
+ [['booster','✨ Booster'],['party','🎰 Slots'],['overdrive','🚀 Overdrive'],['off','◌ Aus']].map(([mode,label])=>
  '<button type="button" data-action="shuffle-motion" data-value="'+mode+'" aria-pressed="'+(active===mode)+'" class="gt-motion-option'+(active===mode?' is-selected':'')+'">'+label+'</button>').join('')+
  (reduced?'<span class="gt-motion-os-note" title="Die Betriebssystem-Einstellung für weniger Bewegung hat Vorrang">System: reduziert</span>':'')+
  '</div>';
@@ -165,6 +165,7 @@ function setMotion(mode){
 }
 const drawEmojis=['🍫','🥛','🥑','🍱','🫘','🍜','🍪','🌱','🍓','🥜','🫛','🍿','🍋','🍕'];
 const drawLines=['Das Universum mischt die Snacks …','Eine ernsthafte Prüfung für deine Geschmacksknospen.','Was kommt jetzt – S-Tier oder kulinarischer Frevel?','Die Bohnen haben sich beraten …'];
+const overdriveLines=['⚠️ CRITICAL TOFU EVENT DETECTED','THE SNACK COUNCIL HAS BEEN SUMMONED','99.97% CHANCE OF HAVING AN OPINION','DO NOT PANIC. IT IS PROBABLY HUMMUS.','THE FATE OF THIS PANTRY IS IN YOUR HANDS'];
 function wait(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
 async function spin(task){
  if(spinner)return;
@@ -173,21 +174,21 @@ async function spin(task){
  if(motion==='off'||reduceMotion()){
   try{return await task()}finally{spinner=false}
  }
- const booster=motion==='booster';const fast=false;
+ const booster=motion==='booster',overdrive=motion==='overdrive';const fast=overdrive;
  const overlay=document.createElement('div');
- overlay.className='gt-spin-overlay gt-spin-v22'+(booster?' gt-spin-booster':' gt-spin-party');
+ overlay.className='gt-spin-overlay gt-spin-v22'+(booster?' gt-spin-booster':overdrive?' gt-spin-overdrive':' gt-spin-party');
  overlay.setAttribute('role','dialog');
  overlay.setAttribute('aria-modal','true');
  overlay.setAttribute('aria-label','Überraschungsprodukt wird gezogen');
  const reel=(i)=>'<div class="gt-reel" data-gt-reel="'+i+'"><span>'+drawEmojis[(i*4)%drawEmojis.length]+'</span></div>';
  overlay.innerHTML='<div class="gt-draw-card">'+
- '<div class="gt-draw-corner">GOOD THINGS <span>✳</span> MYSTERY DRAW</div>'+
+ '<div class="gt-draw-corner">GOOD THINGS <span>✳</span> '+(overdrive?'MAXIMUM NONSENSE · ZERO STAKES':'MYSTERY DRAW')+'</div>'+
  '<div class="gt-draw-orbit gt-draw-orbit-a" aria-hidden="true">✺</div><div class="gt-draw-orbit gt-draw-orbit-b" aria-hidden="true">✴</div>'+
- '<div class="gt-draw-headline"><span class="gt-draw-badge">100% SURPRISE · 0% WAGER</span><h2 id="gt-draw-title">'+(booster?'One pack. One surprise.':'And the snack is...')+'</h2></div>'+
- '<div class="gt-draw-reel-frame"><div class="gt-draw-frame-top">'+(booster?'✦ UNSEAL YOUR NEXT DISCOVERY ✦':'✦ THE GREAT VEGAN MYSTERY ✦')+'</div>'+(booster?'<div class="gt-booster-opening"><div class="gt-booster-pack"><span class="gt-booster-foil">✴ ✳ ✴</span><span class="gt-booster-mark">GOOD<br>THINGS</span><span class="gt-booster-star">✳</span><span class="gt-booster-sub">A LITTLE PACK OF SURPRISE</span><span class="gt-booster-edition">TASTE EDITION · Nº 002</span><span class="gt-booster-seal">✺ RIP & REVEAL ✺</span></div><div class="gt-booster-shine"></div></div>':'<div class="gt-draw-reels" aria-hidden="true">'+[0,1,2].map(reel).join('')+'</div>')+
+ '<div class="gt-draw-headline"><span class="gt-draw-badge">'+(overdrive?'ABSOLUTELY FAKE JACKPOT · NO MONEY':'100% SURPRISE · 0% WAGER')+'</span><h2 id="gt-draw-title">'+(booster?'One pack. One surprise.':overdrive?'THE VEGAN MULTIVERSE IS CALLING':'And the snack is...')+'</h2></div>'+
+ '<div class="gt-draw-reel-frame"><div class="gt-draw-frame-top">'+(booster?'✦ UNSEAL YOUR NEXT DISCOVERY ✦':overdrive?'✦ EXTREMELY SERIOUS SNACK SCIENCE ✦':'✦ THE GREAT VEGAN MYSTERY ✦')+'</div>'+(booster?'<div class="gt-booster-opening"><div class="gt-booster-pack"><span class="gt-booster-foil">✴ ✳ ✴</span><span class="gt-booster-mark">GOOD<br>THINGS</span><span class="gt-booster-star">✳</span><span class="gt-booster-sub">A LITTLE PACK OF SURPRISE</span><span class="gt-booster-edition">TASTE EDITION · Nº 002</span><span class="gt-booster-seal">✺ RIP & REVEAL ✺</span></div><div class="gt-booster-shine"></div></div>':'<div class="gt-draw-reels" aria-hidden="true">'+[0,1,2].map(reel).join('')+'</div>')+
  '<div class="gt-draw-reveal" hidden><div class="gt-draw-reveal-halo"></div><div class="gt-draw-product-image">✳</div><div class="gt-draw-found-label">TODAY’S LITTLE DISCOVERY</div><strong id="gt-draw-product-name">Surprise!</strong><small id="gt-draw-product-brand"></small></div>'+
  '<div class="gt-draw-frame-bottom">NO SPOILERS. JUST TASTE.</div></div>'+
- '<div class="gt-draw-ticker" id="gt-draw-line" role="status" aria-live="polite">'+(booster?'Das nächste Produkt wartet hinter dem Siegel …':'Das Universum mischt die Snacks …')+'</div>'+
+ '<div class="gt-draw-ticker" id="gt-draw-line" role="status" aria-live="polite">'+(booster?'Das nächste Produkt wartet hinter dem Siegel …':overdrive?'SCANNING THE ENTIRE VEGAN MULTIVERSE …':'Das Universum mischt die Snacks …')+'</div>'+
  '<button type="button" class="gt-draw-skip" aria-label="Animation überspringen">Überspringen ↗</button>'+
  '<div class="gt-draw-confetti" aria-hidden="true">'+Array.from({length:16},(_,i)=>'<i style="--i:'+i+'"></i>').join('')+'</div>'+
  '</div>';
@@ -203,7 +204,7 @@ async function spin(task){
  },fast?75:92));
  const messages=setInterval(()=>{
   const label=overlay.querySelector('#gt-draw-line');
-  if(label)label.textContent=drawLines[Math.floor(ticks/17)%drawLines.length];
+  if(label)label.textContent=(overdrive?overdriveLines:drawLines)[Math.floor(ticks/(overdrive?9:17))%(overdrive?overdriveLines:drawLines).length];
  },fast?230:410);
  let skipDelay=()=>{};
  const skipped=new Promise(resolve=>{skipDelay=resolve});
@@ -242,7 +243,7 @@ async function spin(task){
   }else visual.textContent='✳';
   overlay.querySelector('#gt-draw-product-name').textContent=name;
   overlay.querySelector('#gt-draw-product-brand').textContent=brand;
-  overlay.querySelector('#gt-draw-title').textContent=booster?'PACK OPENED! ✳':'TA-DAAA! ✳';
+  overlay.querySelector('#gt-draw-title').textContent=booster?'PACK OPENED! ✳':overdrive?'THE COUNCIL HAS SPOKEN ✳':'TA-DAAA! ✳';
   const revealer=overlay.querySelector('.gt-draw-reveal');
   revealer.hidden=false;
   if(booster){overlay.classList.add('gt-draw-tear');await wait(470)}
