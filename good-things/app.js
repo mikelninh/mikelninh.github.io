@@ -65,7 +65,7 @@ function empty(emoji,heading,body,button){
  return '<div class="empty"><div class="big">'+esc(emoji)+'</div><strong>'+esc(heading)+'</strong><p>'+esc(body)+'</p>'+(button||'')+'</div>';
 }
 function setView(view,extra){
- if(!['board','discover','ours','my','community','duo','shared','profile','list'].includes(view))view='board';
+ if(!['board','discover','ours','my','community','duo','solo','shared','profile','list'].includes(view))view='board';
  st.view=view;
  if(view!=='shared'&&view!=='profile'&&view!=='list'){
   const u=new URL(URL_BASE);u.searchParams.set('view',view);
@@ -1141,7 +1141,8 @@ function renderListView(){
 }
 function render(){
  const content=$('#contentView');
- if(st.view==='duo')content.innerHTML=renderDuo();
+ if(st.view==='solo')content.innerHTML=soloRender();
+ else if(st.view==='duo')content.innerHTML=renderDuo();
  else if(st.view==='board')content.innerHTML=renderBoard();
  else if(st.view==='ours')content.innerHTML=renderOurs();
  else if(st.view==='my')content.innerHTML=renderMy();
@@ -1546,7 +1547,7 @@ async function openShareLink(){
  }
  const view=url.searchParams.get('view');
  if(view==='duo'){st.view='duo';if(url.searchParams.get('room')){st.duo.mode='remote';st.duo.requestedRoom=url.searchParams.get('room')}return}
- st.view=['board','discover','ours','my','community'].includes(view)?view:'board';
+ st.view=['board','discover','ours','my','community','solo'].includes(view)?view:'board';
 }
 document.addEventListener('click',async(event)=>{
  const nav=event.target.closest('[data-nav]');
@@ -1568,6 +1569,10 @@ document.addEventListener('click',async(event)=>{
  case 'save-rating':await saveRating();break;
  case 'delete-rating':await deleteRating();break;
  case 'set-category':st.category=id;render();break;
+ case 'solo-start':await soloStart(false);break;
+ case 'solo-next':await soloStart(true);break;
+ case 'solo-vote':await soloVote(val);break;
+ case 'solo-save-note':await soloSaveNote($('#soloNote')?.value||'');break;
  case 'duo-mode-local':st.duo.mode='local';st.duo.room=null;st.duo.error='';setView('duo');break;
  case 'duo-mode-remote':st.duo.mode='remote';st.duo.room=null;st.duo.error='';await duoLoadRooms();setView('duo');break;
  case 'duo-start-local':await duoLocalStart(false);break;
