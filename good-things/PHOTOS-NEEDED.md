@@ -1,6 +1,6 @@
 # GOOD THINGS — remaining product photos
 
-14 October 2026. **305 of 354** rankable products have source-linked image URLs; **49 lack a sourced packshot**. This does NOT certify the 305 as current, variant-correct high-resolution photos.
+15 October 2026. **309 of 354** rankable products have source-linked image URLs; **45 lack a sourced packshot**. Four exact-EAN Open Food Facts front images have been added. Counts are source links, NOT completed image quality audits. This does NOT certify the 305 as current, variant-correct high-resolution photos.
 
 [Photo Lab](https://mikelninh.github.io/good-things/photos.html): inspect **all** source images' actual pixel dimensions in the visitor's browser, filter low-resolution or missing assets, stop or export results as CSV. Manually inspect full pack visibility, correct variant, ingredient details and photo reuse rights. A high pixel resolution alone doesn't prove the right product.
 
@@ -8,8 +8,8 @@ Two repairs this release: Natumi `milks-14` uses the manufacturer's full-height 
 
 | Category | Missing |
 |---|---:|
-| Tofu & Tempeh | 5 |
-| Plant drinks | 5 |
+| Tofu & Tempeh | 3 |
+| Plant drinks | 4 |
 | Yoghurt & Skyr | 4 |
 | Cheese alternatives | 2 |
 | Spreads & dips | 7 |
@@ -17,22 +17,31 @@ Two repairs this release: Natumi `milks-14` uses the manufacturer's full-height 
 | Meat alternatives | 1 |
 | Chips & snacks | 3 |
 | Chocolate | 2 |
-| Lidl / Vemondo | 12 |
+| Lidl / Vemondo | 11 |
+
+## Confirmed EAN matches added on 15 October 2026
+
+- `tofu-09` · Tukan Bio Tofu Natur 200 g · EAN `4012359710109` · [Open Food Facts](https://world.openfoodfacts.org/product/4012359710109) · [retailer EAN confirmation](https://www.handelshof.de/eigenmarken/produkte/1204352001/bio-tukan-tofu-natur-200g)
+- `tofu-10` · Tukan Bio Räuchertofu 200 g · EAN `4012359711106` · [Open Food Facts](https://world.openfoodfacts.org/product/4012359711106) · [manufacturer product photo](https://www.tukan-vegan.de/produkte/rauchertofu)
+- `milks-05` · Oatly Bio Haferdrink Original 1 l · EAN `7394376615894` · [Open Food Facts](https://world.openfoodfacts.org/product/7394376615894) · [retailer GTIN sheet](https://cdn.metro-group.com/de/de_fir_303659001001_de.pdf)
+- `vemondo-01` · Vemondo Bio Tofu Natur 400 g (2×200 g) · EAN `4056489616191` · [Open Food Facts](https://world.openfoodfacts.org/product/4056489616191). Specific variant is now explicit in catalogue, not an unspecified generic product.
+
+The remaining 45 are *not* represented as confirmed. Some earlier names may be outdated or ambiguous; never equate them with a similar-looking variant. Use [Photo Rescue Lab](https://mikelninh.github.io/good-things/photos.html) to look up exact barcodes, confirm source and package identity, and export reviewable local fixes. A local approval does not update everyone's catalogue.
 
 ## Open image issues
 
 ### Tofu & Tempeh (5)
 
 - [ ] `tofu-03` — **REWE Bio · Tofu Kräuter** (REWE): confirm current GTIN/variant and full-size original packshot
-- [ ] `tofu-09` — **Tukan · Bio Tofu Natur** (REWE): confirm current GTIN/variant and full-size original packshot
-- [ ] `tofu-10` — **Tukan · Bio Räuchertofu** (REWE): confirm current GTIN/variant and full-size original packshot
+- [x] `tofu-09` — **Tukan · Bio Tofu Natur** (REWE): confirm current GTIN/variant and full-size original packshot
+- [x] `tofu-10` — **Tukan · Bio Räuchertofu** (REWE): confirm current GTIN/variant and full-size original packshot
 - [ ] `tofu-13` — **Viana · Tofu Rosso** (REWE): confirm current GTIN/variant and full-size original packshot
 - [ ] `tofu-15` — **Tempehmanufaktur · Tempeh Lupine** (REWE): confirm current GTIN/variant and full-size original packshot
 
 ### Plant drinks (5)
 
 - [ ] `milks-01` — **Alpro · Soja Original** (REWE): confirm current GTIN/variant and full-size original packshot
-- [ ] `milks-05` — **Oatly · Haferdrink Original** (REWE): confirm current GTIN/variant and full-size original packshot
+- [x] `milks-05` — **Oatly · Haferdrink Original** (REWE): confirm current GTIN/variant and full-size original packshot
 - [ ] `milks-10` — **REWE Bio · Bio Sojadrink** (REWE): confirm current GTIN/variant and full-size original packshot
 - [ ] `milks-11` — **REWE Bio · Bio Mandeldrink** (REWE): confirm current GTIN/variant and full-size original packshot
 - [ ] `milks-13` — **Provamel · Sojadrink Ungesüßt** (REWE): confirm current GTIN/variant and full-size original packshot
@@ -87,7 +96,7 @@ Two repairs this release: Natumi `milks-14` uses the manufacturer's full-height 
 
 ### Lidl / Vemondo (12)
 
-- [ ] `vemondo-01` — **Vemondo · Tofu Natur** (Lidl): confirm current GTIN/variant and full-size original packshot
+- [x] `vemondo-01` — **Vemondo · Tofu Natur** (Lidl): confirm current GTIN/variant and full-size original packshot
 - [ ] `vemondo-02` — **Vemondo · Räuchertofu** (Lidl): confirm current GTIN/variant and full-size original packshot
 - [ ] `vemondo-03` — **Vemondo · Bio Sojadrink** (Lidl): confirm current GTIN/variant and full-size original packshot
 - [ ] `vemondo-04` — **Vemondo · Haferdrink Barista** (Lidl): confirm current GTIN/variant and full-size original packshot
