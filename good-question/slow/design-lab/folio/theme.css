@@ -1,5 +1,5 @@
 
-:root{--paper:#f7f2e8;--ink:#242d2b;--muted:#626960;--rule:#b9bbb0;--accent:#c85d3e;--focus:#3653a1;--link:#264ba0;--art-bg:#e3d7bb;--soft-bg:#efe3d2;--sans:'DM Sans',sans-serif;--mono:'DM Mono',monospace;--display:'Fraunces',Georgia,serif;--bodyserif:'Newsreader',Georgia,serif}
+:root{--paper:#f7f2e8;--ink:#242d2b;--muted:#626960;--rule:#b9bbb0;--accent:#a6462d;--focus:#3653a1;--link:#264ba0;--art-bg:#e3d7bb;--soft-bg:#efe3d2;--sans:'DM Sans',sans-serif;--mono:'DM Mono',monospace;--display:'Fraunces',Georgia,serif;--bodyserif:'Newsreader',Georgia,serif}
 body{background:var(--paper)}::selection{background:#d9e2b8}
 .brand{letter-spacing:-.08em}.brand i{color:#3653a1}.topnav{border-bottom:2px solid var(--ink)}.edition-line{color:#3653a1}
 .hero{grid-template-columns:minmax(0,1fr) minmax(0,.96fr);align-items:stretch;gap:clamp(35px,4vw,70px);padding:70px 0 95px}

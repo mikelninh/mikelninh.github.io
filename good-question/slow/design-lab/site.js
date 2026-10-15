@@ -15,7 +15,7 @@
   if(panel&&choices.length){choices.forEach(function(btn){btn.addEventListener('click',function(){choices.forEach(function(b){b.setAttribute('aria-pressed',String(b===btn));});var item=explanations[btn.dataset.choice]||explanations.notice;panel.innerHTML='<strong>'+item.title+'</strong><span>'+item.text+'</span>';});});}
   var motionBtn=document.querySelector('[data-motion-toggle]');if(motionBtn){
     var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduce){document.body.classList.add('motion-off');motionBtn.setAttribute('aria-pressed','false');motionBtn.textContent='Turn illustration movement on';}
-    motionBtn.addEventListener('click',function(){var off=document.body.classList.toggle('motion-off');motionBtn.setAttribute('aria-pressed',String(!off));motionBtn.textContent=off?'Turn illustration movement on':'Turn illustration movement off';});
+    if(reduce){document.body.classList.add('motion-off');motionBtn.setAttribute('aria-pressed','false');motionBtn.textContent='Motion reduced by your device settings';motionBtn.disabled=true;}
+    else motionBtn.addEventListener('click',function(){var off=document.body.classList.toggle('motion-off');motionBtn.setAttribute('aria-pressed',String(!off));motionBtn.textContent=off?'Turn illustration movement on':'Turn illustration movement off';});
   }
 })();

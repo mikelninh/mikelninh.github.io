@@ -1,0 +1,46 @@
+name: GOOD QUESTION / Magazine design lab QA
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'good-question/slow/design-lab/**'
+      - '.github/workflows/gq-design-lab-qa.yml'
+  pull_request:
+    paths:
+      - 'good-question/slow/design-lab/**'
+      - '.github/workflows/gq-design-lab-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: good-question-design-lab-qa
+  cancel-in-progress: true
+jobs:
+  browser-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser testing dependencies
+        run: |
+          npm install --no-save playwright @axe-core/playwright
+          npx playwright install --with-deps chromium
+      - name: Run static site
+        run: |
+          python3 -m http.server 8099 >/tmp/gq-design-lab-http.log 2>&1 &
+          sleep 2
+      - name: Test seven prototype routes on mobile and desktop
+        run: node good-question/slow/design-lab/qa.mjs
+      - name: Save visual QA screenshots
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: magazine-design-lab-screenshots
+          path: good-question/slow/design-lab/qa-shots/
+          if-no-files-found: ignore
