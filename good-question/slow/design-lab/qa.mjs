@@ -26,6 +26,7 @@ try{
      assert.deepEqual(broken,[],'All original cover illustrations load '+path);
      assert.equal(problems.length,0,problems.join(','));
      if(path.endsWith('/story/')){
+       if(w<500){const order=await page.evaluate(()=>({article:document.querySelector('.prose').getBoundingClientRect().top,sidebar:document.querySelector('.side-note').getBoundingClientRect().top}));assert.ok(order.article<order.sidebar,'Mobile essay must appear before editor sidebar '+path);}
        assert.ok((await page.locator('.prose p').count())>12,'Complete long essay '+path);
        assert.equal(await page.locator('.prose .sources').count(),1,'Sources preserved '+path);
        await page.evaluate(()=>scrollTo(0,document.body.scrollHeight));
