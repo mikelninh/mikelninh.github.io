@@ -461,7 +461,7 @@ function duoHistoryPanel(history,remote){
   const id=remote?round.product_id:round.productId;
   const a=remote?round.host_choice:round.votes?.mikel,b=remote?round.partner_choice:round.votes?.huong;
   const p=getProduct(id);if(!p)return '';
-  return '<div class="duo-history-row"><span class="duo-history-index">'+(remote?round.round_no:i+1)+'</span><div class="duo-history-product"><strong>'+esc(p.brand+' · '+p.name)+'</strong><small>'+esc(p.quantity||p.category)+'</small></div><div class="duo-history-scores"><span>'+esc(duoChoiceLabel(a))+'</span><span>×</span><span>'+esc(duoChoiceLabel(b))+'</span></div></div>';
+  return '<div class="duo-history-row"><span class="duo-history-index">'+(remote?round.round_no:i+1)+'</span><div class="duo-history-product"><strong>'+esc(p.brand+' · '+p.name)+'</strong><small>'+esc(p.quantity||p.category)+'</small></div><div class="duo-history-scores"><span>'+esc(duoChoiceLabel(a))+'</span><span>×</span><span>'+esc(duoChoiceLabel(b))+'</span></div>'+(round.discussion?'<span class="duo-history-discussion">♡ '+esc(round.discussion)+'</span>':'')+'</div>';
  }).filter(Boolean).reverse().slice(0,30).join('');
  return '<section class="duo-history"><div class="duo-history-title"><div><div class="eyebrow">OUR TASTE JOURNAL</div><h3>Eure bisherigen Ergebnisse</h3><p>'+(remote?'In Supabase gespeichert, nur für die beiden Raumteilnehmer sichtbar.':'Auf diesem Gerät gespeichert. Browserdaten löschen entfernt die lokalen Ergebnisse; sichert sie bei Bedarf als JSON.')+'</p></div><button class="button button-small button-white" data-action="duo-export-history" '+(!(history||[]).length?'disabled':'')+'>↓ Verlauf exportieren</button></div>'+
  (rows||'<p class="duo-history-empty">Hier erscheinen eure gemeinsam abgeschlossenen Runden.</p>')+'</section>';
@@ -469,11 +469,11 @@ function duoHistoryPanel(history,remote){
 function duoExportHistory(){
  const remote=st.duo.mode==='remote',local=st.duo.local;
  const rows=remote?(st.duo.history||[]):[...(local.history||[]),
-  ...(duoValidChoice(local.votes?.mikel)&&duoValidChoice(local.votes?.huong)?[{productId:local.productId,votes:{...local.votes}}]:[])];
+  ...(duoValidChoice(local.votes?.mikel)&&duoValidChoice(local.votes?.huong)?[{productId:local.productId,votes:{...local.votes},discussion:local.discussion||''}]:[])];
  if(!rows.length)return toast('Noch kein gemeinsames Ergebnis für den Export.');
  const data={app:'GOOD THINGS',version:'1.9',mode:remote?'account-duo':'shared-device',exported_at:new Date().toISOString(),
   rounds:rows.map((x,i)=>({round:remote?x.round_no:i+1,product_id:remote?x.product_id:x.productId,
-   person_one:remote?x.host_choice:x.votes.mikel,person_two:remote?x.partner_choice:x.votes.huong}))};
+   person_one:remote?x.host_choice:x.votes.mikel,person_two:remote?x.partner_choice:x.votes.huong,discussion:remote?(st.duo.comments||[]).filter(c=>c.round_no===x.round_no).map(c=>c.comment):x.discussion||''}))};
  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
  const url=URL.createObjectURL(blob),a=document.createElement('a');
  a.href=url;a.download='good-things-duo-verlauf.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
@@ -969,6 +969,22 @@ document.addEventListener('load',e=>{
  if(img.naturalWidth<450||img.naturalHeight<450)duoImageFallback(img,'zu geringe Auflösung');
 },true);
 
+function soloImageFailure(img){
+ const p=soloCurrent();if(!p)return;
+ duoPhotoBroken.add(p.id);
+ const box=img?.closest?.('.duo-hero-photo');
+ if(box)box.innerHTML='<div class="duo-photo-problem">Dieses Produktfoto ist nicht verfügbar oder unscharf.</div><button class="button button-lime" data-action="solo-next">Anderes Produkt ↗</button>';
+}
+document.addEventListener('error',e=>{
+ const img=e.target;if(img?.dataset?.soloImage!=='true')return;
+ const fallback=img.dataset.fallback;
+ if(fallback&&img.src!==fallback){img.dataset.fallback='';img.src=fallback;return}
+ soloImageFailure(img);
+},true);
+document.addEventListener('load',e=>{
+ const img=e.target;if(img?.dataset?.soloImage!=='true')return;
+ if(img.naturalWidth<450||img.naturalHeight<450)soloImageFailure(img);
+},true);
 document.addEventListener('pointercancel',cancelBoardDrag);
 document.addEventListener('click',e=>{
  if(Date.now()<suppressBoardClickUntil&&e.target.closest?.('[data-drag-id]')){e.preventDefault();e.stopImmediatePropagation()}
