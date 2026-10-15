@@ -22,7 +22,7 @@ for(const p of window.GT_CATALOG||[]){
  }
 }
 const units=[['Energie','kcal','kcal'],['Protein','protein','g'],['Kohlenhydrate','carbs','g'],['davon Zucker','sugar','g'],['Fett','fat','g'],['davon gesättigte Fettsäuren','satFat','g'],['Ballaststoffe','fiber','g'],['Salz','salt','g']];
-function factsNutrition(p,info){return p.nutrition||info?.nutrition||null}
+function factsNutrition(p,info){const fresh=info?.nutrition;return fresh&&Object.values(fresh).some(Number.isFinite)?fresh:p.nutrition||null}
 function bullets(n){
  const plus=[],minus=[];
  if(!n)return {plus:['Nährwertangaben sind noch nicht verifiziert.'],minus:['Ohne Nährwerte ist keine Einordnung möglich.']};
