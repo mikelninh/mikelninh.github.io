@@ -211,7 +211,7 @@ async function duoIsPhotoSharp(p){
    const img=new Image();let done=false;
    const finish=v=>{if(done)return;done=true;clearTimeout(timeout);resolve(v)};
    const timeout=setTimeout(()=>finish(false),3800);
-   img.onload=()=>finish(Math.max(img.naturalWidth,img.naturalHeight)>=600&&Math.min(img.naturalWidth,img.naturalHeight)>=180);
+   img.onload=()=>finish(Math.max(img.naturalWidth,img.naturalHeight)>=600&&Math.min(img.naturalWidth,img.naturalHeight)>=260);
    img.onerror=()=>finish(false);img.src=url;
   });
   if(ok){duoPhotoCheck.set(p.id,url);return url}
@@ -985,7 +985,7 @@ document.addEventListener('error',e=>{
 },true);
 document.addEventListener('load',e=>{
  const img=e.target;if(img?.dataset?.duoImage!=='true')return;
- if(img.naturalWidth<450||img.naturalHeight<450)duoImageFallback(img,'zu geringe Auflösung');
+ if(Math.max(img.naturalWidth,img.naturalHeight)<600||Math.min(img.naturalWidth,img.naturalHeight)<260)duoImageFallback(img,'zu geringe Auflösung');
 },true);
 
 function soloImageFailure(img){
@@ -1002,7 +1002,7 @@ document.addEventListener('error',e=>{
 },true);
 document.addEventListener('load',e=>{
  const img=e.target;if(img?.dataset?.soloImage!=='true')return;
- if(img.naturalWidth<450||img.naturalHeight<450)soloImageFailure(img);
+ if(Math.max(img.naturalWidth,img.naturalHeight)<600||Math.min(img.naturalWidth,img.naturalHeight)<260)soloImageFailure(img);
 },true);
 document.addEventListener('pointercancel',cancelBoardDrag);
 document.addEventListener('click',e=>{
