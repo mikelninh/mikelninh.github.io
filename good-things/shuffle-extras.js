@@ -138,7 +138,9 @@ function afterRender(p){if(p)ensure(p)}
 
 const MOTION_KEY='goodthings_shuffle_motion_v22';
 const MOTION_MODES=['arcade','quick','off'];
+let inMemoryMotion=null;
 function motionSetting(){
+ if(MOTION_MODES.includes(inMemoryMotion))return inMemoryMotion;
  let stored;
  try{stored=localStorage.getItem(MOTION_KEY)}catch(_){}
  return MOTION_MODES.includes(stored)?stored:'arcade';
@@ -155,6 +157,7 @@ function motionControls(){
 }
 function setMotion(mode){
  if(!MOTION_MODES.includes(mode))return false;
+ inMemoryMotion=mode;
  try{localStorage.setItem(MOTION_KEY,mode)}catch(_){}
  return true;
 }
