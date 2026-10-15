@@ -38,7 +38,7 @@ const on=document.body.classList.toggle('focus-reading');
 focus.setAttribute('aria-pressed',String(on));
 focus.textContent=on?'Exit focus mode':'Focus reading';
 });
-let size=0;function adjustSize(next){size=Math.max(-2,Math.min(3,next));const article=$('.prose');if(article)article.style.setProperty('font','400 '+(20+size*1.75)+'px/1.81 var(--read)','important');const label=$('[data-type-label]');if(label)label.textContent='Type '+(size>0?'+'+size:size<0?size:'default');}
+let size=0;function adjustSize(next){size=Math.max(-2,Math.min(3,next));const article=$('.prose');if(article){const px=(20+size*1.75)+'px';article.style.setProperty('font-size',px,'important');article.querySelectorAll(':scope > p:not(.sources), :scope > ol, :scope > ul').forEach(el=>el.style.setProperty('font-size',px,'important'));};const label=$('[data-type-label]');if(label)label.textContent='Type '+(size>0?'+'+size:size<0?size:'default');}
 $$('[data-type-change]').forEach(btn=>btn.addEventListener('click',()=>adjustSize(size+Number(btn.dataset.typeChange))));
 const movement=$('[data-motion]');const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(movement){
