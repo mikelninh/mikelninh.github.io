@@ -1,0 +1,29 @@
+
+:root{--paper:#fcf7e7;--ink:#202b28;--muted:#525f5e;--rule:#8a928e;--accent:#214bb1;--focus:#ea603e;--link:#214bb1;--art-bg:#c9dbdf;--soft-bg:#e5e6cf;--sans:'Space Grotesk',sans-serif;--mono:'DM Mono',monospace;--display:'Fraunces',Georgia,serif;--bodyserif:'Newsreader',Georgia,serif}
+body{background:var(--paper)}::selection{background:#cbe3a1}
+.brand{font-family:'Space Grotesk';font-weight:700;font-size:clamp(27px,3vw,40px);letter-spacing:-.09em}
+.brand i{color:#dd6248}.topnav{border-bottom:3px solid var(--ink)}.site-links a{font-family:'Space Grotesk'}
+.edition-line{background:#e6efaf;box-shadow:0 0 0 20px #e6efaf;margin-top:20px;border-bottom:2px solid var(--ink);color:#2c3f2e}
+.hero{grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);gap:38px;align-items:center;padding:85px 0 55px}.hero-copy{max-width:700px}
+.hero h1{font-size:clamp(63px,6.4vw,104px);letter-spacing:-.075em;line-height:.98}.hero h1 em{color:#214bb1;text-decoration:underline;text-decoration-color:#e69a73;text-decoration-thickness:6px;text-underline-offset:9px}.hero .deck{font:500 clamp(19px,2vw,25px)/1.5 'Space Grotesk',sans-serif;color:#40534a}
+.hero-art{min-height:470px;transform:rotate(1.25deg);box-shadow:16px 18px 0 #e5efaf;border:3px solid #202b28;background:#d1dbed}.hero-art img{min-height:467px}.hero-art figcaption{border-top:2px solid var(--ink);border-right:2px solid var(--ink)}
+.read-link{background:#214bb1;color:#fff;text-decoration:none;border:2px solid #214bb1;padding:13px 20px;margin-top:26px;gap:20px;box-shadow:5px 5px 0 #cad7a4}.read-link:hover{background:#123779}
+.stories-heading{border-top:3px solid var(--ink)}.stories-heading h2{font-size:clamp(35px,4vw,54px)}
+.story-grid{gap:18px}.story-tile{border:2px solid var(--ink);padding:16px 16px 21px;background:#fffdf7;box-shadow:5px 5px 0 #ccd7c1}
+.story-tile h3{font-size:clamp(28px,2.7vw,38px)}.story-tile .nr{color:#214bb1}
+.tile-graphic{height:185px;background:#deedb7;border:1px solid var(--rule)}.tile-graphic b{color:#214bb1}.story-tile:nth-child(2) .tile-graphic{background:#ffc5aa}.story-tile:nth-child(2) .tile-graphic b{color:#a73831}.story-tile:nth-child(3) .tile-graphic{background:#c6c7ff}.story-tile:nth-child(3) .tile-graphic b{color:#373d9d}
+.more-issue{border:3px solid var(--ink);padding:30px;background:#e5efaf;margin-bottom:65px}
+.article-header h1{max-width:1100px;font-size:clamp(57px,7vw,100px)}.article-header h1 em{color:#d85d3c}.article-header .standfirst{font:500 clamp(22px,2.3vw,29px)/1.42 'Space Grotesk',sans-serif}
+.feature-image{border-block:3px solid var(--ink)}.feature-image figcaption{border:2px solid var(--ink)}
+.article-grid{grid-template-columns:minmax(0,750px) minmax(0,260px);gap:60px}.prose{font-size:19px}.prose h2{font-size:42px}.prose p:first-of-type:first-letter{color:#214bb1}.prose blockquote{border-left:5px solid #d85d3c;color:#214bb1}.side-note{background:#e5efaf;border:2px solid var(--ink);padding:25px;box-shadow:5px 5px 0 #ccd7c1}
+.curio-experiment{margin:50px 0;padding:26px 28px;background:#e5efaf;border:2px solid var(--ink);box-shadow:7px 7px 0 #bdd0cc;font-family:'Space Grotesk',sans-serif;color:#202b28}
+.curio-experiment h3{font-family:'Fraunces',Georgia,serif;font-size:31px;font-weight:500;margin:8px 0 15px}
+.curio-experiment p{font-family:'Space Grotesk',sans-serif;font-size:15px;line-height:1.7;margin:0 0 17px}.choice-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.choice-row button{min-height:44px;padding:10px 15px;background:#fffdf7;border:2px solid #283833;font-size:13px;font-weight:700}.choice-row button[aria-pressed="true"]{background:#214bb1;color:#fff;border-color:#214bb1}
+.choice-panel{border-top:1px solid #84927a;padding-top:18px;min-height:74px}.choice-panel strong{display:block;font-weight:700;margin-bottom:7px}
+.ambient-art{display:flex;align-items:center;justify-content:center;height:110px;margin-top:5px;overflow:hidden}
+.ambient-art span{display:block;width:65px;height:65px;border:5px solid #214bb1;border-radius:50%;box-shadow:0 0 0 8px rgba(33,75,177,.08);animation:ambient-drift 7s ease-in-out infinite alternate}
+@keyframes ambient-drift{from{transform:translateX(-35px) scale(.88)}to{transform:translateX(35px) scale(1.13)}}
+.motion-off .ambient-art span{animation:none!important}.motion-toggle{font-size:12px;border:1px solid var(--ink);background:transparent;padding:7px 11px;min-height:44px}
+@media(max-width:900px){.article-grid{grid-template-columns:1fr}.hero-art{transform:none}}
+@media(max-width:700px){.hero{padding:65px 0}.hero-art{min-height:305px;margin-right:8px}.hero-art img{min-height:305px}.curio-experiment{margin-inline:0;padding:20px}.story-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.ambient-art span{animation:none!important}}

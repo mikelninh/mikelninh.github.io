@@ -1,0 +1,18 @@
+
+:root{--paper:#f7f2e8;--ink:#242d2b;--muted:#626960;--rule:#b9bbb0;--accent:#c85d3e;--focus:#3653a1;--link:#264ba0;--art-bg:#e3d7bb;--soft-bg:#efe3d2;--sans:'DM Sans',sans-serif;--mono:'DM Mono',monospace;--display:'Fraunces',Georgia,serif;--bodyserif:'Newsreader',Georgia,serif}
+body{background:var(--paper)}::selection{background:#d9e2b8}
+.brand{letter-spacing:-.08em}.brand i{color:#3653a1}.topnav{border-bottom:2px solid var(--ink)}.edition-line{color:#3653a1}
+.hero{grid-template-columns:minmax(0,1fr) minmax(0,.96fr);align-items:stretch;gap:clamp(35px,4vw,70px);padding:70px 0 95px}
+.hero-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.hero h1{font-size:clamp(65px,7vw,111px);line-height:1.01;max-width:750px}.hero h1 em{color:#3653a1}
+.hero .deck{font-size:clamp(22px,2.2vw,29px)}
+.hero-art{height:min(64vw,680px);min-height:460px;border-radius:0;background:#234d82}
+.hero-art img{min-height:100%}.hero-art figcaption{bottom:0;left:0}
+.read-link{color:#2b4b9a}.stories-heading{border-top:3px solid var(--ink)}
+.story-grid{grid-template-columns:1.18fr 1fr 1fr}.story-tile:first-child{border-right:1px solid var(--rule);padding-right:30px}
+.tile-graphic{background:#e7dcbe}.tile-graphic b{color:#3653a1}.story-tile:nth-child(2) .tile-graphic{background:#e9bf9d}.story-tile:nth-child(2) .tile-graphic b{color:#963f31}.story-tile:nth-child(3) .tile-graphic{background:#bac5a1}.story-tile:nth-child(3) .tile-graphic b{color:#42563c}
+.more-issue{background:#e9e6d8;padding:45px;margin-bottom:95px}
+.article-header h1{max-width:900px}.article-header h1 em{color:#3653a1}.feature-image{background:#3e588f}
+.article-grid .side-note strong{color:#3653a1}.prose p:first-of-type:first-letter{color:#3653a1}
+.prose blockquote{border-color:#3653a1;color:#3653a1}
+@media(max-width:700px){.story-grid{display:grid;grid-template-columns:1fr}.story-tile:first-child{border-right:0;padding-right:0}.hero-art{height:400px;min-height:0}.hero-art img{min-height:0}.more-issue{margin:0 0 70px;padding:25px}}
