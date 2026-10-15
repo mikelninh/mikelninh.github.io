@@ -465,7 +465,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "milks-11",
-    "name": "Bio Mandeldrink",
+    "name": "Bio Mandel Drink Natur",
     "brand": "REWE Bio",
     "store": "REWE",
     "category": "Plant drinks",
@@ -473,8 +473,16 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=REWE%20Bio%20Bio%20Mandeldrink"
+    "image_url": "https://img.rewe-static.de/8090294/29688805_digital-image.png?imwidth=1200&impolicy=pdp",
+    "source_url": "https://www.rewe.de/shop/p/rewe-bio-pflanzlich-mandel-drink-natur-1l/8090294",
+    "quantity": "1 l",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/rewe-bio-pflanzlich-mandel-drink-natur-1l/8090294",
+    "retailer_sku": "8090294",
+    "photo_attribution": "REWE",
+    "photo_match_method": "direct_retailer_sku_product_page_packshot",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_verification_note": "REWE exact retailer SKU 8090294, 1L Bio Mandel Drink Natur, 1200px image from same product page"
   },
   {
     "id": "milks-12",
