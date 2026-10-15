@@ -40,7 +40,7 @@ function card(p){
  '<span class="photo-status '+state+'">'+label+esc(dims)+'</span>'+
  '<h3>'+esc(p.name)+'</h3><p>'+esc(p.brand)+' · '+esc(p.store)+'</p>'+
  '<div class="photo-links">'+(source?'<a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Quelle ↗</a>':'')+
- '<a href="./?view=discover&product='+encodeURIComponent(p.id)+'">Produkt ↗</a></div></article>';
+ '<a href="./?view=discover&product='+encodeURIComponent(p.id)+'">Produkt ↗</a>'+(state==='missing'||state==='low'?'<button type="button" class="gt-rescue-mini" data-gt-rescue="open" data-id="'+esc(p.id)+'">'+(state==='missing'?'🔎 Foto finden':'🔎 Foto reparieren')+'</button>':'')+'</div></article>';
 }
 function filtered(){
  const query=view.query.trim().toLocaleLowerCase('de');
