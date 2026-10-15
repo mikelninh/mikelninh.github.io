@@ -502,7 +502,7 @@ function renderDuo(){
  const labelB=remote?st.profiles.find(x=>x.id===room?.partner_id)?.display_name||'Person 2':'Huong';
  const round=remote?room?.round_no||1:snap.round;
  const controls='<div class="duo-controls"><div class="duo-switch"><button class="'+(!remote?'active':'')+'" data-action="duo-mode-local">Gemeinsam am Gerät</button><button class="'+(remote?'active':'')+'" data-action="duo-mode-remote">Zwei Konten / Geräte</button></div>'+
- '<div class="gap12"><button class="button button-ghost button-small" data-nav="board">← Tier List</button>'+(remote&&room?'<button class="button button-white button-small" data-action="duo-copy-link">Link teilen ↗</button>':'')+'</div></div>';
+ '<div class="gap12"><button class="button button-ghost button-small" data-nav="solo">✳ Solo Shuffle</button><button class="button button-ghost button-small" data-nav="board">← Tier List</button>'+(remote&&room?'<button class="button button-white button-small" data-action="duo-copy-link">Link teilen ↗</button>':'')+'</div></div>';
  const intro=head('GOOD THINGS / MIKEL × HUONG','One product.<br><em>Two opinions.</em>','Ihr entscheidet unabhängig. Erst wenn beide geantwortet haben, zeigen wir S–F oder „Nicht probiert“ nebeneinander.',remote?'ZWEI KONTEN':'SAME-DEVICE DEMO');
  if(remote&&!st.user)return intro+controls+empty('♡','Zwei echte Konten','Meldet euch jeweils mit einem eigenen Konto an, um geräteübergreifend zu spielen. Am selben Gerät könnt ihr sofort starten.','<button class="button button-lime" data-action="open-auth">Anmelden ↗</button>');
  if(remote&&!room){
