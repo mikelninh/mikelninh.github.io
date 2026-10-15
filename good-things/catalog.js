@@ -1559,7 +1559,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "vemondo-02",
-    "name": "Räuchertofu",
+    "name": "Veganer Bio Tofu Geräuchert",
     "brand": "Vemondo",
     "store": "Lidl",
     "category": "Lidl / Vemondo",
@@ -1567,8 +1567,17 @@ window.GT_CATALOG=[
     "emoji": "🌿",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.lidl.de/"
+    "image_url": "https://images.openfoodfacts.org/images/products/405/648/948/7753/front_de.3.400.jpg",
+    "source_url": "https://world.openfoodfacts.org/product/4056489487753",
+    "quantity": "350 g",
+    "barcode": "4056489487753",
+    "image_status": "barcode",
+    "image_source_url": "https://world.openfoodfacts.org/product/4056489487753",
+    "source_type": "openfoodfacts",
+    "photo_attribution": "Open Food Facts · CC BY-SA",
+    "photo_match_method": "lidls_brand_variant_and_off_barcode_record",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_verification_note": "Vemondo Lidl smoked tofu 350g from OFF barcode 4056489487753, crosschecked official Lidl 2024 pack photo"
   },
   {
     "id": "vemondo-03",
