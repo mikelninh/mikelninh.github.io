@@ -107,6 +107,7 @@
   }
   function renderCard(n,fit){
     const card=e('article','tender'),top=e('div','tender-top'),meta=e('div','eyebrow','TED / '+n.id+' · '+(n.buyer_country||'EU'));
+    card.dataset.noticeId=n.id;
     top.append(meta,e('span','stage stage-'+stage(n),STAGES[stage(n)]),e('span','match'+(fit.score<35?' low':''),fit.score+' / 100 text match'));
     card.append(top);
     const h=e('h3');h.append(link(n.title,n.url));card.append(h,p((n.buyer||'Buyer unspecified')+' · Published '+readable(n.published),'meta'));
@@ -290,6 +291,7 @@
   }
   function renderSpotlight(item,index){
     const n=item.notice,card=e('article','focus-card'),top=e('div','focus-card-top');
+    card.dataset.noticeId=n.id;
     top.append(e('span','focus-number',String(index+1).padStart(2,'0')));
     const meta=e('div','focus-top-meta');
     meta.append(e('span','focus-category','PUBLISHED COMPETITION'),e('span','focus-date',item.days+' days until published date'));
