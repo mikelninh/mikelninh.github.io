@@ -326,6 +326,7 @@ async function duoRefresh(){
   if(!revealResult.error){
    st.duo.history=revealResult.data||[];
    st.duo.reveal=st.duo.history.find(x=>x.round_no===room.round_no)||null;
+   if(st.duo.history.length){const notes=await sb.from('gt_duo_comments').select('room_id,round_no,user_id,comment,updated_at').eq('room_id',id).order('round_no',{ascending:false}).limit(100);if(!notes.error)st.duo.comments=notes.data||[]}
   }
   st.duo.error='';
   if(st.view==='duo'&&st.duo.mode==='remote')render();
@@ -410,6 +411,44 @@ function duoSharedLink(){
  if(!st.duo.room)return;
  copyLink(URL_BASE+'?view=duo&room='+encodeURIComponent(st.duo.room.id));
 }
+
+const DUO_TALK_PROMPTS=[
+ 'Was genau macht das Produkt für dich zu einer S- oder F-Wertung?',
+ 'Würdet ihr es nochmals kaufen — und zu welchem Preis?',
+ 'Ist es eher Geschmack, Textur, Zutatenliste oder Preis?',
+ 'Wer von euch bewertet strenger? Was könnte die Meinung ändern?',
+ 'Wäre dieses Produkt bei einem Blindtest genauso bewertet worden?'
+];
+function duoDiscussionPanel(product,roundNo,remote){
+ const note=remote?(st.duo.comments||[]).find(x=>x.room_id===st.duo.room?.id&&x.round_no===roundNo&&x.user_id===st.user?.id)?.comment||st.duo.discussionDraft||'':st.duo.local.discussion||'';
+ const other=remote?(st.duo.comments||[]).filter(x=>x.room_id===st.duo.room?.id&&x.round_no===roundNo&&x.user_id!==st.user?.id):[];
+ const prompt=DUO_TALK_PROMPTS[(String(product?.id||'').length+Number(roundNo))%DUO_TALK_PROMPTS.length];
+ return '<div class="shuffle-talk"><div class="eyebrow">LET’S TALK ABOUT IT</div><h3>Jetzt wird diskutiert. ♡</h3>'+
+ '<p class="shuffle-talk-prompt">'+esc(prompt)+'</p>'+
+ (other.length?'<div class="shuffle-other-notes">'+other.map(c=>{const profile=st.profiles.find(p=>p.id===c.user_id);return '<div class="shuffle-quote"><strong>'+esc(profile?.display_name||'Die andere Person')+':</strong> '+esc(c.comment)+'</div>'}).join('')+'</div>':'')+
+ '<label class="small" for="duoDiscussionNote">'+(remote?'Deine Antwort (für euch beide sichtbar)':'Was habt ihr gemeinsam festgestellt?')+'</label>'+
+ '<textarea class="control" id="duoDiscussionNote" rows="3" maxlength="600" placeholder="Wer hat die bessere Begründung? Was hat euch überrascht?">'+esc(note)+'</textarea>'+
+ '<div class="gap12"><button class="button button-small button-dark" data-action="duo-save-discussion">Gespräch festhalten ♡</button>'+
+ (remote?'<button class="button button-small button-ghost" data-action="duo-refresh">Antworten aktualisieren ↻</button>':'')+'</div>'+
+ '<p class="small muted">'+(remote?'Kommentare werden nur nach dem Reveal für die zwei Teilnehmenden gespeichert.':'Die Gesprächsnotiz wird auf diesem Gerät zusammen mit eurer Runde gespeichert.')+'</p></div>';
+}
+async function duoSaveDiscussion(){
+ if(st.duo.mode==='remote'){
+  if(!sb||!st.user||!st.duo.room||!st.duo.reveal)return toast('Diskussion ist erst nach beiden Bewertungen möglich.');
+  const note=String($('#duoDiscussionNote')?.value||'').trim().slice(0,600);
+  if(!note)return toast('Schreibt zuerst eure Meinung.');
+  const row={room_id:st.duo.room.id,round_no:st.duo.room.round_no,user_id:st.user.id,comment:note,updated_at:new Date().toISOString()};
+  const {error}=await sb.from('gt_duo_comments').upsert(row,{onConflict:'room_id,round_no,user_id'});
+  if(error)return toast('Kommentar nicht gespeichert: '+error.message);
+  st.duo.comments=(st.duo.comments||[]).filter(x=>!(x.room_id===row.room_id&&x.round_no===row.round_no&&x.user_id===row.user_id)).concat(row);
+  st.duo.discussionDraft=note;render();toast('Euer Gespräch wurde gespeichert ♡');return;
+ }
+ const local=st.duo.local;
+ if(!duoValidChoice(local.votes.mikel)||!duoValidChoice(local.votes.huong))return toast('Erst beide bewerten, dann gemeinsam diskutieren.');
+ local.discussion=String($('#duoDiscussionNote')?.value||'').trim().slice(0,600);
+ duoPersist();render();toast('Diskussion für diese Runde gespeichert ♡');
+}
+
 function duoStartPicker(local){
  if(duoValidChoice(local?.votes?.mikel)||duoValidChoice(local?.votes?.huong))return '';
  return '<div class="duo-start-picker"><span class="eyebrow">WER BEGINNT?</span><div class="duo-start-options">'+
@@ -492,14 +531,14 @@ function renderDuo(){
  '<div class="duo-waiting">✓ Dein Urteil ist gespeichert. Wir warten auf die zweite Antwort.<button class="button button-white button-small" data-action="duo-refresh">Aktualisieren ↻</button></div>');
  const counter=remote?(st.duo.history||[]):duoLocalHistory();
  const pic=duoPhotoMarkup(p);
- const historyWithCurrent=remote?counter:[...counter,...(done?[{productId:p.id,votes:{...snap.votes}}]:[])];
+ const historyWithCurrent=remote?counter:[...counter,...(done?[{productId:p.id,votes:{...snap.votes},discussion:st.duo.local.discussion||''}]:[])];
  return intro+controls+'<div class="duo-progress"><span>ROUND '+round+'</span><span>'+duoResultsSummary(counter)+'</span></div>'+
  '<div class="duo-stage"><div class="duo-product">'+pic+duoImageAuditBadge(p)+'<h3>'+esc(p.name)+'</h3><p>'+esc(p.brand)+' · '+esc(p.quantity||p.category)+'</p>'+
  (proteinNumber(p)!=null?'<span class="duo-protein">💪 '+proteinNumber(p)+' g Protein je 100 g/ml</span>':'')+
  '</div><div class="duo-decision">'+status+(remote?'':duoStartPicker(st.duo.local))+reveal+
  (remote?'<p class="small muted" style="text-align:center;margin:20px 0 0">Synchronisiert zwischen zwei getrennten Accounts. Ein unabhängiges Urteil pro Runde.</p>':
  '<p class="small muted" style="text-align:center;margin:20px 0 0">Private gemeinsame Vorschau auf diesem Gerät. Die tatsächlichen öffentlichen Profile werden nicht verändert.</p>')+
- '</div></div>'+duoHistoryPanel(historyWithCurrent,remote);
+ '</div></div>'+(done?duoDiscussionPanel(p,round,remote):'')+duoHistoryPanel(historyWithCurrent,remote);
 }
 
 
@@ -1534,6 +1573,7 @@ document.addEventListener('click',async(event)=>{
  case 'duo-start-local':await duoLocalStart(false);break;
  case 'duo-set-starter':duoSetStarter(val);break;
  case 'duo-export-history':duoExportHistory();break;
+ case 'duo-save-discussion':await duoSaveDiscussion();break;
  case 'duo-vote':if(st.duo.mode==='remote')await duoRemoteVote(val);else duoLocalVote(val);break;
  case 'duo-next-local':await duoLocalStart(true);break;
  case 'duo-next-remote':await duoNextRemote();break;
@@ -1588,6 +1628,7 @@ document.addEventListener('input',e=>{
  if(e.target.id==='productSearch'){st.query=e.target.value;refreshProducts()}
  if(e.target.id==='boardSearch'){st.boardQuery=e.target.value;refreshBoardTray()}
  if(e.target.id==='ratingNote')st.draftNote=e.target.value.slice(0,200);
+ if(e.target.id==='duoDiscussionNote'&&st.duo.mode==='remote')st.duo.discussionDraft=e.target.value.slice(0,600);
 });
 document.addEventListener('change',e=>{
  if(e.target.id==='importJsonFile'){importJson(e.target.files?.[0]);return}
