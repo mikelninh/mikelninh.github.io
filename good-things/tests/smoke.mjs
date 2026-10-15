@@ -12,6 +12,7 @@ const schema=fs.readFileSync(path.join(root,'schema.sql'),'utf8');
 const photoReports=fs.readFileSync(path.join(root,'photo-reports.sql'),'utf8');
 const duoSchema=fs.readFileSync(path.join(root,'duo-v18.sql'),'utf8');
 const duoPhotoGuard=fs.readFileSync(path.join(root,'duo-photo-guard-v18.sql'),'utf8');
+const duoCommentsSql=fs.readFileSync(path.join(root,'duo-comments-v20.sql'),'utf8');
 const productRequests=fs.readFileSync(path.join(root,'product-requests-v17.sql'),'utf8');
 const nutritionMigration=fs.readFileSync(path.join(root,'nutrition-v17.sql'),'utf8');
 const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
@@ -39,7 +40,7 @@ function fixture(seed={}){
   console,Intl};
  for(const catalog of catalogs)vm.runInNewContext(catalog,context);
  const injected=source.replace("document.addEventListener('click',async(event)=>{",
- "window.__qa={render,renderBoard,renderDiscover,renderOurs,renderMy,renderCommunity,ourPreview,productFacts,proteinNumber,filteredProducts,duoLocalStart,duoLocalVote,duoLocalSnapshot,duoSetStarter,duoStartPicker,duoHistoryPanel,duoPhotoCandidates,duoHiResImage,duoPick,renderDuo,boardMove,boardAnswers,boardEntries,boardNotTried,boardSorted,boardTrayProducts,boardInsertionIndex,undoBoard,resetBoard,matchedPhoto,saveRating,st,gradedRatings,notTriedRatings,selfRatings,publicRated,scoreFor,quickRank,importTier,importJson,snapshotUrl,decodeSnapshot};document.addEventListener('click',async(event)=>{");
+ "window.__qa={render,renderBoard,renderDiscover,renderOurs,renderMy,renderCommunity,ourPreview,productFacts,proteinNumber,filteredProducts,soloRender,soloStart,soloVote,soloSaveNote,soloHistory,soloCurrent,duoSaveDiscussion,duoDiscussionPanel,duoLocalStart,duoLocalVote,duoLocalSnapshot,duoSetStarter,duoStartPicker,duoHistoryPanel,duoPhotoCandidates,duoHiResImage,duoPick,renderDuo,boardMove,boardAnswers,boardEntries,boardNotTried,boardSorted,boardTrayProducts,boardInsertionIndex,undoBoard,resetBoard,matchedPhoto,saveRating,st,gradedRatings,notTriedRatings,selfRatings,publicRated,scoreFor,quickRank,importTier,importJson,snapshotUrl,decodeSnapshot};document.addEventListener('click',async(event)=>{");
  assert.ok(injected.includes('window.__qa={'),'Expected app injection point is missing');
  vm.runInNewContext(injected,context);
  return {context,t:window.__qa,localStorage};
@@ -431,4 +432,66 @@ test('Photo Lab audits linked images in batches and can inspect the full catalog
  assert.match(photoLabScript,/naturalWidth/);
  assert.match(photoLabScript,/photo-audit\.csv/);
  assert.match(photoLabScript,/status:'low'/);
+});
+
+test('Solo Shuffle picks a random real-photo item, saves private grade/note and does not repeat next',async()=>{
+ const {t,context,localStorage}=fixture();
+ assert.ok(t.soloRender().includes('Zufallsprodukt zeigen'));
+ await t.soloStart(false);
+ const first=t.soloCurrent();
+ assert.ok(first&&first.image_url?.startsWith('https://'));
+ await t.soloVote('F');
+ assert.equal(t.st.guest.you[first.id].tier,'F');
+ assert.equal(t.st.guest.you[first.id].is_public,false);
+ assert.ok(t.soloRender().includes('DEIN URTEIL'));
+ await t.soloSaveNote('Schmeckt überraschend künstlich.');
+ assert.equal(t.st.guest.you[first.id].note,'Schmeckt überraschend künstlich.');
+ assert.ok(localStorage.getItem('goodthings_solo_v20'));
+ await t.soloStart(true);
+ assert.equal(t.soloHistory().length,1);
+ assert.notEqual(t.soloCurrent().id,first.id);
+ assert.match(t.soloRender(),/solo-vote/);
+});
+test('Solo not tried is an explicit no-grade answer separate from F',async()=>{
+ const {t}=fixture();
+ await t.soloStart(false);
+ const id=t.soloCurrent().id;
+ await t.soloVote('not_tried');
+ const r=t.st.guest.you[id];
+ assert.equal(r.status,'not_tried');
+ assert.equal(r.tier,null);
+ assert.equal(r.is_public,false);
+});
+test('Together discussion appears only after reveal, persists with the round, and is escaped',async()=>{
+ const {t,context,localStorage}=fixture();
+ t.duoSetStarter('huong');
+ await t.duoLocalStart(false);
+ t.duoLocalVote('D');
+ assert.ok(!t.renderDuo().includes('shuffle-talk'));
+ t.duoLocalVote('F');
+ assert.ok(t.renderDuo().includes('Jetzt wird diskutiert'));
+ assert.ok(t.renderDuo().includes('duoDiscussionNote'));
+ context.document.querySelector('#duoDiscussionNote').value='<script>alert("no")</script> Textur ist schrecklich.';
+ await t.duoSaveDiscussion();
+ assert.equal(t.st.duo.local.discussion,'<script>alert("no")</script> Textur ist schrecklich.');
+ assert.ok(t.renderDuo().includes('&lt;script&gt;'));
+ await t.duoLocalStart(true);
+ assert.equal(t.st.duo.local.history[0].discussion,'<script>alert("no")</script> Textur ist schrecklich.');
+ assert.ok(localStorage.getItem('goodthings_duo_v18').includes('Textur'));
+});
+test('Database private duo commentary cannot be read or written before both votes',()=>{
+ assert.match(duoCommentsSql,/gt_duo_comments/);
+ assert.match(duoCommentsSql,/enable row level security/i);
+ assert.match(duoCommentsSql,/gt_duo_reveals rv/);
+ assert.match(duoCommentsSql,/comment text not null check/);
+ assert.match(duoCommentsSql,/user_id=\(select auth\.uid\(\)\)/);
+ assert.match(source,/gt_duo_comments/);
+});
+test('Solo and Together Shuffle have links on mobile and desktop',()=>{
+ assert.match(index,/data-nav="solo"/);
+ assert.match(index,/data-nav="duo"/);
+ assert.match(index,/Play Solo Shuffle/);
+ assert.match(index,/Play Together/);
+ assert.match(allCSS,/shuffle-talk/);
+ assert.match(allCSS,/shuffle-mode-nav/);
 });
