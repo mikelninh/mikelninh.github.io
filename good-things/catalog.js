@@ -291,8 +291,17 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Alpro%20Soja%20Original"
+    "image_url": "https://images.openfoodfacts.org/images/products/541/118/811/5472/front_de.222.400.jpg",
+    "source_url": "https://world.openfoodfacts.org/product/5411188115472",
+    "quantity": "1 l",
+    "barcode": "5411188115472",
+    "image_status": "barcode",
+    "image_source_url": "https://world.openfoodfacts.org/product/5411188115472",
+    "source_type": "openfoodfacts",
+    "photo_attribution": "Open Food Facts · CC BY-SA",
+    "photo_match_method": "ean_retailer_and_off_front",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_verification_note": "GTIN for alpro soy Original 1L corroborated by French specialist Piccantino and Miamland, German OFF front image"
   },
   {
     "id": "milks-02",
@@ -983,7 +992,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "deli-03",
-    "name": "Veganer Hauchschnitt Klassisch",
+    "name": "Veganer Hauchgenuss Klassisch Typ Hähnchen (ehem. Hauchschnitt)",
     "brand": "Rügenwalder Mühle",
     "store": "REWE",
     "category": "Deli slices & toppings",
@@ -991,8 +1000,17 @@ window.GT_CATALOG=[
     "emoji": "🥪",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=R%C3%BCgenwalder%20M%C3%BChle%20Veganer%20Hauchschnitt%20Klassisch"
+    "image_url": "https://images.openfoodfacts.org/images/products/400/040/500/1738/front_de.91.400.jpg",
+    "source_url": "https://world.openfoodfacts.org/product/4000405001738",
+    "quantity": "70 g",
+    "barcode": "4000405001738",
+    "image_status": "barcode",
+    "image_source_url": "https://world.openfoodfacts.org/product/4000405001738",
+    "source_type": "openfoodfacts",
+    "photo_attribution": "Open Food Facts · CC BY-SA",
+    "photo_match_method": "ean_retailer_and_off_front",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_verification_note": "GTIN for previously named Hauchschnitt confirmed in published Mintel dataset; renamed by manufacturer to Hauchgenuss, source OFF current front"
   },
   {
     "id": "deli-04",
