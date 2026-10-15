@@ -116,6 +116,25 @@ h1 em,h2 em{font-style:italic;color:#63836c}
 @media(max-width:800px){.hero-grid,.section-intro,.principle-grid,.about-grid{grid-template-columns:1fr}.hero-side{min-height:220px}.project{grid-template-columns:1fr}.project-art{min-height:250px;order:-1}.section{padding:70px 0}.about-grid{gap:22px}.navlinks{gap:13px}.footer-grid{align-items:start;flex-direction:column}}
 @media(max-width:540px){.wrap{width:calc(100% - 36px)}.topbar{height:60px}.navlinks a:not(.hello-link){display:none}.hero{padding:66px 0}.hero h1{font-size:clamp(48px,12vw,67px)}.hero-side{min-height:240px}.project-copy{padding:28px}.project-art{padding:22px}.footer-bottom a{margin-left:10px}.footer-bottom{align-items:start}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+
+/* Real, locally hosted captures from the actual applications. */
+.project-art{padding:0}
+.project-art>.project-screenshot{display:block;width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center top;z-index:3}
+.project-art>.project-screenshot[hidden]{display:none}
+.project-art:has(>.project-screenshot:not([hidden]))>.schematic,
+.project-art:has(>.project-screenshot:not([hidden]))>.tier-shell,
+.project-art:has(>.project-screenshot:not([hidden]))>.ops-shell{display:none}
+.play-feature{display:grid;grid-template-columns:minmax(0,.84fr) minmax(0,1.16fr);margin:50px 0 0;border:1px solid #e1d5c5;border-radius:13px;overflow:hidden;background:#fbf4ea}
+.play-feature-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(27px,4vw,48px)}
+.play-feature h3{font:400 clamp(36px,4vw,54px)/1.04 var(--serif);letter-spacing:-.04em;margin:20px 0 12px}
+.play-feature p{font-size:14px;color:#56685a;line-height:1.75;max-width:420px;margin-bottom:15px}
+.play-feature .play-feature-note{color:#8a8c7d;font-size:11px;line-height:1.55;display:block;margin-bottom:22px;max-width:400px}
+.play-feature-visual{display:block;position:relative;min-height:280px;background:#e4decf;overflow:hidden}
+.play-feature-visual img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:60% center;transition:transform .25s}
+.play-feature-visual:hover img{transform:scale(1.015)}
+@media(max-width:800px){.play-feature{grid-template-columns:1fr}.play-feature-visual{min-height:320px;order:-1}.project-art>.project-screenshot{object-position:center top}}
+@media(max-width:540px){.play-feature{margin-top:35px}.play-feature-visual{min-height:230px}.play-feature-copy{padding:27px}}
+
 </style>
 </head>
 <body>
@@ -150,7 +169,7 @@ h1 em,h2 em{font-style:italic;color:#63836c}
 <p class="project-note">Built with retrieval, APIs, MCP tools and tests. Source lookup is stronger than end-to-end legal advice.</p>
 <a class="project-link" href="https://mikelninh.github.io/gitlaw/">Try GitLaw ↗</a>
 </div>
-<div class="project-art law" aria-label="Illustration of GitLaw source-grounded search">
+<div class="project-art law" aria-label="Actual screenshot of the GitLaw application"><img class="project-screenshot" src="assets/project-shots/gitlaw.png" width="1280" height="800" loading="lazy" decoding="async" alt="Real GitLaw website showing the searchable law research interface" onerror="this.hidden=true">
 <div class="schematic"><div class="schem-head"><span>GITLAW / SOURCE SEARCH</span><span>DE · 5,936 laws</span></div><div class="schem-query">Where does the law actually say that? <span aria-hidden="true">↗</span></div><div class="schem-doc"><span class="schem-mark">§</span><div><b>Source found</b><small>Open the relevant paragraph · Check the citation</small></div></div><div class="schem-doc"><span class="schem-mark">✓</span><div><b>Evidence before confidence</b><small>You can inspect what the answer depends on</small></div></div></div>
 </div>
 </article>
@@ -162,7 +181,7 @@ h1 em,h2 em{font-style:italic;color:#63836c}
 <p class="project-note">Work in progress. We’re still improving the catalogue, product photos and nutrition details.</p>
 <a class="project-link" href="good-things/?view=duo">Try GOOD THINGS ↗</a>
 </div>
-<div class="project-art food" aria-label="Illustration of the GOOD THINGS vegan tasting tiers">
+<div class="project-art food" aria-label="Actual screenshot of the GOOD THINGS application"><img class="project-screenshot" src="assets/project-shots/good-things.png" width="1280" height="800" loading="lazy" decoding="async" alt="Real GOOD THINGS website showing the vegan discovery and tier board" onerror="this.hidden=true">
 <div class="tier-shell"><div class="tier-title"><span>GOOD THINGS</span><span>the taste test · ✳</span></div><div class="tier-row"><span class="tier-grade s">S</span><span class="tier-item">Would buy again immediately <span class="tier-pill">♥</span></span></div><div class="tier-row"><span class="tier-grade a">A</span><span class="tier-item">Very good, actually</span></div><div class="tier-row"><span class="tier-grade b">B</span><span class="tier-item">Would happily eat</span></div><div class="tier-row"><span class="tier-grade f">F</span><span class="tier-item">Durchgefallen. We have standards.</span></div></div>
 </div>
 </article>
@@ -174,12 +193,24 @@ h1 em,h2 em{font-style:italic;color:#63836c}
 <p class="project-note">Eight fictional cases; deterministic checks. No live insurer data or model calls.</p>
 <a class="project-link" href="inca-demo/">Try the Claims Ops Loop ↗</a>
 </div>
-<div class="project-art ops" aria-label="Illustration of a simple claims review workflow">
+<div class="project-art ops" aria-label="Actual screenshot of the Claims Ops Loop work sample"><img class="project-screenshot" src="assets/project-shots/claims-ops.png" width="1280" height="800" loading="lazy" decoding="async" alt="Real Claims Ops Loop work sample showing a synthetic insurance claim review" onerror="this.hidden=true">
 <div class="ops-shell"><div class="ops-label">CLAIMS OPS / SYNTHETIC EXERCISE</div><div class="ops-title">One decision needs a second look.</div><div class="ops-claim">Repair invoice ≠ reported incident</div><div class="ops-row"><span class="ops-step">Decision</span><span class="ops-arrow">→</span><span class="ops-step">Check</span><span class="ops-arrow">→</span><span class="ops-step">Human review</span></div></div>
 </div>
 </article>
 </div>
 <div class="work-extra"><span>There’s more behind these three, including agent safety and document review experiments.</span><a href="proofs.html">More AI engineering work ↗</a></div>
+<aside class="play-feature" aria-label="A playable little detour">
+  <div class="play-feature-copy">
+    <div class="eyebrow">A LITTLE DETOUR · PLAY SOMETHING</div>
+    <h3>Don’t Drop the Cake.</h3>
+    <p>Seven floors. A wedding cake taller than your optimism. A broken elevator. I made a rather silly balance game, and I think you might enjoy it.</p>
+    <span class="play-feature-note">Take the stairs. Mind the wobble. No actual pastries were harmed in the making of this website.</span>
+    <a class="btn btn-main" href="https://dont-drop-the-cake-run.hyperspacekid.chatgpt.site/" target="_blank" rel="noopener noreferrer">Play the game ↗</a>
+  </div>
+  <a class="play-feature-visual" href="https://dont-drop-the-cake-run.hyperspacekid.chatgpt.site/" target="_blank" rel="noopener noreferrer" aria-label="Play Don’t Drop the Cake">
+    <img src="beyond-cv/dont-drop-the-cake/preview.png" width="1440" height="900" loading="lazy" decoding="async" alt="Actual Don’t Drop the Cake game: a courier carrying a seven-tier wedding cake in the Grand Hotel">
+  </a>
+</aside>
 </div></section>
 <section class="section principle" id="how"><div class="wrap principle-grid">
 <div><div class="eyebrow">02 / How I work</div><h2 style="margin-top:20px">I’d rather try<br><em>than pretend to know.</em></h2></div>
