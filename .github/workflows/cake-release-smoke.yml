@@ -1,0 +1,30 @@
+name: Cake game release smoke
+on:
+  push:
+    paths:
+      - scripts/cake-release-smoke.mjs
+      - .github/workflows/cake-release-smoke.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser tools
+        run: |
+          npm install --no-save --no-package-lock playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Check the existing live game
+        run: node scripts/cake-release-smoke.mjs
+      - name: Upload screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cake-release-smoke
+          path: assets/cake-release-check/
