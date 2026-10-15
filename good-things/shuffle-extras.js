@@ -137,20 +137,20 @@ function ensure(p){
 function afterRender(p){if(p)ensure(p)}
 
 const MOTION_KEY='goodthings_shuffle_motion_v22';
-const MOTION_MODES=['arcade','quick','off'];
+const MOTION_MODES=['booster','party','off'];
 let inMemoryMotion=null;
 function motionSetting(){
  if(MOTION_MODES.includes(inMemoryMotion))return inMemoryMotion;
  let stored;
  try{stored=localStorage.getItem(MOTION_KEY)}catch(_){}
- return MOTION_MODES.includes(stored)?stored:'arcade';
+ return stored==='arcade'||stored==='quick'?'party':MOTION_MODES.includes(stored)?stored:'booster';
 }
 function reduceMotion(){return Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches)}
 function motionControls(){
  const active=motionSetting(),reduced=reduceMotion();
  return '<div class="gt-motion-controls" role="group" aria-label="Animation beim Zufallsprodukt wählen">'+
  '<span class="gt-motion-label">✳ Reveal</span>'+
- [['arcade','✨ Arcade'],['quick','⚡ Kurz'],['off','◌ Aus']].map(([mode,label])=>
+ [['booster','✨ Booster Pack'],['party','🎉 Party Surprise'],['off','◌ Aus']].map(([mode,label])=>
  '<button type="button" data-action="shuffle-motion" data-value="'+mode+'" aria-pressed="'+(active===mode)+'" class="gt-motion-option'+(active===mode?' is-selected':'')+'">'+label+'</button>').join('')+
  (reduced?'<span class="gt-motion-os-note" title="Die Betriebssystem-Einstellung für weniger Bewegung hat Vorrang">System: reduziert</span>':'')+
  '</div>';
@@ -171,9 +171,9 @@ async function spin(task){
  if(motion==='off'||reduceMotion()){
   try{return await task()}finally{spinner=false}
  }
- const fast=motion==='quick';
+ const booster=motion==='booster';const fast=false;
  const overlay=document.createElement('div');
- overlay.className='gt-spin-overlay gt-spin-v22'+(fast?' gt-spin-quick':'');
+ overlay.className='gt-spin-overlay gt-spin-v22'+(booster?' gt-spin-booster':' gt-spin-party');
  overlay.setAttribute('role','dialog');
  overlay.setAttribute('aria-modal','true');
  overlay.setAttribute('aria-label','Überraschungsprodukt wird gezogen');
@@ -181,11 +181,11 @@ async function spin(task){
  overlay.innerHTML='<div class="gt-draw-card">'+
  '<div class="gt-draw-corner">GOOD THINGS <span>✳</span> MYSTERY DRAW</div>'+
  '<div class="gt-draw-orbit gt-draw-orbit-a" aria-hidden="true">✺</div><div class="gt-draw-orbit gt-draw-orbit-b" aria-hidden="true">✴</div>'+
- '<div class="gt-draw-headline"><span class="gt-draw-badge">100% SURPRISE · 0% WAGER</span><h2 id="gt-draw-title">And the snack is...</h2></div>'+
- '<div class="gt-draw-reel-frame"><div class="gt-draw-frame-top">✦ THE GREAT VEGAN MYSTERY ✦</div><div class="gt-draw-reels" aria-hidden="true">'+[0,1,2].map(reel).join('')+'</div>'+
+ '<div class="gt-draw-headline"><span class="gt-draw-badge">100% SURPRISE · 0% WAGER</span><h2 id="gt-draw-title">'+(booster?'One pack. One surprise.':'And the snack is...')+'</h2></div>'+
+ '<div class="gt-draw-reel-frame"><div class="gt-draw-frame-top">'+(booster?'✦ UNSEAL YOUR NEXT DISCOVERY ✦':'✦ THE GREAT VEGAN MYSTERY ✦')+'</div>'+(booster?'<div class="gt-booster-opening"><div class="gt-booster-pack"><span class="gt-booster-foil">✴ ✳ ✴</span><span class="gt-booster-mark">GOOD<br>THINGS</span><span class="gt-booster-star">✳</span><span class="gt-booster-sub">A LITTLE PACK OF SURPRISE</span><span class="gt-booster-edition">TASTE EDITION · Nº 002</span><span class="gt-booster-seal">✺ RIP & REVEAL ✺</span></div><div class="gt-booster-shine"></div></div>':'<div class="gt-draw-reels" aria-hidden="true">'+[0,1,2].map(reel).join('')+'</div>')+
  '<div class="gt-draw-reveal" hidden><div class="gt-draw-reveal-halo"></div><div class="gt-draw-product-image">✳</div><div class="gt-draw-found-label">TODAY’S LITTLE DISCOVERY</div><strong id="gt-draw-product-name">Surprise!</strong><small id="gt-draw-product-brand"></small></div>'+
  '<div class="gt-draw-frame-bottom">NO SPOILERS. JUST TASTE.</div></div>'+
- '<div class="gt-draw-ticker" id="gt-draw-line" role="status" aria-live="polite">Das Universum mischt die Snacks …</div>'+
+ '<div class="gt-draw-ticker" id="gt-draw-line" role="status" aria-live="polite">'+(booster?'Das nächste Produkt wartet hinter dem Siegel …':'Das Universum mischt die Snacks …')+'</div>'+
  '<button type="button" class="gt-draw-skip" aria-label="Animation überspringen">Überspringen ↗</button>'+
  '<div class="gt-draw-confetti" aria-hidden="true">'+Array.from({length:16},(_,i)=>'<i style="--i:'+i+'"></i>').join('')+'</div>'+
  '</div>';
@@ -193,7 +193,7 @@ async function spin(task){
  const lastFocus=document.activeElement;
  let ticks=0;
  const reels=[...overlay.querySelectorAll('[data-gt-reel]')];
- const timers=reels.map((el,j)=>setInterval(()=>{
+ const timers=booster?[]:reels.map((el,j)=>setInterval(()=>{
   if(!el.isConnected)return;
   const symbol=el.querySelector('span');
   if(symbol)symbol.textContent=drawEmojis[(ticks*(j+3)+j*5+drawEmojis.length)%drawEmojis.length];
@@ -240,7 +240,7 @@ async function spin(task){
   }else visual.textContent='✳';
   overlay.querySelector('#gt-draw-product-name').textContent=name;
   overlay.querySelector('#gt-draw-product-brand').textContent=brand;
-  overlay.querySelector('#gt-draw-title').textContent='TA-DAAA! ✳';
+  overlay.querySelector('#gt-draw-title').textContent=booster?'PACK OPENED! ✳':'TA-DAAA! ✳';
   const revealer=overlay.querySelector('.gt-draw-reveal');
   revealer.hidden=false;
   overlay.classList.add('gt-draw-winner');
