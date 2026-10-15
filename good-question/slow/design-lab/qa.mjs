@@ -10,7 +10,8 @@ let checked=0;let violations=[];
 try{
  for(const [label,w,h] of [['desktop',1440,900],['mobile',375,812]]){
    for(const path of paths){
-     const page=await browser.newPage({viewport:{width:w,height:h},reducedMotion:'reduce'});
+     const context=await browser.newContext({viewport:{width:w,height:h},reducedMotion:'reduce'});
+     const page=await context.newPage();
      const problems=[];page.on('pageerror',e=>problems.push('JS: '+e.message));
      const response=await page.goto(origin+path,{waitUntil:'networkidle',timeout:30000});
      assert.equal(response.status(),200,'HTTP '+path);
@@ -43,7 +44,7 @@ try{
      if(important.length)violations.push({path,label,violations:important.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.slice(0,3).map(n=>n.target)}))});
      const name=(path||'compare').replaceAll('/','-').replace(/-$/,'');
      await page.screenshot({path:'good-question/slow/design-lab/qa-shots/'+name+'-'+label+'.png',fullPage:true});
-     await page.close();checked++;
+     await context.close();checked++;
      console.log('PASS',label,path||'comparison','axe violations:',audit.violations.length);
    }
  }
