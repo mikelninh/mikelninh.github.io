@@ -93,7 +93,7 @@ async function searchCandidates(){
    .filter(h=>(Array.isArray(h.brands)?h.brands:[h.brands]).some(b=>normName(b).includes(brandSlug)||brandSlug.includes(normName(b))&&normName(b).length>4))
    .map(h=>{
     const words=searchWord(h.product_name),overlap=tokens.filter(t=>words.some(w=>w.includes(t)||t.includes(w))).length,score=overlap/Math.max(tokens.length,1);
-    return {code:String(h.code),brand:(h.brands||[]).join(', '),name:String(h.product_name||''),quantity:String(h.quantity||''),image:safe(h.image_front_url),score};
+    return {code:String(h.code),brand:(Array.isArray(h.brands)?h.brands:[h.brands]).filter(Boolean).join(', '),name:String(h.product_name||''),quantity:String(h.quantity||''),image:safe(h.image_front_url),score};
    })
    .sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name,'de')).slice(0,18);
   if(!searchSuggestions.length)searchError='Keine ausreichend passenden Kandidaten gefunden. Bitte EAN manuell recherchieren oder die Produktbezeichnung prüfen.';
