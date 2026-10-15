@@ -652,7 +652,8 @@ body:has(.shuffle-mode-nav) .hero p{font-size:14px;margin:0}
 .gt-draw-skip:focus-visible{outline:3px solid #d3ef90;outline-offset:3px}
 .gt-draw-skip:disabled{opacity:.65;cursor:default}
 .gt-draw-confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:0}
-.gt-draw-confetti i{position:absolute;top:-26px;left:calc(8% + (var(--i) * 5.5%));height:13px;width:7px;background:hsl(calc(62 + var(--i) * 11) 76% 72%);border-radius:2px;transform:rotate(calc(var(--i) * 24deg));animation:gtConfetti 1.5s cubic-bezier(.26,.7,.4,1) both;animation-delay:calc(var(--i) * 31ms)}
+.gt-draw-confetti i{position:absolute;top:-26px;left:calc(8% + (var(--i) * 5.5%));height:13px;width:7px;background:hsl(calc(62 + var(--i) * 11) 76% 72%);border-radius:2px;transform:rotate(calc(var(--i) * 24deg));animation:none} 
+.gt-draw-winner .gt-draw-confetti i{animation:gtConfetti 1.5s cubic-bezier(.26,.7,.4,1) both;animation-delay:calc(var(--i) * 31ms)}
 .gt-draw-winner .gt-draw-confetti{opacity:1}
 .gt-draw-reveal{height:142px;position:relative;z-index:3;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#2c4d32;gap:4px}
 .gt-draw-reveal[hidden]{display:none}
