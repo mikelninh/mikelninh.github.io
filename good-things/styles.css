@@ -781,3 +781,24 @@ body.gt-rescue-open{overflow:hidden}
 .gt-rescue-suggestion small{display:block;margin-top:5px;color:#71806a;font-size:10px;line-height:1.4}
 .gt-rescue-suggestion>span:last-child{font-size:10px;font-weight:800;white-space:nowrap}
 @media(max-width:450px){.gt-rescue-suggestion{grid-template-columns:42px minmax(0,1fr)}.gt-rescue-suggestion>span:last-child{grid-column:2}}
+
+/* v2.4 — deliberately ridiculous, zero-stakes Overdrive */
+.gt-spin-overdrive{background:radial-gradient(circle at 50% 40%,rgba(90,32,104,.78),rgba(18,9,35,.98));}
+.gt-spin-overdrive .gt-draw-card{background:linear-gradient(143deg,#30234e,#170d30 43%,#241236 75%,#392548);border:2px solid #edbfff;box-shadow:0 25px 125px rgba(2,0,18,.86),0 0 90px rgba(239,130,245,.26),inset 0 0 0 7px rgba(255,235,129,.08);animation:gtOverdriveQuake .34s ease-in-out infinite alternate}
+.gt-spin-overdrive .gt-draw-card:after{height:7px;background:linear-gradient(90deg,#c2f7ff,#f7f36d,#ff82d3,#c2f7ff);background-size:250% 100%;animation:gtOverdriveStrobe 1.9s linear infinite}
+.gt-spin-overdrive .gt-draw-badge{background:#ffef79;color:#4a1849;box-shadow:0 0 24px #fc94cd75;}
+.gt-spin-overdrive .gt-draw-headline h2{color:#fff2a2;font:950 clamp(29px,5.4vw,44px)/1.03 'DM Sans',system-ui,sans-serif;text-transform:uppercase;text-shadow:2px 4px 0 #9b3d9c;animation:gtOverdriveTitle .54s ease-in-out infinite alternate;letter-spacing:-.055em}
+.gt-spin-overdrive .gt-draw-reel-frame{border:3px solid #ffbfe7;background:linear-gradient(140deg,#ffebf8,#dbe4ff);box-shadow:0 14px 0 #a64eab,0 25px 65px #040012a8;}
+.gt-spin-overdrive .gt-reel{border:2px solid #e49dec;background:linear-gradient(#d3c0f6,#fff7ed,#ffeff9);height:156px}
+.gt-spin-overdrive .gt-reel span{font-size:81px;animation-duration:.1s}
+.gt-spin-overdrive .gt-draw-ticker{font:900 14px/1.45 'DM Sans',system-ui,sans-serif;letter-spacing:.04em;color:#ffed8e;text-shadow:0 0 10px #d2b0e1}
+.gt-spin-overdrive .gt-draw-orbit{font-size:84px;color:#fced91;opacity:.8;animation-duration:1s}
+.gt-spin-overdrive .gt-draw-confetti i{height:17px;width:11px}
+.gt-spin-overdrive .gt-draw-winner .gt-draw-headline h2{color:#c3ffc1;animation:none}
+.gt-spin-overdrive .gt-draw-reveal-halo{background:radial-gradient(circle,#f8d0ff,transparent 75%)}
+.gt-spin-overdrive.gt-draw-winner .gt-draw-card{animation:none}
+@keyframes gtOverdriveQuake{0%{transform:translate(-1px,0) rotate(-.28deg)}100%{transform:translate(1px,-1px) rotate(.28deg)}}
+@keyframes gtOverdriveStrobe{to{background-position:250% 0}}
+@keyframes gtOverdriveTitle{to{transform:scale(1.025);text-shadow:-2px 4px 0 #3f8d92}}
+@media(max-width:550px){.gt-spin-overdrive .gt-reel{height:117px}.gt-spin-overdrive .gt-reel span{font-size:62px}.gt-spin-overdrive .gt-draw-headline h2{font-size:30px}.gt-motion-controls{gap:3px}.gt-motion-option{padding:8px 10px;font-size:10px}}
+@media(prefers-reduced-motion:reduce){.gt-spin-overdrive .gt-draw-card,.gt-spin-overdrive .gt-draw-card:after,.gt-spin-overdrive .gt-draw-headline h2{animation:none!important}}
