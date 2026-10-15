@@ -15,10 +15,12 @@ function saveCachedPhoto(p,u){
 const savedPhotos=getCachedPhotos();
 for(const p of window.GT_CATALOG||[]){
  const saved=savedPhotos[p.id];
- if(p.barcode&&saved?.barcode===p.barcode&&url(saved.url)&&new URL(saved.url).hostname==='images.openfoodfacts.org'){
-  p.image_url=saved.url;p.image_status='barcode';
+ const communityImage=Boolean(saved?.reviewed===true&&!p.barcode&&/^\d{8,14}$/.test(saved?.barcode||''));
+ if((communityImage||(p.barcode&&saved?.barcode===p.barcode))&&url(saved?.url)&&new URL(saved.url).hostname==='images.openfoodfacts.org'){
+  if(communityImage)p.barcode=saved.barcode;
+  p.image_url=saved.url;p.image_status='barcode';p.photo_blocked=false;
   p.image_source_url='https://world.openfoodfacts.org/product/'+p.barcode;
-  p.photo_attribution='Open Food Facts · EAN';
+  p.photo_attribution='Open Food Facts · EAN';p.photo_match_method=communityImage?'locally_reviewed_exact_barcode':'barcode_recovery';
  }
 }
 const units=[['Energie','kcal','kcal'],['Protein','protein','g'],['Kohlenhydrate','carbs','g'],['davon Zucker','sugar','g'],['Fett','fat','g'],['davon gesättigte Fettsäuren','satFat','g'],['Ballaststoffe','fiber','g'],['Salz','salt','g']];
