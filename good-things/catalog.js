@@ -143,8 +143,17 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Tukan%20Bio%20Tofu%20Natur"
+    "image_url": "https://images.openfoodfacts.org/images/products/401/235/971/0109/front_de.22.400.jpg",
+    "source_url": "https://de.openfoodfacts.org/produkt/4012359710109",
+    "barcode": "4012359710109",
+    "quantity": "200 g",
+    "image_status": "barcode",
+    "image_source_url": "https://de.openfoodfacts.org/produkt/4012359710109",
+    "source_type": "openfoodfacts",
+    "photo_attribution": "Open Food Facts · CC BY-SA",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_match_method": "exact_manufacturer_or_retailer_gtin_crosschecked_off",
+    "vegan_status": "source_checked"
   },
   {
     "id": "tofu-10",
@@ -156,8 +165,17 @@ window.GT_CATALOG=[
     "emoji": "🍱",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Tukan%20Bio%20R%C3%A4uchertofu"
+    "image_url": "https://images.openfoodfacts.org/images/products/401/235/971/1106/front_de.34.400.jpg",
+    "source_url": "https://de.openfoodfacts.org/produkt/4012359711106",
+    "barcode": "4012359711106",
+    "quantity": "200 g",
+    "image_status": "barcode",
+    "image_source_url": "https://de.openfoodfacts.org/produkt/4012359711106",
+    "source_type": "openfoodfacts",
+    "photo_attribution": "Open Food Facts · CC BY-SA",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_match_method": "exact_manufacturer_or_retailer_gtin_crosschecked_off",
+    "vegan_status": "source_checked"
   },
   {
     "id": "tofu-11",
@@ -320,7 +338,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "milks-05",
-    "name": "Haferdrink Original",
+    "name": "Bio Haferdrink Original",
     "brand": "Oatly",
     "store": "REWE",
     "category": "Plant drinks",
@@ -328,8 +346,17 @@ window.GT_CATALOG=[
     "emoji": "🥛",
     "tone": "oat",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Oatly%20Haferdrink%20Original"
+    "image_url": "https://images.openfoodfacts.org/images/products/739/437/661/5894/front_de.43.400.jpg",
+    "source_url": "https://de.openfoodfacts.org/produkt/7394376615894",
+    "barcode": "7394376615894",
+    "quantity": "1 l",
+    "image_status": "barcode",
+    "image_source_url": "https://de.openfoodfacts.org/produkt/7394376615894",
+    "source_type": "openfoodfacts",
+    "photo_attribution": "Open Food Facts · CC BY-SA",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_match_method": "exact_manufacturer_or_retailer_gtin_crosschecked_off",
+    "vegan_status": "source_checked"
   },
   {
     "id": "milks-06",
@@ -1399,7 +1426,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "vemondo-01",
-    "name": "Tofu Natur",
+    "name": "Bio Tofu Natur",
     "brand": "Vemondo",
     "store": "Lidl",
     "category": "Lidl / Vemondo",
@@ -1407,8 +1434,17 @@ window.GT_CATALOG=[
     "emoji": "🌿",
     "tone": "mint",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.lidl.de/"
+    "image_url": "https://images.openfoodfacts.org/images/products/405/648/961/6191/front_de.30.400.jpg",
+    "source_url": "https://de.openfoodfacts.org/produkt/4056489616191",
+    "barcode": "4056489616191",
+    "quantity": "400 g (2×200 g)",
+    "image_status": "barcode",
+    "image_source_url": "https://de.openfoodfacts.org/produkt/4056489616191",
+    "source_type": "openfoodfacts",
+    "photo_attribution": "Open Food Facts · CC BY-SA",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_match_method": "exact_manufacturer_or_retailer_gtin_crosschecked_off",
+    "vegan_status": "source_checked"
   },
   {
     "id": "vemondo-02",
