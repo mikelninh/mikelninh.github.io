@@ -1,0 +1,26 @@
+name: BIDPILOT · first-value product study release gate
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'bidpilot/**'
+      - '.github/workflows/bidpilot-product-gate.yml'
+permissions:
+  contents: read
+jobs:
+  study-and-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Check production scripts
+        run: |
+          node --check bidpilot/app.js
+          node --check bidpilot/study.js
+          node --check bidpilot/priority.js
+      - name: Verify honest product-study measurement and existing screening
+        run: node --test bidpilot/test_study.cjs bidpilot/test_ui.cjs bidpilot/test_priority.cjs bidpilot/test_dashboard.cjs
