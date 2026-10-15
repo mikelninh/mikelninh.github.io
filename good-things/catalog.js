@@ -1355,7 +1355,7 @@ window.GT_CATALOG=[
   },
   {
     "id": "snacks-05",
-    "name": "Sweet Chili Chips",
+    "name": "Thai Sweet Chili Chips",
     "brand": "Kettle",
     "store": "REWE",
     "category": "Chips & snacks",
@@ -1363,8 +1363,16 @@ window.GT_CATALOG=[
     "emoji": "🍿",
     "tone": "peach",
     "verified": false,
-    "image_url": null,
-    "source_url": "https://www.rewe.de/suche/produkte?search=Kettle%20Sweet%20Chili%20Chips"
+    "image_url": "https://img.rewe-static.de/8901235/40249169_digital-image.png?imwidth=1200&impolicy=pdp",
+    "source_url": "https://www.rewe.de/shop/p/kettle-chips-thai-sweet-chili-130g/8901235",
+    "quantity": "130 g",
+    "image_status": "retailer",
+    "image_source_url": "https://www.rewe.de/shop/p/kettle-chips-thai-sweet-chili-130g/8901235",
+    "retailer_sku": "8901235",
+    "photo_attribution": "REWE",
+    "photo_match_method": "direct_retailer_sku_named_flavour_130g",
+    "photo_reviewed_at": "2026-10-15",
+    "photo_verification_note": "REWE exact Thai Sweet Chili variant, SKU 8901235; distinguish from Sweet Chilli & Sour Cream variety"
   },
   {
     "id": "snacks-06",
