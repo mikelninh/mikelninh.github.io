@@ -1,0 +1,39 @@
+name: FIRST MILE 90-second browser release gate
+on:
+  push:
+    paths:
+      - "first-mile/index.html"
+      - "first-mile/style.css"
+      - "first-mile/app.mjs"
+      - "first-mile/art/**"
+      - "first-mile/samples/**"
+      - "first-mile/e2e/**"
+      - ".github/workflows/first-mile-browser-e2e.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  upload-export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated browser test dependencies
+        working-directory: first-mile/e2e
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Open site in Chromium and verify actual PDF upload and export
+        working-directory: first-mile/e2e
+        run: node smoke.mjs
+      - name: Preserve real desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-mile-browser-smoke
+          path: first-mile/e2e/artifacts/*.png
+          if-no-files-found: ignore
+          retention-days: 7
