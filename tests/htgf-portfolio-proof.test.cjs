@@ -24,7 +24,7 @@ test('the public HTGF workflow points to a tested executable source',()=>{
 })
 
 test('GitLaw includes the human reviewer and original legislative sources',()=>{
-  const html=read('gitlaw/index.html')
+  const html=read('gitlaw-proof/index.html')
   assert.match(html,/When someone checks a rent increase/)
   assert.match(html,/human reviewer checks the facts/)
   assert.match(html,/gesetze-im-internet\.de\/bgb\/__558/)
