@@ -24,7 +24,7 @@ for(const p of window.GT_CATALOG||[]){
  }
 }
 const units=[['Energie','kcal','kcal'],['Protein','protein','g'],['Kohlenhydrate','carbs','g'],['davon Zucker','sugar','g'],['Fett','fat','g'],['davon gesättigte Fettsäuren','satFat','g'],['Ballaststoffe','fiber','g'],['Salz','salt','g']];
-function factsNutrition(p,info){const fresh=info?.nutrition;return fresh&&Object.values(fresh).some(Number.isFinite)?fresh:p.nutrition||null}
+function factsNutrition(p,info){const fresh=info?.nutrition,known=p.nutrition||{};if(!fresh)return p.nutrition||null;const merged={...known};for(const [k,v] of Object.entries(fresh))if(Number.isFinite(v))merged[k]=v;return Object.values(merged).some(Number.isFinite)?merged:null}
 function bullets(n){
  const plus=[],minus=[];
  if(!n)return {plus:['Nährwertangaben sind noch nicht verifiziert.'],minus:['Ohne Nährwerte ist keine Einordnung möglich.']};
@@ -61,12 +61,12 @@ function priceMarkup(info,p){
 function facts(p){
  if(!p)return '';
  const info=meta.get(p.barcode)||{},n=factsNutrition(p,info),pm=bullets(n);
- const grade=info?.nutriscore_grade,manufacturer=info?.brand_owner||info?.manufacturer||'',ingredients=info?.ingredients||'';
+ const grade=info?.nutriscore_grade||p.nutri_score,manufacturer=info?.brand_owner||info?.manufacturer||'',ingredients=info?.ingredients||'';
  const allergens=info?.allergens||'';
  const id=esc(p.id),src=url(p.barcode?'https://world.openfoodfacts.org/product/'+p.barcode:p.source_url);
  return '<section class="gt-fact-card" data-gt-fact="'+id+'" aria-label="Produktinformationen vor der Bewertung">'+
  '<div class="gt-fact-top"><div><span class="eyebrow">BEVOR DU BEWERTEST</span><h4>Was steckt drin?</h4></div><span class="gt-fact-tag">'+esc(p.quantity||'je 100 g/ml')+'</span></div>'+
- '<div class="gt-quick-facts"><div><span>Marke</span><strong>'+esc(p.brand||'Unbekannt')+'</strong></div><div><span>Protein</span><strong>'+fmt(n?.protein)+' g</strong></div><div><span>Zucker</span><strong>'+fmt(n?.sugar)+' g</strong></div><div><span>Salz</span><strong>'+fmt(n?.salt)+' g</strong></div></div>'+
+ '<div class="gt-quick-facts"><div><span>Marke</span><strong>'+esc(p.brand||'Unbekannt')+'</strong></div><div><span>Protein</span><strong>'+fmt(n?.protein)+(Number.isFinite(n?.protein)?' g':'')+'</strong></div><div><span>Zucker</span><strong>'+fmt(n?.sugar)+(Number.isFinite(n?.sugar)?' g':'')+'</strong></div><div><span>Salz</span><strong>'+fmt(n?.salt)+(Number.isFinite(n?.salt)?' g':'')+'</strong></div></div>'+
  '<div class="gt-pro-con"><div class="gt-pro"><strong>↗ Pro</strong><ul>'+pm.plus.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div class="gt-con"><strong>↘ Contra / zu beachten</strong><ul>'+pm.minus.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></div>'+
  '<div class="gt-score-section"><div><strong>Und der Nutri-Score?</strong><small>A–E misst Nährstoffzusammensetzung, nicht Geschmack oder Vegan-Status.</small></div>'+scoreBadge(grade)+'</div>'+
  '<details class="gt-fact-details"><summary>Mehr erfahren · Zutaten, Hersteller, Preis &amp; alle Nährwerte <span>⌄</span></summary>'+
@@ -99,7 +99,7 @@ async function fetchJSON(u,ms){
 }
 function nutritionFromApi(n){
  if(!n)return null;
- const val=k=>{const v=Number(n[k]);return Number.isFinite(v)&&v>=0&&v<10000?v:null};
+ const val=k=>{if(n[k]===null||n[k]===undefined||n[k]==='')return null;const v=Number(n[k]);return Number.isFinite(v)&&v>=0&&v<10000?Math.round(v*100)/100:null};
  return {kcal:val('energy-kcal_100g'),protein:val('proteins_100g'),carbs:val('carbohydrates_100g'),sugar:val('sugars_100g'),fat:val('fat_100g'),satFat:val('saturated-fat_100g'),fiber:val('fiber_100g'),salt:val('salt_100g')};
 }
 function ensure(p){
