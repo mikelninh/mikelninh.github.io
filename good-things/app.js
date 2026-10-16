@@ -1677,6 +1677,35 @@ document.addEventListener('click',async(event)=>{
   await copyLink(link);break;
  }
  case 'awards-own':st.awardsShared=null;setView('awards');break;
+ case 'brand-select':if(window.GT_BRANDS.setBrand(val))setView('brands',false);break;
+ case 'brand-status':if(window.GT_BRANDS.setStatus(val))render();break;
+ case 'brand-persona':if(!st.user&&['you','mikel','huong'].includes(val)){st.persona=val;render()}break;
+ case 'brand-more':window.GT_BRANDS.more();break;
+ case 'brand-invite':{
+  const brand=window.GT_BRANDS.state.brand,label=brand==='penny'?'PENNY Food for Future':'Lidl Vemondo';
+  const link=URL_BASE+'?view=brands&brand='+brand;
+  const intro='Ich will mit dir vegane Produkte von '+label+' bewerten! 🌱 Mach deine eigene Tier List und sag ehrlich, was sich verbessern sollte. ♡';
+  if(navigator.share){try{await navigator.share({title:'GOOD THINGS · '+label,text:intro,url:link});break}catch(e){if(e?.name==='AbortError')break}}
+  await copyLink(intro+'\n'+link);break;
+ }
+ case 'brand-feedback':{
+  const product=getProduct(id),grade=boardEntries().find(x=>x.product_id===id);
+  if(!product)return;
+  if(!grade){toast('Erst probieren und S–F bewerten; danach kannst du konkretes Feedback geben.');openProduct(id);break}
+  const scope=st.user?'account_'+st.user.id:'guest_'+st.persona;
+  modal(window.GT_BRANDS.feedbackForm(product,scope,grade.tier));break;
+ }
+ case 'brand-copy-report':
+ case 'brand-export-report':{
+  const content=window.GT_BRANDS.report();
+  if(!content){toast('Noch kein freigegebenes Feedback. Bewerte Produkte, schreibe Notizen und erlaube freiwilligen Export.');break}
+  if(a==='brand-copy-report'){await copyLink(content);break}
+  const blob=new Blob([content],{type:'text/markdown;charset=utf-8'}),fileUrl=URL.createObjectURL(blob),anchor=document.createElement('a');
+  anchor.href=fileUrl;anchor.download='good-things-'+window.GT_BRANDS.state.brand+'-feedback.md';
+  document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(fileUrl),1800);
+  toast('Feedbackbericht exportiert. Du entscheidest über den Versand. ♡');break;
+ }
+
  case 'view-exclusions':viewExclusions();break;
  case 'board-unrank':await boardMove(id,'unranked',0);break;
  case 'lookup-image':await photoLookup();break;
@@ -1708,6 +1737,7 @@ document.addEventListener('click',async(event)=>{
 });
 document.addEventListener('input',e=>{
  if(e.target.id==='productSearch'){st.query=e.target.value;refreshProducts()}
+ if(e.target.id==='gtBrandSearch')window.GT_BRANDS.setQuery(e.target.value);
  if(e.target.id==='boardSearch'){st.boardQuery=e.target.value;refreshBoardTray()}
  if(e.target.id==='ratingNote')st.draftNote=e.target.value.slice(0,200);
  if(e.target.id==='duoDiscussionNote'&&st.duo.mode==='remote')st.duo.discussionDraft=e.target.value.slice(0,600);
@@ -1715,6 +1745,7 @@ document.addEventListener('input',e=>{
 document.addEventListener('change',e=>{
  if(e.target.id==='importJsonFile'){importJson(e.target.files?.[0]);return}
  if(e.target.id==='storeSelect'){st.store=e.target.value;refreshProducts()}
+ if(e.target.id==='gtBrandCategory'){window.GT_BRANDS.setCategory(e.target.value);render();return}
  if(e.target.id==='sortSelect'){st.sort=e.target.value;refreshProducts()}
  if(e.target.id==='boardCategory'){st.boardCategory=e.target.value;refreshBoardTray()}
  if(e.target.id==='boardPhotoFilter'){st.boardPhotoFilter=e.target.value;refreshBoardTray()}
@@ -1725,7 +1756,7 @@ document.addEventListener('change',e=>{
  if(e.target.id==='ratingPublic')st.draftPublic=e.target.checked;
 });
 document.addEventListener('submit',async e=>{
- if(!['authForm','profileForm','listForm','feedbackForm','photoReportForm','productRequestForm','duoPartnerForm'].includes(e.target.id))return;
+ if(!['authForm','profileForm','listForm','feedbackForm','photoReportForm','productRequestForm','duoPartnerForm','gtBrandFeedbackForm'].includes(e.target.id))return;
  e.preventDefault();
  try{
  if(e.target.id==='authForm')await submitAuth(e.target);
@@ -1735,6 +1766,15 @@ document.addEventListener('submit',async e=>{
  if(e.target.id==='photoReportForm')await submitPhotoReport(e.target);
  if(e.target.id==='productRequestForm')await submitProductSuggestion(e.target);
  if(e.target.id==='duoPartnerForm')await duoCreateRoom(e.target);
+ if(e.target.id==='gtBrandFeedbackForm'){
+  const form=e.target,id=form.elements.namedItem('product_id')?.value;
+  const scope=st.user?'account_'+st.user.id:'guest_'+st.persona;
+  const field=n=>form.elements.namedItem(n)?.value||'';
+  const answer={taste:field('taste'),texture:field('texture'),value:field('value'),buyAgain:field('buyAgain'),liked:field('liked'),improve:field('improve'),consent:!!form.elements.namedItem('consent')?.checked};
+  const good=window.GT_BRANDS.save(scope,id,answer,boardEntries().map(r=>r.product_id));
+  if(good){closeOverlay('modalOverlay');render();toast('Konstruktives Feedback gespeichert. Nicht automatisch veröffentlicht. ♡')}
+  else toast('Feedback konnte nicht gespeichert werden. Bitte lokale Speicherung prüfen.');
+ }
  }catch(err){toast('Error: '+String(err.message||err))}
 });
 $$('.overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)closeOverlay(el.id)}));
