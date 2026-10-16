@@ -1083,3 +1083,7 @@ body:has(.gt-value-hero) .left-rail,body:has(.gt-value-hero) .hero{display:none}
 @media(max-width:1020px){.gt-value-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}.gt-value-missing{grid-template-columns:1fr}}
 @media(max-width:700px){.gt-value-item{grid-template-columns:24px 57px minmax(0,1fr) 104px;gap:7px;padding:9px}.gt-value-art{height:70px;width:57px}.gt-value-rank{font-size:17px}.gt-value-product>strong{font-size:16px}.gt-value-numbers>strong{font-size:21px}.gt-value-price-btn{grid-column:3 / 5;width:max-content;justify-self:end}.gt-value-hero{padding:25px}.gt-value-lesson{padding:18px}.gt-value-hero h1{font-size:50px}.gt-value-missing>div{flex-wrap:wrap}.mobile-nav:has([data-nav="protein"]){overflow-x:auto;justify-content:start;gap:8px}.mobile-nav:has([data-nav="protein"]) button{flex:0 0 52px}}
 @media(max-width:410px){.gt-value-item{grid-template-columns:22px 48px 1fr}.gt-value-art{height:58px;width:48px}.gt-value-numbers{grid-column:3;justify-self:start;text-align:left;padding-top:8px}.gt-value-price-btn{grid-column:3;width:max-content}.gt-value-toolbar{grid-template-columns:1fr}}
+
+/* protein value: expansion without ranking missing prices */
+.gt-value-more-candidates{display:block;margin:14px auto 18px;background:#e8f2dc;border:1px solid #c2dcb7;border-radius:99px;color:#476f4b;font-size:12px;font-weight:850;padding:12px 24px;cursor:pointer}
+.gt-value-more-candidates:hover{background:#d6ecbd}
