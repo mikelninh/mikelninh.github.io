@@ -1011,3 +1011,75 @@ body:has(.gt-bp-hero) .left-rail,body:has(.gt-bp-hero) .hero{display:none}
 .gt-episode-recap-row small{font-size:10px;line-height:1.6;display:block;color:#8a8d75}
 .gt-episode-recap-row>div{flex:1;min-width:230px}
 @media(max-width:550px){.gt-episode-recap{padding:16px}.gt-episode-recap-row .button{width:100%}}
+
+
+/* GOOD THINGS 2.8: Evidence-backed protein price/value league */
+body:has(.gt-value-hero) .workspace{display:block;max-width:1450px;padding-top:24px}
+body:has(.gt-value-hero) .left-rail,body:has(.gt-value-hero) .hero{display:none}
+.gt-value-hero{position:relative;overflow:hidden;isolation:isolate;padding:clamp(26px,5vw,56px);background:linear-gradient(125deg,#254934,#19392e 65%,#456846);border:1px solid #2e573f;color:#f5f9e9;border-radius:23px}
+.gt-value-hero:before{content:"💪";position:absolute;font-size:240px;right:-30px;top:-60px;transform:rotate(-13deg);opacity:.095;z-index:-1;pointer-events:none}
+.gt-value-eyebrow{font-size:10px;font-weight:850;letter-spacing:.15em;color:#c7e5a3}
+.gt-value-hero h1{font:630 clamp(49px,8vw,102px)/.96 'Fraunces',Georgia,serif;letter-spacing:-.07em;margin:18px 0 24px;color:#fffdf0}
+.gt-value-hero h1 em{color:#dff08a;font-weight:500}
+.gt-value-hero>p{font-size:15px;line-height:1.65;max-width:590px;color:#e1ebd9}
+.gt-value-hero-stats{display:flex;align-items:center;gap:12px 26px;flex-wrap:wrap;margin-top:40px;border-top:1px solid #ffffff3d;padding-top:17px}
+.gt-value-hero-stats span{display:flex;gap:8px;align-items:baseline;font-size:11px;color:#d9e9cc;font-weight:750}
+.gt-value-hero-stats strong{font:600 24px 'Fraunces',Georgia,serif;color:#f1f2c1}
+.gt-value-lesson{margin:21px 0;padding:23px 29px;display:flex;align-items:center;gap:20px;justify-content:space-between;flex-wrap:wrap;background:#e9f1da;border:1px solid #d5e3c7;border-radius:18px}
+.gt-value-lesson>div:first-child{flex:1;min-width:260px}
+.gt-value-lesson span{font-size:10px;color:#739467;letter-spacing:.13em;font-weight:850}
+.gt-value-lesson h3{font:600 clamp(21px,3vw,30px)/1.18 'Fraunces',Georgia,serif;letter-spacing:-.03em;color:#35513a;margin:9px 0}
+.gt-value-lesson p{max-width:750px;font-size:12px;line-height:1.7;color:#688265}
+.gt-value-mini-equation{background:#fffefa;border:1px solid #d9e5c6;border-radius:14px;min-width:190px;padding:15px}
+.gt-value-mini-equation strong{display:block;color:#34583e;font:600 20px 'Fraunces',Georgia,serif;margin:7px 0}
+.gt-value-mini-equation small{display:block;max-width:205px;font-size:11px;color:#748a70;line-height:1.4}
+.gt-value-toolbar{display:grid;grid-template-columns:2fr 1fr 1fr 1.45fr;gap:11px;align-items:end;margin:24px 0 14px}
+.gt-value-toolbar label{min-width:0;font-size:11px;color:#6e8769;font-weight:850}
+.gt-value-toolbar .control{width:100%;margin-top:7px;font-size:12px;padding:13px 10px;background:#fffefa}
+.gt-value-old{display:flex;align-items:center;gap:9px;font-size:11px;color:#748674;font-weight:650}
+.gt-value-old input{accent-color:#789f66}
+.gt-value-snapshot{font-size:12px;line-height:1.65;background:#f0f5e6;color:#507150;border-left:4px solid #a6c982;border-radius:5px 12px 12px 5px;padding:13px 17px;margin:18px 0}
+.gt-value-count{font-size:12px;color:#748974;margin:12px 0}
+.gt-value-count strong{color:#325e3a}
+.gt-value-list{display:grid;gap:9px}
+.gt-value-item{display:grid;grid-template-columns:34px 76px minmax(0,1fr) minmax(135px,175px) 75px;gap:11px;align-items:center;background:#fffefa;border:1px solid #e1e9d9;border-radius:15px;padding:12px 14px;min-width:0}
+.gt-value-rank{font:650 24px 'Fraunces',Georgia,serif;color:#8ca582;text-align:center}
+.gt-value-art{display:grid;place-items:center;width:76px;height:86px;border-radius:12px;background:linear-gradient(145deg,#eef4e9,#fffdf7);border:1px solid #e2e8d9;overflow:hidden;padding:8px}
+.gt-value-art img{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain}
+.gt-value-fallback{font-size:32px}
+.gt-value-fallback[hidden]{display:none}
+.gt-value-product{min-width:0}
+.gt-value-category{font-size:10px;font-weight:850;color:#6f8f6b;display:block;margin-bottom:5px}
+.gt-value-product>strong{font:600 clamp(16px,2.1vw,21px)/1.15 'Fraunces',Georgia,serif;letter-spacing:-.028em;color:#35533b;display:block;overflow-wrap:anywhere}
+.gt-value-product>small{display:block;font-size:11px;line-height:1.5;color:#81907c;margin-top:5px}
+.gt-value-row-foot{font-size:10px;line-height:1.5;color:#8a9782;margin-top:7px}
+.gt-value-row-foot a{text-decoration:underline;color:#406d43;font-weight:800}
+.gt-value-numbers{text-align:right;min-width:0}
+.gt-value-numbers>strong{font:650 clamp(23px,3vw,29px)/1 'Fraunces',Georgia,serif;letter-spacing:-.04em;display:block;color:#31583a}
+.gt-value-numbers>small{font-size:9px;font-weight:750;color:#81937d;display:block;margin:3px 0 5px}
+.gt-value-numbers>span{font-size:11px;font-weight:850;color:#53794b;display:block}
+.gt-value-price-btn{background:#eaf3dc;border:1px solid #cfdfbf;border-radius:99px;color:#56704e;cursor:pointer;font-size:10px;font-weight:850;padding:9px 7px;white-space:nowrap}
+.gt-value-price-btn:hover{background:#d6ecb9}
+.gt-value-item:has(.gt-value-numbers>strong:first-child){min-width:0}
+.gt-value-empty{color:#82917a;background:#f4f6ed;border:1px dashed #d3dfc8;border-radius:13px;padding:22px 25px;font-size:13px;line-height:1.65}
+.gt-value-personal{margin:25px 0;padding:17px;background:#eff3e6;border:1px solid #dae5d2;border-radius:17px}
+.gt-value-personal h3{font:650 27px 'Fraunces',Georgia,serif;color:#3a613e;margin:4px 0 6px}
+.gt-value-personal>p{font-size:12px;color:#798c71;line-height:1.5}
+.gt-value-personal .gt-value-item{margin:8px 0}
+.gt-value-pending{margin-top:33px;border-top:1px solid #dbe5d5;padding-top:26px}
+.gt-value-pending-header{display:flex;justify-content:space-between;align-items:center;gap:13px;flex-wrap:wrap}
+.gt-value-pending-header h3{font:650 clamp(25px,3.5vw,35px) 'Fraunces',Georgia,serif;letter-spacing:-.04em;color:#37533c;margin:0 0 8px}
+.gt-value-pending-header p{font-size:12px;line-height:1.5;color:#81907d;max-width:720px}
+.gt-value-missing{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:16px 0}
+.gt-value-missing>div{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid #e3e8de;border-radius:12px;background:#fffefa;padding:11px 14px}
+.gt-value-missing span{font-size:11px;color:#5c735c;line-height:1.4;flex:1}
+.gt-value-missing strong{font-size:11px;color:#395b41;white-space:nowrap}
+.gt-value-missing button{background:transparent;border:0;text-decoration:underline;color:#5b8155;font-size:10px;font-weight:800;cursor:pointer;text-align:right}
+.gt-value-pending>small{color:#94a28e;font-size:11px}
+.gt-value-method{margin:30px 0 45px;padding:25px 30px;background:#f2f5eb;border:1px solid #dce7d3;border-radius:18px}
+.gt-value-method h3{font:650 27px 'Fraunces',Georgia,serif;color:#375941;margin:0 0 12px}
+.gt-value-method p{font-size:12px;line-height:1.72;color:#75826f}
+.gt-value-method a{text-decoration:underline;color:#3c6a45}
+@media(max-width:1020px){.gt-value-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}.gt-value-missing{grid-template-columns:1fr}}
+@media(max-width:700px){.gt-value-item{grid-template-columns:24px 57px minmax(0,1fr) 104px;gap:7px;padding:9px}.gt-value-art{height:70px;width:57px}.gt-value-rank{font-size:17px}.gt-value-product>strong{font-size:16px}.gt-value-numbers>strong{font-size:21px}.gt-value-price-btn{grid-column:3 / 5;width:max-content;justify-self:end}.gt-value-hero{padding:25px}.gt-value-lesson{padding:18px}.gt-value-hero h1{font-size:50px}.gt-value-missing>div{flex-wrap:wrap}.mobile-nav:has([data-nav="protein"]){overflow-x:auto;justify-content:start;gap:8px}.mobile-nav:has([data-nav="protein"]) button{flex:0 0 52px}}
+@media(max-width:410px){.gt-value-item{grid-template-columns:22px 48px 1fr}.gt-value-art{height:58px;width:48px}.gt-value-numbers{grid-column:3;justify-self:start;text-align:left;padding-top:8px}.gt-value-price-btn{grid-column:3;width:max-content}.gt-value-toolbar{grid-template-columns:1fr}}
