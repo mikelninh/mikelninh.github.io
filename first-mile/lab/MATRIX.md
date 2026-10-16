@@ -44,3 +44,11 @@ This is a self-authored synthetic test set, not independent representative deck 
 The $1.50 budget guard conservatively reserves capacity before requests and uses token usage after responses. It is NOT a provider-enforced hard account spending limit, especially if a failed request is charged differently than expected. Set spending limits in the OpenAI Platform dashboard as a second safeguard. Actual pricing may change.
 
 Model access also depends on the API account/project. If a request is rejected, the case is recorded as failed, not silently replaced with a different model. Results and confidential documents must not be committed to this public repository.
+
+## Windows starter
+
+In Windows PowerShell after cloning the repository:
+
+    powershell -ExecutionPolicy Bypass -File first-mile/lab/run-matrix.ps1
+
+This prompts for the API key (hidden), displays the budget, and requires typing RUN to authorize paid calls. The key is cleared from the current process after execution if entered by the script. No API key is uploaded to the website or GitHub.
