@@ -40,11 +40,11 @@ const cacheRead=()=>{try{const x=JSON.parse(localStorage.getItem(CACHE)||'{}');r
 let seen=cacheRead(),checking=false;
 const personalRead=()=>{try{const x=JSON.parse(localStorage.getItem(STORE)||'{}');return x&&typeof x==='object'?x:{}}catch(_){return {}}};
 let personal=personalRead();
-let ctx=null,state={sort:'euro100',category:'all',min:10,showOld:false,limit:20,pendingLimit:12,search:''};
+let ctx=null,state={sort:'euro100',category:'all',min:5,showOld:false,limit:20,pendingLimit:12,search:''};
 function latest(p){
  if(!p?.barcode)return null;
  const list=[verifiedByBarcode.get(String(p.barcode)),seen[String(p.barcode)]?.price].filter(goodSource);
- const sorted=list.sort((a,b)=>b.date.localeCompare(a.date)||Number(a.source_type==='official_online')-Number(b.source_type==='official_online'));
+ const sorted=list.sort((a,b)=>b.date.localeCompare(a.date)||Number(b.source_type==='official_online')-Number(a.source_type==='official_online'));
  return sorted[0]||null;
 }
 function own(id){return personal[id]||null}
@@ -55,7 +55,7 @@ function reviewed(p){
 function eligible(p){
  if(!p||p.vegan_status==='non_vegan')return false;
  const n=nutrition(p);
- if(!n||n.protein<state.min||!quantity(p.quantity))return false;
+ if(!n||n.protein<=0||n.protein<state.min||!quantity(p.quantity))return false;
  if(state.category!=='all'&&p.category_id!==state.category)return false;
  if(state.search&&!String(p.brand+' '+p.name+' '+p.store).toLowerCase().includes(state.search.toLowerCase()))return false;
  return true;
