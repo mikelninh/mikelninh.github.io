@@ -14,97 +14,20 @@ concurrency:
 jobs:
   public-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 16
     steps:
       - uses: actions/checkout@v4
       - name: Install browser test runner
         run: |
           python -m pip install --quiet playwright
           python -m playwright install --with-deps chromium
-      - name: Verify publication and real-origin interaction
+      - name: Verify Root Atlas publication and real-origin interactions
         env:
           SITE: https://mikelninh.github.io/interbeing/
-        run: |
-          python - <<'PY'
-          import hashlib, json, os, time, urllib.request
-          from pathlib import Path
-          from playwright.sync_api import sync_playwright
-          base = os.environ['SITE']
-          paths = ['index.html','styles.css','atlas.js','app.js','og.png']
-          published = False
-          for attempt in range(48):
-              try:
-                  results = []
-                  for path in paths:
-                      req = urllib.request.Request(base+path, headers={'Cache-Control':'no-cache','User-Agent':'InterbeingReleaseCheck/1.0'})
-                      with urllib.request.urlopen(req,timeout=15) as response:
-                          content = response.read()
-                          expected = (Path('interbeing')/path).read_bytes()
-                          assert content == expected, path+' does not match the committed source yet'
-                          results.append({'file':path,'http':response.status,'sha256':hashlib.sha256(content).hexdigest()})
-                  published = True
-                  print('PUBLIC ASSETS PASS', json.dumps(results))
-                  break
-              except Exception as error:
-                  print('Awaiting Pages propagation', attempt+1, str(error), flush=True)
-                  time.sleep(5)
-          assert published, 'Public assets did not become identical to the checked-out source'
-          Path('interbeing-qa').mkdir(exist_ok=True)
-          with sync_playwright() as p:
-              browser = p.chromium.launch()
-              page = browser.new_page(viewport={'width':1440,'height':1000}, accept_downloads=True)
-              errors = []
-              page.on('pageerror', lambda error: errors.append(str(error)))
-              page.goto(base, wait_until='networkidle')
-              page.wait_for_function('window.Interbeing && window.Interbeing.validate()')
-              assert 'You are not' in page.locator('#hero-title').inner_text()
-              for lens in ['biological','social','economic','future','ecological']:
-                  page.select_option('#lens', lens)
-                  assert page.evaluate('Interbeing.snapshot().lens') == lens
-              page.screenshot(path='interbeing-qa/desktop.png')
-              for scene in ['food','wild','health']:
-                  page.click('[data-story="'+scene+'"]')
-                  first = page.locator('#story-title').inner_text()
-                  page.click('#story-next')
-                  assert page.locator('#story-title').inner_text() != first
-                  for _ in range(3): page.click('#story-next')
-                  assert page.evaluate('Interbeing.snapshot().step') == 4
-                  page.click('#share-view')
-                  assert not page.locator('#include-name').is_checked()
-                  link = page.locator('#share-url').input_value()
-                  assert 'scene='+scene in link and 'step=4' in link and 'name=' not in link
-                  second = browser.new_page()
-                  second.goto(link,wait_until='networkidle')
-                  second.wait_for_function('window.Interbeing')
-                  assert second.evaluate('Interbeing.snapshot().scene') == scene
-                  assert second.evaluate('Interbeing.snapshot().step') == 4
-                  second.close()
-                  page.click('#close-modal')
-                  page.click('#story-next')
-              page.click('[data-scene="food"]')
-              choose = page.locator('[data-plan="meal-invite"]')
-              choose.click()
-              page.reload(wait_until='networkidle')
-              assert 'chosen' in (page.evaluate('localStorage.getItem("interbeing.next-steps.v1")') or '')
-              page.click('#clear-plan')
-              mobile = browser.new_page(viewport={'width':390,'height':844},is_mobile=True,has_touch=True)
-              mobile.on('pageerror', lambda error: errors.append(str(error)))
-              mobile.goto(base,wait_until='networkidle')
-              mobile.wait_for_function('window.Interbeing')
-              assert mobile.evaluate('document.documentElement.scrollWidth <= window.innerWidth+1')
-              mobile.screenshot(path='interbeing-qa/mobile.png')
-              mobile.click('[data-scene="wild"]')
-              mobile.click('#list-mode')
-              mobile.click('#graph-list [data-node="wolf"]')
-              assert mobile.evaluate('Interbeing.snapshot().selected') == 'wolf'
-              assert not errors, errors
-              browser.close()
-          Path('interbeing-qa/results.json').write_text(json.dumps({'public_url':base,'assets':results,'browser':'Chromium on actual HTTPS origin','perspectives':5,'stories':3,'story_steps':15,'share_roundtrips':3,'storage_reload':True,'mobile_list_selection':True,'javascript_errors':errors},indent=2))
-          print('INTERBEING REAL-ORIGIN BROWSER PASS')
-          PY
+        run: python interbeing/qa/test_v2_public.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: interbeing-public-qa
+          name: interbeing-v2-public-qa
           path: interbeing-qa
           if-no-files-found: ignore
