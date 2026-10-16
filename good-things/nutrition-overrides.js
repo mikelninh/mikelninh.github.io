@@ -2430,5 +2430,917 @@ window.GT_NUTRITION_OVERRIDES=[
     "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489695417",
     "nutrition_updated_at": "2026-10-16",
     "name": "Bio Hafer Creme"
+  },
+  {
+    "id": "off-4056489706595",
+    "barcode": "4056489706595",
+    "nutrition": {
+      "kcal": 211,
+      "protein": 12,
+      "carbs": 16,
+      "sugar": 0.9,
+      "fat": 11,
+      "satFat": 1.1,
+      "fiber": 5,
+      "salt": 1.5
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489706595",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-20092016",
+    "barcode": "20092016",
+    "nutrition": {
+      "kcal": 343,
+      "protein": 3.5,
+      "carbs": 25.2,
+      "sugar": 20.9,
+      "fat": 24.5,
+      "satFat": 16.2,
+      "fiber": null,
+      "salt": 0.04
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/20092016",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489041320",
+    "barcode": "4056489041320",
+    "nutrition": {
+      "kcal": 37,
+      "protein": 0.4,
+      "carbs": 5.6,
+      "sugar": 4.4,
+      "fat": 1.2,
+      "satFat": 0.1,
+      "fiber": null,
+      "salt": 0.1
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489041320",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489886976",
+    "barcode": "4056489886976",
+    "nutrition": {
+      "kcal": 100,
+      "protein": 1.1,
+      "carbs": 7.9,
+      "sugar": 1.6,
+      "fat": 6.6,
+      "satFat": 0.6,
+      "fiber": 2.1,
+      "salt": 2.07
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489886976",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489067733",
+    "barcode": "4056489067733",
+    "nutrition": {
+      "kcal": 287,
+      "protein": 8.1,
+      "carbs": 5.8,
+      "sugar": 0.5,
+      "fat": 25,
+      "satFat": 1.8,
+      "fiber": 3,
+      "salt": 1.1
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489067733",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489708988",
+    "barcode": "4056489708988",
+    "nutrition": {
+      "kcal": 38,
+      "protein": 0.8,
+      "carbs": 4.1,
+      "sugar": 1.2,
+      "fat": 1.8,
+      "satFat": 0.2,
+      "fiber": 1.1,
+      "salt": 0.13
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489708988",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489870067",
+    "barcode": "4056489870067",
+    "nutrition": {
+      "kcal": 298,
+      "protein": 0.2,
+      "carbs": 68.9,
+      "sugar": 62.2,
+      "fat": 0.7,
+      "satFat": 0.1,
+      "fiber": 10.5,
+      "salt": 0.01
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489870067",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489680093",
+    "barcode": "4056489680093",
+    "nutrition": {
+      "kcal": 275,
+      "protein": 0.7,
+      "carbs": 18.6,
+      "sugar": 0.3,
+      "fat": 21.3,
+      "satFat": 18.5,
+      "fiber": 2.8,
+      "salt": 2.23
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489680093",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489451655",
+    "barcode": "4056489451655",
+    "nutrition": {
+      "kcal": 211,
+      "protein": 4.2,
+      "carbs": 5.8,
+      "sugar": 0.4,
+      "fat": 18.3,
+      "satFat": 1.8,
+      "fiber": 2.9,
+      "salt": 0.76
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489451655",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489630630",
+    "barcode": "4056489630630",
+    "nutrition": {
+      "kcal": 227,
+      "protein": 12,
+      "carbs": 6.3,
+      "sugar": 0.9,
+      "fat": 16,
+      "satFat": 10,
+      "fiber": 5.1,
+      "salt": 1.7
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489630630",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489417590",
+    "barcode": "4056489417590",
+    "nutrition": {
+      "kcal": 260,
+      "protein": 1.5,
+      "carbs": 14,
+      "sugar": 0,
+      "fat": 22,
+      "satFat": 19.2,
+      "fiber": null,
+      "salt": 2.5
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489417590",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489846888",
+    "barcode": "4056489846888",
+    "nutrition": {
+      "kcal": 379,
+      "protein": 4.7,
+      "carbs": 13,
+      "sugar": 9.3,
+      "fat": 34,
+      "satFat": 3.6,
+      "fiber": 1.2,
+      "salt": 1.1
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489846888",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489404958",
+    "barcode": "4056489404958",
+    "nutrition": {
+      "kcal": 131,
+      "protein": 0.8,
+      "carbs": 13.5,
+      "sugar": 10,
+      "fat": 8.1,
+      "satFat": 7.6,
+      "fiber": 0.5,
+      "salt": 0.07
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489404958",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489790440",
+    "barcode": "4056489790440",
+    "nutrition": {
+      "kcal": 241,
+      "protein": 7,
+      "carbs": 20,
+      "sugar": 0.5,
+      "fat": 14,
+      "satFat": 1,
+      "fiber": 3.6,
+      "salt": 1.4
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489790440",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489526957",
+    "barcode": "4056489526957",
+    "nutrition": {
+      "kcal": 251,
+      "protein": 2.2,
+      "carbs": 27.7,
+      "sugar": 23.4,
+      "fat": 13.7,
+      "satFat": 9.4,
+      "fiber": null,
+      "salt": 0.03
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489526957",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489387688",
+    "barcode": "4056489387688",
+    "nutrition": {
+      "kcal": 160,
+      "protein": 3.9,
+      "carbs": 33.1,
+      "sugar": 5.1,
+      "fat": 0.7,
+      "satFat": 0.1,
+      "fiber": 2.6,
+      "salt": 0
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489387688",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489238591",
+    "barcode": "4056489238591",
+    "nutrition": {
+      "kcal": 231,
+      "protein": 2.7,
+      "carbs": 29.3,
+      "sugar": 25.5,
+      "fat": 10.7,
+      "satFat": 8,
+      "fiber": null,
+      "salt": 0.03
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489238591",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489345732",
+    "barcode": "4056489345732",
+    "nutrition": {
+      "kcal": 262,
+      "protein": 4.9,
+      "carbs": 8.6,
+      "sugar": 2.2,
+      "fat": 21.5,
+      "satFat": 1.8,
+      "fiber": null,
+      "salt": 1.72
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489345732",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489456483",
+    "barcode": "4056489456483",
+    "nutrition": {
+      "kcal": 80,
+      "protein": 3.8,
+      "carbs": 8.5,
+      "sugar": 3.2,
+      "fat": 2.5,
+      "satFat": 0.3,
+      "fiber": 4.3,
+      "salt": 0.5
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489456483",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489630258",
+    "barcode": "4056489630258",
+    "nutrition": {
+      "kcal": 94,
+      "protein": 0.7,
+      "carbs": 5.2,
+      "sugar": 0.8,
+      "fat": 7.7,
+      "satFat": 7.1,
+      "fiber": 0.5,
+      "salt": 0.18
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489630258",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489441298",
+    "barcode": "4056489441298",
+    "nutrition": {
+      "kcal": 281,
+      "protein": 4.6,
+      "carbs": 7.3,
+      "sugar": 5.2,
+      "fat": 25.6,
+      "satFat": 2.8,
+      "fiber": 1.7,
+      "salt": 1.75
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489441298",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489466581",
+    "barcode": "4056489466581",
+    "nutrition": {
+      "kcal": 53,
+      "protein": 4.1,
+      "carbs": 3.3,
+      "sugar": 1.8,
+      "fat": 2.2,
+      "satFat": 0.4,
+      "fiber": 0.17,
+      "salt": 0.17
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489466581",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489459538",
+    "barcode": "4056489459538",
+    "nutrition": {
+      "kcal": 220,
+      "protein": 8.4,
+      "carbs": 9.9,
+      "sugar": 1.9,
+      "fat": 14.8,
+      "satFat": 1.5,
+      "fiber": 6.8,
+      "salt": 1.29
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489459538",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489258834",
+    "barcode": "4056489258834",
+    "nutrition": {
+      "kcal": 351,
+      "protein": 7.6,
+      "carbs": 63,
+      "sugar": 27,
+      "fat": 3.6,
+      "satFat": 0.7,
+      "fiber": null,
+      "salt": null
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489258834",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489624424",
+    "barcode": "4056489624424",
+    "nutrition": {
+      "kcal": 193,
+      "protein": 4.4,
+      "carbs": 23.3,
+      "sugar": 3.4,
+      "fat": 8.3,
+      "satFat": 4.6,
+      "fiber": 2.3,
+      "salt": 0.92
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489624424",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489406280",
+    "barcode": "4056489406280",
+    "nutrition": {
+      "kcal": 168,
+      "protein": 1.3,
+      "carbs": 12,
+      "sugar": 2,
+      "fat": 12,
+      "satFat": 11.5,
+      "fiber": null,
+      "salt": 0.5
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489406280",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-42426202",
+    "barcode": "42426202",
+    "nutrition": {
+      "kcal": 33,
+      "protein": 0.5,
+      "carbs": 5.4,
+      "sugar": 4.9,
+      "fat": 0.8,
+      "satFat": 0.1,
+      "fiber": null,
+      "salt": 0.17
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/42426202",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-20702069",
+    "barcode": "20702069",
+    "nutrition": {
+      "kcal": 384,
+      "protein": 2.7,
+      "carbs": 7,
+      "sugar": 5.1,
+      "fat": 38,
+      "satFat": 4.2,
+      "fiber": 1.6,
+      "salt": 4
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/20702069",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-20831905",
+    "barcode": "20831905",
+    "nutrition": {
+      "kcal": 188,
+      "protein": 8.3,
+      "carbs": 26,
+      "sugar": 3.4,
+      "fat": 4.8,
+      "satFat": 0.4,
+      "fiber": 3.8,
+      "salt": 1.4
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/20831905",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489436485",
+    "barcode": "4056489436485",
+    "nutrition": {
+      "kcal": 377,
+      "protein": 3.8,
+      "carbs": 50.2,
+      "sugar": 23.8,
+      "fat": 17.7,
+      "satFat": 1.6,
+      "fiber": null,
+      "salt": 0.85
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489436485",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489460312",
+    "barcode": "4056489460312",
+    "nutrition": {
+      "kcal": 290,
+      "protein": 2.2,
+      "carbs": 10,
+      "sugar": 6.6,
+      "fat": 26.5,
+      "satFat": 2.2,
+      "fiber": null,
+      "salt": 1.98
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489460312",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489591528",
+    "barcode": "4056489591528",
+    "nutrition": {
+      "kcal": 53,
+      "protein": 0.4,
+      "carbs": 11.2,
+      "sugar": 6.4,
+      "fat": 0.7,
+      "satFat": 0.1,
+      "fiber": null,
+      "salt": 0.11
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489591528",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489592358",
+    "barcode": "4056489592358",
+    "nutrition": {
+      "kcal": 120,
+      "protein": 1.3,
+      "carbs": 17.9,
+      "sugar": 6.8,
+      "fat": 4.8,
+      "satFat": 4.3,
+      "fiber": null,
+      "salt": 0.1
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489592358",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489687665",
+    "barcode": "4056489687665",
+    "nutrition": {
+      "kcal": 45,
+      "protein": 0.4,
+      "carbs": 6.6,
+      "sugar": 5,
+      "fat": 1.8,
+      "satFat": 0.2,
+      "fiber": 0.5,
+      "salt": 0.12
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489687665",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-51564742",
+    "barcode": "51564742",
+    "nutrition": {
+      "kcal": 53,
+      "protein": 0.8,
+      "carbs": 4.1,
+      "sugar": 1.2,
+      "fat": 3.5,
+      "satFat": 0.3,
+      "fiber": 1.1,
+      "salt": 0.13
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/51564742",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489404941",
+    "barcode": "4056489404941",
+    "nutrition": {
+      "kcal": 86.2,
+      "protein": 0.8,
+      "carbs": 13.3,
+      "sugar": 9.8,
+      "fat": 8,
+      "satFat": 7.5,
+      "fiber": 0.6,
+      "salt": 0.07
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489404941",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489244523",
+    "barcode": "4056489244523",
+    "nutrition": {
+      "kcal": 279,
+      "protein": 0,
+      "carbs": 18,
+      "sugar": 0,
+      "fat": 23,
+      "satFat": 14,
+      "fiber": null,
+      "salt": 0.89
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489244523",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489498308",
+    "barcode": "4056489498308",
+    "nutrition": {
+      "kcal": 142,
+      "protein": 2.4,
+      "carbs": 13.6,
+      "sugar": 1.8,
+      "fat": 8.3,
+      "satFat": 1,
+      "fiber": 1.7,
+      "salt": 0.5
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489498308",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-20749880",
+    "barcode": "20749880",
+    "nutrition": {
+      "kcal": 44,
+      "protein": 3.3,
+      "carbs": 2.9,
+      "sugar": 2.9,
+      "fat": 1.9,
+      "satFat": 0.3,
+      "fiber": 0.8,
+      "salt": 0.16
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/20749880",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489722670",
+    "barcode": "4056489722670",
+    "nutrition": {
+      "kcal": 215,
+      "protein": 24.5,
+      "carbs": 8.9,
+      "sugar": 3.3,
+      "fat": 7.9,
+      "satFat": 1.9,
+      "fiber": 5.4,
+      "salt": 2.78
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489722670",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4335619027251",
+    "barcode": "4335619027251",
+    "nutrition": {
+      "kcal": 226,
+      "protein": 1.2,
+      "carbs": 33.9,
+      "sugar": 16.9,
+      "fat": 7.3,
+      "satFat": 5.7,
+      "fiber": 4.1,
+      "salt": 0.13
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4335619027251",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489466598",
+    "barcode": "4056489466598",
+    "nutrition": {
+      "kcal": 47.2,
+      "protein": 4.2,
+      "carbs": 2.1,
+      "sugar": 0,
+      "fat": 2.2,
+      "satFat": 0.4,
+      "fiber": 0.6,
+      "salt": 0.18
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489466598",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4335619030954",
+    "barcode": "4335619030954",
+    "nutrition": {
+      "kcal": 53,
+      "protein": 0.8,
+      "carbs": 4.1,
+      "sugar": 1.2,
+      "fat": 3.5,
+      "satFat": 0.3,
+      "fiber": 1.1,
+      "salt": 0.13
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4335619030954",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4335619100978",
+    "barcode": "4335619100978",
+    "nutrition": {
+      "kcal": 286,
+      "protein": 2,
+      "carbs": 5.2,
+      "sugar": 1.2,
+      "fat": 28.3,
+      "satFat": 28,
+      "fiber": 1.1,
+      "salt": 1.36
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4335619100978",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489927907",
+    "barcode": "4056489927907",
+    "nutrition": {
+      "kcal": 346,
+      "protein": 13,
+      "carbs": 13,
+      "sugar": 7,
+      "fat": 25,
+      "satFat": 3,
+      "fiber": 8.5,
+      "salt": 3.2
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489927907",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489467922",
+    "barcode": "4056489467922",
+    "nutrition": {
+      "kcal": 273,
+      "protein": 1,
+      "carbs": 19,
+      "sugar": 0.3,
+      "fat": 21.4,
+      "satFat": 18.8,
+      "fiber": 0.5,
+      "salt": 2.13
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489467922",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489442431",
+    "barcode": "4056489442431",
+    "nutrition": {
+      "kcal": 294.26,
+      "protein": 3.28,
+      "carbs": 28.64,
+      "sugar": 3.52,
+      "fat": 20,
+      "satFat": 2.4,
+      "fiber": 5.44,
+      "salt": 1.63
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489442431",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489604488",
+    "barcode": "4056489604488",
+    "nutrition": {
+      "kcal": 481,
+      "protein": 0.8,
+      "carbs": 6.9,
+      "sugar": 4.5,
+      "fat": 49.6,
+      "satFat": 3.6,
+      "fiber": null,
+      "salt": 0.81
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489604488",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489681373",
+    "barcode": "4056489681373",
+    "nutrition": {
+      "kcal": 438,
+      "protein": 0.6,
+      "carbs": 10.7,
+      "sugar": 7.7,
+      "fat": 43.3,
+      "satFat": 3.2,
+      "fiber": 1.5,
+      "salt": 0.9
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489681373",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489708995",
+    "barcode": "4056489708995",
+    "nutrition": {
+      "kcal": 53,
+      "protein": 0.8,
+      "carbs": 4.1,
+      "sugar": 1.2,
+      "fat": 3.5,
+      "satFat": 0.3,
+      "fiber": 1.1,
+      "salt": 0.15
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489708995",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489723080",
+    "barcode": "4056489723080",
+    "nutrition": {
+      "kcal": 211,
+      "protein": 14,
+      "carbs": 7,
+      "sugar": 1.5,
+      "fat": 13,
+      "satFat": 1.5,
+      "fiber": 5,
+      "salt": 1.97
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489723080",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489244707",
+    "barcode": "4056489244707",
+    "nutrition": {
+      "kcal": 23,
+      "protein": 0.1,
+      "carbs": 2.7,
+      "sugar": 1.9,
+      "fat": 1.3,
+      "satFat": 1.2,
+      "fiber": 0.1,
+      "salt": 0.1
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489244707",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489484233",
+    "barcode": "4056489484233",
+    "nutrition": {
+      "kcal": 382,
+      "protein": 6,
+      "carbs": 41,
+      "sugar": 35,
+      "fat": 17.7,
+      "satFat": 4.3,
+      "fiber": 17.5,
+      "salt": 0.01
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489484233",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489414735",
+    "barcode": "4056489414735",
+    "nutrition": {
+      "kcal": 226,
+      "protein": 1.4,
+      "carbs": 5.5,
+      "sugar": 1.5,
+      "fat": 22,
+      "satFat": 20,
+      "fiber": null,
+      "salt": 1.05
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489414735",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489182856",
+    "barcode": "4056489182856",
+    "nutrition": {
+      "kcal": 57,
+      "protein": 0.3,
+      "carbs": 8.9,
+      "sugar": 1.9,
+      "fat": 2.2,
+      "satFat": 2.1,
+      "fiber": null,
+      "salt": 0.08
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489182856",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4056489723011",
+    "barcode": "4056489723011",
+    "nutrition": {
+      "kcal": 222,
+      "protein": 12,
+      "carbs": 7,
+      "sugar": 1.5,
+      "fat": 15,
+      "satFat": 4,
+      "fiber": 5.5,
+      "salt": 2.4
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4056489723011",
+    "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "off-4260042083089",
+    "barcode": "4260042083089",
+    "nutrition": {
+      "kcal": 76,
+      "protein": 1.1,
+      "carbs": 9.1,
+      "sugar": 8.4,
+      "fat": 2.9,
+      "satFat": 0.7,
+      "fiber": 4.4,
+      "salt": 0.01
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4260042083089",
+    "nutrition_updated_at": "2026-10-16"
   }
 ];
