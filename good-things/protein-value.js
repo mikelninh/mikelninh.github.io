@@ -5,6 +5,7 @@
 (function(){
 'use strict';
 const STORE='goodthings_personal_protein_prices_v28',CACHE='goodthings_open_prices_cache_v28',TODAY=new Date().toISOString().slice(0,10);
+const GOAL=window.GT_PROTEIN_TARGET;
 const fmt=(x,d=1)=>Number.isFinite(x)?new Intl.NumberFormat('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d}).format(x):'–';
 const esc=x=>String(x==null?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const tiers={S:6,A:5,B:4,C:3,D:2,F:1};
@@ -89,7 +90,8 @@ function row(x,index,local=false){
  const origin=local?'Dein eingetragener Preis · nicht extern bestätigt':(priced?.source_type==='official_online'?'Offizieller Online-Listenpreis':'Open Prices · belegte Ladenbeobachtung')+(priced&&daysAgo(priced.date)>365?' · VERALTET (älter als 12 Monate)':'');
  return '<article class="gt-value-item"><span class="gt-value-rank">'+(index+1)+'</span><div class="gt-value-art">'+picture(p)+'</div><div class="gt-value-product"><span class="gt-value-category">'+esc(p.brand)+' · '+esc(p.category||'')+'</span><strong>'+esc(p.name)+'</strong><small>'+esc(p.quantity||'')+' · '+fmt(p.nutrition.protein)+' g Protein / 100 '+(quantity(p.quantity)?.basis||'g')+grade+'</small>'+
  '<div class="gt-value-row-foot">'+(priced?'<span>'+esc(origin)+' · '+esc(priceDate)+'</span>':'<span>Preis noch nicht belegt</span>')+(link?' · <a href="'+esc(link)+'" target="_blank" rel="noopener noreferrer">Quelle ↗</a>':'')+'</div></div>'+
- '<div class="gt-value-numbers"><strong>'+(w?fmt(w.euroPer100,2)+' €':'–')+'</strong><small>pro 100 g Protein</small><span>'+(w?fmt(w.proteinPerEuro)+' g Protein / €':'Kein Preisnachweis')+'</span><small>'+(w?fmt(w.euroFor25,2)+' € / 25 g Protein':'')+'</small></div>'+
+ '<div class="gt-value-numbers"><strong>'+(w?fmt(w.euroPer100,2)+' €':'–')+'</strong><small>pro 100 g Protein</small><span>'+(w?fmt(w.proteinPerEuro)+' g Protein / €':'Kein Preisnachweis')+'</span><small>'+(w?fmt(w.euroFor25,2)+' € / 25 g Protein':'')+'</small>'+
+ '<div class="gt-day-cost">'+GOAL.metric(priced?.price,w?.totalProtein)+'</div></div>'+
  '<button class="gt-value-price-btn" data-action="protein-price-edit" data-id="'+esc(p.id)+'" title="Eigenen aktuellen Preis als privaten Vergleich eintragen">✎ Preis</button></article>';
 }
 function resultHtml(){
@@ -115,6 +117,7 @@ function render(context){
  const example=top?'Aktuell günstigster verfügbarer Quellennachweis in dieser Liste: '+esc(top.p.brand)+' '+esc(top.p.name)+' · '+fmt(top.worth.euroPer100,2)+' € je 100 g Protein.':'Noch kein belegter aktueller Preis in diesem Filter.';
  return '<section class="gt-value-hero"><span class="gt-value-eyebrow">GOOD THINGS · THE REAL DEAL</span><h1>More protein.<br><em>Less money.</em></h1><p>Wie viel Eiweiß bekomme ich wirklich für einen Euro? Mit datierten Quellen, deinem Geschmack und einer ehrlichen Rechnung – statt Marketing-Schlagworten.</p>'+
  '<div class="gt-value-hero-stats"><span><strong>'+complete+'</strong> Produkte mit Proteinwert</span><span><strong>'+all.length+'</strong> bewertbare Produkte</span><span><strong>'+verifiedByBarcode.size+'</strong> datierte Preisquellen im ersten Datensatz</span></div></section>'+
+ '<div id="gtProteinGoalMount">'+GOAL.panel()+'</div>'+
  '<section class="gt-value-lesson"><div><span>SO RECHNEN WIR</span><h3>€ je 100 g Protein = Packungspreis ÷ Packungsprotein × 100</h3><p>Beispiel: 200 g Tofu mit 12 g Protein pro 100 g liefern 24 g Protein. Kostet die Packung 0,95 €, entspricht das <strong>3,96 € pro 100 g Protein</strong>.</p></div><div class="gt-value-mini-equation"><span>ALSO SEE</span><strong>Protein pro 1 €</strong><small>Und den Preis einer 25-g-Proteinportion</small></div></section>'+
  '<div class="gt-value-toolbar"><label>Find a source<input class="control" id="gtProteinSearch" type="search" value="'+esc(state.search)+'" placeholder="Tofu, Soja, Hack, Vemondo …"></label>'+
  '<label>Category<select class="control" id="gtProteinCategory"><option value="all">All types</option>'+cats.map(id=>'<option value="'+esc(id)+'" '+(state.category===id?'selected':'')+'>'+esc(context.products.find(p=>p.category_id===id)?.category||id)+'</option>').join('')+'</select></label>'+
@@ -126,6 +129,7 @@ function render(context){
 }
 function refresh(){
  if(!ctx)return;
+ const goalMount=document.querySelector('#gtProteinGoalMount');if(goalMount)goalMount.innerHTML=GOAL.panel();
  const target=document.querySelector('#gtValueResults');if(target)target.innerHTML=resultHtml();
  const snap=document.querySelector('#gtValueSnapshot');if(snap){const valid=sourceList().filter(x=>x.worth&&daysAgo(x.fact.date)<=365).sort((a,b)=>a.worth.euroPer100-b.worth.euroPer100);snap.textContent=valid.length?'Günstigster beobachteter Proteinpreis im aktuellen Filter: '+valid[0].p.brand+' '+valid[0].p.name+' · '+fmt(valid[0].worth.euroPer100,2)+' € je 100 g Protein.':'Noch kein ausreichend aktueller Preisbeleg im Filter.'}
 }
@@ -173,5 +177,6 @@ async function fetchMore(){
  try{localStorage.setItem(CACHE,JSON.stringify(seen))}catch(_){}
  checking=false;refresh();return got;
 }
+GOAL.subscribe(refresh);
 window.GT_PROTEIN={quantity,amountProtein,value,latest,daysAgo,render,refresh,select,more,moreCandidates,editor,save,fetchMore,state};
 })();
