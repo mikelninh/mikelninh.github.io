@@ -975,7 +975,11 @@ document.addEventListener('pointermove',e=>{
 },{passive:false});
 document.addEventListener('pointerup',async e=>{
  const d=boardDrag;if(!d||e.pointerId!==d.pointerId)return;
- const started=d.started,selected=d.targetTier,index=d.targetIndex,id=d.id;
+ const started=d.started,id=d.id;
+ const releaseZone=started?boardDropTarget(e.clientX,e.clientY):null;
+ const zone=releaseZone||d.dropZone;
+ const selected=zone?.dataset.dropTier||null;
+ const index=zone?boardInsertionIndex(zone,e.clientX,e.clientY,id):0;
  cancelBoardDrag();
  if(started){suppressBoardClickUntil=Date.now()+650;if(selected)await boardMove(id,selected,index);else toast('Drag onto a tier row to rank a product.')}
 });
