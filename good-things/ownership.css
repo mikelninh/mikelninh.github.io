@@ -1,0 +1,15 @@
+/* GOOD THINGS Behind the Brand · deliberately neutral styling */
+img[hidden],.board-emoji[hidden],.art-emoji[hidden],.photo-fallback[hidden]{display:none!important}
+.gt-owner-inline{display:inline-flex;max-width:100%;align-items:center;overflow-wrap:anywhere;margin:4px 0 8px;padding:4px 7px;border-radius:8px;border:1px solid #d8e4d0;background:#f1f6eb;color:#566d58;font-size:10px;font-weight:750;line-height:1.35}
+.gt-brand-identity{margin:17px 0;padding:16px;background:#f4f7ee;border:1px solid #dbe5d5;border-radius:14px;line-height:1.45}
+.gt-brand-header{display:flex;flex-direction:column;gap:3px}
+.gt-brand-header strong{font:700 22px/1.18 Georgia,serif;color:#293c30}
+.gt-brand-header small,.gt-brand-identity>small{color:#647969;font-size:11px}
+.gt-brand-identity p{margin:10px 0;font-size:13px;color:#3a5040}
+.gt-brand-identity details{margin:11px 0;border-top:1px solid #dbe5d5;padding-top:10px}
+.gt-brand-identity summary{cursor:pointer;font-size:12px;font-weight:800;color:#31503b}
+.gt-brand-sources{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}
+.gt-brand-sources a{font-size:11px;color:#345d42;text-decoration:underline;text-underline-offset:2px}
+.gt-brand-context{border-top:1px solid #dbe5d5;padding-top:12px}
+.gt-brand-context strong{font-size:12px}
+.gt-brand-context p{font-size:12px}
