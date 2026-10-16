@@ -222,9 +222,9 @@ async function duoIsPhotoSharp(p){
  duoPhotoCheck.set(p.id,false);
  return false;
 }
-async function duoPick(usedIds,brand='all'){
+async function duoPick(usedIds,brand='all',episodeId=''){
  const used=new Set(usedIds||[]);
- const list=duoPhotoCandidates(brand).filter(p=>!used.has(p.id));
+ const list=duoPhotoCandidates(brand).filter(p=>!used.has(p.id)&&(!episodeId||window.GT_EPISODES.accepts(episodeId,p)));
  // Shuffle while preferring real barcode-linked records. Parallel verification means
  // the user does not wait for 28 sequential CDN timeouts on mobile.
  const priority=p=>inspectedPhotoQuality[p.id]?.status==='good'&&inspectedPhotoQuality[p.id]?.url===p.image_url?0:
@@ -253,6 +253,7 @@ function duoLocalReset(){
 }
 async function duoLocalStart(forceNext){
  if(st.duo.busy)return;
+ if(window.GT_EPISODES.finished('duo')){toast('Fünf Produkte geschafft! Teilt euer Ergebnis oder startet eine neue Folge. ✳');return}
  st.duo.busy=true;
  try{
   const local=st.duo.local;
@@ -269,7 +270,8 @@ async function duoLocalStart(forceNext){
   if(local.productId)used.push(local.productId);
   for(const key of ['mikel','huong'])for(const id of Object.keys(st.guest[key]||{}))
    if(st.guest.mikel[id]&&st.guest.huong[id])used.push(id);
-  const p=await duoPick(used,st.duo.brandFilter);
+  const active=window.GT_EPISODES.selected('duo');
+  const p=await duoPick(used,active?'all':st.duo.brandFilter,active?.id||'');
   if(!p){st.duo.qualityMessage='Keine weitere Packung mit ausreichender Bildauflösung gefunden. Die noch offenen Produkte brauchen bessere Fotos.';return}
   local.productId=p.id;local.votes={};local.discussion='';local.activeRole=local.starter;
   st.duo.qualityMessage='';duoPersist();
@@ -296,7 +298,9 @@ function duoLocalVote(choice){
  const person=local.activeRole;local.votes[person]=choice;
  duoSaveLocalAnswer(person,local.productId,choice);
  local.activeRole=person==='mikel'?'huong':'mikel';
- duoPersist();render();
+ duoPersist();
+ if(duoValidChoice(local.votes.mikel)&&duoValidChoice(local.votes.huong))window.GT_EPISODES.record('duo',local.productId,{mikel:local.votes.mikel,huong:local.votes.huong});
+ render();
  if(duoValidChoice(local.votes.mikel)&&duoValidChoice(local.votes.huong))
   toast('Beide haben entschieden. Reveal! ✳');
  else toast('Gespeichert, aber verborgen. Jetzt ist '+(local.activeRole==='huong'?'Huong':'Mikel')+' dran ♡');
@@ -570,6 +574,7 @@ function soloPhoto(p){
 }
 async function soloStart(next){
  if(st.solo.busy)return;
+ if(window.GT_EPISODES.finished('solo')){toast('Episode geschafft! Wähle eine neue Folge oder teile dein Ergebnis. ✳');return}
  if(st.solo.productId&&!next)return;
  st.solo.busy=true;
  try{
@@ -577,8 +582,9 @@ async function soloStart(next){
   if(old&&st.solo.lastChoice&&!soloHistory().some(x=>x.product_id===old)){
    st.solo.history.push({product_id:old,choice:st.solo.lastChoice});
   }
-  const previously=[...new Set([...soloHistory().map(x=>x.product_id),...selfRatings().map(x=>x.product_id),old].filter(Boolean))];
-  const p=await duoPick(previously);
+  const active=window.GT_EPISODES.selected('solo');
+  const previously=active?[...new Set([...window.GT_EPISODES.get('solo').answers.map(x=>x.productId),old].filter(Boolean))]:[...new Set([...soloHistory().map(x=>x.product_id),...selfRatings().map(x=>x.product_id),old].filter(Boolean))];
+  const p=await duoPick(previously,'all',active?.id||'');
   if(!p){st.solo.warning='Keine weiteren Produkte mit ausreichend gutem Bild gefunden. Bitte Foto-Qualität prüfen oder die Auswahl später erweitern.';return}
   st.solo.productId=p.id;st.solo.lastChoice=null;st.solo.warning='';soloPersist();
  }finally{st.solo.busy=false;render()}
@@ -596,7 +602,7 @@ async function soloVote(choice){
   if(error)return toast('Bewertung konnte nicht gespeichert werden: '+error.message);
   st.allRatings=st.allRatings.filter(x=>!(x.user_id===st.user.id&&x.product_id===id)).concat(obj);
  }else{st.guest.you[id]=row;persist()}
- st.solo.lastChoice=choice;soloPersist();render();toast('Deine Bewertung ist gespeichert. Weiter zum nächsten Zufallsprodukt ♡');
+ st.solo.lastChoice=choice;soloPersist();window.GT_EPISODES.record('solo',id,choice);render();toast('Deine Bewertung ist gespeichert. Weiter zum nächsten Zufallsprodukt ♡');
 }
 async function soloSaveNote(note){
  const id=st.solo.productId,choice=st.solo.lastChoice;
