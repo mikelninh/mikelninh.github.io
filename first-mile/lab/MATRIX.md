@@ -52,3 +52,5 @@ In Windows PowerShell after cloning the repository:
     powershell -ExecutionPolicy Bypass -File first-mile/lab/run-matrix.ps1
 
 This prompts for the API key (hidden), displays the budget, and requires typing RUN to authorize paid calls. The key is cleared from the current process after execution if entered by the script. No API key is uploaded to the website or GitHub.
+
+Before requesting paid model completions, the Windows launcher now calls check_access.py, which performs a free read-only GET /v1/models to see whether Luna, Sol and Astra are listed for the API project. It does not guarantee that the completion endpoint will accept a given model; unsupported or unlisted models can still fail the paid benchmark. Review availability before typing RUN.

@@ -26,6 +26,9 @@ try {
     $enteredKey=$true
   }
   if (-not $env:OPENAI_API_KEY) { throw 'No API key was supplied.' }
+  Write-Host 'Checking available API models (no generation charges)...'
+  & $python.Source (Join-Path $PSScriptRoot 'check_access.py')
+  if ($LASTEXITCODE -ne 0) { Write-Host 'Model access check failed. No billable benchmark was started.' -ForegroundColor Yellow;return }
   $confirm=Read-Host 'Type RUN to approve potentially billable OpenAI requests'
   if ($confirm -cne 'RUN') { Write-Host 'Cancelled without API calls.';return }
   Push-Location $base
