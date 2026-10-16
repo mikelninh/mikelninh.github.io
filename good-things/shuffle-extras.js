@@ -24,7 +24,7 @@ for(const p of window.GT_CATALOG||[]){
  }
 }
 const units=[['Energie','kcal','kcal'],['Protein','protein','g'],['Kohlenhydrate','carbs','g'],['davon Zucker','sugar','g'],['Fett','fat','g'],['davon gesättigte Fettsäuren','satFat','g'],['Ballaststoffe','fiber','g'],['Salz','salt','g']];
-function factsNutrition(p,info){const fresh=info?.nutrition,known=p.nutrition||{};if(!fresh)return p.nutrition||null;const merged={...known};for(const [k,v] of Object.entries(fresh))if(Number.isFinite(v))merged[k]=v;return Object.values(merged).some(Number.isFinite)?merged:null}
+function factsNutrition(p,info){const fresh=info?.nutrition,known=p.nutrition||{};const merged={...known};if(fresh)for(const [k,v] of Object.entries(fresh))if(Number.isFinite(v))merged[k]=v;try{const entry=JSON.parse(localStorage.getItem('goodthings_protein_lab_v28')||'{}')[p.id];if(entry&&entry.protein!==undefined&&entry.protein!==null&&Number.isFinite(Number(entry.protein))&&Number(entry.protein)>=0&&Number(entry.protein)<=100)merged.protein=Number(entry.protein)}catch(_){}return Object.values(merged).some(Number.isFinite)?merged:null}
 function bullets(n){
  const plus=[],minus=[];
  if(!n)return {plus:['Nährwertangaben sind noch nicht verifiziert.'],minus:['Ohne Nährwerte ist keine Einordnung möglich.']};
@@ -67,7 +67,8 @@ function facts(p){
  return '<section class="gt-fact-card" data-gt-fact="'+id+'" aria-label="Produktinformationen vor der Bewertung">'+
  '<div class="gt-fact-top"><div><span class="eyebrow">BEVOR DU BEWERTEST</span><h4>Was steckt drin?</h4></div><span class="gt-fact-tag">'+esc(p.quantity||'je 100 g/ml')+'</span></div>'+
  '<div class="gt-quick-facts"><div><span>Marke</span><strong>'+esc(p.brand||'Unbekannt')+'</strong></div><div><span>Protein</span><strong>'+fmt(n?.protein)+(Number.isFinite(n?.protein)?' g':'')+'</strong></div><div><span>Zucker</span><strong>'+fmt(n?.sugar)+(Number.isFinite(n?.sugar)?' g':'')+'</strong></div><div><span>Salz</span><strong>'+fmt(n?.salt)+(Number.isFinite(n?.salt)?' g':'')+'</strong></div></div>'+
- '<div class="gt-pro-con"><div class="gt-pro"><strong>↗ Pro</strong><ul>'+pm.plus.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div class="gt-con"><strong>↘ Contra / zu beachten</strong><ul>'+pm.minus.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></div>'+
+ (function(){try{const x=JSON.parse(localStorage.getItem('goodthings_protein_lab_v28')||'{}')[p.id];return x?.protein!==undefined?'<p class="gt-explain">Proteinwert aus deinem eigenen Etikett-Eintrag; nicht unabhängig verifiziert.</p>':''}catch(_){return''}})()+
+  '<div class="gt-pro-con"><div class="gt-pro"><strong>↗ Pro</strong><ul>'+pm.plus.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div class="gt-con"><strong>↘ Contra / zu beachten</strong><ul>'+pm.minus.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></div>'+
  '<div class="gt-score-section"><div><strong>Und der Nutri-Score?</strong><small>A–E misst Nährstoffzusammensetzung, nicht Geschmack oder Vegan-Status.</small></div>'+scoreBadge(grade)+'</div>'+
  '<details class="gt-fact-details"><summary>Mehr erfahren · Zutaten, Hersteller, Preis &amp; alle Nährwerte <span>⌄</span></summary>'+
  '<div class="gt-fact-more"><p><strong>Hersteller / Markeninhaber</strong><span>'+esc(manufacturer||'Nicht eindeutig belegt – Marke ≠ Hersteller')+'</span></p>'+
