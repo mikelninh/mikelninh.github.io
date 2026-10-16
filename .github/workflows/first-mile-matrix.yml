@@ -1,0 +1,18 @@
+name: FIRST MILE GPT-6 model matrix contracts
+on:
+  push:
+    paths:
+      - "first-mile/lab/matrix.py"
+      - "first-mile/lab/test_matrix.py"
+      - "first-mile/lab/MATRIX.md"
+      - ".github/workflows/first-mile-matrix.yml"
+  workflow_dispatch:
+jobs:
+  safe-dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Matrix, budget and source-verification tests
+        run: python -m unittest first-mile/lab/test_matrix.py -v
+      - name: Zero-cost dry-run
+        run: python first-mile/lab/matrix.py --budget-usd 1.50 --output /tmp/first-mile-dry.json
