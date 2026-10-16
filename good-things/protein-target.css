@@ -33,3 +33,61 @@
 .gt-value-numbers .gt-day-cost{margin:9px 0 0}
 .gt-value-numbers .gt-day-cost-main{display:block}
 @media(max-width:680px){.gt-day-target-top{align-items:stretch;flex-direction:column}.gt-day-target-number{width:max-content;min-width:130px;padding:11px 15px;text-align:left}.gt-day-target-number strong{font-size:34px}.gt-day-fields{grid-template-columns:1fr}.gt-day-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.gt-day-modes button{font-size:10px;padding:9px 4px;min-height:44px}.gt-day-target-top h2{font-size:29px}}
+
+/* GOOD THINGS 3.2 · Personal number first. Daily and 30-day price examples. */
+.gt-day-target{margin:7px 0 23px;padding:clamp(16px,2.4vw,28px);background:linear-gradient(145deg,#fcfdf8,#f1f6e7);border:1px solid #cbd9bb}
+.gt-day-target-top h2{font-size:clamp(30px,3.3vw,44px);max-width:710px}
+.gt-day-target-top p{font-size:13px;line-height:1.45}
+.gt-day-fields-visible{margin:20px 0 6px;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
+.gt-day-fields-visible label{font-size:13px;color:#36543d}
+.gt-day-fields-visible input,.gt-day-fields-visible select{font-size:16px;min-height:50px;border-color:#9db98c;background:#fffefa}
+.gt-day-fields-visible input:focus,.gt-day-fields-visible select:focus{outline:3px solid #d9eaa9;outline-offset:2px}
+.gt-day-modes{margin:9px 0 15px}
+.gt-day-modes button{background:#fffefb;font-size:11px;padding:8px 11px}
+.gt-day-modes button.active{background:#314e3b;color:#f9fced}
+.gt-day-target-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:13px 0 10px}
+.gt-day-target-summary>div{border:1px solid #dce6d2;background:#fffefa;border-radius:13px;padding:13px 16px}
+.gt-day-target-summary>div span{display:block;color:#647a69;font-size:11px;font-weight:800;letter-spacing:.02em}
+.gt-day-target-summary>div strong{display:block;font:700 clamp(24px,3vw,36px)/1.2 Fraunces,Georgia,serif;letter-spacing:-.04em;color:#2e5438;margin-top:5px}
+.gt-day-explain{margin:8px 0 14px}
+.gt-day-reference{background:#fffefa;border:1px solid #d8e5cf;border-radius:16px;padding:16px 18px;margin:17px 0 14px;box-shadow:0 3px 15px #334d2510}
+.gt-day-reference-heading{display:flex;justify-content:space-between;align-items:start;gap:12px;flex-wrap:wrap}
+.gt-day-reference-heading h3{font:700 23px/1.15 Fraunces,Georgia,serif;margin:6px 0;color:#2c4834}
+.gt-day-reference-heading p{font-size:11px;color:#6c806e;margin:3px 0 12px}
+.gt-day-reference-heading>a{font-size:11px;color:#466f4b;text-decoration:underline;text-underline-offset:3px;font-weight:750}
+.gt-day-price-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.gt-day-price-grid>div{padding:14px;border:1px solid #e4eadb;border-radius:12px;background:#f6f9ef}
+.gt-day-price-grid span{color:#648064;font-size:11px;font-weight:750}
+.gt-day-price-grid strong{display:block;color:#365c38;font:700 clamp(27px,3vw,38px)/1.25 Fraunces,Georgia,serif;margin:2px 0;letter-spacing:-.03em}
+.gt-day-price-grid small{font-size:10px;color:#738473}
+.gt-day-pack-note{font-size:12px;line-height:1.6;color:#486c49;margin:14px 0 9px}
+.gt-day-disclaimer{color:#70816e;font-size:11px;line-height:1.55;margin:9px 0 0}
+.gt-day-reference-empty{background:#f8faf4}
+.gt-day-reference-empty strong{color:#496d4d;font-size:12px}
+.gt-day-reference-empty p{font-size:11px;color:#70816f}
+.gt-day-metric-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.gt-day-metric-grid>div{min-width:0}
+.gt-day-metric-grid small{display:block;font-size:10px;color:#658064;font-weight:800}
+.gt-day-metric-grid strong{display:block;font-size:clamp(16px,1.5vw,21px)!important;line-height:1.23}
+.gt-day-cost{gap:6px}
+.gt-day-cost>.gt-day-whole{display:block;margin-top:6px;font-size:11px;line-height:1.5}
+.gt-day-cost>small{font-size:10px}
+.pl-table .pl-day-cost{min-width:210px;max-width:245px}
+.pl-table{min-width:1170px}
+.pl-table .gt-day-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.gt-value-numbers .gt-day-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;text-align:left}
+.gt-value-numbers .gt-day-metric-grid .gt-day-cost-main{font-size:17px!important}
+@media(max-width:680px){
+ .gt-day-target-top{gap:8px}
+ .gt-day-target-top h2{font-size:32px}
+ .gt-day-fields-visible{grid-template-columns:1fr;gap:10px;margin:15px 0 10px}
+ .gt-day-target-number{width:max-content;min-width:160px}
+ .gt-day-modes{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .gt-day-modes button{padding:8px 4px;font-size:10px;line-height:1.2}
+ .gt-day-target-summary>div{padding:12px 11px}
+ .gt-day-target-summary>div strong{font-size:27px}
+ .gt-day-reference{padding:13px}
+ .gt-day-reference-heading h3{font-size:22px}
+ .gt-day-price-grid>div{padding:11px}
+ .gt-day-price-grid strong{font-size:27px}
+}
