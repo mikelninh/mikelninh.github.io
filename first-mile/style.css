@@ -22,3 +22,28 @@
 .outcome-caveat strong{color:#476b51}
 .outcome-caveat a{font-weight:800;color:#336547}
 @media(max-width:700px){.outcome-grid{grid-template-columns:1fr}.outcome-grid article+article{border-left:0;border-top:1px solid #d5ded3}.outcome{padding-bottom:65px}.outcome-top{align-items:start;flex-direction:column}.outcome h2{margin:23px 0}}
+
+
+/* FOUR-CASE FIRST MILE PICKER */
+.picker{padding-bottom:75px}
+.picker-top{display:flex;justify-content:space-between;gap:28px;align-items:end;margin-bottom:25px}
+.picker-top h2{font:400 clamp(38px,4.4vw,63px)/1.08 var(--serif);letter-spacing:-.035em;margin:13px 0}
+.picker-top h2 em{color:#719176}
+.picker-top p{font-size:13px;line-height:1.7;color:#718473;max-width:600px;margin:0}
+.picker-note{max-width:210px;color:#95a297;text-align:right;font-size:9px;font-weight:800;letter-spacing:.09em}
+.picker-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.picker-card{min-height:236px;padding:23px;text-align:left;border:1px solid #d1ddd2;background:#fffefa;color:var(--ink);display:flex;align-items:flex-start;flex-direction:column;gap:9px;transition:border-color .15s,transform .15s,background .15s;position:relative}
+.picker-card:hover{transform:translateY(-3px);border-color:#7da985}
+.picker-card.active{border:2px solid #315a3b;background:#e8efe3;padding:22px;box-shadow:0 12px 30px #1c4b3010}
+.picker-card.active:after{content:"SELECTED";position:absolute;top:-11px;right:13px;color:#fff;background:#315a3b;font-size:9px;font-weight:800;letter-spacing:.06em;padding:3px 9px}
+.picker-meta{font-size:9px;font-weight:850;letter-spacing:.09em;color:#67826d}
+.picker-symbol{font:400 43px/1 var(--serif);color:#6b9374;margin:13px 0 4px}
+.picker-card strong{font:400 25px/1.1 var(--serif)}
+.picker-description{font-size:11px;color:#819383}
+.picker-result{margin-top:auto;padding-top:12px;display:flex;width:100%;justify-content:space-between;align-items:center;color:#315b40;font-size:11px;font-weight:800;border-top:1px solid #d7e3d5}
+.picker-result b{font-size:18px}
+.picker-foot{font-size:10px;line-height:1.65;color:#839387;max-width:900px;margin:13px 0 0}
+.tag.forecast,.tag.mixed{border-color:#e6c9a4;background:#fff2db;color:#91602f}
+.outcome-grid .outcome-lesson{margin-top:10px;font-size:11px;color:#5e785f}
+@media(max-width:1000px){.picker-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:570px){.picker-list{grid-template-columns:1fr}.picker-card{min-height:160px}.picker-symbol{margin:5px 0}.picker-top{display:block}.picker-note{display:block;text-align:left;max-width:none;margin-top:15px}}

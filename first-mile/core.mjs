@@ -33,16 +33,20 @@ export const analyze = function analyze(documents){
      if(!matcher.test(str))continue;
      const value=type==="money"?money(str):type==="count"?count(str):null;
      if(type!=="text"&&value===null)continue;
-     hits.push({key,label,value,source:doc.name,page:page.number,excerpt:str.slice(0,420)});
+     const projected=type==="money"&&/\b(forecast|forecasted|projected|projection|target|expected in|expected by|future revenue|not current revenue|prognose|geplant)\b/i.test(str);
+     hits.push({key,label,value,projected,source:doc.name,page:page.number,excerpt:str.slice(0,420)});
    }
  }
  const fields=rules.map(([key,label,,,question])=>{
    const evidence=hits.filter(x=>x.key===key);
-   const unique=[...new Set(evidence.filter(x=>x.value!==null).map(x=>String(x.value)))];
-   return {key,label,question,evidence,status:!evidence.length?"missing":unique.length>1?"different":"found"};
+   const actual=[...new Set(evidence.filter(x=>x.value!==null&&!x.projected).map(x=>String(x.value)))];
+   const forecast=[...new Set(evidence.filter(x=>x.value!==null&&x.projected).map(x=>String(x.value)))];
+   const status=!evidence.length?"missing":actual.length>1?"different":forecast.length&&actual.length===0?"forecast":forecast.length&&actual.length?"mixed":"found";
+   return {key,label,question,evidence,status};
  });
  const differences=fields.filter(x=>x.status==="different");
  const missing=fields.filter(x=>x.status==="missing");
- const questions=[...differences.map(x=>"Different "+x.label.toLowerCase()+" figures appear. Which is current, and how do reporting dates differ?"),...missing.map(x=>x.question),...fields.filter(x=>x.status==="found").map(x=>x.question)].slice(0,5);
- return {fields,differences,missing,questions,evidenceCount:hits.length,sourceCount:(documents||[]).length};
+ const forecasts=fields.filter(x=>x.status==="forecast"||x.status==="mixed");
+ const questions=[...differences.map(x=>"Different "+x.label.toLowerCase()+" figures appear. Which is current, and how do reporting dates differ?"),...forecasts.map(x=>"The "+x.label.toLowerCase()+" figure is a forecast or target, not verified current performance. What is the current actual figure and the evidence behind it?"),...missing.map(x=>x.question),...fields.filter(x=>x.status==="found").map(x=>x.question)].slice(0,5);
+ return {fields,differences,missing,forecasts,questions,evidenceCount:hits.length,sourceCount:(documents||[]).length};
 };

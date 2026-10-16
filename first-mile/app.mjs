@@ -1,7 +1,7 @@
 import {analyze} from './core.mjs';
-import {sampleDocs} from './samples.mjs';
+import {demoCases,getDemoCase} from './cases.mjs';
 const el=id=>document.getElementById(id);
-let docs=[],report=null,fictional=true;
+let docs=[],report=null,fictional=true,activeCase=getDemoCase("asterion");
 const make=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n};
 const status=(msg,error=false)=>{el('status').textContent=msg;el('status').classList.toggle('error',error)};
 function showSources(field){
@@ -13,18 +13,35 @@ function showSources(field){
 function render(){
  report=analyze(docs);el('workspace').hidden=false;el('doccount').textContent=String(report.sourceCount).padStart(2,'0');
  el('hitCount').textContent=String(report.evidenceCount).padStart(2,'0');el('diffCount').textContent=String(report.differences.length).padStart(2,'0');el('gapCount').textContent=String(report.missing.length).padStart(2,'0');
- el('case').textContent=fictional?'ASTERION ENERGY · FICTIONAL':docs.map(x=>x.name).join(' + ');
+ el('case').textContent=fictional?activeCase.name.toUpperCase()+' · FICTIONAL':docs.map(x=>x.name).join(' + ');
  el('mode').textContent=fictional?'SYNTHETIC EXAMPLE · NOT A REAL STARTUP':'YOUR LOCAL DOCUMENTS · NOT UPLOADED';
  el('cards').replaceChildren();el('questions').replaceChildren();
  report.fields.forEach(f=>{
   const button=make('button','card');button.type='button';button.setAttribute('aria-label','Inspect '+f.label+' source excerpts');
-  const row=make('div','card-row');row.append(make('h4','',f.label),make('span','tag '+f.status,f.status==='different'?'RECONCILE':f.status==='missing'?'NOT FOUND':'EXCERPT FOUND'));
-  const summary=f.status==='missing'?'No matching text found. This is not proof the topic is absent.':f.status==='different'?'Figures differ. Check definitions and reporting periods.':f.evidence[0].excerpt.slice(0,135);
+  const row=make('div','card-row');const badges={different:'RECONCILE',missing:'NOT FOUND',forecast:'FORECAST ONLY',mixed:'ACTUAL + FORECAST',found:'EXCERPT FOUND'};row.append(make('h4','',f.label),make('span','tag '+f.status,badges[f.status]||'REVIEW'));
+  const summary=f.status==='missing'?'No matching text found. This is not proof the topic is absent.':f.status==='different'?'Figures differ. Check definitions and reporting periods.':f.status==='forecast'?'Projected figure only. Do not confuse this with actual current revenue.':f.status==='mixed'?'Both reported and projected values appear. Keep them distinct.':f.evidence[0].excerpt.slice(0,135);
   button.append(row,make('p','',summary),make('span','inspect','Inspect sources →'));button.addEventListener('click',()=>showSources(f));el('cards').append(button);
  });
  report.questions.forEach((q,i)=>{const row=make('div','question');row.append(make('b','',String(i+1).padStart(2,'0')),make('p','',q));el('questions').append(row)});
+ if(fictional){
+   el('outcomeKind').textContent=activeCase.name.toUpperCase()+' · FICTIONAL EXCERPTS';
+   el('outcomeBefore').textContent=activeCase.before;
+   el('outcomeAction').textContent=report.differences.length?'Start with the differences.':report.forecasts.length?'Separate forecast from fact.':report.missing.length?'Make gaps visible.':'Go deeper than a clean deck.';
+   el('outcomeProof').textContent=activeCase.name+' surfaces '+report.evidenceCount+' traceable observations, '+report.differences.length+' differing figures, '+report.missing.length+' topics not found and '+report.questions.length+' questions for review.';
+   el('outcomeLesson').textContent=activeCase.lesson;
+ }else{
+   el('outcomeKind').textContent='UPLOADED DOCUMENTS · LOCAL REVIEW';
+   el('outcomeBefore').textContent='Read uploaded PDFs, locate assertions, compare figures, and trace claims back to original pages.';
+   el('outcomeAction').textContent='Inspect before deciding.';
+   el('outcomeProof').textContent='The uploaded files surfaced '+report.evidenceCount+' rule-based observations, '+report.differences.length+' differences, '+report.missing.length+' topics not found and '+report.questions.length+' follow-up questions.';
+   el('outcomeLesson').textContent='These observations are not external fact checks; verify dates, definitions and omissions.';
+ }
 }
-function loadExample(){docs=JSON.parse(JSON.stringify(sampleDocs));fictional=true;el('files').value='';el('notes').value='';render();status('Fictional two-document case loaded. Select cards to inspect actual sample text.')}
+function loadExample(id='asterion'){
+ activeCase=getDemoCase(id);docs=JSON.parse(JSON.stringify(activeCase.docs));fictional=true;el('files').value='';el('notes').value='';
+ document.querySelectorAll('[data-case]').forEach(button=>{const isSelected=button.dataset.case===activeCase.id;button.classList.toggle('active',isSelected);button.setAttribute('aria-pressed',String(isSelected))});
+ render();status('Fictional '+activeCase.name+' case selected. Review '+report.evidenceCount+' source excerpts and '+report.questions.length+' questions.');
+}
 async function parsePdf(file){
  const pdfjs=await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs');
  pdfjs.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs';
@@ -52,7 +69,7 @@ async function handle(files){
    else throw Error('Only PDF and TXT files are supported.');
   }
   if(!next.some(d=>d.pages.some(p=>p.text.trim())))throw Error('No extractable text found. Scanned documents require OCR, which is not supported.');
-  docs=next;fictional=false;el('notes').value='';render();status('Read '+docs.length+' file(s). '+report.evidenceCount+' rule-based observations; inspect sources.');
+  docs=next;fictional=false;document.querySelectorAll('[data-case]').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-pressed','false')});el('notes').value='';render();status('Read '+docs.length+' file(s). '+report.evidenceCount+' rule-based observations; inspect sources.');
   el('workspace').scrollIntoView({behavior:'smooth',block:'start'});
  }catch(error){status(error?.message||String(error),true)}
 }
@@ -68,7 +85,8 @@ function exportBrief(){
  const blob=new Blob([out.join('\n')],{type:'text/markdown;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
  a.href=url;a.download='first-mile-founder-brief.md';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);
 }
-el('example').addEventListener('click',()=>{loadExample();el('workspace').scrollIntoView({behavior:'smooth',block:'start'})});
+el('example').addEventListener('click',()=>el('case-picker').scrollIntoView({behavior:'smooth',block:'start'}));
+document.querySelectorAll('[data-case]').forEach(button=>button.addEventListener('click',()=>{loadExample(button.dataset.case);el('outcome').scrollIntoView({behavior:'smooth',block:'start'})}));
 el('files').addEventListener('change',event=>handle([...event.target.files]));
 el('export').addEventListener('click',exportBrief);el('close').addEventListener('click',()=>el('dialog').close());
 const drop=el('drop');drop.addEventListener('dragover',e=>e.preventDefault());drop.addEventListener('drop',e=>{e.preventDefault();handle([...e.dataTransfer.files])});
