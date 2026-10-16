@@ -947,3 +947,10 @@ body:has(.gt-bp-hero) .left-rail,body:has(.gt-bp-hero) .hero{display:none}
 @media(max-width:900px){.gt-bp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.gt-bp-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.gt-bp-stats{grid-template-columns:repeat(2,1fr);gap:7px}.gt-bp-filters{flex-direction:column}.gt-bp-filters label{width:100%}.gt-bp-photo{height:156px;padding:11px 12px 31px}.gt-bp-card-main{padding:11px}.gt-bp-card h3{font-size:17px}.gt-bp-card-cta{padding:8px}.gt-bp-card-cta button{font-size:10px;padding:9px 8px}.gt-bp-hero{padding:22px}.gt-bp-hero h2{font-size:42px}.gt-bp-brands{display:grid}.gt-bp-invite{padding:20px}.gt-bp-invite>div:last-child .button{flex:1}.gt-bp-status button{font-size:10px;padding:7px 10px}.gt-bp-scores{grid-template-columns:1fr}.mobile-nav:has([data-nav="brands"]){gap:3px}.mobile-nav:has([data-nav="brands"]) button{font-size:9px}}
 @media(max-width:385px){.gt-bp-grid{grid-template-columns:1fr}.gt-bp-photo{height:205px}}
+
+/* Good Things 2.6 · personal tasting completion tracking */
+.gt-bp-progress{height:8px;border-radius:99px;overflow:hidden;background:#e6ecdc;margin:6px 3px 7px}
+.gt-bp-progress>div{height:100%;background:linear-gradient(90deg,#9bc76c,#c9e88c);border-radius:99px;transition:width .45s ease}
+.gt-bp-progress-caption{font-size:11px;color:#779172;margin:0 3px 18px}
+.gt-bp-missing-action{display:inline;background:transparent;border:0;color:#3e7440;text-decoration:underline;cursor:pointer;font-size:11px;font-weight:800;padding:0 3px}
+@media(prefers-reduced-motion:reduce){.gt-bp-progress>div{transition:none}}
