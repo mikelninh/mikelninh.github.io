@@ -1,0 +1,38 @@
+name: GOOD THINGS 3.0 browser release gate
+on:
+  push:
+    paths:
+      - 'good-things/**'
+      - '.github/workflows/good-things-browser.yml'
+  pull_request:
+    paths:
+      - 'good-things/**'
+      - '.github/workflows/good-things-browser.yml'
+  workflow_dispatch:
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Serve GOOD THINGS and run mobile + desktop browser tests
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory . >/tmp/good-things-server.log 2>&1 &
+          sleep 2
+          node good-things/tests/browser.mjs
+      - name: Upload release screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: good-things-3-screenshots
+          path: good-things/browser-artifacts/*.png
+          if-no-files-found: ignore

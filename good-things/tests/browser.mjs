@@ -1,0 +1,82 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { chromium } from 'playwright';
+
+const port=process.env.GT_BROWSER_PORT||'8765';
+const base='http://127.0.0.1:'+port+'/good-things/';
+const shots='good-things/browser-artifacts';
+fs.mkdirSync(shots,{recursive:true});
+const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+const errors=[];
+async function startPage(ctx,url){
+ const page=await ctx.newPage();
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});
+ await page.waitForSelector('#boardTray .board-piece',{timeout:25000});
+ return page;
+}
+try{
+ const mobile=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1,hasTouch:true,isMobile:true});
+ const m=await startPage(mobile,base);
+ const pantry=await m.locator('#boardPantry').boundingBox();
+ const mat=await m.locator('#boardMat').boundingBox();
+ assert.ok(pantry&&mat&&pantry.y<mat.y,'mobile products must appear before six tier rows');
+ assert.equal(await m.locator('.gt-mobile-nav [data-nav="board"]').count(),1);
+ assert.ok(await m.locator('#boardTray .board-piece').count()>0,'source-linked products shown');
+ await m.screenshot({path:shots+'/tier-list-mobile.png'});
+ const item=m.locator('#boardTray .board-piece').first();
+ const id=await item.getAttribute('data-drag-id');
+ await item.click();
+ await m.waitForSelector('#modalOverlay.open .gt-quick-rank');
+ assert.equal(await m.locator('#modalOverlay .quick-rank-choices button').count(),6);
+ const more=m.locator('#modalOverlay .gt-quick-more');
+ assert.equal(await more.evaluate(el=>el.open),false,'product facts must be collapsed by default');
+ const artBox=await m.locator('#modalOverlay .quick-rank-art').boundingBox();
+ const choices=await m.locator('#modalOverlay .quick-rank-choices').boundingBox();
+ assert.ok(artBox&&choices&&choices.y>=artBox.y+artBox.height-2,'product art must not overlap choices');
+ assert.ok(choices.y+choices.height<=844,'S–F must be reachable without modal scrolling at 390×844');
+ await m.screenshot({path:shots+'/quick-rank-mobile.png'});
+ await m.locator('#modalOverlay button[data-action="quick-rank"][data-value="S"]').click();
+ await m.waitForSelector('#boardMat .tier-lane[data-drop-tier="S"] [data-drag-id="'+id+'"]');
+ assert.equal(await m.locator('#modalOverlay.open').count(),0,'dialog closes after a saved grade');
+ await m.locator('[data-action="undo-board"]').click();
+ await m.waitForSelector('#boardTray [data-drag-id="'+id+'"]');
+ await m.locator('#boardTray [data-drag-id="'+id+'"]').click();
+ await m.waitForSelector('#modalOverlay.open .gt-quick-rank');
+ await m.locator('#modalOverlay button[data-action="quick-rank"][data-value="A"]').click();
+ await m.waitForSelector('#boardMat .tier-lane[data-drop-tier="A"] [data-drag-id="'+id+'"]');
+ await m.reload({waitUntil:'domcontentloaded'});
+ await m.waitForSelector('#boardMat .tier-lane[data-drop-tier="A"] [data-drag-id="'+id+'"]',{timeout:25000});
+ const next=m.locator('#boardTray .board-piece').first();
+ const second=await next.getAttribute('data-drag-id');
+ await next.click();
+ await m.waitForSelector('#modalOverlay.open .gt-quick-rank');
+ await m.locator('#modalOverlay button[data-action="quick-not-tried"]').click();
+ await m.waitForSelector('#boardNotTried [data-drag-id="'+second+'"]');
+ assert.equal(await m.locator('#boardMat .tier-lane [data-drag-id="'+second+'"]').count(),0);
+ await m.screenshot({path:shots+'/tier-list-rated-mobile.png'});
+ await mobile.close();
+ 
+ const desktop=await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:1});
+ const d=await startPage(desktop,base);
+ const dPantry=await d.locator('#boardPantry').boundingBox(),dMat=await d.locator('#boardMat').boundingBox();
+ assert.ok(dPantry&&dMat&&dMat.y<dPantry.y,'desktop board sits before product shelf');
+ assert.equal(await d.locator('.gt-top-nav [data-nav="board"]').count(),1);
+ await d.locator('.gt-nav-more summary').click();
+ assert.ok(await d.locator('.gt-more-menu [data-nav="solo"]').isVisible());
+ await d.screenshot({path:shots+'/tier-list-desktop.png'});
+ const storePage=await desktop.newPage();
+ storePage.on('pageerror',e=>errors.push('stores: '+e.message));
+ await storePage.goto(base+'stores.html',{waitUntil:'domcontentloaded'});
+ await storePage.waitForSelector('#shops [data-shop]',{timeout:25000});
+ assert.equal(await storePage.locator('#shops [data-shop]').count(),7);
+ await storePage.locator('#shops [data-shop="NETTO"]').click();
+ assert.equal(await storePage.locator('#bagTotal').textContent(),'–');
+ await storePage.locator('[data-add]').first().click();
+ assert.equal(await storePage.locator('#bagTotal').textContent(),'–','no invented Netto price');
+ await desktop.close();
+ assert.deepEqual(errors,[],'no uncaught page exceptions');
+ console.log('GOOD THINGS 3.0 BROWSER PASS: 390px touch, 1440px desktop, six tiers, undo, reload persistence, no-grade, photo bounds, ownership, seven stores');
+}finally{
+ await browser.close();
+}

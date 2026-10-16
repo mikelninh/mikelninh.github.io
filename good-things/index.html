@@ -13,6 +13,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23dff179'/%3E%3Ctext x='50' y='72' font-family='serif' font-size='75' fill='%23263d32' text-anchor='middle'%3E✳%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="./styles.css?v=2.9.2">
   <link rel="stylesheet" href="./ownership.css?v=2.9.1">
+  <link rel="stylesheet" href="./release-3.css?v=3.0.0">
   <title>GOOD THINGS — Mikel & Huong</title>
   <script defer src="./catalog.js"></script>
   <script defer src="./catalog-extra-1.js"></script>
@@ -34,26 +35,30 @@
   <script defer src="./episodes.js?v=2.7.2"></script>
   <script defer src="./protein-value.js?v=2.8"></script>
   <script defer src="./ownership.js?v=2.9.1"></script>
-  <script defer src="./app.js?v=2.9.2"></script>
+  <script defer src="./app.js?v=3.0.0"></script>
 </head>
 <body>
 <header class="masthead wrap">
  <a class="brand" href="./" aria-label="GOOD THINGS home"><span class="brand-icon">✳</span><span>GOOD<br>THINGS<span style="color:#84a567">.</span></span></a>
- <nav class="desktopnav" aria-label="Main navigation">
-   <button class="navlink active" data-nav="board">Tier board ✳</button>
+ <nav class="desktopnav gt-top-nav" aria-label="Main navigation">
+   <button class="navlink active" data-nav="board">✳ Tier List</button>
+   <button class="navlink" data-nav="duo">♡ Play Together</button>
    <button class="navlink" data-nav="discover">Discover</button>
-   <button class="navlink" data-nav="ours">Mikel &amp; Huong</button>
-   <button class="navlink" data-nav="solo">✳ Solo Shuffle</button>
-   <button class="navlink" data-nav="duo">♡ Together Shuffle</button>
    <button class="navlink" data-nav="my">My shelf</button>
-   <button class="navlink" data-nav="community">Community</button>
-    <button class="navlink" data-nav="brands">🌱 Plant Brands</button>
-    <a class="navlink" href="./protein.html">💪 Protein / €</a>
-    <a class="navlink" href="./stores.html">🛒 My Stores</a>
-    <button class="navlink" data-nav="protein">💪 Protein Value</button>
-    <button class="navlink" data-nav="awards">🏆 Awards</button>
-   <a class="navlink" href="./lookup.html">Product Detective ✳</a>
-   <a class="navlink" href="./photos.html">Photo Lab ↗</a>
+   <a class="navlink" href="./stores.html">🛒 My Stores</a>
+   <details class="gt-nav-more"><summary class="navlink">Explore <span aria-hidden="true">⌄</span></summary>
+     <div class="gt-more-menu">
+      <button class="navlink" data-nav="solo">✳ Solo Shuffle</button>
+      <button class="navlink" data-nav="ours">Mikel &amp; Huong</button>
+      <button class="navlink" data-nav="brands">🌱 Plant Brands</button>
+      <button class="navlink" data-nav="awards">🏆 Awards</button>
+      <button class="navlink" data-nav="community">Community</button>
+      <a class="navlink" href="./protein.html">Protein / €</a>
+      <button class="navlink" data-nav="protein">Protein Value</button>
+      <a class="navlink" href="./lookup.html">Product Detective ✳</a>
+      <a class="navlink" href="./photos.html">Photo Lab ↗</a>
+     </div>
+   </details>
  </nav>
  <div class="navright">
    <span class="small muted" id="authStatus" aria-live="polite"><span class="dot"></span> Local tasting shelf</span>
@@ -135,15 +140,12 @@
   <div><a href="https://mikelninh.github.io/vegan/" target="_blank" rel="noopener">Plant Table ↗</a><a href="https://mikelninh.github.io/ramen/" target="_blank" rel="noopener">Ramen Passport ↗</a><a href="./privacy.html">Privacy ↗</a><a href="https://world.openfoodfacts.org/" target="_blank" rel="noopener noreferrer">Produktdaten: Open Food Facts · ODbL ↗</a><a href="https://openfoodfacts.github.io/documentation/docs/Product-Opener/api/tutorials/license-be-on-the-legal-side/" target="_blank" rel="noopener noreferrer">Community-Produktbilder · CC BY-SA ↗</a><a href="https://prices.openfoodfacts.org/" target="_blank" rel="noopener noreferrer">Preisbelege: Open Prices ↗</a><button class="navlink" style="color:#d7e8d2" data-action="open-feedback">Send feedback ♡</button></div>
  </div>
 </footer>
-<nav class="mobile-nav" aria-label="Mobile navigation">
-  <button class="active" data-nav="board"><span>✳</span>Rank</button>
-  <button data-nav="solo"><span>✳</span>Solo</button>
+<nav class="mobile-nav gt-mobile-nav" aria-label="Mobile navigation">
+  <button class="active" data-nav="board"><span>✳</span>Tier List</button>
   <button data-nav="duo"><span>♡</span>Together</button>
-  <button data-nav="my"><span>☷</span>My shelf</button>
   <button data-nav="discover"><span>⌕</span>Discover</button>
-  <button data-nav="awards"><span>🏆</span>Awards</button>
-  <button data-nav="brands"><span>🌱</span>Brands</button>
-  <button data-nav="protein"><span>💪</span>Value</button>
+  <button data-nav="my"><span>☷</span>My shelf</button>
+  <a href="./stores.html"><span>▣</span>Stores</a>
 </nav>
 <div class="overlay" id="drawerOverlay" aria-hidden="true"><div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Product detail"></div></div>
 <div class="overlay" id="modalOverlay" aria-hidden="true"><div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Good Things dialog"></div></div>
