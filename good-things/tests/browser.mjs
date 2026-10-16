@@ -98,6 +98,24 @@ try{
  await protein.reload({waitUntil:'domcontentloaded'});
  await protein.waitForSelector('#plGoalMount .gt-day-target');
  assert.ok((await protein.locator('.gt-day-target-number').innerText()).includes('50'),'unremembered weight resets to baseline on reload');
+
+ // The customer's personal 63 kg × 1.2 g/kg link must be usable without hidden mode clicks.
+ await protein.goto(base+'protein.html?weight=63&factor=1.2',{waitUntil:'domcontentloaded',timeout:30000});
+ await protein.waitForSelector('#plGoalMount .gt-day-target');
+ assert.equal(await protein.locator('#gtGoalWeight').inputValue(),'63','direct link preselects weight');
+ assert.equal(await protein.locator('#gtGoalFactor').inputValue(),'1.2','direct link preselects g/kg');
+ assert.ok(await protein.locator('#gtGoalWeight').isVisible(),'personal number field is visible by default');
+ const calculator=await protein.locator('#plGoalMount').innerText();
+ assert.ok(calculator.includes('75,6'),'daily goal 75.6g shown');
+ assert.ok(calculator.includes('2.268'),'month goal 2,268g shown');
+ for(const v of ['2,99','89,78','3,80','90,25'])assert.ok(calculator.includes(v),'daily and monthly example must include '+v);
+ assert.match(calculator,/kein bestätigter Filialpreis/i,'reference explicitly not a shelf-price promise');
+ const dayRow=protein.locator('.pl-table tbody tr').filter({hasText:'dmBio'}).first();
+ assert.ok((await dayRow.locator('.gt-day-cost').innerText()).includes('89,78'),'the product row also exposes month cost');
+ assert.equal(await protein.evaluate(()=>localStorage.getItem('goodthings_protein_target_v31')),null,'direct link must not silently persist weight');
+ await protein.screenshot({path:shots+'/protein-63kg-personal-mobile.png'});
+ assert.ok(await protein.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+2),'personal calculator does not overflow mobile viewport');
+
  const inApp=await desktop.newPage();
  inApp.on('pageerror',e=>errors.push('protein-value: '+e.message));
  await inApp.goto(base+'?view=protein',{waitUntil:'domcontentloaded',timeout:30000});
