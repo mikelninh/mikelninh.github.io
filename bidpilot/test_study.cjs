@@ -90,7 +90,7 @@ test('unexpected free-form values cannot invent a feedback category',()=>{
   const s=new StudySession();s.start();
   const r=s.finish({useful:false,feedback:{reason:'fabricated_benefit',confidence:'certain!',note:'<script>hello</script>'}});
   assert.equal(r.feedback.reason,null);assert.equal(r.feedback.confidence,null);
-  assert.equal(r.feedback.note,'scripthelloscript');
+  assert.equal(r.feedback.note,'hello');
 });
 test('feedback is explicitly optional and an honest unsuccessful session can be exported',()=>{
   const s=new StudySession();s.start();const r=s.finish({useful:false});

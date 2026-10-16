@@ -38,7 +38,7 @@
       this.feedback={
         reason:reasons.includes(feedback?.reason)?feedback.reason:null,
         confidence:confidences.includes(feedback?.confidence)?feedback.confidence:null,
-        note:typeof feedback?.note==='string'?feedback.note.replace(/[<>]/g,'').slice(0,180).trim()||null:null
+        note:typeof feedback?.note==='string'?feedback.note.replace(/<[^>]*>/g,'').slice(0,180).trim()||null:null
       }
       this.events.push({event:useful?'relevant_notice_confirmed':'no_relevant_notice',atSec:this.seconds(),noticeId:this.chosenId})
       return this.report()
