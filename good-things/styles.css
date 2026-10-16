@@ -1001,3 +1001,13 @@ body:has(.gt-bp-hero) .left-rail,body:has(.gt-bp-hero) .hero{display:none}
 @media(max-width:680px){.gt-episode-head{align-items:flex-start;flex-direction:column}.gt-episode-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.gt-episode-card{grid-template-columns:35px minmax(0,1fr);gap:8px;min-height:117px;padding:9px}.gt-episode-card.active{padding:8px}.gt-episode-emoji{height:36px;width:36px;font-size:22px}.gt-episode-content strong{font-size:16px}.gt-episode-content small{font-size:8px}.gt-episode-content>span{font-size:9px}.gt-episode-start{display:none}.gt-episode-library{padding:13px}.gt-episode-progress{padding:13px 15px}}
 @media(max-width:385px){.gt-episode-grid{grid-template-columns:1fr}.gt-episode-card{min-height:78px;grid-template-columns:42px minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.gt-episode-card{transition:none!important}}
+
+/* GOOD THINGS Episode Finale · honest five-product mini awards */
+.gt-episode-recap{margin:12px 0 24px;background:linear-gradient(120deg,#f6ebd4,#eff4e5);border:1px solid #e0dac4;border-radius:17px;padding:22px}
+.gt-episode-recap .eyebrow{color:#997a4c;font-size:10px;letter-spacing:.14em}
+.gt-episode-recap-row{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.gt-episode-recap-row h3{color:#395038;font:620 clamp(22px,3vw,32px)/1.13 'Fraunces',Georgia,serif;letter-spacing:-.045em;margin:13px 0 8px}
+.gt-episode-recap-row p{font-size:12px;color:#6e805f;line-height:1.5;margin:0 0 6px}
+.gt-episode-recap-row small{font-size:10px;line-height:1.6;display:block;color:#8a8d75}
+.gt-episode-recap-row>div{flex:1;min-width:230px}
+@media(max-width:550px){.gt-episode-recap{padding:16px}.gt-episode-recap-row .button{width:100%}}
