@@ -1630,6 +1630,7 @@ document.addEventListener('click',async(event)=>{
  try{
  switch(a){
  case 'protein-more':window.GT_PROTEIN.more();break;
+ case 'protein-more-candidates':window.GT_PROTEIN.moreCandidates();break;
  case 'protein-price-edit':{
   const product=getProduct(id);
   if(product)modal(window.GT_PROTEIN.editor(product));
