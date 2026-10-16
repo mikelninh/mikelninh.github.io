@@ -42,7 +42,7 @@ try:
         assert "Release approved once" in desktop.locator("#notSent").inner_text()
         desktop.locator("#retry").click()
         assert "Duplicate execution blocked" in desktop.locator("#notSent").inner_text()
-        desktop.goto("http://127.0.0.1:8877/gitlaw/", wait_until="networkidle")
+        desktop.goto("http://127.0.0.1:8877/gitlaw-proof/", wait_until="networkidle")
         assert desktop.locator(".as-hero-side").is_visible()
         desktop.screenshot(path=str(OUT / "03-gitlaw-desktop.png"), full_page=True)
         desktop.locator("#sourceBtn").click()
@@ -61,7 +61,7 @@ try:
                                   device_scale_factor=1)
         mobile.on("pageerror", lambda error: issues.append(str(error)))
         for route, file in (("agents", "05-worker-mobile.png"),
-                            ("gitlaw", "06-gitlaw-mobile.png"),
+                            ("gitlaw-proof", "06-gitlaw-mobile.png"),
                             ("pruefpilot", "07-pruefpilot-mobile.png")):
             mobile.goto(f"http://127.0.0.1:8877/{route}/", wait_until="networkidle")
             assert mobile.locator(".as-hero-side").is_visible(), f"{route}: missing case preview"
