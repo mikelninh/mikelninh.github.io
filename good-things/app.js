@@ -65,7 +65,7 @@ function empty(emoji,heading,body,button){
  return '<div class="empty"><div class="big">'+esc(emoji)+'</div><strong>'+esc(heading)+'</strong><p>'+esc(body)+'</p>'+(button||'')+'</div>';
 }
 function setView(view,extra){
- if(!['board','discover','ours','my','community','awards','brands','duo','solo','shared','profile','list'].includes(view))view='board';
+ if(!['board','discover','ours','my','community','awards','brands','protein','duo','solo','shared','profile','list'].includes(view))view='board';
  st.view=view;
  if(view!=='shared'&&view!=='profile'&&view!=='list'){
   const u=new URL(URL_BASE);u.searchParams.set('view',view);
@@ -1197,6 +1197,7 @@ function renderBrands(){
  const switcher=st.user?'':'<div class="gt-bp-personas"><span>Local tasting shelf:</span>'+['you','mikel','huong'].map(w=>'<button data-action="brand-persona" data-value="'+w+'" class="'+(st.persona===w?'active':'')+'">'+(w==='you'?'You':w==='mikel'?'Mikel':'Huong')+'</button>').join('')+'</div>';
  return switcher+window.GT_BRANDS.render({scope,products:RANKABLE,ratings:boardAnswers()});
 }
+function renderProtein(){return window.GT_PROTEIN.render({products:RANKABLE,ratings:boardAnswers()})}
 function render(){
  const content=$('#contentView');
  if(st.view==='solo')content.innerHTML=soloRender();
@@ -1207,6 +1208,7 @@ function render(){
  else if(st.view==='community')content.innerHTML=renderCommunity();
  else if(st.view==='awards')content.innerHTML=renderAwards();
  else if(st.view==='brands')content.innerHTML=renderBrands();
+ else if(st.view==='protein')content.innerHTML=renderProtein();
  else if(st.view==='shared')content.innerHTML=renderShared();
  else if(st.view==='profile')content.innerHTML=renderProfileView();
  else if(st.view==='list')content.innerHTML=renderListView();
@@ -1616,7 +1618,7 @@ async function openShareLink(){
  if(view==='brands'){window.GT_BRANDS.setBrand(url.searchParams.get('brand')==='penny'?'penny':'vemondo');st.view='brands';return}
  if(view==='duo'){st.view='duo';if(url.searchParams.get('room')){st.duo.mode='remote';st.duo.requestedRoom=url.searchParams.get('room')}else {const topic=url.searchParams.get('episode');if(topic&&window.GT_EPISODES.getDef(topic)&&window.GT_EPISODES.selected('duo')?.id!==topic){window.GT_EPISODES.start('duo',topic);st.duo.local.productId=null;st.duo.local.votes={};st.duo.local.discussion='';duoPersist()}}return}
  if(view==='solo'){const topic=url.searchParams.get('episode');if(topic&&window.GT_EPISODES.getDef(topic)&&window.GT_EPISODES.selected('solo')?.id!==topic){window.GT_EPISODES.start('solo',topic);st.solo.productId=null;st.solo.lastChoice=null;soloPersist()}}
- st.view=['board','discover','ours','my','community','awards','brands','solo'].includes(view)?view:'board';
+ st.view=['board','discover','ours','my','community','awards','brands','protein','solo'].includes(view)?view:'board';
 }
 document.addEventListener('click',async(event)=>{
  const nav=event.target.closest('[data-nav]');
@@ -1627,6 +1629,18 @@ document.addEventListener('click',async(event)=>{
  const a=btn.dataset.action,id=btn.dataset.id,val=btn.dataset.value;
  try{
  switch(a){
+ case 'protein-more':window.GT_PROTEIN.more();break;
+ case 'protein-price-edit':{
+  const product=getProduct(id);
+  if(product)modal(window.GT_PROTEIN.editor(product));
+  break;
+ }
+ case 'protein-check-prices':{
+  toast('Suche datierte EUR-Belege für eindeutig identifizierte Produkte …');
+  const got=await window.GT_PROTEIN.fetchMore();
+  toast(got?got+' neue Preisbelege gefunden. ✳':'Für diese Produkte wurden keine weiteren belegten deutschen EUR-Preise gefunden.');
+  break;
+ }
  case 'open-product':openProduct(id);break;
  case 'rate-product':openProduct(id,val);break;
  case 'select-tier':
@@ -1782,6 +1796,7 @@ document.addEventListener('click',async(event)=>{
 });
 document.addEventListener('input',e=>{
  if(e.target.id==='productSearch'){st.query=e.target.value;refreshProducts()}
+ if(e.target.id==='gtProteinSearch')window.GT_PROTEIN.select('search',e.target.value);
  if(e.target.id==='gtBrandSearch')window.GT_BRANDS.setQuery(e.target.value);
  if(e.target.id==='boardSearch'){st.boardQuery=e.target.value;st.boardLimit=80;refreshBoardTray()}
  if(e.target.id==='ratingNote')st.draftNote=e.target.value.slice(0,200);
@@ -1790,6 +1805,10 @@ document.addEventListener('input',e=>{
 document.addEventListener('change',e=>{
  if(e.target.id==='importJsonFile'){importJson(e.target.files?.[0]);return}
  if(e.target.id==='storeSelect'){st.store=e.target.value;refreshProducts()}
+ if(e.target.id==='gtProteinCategory')window.GT_PROTEIN.select('category',e.target.value);
+ if(e.target.id==='gtProteinMin')window.GT_PROTEIN.select('min',e.target.value);
+ if(e.target.id==='gtProteinSort')window.GT_PROTEIN.select('sort',e.target.value);
+ if(e.target.id==='gtProteinOld')window.GT_PROTEIN.select('old',e.target.checked);
  if(e.target.id==='gtBrandCategory'){window.GT_BRANDS.setCategory(e.target.value);render();return}
  if(e.target.id==='sortSelect'){st.sort=e.target.value;refreshProducts()}
  if(e.target.id==='boardCategory'){st.boardCategory=e.target.value;st.boardLimit=80;refreshBoardTray()}
@@ -1801,7 +1820,7 @@ document.addEventListener('change',e=>{
  if(e.target.id==='ratingPublic')st.draftPublic=e.target.checked;
 });
 document.addEventListener('submit',async e=>{
- if(!['authForm','profileForm','listForm','feedbackForm','photoReportForm','productRequestForm','duoPartnerForm','gtBrandFeedbackForm'].includes(e.target.id))return;
+ if(!['authForm','profileForm','listForm','feedbackForm','photoReportForm','productRequestForm','duoPartnerForm','gtBrandFeedbackForm','gtProteinPriceForm'].includes(e.target.id))return;
  e.preventDefault();
  try{
  if(e.target.id==='authForm')await submitAuth(e.target);
@@ -1811,6 +1830,10 @@ document.addEventListener('submit',async e=>{
  if(e.target.id==='photoReportForm')await submitPhotoReport(e.target);
  if(e.target.id==='productRequestForm')await submitProductSuggestion(e.target);
  if(e.target.id==='duoPartnerForm')await duoCreateRoom(e.target);
+ if(e.target.id==='gtProteinPriceForm'){
+  if(window.GT_PROTEIN.save(e.target,RANKABLE)){closeOverlay('modalOverlay');render();toast('Dein Packungspreis ist privat gespeichert. ✳')}
+  else toast('Preis konnte nicht gespeichert werden. Prüfe Betrag, Datum und Produkt.');
+ }
  if(e.target.id==='gtBrandFeedbackForm'){
   const form=e.target,id=form.elements.namedItem('product_id')?.value;
   const scope=st.user?'account_'+st.user.id:'guest_'+st.persona;
