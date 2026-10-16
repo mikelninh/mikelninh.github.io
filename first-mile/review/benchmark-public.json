@@ -1,0 +1,81 @@
+{
+  "schema": "first-mile-release-review/v1",
+  "source": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/38906414912",
+  "experiment": {
+    "sample": "6 developer-authored synthetic cases",
+    "requests": 36,
+    "estimated_spend_usd": 0.355237,
+    "historical_rules_v2": {
+      "correct": 42,
+      "total": 48
+    },
+    "finalists": [
+      {
+        "key": "luna-none",
+        "name": "Luna · None",
+        "correct": 45,
+        "total": 48,
+        "cost_usd": 0.0011405,
+        "latency_ms": 22364,
+        "rejected_quotes": 2,
+        "misses": {
+          "riverbend": [
+            "technology",
+            "team"
+          ],
+          "forecast-split": [
+            "team"
+          ]
+        }
+      },
+      {
+        "key": "sol-medium",
+        "name": "Sol · Medium",
+        "correct": 45,
+        "total": 48,
+        "cost_usd": 0.02741,
+        "latency_ms": 48086,
+        "rejected_quotes": 2,
+        "misses": {
+          "riverbend": [
+            "technology",
+            "team"
+          ],
+          "forecast-split": [
+            "team"
+          ]
+        }
+      },
+      {
+        "key": "astra-high",
+        "name": "Astra · High",
+        "correct": 43,
+        "total": 48,
+        "cost_usd": 0.21815,
+        "latency_ms": 74525,
+        "rejected_quotes": 2,
+        "misses": {
+          "asterion": [
+            "ask"
+          ],
+          "riverbend": [
+            "technology",
+            "team"
+          ],
+          "forecast-split": [
+            "team"
+          ],
+          "heliogrid": [
+            "ask"
+          ]
+        }
+      }
+    ]
+  },
+  "caveats": [
+    "Developer-authored synthetic labels; not independent real-deck accuracy.",
+    "Rejected quotes demonstrate a functioning fail-closed check, but also warrant analysis.",
+    "No blinded, representative pilot or measured reviewer productivity.",
+    "The forecast-context patch was written after observing the challenge case; its results are development-set results."
+  ]
+}
