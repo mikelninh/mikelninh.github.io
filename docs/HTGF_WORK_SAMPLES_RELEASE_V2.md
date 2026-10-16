@@ -9,7 +9,7 @@ Three independent, runnable public-case experiences designed around the same que
 | Experience | First question | What the user can actually do | Evidence |
 |---|---|---|---|
 | [Digital Worker Factory](../agents/) | A tenant needs help. Can AI prepare the work safely? | Prepare a fictional hand-off, remove source evidence, observe the stop, simulate approval and retry | [Executable ProductionAgentGateway test](https://github.com/mikelninh/digital-worker-factory/blob/main/proofs/htgf-boundary-release.test.mjs) / [passing CI](https://github.com/mikelninh/digital-worker-factory/actions/runs/38720612981) |
-| [GitLaw](../gitlaw/) | €900 becomes €1,008. What can be established? | Inspect original BGB links, open an unresolved-fact box and explore the deeper case | [GitLaw repository](https://github.com/mikelninh/gitlaw) |
+| [GitLaw](../gitlaw-proof/) | €900 becomes €1,008. What can be established? | Inspect original BGB links, open an unresolved-fact box and explore the deeper case | [GitLaw repository](https://github.com/mikelninh/gitlaw) |
 | [PrüfPilot](../pruefpilot/) | Five documents needed, three provided. What now? | Run three fictional document scenarios, inspect evidence, prepare the next step, approve simulated release | [PrüfPilot repository](https://github.com/mikelninh/pruefpilot) |
 
 ## Visual system
