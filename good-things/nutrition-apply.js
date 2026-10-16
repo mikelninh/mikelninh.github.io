@@ -4,6 +4,14 @@
 (function(){
 'use strict';
 const catalog=Array.isArray(window.GT_CATALOG)?window.GT_CATALOG:[];
+const additions=Array.isArray(window.GT_VALUE_EXTRA_PRODUCTS)?window.GT_VALUE_EXTRA_PRODUCTS:[];
+const existingIds=new Set(catalog.map(p=>p.id)),existingBarcodes=new Set(catalog.map(p=>String(p.barcode||'')).filter(Boolean));
+for(const p of additions){
+ if(!p?.id||!p?.barcode||existingIds.has(p.id)||existingBarcodes.has(String(p.barcode)))continue;
+ existingIds.add(p.id);existingBarcodes.add(String(p.barcode));catalog.push(p);
+ const group=(window.GT_GROUPS||[]).find(g=>g.id===p.category_id);
+ if(group)group.count=(group.count||0)+1;
+}
 const supplement=Array.isArray(window.GT_NUTRITION_OVERRIDES)?window.GT_NUTRITION_OVERRIDES:[];
 const byId=new Map(catalog.map(p=>[p.id,p]));
 const keys=['kcal','protein','carbs','sugar','fat','satFat','fiber','salt'];
