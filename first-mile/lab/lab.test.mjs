@@ -35,3 +35,11 @@ test('browser comparison does not expose provider credentials',()=>{
 });
 
 test('public comparison displays both provider-specific verified workflows and explicit billable flag',()=>{const html=readFileSync(new URL('index.html',import.meta.url),'utf8');const js=readFileSync(new URL('lab.mjs',import.meta.url),'utf8');assert.match(html,/--allow-billable/);assert.match(html,/Verified · GPT/);assert.match(html,/Verified · Claude/);assert.match(js,/agent-claude/)});
+
+test('budgeted OpenAI-only matrix viewer and import action exist',()=>{
+const h=readFileSync(new URL('index.html',import.meta.url),'utf8');
+const js=readFileSync(new URL('matrix-ui.js',import.meta.url),'utf8');
+assert.match(h,/id="reasoning-matrix"/);assert.match(h,/id="matrixFile"/);
+assert.match(h,/matrix-ui.js/);assert.match(js,/first-mile-reasoning-matrix\/v1/);
+assert.doesNotMatch(js,/OPENAI_API_KEY|Authorization|api.openai.com/);
+});
