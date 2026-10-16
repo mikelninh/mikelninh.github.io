@@ -179,9 +179,10 @@ const duoSafe=raw=>{
  return base;
 };
 st.duo=duoSafe(tryRead(DUO_KEY,null));
+try{const saved=localStorage.getItem('goodthings_duo_brand_v26');st.duo.brandFilter=['all','vemondo','penny'].includes(saved)?saved:'all'}catch(_){st.duo.brandFilter='all'}
 const duoPersist=()=>{try{localStorage.setItem(DUO_KEY,JSON.stringify({local:st.duo.local}))}catch(_){}};
 const duoValidChoice=x=>TIERS.includes(x)||x==='not_tried';
-const duoPhotoCandidates=()=>RANKABLE.filter(p=>matchedPhoto(p)&&p.image_url&&!p.photo_blocked&&!duoPhotoBroken.has(p.id)&&duoPhotoCheck.get(p.id)!==false&&!(inspectedPhotoQuality[p.id]?.url===p.image_url&&inspectedPhotoQuality[p.id]?.status==='low'));
+const duoPhotoCandidates=(brand='all')=>RANKABLE.filter(p=>(brand==='all'||window.GT_BRANDS.brandOf(p)===brand)&&matchedPhoto(p)&&p.image_url&&!p.photo_blocked&&!duoPhotoBroken.has(p.id)&&duoPhotoCheck.get(p.id)!==false&&!(inspectedPhotoQuality[p.id]?.url===p.image_url&&inspectedPhotoQuality[p.id]?.status==='low'));
 function duoHiResImage(p){
  const url=validUrl(p?.image_url);if(!url)return '';
  // Official Open Food Facts selected images expose an explicit .full variant.
@@ -221,9 +222,9 @@ async function duoIsPhotoSharp(p){
  duoPhotoCheck.set(p.id,false);
  return false;
 }
-async function duoPick(usedIds){
+async function duoPick(usedIds,brand='all'){
  const used=new Set(usedIds||[]);
- const list=duoPhotoCandidates().filter(p=>!used.has(p.id));
+ const list=duoPhotoCandidates(brand).filter(p=>!used.has(p.id));
  // Shuffle while preferring real barcode-linked records. Parallel verification means
  // the user does not wait for 28 sequential CDN timeouts on mobile.
  const priority=p=>inspectedPhotoQuality[p.id]?.status==='good'&&inspectedPhotoQuality[p.id]?.url===p.image_url?0:
@@ -268,7 +269,7 @@ async function duoLocalStart(forceNext){
   if(local.productId)used.push(local.productId);
   for(const key of ['mikel','huong'])for(const id of Object.keys(st.guest[key]||{}))
    if(st.guest.mikel[id]&&st.guest.huong[id])used.push(id);
-  const p=await duoPick(used);
+  const p=await duoPick(used,st.duo.brandFilter);
   if(!p){st.duo.qualityMessage='Keine weitere Packung mit ausreichender Bildauflösung gefunden. Die noch offenen Produkte brauchen bessere Fotos.';return}
   local.productId=p.id;local.votes={};local.discussion='';local.activeRole=local.starter;
   st.duo.qualityMessage='';duoPersist();
@@ -361,7 +362,7 @@ async function duoCreateRoom(form){
  if(!partner)return toast('Dieses Profil gibt es noch nicht. Huong muss erst ein eigenes Konto anlegen.');
  if(partner.id===st.user.id)return toast('Du kannst dich nicht selbst herausfordern.');
  const used=st.duo.history.map(x=>x.product_id);
- const product=await duoPick(used);
+ const product=await duoPick(used,st.duo.brandFilter);
  if(!product)return toast('Noch kein hochauflösendes Produktfoto gefunden. Bitte erst Fotos prüfen.');
  const res=await sb.from('gt_duo_rooms').insert({host_id:st.user.id,partner_id:partner.id,current_product_id:product.id}).select().single();
  if(res.error)return toast('Raum konnte nicht erstellt werden: '+res.error.message);
@@ -405,7 +406,7 @@ async function duoSkipPhoto(){
  if(st.duo.room.host_id!==st.user.id)return toast('Bitte den Host um einen neuen Artikel.');
  if(st.duo.ownVote)return toast('Deine Stimme ist schon abgegeben; nun muss die zweite Person entscheiden.');
  const room=st.duo.room;
- const next=await duoPick([id,...st.duo.history.map(x=>x.product_id)]);
+ const next=await duoPick([id,...st.duo.history.map(x=>x.product_id)],st.duo.brandFilter);
  if(!next)return toast('Noch keine weiteren hochauflösenden Produktfotos verfügbar.');
  const r=await sb.from('gt_duo_rooms').update({current_product_id:next.id,updated_at:new Date().toISOString()}).eq('id',room.id).eq('round_no',room.round_no).select().single();
  if(r.error)return toast('Die Runde kann nach einer abgegebenen Stimme nicht übersprungen werden.');
@@ -507,7 +508,8 @@ function renderDuo(){
  const labelB=remote?st.profiles.find(x=>x.id===room?.partner_id)?.display_name||'Person 2':'Huong';
  const round=remote?room?.round_no||1:snap.round;
  const controls='<div class="duo-controls"><div class="duo-switch"><button class="'+(!remote?'active':'')+'" data-action="duo-mode-local">Gemeinsam am Gerät</button><button class="'+(remote?'active':'')+'" data-action="duo-mode-remote">Zwei Konten / Geräte</button></div>'+
- '<div class="gap12"><button class="button button-ghost button-small" data-nav="solo">✳ Solo Shuffle</button><button class="button button-ghost button-small" data-nav="board">← Tier List</button>'+(remote&&room?'<button class="button button-white button-small" data-action="duo-copy-link">Link teilen ↗</button>':'')+'</div></div>'+window.GT_EXTRAS.motionControls();
+ '<div class="gap12"><button class="button button-ghost button-small" data-nav="solo">✳ Solo Shuffle</button><button class="button button-ghost button-small" data-nav="board">← Tier List</button>'+(remote&&room?'<button class="button button-white button-small" data-action="duo-copy-link">Link teilen ↗</button>':'')+'</div></div>'+window.GT_EXTRAS.motionControls()+
+ '<div class="gt-duo-brand-focus"><span>What are we tasting?</span>'+[['all','✳ Everything'],['vemondo','🌱 Vemondo'],['penny','♡ Food for Future']].map(([id,name])=>'<button data-action="duo-brand" data-value="'+id+'" class="'+(st.duo.brandFilter===id?'active':'')+'">'+name+'</button>').join('')+'<small>Applies to the next product draw. Existing answers are never changed.</small></div>';
  const intro=head('GOOD THINGS / MIKEL × HUONG','One product.<br><em>Two opinions.</em>','Ihr entscheidet unabhängig. Erst wenn beide geantwortet haben, zeigen wir S–F oder „Nicht probiert“ nebeneinander.',remote?'ZWEI KONTEN':'SAME-DEVICE DEMO');
  if(remote&&!st.user)return intro+controls+empty('♡','Zwei echte Konten','Meldet euch jeweils mit einem eigenen Konto an, um geräteübergreifend zu spielen. Am selben Gerät könnt ihr sofort starten.','<button class="button button-lime" data-action="open-auth">Anmelden ↗</button>');
  if(remote&&!room){
@@ -1611,7 +1613,7 @@ async function openShareLink(){
 }
 document.addEventListener('click',async(event)=>{
  const nav=event.target.closest('[data-nav]');
- if(nav){event.preventDefault();closeAll();if(nav.dataset.nav==='awards')st.awardsShared=null;setView(nav.dataset.nav);return}
+ if(nav){event.preventDefault();closeAll();if(st.view==='brands'&&nav.dataset.nav==='duo'){st.duo.brandFilter=window.GT_BRANDS.state.brand;try{localStorage.setItem('goodthings_duo_brand_v26',st.duo.brandFilter)}catch(_){}}if(nav.dataset.nav==='awards')st.awardsShared=null;setView(nav.dataset.nav);return}
  const btn=event.target.closest('[data-action]');
  if(!btn)return;
  event.preventDefault();
@@ -1634,6 +1636,7 @@ document.addEventListener('click',async(event)=>{
  case 'solo-next':await window.GT_EXTRAS.spin(()=>soloStart(true));break;
  case 'solo-vote':await soloVote(val);break;
  case 'solo-save-note':await soloSaveNote($('#soloNote')?.value||'');break;
+ case 'duo-brand':if(['all','vemondo','penny'].includes(val)){st.duo.brandFilter=val;try{localStorage.setItem('goodthings_duo_brand_v26',val)}catch(_){}render()}break;
  case 'duo-mode-local':st.duo.mode='local';st.duo.room=null;st.duo.error='';setView('duo');break;
  case 'duo-mode-remote':st.duo.mode='remote';st.duo.room=null;st.duo.error='';await duoLoadRooms();setView('duo');break;
  case 'duo-start-local':await window.GT_EXTRAS.spin(()=>duoLocalStart(false));break;
