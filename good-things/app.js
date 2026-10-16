@@ -385,7 +385,7 @@ async function duoNextRemote(){
  const room=st.duo.room;
  if(room.host_id!==st.user.id)return toast('Der Host wählt die nächste Runde.');
  const used=new Set(st.duo.history.map(x=>x.product_id));used.add(room.current_product_id);
- const product=await duoPick(used);
+ const product=await duoPick(used,st.duo.brandFilter);
  if(!product)return toast('Keine weiteren hochauflösenden Packshots verfügbar. Bitte Bilder verbessern.');
  const r=await sb.from('gt_duo_rooms').update({current_product_id:product.id,round_no:room.round_no+1,updated_at:new Date().toISOString()}).eq('id',room.id).eq('round_no',room.round_no).select().single();
  if(r.error)return toast('Nächste Runde blockiert: '+r.error.message);
