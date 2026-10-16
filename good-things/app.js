@@ -99,7 +99,7 @@ function productArt(p){
 }
 function productCard(p){
  const r=showRating(p.id);
- return '<article class="product-card">'+productArt(p)+'<div class="card-topline"><span class="micro">'+esc(p.category)+'</span><span class="storetag">'+esc(p.store)+'</span></div><div><p class="brandname">'+esc(p.brand)+'</p><h3>'+esc(p.name)+'</h3></div>'+(proteinNumber(p)!==null?'<div class="product-nutri-teaser">💪 '+proteinNumber(p)+' g Protein* <span>je 100 g/ml</span></div>':'')+(isNotTried(r)?'<div class="not-tried-pill">◌ Not tried yet · no grade</div>':'')+'<div class="card-bottom"><div class="tier-row" aria-label="Your rating for '+attr(p.name)+'">'+TIERS.map(t=>'<button class="tier '+(r?.tier===t?'active':'')+'" data-tier="'+t+'" title="Rate '+t+'" aria-label="Rate '+attr(p.name)+' '+t+'" data-action="rate-product" data-id="'+attr(p.id)+'" data-value="'+t+'">'+t+'</button>').join('')+'</div><button class="round-add" title="Details and notes" aria-label="Open '+attr(p.name)+'" data-action="open-product" data-id="'+attr(p.id)+'">↗</button></div></article>';
+ return '<article class="product-card">'+productArt(p)+'<div class="card-topline"><span class="micro">'+esc(p.category)+'</span><span class="storetag">'+esc(p.store)+'</span></div><div><p class="brandname">'+esc(p.brand)+'</p><h3>'+esc(p.name)+'</h3></div>'+(proteinNumber(p)!==null?'<div class="product-nutri-teaser">💪 '+proteinNumber(p)+' g Protein* <span>je 100 g/ml</span></div>':'')+(isNotTried(r)?'<div class="not-tried-pill">◌ Not tried yet · no grade</div>':'')+window.GT_OWNERSHIP.inline(p)+'<div class="card-bottom"><div class="tier-row" aria-label="Your rating for '+attr(p.name)+'">'+TIERS.map(t=>'<button class="tier '+(r?.tier===t?'active':'')+'" data-tier="'+t+'" title="Rate '+t+'" aria-label="Rate '+attr(p.name)+' '+t+'" data-action="rate-product" data-id="'+attr(p.id)+'" data-value="'+t+'">'+t+'</button>').join('')+'</div><button class="round-add" title="Details and notes" aria-label="Open '+attr(p.name)+'" data-action="open-product" data-id="'+attr(p.id)+'">↗</button></div></article>';
 }
 function filteredProducts(){
  let a=RANKABLE.filter(p=>(st.category==='all'||p.category_id===st.category)&&(st.store==='all'||String(p.store||'').toUpperCase()===String(st.store).toUpperCase()));
@@ -151,7 +151,7 @@ function boardPhoto(p){
 function boardPiece(p){
  const matched=matchedPhoto(p);
  const img=matched;
- const label=p.brand+' '+p.name;
+ const label=p.brand+' '+p.name+(window.GT_OWNERSHIP.label(p)?' · '+window.GT_OWNERSHIP.label(p):'');
  return '<button type="button" draggable="false" class="board-piece" data-drag-id="'+attr(p.id)+'" data-photo="'+(img?'yes':'none')+'" data-action="board-pick" data-id="'+attr(p.id)+'" title="'+attr(label)+' — drag to rank; tap to choose S–F; arrow keys to move" aria-label="'+attr(label)+' — draggable, tap to rank, arrow keys to change tiers">'
  +boardPhoto(p)+(matched?'<span class="verified-indicator" title="Photo from a traceable retailer, brand or barcode record; check current packaging and recipe" aria-hidden="true"></span>':'')
  +'<strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+'</small>'+(proteinNumber(p)!==null?'<span class="board-protein">'+proteinNumber(p)+' g Protein*</span>':'')+'</button>';
@@ -1306,6 +1306,7 @@ function drawerHtml(){
  const name=st.user?'Your account':st.persona.charAt(0).toUpperCase()+st.persona.slice(1)+' (on this device)';
  return '<button class="close" aria-label="Close product" data-action="close-drawer">×</button>'
  +'<div class="eyebrow">THE TASTING TABLE / '+esc(p.category)+'</div><h2>'+esc(p.name)+'</h2><p class="muted">'+esc(p.brand)+' · '+esc(p.store)+'</p>'
+ +window.GT_OWNERSHIP.panel(p)
  +'<div class="drawer-art tone-'+esc(p.tone)+'">'+(matchedPhoto(p)?'<img data-pack-id="'+attr(p.id)+'" src="'+attr(validUrl(p.image_url))+'" alt="Product packaging from '+attr(p.photo_attribution||'the manufacturer')+'" referrerpolicy="no-referrer" onerror="window.GT_EXTRAS.onPackError(this)"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':st.imageCache[p.id]?.url?'<img src="'+attr(validUrl(st.imageCache[p.id].url))+'" alt="Unverified community photograph" referrerpolicy="no-referrer" onerror="window.GT_EXTRAS.onPackError(this)"><span class="board-emoji" hidden>'+esc(p.emoji)+'</span>':esc(p.emoji))+'</div>'
  +'<div class="inline-notice">'+(matchedPhoto(p)?'✓ Packshot linked to a specific '+(p.image_status==='brand'?'manufacturer':p.image_status==='barcode'?'barcode-matched community':'retailer')+' product record. Packaging and ingredients can change; please check the actual packet.': 'ⓘ No confirmed front-pack photo yet. Variant and vegan status need checking before purchase.')+'</div>'
  +window.GT_EXTRAS.facts(p)
