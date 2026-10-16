@@ -723,7 +723,7 @@ function quickRank(id){
  const current=st.user?accountRating(id):guestRating(id,st.persona);
  modal('<button class="close" data-action="close-modal" aria-label="Close">×</button>'+
   '<div class="eyebrow">QUICK RANK / '+esc(p.brand)+'</div><h2>'+esc(p.name)+'</h2>'+
-  '<div class="quick-rank-art">'+boardPhoto(p)+'</div>'+window.GT_EXTRAS.facts(p)+
+  '<div class="quick-rank-art">'+boardPhoto(p)+'</div>'+window.GT_OWNERSHIP.inline(p)+window.GT_EXTRAS.facts(p)+
   '<p class="small muted">Tried it? Choose an S–F grade. Otherwise mark it as not tried yet — an answer without a score.</p>'+
   '<div class="quick-rank-choices">'+TIERS.map(t=>'<button type="button" class="quick-rank-button" data-rank-tier="'+t+'" data-action="quick-rank" data-value="'+t+'" aria-label="Place in '+t+' tier"><strong>'+t+'</strong><small>'+({S:'Obsessed',A:'Brilliant',B:'Good',C:'Okay',D:'Disappointing',F:'Durchgefallen'}[t])+'</small></button>').join('')+'</div>'+
   '<button type="button" class="not-tried-choice '+(isNotTried(current)?'selected':'')+'" data-action="quick-not-tried" aria-pressed="'+(isNotTried(current)?'true':'false')+'"><span>◌</span><span><strong>Not tried yet</strong><small>Answered · no grade · stays off S–F</small></span><span>↗</span></button>'+ 

@@ -522,3 +522,20 @@ test('Failed packshots are hidden, source-image retries remain barcode-specific'
  assert.match(guard,/rememberFailure\(p\)/);
  assert.match(css,/img\[hidden\]/);
 });
+
+test('Quick Rank photo is constrained inside its viewport and owner identity is shown',()=>{
+ const css=fs.readFileSync(path.join(root,'styles.css'),'utf8');
+ assert.match(css,/GOOD THINGS 2\.9\.2 · Quick Rank/);
+ assert.match(css,/\.quick-rank-art\s*\{[^}]*overflow:hidden/);
+ assert.match(css,/\.quick-rank-art > img\s*\{[^}]*max-height:100%/);
+ assert.match(source,/boardPhoto\(p\)\+'<\/div>'\+window\.GT_OWNERSHIP\.inline\(p\)/);
+ assert.match(index,/styles\.css\?v=2\.9\.2/);
+});
+test('Product facts distinguish brand owner from manufacturer',()=>{
+ const extras=fs.readFileSync(path.join(root,'shuffle-extras.js'),'utf8');
+ assert.match(extras,/brandOwner=info\?\.brand_owner/);
+ assert.match(extras,/manufacturer=info\?\.manufacturer/);
+ assert.match(extras,/Markeninhaber · Open Food Facts/);
+ assert.match(extras,/Hersteller · Open Food Facts/);
+ assert.doesNotMatch(extras,/Hersteller \/ Markeninhaber/);
+});

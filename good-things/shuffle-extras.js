@@ -65,7 +65,7 @@ function priceMarkup(info,p){
 function facts(p){
  if(!p)return '';
  const info=meta.get(p.barcode)||{},n=factsNutrition(p,info),pm=bullets(n);
- const grade=info?.nutriscore_grade||p.nutri_score,manufacturer=info?.brand_owner||info?.manufacturer||'',ingredients=info?.ingredients||'';
+ const grade=info?.nutriscore_grade||p.nutri_score,brandOwner=info?.brand_owner||'',manufacturer=info?.manufacturer||'',ingredients=info?.ingredients||'';
  const allergens=info?.allergens||'';
  const id=esc(p.id),src=url(p.barcode?'https://world.openfoodfacts.org/product/'+p.barcode:p.source_url);
  return '<section class="gt-fact-card" data-gt-fact="'+id+'" aria-label="Produktinformationen vor der Bewertung">'+
@@ -75,7 +75,7 @@ function facts(p){
   '<div class="gt-pro-con"><div class="gt-pro"><strong>↗ Pro</strong><ul>'+pm.plus.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div class="gt-con"><strong>↘ Contra / zu beachten</strong><ul>'+pm.minus.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></div>'+
  '<div class="gt-score-section"><div><strong>Und der Nutri-Score?</strong><small>A–E misst Nährstoffzusammensetzung, nicht Geschmack oder Vegan-Status.</small></div>'+scoreBadge(grade)+'</div>'+
  '<details class="gt-fact-details"><summary>Mehr erfahren · Zutaten, Hersteller, Preis &amp; alle Nährwerte <span>⌄</span></summary>'+
- '<div class="gt-fact-more"><p><strong>Hersteller / Markeninhaber</strong><span>'+esc(manufacturer||'Nicht eindeutig belegt – Marke ≠ Hersteller')+'</span></p>'+
+ '<div class="gt-fact-more"><p><strong>Markeninhaber · Open Food Facts</strong><span>'+esc(brandOwner||'Nicht belegt')+'</span></p><p><strong>Hersteller · Open Food Facts</strong><span>'+esc(manufacturer||'Nicht eindeutig belegt')+'</span></p>'+
  '<p><strong>Zutaten</strong><span>'+esc(ingredients||(!p.barcode?'Keine EAN zugeordnet.':'Nicht verfügbar oder noch nicht geladen.'))+'</span></p>'+
  '<p><strong>Allergene laut Quelle</strong><span>'+esc(allergens||'Keine zuverlässige Angabe verfügbar. Verpackung prüfen – das bedeutet NICHT allergenfrei.')+'</span></p>'+
  '<div class="gt-fact-subtitle">Nährwerte je 100 g bzw. 100 ml (Quelleneinheit)</div>'+nutritionMarkup(n)+
