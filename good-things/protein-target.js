@@ -20,7 +20,7 @@ const parse=x=>{
 };
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number=(n,d=1)=>new Intl.NumberFormat('de-DE',{maximumFractionDigits:d}).format(n);
-const euro=n=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(n);
+const euro=n=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(Math.round((n+1e-9)*100)/100); // Round at display, not per day
 const safeUrl=s=>{try{const u=new URL(s);return u.protocol==='https:'?u.href:''}catch(_){return ''}};
 const defaults=()=>({mode:'example',weight:null,factor:0.8,custom:null,remember:false});
 const state=defaults();
