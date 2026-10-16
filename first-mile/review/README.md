@@ -28,3 +28,13 @@ The browser Release Gate computes the current rule engine against the same six a
 - Which improvement would you test next, and how would you avoid label leakage?
 - What are the tradeoffs between deterministic rules, structured-output LLMs, RAG and agents?
 - How would you design an idempotent API, privacy-safe monitoring, failure fallback and human approval?
+
+## Reproducible review and API tests
+
+From repository root:
+
+    node --test first-mile/review/review.test.mjs
+    node --test tests/first-mile.test.mjs
+    python -m pytest first-mile/service/test_api.py -q
+
+The service remains local-only; browser review stays static and uses no secret.
