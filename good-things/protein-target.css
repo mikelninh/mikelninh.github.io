@@ -1,0 +1,35 @@
+/* GOOD THINGS · Protein daily goal, an optional layer beside the Tier List */
+.gt-day-target{background:linear-gradient(130deg,#f5f8ee 0%,#eaf2df 100%);border:1px solid #ccdcbf;border-radius:22px;padding:clamp(17px,2.6vw,28px);color:#304e35;margin:19px 0 24px;box-shadow:0 8px 26px #193d2510}
+.gt-day-target-top{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.gt-day-eyebrow{letter-spacing:.14em;text-transform:uppercase;font-size:10px;font-weight:850;color:#739069}
+.gt-day-target-top h2{font:650 clamp(24px,3vw,39px)/1.12 Fraunces,Georgia,serif;letter-spacing:-.045em;max-width:770px;margin:10px 0}
+.gt-day-target-top h2 em{color:#729854}
+.gt-day-target-top p{font-size:13px;color:#66806b;margin:0}
+.gt-day-target-number{text-align:center;flex:none;background:#fffefa;border:1px solid #d9e5cf;border-radius:16px;padding:16px 20px;min-width:138px;box-shadow:0 4px 15px #162a1610}
+.gt-day-target-number strong{display:block;font:700 43px/1 Fraunces,Georgia,serif;letter-spacing:-.05em;color:#294935}
+.gt-day-target-number strong span{font-size:18px}
+.gt-day-target-number small{font-size:11px;color:#647a65;display:block;margin-top:5px}
+.gt-day-modes{display:flex;flex-wrap:wrap;gap:7px;margin:21px 0 12px}
+.gt-day-modes button{border:1px solid #bfceb5;border-radius:11px;padding:10px 13px;background:#fffefa;color:#4a654e;font-weight:850;font-size:12px;cursor:pointer}
+.gt-day-modes button.active{background:#304c39;border-color:#304c39;color:#f5f9ea}
+.gt-day-modes button:focus-visible,.gt-day-privacy button:focus-visible{outline:3px solid #8db960;outline-offset:3px}
+.gt-day-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:10px 0}
+.gt-day-fields label{font-weight:800;font-size:12px;color:#465d49}
+.gt-day-fields input,.gt-day-fields select{display:block;width:100%;margin-top:7px;padding:12px;border:1px solid #c8d6bc;background:#fffefa;color:#263f30;border-radius:10px;font:inherit;min-height:44px}
+.gt-day-explain{font-size:12px;line-height:1.6;color:#627962;margin:12px 0}
+.gt-day-privacy{border-top:1px solid #d4e0ce;padding-top:13px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;align-items:center}
+.gt-day-privacy label{display:flex;gap:7px;align-items:center;color:#4e6851;font-size:11px;font-weight:700}
+.gt-day-privacy label input{accent-color:#547c4b}
+.gt-day-privacy button{border:0;background:transparent;text-decoration:underline;cursor:pointer;font-weight:750;font-size:11px;color:#506c4c}
+.gt-day-method{border-top:1px solid #d4e0ce;padding-top:13px;font-size:11px;line-height:1.75;color:#6a7f6d;margin:13px 0 0}
+.gt-day-method a{color:#436e46;font-weight:750;text-underline-offset:3px}
+.gt-day-cost{margin-top:10px;display:flex;flex-direction:column;gap:3px;padding-top:8px;border-top:1px solid #e5ebdc;line-height:1.35}
+.gt-day-cost-main{font:700 20px Fraunces,Georgia,serif!important;color:#446e3a}
+.gt-day-cost small{font-size:10px;color:#6c7f6c}
+.gt-day-whole{color:#54704f;font-size:10px;font-weight:750;line-height:1.4}
+.gt-day-empty{font-weight:800;font-size:15px}
+.pl-day-cost{white-space:normal;min-width:155px}
+.pl-day-cost .gt-day-cost{margin:0;border:0;padding:0}
+.gt-value-numbers .gt-day-cost{margin:9px 0 0}
+.gt-value-numbers .gt-day-cost-main{display:block}
+@media(max-width:680px){.gt-day-target-top{align-items:stretch;flex-direction:column}.gt-day-target-number{width:max-content;min-width:130px;padding:11px 15px;text-align:left}.gt-day-target-number strong{font-size:34px}.gt-day-fields{grid-template-columns:1fr}.gt-day-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.gt-day-modes button{font-size:10px;padding:9px 4px;min-height:44px}.gt-day-target-top h2{font-size:29px}}
