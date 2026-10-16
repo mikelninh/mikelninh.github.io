@@ -90,6 +90,24 @@ function progress(mode){
  '<button class="button button-ghost button-small" data-action="episode-restart" data-mode="'+mode+'">Nochmal spielen ↻</button></div>':'')+
  '</div>';
 }
+function recap(mode,products){
+ const session=get(mode),d=selected(mode);
+ if(!session||!d||!finished(mode))return '';
+ const byId=new Map(products.map(p=>[p.id,p])),tiers={S:6,A:5,B:4,C:3,D:2,F:1};
+ const ranked=session.answers.map(a=>({product:byId.get(a.productId),grade:a.result})).filter(x=>x.product);
+ const graded=mode==='solo'?ranked.filter(x=>typeof x.grade==='string'&&tiers[x.grade]):ranked.filter(x=>x.grade&&tiers[x.grade.mikel]&&tiers[x.grade.huong]);
+ const best=graded.slice().sort((a,b)=>mode==='solo'?tiers[b.grade]-tiers[a.grade]:tiers[b.grade.mikel]+tiers[b.grade.huong]-tiers[a.grade.mikel]-tiers[a.grade.huong])[0];
+ let title=best?best.product.brand+' · '+best.product.name:'Noch kein Geschmacks-Champion';
+ const notTried=ranked.filter(x=>mode==='solo'?x.grade==='not_tried':x.grade?.mikel==='not_tried'||x.grade?.huong==='not_tried').length;
+ let text=mode==='solo'?'Die beste bewertete Entdeckung dieser Folge':'Euer Favorit nach beiden Tier-Noten';
+ if(mode==='duo'){
+  const agreed=graded.filter(x=>x.grade.mikel===x.grade.huong).length;
+  text+=' · '+agreed+'/'+graded.length+' übereinstimmende Bewertungen';
+ }
+ return '<section class="gt-episode-recap"><div class="eyebrow">THE MINI FINALE · '+h(d.title)+'</div>'+
+ '<div class="gt-episode-recap-row"><div><h3>🏆 '+h(title)+'</h3><p>'+h(text)+'</p><small>'+graded.length+' geschmacklich bewertete Produkte'+(notTried?' · '+notTried+' noch nicht probiert':'')+'. Kleine Stichprobe, persönliche Meinung – kein offizieller Produktpreis.</small></div>'+
+ '<button class="button button-lime button-small" data-action="episode-share" data-mode="'+mode+'">Folge teilen ↗</button></div></section>';
+}
 function summary(mode,products){
  const s=get(mode),d=selected(mode);if(!s||!d)return '';
  const byId=new Map(products.map(p=>[p.id,p]));
@@ -102,5 +120,5 @@ function summary(mode,products){
  return 'GOOD THINGS · '+d.emoji+' '+d.title+' — '+s.answers.length+'/'+LIMIT+'\n'+line.join('\n')+'\n\nMach deine eigene kleine Tier-Runde: '+location.origin+location.pathname+'?view='+mode+'&episode='+d.id;
 }
 function toggle(mode){filterView[mode]=!filterView[mode]}
-window.GT_EPISODES={LIMIT,L,accepts,get,selected,start,finished,contains,record,count,items,picker,progress,summary,toggle,getDef};
+window.GT_EPISODES={LIMIT,L,accepts,get,selected,start,finished,contains,record,count,items,picker,progress,recap,summary,toggle,getDef};
 })();
