@@ -266,11 +266,11 @@ async function duoLocalStart(forceNext){
    const prevStarter=local.starter||'mikel';local.starter=prevStarter==='mikel'?'huong':'mikel';
   }
   if(!local.starter)local.starter=Math.random()<0.5?'mikel':'huong';
-  const used=local.history.map(x=>x.productId);
-  if(local.productId)used.push(local.productId);
-  for(const key of ['mikel','huong'])for(const id of Object.keys(st.guest[key]||{}))
-   if(st.guest.mikel[id]&&st.guest.huong[id])used.push(id);
   const active=window.GT_EPISODES.selected('duo');
+  const used=active?window.GT_EPISODES.get('duo').answers.map(x=>x.productId):local.history.map(x=>x.productId);
+  if(local.productId)used.push(local.productId);
+  if(!active)for(const id of Object.keys(st.guest.mikel||{}))
+   if(st.guest.mikel[id]&&st.guest.huong[id])used.push(id);
   const p=await duoPick(used,active?'all':st.duo.brandFilter,active?.id||'');
   if(!p){st.duo.qualityMessage='Keine weitere Packung mit ausreichender Bildauflösung gefunden. Die noch offenen Produkte brauchen bessere Fotos.';return}
   local.productId=p.id;local.votes={};local.discussion='';local.activeRole=local.starter;
