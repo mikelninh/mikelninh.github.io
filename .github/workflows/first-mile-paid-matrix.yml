@@ -1,0 +1,57 @@
+name: FIRST MILE paid GPT-6 matrix — one-shot
+on:
+  push:
+    paths:
+      - ".github/first-mile-runs/20261016-billable.request"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: first-mile-paid-matrix
+  cancel-in-progress: false
+
+jobs:
+  run-matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate matrix and budget guard before paid run
+        run: python -m unittest first-mile/lab/test_matrix.py -v
+      - name: Run authorised GPT-6 API matrix (maximum planned $1.50)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$OPENAI_API_KEY" || { echo 'OPENAI_API_KEY secret missing'; exit 2; }
+          echo 'Beginning authorised FIRST MILE benchmark using synthetic cases only.'
+          echo 'Software budget guard: USD 1.50. No retries and no sensitive text.'
+          python first-mile/lab/matrix.py --allow-billable --budget-usd 1.50 --max-output-tokens 1400 --output first-mile/lab/results.matrix.local.json
+      - name: Summarise measured results without API key
+        if: success()
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('first-mile/lab/results.matrix.local.json'))
+          print('MODE:',r['mode'])
+          print('BUDGET ACCOUNTED USD:',r['budget']['accounted_usd'])
+          print('BUDGET REMAINING ESTIMATED USD:',r['budget']['remaining_estimated_usd'])
+          for p in r['profiles']:
+            states={}
+            for c in p['cases']:states[c['status']]=states.get(c['status'],0)+1
+            print(f"PROFILE {p['id']} | completed={len(p['cases'])} | statuses={states} | accuracy={p['quality']['correct']}/{p['quality']['fields']} | cost_usd={p['quality']['cost_usd']} | rejected_quotes={p['quality']['rejected_quotes']} | elapsed_ms={p['quality']['latency_ms']} | full={p['complete_six']}")
+          print('SELECTION:',r['recommendation'])
+          PY
+      - name: Upload synthetic comparison results
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-mile-gpt6-model-matrix-20261016
+          path: first-mile/lab/results.matrix.local.json
+          if-no-files-found: error
+          retention-days: 15
