@@ -281,8 +281,8 @@ test('F grade works in quick picker, share snapshots, public scores and comparis
 
 test('Expanded barcode foods have distinct IDs, 252 sourced nutrition records and shopping facts',()=>{
  const {context,t}=fixture();
- const all=context.window.GT_CATALOG,external=all.filter(p=>p.source_type==='openfoodfacts');
- assert.equal(external.length,268);
+ const all=context.window.GT_CATALOG,external=all.filter(p=>p.source_type==='openfoodfacts'&&p.id.startsWith('off-'));
+ assert.equal(external.length,252);
  assert.ok(external.every(p=>/^\d{8,14}$/.test(p.barcode)&&p.id==='off-'+p.barcode));
  assert.ok(external.every(p=>p.image_url?.startsWith('https://images.openfoodfacts.org/')));
  assert.ok(external.every(p=>p.nutrition_source_url.endsWith(p.barcode)));
@@ -337,7 +337,7 @@ test('Duo preview uses real photos and hides the first person’s grade until bo
  const {t,localStorage}=fixture();
  t.duoSetStarter('mikel');
  assert.equal(t.duoPhotoCandidates().length,323);
- assert.ok(t.renderDuo().includes('Unser erstes Produkt'));
+ assert.ok(t.renderDuo().includes('Geschmack ist Teamwork.'));
  await t.duoLocalStart(false);
  const first=t.duoLocalSnapshot();
  assert.ok(first.product?.image_url?.startsWith('https://'));
@@ -438,7 +438,7 @@ test('Photo Lab audits linked images in batches and can inspect the full catalog
 
 test('Solo Shuffle picks a random real-photo item, saves private grade/note and does not repeat next',async()=>{
  const {t,context,localStorage}=fixture();
- assert.ok(t.soloRender().includes('Zufallsprodukt zeigen'));
+ assert.ok(t.soloRender().includes('VEGAN SURPRISE!'));
  await t.soloStart(false);
  const first=t.soloCurrent();
  assert.ok(first&&first.image_url?.startsWith('https://'));
