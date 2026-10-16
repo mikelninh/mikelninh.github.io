@@ -25,7 +25,7 @@ const STORE_URLS={DM:'https://www.dm.de/',ROSSMANN:'https://www.rossmann.de/',RE
 const proteinNumber=p=>Number.isFinite(p?.nutrition?.protein)?Number(p.nutrition.protein):null;
 const FLAGGED=ALL.filter(p=>!rankableProduct(p));
 const tryRead=(key,fallback)=>{try{const d=JSON.parse(localStorage.getItem(key)||'null');return d&&typeof d==='object'?d:fallback}catch(_){return fallback}};
-const st={view:'board',boardQuery:'',boardCategory:'all',boardPhotoFilter:'matched',boardHistory:[],boardBusy:false,boardModalProduct:null,boardUndoing:false,category:'all',store:'all',sort:'name',query:'',ratedOnly:false,highProtein:false,catalogStatus:'all',catalogPhotoFilter:true,persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],requests:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
+const st={view:'board',boardLimit:80,boardQuery:'',boardCategory:'all',boardPhotoFilter:'matched',boardHistory:[],boardBusy:false,boardModalProduct:null,boardUndoing:false,category:'all',store:'all',sort:'name',query:'',ratedOnly:false,highProtein:false,catalogStatus:'all',catalogPhotoFilter:true,persona:'you',selected:null,draftTier:'',draftNote:'',draftPublic:true,guest:{mikel:{},huong:{},you:{}},imageCache:{},user:null,profile:null,allRatings:[],profiles:[],follows:[],lists:[],curators:[],requests:[],ourMode:'published',cloud:'connecting',modal:'',openedUser:null,shareData:null,shareList:null,returnView:'discover'};
 let sb=null;
 function safeGuest(raw){
  const ret={mikel:{},huong:{},you:{}};
@@ -156,7 +156,7 @@ function boardPiece(p){
  +boardPhoto(p)+(matched?'<span class="verified-indicator" title="Photo from a traceable retailer, brand or barcode record; check current packaging and recipe" aria-hidden="true"></span>':'')
  +'<strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+'</small>'+(proteinNumber(p)!==null?'<span class="board-protein">'+proteinNumber(p)+' g Protein*</span>':'')+'</button>';
 }
-function boardTrayProducts(){
+function boardAllUnranked(){
  const rated=new Set(boardAnswers().map(r=>r.product_id));
  const query=st.boardQuery.toLocaleLowerCase().trim();
  return RANKABLE.filter(p=>!rated.has(p.id)
@@ -165,6 +165,7 @@ function boardTrayProducts(){
  &&(!query||(p.brand+' '+p.name+' '+p.category+' '+p.store).toLocaleLowerCase().includes(query)))
  .sort((a,b)=>a.brand.localeCompare(b.brand,'de')||a.name.localeCompare(b.name,'de'));
 }
+function boardTrayProducts(){return boardAllUnranked().slice(0,st.boardLimit)}
 
 // ── GOOD THINGS DUO · One product. Two honest opinions. ────────────────────
 const DUO_KEY='goodthings_duo_v18';
@@ -654,7 +655,8 @@ function renderBoard(){
  +'<div class="board-filter-row"><input type="search" id="boardSearch" class="board-filter" aria-label="Search unranked products" placeholder="Find chocolate, tofu…" value="'+attr(st.boardQuery)+'"><select class="board-filter" id="boardCategory" aria-label="Filter board by category">'
  +'<option value="all">All categories</option>'+GROUPS.map(g=>'<option value="'+attr(g.id)+'" '+(st.boardCategory===g.id?'selected':'')+'>'+esc(g.emoji)+' '+esc(g.label)+'</option>').join('')+'</select><select class="board-filter" id="boardPhotoFilter" aria-label="Photo quality"><option value="all">All photos</option><option value="matched" '+(st.boardPhotoFilter==='matched'?'selected':'')+'>✓ Source-matched</option><option value="missing" '+(st.boardPhotoFilter==='missing'?'selected':'')+'>Needs a packshot</option></select></div>'
  +'<div class="board-tray" id="boardTray" data-drop-tier="unranked" aria-label="Unanswered products. Drop here to remove a response.">'+boardTrayProducts().map(boardPiece).join('')+'</div>'
- +'<div class="board-photo-progress" title="Sourced exact retailer photo coverage"><span style="width:'+photos/RANKABLE.length*100+'%"></span></div>'
+ +'<button id="boardMore" class="gt-bp-showmore" data-action="board-more" '+(boardAllUnranked().length<=st.boardLimit?'hidden':'')+'>Show more products ↓</button>'+
+  '<div class="board-photo-progress" title="Sourced exact retailer photo coverage"><span style="width:'+photos/RANKABLE.length*100+'%"></span></div>'
  +'<div class="board-legend"><span>'+photos+' / '+RANKABLE.length+' source-matched packshots</span><span>Drop here to clear your answer ↶</span></div>'
  +'</section><section class="board-mat" aria-label="Your S through D tier ranking">'
  +'<div class="board-mat-head"><div><strong>'+esc(who)+' taste board</strong><small style="display:block;margin-top:6px">S–F is for products you have tasted.</small></div><small>'+entries.length+' ranked · '+skipped.length+' not tried · '+(RANKABLE.length-answered.size)+' unanswered</small></div>'
@@ -664,7 +666,8 @@ function renderBoard(){
 }
 function refreshBoardTray(){
  const tray=$('#boardTray');if(tray)tray.innerHTML=boardTrayProducts().map(boardPiece).join('');
- if($('#boardTrayCount'))$('#boardTrayCount').textContent=boardTrayProducts().length+' unanswered';
+ if($('#boardTrayCount'))$('#boardTrayCount').textContent=boardTrayProducts().length+' of '+boardAllUnranked().length+' results';
+ if($('#boardMore'))$('#boardMore').hidden=boardAllUnranked().length<=st.boardLimit;
 }
 async function boardMove(id,tier,index){
  if(!rankableProduct(getProduct(id))||!(TIERS.includes(tier)||tier==='unranked'||tier==='not_tried'))return false;
@@ -1644,6 +1647,7 @@ document.addEventListener('click',async(event)=>{
  case 'duo-open-room':await duoOpenRoom(id);break;
  case 'duo-refresh':await duoRefresh();break;
  case 'duo-skip-photo':await duoSkipPhoto();break;
+ case 'board-more':st.boardLimit+=80;refreshBoardTray();break;
  case 'board-persona':if(!st.user&&['you','mikel','huong'].includes(val)){st.persona=val;st.boardHistory=[];render()}break;
  case 'board-pick':quickRank(id);break;
  case 'mark-not-tried':{const pid=id||st.selected;if(pid){const ok=await boardMove(pid,'not_tried',0);if(ok)closeOverlay('drawerOverlay')}break}
@@ -1738,7 +1742,7 @@ document.addEventListener('click',async(event)=>{
 document.addEventListener('input',e=>{
  if(e.target.id==='productSearch'){st.query=e.target.value;refreshProducts()}
  if(e.target.id==='gtBrandSearch')window.GT_BRANDS.setQuery(e.target.value);
- if(e.target.id==='boardSearch'){st.boardQuery=e.target.value;refreshBoardTray()}
+ if(e.target.id==='boardSearch'){st.boardQuery=e.target.value;st.boardLimit=80;refreshBoardTray()}
  if(e.target.id==='ratingNote')st.draftNote=e.target.value.slice(0,200);
  if(e.target.id==='duoDiscussionNote'&&st.duo.mode==='remote')st.duo.discussionDraft=e.target.value.slice(0,600);
 });
@@ -1747,8 +1751,8 @@ document.addEventListener('change',e=>{
  if(e.target.id==='storeSelect'){st.store=e.target.value;refreshProducts()}
  if(e.target.id==='gtBrandCategory'){window.GT_BRANDS.setCategory(e.target.value);render();return}
  if(e.target.id==='sortSelect'){st.sort=e.target.value;refreshProducts()}
- if(e.target.id==='boardCategory'){st.boardCategory=e.target.value;refreshBoardTray()}
- if(e.target.id==='boardPhotoFilter'){st.boardPhotoFilter=e.target.value;refreshBoardTray()}
+ if(e.target.id==='boardCategory'){st.boardCategory=e.target.value;st.boardLimit=80;refreshBoardTray()}
+ if(e.target.id==='boardPhotoFilter'){st.boardPhotoFilter=e.target.value;st.boardLimit=80;refreshBoardTray()}
  if(e.target.id==='ratedOnly'){st.ratedOnly=e.target.checked;refreshProducts()}
  if(e.target.id==='highProteinOnly'){st.highProtein=e.target.checked;refreshProducts()}
  if(e.target.id==='catalogPhotoFilter'){st.catalogPhotoFilter=e.target.checked;refreshProducts()}
