@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eeeae3"><meta name="referrer" content="no-referrer">
+<title>Interbeing — A space between lives.</title>
+<meta name="description" content="Find yourself inside a spatial atlas of lives, dependencies and possible solutions. Explore in 3D, or follow an illustrative journey through time.">
+<meta property="og:title" content="Interbeing — A space between lives."><meta property="og:description" content="From interconnected suffering to shared solutions. A spatial atlas to explore together."><meta property="og:type" content="website"><meta property="og:url" content="https://mikelninh.github.io/interbeing/space/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='17' fill='none' stroke='%23ad553b'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23ad553b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="space.css">
+<script src="../atlas.js" defer></script><script src="space.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#inspect">Skip to relationship details</a>
+<header class="masthead">
+<a class="brand" href="../design-02/" aria-label="Interbeing, return to the Fieldnotes preview"><svg viewBox="0 0 40 40" aria-hidden="true"><ellipse cx="20" cy="20" rx="17" ry="11" transform="rotate(-36 20 20)"/><ellipse cx="20" cy="20" rx="11" ry="17" transform="rotate(-36 20 20)"/><circle cx="20" cy="20" r="2.5"/></svg>interbeing<span>.</span></a>
+<div class="mode-switch" role="group" aria-label="Dimensions"><button data-mode="3d" aria-pressed="true">3D <span>Space</span></button><button data-mode="4d" aria-pressed="false">4D <span>Time</span><i>↗</i></button></div>
+<div class="header-actions"><button id="about" class="quiet">About this space</button><button id="share" class="pill">Share a perspective <span aria-hidden="true">↗</span></button></div>
+</header>
+<main class="experience">
+<aside class="rail">
+<div class="intro"><p class="eyebrow">INTERBEING / SPATIAL STUDY 03</p><h1>A space<br>between <em>lives.</em></h1><p class="promise">From interconnected suffering<br>to shared solutions.</p></div>
+<section id="inspect" class="inspector" aria-label="Selected life or connection"><div id="details" aria-live="polite"></div></section>
+<button id="personalise" class="personal"><span class="personal-mark">◎</span><span>Make this your place<small>Optional name. Only on this device.</small></span><span aria-hidden="true">↗</span></button>
+</aside>
+<section class="world" aria-label="Interactive spatial relationship atlas">
+<div class="world-head"><div class="world-title"><span class="small-dot"></span><span id="space-title">YOUR WEB / ECOLOGICAL SELF</span></div><div class="view-tools"><button id="list-toggle" aria-pressed="false">List view</button><button id="theme" aria-label="Switch to night atmosphere" title="Change atmosphere">◐</button><button id="help" aria-label="Navigation help">?</button></div></div>
+<div id="stage" class="stage">
+<canvas id="space" tabindex="0" aria-label="3D relationship space. Drag to orbit, wheel or pinch to zoom. Arrow keys rotate. Plus and minus zoom. Use List view for all nodes and relationships."></canvas>
+<div class="over-map"><span id="view-state">A place to look from.</span><span id="scenario-state" hidden>ILLUSTRATIVE SCENARIO · NOT A FORECAST</span></div>
+<div id="labels" aria-label="Lives and systems in this view"></div>
+<div id="list-panel" class="list-panel" hidden><label for="search">Find a life, system or solution</label><input id="search" type="search" placeholder="Try animals, care, or water…" autocomplete="off"><div id="list-nodes"></div><p class="list-note">Selecting an item reveals its source-linked relationships in the details panel.</p></div>
+<div class="stage-caption"><span id="selection-caption">You are a participant, not an outside observer.</span><span class="caption-rule"></span><span id="node-count">8 nodes</span></div>
+<div class="camera-controls" role="group" aria-label="Camera controls"><button id="orbit" aria-pressed="false" aria-label="Start slow orbit" title="Slow orbit">↻</button><button id="zoom-in" aria-label="Zoom in">+</button><button id="zoom-out" aria-label="Zoom out">−</button><button id="reset" aria-label="Reset camera and focus" title="Return to the whole view">⌖</button></div>
+<p id="gesture-hint" class="gesture-hint">Drag to orbit <span>·</span> Scroll to explore <span>·</span> Select a life</p>
+</div>
+<div class="world-bottom">
+<div id="temporal" class="temporal" hidden>
+<div class="time-heading"><span class="eyebrow">THE FOURTH DIMENSION / TIME</span><span class="scenario-label">A possible sequence, not a prediction</span></div>
+<div class="time-story"><span id="time-number">01</span><div><h2 id="time-title"></h2><p id="time-copy"></p></div><button id="play-time" aria-pressed="false" aria-label="Play illustrative time sequence">▶</button></div>
+<label for="time" class="sr-only">Explore the illustrative sequence</label><input id="time" type="range" min="0" max="3" step="0.01" value="0" aria-describedby="time-disclaimer"><div class="time-stops"><button data-time="0">Now</button><button data-time="1">A possible step</button><button data-time="2">Through change</button><button data-time="3">Further ahead</button></div>
+<p id="time-disclaimer">No dates, probabilities or measured impacts. The slider changes which relationships this scenario brings into focus.</p>
+</div>
+<div class="world-select" role="group" aria-label="Choose a world"><button data-world="self" aria-pressed="true">◎ Your web</button><button data-world="food" aria-pressed="false">01 <span>A meal</span></button><button data-world="wild" aria-pressed="false">02 <span>Coexistence</span></button><button data-world="health" aria-pressed="false">03 <span>Protection</span></button><button data-world="all" aria-pressed="false">All connections <span>↗</span></button></div>
+<div class="world-options"><label id="lens-wrap">Look through <select id="lens"><option value="ecological">Ecological self</option><option value="biological">Living body</option><option value="social">Care & belonging</option><option value="economic">Work & exchange</option><option value="future">Future lives</option></select></label><label><input type="checkbox" id="actors" checked> Organisations</label><label><input type="checkbox" id="tensions" checked> Tensions</label></div>
+<div class="legend" aria-label="Relationship styles"><span><i class="dependency"></i>Depends on</span><span><i class="possibility"></i>May help</span><span><i class="tension"></i>Tension / harm</span><span><i class="uncertain"></i>Uncertain</span><button id="motion" aria-pressed="false">Motion off</button></div>
+</div>
+</section>
+</main>
+<footer><span>Not a model of your actual life. Position, colour and size do not measure worth, impact or physical distance.</span><button id="approach">Evidence, privacy & limits ↗</button><a href="../design-02/">Back to the 2D atlas ↗</a></footer>
+<dialog id="dialog"><div class="dialog-top"><span class="eyebrow">INTERBEING / A SHARED PERSPECTIVE</span><button id="close-dialog" aria-label="Close dialog">×</button></div><div id="dialog-body"></div></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<noscript><p class="noscript">This spatial atlas needs JavaScript. The source-linked 2D atlas is available through the link below.</p></noscript>
+</body>
+</html>
