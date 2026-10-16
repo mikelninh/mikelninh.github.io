@@ -1,4 +1,4 @@
-import test from 'node:test';import assert from 'node:assert/strict';
+import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
 import {analyze} from '../first-mile/core.mjs';import {sampleDocs} from '../first-mile/samples.mjs';
 const doc=(text,name='deck.pdf')=>[{name,pages:[{number:3,text}]}];
 const f=(line,key)=>analyze(doc(line)).fields.find(x=>x.key===key);
@@ -20,3 +20,5 @@ test('15 no invented results for empty input',()=>{const r=analyze([]);assert.eq
 test('16 every sample hit has provenance',()=>{const r=analyze(sampleDocs);for(const field of r.fields)for(const hit of field.evidence){assert.ok(hit.source);assert.ok(hit.page);assert.ok(hit.excerpt)}});
 test('17 sample exposes numerical differences',()=>assert.ok(analyze(sampleDocs).differences.length>=2));
 test('18 questions max five',()=>assert.ok(analyze(sampleDocs).questions.length<=5));
+
+test('19 release story distinguishes sample outcomes from actual productivity measurements',()=>{const h=readFileSync(new URL('../first-mile/index.html',import.meta.url),'utf8');assert.match(h,/THE 60-SECOND RESEARCH TEST/);assert.match(h,/11 traceable observations/);assert.match(h,/3 differing figures/);assert.match(h,/not proven time savings/i)});

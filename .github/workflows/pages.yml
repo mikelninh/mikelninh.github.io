@@ -106,7 +106,7 @@ jobs:
             return 1
           }
 
-          fetch_until_ready "$base/" "I build useful things."
+          fetch_until_ready "$base/" "I like to"
           fetch_until_ready "$base/beyond-cv/" 'id="state-bridge"'
           fetch_until_ready "$base/beyond-cv/dksr/" "Was braucht eine Stadt"
           fetch_until_ready "$base/beyond-cv/dksr/case.js" "var sources="
@@ -115,3 +115,6 @@ jobs:
           fetch_until_ready "$base/broker-signup-lab/" "Wo verlieren wir Nutzer"
           fetch_until_ready "$base/doctolib-ai-ops/" "AI Operations Workbench"
           fetch_until_ready "$base/doctolib-onboarding/" "Onboarding Shift"
+          fetch_until_ready "$base/first-mile/" "See the potential."
+          fetch_until_ready "$base/first-mile/app.mjs" "async function parsePdf"
+          fetch_until_ready "$base/first-mile/core.mjs" "export const analyze"
