@@ -32,8 +32,7 @@ test('5 all six authored cases are rescored by current actual engine',()=>{
 test('6 unrepaired recall gaps remain honestly visible',()=>{
  const p=prediction(get('riverbend'));
  const failures=Object.keys(gold.labels.riverbend).filter(k=>p[k]!==gold.labels.riverbend[k]);
- assert.ok(failures.includes('technology'));
- assert.ok(failures.includes('team'));
+ assert.deepEqual(failures.sort(),['arr','ask','customers','problem','technology'].sort());
  assert.equal(failures.length,5);
 });
 test('7 known Asterion contradiction still preserved',()=>{
