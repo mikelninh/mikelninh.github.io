@@ -962,3 +962,42 @@ body:has(.gt-bp-hero) .left-rail,body:has(.gt-bp-hero) .hero{display:none}
 .gt-duo-brand-focus button.active{background:#d7eb9c;border-color:#a6c976;color:#2b4e32}
 .gt-duo-brand-focus small{font-size:10px;color:#879883;flex-basis:100%}
 @media(max-width:560px){.gt-duo-brand-focus{gap:6px}.gt-duo-brand-focus button{flex:1;padding:8px 6px;font-size:10px}.gt-duo-brand-focus>span{flex-basis:100%}}
+
+
+/* GOOD THINGS 2.7 — five-product episodes, a tiny show rather than an infinite catalogue */
+.gt-episode-library{margin:18px 0 20px;border:1px solid #d9e5cf;background:#f7f9f2;border-radius:21px;padding:clamp(15px,2.7vw,25px)}
+.gt-episode-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:17px}
+.gt-episode-head .eyebrow{font-size:10px;color:#7b9872;font-weight:800;letter-spacing:.09em}
+.gt-episode-head h3{font:620 clamp(25px,3.5vw,38px)/1.05 'Fraunces',Georgia,serif;color:#304c35;letter-spacing:-.05em;margin:6px 0 9px}
+.gt-episode-head p{font-size:12px;color:#768571;line-height:1.55;max-width:620px;margin:0}
+.gt-episode-toggle{white-space:nowrap;border:1px solid #d3e2c8;color:#4c7450;font-size:11px;font-weight:850;background:#fffefa;border-radius:999px;padding:11px 14px;cursor:pointer}
+.gt-episode-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.gt-episode-card{position:relative;min-width:0;display:grid;grid-template-columns:46px minmax(0,1fr) 16px;align-items:center;gap:8px;text-align:left;min-height:103px;background:#fffefa;border:1px solid #dce5d5;border-radius:13px;padding:12px 10px;cursor:pointer;transition:background .16s,transform .16s,border .16s,box-shadow .16s}
+.gt-episode-card:hover:not(:disabled){transform:translateY(-2px);background:#edf4e4;border-color:#b3d3a0;box-shadow:0 8px 18px #28462e14}
+.gt-episode-card.active{background:#e6f1d5;border:2px solid #a9d477;padding:11px 9px;box-shadow:inset 0 0 0 1px #faffef}
+.gt-episode-card:disabled{opacity:.55;cursor:not-allowed}
+.gt-episode-emoji{height:44px;width:44px;display:grid;place-items:center;border-radius:13px;background:#f0f4e8;font-size:26px}
+.gt-episode-card:nth-child(3n+2) .gt-episode-emoji{background:#edf2f7}
+.gt-episode-card:nth-child(3n+3) .gt-episode-emoji{background:#f7eee6}
+.gt-episode-content{min-width:0;display:grid;gap:4px}
+.gt-episode-content small{font-weight:850;font-size:9px;letter-spacing:.05em;color:#8c9e84;text-transform:uppercase}
+.gt-episode-content strong{font:600 19px/1.11 'Fraunces',Georgia,serif;color:#2e5036;letter-spacing:-.03em}
+.gt-episode-content>span{font-size:10px;line-height:1.35;color:#889484}
+.gt-episode-start{color:#819e6e;font-size:13px;align-self:start;font-weight:800}
+.gt-episode-foot{border-top:1px solid #dde7d5;padding-top:15px;margin-top:15px;display:flex;align-items:center;gap:11px;justify-content:space-between;flex-wrap:wrap}
+.gt-episode-foot>span{font-size:12px;font-weight:850;color:#526d50}
+.gt-episode-free{border:1px solid #d4e3c6;border-radius:99px;padding:10px 14px;background:#fffefa;font-weight:850;font-size:11px;color:#698168;cursor:pointer}
+.gt-episode-free.active{background:#2f523a;border-color:#2f523a;color:#fffefa}
+.gt-episode-progress{background:#eaf2db;border:1px solid #d2e5be;border-radius:15px;padding:17px 21px;margin:12px 0 22px}
+.gt-episode-progress-title{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#3e6441;font-size:13px;font-weight:850}
+.gt-episode-progress-title strong{font:650 23px 'Fraunces',Georgia,serif;color:#2d5033}
+.gt-episode-dots{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:12px}
+.gt-episode-dots span{height:8px;border-radius:99px;background:#d5e0ca}
+.gt-episode-dots span.done{background:linear-gradient(90deg,#7daa66,#c2dc76)}
+.gt-episode-complete{margin-top:17px;border-top:1px solid #cddfbb;padding-top:14px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;color:#58734f;font-size:12px}
+.gt-episode-complete>strong{font:600 22px 'Fraunces',Georgia,serif;color:#335b39;margin-right:auto}
+.gt-episode-remote-note{padding:12px 14px;background:#f7f2e5;color:#7b765f;border-radius:9px;font-size:11px;line-height:1.5;margin:12px 0}
+@media(max-width:1080px){.gt-episode-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.gt-episode-head{align-items:flex-start;flex-direction:column}.gt-episode-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.gt-episode-card{grid-template-columns:35px minmax(0,1fr);gap:8px;min-height:117px;padding:9px}.gt-episode-card.active{padding:8px}.gt-episode-emoji{height:36px;width:36px;font-size:22px}.gt-episode-content strong{font-size:16px}.gt-episode-content small{font-size:8px}.gt-episode-content>span{font-size:9px}.gt-episode-start{display:none}.gt-episode-library{padding:13px}.gt-episode-progress{padding:13px 15px}}
+@media(max-width:385px){.gt-episode-grid{grid-template-columns:1fr}.gt-episode-card{min-height:78px;grid-template-columns:42px minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){.gt-episode-card{transition:none!important}}
