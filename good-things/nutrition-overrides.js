@@ -3342,5 +3342,21 @@ window.GT_NUTRITION_OVERRIDES=[
     },
     "nutrition_source_url": "https://world.openfoodfacts.org/product/4260042083089",
     "nutrition_updated_at": "2026-10-16"
+  },
+  {
+    "id": "spreads-07",
+    "barcode": "4002468180825",
+    "nutrition": {
+      "kcal": 233,
+      "protein": 4.8,
+      "carbs": 1.2,
+      "sugar": 0.9,
+      "fat": 23,
+      "satFat": 12,
+      "fiber": null,
+      "salt": 0.49
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/4002468180825",
+    "nutrition_updated_at": "2026-10-16"
   }
 ];
