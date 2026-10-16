@@ -24,7 +24,7 @@ for(const p of window.GT_CATALOG||[]){
  }
 }
 const units=[['Energie','kcal','kcal'],['Protein','protein','g'],['Kohlenhydrate','carbs','g'],['davon Zucker','sugar','g'],['Fett','fat','g'],['davon gesättigte Fettsäuren','satFat','g'],['Ballaststoffe','fiber','g'],['Salz','salt','g']];
-function factsNutrition(p,info){const fresh=info?.nutrition,known=p.nutrition||{};const merged={...known};if(fresh)for(const [k,v] of Object.entries(fresh))if(Number.isFinite(v))merged[k]=v;try{const entry=JSON.parse(localStorage.getItem('goodthings_protein_lab_v28')||'{}')[p.id];if(entry&&entry.protein!==undefined&&entry.protein!==null&&Number.isFinite(Number(entry.protein))&&Number(entry.protein)>=0&&Number(entry.protein)<=100)merged.protein=Number(entry.protein)}catch(_){}return Object.values(merged).some(Number.isFinite)?merged:null}
+function factsNutrition(p,info){const fresh=info?.nutrition,known=p.nutrition||{};const merged={...known};if(fresh)for(const [k,v] of Object.entries(fresh))if(Number.isFinite(v))merged[k]=v;try{const item=JSON.parse(localStorage.getItem('goodthings_protein_source_v28')||'{}')[p.barcode];if(!Number.isFinite(merged.protein)&&item?.protein!==undefined&&Number.isFinite(Number(item.protein))&&Number(item.protein)>=0&&Number(item.protein)<=100)merged.protein=Number(item.protein)}catch(_){}try{const entry=JSON.parse(localStorage.getItem('goodthings_protein_lab_v28')||'{}')[p.id];if(entry&&entry.protein!==undefined&&entry.protein!==null&&Number.isFinite(Number(entry.protein))&&Number(entry.protein)>=0&&Number(entry.protein)<=100)merged.protein=Number(entry.protein)}catch(_){}return Object.values(merged).some(Number.isFinite)?merged:null}
 function bullets(n){
  const plus=[],minus=[];
  if(!n)return {plus:['Nährwertangaben sind noch nicht verifiziert.'],minus:['Ohne Nährwerte ist keine Einordnung möglich.']};
@@ -78,7 +78,8 @@ function facts(p){
  '<div class="gt-fact-subtitle">Preis und Bezugsquellen</div><div class="gt-source-row"><div>'+priceMarkup(info,p)+'</div><div>'+storeMarkup(p,info)+'</div></div>'+
  '<p class="gt-explain">Nutri-Score: A steht für eine eher günstige, E für eine weniger günstige Nährstoffzusammensetzung. Am sinnvollsten vergleichst du ähnliche Produkte. Zucker, Salz, gesättigte Fette und Energie werden unter anderem gegen Protein, Ballaststoffe und Anteile bestimmter pflanzlicher Zutaten abgewogen. Der Score sagt nichts über Allergene, Bioqualität oder die gesamte Ernährung aus. <a target="_blank" rel="noopener noreferrer" href="https://www.bmel.de/DE/themen/ernaehrung/lebensmittel-kennzeichnung/freiwillige-angaben-und-label/nutri-score/nutri-score_node.html">Offizielle Erklärung ↗</a></p>'+
  (src?'<a href="'+esc(src)+'" target="_blank" rel="noopener noreferrer" class="gt-fact-link">Produkt- und Datenquelle prüfen ↗</a>':'')+
- '<p class="gt-explain">Pro / Contra sind transparente Orientierungshilfen anhand einzelner Grenzwerte, kein Gesamturteil. Nährwerte und Zutaten können sich ändern; Etikett vor Kauf prüfen.</p>'+
+ '<p class="gt-explain">Fehlen Angaben? <a href="./protein.html?product='+encodeURIComponent(p.id)+'" target="_blank" rel="noopener noreferrer">Etikettprotein &amp; tatsächlichen Kaufpreis ergänzen ↗</a></p>'+
+  '<p class="gt-explain">Pro / Contra sind transparente Orientierungshilfen anhand einzelner Grenzwerte, kein Gesamturteil. Nährwerte und Zutaten können sich ändern; Etikett vor Kauf prüfen.</p>'+
  '</div></details></section>';
 }
 function repaint(p){
