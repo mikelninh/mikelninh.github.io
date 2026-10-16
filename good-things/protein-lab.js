@@ -39,12 +39,12 @@ function render(){
  $('#proteinRoot').innerHTML='<section class="pl-hero"><span>✳ GOOD THINGS · THE SMART PANTRY</span><h1>More protein.<br><em>Less money.</em></h1><p>Der faire Vergleich: Wie viele Gramm Protein bekommst du für einen Euro? Wir zeigen nur berechenbare Werte. Preise ohne aktuelle Quellen sind nicht erfunden – du kannst deinen eigenen Kassenbonpreis eingeben.</p></section>'+
  '<section class="pl-explainer"><div><strong>Protein pro Euro</strong><p>(Protein je 100 g × Packungsinhalt / 100) ÷ Packungspreis. Für Getränke rechnen wir mit ml statt g; die Rechnung ist eine Näherung auf Grundlage der Deklaration je 100 ml.</p></div><div><strong>Wirklich vergleichbar?</strong><p>Vergleiche Tofu eher mit Tofu und Drinks mit Drinks. Berücksichtige Portionsgröße, Qualität, Geschmack, Zubereitung und ggf. den Preis je Kilogramm. Kein Gesundheitsranking.</p></div></section>'+
  '<div class="pl-filters"><label>Kategorie<select id="plCategory"><option value="all">Alle Kategorien</option>'+categories.map(([id,name])=>'<option value="'+esc(id)+'" '+(id===filter?'selected':'')+'>'+esc(name)+'</option>').join('')+'</select></label><label>Produkt suchen<input id="plSearch" type="search" value="'+esc(query)+'" placeholder="Tofu, Seitan, Linsen, Vemondo..."></label><label class="pl-check"><input id="plOnly" type="checkbox" '+(onlyComplete?'checked':'')+'> Nur berechenbare Produkte</label></div>'+
- '<div class="pl-count"><strong>'+ready+'</strong> berechenbare Produkte in dieser Auswahl · <strong>'+items.length+'</strong> insgesamt · Preise von dir eingegeben, keine Live-Angebote</div><button class="pl-nutrition-button" id="plFetchNutrition" type="button" '+(loadBusy?'disabled':'')+'>'+(loadBusy?'Prüfe Open Food Facts …':'✳ 25 fehlende EAN-Nährwerte aus Open Food Facts prüfen')+'</button>'+
+ '<div class="pl-count"><strong>'+ready+'</strong> berechenbare Produkte in dieser Auswahl · <strong>'+items.length+'</strong> insgesamt · Eigene Bonpreise oder datierte Open-Prices-Belege, keine Live-Angebote</div><button class="pl-nutrition-button" id="plFetchNutrition" type="button" '+(loadBusy?'disabled':'')+'>'+(loadBusy?'Prüfe Open Food Facts …':'✳ 25 fehlende EAN-Nährwerte aus Open Food Facts prüfen')+'</button><button class="pl-nutrition-button" id="plFetchPrices" type="button" '+(loadBusy?'disabled':'')+'>💶 20 deutsche Preisbelege aus Open Prices suchen</button>'+
  '<div class="pl-table-wrap"><table class="pl-table"><thead><tr><th>Produkt</th><th>Protein / 100 g/ml</th><th>Packungsinhalt</th><th>Preis €</th><th>Protein / €</th><th></th></tr></thead><tbody>'+
  items.slice(0,180).map(({p,ratio})=>{const v=local(p),can=ratio!==null;return '<tr><td><strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+' · '+esc(p.store)+'</small><small>'+esc(updated(p))+'</small></td>'+
  '<td><input aria-label="Protein in g je 100 für '+esc(p.name)+'" data-pl="protein" data-id="'+esc(p.id)+'" placeholder="'+(p.nutrition?.protein!=null?fmt(p.nutrition.protein):'unbekannt')+'" value="'+esc(v.protein??'')+'" inputmode="decimal"></td>'+
  '<td><input aria-label="Packungsmenge für '+esc(p.name)+'" data-pl="quantity" data-id="'+esc(p.id)+'" placeholder="'+(quantity(p)??'g/ml?')+'" value="'+esc(v.quantity??'')+'" inputmode="decimal"></td>'+
- '<td><input aria-label="Dein Kaufpreis in Euro für '+esc(p.name)+'" data-pl="price" data-id="'+esc(p.id)+'" placeholder="€ vom Bon" value="'+esc(v.price??'')+'" inputmode="decimal"></td>'+
+ '<td><input aria-label="Dein Kaufpreis in Euro für '+esc(p.name)+'" data-pl="price" data-id="'+esc(p.id)+'" placeholder="€ vom Bon" value="'+esc(v.price??'')+'" inputmode="decimal">'+(v.priceSource==='openprices'?'<small>Open Prices · '+esc(v.priceDate||'')+' · '+esc(v.pricePlace||'DE')+'</small>':'')+'</td>'+
  '<td class="pl-score">'+(can?'<strong>'+fmt(ratio,2)+' g</strong>':'<span>—</span>')+'</td>'+
  '<td><a href="./?view=discover&product='+encodeURIComponent(p.id)+'">Produkt ↗</a></td></tr>'}).join('')+'</tbody></table></div>'+
  '<p class="pl-disclaimer">Die Eingaben werden nur in diesem Browser gespeichert und nicht als offiziell verifizierte Produktdaten ausgegeben. Eine Packung, ein Rezept oder ein Preis kann sich ändern. Fehlende Proteinzahlen kannst du direkt vom Nährwertetikett ergänzen.</p>';
@@ -75,7 +75,33 @@ async function loadMissingNutrition(){
  loadBusy=false;render();
  alert('Geprüft: '+checked+' Barcode-Datensätze; '+found+' zusätzliche Proteinangaben gefunden. Fehlende Werte bleiben unbekannt.');
 }
-document.addEventListener('click',e=>{if(e.target.closest('#plFetchNutrition'))loadMissingNutrition()});
+async function loadDatedPrices(){
+ if(loadBusy)return;
+ loadBusy=true;render();
+ const candidates=list.filter(p=>p.barcode&&protein(p)!==null&&mass(p)!==null&&price(p)===null).slice(0,20);
+ let checked=0,found=0;
+ for(let i=0;i<candidates.length;i+=4){
+  await Promise.all(candidates.slice(i,i+4).map(async p=>{
+   try{
+    const ctl=typeof AbortController!=='undefined'?new AbortController():null;
+    const timer=ctl?setTimeout(()=>ctl.abort(),9000):null;
+    let response;try{response=await fetch('https://prices.openfoodfacts.org/api/v1/prices?product_code='+encodeURIComponent(p.barcode)+'&size=12&order_by=-date',{signal:ctl?.signal})}finally{if(timer)clearTimeout(timer)}
+    if(!response.ok)return;
+    const json=await response.json();
+    const candidates=(json.items||[]).filter(x=>x?.type==='PRODUCT'&&x.currency==='EUR'&&Number.isFinite(x.price)&&x.price>0&&x.location?.osm_address_country_code==='DE'&&/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')&&Date.parse(x.date)<=Date.now()).sort((x,y)=>String(y.date).localeCompare(String(x.date)));
+    const best=candidates[0];
+    if(!best)return;
+    values[p.id]={...(values[p.id]||{}),price:Number(best.price),priceSource:'openprices',priceDate:best.date,pricePlace:String(best.location.osm_brand||best.location.osm_name||'Deutschland').slice(0,60)};
+    found++;
+   }catch(_){}
+   finally{checked++}
+  }));
+ }
+ try{localStorage.setItem(KEY,JSON.stringify(values))}catch(_){}
+ loadBusy=false;render();
+ alert('Preisbelege geprüft: '+checked+' Produkte; '+found+' deutsche EUR-Belege gefunden. Das sind datierte Beobachtungen, keine garantierten aktuellen Preise.');
+}
+document.addEventListener('click',e=>{if(e.target.closest('#plFetchNutrition'))loadMissingNutrition();if(e.target.closest('#plFetchPrices'))loadDatedPrices()});
 document.addEventListener('change',e=>{
  if(e.target.id==='plCategory'){filter=e.target.value;render();return}
  if(e.target.id==='plOnly'){onlyComplete=e.target.checked;render();return}
@@ -83,7 +109,7 @@ document.addEventListener('change',e=>{
  const id=i.dataset.id,field=i.dataset.pl,val=i.value.trim(),n=num(val);
  if(val&&(!Number.isFinite(n)||n<0||field==='protein'&&n>100||field==='quantity'&&n>15000||field==='price'&&n>10000)){alert('Bitte eine plausible positive Zahl eingeben.');return}
  values[id]={...(values[id]||{})};
- if(val==='')delete values[id][field];else values[id][field]=n;
+ if(val==='')delete values[id][field];else values[id][field]=n;if(field==='price'){delete values[id].priceSource;delete values[id].priceDate;delete values[id].pricePlace}
  try{localStorage.setItem(KEY,JSON.stringify(values))}catch(_){}
  render();
 });
