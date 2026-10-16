@@ -194,3 +194,33 @@ body.as-showcase .as-hero-side{padding:24px}
 }
 @media(max-width:410px){body.as-dwf .hero h1{font-size:44px}body.as-dwf .grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){body.as-showcase *,body.as-showcase *:before,body.as-showcase *:after{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+
+
+/* Release 2.1 — unifying reviewer-first evidence rather than stacking decorative cards. */
+body.as-showcase .as-release-evidence{padding:32px 0 82px}
+body.as-showcase .as-release-evidence-inner{width:min(1120px,calc(100% - 64px));margin:auto;border-top:1px solid #cfded0;padding-top:30px}
+body.as-showcase .as-release-evidence-heading>span{font:800 10px/1.4 'DM Sans',sans-serif;letter-spacing:.16em;color:#527e5c}
+body.as-showcase .as-release-evidence-heading h2{font:400 clamp(30px,4vw,47px)/1.15 'Newsreader',Georgia,serif;margin:11px 0 28px;color:#234b37}
+body.as-showcase .as-release-evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:29px}
+body.as-showcase .as-release-evidence-grid article{border-top:1px solid #d8e5d9;padding-top:17px;min-width:0}
+body.as-showcase .as-release-evidence-grid span{font:800 10px/1.4 'DM Sans',sans-serif;letter-spacing:.08em;color:#698671}
+body.as-showcase .as-release-evidence-grid h3{font:400 27px/1.2 'Newsreader',Georgia,serif;color:#244b37;margin:10px 0 8px}
+body.as-showcase .as-release-evidence-grid p{font:400 12px/1.75 'DM Sans',sans-serif;color:#687d6e;margin:0}
+body.as-showcase .as-release-actions{display:flex;align-items:center;gap:19px;flex-wrap:wrap;margin-top:28px}
+body.as-showcase .as-release-actions a{font:700 12px/1.25 'DM Sans',sans-serif;text-decoration:none;color:#28583d}
+body.as-showcase .as-release-actions a:not(.as-release-primary){text-decoration:underline;text-underline-offset:4px}
+body.as-showcase .as-release-actions .as-release-primary{background:#234c38;color:#fff;padding:14px 18px;border-radius:9px}
+body.as-showcase .as-release-actions .as-release-primary:hover{background:#347251}
+/* Deliberate shared negative space between hero and one real case. */
+body.as-dwf .hero{padding-bottom:62px}
+body.as-dwf .people-impact{padding-bottom:32px}
+body.as-dwf .verify{padding-bottom:30px}
+body.as-gl .proof-section,body.as-pp .proof-section{padding-bottom:40px}
+body.as-showcase button:disabled{opacity:.62;cursor:not-allowed}
+@media(max-width:760px){
+ body.as-showcase .as-release-evidence-inner{width:calc(100% - 32px)}
+ body.as-showcase .as-release-evidence-grid{grid-template-columns:1fr;gap:22px}
+ body.as-showcase .as-release-evidence{padding-bottom:55px}
+ body.as-dwf .hero{padding-bottom:34px}
+}
+@media(prefers-reduced-motion:reduce){body.as-showcase *,body.as-showcase *::before,body.as-showcase *::after{transition:none!important;scroll-behavior:auto!important}}
