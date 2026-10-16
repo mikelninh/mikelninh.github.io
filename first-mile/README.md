@@ -4,7 +4,9 @@
 
 Live product: https://mikelninh.github.io/first-mile/
 
-**NEW: Model Lab v2:** https://mikelninh.github.io/first-mile/lab/
+**Model Lab:** https://mikelninh.github.io/first-mile/lab/
+
+**Failure Clinic (release-gate demonstration):** https://mikelninh.github.io/first-mile/review/
 
 ## The everyday problem
 
@@ -35,17 +37,19 @@ The final two perform a model extraction stage, then a deterministic citation/nu
 
 All methods share six author-created, fictional pitch cases (four original and two harder challenge formats), with eight pre-labelled statuses per case = 48 comparisons. We also track citation verification, latency, token usage and optional cost estimates. Models cannot authorise their own sources.
 
-**Measured rules baseline: 42/48 exact labelled status matches on this six-case synthetic set**, including 32/32 on four known development cases and 10/16 on two developer-authored challenge cases. This is **not accuracy on real pitch decks**. It reveals brittleness under unfamiliar phrasing and forecast context.
+**Historical rule baseline v2:** 42/48 labelled matches. **Post-fix v3 rule candidate:** 43/48 on the same authored development set, after the split-line forecast failure was inspected and specifically addressed. The latter score is not independently blind. This is not accuracy on real pitch decks.
 
-**No real GPT/Claude benchmark scores have been claimed or fabricated.** Those require actual model API credentials, configured model names, explicit approval for potentially billable calls, and an exported benchmark report. The static website never accepts API keys.
+**Real OpenAI GPT-6 benchmark completed on 2026-10-16:** 36 authenticated calls, estimated total $0.355237 based on token usage/rates. Six-case finalists: Luna None 45/48 ($0.0011405), Sol Medium 45/48 ($0.02741), Astra High 43/48 ($0.21815). Every finalist had two rejected quotations. Original measured run: https://github.com/mikelninh/mikelninh.github.io/actions/runs/38906414912. These are synthetic field-label matches, not real-world accuracy. **No Claude API experiment is claimed.**
 
 Run comparison locally following [lab/README.md](lab/README.md). The lab compares results from locally imported JSON without uploading the report. It is intentionally not an unauthenticated public LLM proxy.
 
 ## Quality gates
 
-- 28 deterministic frontend contract tests for the original demo and picker.
+- 31 deterministic frontend behavior tests, including the scoped forecast fix and negative cases.
 - Model Lab tests for labelled scenarios, baseline reproducibility and unsupported quotation rejection.
 - Provider-free Python tests for staged orchestration, source safety and no unintended paid calls.
+- Failure Clinic benchmark replay and release-gate tests.
+- Independent local FastAPI/Pydantic verification service with negative HTTP tests. This service is NOT integrated into the hosted frontend and is NOT a production API.
 - GitHub Actions runs the tests without calling paid APIs.
 
 ## What is not proved
@@ -55,3 +59,9 @@ No independently measured productivity gains, source reliability for arbitrary P
 The next meaningful pilot: obtain consented, representative founder materials; establish human-labelled ground truth; compare end-to-end reviewer time including corrections; and only expand automation where verified evidence supports it.
 
 Built by Michael Ninh · Berlin · October 2026.
+
+## Interview engineering proof
+
+- [Failure Clinic](review/): Reproduce one miss, inspect the source, run regression checks and explain why production is held.
+- [Reference verification API](service/): async-capable FastAPI + Pydantic with schema and citation checks; locally runnable, not deployed.
+- [Interview questions and practice rubric](review/INTERVIEW.md): honest examples for source verification, evaluation, APIs, agent boundaries and product sense.
