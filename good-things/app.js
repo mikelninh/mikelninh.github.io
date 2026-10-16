@@ -1614,7 +1614,8 @@ async function openShareLink(){
  }
  const view=url.searchParams.get('view');
  if(view==='brands'){window.GT_BRANDS.setBrand(url.searchParams.get('brand')==='penny'?'penny':'vemondo');st.view='brands';return}
- if(view==='duo'){st.view='duo';if(url.searchParams.get('room')){st.duo.mode='remote';st.duo.requestedRoom=url.searchParams.get('room')}return}
+ if(view==='duo'){st.view='duo';if(url.searchParams.get('room')){st.duo.mode='remote';st.duo.requestedRoom=url.searchParams.get('room')}else {const topic=url.searchParams.get('episode');if(topic&&window.GT_EPISODES.getDef(topic)&&window.GT_EPISODES.selected('duo')?.id!==topic)window.GT_EPISODES.start('duo',topic)}return}
+ if(view==='solo'){const topic=url.searchParams.get('episode');if(topic&&window.GT_EPISODES.getDef(topic)&&window.GT_EPISODES.selected('solo')?.id!==topic)window.GT_EPISODES.start('solo',topic)}
  st.view=['board','discover','ours','my','community','awards','brands','solo'].includes(view)?view:'board';
 }
 document.addEventListener('click',async(event)=>{
@@ -1637,12 +1638,43 @@ document.addEventListener('click',async(event)=>{
  case 'save-rating':await saveRating();break;
  case 'delete-rating':await deleteRating();break;
  case 'set-category':st.category=id;render();break;
+ case 'episode-toggle':if(['solo','duo'].includes(btn.dataset.mode)){window.GT_EPISODES.toggle(btn.dataset.mode);render()}break;
+ case 'episode-select':{
+  const mode=btn.dataset.mode,episodeId=val==='all'?'':val;
+  if(!['solo','duo'].includes(mode))break;
+  if(mode==='duo'&&st.duo.mode==='remote'){toast('Die fünfteiligen Episoden gibt es aktuell am gemeinsamen Gerät.');break}
+  if(episodeId&&!window.GT_EPISODES.getDef(episodeId))break;
+  if(mode==='duo'&&Object.keys(st.duo.local.votes||{}).length&&!duoLocalSnapshot().complete){toast('Bitte erst beide Urteile abschließen, bevor ihr das Thema wechselt.');break}
+  window.GT_EPISODES.start(mode,episodeId);
+  if(mode==='solo'){st.solo.productId=null;st.solo.lastChoice=null;st.solo.warning='';soloPersist()}
+  else{st.duo.local.productId=null;st.duo.local.votes={};st.duo.local.discussion='';st.duo.qualityMessage='';st.duo.brandFilter='all';duoPersist()}
+  const u=new URL(location.href);u.searchParams.set('view',mode);
+  if(episodeId)u.searchParams.set('episode',episodeId);else u.searchParams.delete('episode');
+  history.replaceState(null,'',u.toString());
+  render();toast(episodeId?'Deine Folge ist bereit: fünf Produkte, ein Finale. ✳':'Freestyle: alle Produkte wieder im Spiel. ✳');break;
+ }
+ case 'episode-restart':{
+  const mode=btn.dataset.mode,ep=window.GT_EPISODES.selected(mode);
+  if(!ep||mode==='duo'&&st.duo.mode==='remote')break;
+  window.GT_EPISODES.start(mode,ep.id);
+  if(mode==='solo'){st.solo.productId=null;st.solo.lastChoice=null;soloPersist()}
+  else{st.duo.local.productId=null;st.duo.local.votes={};st.duo.local.discussion='';duoPersist()}
+  render();toast('Neue Runde, neues Glück! ✳');break;
+ }
+ case 'episode-share':{
+  const mode=btn.dataset.mode;
+  if(!window.GT_EPISODES.finished(mode)){toast('Bitte erst alle fünf Produkte beantworten.');break}
+  const content=window.GT_EPISODES.summary(mode,RANKABLE);
+  if(!content)break;
+  if(navigator.share){try{await navigator.share({title:'GOOD THINGS · Tasting Episode',text:content});break}catch(e){if(e?.name==='AbortError')break}}
+  await copyLink(content);break;
+ }
  case 'shuffle-motion':if(window.GT_EXTRAS.setMotion(val))render();break;
  case 'solo-start':await window.GT_EXTRAS.spin(()=>soloStart(false));break;
  case 'solo-next':await window.GT_EXTRAS.spin(()=>soloStart(true));break;
  case 'solo-vote':await soloVote(val);break;
  case 'solo-save-note':await soloSaveNote($('#soloNote')?.value||'');break;
- case 'duo-brand':if(['all','vemondo','penny'].includes(val)){st.duo.brandFilter=val;try{localStorage.setItem('goodthings_duo_brand_v26',val)}catch(_){}render()}break;
+ case 'duo-brand':if(['all','vemondo','penny'].includes(val)){if(window.GT_EPISODES.selected('duo')){if(Object.keys(st.duo.local.votes||{}).length&&!duoLocalSnapshot().complete){toast('Bitte zuerst beide Urteile abgeben.');break}window.GT_EPISODES.start('duo','');st.duo.local.productId=null;st.duo.local.votes={};duoPersist()}st.duo.brandFilter=val;try{localStorage.setItem('goodthings_duo_brand_v26',val)}catch(_){}render()}break;
  case 'duo-mode-local':st.duo.mode='local';st.duo.room=null;st.duo.error='';setView('duo');break;
  case 'duo-mode-remote':st.duo.mode='remote';st.duo.room=null;st.duo.error='';await duoLoadRooms();setView('duo');break;
  case 'duo-start-local':await window.GT_EXTRAS.spin(()=>duoLocalStart(false));break;
