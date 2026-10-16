@@ -1,0 +1,23 @@
+name: HTGF application · three public evidence demos
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'agents/index.html'
+      - 'gitlaw/index.html'
+      - 'pruefpilot/index.html'
+      - 'tests/htgf-portfolio-proof.test.cjs'
+      - '.github/workflows/htgf-portfolio-proof.yml'
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Verify documented problem, proof and ownership in all three application demos
+        run: node --test tests/htgf-portfolio-proof.test.cjs
