@@ -27,14 +27,18 @@ export const analyze = function analyze(documents){
    return m?Number(m[1]):null;
  };
  const hits=[];
- for(const doc of documents||[])for(const page of doc.pages||[])for(const line of String(page.text||"").split(/\n+/)){
-   const str=line.trim();if(!str)continue;
+ for(const doc of documents||[])for(const page of doc.pages||[]){
+   const lines=String(page.text||"").split(/\n+/);
+   for(let i=0;i<lines.length;i++){
+   const str=lines[i].trim();if(!str)continue;
    for(const [key,label,matcher,type] of rules){
      if(!matcher.test(str))continue;
      const value=type==="money"?money(str):type==="count"?count(str):null;
      if(type!=="text"&&value===null)continue;
-     const projected=type==="money"&&/\b(forecast|forecasted|projected|projection|target|expected in|expected by|future revenue|not current revenue|prognose|geplant)\b/i.test(str);
+     const contextHeader=key==="arr"&&i>0&&/^(?:20\d{2}\s+)?(?:TARGET|FORECAST|PROJECTION)\b/i.test(lines[i-1].trim());
+     const projected=type==="money"&&(/\b(forecast|forecasted|projected|projection|target|expected in|expected by|future revenue|not current revenue|prognose|geplant)\b/i.test(str)||contextHeader);
      hits.push({key,label,value,projected,source:doc.name,page:page.number,excerpt:str.slice(0,420)});
+   }
    }
  }
  const fields=rules.map(([key,label,,,question])=>{

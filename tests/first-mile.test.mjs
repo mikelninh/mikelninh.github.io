@@ -32,3 +32,17 @@ test('25 Orchid projected revenue is explicitly not current revenue',()=>{const 
 test('26 forecast only is not a discrepancy even with another date',()=>{const r=analyze([{name:'example',pages:[{number:1,text:'ARR: €2m projected for 2028\nARR: €4m target for 2029'}]}]);assert.equal(r.fields.find(x=>x.key==='arr').status,'forecast');assert.equal(r.differences.length,0)});
 test('27 actual and future projections remain distinct',()=>{const r=analyze([{name:'example',pages:[{number:1,text:'ARR: €120k reported 2026\nARR: €2m projected for 2028'}]}]);assert.equal(r.fields.find(x=>x.key==='arr').status,'mixed')});
 test('28 picker is interactive and presentation stays transparent',()=>{const h=readFileSync(new URL('../first-mile/index.html',import.meta.url),'utf8');assert.match(h,/id="case-picker"/);for(const id of ['asterion','heliogrid','bioweave','orchid'])assert.ok(h.includes('data-case="'+id+'"'));assert.match(h,/SYNTHETIC DOCUMENT FIXTURES/)});
+
+test('29 a forecast header immediately before ARR is carried to the reported figure',()=>{
+ const r=analyze([{name:'example',pages:[{number:1,text:'2028 TARGET — future performance, not current revenue\\nARR: €2m'}]}]);
+ assert.equal(r.fields.find(x=>x.key==='arr').status,'forecast');
+});
+test('30 forecast context must not bleed from ARR into unrelated funding lines',()=>{
+ const r=analyze([{name:'example',pages:[{number:1,text:'2028 TARGET\\nARR: €2m\\nFunding ask: raising €1m'}]}]);
+ assert.equal(r.fields.find(x=>x.key==='arr').status,'forecast');
+ assert.equal(r.fields.find(x=>x.key==='ask').status,'found');
+});
+test('31 heading context must not carry between pages or documents',()=>{
+ const r=analyze([{name:'one',pages:[{number:1,text:'2028 TARGET'}, {number:2,text:'ARR: €2m'}]}]);
+ assert.equal(r.fields.find(x=>x.key==='arr').status,'found');
+});
