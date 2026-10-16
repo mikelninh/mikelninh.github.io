@@ -49,3 +49,33 @@
 @media(max-width:570px){.picker-list{grid-template-columns:1fr}.picker-card{min-height:160px}.picker-symbol{margin:5px 0}.picker-top{display:block}.picker-note{display:block;text-align:left;max-width:none;margin-top:15px}}
 
 .lab-inline-link{display:inline-block;margin-top:19px;color:#2b633f;font-size:12px;font-weight:850;text-decoration:underline;text-underline-offset:5px}
+
+/* Recruiter-first 30-90 second experience */
+.hero{padding-top:clamp(30px,4.2vw,65px);padding-bottom:clamp(30px,4.2vw,62px);gap:clamp(25px,3.7vw,70px)}
+.hero h1{font-size:clamp(52px,5.9vw,89px);margin:15px 0 17px;line-height:1.02}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:29px}
+.hero-actions a{padding:13px 19px;min-width:175px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:12px;font-weight:800;text-decoration:none}
+.cta-primary{background:#244b35;color:#fff}.cta-secondary{border:1px solid #b8cdb9;color:#254b36;background:#fffefa}
+.hero-honest{font-size:11px;color:#7a8c7c;margin:14px 0 0}
+.intake{padding:clamp(22px,2.7vw,32px)}.accent-arrow{font-size:38px;margin-top:4px}.intake h2{font-size:clamp(29px,2.9vw,43px);margin:12px 0}.intake p{margin-bottom:14px}.intake .fine{margin-top:9px}
+.test-deck-link{font-size:11px;color:#c8e9c0;display:inline-flex;margin-top:8px;text-underline-offset:3px;font-weight:700}
+.picker{padding-bottom:36px}.picker-top{margin-bottom:18px}.picker-top h2{font-size:clamp(33px,3.5vw,53px);margin:8px 0}
+.picker-card{min-height:260px;padding:0 0 18px;overflow:hidden;gap:7px}
+.picker-card.active{padding:0 0 17px}.picker-card.active::after{z-index:2}
+.picker-card .picker-meta{padding:15px 18px 0}.picker-card strong,.picker-card .picker-description,.picker-card .picker-result{margin-left:18px;margin-right:18px}
+.case-art{display:block;width:100%;height:132px;margin:4px 0 8px;overflow:hidden;background:#e8eee9}
+.case-art img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .25s ease}
+.picker-card:hover .case-art img{transform:scale(1.03)}
+.picker-symbol{display:none}.picker-card strong{font-size:24px}.picker-card .picker-result{width:calc(100% - 36px);margin-top:auto}
+.workspace{padding-top:27px;padding-bottom:45px;scroll-margin-top:14px}.workhead h2{font-size:clamp(38px,4.4vw,61px);margin:7px 0}.workhead{margin-bottom:13px}
+.more-fields{width:100%;background:#e9eee6;color:#2a5839;border:1px solid #cbdacb;padding:15px;font-size:12px;font-weight:800;text-align:center;cursor:pointer}
+.more-fields:hover{background:#dce9db}
+.read-deeper{margin-top:20px;margin-bottom:28px}.read-deeper>summary,.method-collapse>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:15px;align-items:center;padding:17px 21px;border:1px solid #d0ddcf;background:#fdfdf9;font-weight:800;font-size:13px;color:#285137}
+.read-deeper>summary::-webkit-details-marker,.method-collapse>summary::-webkit-details-marker{display:none}
+.read-deeper>summary span,.method-collapse>summary span{font-size:11px;color:#678b6b}
+.read-deeper[open]>.outcome{padding-top:38px}.read-deeper .outcome h2{font-size:clamp(30px,3vw,46px)}.read-deeper .outcome{padding-left:0;padding-right:0;padding-bottom:20px}
+.method-collapse>.method{padding-top:55px;padding-bottom:55px}.method-collapse>summary{max-width:1440px;margin:0 auto;scroll-margin-top:20px}
+.outro{padding-top:48px;padding-bottom:58px}.outro h2{font-size:clamp(34px,4vw,55px);line-height:1.08;margin-bottom:15px}
+@media(max-width:750px){.navlinks{gap:9px}.navlinks a{font-size:10px}.picker-card{min-height:230px}.case-art{height:115px}.hero-actions a{flex:1}.read-deeper>summary,.method-collapse>summary{display:block}.read-deeper>summary span,.method-collapse>summary span{display:block;margin-top:6px}}
+@media(max-width:570px){.picker-list{grid-template-columns:repeat(2,minmax(0,1fr))}.picker-card{min-height:225px}.picker-card strong{font-size:19px}.case-art{height:105px}.picker-card .picker-meta{font-size:8px}.picker-description{font-size:10px}.picker-result{font-size:9px}.hero{padding-top:26px}.navlinks a:last-child{display:none}}
+@media(max-width:380px){.picker-list{grid-template-columns:1fr}.case-art{height:125px}}

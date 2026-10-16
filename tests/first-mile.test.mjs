@@ -46,3 +46,27 @@ test('31 heading context must not carry between pages or documents',()=>{
  const r=analyze([{name:'one',pages:[{number:1,text:'2028 TARGET'}, {number:2,text:'ARR: €2m'}]}]);
  assert.equal(r.fields.find(x=>x.key==='arr').status,'found');
 });
+
+test('32 recruiter-first sample clicks go straight to real findings, not marketing copy',()=>{
+ const script=readFileSync(new URL('../first-mile/app.mjs',import.meta.url),'utf8');
+ assert.match(script,/loadExample\(button\.dataset\.case\);el\('workspace'\)\.scrollIntoView/);
+});
+test('33 upload and export remain entirely client-side; nothing gets silently persisted',()=>{
+ const script=readFileSync(new URL('../first-mile/app.mjs',import.meta.url),'utf8');
+ assert.match(script,/URL\.createObjectURL\(blob\)/);
+ assert.match(script,/arrayBuffer\(\)/);
+ assert.doesNotMatch(script,/localStorage|sessionStorage|fetch\(|XMLHttpRequest|sendBeacon/);
+});
+test('34 visible page makes explicit what happens after refresh and offers a safe PDF',()=>{
+ const html=readFileSync(new URL('../first-mile/index.html',import.meta.url),'utf8');
+ assert.match(html,/refreshing this page clears the current review/i);
+ assert.match(html,/samples\/asterion-fictional-test\.pdf/);
+ assert.match(html,/STEP 2 · SEE THE RESULT/);
+ assert.match(html,/fictional startup/i);
+});
+test('35 priority findings use a progressive disclosure control without suppressing evidence',()=>{
+ const script=readFileSync(new URL('../first-mile/app.mjs',import.meta.url),'utf8');
+ assert.match(script,/const priority=/);
+ assert.match(script,/See all/);
+ assert.match(script,/showAllFields/);
+});
