@@ -40,7 +40,7 @@ const cacheRead=()=>{try{const x=JSON.parse(localStorage.getItem(CACHE)||'{}');r
 let seen=cacheRead(),checking=false;
 const personalRead=()=>{try{const x=JSON.parse(localStorage.getItem(STORE)||'{}');return x&&typeof x==='object'?x:{}}catch(_){return {}}};
 let personal=personalRead();
-let ctx=null,state={sort:'euro100',category:'all',min:10,showOld:false,limit:20,search:''};
+let ctx=null,state={sort:'euro100',category:'all',min:10,showOld:false,limit:20,pendingLimit:12,search:''};
 function latest(p){
  if(!p?.barcode)return null;
  const list=[verifiedByBarcode.get(String(p.barcode)),seen[String(p.barcode)]?.price].filter(goodSource);
@@ -95,7 +95,7 @@ function row(x,index,local=false){
 function resultHtml(){
  const rows=sourceList(),valid=rows.filter(x=>x.worth&&(state.showOld||daysAgo(x.fact?.date)<=365)),local=rows.filter(x=>own(x.p.id)&&value(x.p,own(x.p.id).price)),pending=rows.filter(x=>!valid.some(y=>y.p.id===x.p.id)).sort((a,b)=>b.p.nutrition.protein-a.p.nutrition.protein);
  const rowsValid=sorted(valid).slice(0,state.limit),self=sorted(local).slice(0,10);
- const rest=pending.slice(0,12);
+ const rest=pending.slice(0,state.pendingLimit);
  const coverage=rows.filter(x=>x.worth).length;
  return '<div class="gt-value-count"><strong>'+valid.length+'</strong> belegte Vergleiche ('+coverage+' mit irgendeinem datierten Preis) · '+pending.length+' weitere Kandidaten ohne aktuellen Preis</div>'+
  '<div class="gt-value-list">'+(rowsValid.length?rowsValid.map((x,i)=>row(x,i)).join(''):'<div class="gt-value-empty">Noch keine datierten, höchstens 12 Monate alten Preisbelege für diesen Filter. Proteinwerte bleiben trotzdem vergleichbar. Schalte bei Bedarf historische Preise dazu oder erfasse deinen eigenen Einkaufsbeleg.</div>')+'</div>'+
@@ -103,6 +103,7 @@ function resultHtml(){
  (self.length?'<section class="gt-value-personal"><h3>✳ Mein privater Preisvergleich</h3><p>Diese Preise hast du selbst erfasst. Sie sind keine unabhängige Preisstatistik.</p>'+self.map((x,i)=>row(x,i,true)).join('')+'</section>':'')+
  '<section class="gt-value-pending"><div class="gt-value-pending-header"><div><h3>Proteinreich – Preis noch offen.</h3><p>Diese Produkte haben einen belastbaren Proteinwert und eine Packungsgröße, aber keinen aktuell belegten Kaufpreis.</p></div><button data-action="protein-check-prices" class="button button-lime button-small" '+(checking?'disabled':'')+'>'+(checking?'Preisquellen werden geprüft …':'🔎 Weitere Preisbelege suchen')+'</button></div>'+
  '<div class="gt-value-missing">'+rest.map(x=>'<div><span>'+esc(x.p.brand)+' · '+esc(x.p.name)+'</span><strong>'+fmt(x.p.nutrition.protein)+' g/100 g/ml</strong><button data-action="protein-price-edit" data-id="'+esc(x.p.id)+'">Eigenen Preis eintragen ↗</button></div>').join('')+'</div>'+
+ (state.pendingLimit<pending.length?'<button class="gt-value-more-candidates" data-action="protein-more-candidates">Weitere '+Math.min(20,pending.length-state.pendingLimit)+' Proteinquellen anzeigen ↓</button>':'')+
  (rows.length?'<small>'+rows.length+' Proteinprodukte in diesem Filter. Ranking-Plätze ohne belegten Preis werden bewusst nicht erfunden.</small>':'<p>Keine passende Proteinquelle gefunden. Versuche einen niedrigeren Proteingrenzwert.</p>')+'</section>';
 }
 function render(context){
@@ -128,8 +129,9 @@ function refresh(){
  const target=document.querySelector('#gtValueResults');if(target)target.innerHTML=resultHtml();
  const snap=document.querySelector('#gtValueSnapshot');if(snap){const valid=sourceList().filter(x=>x.worth&&daysAgo(x.fact.date)<=365).sort((a,b)=>a.worth.euroPer100-b.worth.euroPer100);snap.textContent=valid.length?'Günstigster beobachteter Proteinpreis im aktuellen Filter: '+valid[0].p.brand+' '+valid[0].p.name+' · '+fmt(valid[0].worth.euroPer100,2)+' € je 100 g Protein.':'Noch kein ausreichend aktueller Preisbeleg im Filter.'}
 }
-function select(name,value){if(name==='category')state.category=String(value||'all');if(name==='search')state.search=String(value||'').slice(0,100);if(name==='sort'&&['euro100','protein','calories','taste'].includes(value))state.sort=value;if(name==='min'&&[0,5,10,15,20,30].includes(Number(value)))state.min=Number(value);if(name==='old')state.showOld=!!value;state.limit=20;refresh()}
+function select(name,value){if(name==='category')state.category=String(value||'all');if(name==='search')state.search=String(value||'').slice(0,100);if(name==='sort'&&['euro100','protein','calories','taste'].includes(value))state.sort=value;if(name==='min'&&[0,5,10,15,20,30].includes(Number(value)))state.min=Number(value);if(name==='old')state.showOld=!!value;state.limit=20;state.pendingLimit=12;refresh()}
 function more(){state.limit+=20;refresh()}
+function moreCandidates(){state.pendingLimit+=20;refresh()}
 function editor(p){
  const old=own(p.id),date=old?.date||TODAY,price=old?.price;
  return '<button class="close" data-action="close-modal" aria-label="Close">×</button><span class="eyebrow">MY PROTEIN PRICE NOTE</span><h2>'+esc(p.brand)+' · '+esc(p.name)+'</h2>'+
@@ -171,5 +173,5 @@ async function fetchMore(){
  try{localStorage.setItem(CACHE,JSON.stringify(seen))}catch(_){}
  checking=false;refresh();return got;
 }
-window.GT_PROTEIN={quantity,amountProtein,value,latest,daysAgo,render,refresh,select,more,editor,save,fetchMore,state};
+window.GT_PROTEIN={quantity,amountProtein,value,latest,daysAgo,render,refresh,select,more,moreCandidates,editor,save,fetchMore,state};
 })();
