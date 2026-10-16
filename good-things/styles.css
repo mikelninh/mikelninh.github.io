@@ -872,3 +872,78 @@ body:has(.gt-awards-hero) .hero{display:none}
 @media(max-width:750px){.gt-awards-grid{grid-template-columns:1fr}.gt-awards-toolbar{align-items:stretch;flex-direction:column}.gt-peoples-steps{grid-template-columns:1fr}.gt-awards-hero{min-height:280px}.gt-awards-hero:before{font-size:400px;right:-100px;top:-125px}}
 @media(max-width:400px){.gt-awards-hero h1{font-size:56px}.gt-awards-toolbar{padding:17px}.gt-award-card{padding:20px}.gt-awards-personas button{padding:8px 11px}}
 @media(prefers-reduced-motion:reduce){.gt-award-pick{transition:none!important}}
+
+
+/* GOOD THINGS 2.6 · Vemondo × Food for Future, calmer first-party brand tasting studio */
+body:has(.gt-bp-hero) .workspace{display:block;max-width:1420px;padding-top:23px}
+body:has(.gt-bp-hero) .left-rail,body:has(.gt-bp-hero) .hero{display:none}
+.gt-bp-personas{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 15px}
+.gt-bp-personas span{color:#74836d;font-size:11px;font-weight:700;padding-right:4px}
+.gt-bp-personas button{border:1px solid #d9e3d0;border-radius:99px;padding:8px 15px;font-size:12px;background:#f7f9ef;color:#60775b;font-weight:800;cursor:pointer}
+.gt-bp-personas button.active{background:#dcec95;border-color:#a8cc76;color:#2d4a31}
+.gt-bp-hero{background:linear-gradient(116deg,#233f30 0%,#254a32 58%,#496e40 100%);border:1px solid #345a3d;border-radius:22px;padding:clamp(23px,5vw,52px);position:relative;isolation:isolate;overflow:hidden;color:#f3f4e5;min-height:270px}
+.gt-bp-hero:before{content:"✳";position:absolute;z-index:-1;right:-30px;top:-185px;font:500 430px Georgia,serif;color:#e9faa41a;transform:rotate(-20deg)}
+.gt-bp-eyebrow{font-size:10px;font-weight:850;letter-spacing:.16em;color:#c5df9a;text-transform:uppercase}
+.gt-bp-hero h2{font:600 clamp(43px,6.1vw,82px)/.96 'Fraunces',Georgia,serif;letter-spacing:-.077em;margin:22px 0 20px}
+.gt-bp-hero h2 em{color:#e2f28e;font-weight:500}
+.gt-bp-hero>p{color:#d8e8d2;font-size:14px;line-height:1.67;max-width:610px}
+.gt-bp-brands{margin-top:23px;display:flex;gap:8px;flex-wrap:wrap}
+.gt-bp-brands button{padding:13px 18px;border:1px solid #c8e69a45;border-radius:12px;background:#f5f9ea13;color:#dcecca;font-size:13px;font-weight:800;cursor:pointer}
+.gt-bp-brands button.active{background:#ddef9b;border-color:#ddef9b;color:#254631}
+.gt-bp-brands button:hover{background:#e5f4c833;color:#fff}
+.gt-bp-brands button.active:hover{background:#ddef9b;color:#254631}
+.gt-bp-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:19px 0}
+.gt-bp-stats>div{padding:17px;background:#fffefa;border:1px solid #dfe6d6;border-radius:15px}
+.gt-bp-stats strong{display:block;font:650 36px/.95 'Fraunces',Georgia,serif;letter-spacing:-.055em;color:#2a4b33}
+.gt-bp-stats small{display:block;margin-top:6px;font-weight:700;font-size:10px;color:#82917b}
+.gt-bp-source{font-size:11px;line-height:1.65;color:#758572;background:#f2f6e9;border:1px solid #dfebd8;border-radius:13px;padding:11px 15px;margin:10px 0 19px}
+.gt-bp-source a{text-decoration:underline;color:#426d42;font-weight:800}
+.gt-bp-invite{display:flex;align-items:center;justify-content:space-between;gap:23px;flex-wrap:wrap;background:#e3ecd5;border:1px solid #cedfba;padding:22px 25px;border-radius:18px;margin:16px 0 30px}
+.gt-bp-invite .gt-bp-eyebrow{color:#739059}
+.gt-bp-invite h3{font:650 29px 'Fraunces',Georgia,serif;letter-spacing:-.035em;margin:7px 0 7px;color:#315136}
+.gt-bp-invite p{font-size:12px;line-height:1.65;color:#698264;max-width:480px;margin:0}
+.gt-bp-invite>div:last-child{display:flex;gap:8px;flex-wrap:wrap}
+.gt-bp-filters{display:flex;gap:12px;align-items:end;margin-bottom:13px}
+.gt-bp-filters label{flex:1;min-width:0;font-size:11px;font-weight:800;color:#6b7e65}
+.gt-bp-filters label:first-child{flex:2}
+.gt-bp-filters .control{margin-top:8px;width:100%;background:#fffefa}
+.gt-bp-status{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:15px}
+.gt-bp-status button{border:1px solid #dee5d6;border-radius:99px;padding:9px 14px;background:#fffefa;color:#68816c;font-size:11px;font-weight:750;cursor:pointer}
+.gt-bp-status button.active{background:#304d38;border-color:#304d38;color:#fff}
+.gt-bp-results{font-size:12px;color:#798a76;margin:10px 0 16px}
+.gt-bp-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.gt-bp-card{display:flex;flex-direction:column;min-width:0;background:#fffefa;border:1px solid #e0e6db;border-radius:16px;overflow:hidden;box-shadow:0 5px 20px #355d3410}
+.gt-bp-photo{position:relative;display:grid;place-items:center;height:190px;background:linear-gradient(157deg,#f4f7ed,#fffefa);border-bottom:1px solid #ebefdf;padding:15px 20px 32px}
+.gt-bp-photo img{max-height:100%;max-width:100%;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 7px 9px #3852381a)}
+.gt-bp-photo>span{position:absolute;bottom:0;left:0;right:0;font-size:9px;text-align:center;font-weight:800;color:#7c8d77;background:#f3f6e9d6;padding:7px 4px;border-top:1px solid #e8eedf}
+.gt-bp-photo-unavailable{height:100%;width:100%;display:grid;place-items:center;align-content:center;gap:12px;font-size:54px;color:#a3bd92}
+.gt-bp-photo-unavailable[hidden]{display:none}
+.gt-bp-photo-unavailable small{font:800 9px system-ui;color:#9cad93;letter-spacing:.07em}
+.gt-bp-card-main{padding:15px 16px 10px;flex:1}
+.gt-bp-card-main>small{font-size:9px;font-weight:800;color:#8ca085;letter-spacing:.04em}
+.gt-bp-card h3{font:650 20px/1.15 'Fraunces',Georgia,serif;color:#2d4c37;letter-spacing:-.03em;margin:10px 0 7px;overflow-wrap:anywhere}
+.gt-bp-card-main p{font-size:11px;color:#849182;margin:0 0 13px}
+.gt-bp-rating{font-size:10px;color:#708365;font-weight:800}
+.gt-bp-card-cta{padding:11px 14px 14px;display:grid;gap:6px}
+.gt-bp-card-cta button{border-radius:8px;font-size:11px;font-weight:850;padding:11px 12px;cursor:pointer}
+.gt-bp-primary{background:#deefbe;border:1px solid #c1daa2;color:#355439}
+.gt-bp-primary:hover{background:#c9eba2}
+.gt-bp-secondary{background:#fffefa;border:1px solid #e4e9dd;color:#577456}
+.gt-bp-secondary:hover{background:#f1f6e8}
+.gt-bp-showmore{display:block;width:100%;margin:20px 0;background:#f4f7ed;border:1px solid #dbe8d5;border-radius:12px;color:#587654;font-size:13px;font-weight:800;padding:14px;cursor:pointer}
+.gt-bp-empty{text-align:center;color:#81947b;padding:30px}
+.gt-bp-report{margin:43px 0;background:#f0f3e4;border:1px solid #d7e3cc;border-radius:22px;padding:clamp(22px,5vw,45px)}
+.gt-bp-report .gt-bp-eyebrow{color:#68855f}
+.gt-bp-report h2{font:600 clamp(35px,5vw,57px) 'Fraunces',Georgia,serif;letter-spacing:-.06em;color:#2d4b35;margin:14px 0}
+.gt-bp-report p{font-size:14px;max-width:650px;color:#6d7c65;line-height:1.7}
+.gt-bp-report-actions{display:flex;gap:10px;flex-wrap:wrap;margin:19px 0}
+.gt-bp-report small{font-size:11px;color:#899783;line-height:1.6;display:block}
+.gt-bp-scores{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:22px 0}
+.gt-bp-scores label,.gt-bp-field{font-size:12px;font-weight:800;color:#64775d}
+.gt-bp-scores .control,.gt-bp-field .control{width:100%;display:block;margin:9px 0 15px;font-size:13px}
+.gt-bp-consent{display:flex;align-items:start;gap:9px;font-size:12px;font-weight:600;color:#677863;line-height:1.6;background:#ecf4e0;border:1px solid #dce7cf;padding:13px;border-radius:11px;margin:14px 0}
+.gt-bp-consent input{accent-color:#638a50;margin-top:4px;flex:none}
+@media(max-width:1200px){.gt-bp-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){.gt-bp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.gt-bp-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.gt-bp-stats{grid-template-columns:repeat(2,1fr);gap:7px}.gt-bp-filters{flex-direction:column}.gt-bp-filters label{width:100%}.gt-bp-photo{height:156px;padding:11px 12px 31px}.gt-bp-card-main{padding:11px}.gt-bp-card h3{font-size:17px}.gt-bp-card-cta{padding:8px}.gt-bp-card-cta button{font-size:10px;padding:9px 8px}.gt-bp-hero{padding:22px}.gt-bp-hero h2{font-size:42px}.gt-bp-brands{display:grid}.gt-bp-invite{padding:20px}.gt-bp-invite>div:last-child .button{flex:1}.gt-bp-status button{font-size:10px;padding:7px 10px}.gt-bp-scores{grid-template-columns:1fr}.mobile-nav:has([data-nav="brands"]){gap:3px}.mobile-nav:has([data-nav="brands"]) button{font-size:9px}}
+@media(max-width:385px){.gt-bp-grid{grid-template-columns:1fr}.gt-bp-photo{height:205px}}
