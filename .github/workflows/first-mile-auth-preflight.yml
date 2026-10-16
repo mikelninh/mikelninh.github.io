@@ -1,0 +1,26 @@
+name: FIRST MILE authenticated model preflight
+on:
+  push:
+    paths:
+      - ".github/first-mile-runs/20261016-preflight.request"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check-key-and-models:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check secret is configured without printing it
+        shell: bash
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "FIRST MILE BLOCKED: repository secret OPENAI_API_KEY is missing or empty."
+            exit 2
+          fi
+          echo "FIRST MILE: API credential is configured (key value not printed)."
+      - name: Check available OpenAI API models without billable generation
+        run: python first-mile/lab/check_access.py
