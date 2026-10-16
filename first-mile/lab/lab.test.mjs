@@ -33,3 +33,5 @@ test('browser comparison does not expose provider credentials',()=>{
  assert.match(html,/No invented model scores/);
  assert.match(html,/Import measured run/);
 });
+
+test('public comparison displays both provider-specific verified workflows and explicit billable flag',()=>{const html=readFileSync(new URL('index.html',import.meta.url),'utf8');const js=readFileSync(new URL('lab.mjs',import.meta.url),'utf8');assert.match(html,/--allow-billable/);assert.match(html,/Verified · GPT/);assert.match(html,/Verified · Claude/);assert.match(js,/agent-claude/)});

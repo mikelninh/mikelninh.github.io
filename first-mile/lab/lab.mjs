@@ -1,9 +1,8 @@
 import {analyze} from '../core.mjs';
-import {getDemoCase} from '../cases.mjs';
 const $=id=>document.getElementById(id);
 const fixture=await(await fetch('./fixtures.json')).json(),gold=await(await fetch('./gold.json')).json();
 const names=[['rules','Deterministic rules'],['gpt','GPT'],['claude','Claude'],['agent-gpt','Verified workflow · GPT'],['agent-claude','Verified workflow · Claude']];
-const slots=[['rules','Rules'],['gpt','GPT'],['claude','Claude'],['agent-gpt','Verified workflow']];
+const slots=[['rules','Rules'],['gpt','GPT'],['claude','Claude'],['agent-gpt','Verified · GPT'],['agent-claude','Verified · Claude']];
 let output=null,selection=fixture.cases[0].id;
 const calc=()=>fixture.cases.map(c=>({id:c.id,predicted:Object.fromEntries(analyze(c.docs).fields.map(f=>[f.key,f.status]))}));
 const base=calc();
@@ -16,7 +15,7 @@ function engine(key){return key==='rules'?localBaseline():(output?.engines?.find
 function renderCards(){
  const holder=$('engineCards');holder.replaceChildren();
  for(const [key,name] of names){
-  const e=engine(key);if(key==='agent-claude'&&output===null)continue;
+  const e=engine(key);
   const card=document.createElement('article');card.className='engine'+(!e||e.status!=='measured'?' not-run':'');
   const tag=document.createElement('span');tag.className='engine-state';tag.textContent=!e||e.status!=='measured'?'NOT RUN · API REQUIRED':(e.mode==='rules'?'LOCAL RULE BASELINE':'MEASURED MODEL RUN');
   const title=document.createElement('h3');title.textContent=name;const score=document.createElement('div');score.className='engine-score';
