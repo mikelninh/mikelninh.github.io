@@ -1614,8 +1614,8 @@ async function openShareLink(){
  }
  const view=url.searchParams.get('view');
  if(view==='brands'){window.GT_BRANDS.setBrand(url.searchParams.get('brand')==='penny'?'penny':'vemondo');st.view='brands';return}
- if(view==='duo'){st.view='duo';if(url.searchParams.get('room')){st.duo.mode='remote';st.duo.requestedRoom=url.searchParams.get('room')}else {const topic=url.searchParams.get('episode');if(topic&&window.GT_EPISODES.getDef(topic)&&window.GT_EPISODES.selected('duo')?.id!==topic)window.GT_EPISODES.start('duo',topic)}return}
- if(view==='solo'){const topic=url.searchParams.get('episode');if(topic&&window.GT_EPISODES.getDef(topic)&&window.GT_EPISODES.selected('solo')?.id!==topic)window.GT_EPISODES.start('solo',topic)}
+ if(view==='duo'){st.view='duo';if(url.searchParams.get('room')){st.duo.mode='remote';st.duo.requestedRoom=url.searchParams.get('room')}else {const topic=url.searchParams.get('episode');if(topic&&window.GT_EPISODES.getDef(topic)&&window.GT_EPISODES.selected('duo')?.id!==topic){window.GT_EPISODES.start('duo',topic);st.duo.local.productId=null;st.duo.local.votes={};st.duo.local.discussion='';duoPersist()}}return}
+ if(view==='solo'){const topic=url.searchParams.get('episode');if(topic&&window.GT_EPISODES.getDef(topic)&&window.GT_EPISODES.selected('solo')?.id!==topic){window.GT_EPISODES.start('solo',topic);st.solo.productId=null;st.solo.lastChoice=null;soloPersist()}}
  st.view=['board','discover','ours','my','community','awards','brands','solo'].includes(view)?view:'board';
 }
 document.addEventListener('click',async(event)=>{
