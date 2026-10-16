@@ -76,3 +76,27 @@ test('two arms measure the same outcome, no random business success is inserted'
  assert.deepEqual(outputs.map(x=>x.variant),['guided','baseline']);
  assert.ok(outputs.every(x=>x.dataDisclaimer.includes('not verified')));
 });
+
+
+test('optional feedback is validated and exported without storing private data centrally',()=>{
+  const s=new StudySession({now:()=>500});s.start();s.inspect('123456-2026');
+  const r=s.finish({useful:true,noticeId:'123456-2026',feedback:{reason:'unclear_fit',confidence:'unsure',note:'Need better fit explanation.'}});
+  assert.equal(r.feedback.reason,'unclear_fit');
+  assert.equal(r.feedback.confidence,'unsure');
+  assert.equal(r.feedback.note,'Need better fit explanation.');
+  assert.equal(r.feedbackConsent,'Participant-controlled local export only');
+});
+test('unexpected free-form values cannot invent a feedback category',()=>{
+  const s=new StudySession();s.start();
+  const r=s.finish({useful:false,feedback:{reason:'fabricated_benefit',confidence:'certain!',note:'<script>hello</script>'}});
+  assert.equal(r.feedback.reason,null);assert.equal(r.feedback.confidence,null);
+  assert.equal(r.feedback.note,'scripthelloscript');
+});
+test('feedback is explicitly optional and an honest unsuccessful session can be exported',()=>{
+  const s=new StudySession();s.start();const r=s.finish({useful:false});
+  assert.equal(r.feedback.reason,null);assert.equal(r.success,false);
+});
+test('the research UI exposes explicit learning and stopping criteria',()=>{
+  const h=fs.readFileSync(path.join(__dirname,'index.html'),'utf8');
+  assert.ok(h.includes('STOP / REWORK SIGNAL'));assert.ok(h.includes('studyReason'));assert.ok(h.includes('studyConfidence'));
+});

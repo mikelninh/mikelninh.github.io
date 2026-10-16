@@ -16,7 +16,7 @@
     constructor({variant='guided',now=()=>Date.now()}={}){
       if (!['guided','baseline'].includes(variant))throw new Error('invalid_variant')
       this.variant=variant;this.now=now;this.startMs=null;this.endMs=null
-      this.inspected=[];this.firstInspectedAt=null;this.chosenId=null;this.success=null
+      this.inspected=[];this.firstInspectedAt=null;this.chosenId=null;this.success=null;this.feedback={reason:null,confidence:null,note:null}
       this.events=[]
     }
     start(){if(this.startMs!==null)throw new Error('already_started');this.startMs=this.now();this.events.push({event:'task_started',atMs:0});return this}
@@ -27,12 +27,19 @@
       if(!this.inspected.includes(id)){this.inspected.push(id);if(this.firstInspectedAt===null)this.firstInspectedAt=this.seconds();this.events.push({event:'notice_inspected',noticeId:id,atSec:this.seconds()})}
       return true
     }
-    finish({useful,noticeId=null}={}){
+    finish({useful,noticeId=null,feedback={}}={}){
       if(this.startMs===null)throw new Error('not_started')
       if(this.endMs!==null)throw new Error('already_finished')
       if(typeof useful!=='boolean')throw new Error('explicit_outcome_required')
       if(useful&&(!noticeId||!this.inspected.includes(noticeId)))throw new Error('must_inspect_notice_before_success')
-      this.endMs=this.now();this.success=useful;this.chosenId=useful?noticeId:null
+      this.endMs=this.now();this.success=useful;this.chosenId=useful?noticeId:null;
+      const reasons=['clear_fit','unclear_fit','weak_source','hard_to_scan','no_match'];
+      const confidences=['unsure','somewhat','confident'];
+      this.feedback={
+        reason:reasons.includes(feedback?.reason)?feedback.reason:null,
+        confidence:confidences.includes(feedback?.confidence)?feedback.confidence:null,
+        note:typeof feedback?.note==='string'?feedback.note.replace(/[<>]/g,'').slice(0,180).trim()||null:null
+      }
       this.events.push({event:useful?'relevant_notice_confirmed':'no_relevant_notice',atSec:this.seconds(),noticeId:this.chosenId})
       return this.report()
     }
@@ -45,6 +52,7 @@
         inspectedCount:this.inspected.length,inspectedNoticeIds:[...this.inspected],
         firstInspectedAtSeconds:this.firstInspectedAt,
         firstRelevantNoticeId:this.chosenId,
+        feedback:{...this.feedback},feedbackConsent:'Participant-controlled local export only',
         dataDisclaimer:'Volunteer report only; notice relevance self-reported; eligibility and time savings not verified; no statistical AB significance.',
         events:[...this.events]
       })
@@ -83,7 +91,9 @@
     function done(useful){
       if(!current||current.endMs!==null)return
       try{
-        lastReport=current.finish({useful,noticeId:useful?selected:null})
+        lastReport=current.finish({useful,noticeId:useful?selected:null,feedback:{
+          reason:$('studyReason')?.value,confidence:$('studyConfidence')?.value,note:$('studyNote')?.value
+        }})
       }catch(err){$('studyStatus').textContent=err.message;return}
       stopTimer();$('studyLive').hidden=true;$('studyResult').hidden=false
       const status=lastReport.success?
@@ -96,7 +106,19 @@
       const extra=doc.createElement('p');extra.textContent='This is your opinion, not eligibility verification. The report is kept only in this tab until you download it.'
       const btn=doc.createElement('button');btn.type='button';btn.textContent='Download honest pilot result (.json) ↗'
       btn.addEventListener('click',download)
-      $('studyResult').append(heading,p,extra,btn)
+      const insight=doc.createElement('div');insight.className='study-insight';
+      const insightTitle=doc.createElement('strong');insightTitle.textContent='One interview, one learning signal';
+      const reasonMap={
+        clear_fit:'The person recognised fit quickly. In a next test, verify they can explain why this notice matters.',
+        unclear_fit:'Fit remains unclear. Next test: show explicit inclusion and exclusion reasons before deeper inspection.',
+        weak_source:'Evidence was not sufficient. Next test: make original notice detail and deadline context easier to verify.',
+        hard_to_scan:'Scanning caused friction. Next test: reduce noise around the three highest priority notices.',
+        no_match:'No useful match. Next test: tune the business profile and inspect missed/false-positive opportunities.'
+      };
+      const hypothesis=doc.createElement('p');hypothesis.textContent=reasonMap[lastReport.feedback.reason]||'This one session is not a product verdict. Ask what was confusing, then repeat with another consented participant.';
+      const reminder=doc.createElement('p');reminder.textContent='Next decision: repeat or revise the hypothesis based on several observed sessions — never infer A/B significance from one voluntary report.';
+      insight.append(insightTitle,hypothesis,reminder);
+      $('studyResult').append(heading,p,extra,insight,btn)
     }
     function download(){
       if(!lastReport)return
@@ -111,6 +133,9 @@
       $('studyVariant').disabled=false;$('studyStart').hidden=false
       $('studyLive').hidden=true;$('studyResult').hidden=true;$('studyReset').hidden=true
       $('studyStatus').textContent='Explore a source-backed notice.'
+      if($('studyReason'))$('studyReason').value='';
+      if($('studyConfidence'))$('studyConfidence').value='';
+      if($('studyNote'))$('studyNote').value='';
     }
     function track(ev){
       if(!current||current.endMs!==null)return

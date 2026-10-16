@@ -41,3 +41,10 @@ Pilot hypotheses: a relevant opportunity may be found in ≤ 3 minutes; guided o
 ## Honest limitations
 
 No human usability outcomes collected here yet. No verified conversion improvement, bid acceptance, saved business time or causal experiment. The participant's 'worth reviewing' selection may be wrong; evidence/eligibility still require checking the official TED record and full tender documents.
+
+## v1.4: Reason → product bet (not a claim of outcome)
+The participant can optionally report **why** an opportunity is useful or confusing, how confident they are and one short improvement note. Feedback is validated, capped at 180 characters, kept only in browser state and included only when the participant downloads the JSON. No background collection.
+
+After a session, the UI shows a **qualitative next-test recommendation** tied to the feedback category. That is a proposed research action, **not evidence of A/B lift, product-market fit, or achieved customer value**. Explicit stop/rework criteria appear next to the start control.
+
+Run `node --test bidpilot/test_study.cjs` to test the session and feedback contract.

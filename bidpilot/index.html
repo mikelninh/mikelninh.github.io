@@ -67,12 +67,36 @@
       <div class="study-clock"><span id="studyClock">0:00</span><small>Elapsed · target ≤ 3:00</small></div>
       <div class="study-steps" id="studySteps"></div>
       <div class="study-status" id="studyStatus">Explore a source-backed notice.</div>
+      <div class="study-feedback">
+        <div class="study-feedback-intro"><b>Capture what happened</b><span>Optional feedback; kept in your browser</span></div>
+        <label for="studyReason">What made the task easier or harder?</label>
+        <select id="studyReason">
+          <option value="">Choose a reason (optional)</option>
+          <option value="clear_fit">Match to my services was clear</option>
+          <option value="unclear_fit">Not sure whether it fits my business</option>
+          <option value="weak_source">Need more evidence or source details</option>
+          <option value="hard_to_scan">Hard to scan or compare notices</option>
+          <option value="no_match">No useful match in this shortlist</option>
+        </select>
+        <label for="studyConfidence">How confident are you about your decision?</label>
+        <select id="studyConfidence">
+          <option value="">Choose confidence (optional)</option>
+          <option value="unsure">Unsure</option><option value="somewhat">Somewhat</option><option value="confident">Confident</option>
+        </select>
+        <label for="studyNote">One thing you would improve <span>(optional, max 180 characters)</span></label>
+        <textarea id="studyNote" maxlength="180" rows="2" placeholder="Where did you hesitate? What was unclear? Don't add personal or confidential information."></textarea>
+      </div>
       <div class="study-actions">
         <button id="studySuccess" type="button" disabled>Yes, this is worth reviewing</button>
         <button id="studyNotFit" type="button">No useful opportunity found</button>
       </div>
     </div>
     <div id="studyResult" class="study-result" hidden aria-live="polite"></div>
+    <div class="study-hypothesis">
+      <div><span>HYPOTHESIS</span><p>Clear guidance helps a small B2B team identify one personally relevant notice in ≤ 3 minutes.</p></div>
+      <div><span>SUCCESS SIGNAL</span><p>Observed task completion + reviewed source + the participant's own explanation of relevance.</p></div>
+      <div><span>STOP / REWORK SIGNAL</span><p>Participants cannot explain fit, repeatedly hit dead ends, or must make unsupported assumptions.</p></div>
+    </div>
     <div class="study-disclaimer">We never claim eligibility or a winning chance. The study stays in your browser; findings are shared only if you choose to export them. The two variants are a small usability pilot, not a statistically powered A/B test.</div>
   </div>
 </section>
