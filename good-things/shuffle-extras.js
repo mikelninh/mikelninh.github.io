@@ -13,8 +13,12 @@ function saveCachedPhoto(p,u){
  try{const d=getCachedPhotos();d[p.id]={barcode:p.barcode,url:u};localStorage.setItem(photoStorageKey,JSON.stringify(d))}catch(_){}
 }
 const savedPhotos=getCachedPhotos();
+const failedKey='goodthings_bad_photos_v29';
+let failed={};try{failed=JSON.parse(localStorage.getItem(failedKey)||'{}')||{}}catch(_){}
+function rememberFailure(p){try{failed[p.id]={url:p.image_url,date:Date.now()};localStorage.setItem(failedKey,JSON.stringify(failed))}catch(_){}}
 for(const p of window.GT_CATALOG||[]){
  const saved=savedPhotos[p.id];
+ const old=failed[p.id];if(old?.url===p.image_url&&Date.now()-old.date<7*86400000)p.photo_blocked=true;
  const communityImage=Boolean(saved?.reviewed===true&&!p.barcode&&/^\d{8,14}$/.test(saved?.barcode||''));
  if((communityImage||(p.barcode&&saved?.barcode===p.barcode))&&url(saved?.url)&&new URL(saved.url).hostname==='images.openfoodfacts.org'){
   if(communityImage)p.barcode=saved.barcode;
@@ -267,9 +271,9 @@ async function spin(task){
 }
 const fallback=img=>{
  if(!img)return;
- img.hidden=true;
+ img.hidden=true;img.style.display='none';
  const sibling=img.nextElementSibling;
- if(sibling&&sibling.hidden)sibling.hidden=false;
+ if(sibling){sibling.hidden=false;sibling.style.display='';}
 };
 function goodImage(u,min=140){
  return new Promise(resolve=>{
@@ -303,7 +307,7 @@ async function repairImage(img,p){
  p.image_url=replacement;p.photo_blocked=false;p.image_status='barcode';p.image_source_url='https://world.openfoodfacts.org/product/'+p.barcode;
  p.photo_attribution='Open Food Facts · EAN';
  saveCachedPhoto(p,replacement);
- img.onload=()=>{img.hidden=false;if(img.nextElementSibling?.hidden===false)img.nextElementSibling.hidden=true};
+ img.onload=()=>{img.hidden=false;img.style.display='';if(img.nextElementSibling?.hidden===false)img.nextElementSibling.hidden=true};
  img.src=replacement;
  return true;
 }
@@ -314,8 +318,8 @@ async function onPackError(img){
  if(!p)return;
  if(p.barcode){
   const repaired=await repairImage(img,p);
-  if(!repaired)p.photo_blocked=true;
- }else p.photo_blocked=true;
+  if(!repaired){p.photo_blocked=true;rememberFailure(p)}
+ }else {p.photo_blocked=true;rememberFailure(p)}
 }
 window.GT_EXTRAS={facts,afterRender,spin,motionControls,setMotion,motionSetting,onPackError,repairImage,scoreBadge};
 })();
