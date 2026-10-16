@@ -34,11 +34,11 @@ test('27 actual and future projections remain distinct',()=>{const r=analyze([{n
 test('28 picker is interactive and presentation stays transparent',()=>{const h=readFileSync(new URL('../first-mile/index.html',import.meta.url),'utf8');assert.match(h,/id="case-picker"/);for(const id of ['asterion','heliogrid','bioweave','orchid'])assert.ok(h.includes('data-case="'+id+'"'));assert.match(h,/SYNTHETIC DOCUMENT FIXTURES/)});
 
 test('29 a forecast header immediately before ARR is carried to the reported figure',()=>{
- const r=analyze([{name:'example',pages:[{number:1,text:'2028 TARGET — future performance, not current revenue\\nARR: €2m'}]}]);
+ const r=analyze([{name:'example',pages:[{number:1,text:'2028 TARGET — future performance, not current revenue\nARR: €2m'}]}]);
  assert.equal(r.fields.find(x=>x.key==='arr').status,'forecast');
 });
 test('30 forecast context must not bleed from ARR into unrelated funding lines',()=>{
- const r=analyze([{name:'example',pages:[{number:1,text:'2028 TARGET\\nARR: €2m\\nFunding ask: raising €1m'}]}]);
+ const r=analyze([{name:'example',pages:[{number:1,text:'2028 TARGET\nARR: €2m\nFunding ask: raising €1m'}]}]);
  assert.equal(r.fields.find(x=>x.key==='arr').status,'forecast');
  assert.equal(r.fields.find(x=>x.key==='ask').status,'found');
 });
