@@ -1,0 +1,24 @@
+name: FIRST MILE v2 Model Lab checks
+on:
+  push:
+    paths:
+      - "first-mile/**"
+      - "tests/first-mile.test.mjs"
+      - ".github/workflows/first-mile-v2.yml"
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Existing application tests
+        run: node --test tests/first-mile.test.mjs
+      - name: Six-case synthetic benchmark and UI integrity
+        run: node --test first-mile/lab/lab.test.mjs
+      - name: Grounding, safety and provider-free orchestration tests
+        run: python -m unittest first-mile/lab/test_benchmark.py -v
+      - name: Execute real deterministic baseline without provider calls
+        run: node first-mile/lab/baseline.mjs > /tmp/first-mile-baseline.json
