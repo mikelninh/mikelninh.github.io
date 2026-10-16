@@ -11,17 +11,21 @@
   <meta property="og:url" content="https://mikelninh.github.io/good-things/">
   <link rel="canonical" href="https://mikelninh.github.io/good-things/">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23dff179'/%3E%3Ctext x='50' y='72' font-family='serif' font-size='75' fill='%23263d32' text-anchor='middle'%3E✳%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./styles.css?v=2.5">
+  <link rel="stylesheet" href="./styles.css?v=2.6">
   <title>GOOD THINGS — Mikel & Huong</title>
   <script defer src="./catalog.js"></script>
   <script defer src="./catalog-extra-1.js"></script>
   <script defer src="./catalog-extra-2.js"></script>
   <script defer src="./catalog-extra-3.js"></script>
   <script defer src="./catalog-merge.js"></script>
+  <script defer src="./catalog-penny.js?v=2.6"></script>
+  <script defer src="./catalog-vemondo.js?v=2.6"></script>
+  <script defer src="./catalog-brand-merge.js?v=2.6"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
   <script defer src="./shuffle-extras.js?v=2.4"></script>
   <script defer src="./awards.js?v=2.5"></script>
-  <script defer src="./app.js?v=2.5"></script>
+  <script defer src="./brand-lab.js?v=2.6"></script>
+  <script defer src="./app.js?v=2.6"></script>
 </head>
 <body>
 <header class="masthead wrap">
@@ -34,6 +38,7 @@
    <button class="navlink" data-nav="duo">♡ Together Shuffle</button>
    <button class="navlink" data-nav="my">My shelf</button>
    <button class="navlink" data-nav="community">Community</button>
+    <button class="navlink" data-nav="brands">🌱 Plant Brands</button>
     <button class="navlink" data-nav="awards">🏆 Awards</button>
    <a class="navlink" href="./lookup.html">Product Detective ✳</a>
    <a class="navlink" href="./photos.html">Photo Lab ↗</a>
@@ -55,6 +60,7 @@
           <button class="button button-white" data-nav="duo">Play Together ♡</button>
           <button class="button button-white" data-nav="board">Build a tier list ↗</button>
           <button class="button button-white" data-nav="awards">Explore the Awards 🏆</button>
+          <button class="button button-lime" data-nav="brands">Rate Vemondo & Food for Future 🌱</button>
         </div>
         <div class="hero-foot">
           <span><strong id="catalogHeroCount">350+</strong> products to explore</span>
@@ -85,6 +91,7 @@
           <button class="rail-link" data-nav="my"><span>✳ &nbsp; Your shelf</span><span class="count" id="myCount">0</span></button>
           <button class="rail-link" data-nav="community"><span>♧ &nbsp; People</span><span class="count" id="communityCount">0</span></button>
           <button class="rail-link" data-nav="awards"><span>🏆 &nbsp; Awards</span><span class="count">NEW</span></button>
+          <button class="rail-link" data-nav="brands"><span>🌱 &nbsp; Plant Brands</span><span class="count">NEW</span></button>
         </nav>
       </div>
       <div class="rail-panel rail-challenge" id="sidebarChallenge">
@@ -117,6 +124,7 @@
   <button data-nav="my"><span>☷</span>My shelf</button>
   <button data-nav="discover"><span>⌕</span>Discover</button>
   <button data-nav="awards"><span>🏆</span>Awards</button>
+  <button data-nav="brands"><span>🌱</span>Brands</button>
 </nav>
 <div class="overlay" id="drawerOverlay" aria-hidden="true"><div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Product detail"></div></div>
 <div class="overlay" id="modalOverlay" aria-hidden="true"><div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Good Things dialog"></div></div>
