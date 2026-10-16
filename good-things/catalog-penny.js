@@ -241,7 +241,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "21259418",
+    "nutrition": {
+      "kcal": 168,
+      "protein": 2.7,
+      "carbs": 2,
+      "sugar": 0.6,
+      "fat": 17,
+      "satFat": 2,
+      "fiber": 0.5,
+      "salt": 0.09
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/21259418",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "B",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuer-deinen-vorrat-food-for-future-sojacuisine-light",
@@ -265,7 +281,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "21755118",
+    "nutrition": {
+      "kcal": 90,
+      "protein": 2.4,
+      "carbs": 5.7,
+      "sugar": 0.6,
+      "fat": 6.3,
+      "satFat": 0.6,
+      "fiber": null,
+      "salt": 0.1
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/21755118",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "B",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuer-die-schnelle-kueche-food-for-future-vegane-penne-bolognese",
@@ -337,7 +369,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "20874452",
+    "nutrition": {
+      "kcal": 238,
+      "protein": 11.3,
+      "carbs": 8.1,
+      "sugar": 3.1,
+      "fat": 16.4,
+      "satFat": 1.3,
+      "fiber": null,
+      "salt": 1.81
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/20874452",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "D",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuer-die-schnelle-kueche-food-for-future-falafel",
@@ -481,7 +529,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "21764882",
+    "nutrition": {
+      "kcal": 286,
+      "protein": 11,
+      "carbs": 22,
+      "sugar": 1.2,
+      "fat": 16,
+      "satFat": 1.2,
+      "fiber": 3.4,
+      "salt": 1.4
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/21764882",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "C",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuer-die-schnelle-kueche-vegane-nuggets",
@@ -625,7 +689,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "20863050",
+    "nutrition": {
+      "kcal": 159,
+      "protein": 3.9,
+      "carbs": 33,
+      "sugar": 5.1,
+      "fat": 0.7,
+      "satFat": 0.1,
+      "fiber": null,
+      "salt": 0.65
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/20863050",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "C",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuer-die-schnelle-kueche-food-for-future-vegane-spaetzle",
@@ -721,7 +801,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "21314834",
+    "nutrition": {
+      "kcal": 188,
+      "protein": 20.7,
+      "carbs": 1.3,
+      "sugar": 0.6,
+      "fat": 10.6,
+      "satFat": 1.8,
+      "fiber": 1,
+      "salt": 1.2
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/21314834",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "A",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuer-die-schnelle-kueche-big-burger-classic",
@@ -937,7 +1033,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "21149832",
+    "nutrition": {
+      "kcal": 35,
+      "protein": 3.9,
+      "carbs": 1.1,
+      "sugar": 0.4,
+      "fat": 1.6,
+      "satFat": 0.3,
+      "fiber": null,
+      "salt": 0.05
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/21149832",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "B",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuers-vegane-fruehstueck-food-for-future-bio-mandeldrink",
@@ -1081,7 +1193,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "21938160",
+    "nutrition": {
+      "kcal": 73,
+      "protein": 3.6,
+      "carbs": 8.8,
+      "sugar": 7.6,
+      "fat": 2.4,
+      "satFat": 0.4,
+      "fiber": null,
+      "salt": 0.11
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/21938160",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "B",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuers-vegane-fruehstueck-food-for-future-soja-joghurtalternative-kirsch",
@@ -1129,7 +1257,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "21943935",
+    "nutrition": {
+      "kcal": 74,
+      "protein": 3.6,
+      "carbs": 9.2,
+      "sugar": 8.1,
+      "fat": 2.4,
+      "satFat": 0.4,
+      "fiber": null,
+      "salt": 0.1
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/21943935",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "B",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuers-vegane-fruehstueck-food-for-future-soja-joghurtalternative1",
@@ -1153,7 +1297,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "21943119",
+    "nutrition": {
+      "kcal": 70,
+      "protein": 3.5,
+      "carbs": 8.6,
+      "sugar": 7.5,
+      "fat": 2.3,
+      "satFat": 0.4,
+      "fiber": null,
+      "salt": 0.11
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/21943119",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "B",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuers-vegane-fruehstueck-food-for-future-soja-joghurtalternative",
@@ -1201,7 +1361,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "21642920",
+    "nutrition": {
+      "kcal": 99,
+      "protein": 0.9,
+      "carbs": 3.4,
+      "sugar": 0.8,
+      "fat": 8.9,
+      "satFat": 8.1,
+      "fiber": null,
+      "salt": 0.03
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/21642920",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "C",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuers-vegane-fruehstueck-food-for-future-vegane-frischcreme-tomate-basilikum",
@@ -1249,7 +1425,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "26005676",
+    "nutrition": {
+      "kcal": 285,
+      "protein": 2,
+      "carbs": 0.9,
+      "sugar": 0.8,
+      "fat": 29,
+      "satFat": 28,
+      "fiber": null,
+      "salt": 1.1
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/26005676",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "D",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuers-vegane-fruehstueck-food-for-future-vegane-frischcreme-gartenkraeuter",
@@ -1297,7 +1489,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "26005546",
+    "nutrition": {
+      "kcal": 295,
+      "protein": 1.8,
+      "carbs": 4.7,
+      "sugar": 0.9,
+      "fat": 30,
+      "satFat": 30,
+      "fiber": 0.6,
+      "salt": 0.84
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/26005546",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "D",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuers-vegane-fruehstueck-food-for-future-vegane-lyoner-grillgemuese",
@@ -1417,7 +1625,23 @@ window.GT_PENNY_PRODUCTS=[
     "source_type": "penny_official_listing",
     "brand_collection": "food-for-future",
     "photo_rights": "PENNY rights retained; link image without copying, review permission for production",
-    "listing_verified_at": "2026-10-16"
+    "listing_verified_at": "2026-10-16",
+    "barcode": "26330433",
+    "nutrition": {
+      "kcal": 115,
+      "protein": 10,
+      "carbs": 5,
+      "sugar": 0.5,
+      "fat": 5,
+      "satFat": 0.5,
+      "fiber": 5,
+      "salt": 2
+    },
+    "nutrition_source_url": "https://world.openfoodfacts.org/product/26330433",
+    "nutrition_updated_at": 1792138924,
+    "nutri_score": "C",
+    "nutrition_match_method": "penny_product_name_quantity_and_exact_off_record",
+    "nutrition_verification_note": "Independent community label values. Check current PENNY packaging before dietary decisions."
   },
   {
     "id": "penny-fff-fuers-vegane-fruehstueck-food-for-future-fleischwurst",
