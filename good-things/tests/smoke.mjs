@@ -539,3 +539,44 @@ test('Product facts distinguish brand owner from manufacturer',()=>{
  assert.match(extras,/Hersteller · Open Food Facts/);
  assert.doesNotMatch(extras,/Hersteller \/ Markeninhaber/);
 });
+
+
+test('GOOD THINGS 3.0 keeps the Tier List as the first meaningful screen and all former modes accessible',()=>{
+ const {t}=fixture();
+ const html=t.renderBoard();
+ assert.match(html,/gt-play-hero/);
+ assert.match(html,/THE FIRST FIVE/);
+ assert.match(html,/id="boardPantry"/);
+ assert.match(html,/id="boardMat"/);
+ assert.match(html,/data-action="share-board"/);
+ assert.match(html,/data-action="undo-board"/);
+ assert.match(html,/data-action="export-board-png"/);
+ assert.match(html,/data-drop-tier="not_tried"/);
+ assert.match(index,/class="gt-nav-more"/);
+ assert.match(index,/data-nav="solo"/);
+ assert.match(index,/data-nav="duo"/);
+ assert.match(index,/stores\.html/);
+ const sheet=fs.readFileSync(path.join(root,'release-3.css'),'utf8');
+ assert.match(sheet,/board-layout \.board-pantry\{order:0!important/);
+ assert.match(sheet,/body:has\(\.gt-play-hero\) \.hero/);
+});
+test('Quick Rank presents S–F before the optional ownership and nutrition details',()=>{
+ const {t,context}=fixture();
+ t.quickRank('tofu-01');
+ const html=context.document.querySelector('#modal').innerHTML;
+ assert.ok(html.includes('gt-quick-rank'));
+ assert.ok(html.includes('gt-quick-more'));
+ assert.ok(html.indexOf('quick-rank-choices')<html.indexOf('gt-fact-card'));
+ assert.ok(html.indexOf('quick-rank-choices')<html.indexOf('gt-brand-identity'));
+ assert.ok(html.includes('data-action="quick-not-tried"'));
+ assert.equal((html.match(/class="quick-rank-button/g)||[]).length,6);
+ assert.match(html,/aria-label="S to F taste rating"/);
+});
+test('Quick Rank has a previously rated tier selected without changing the persisted answer',()=>{
+ const {t,context}=fixture();
+ t.st.guest.you['tofu-01']={status:'rated',tier:'F',note:'No thanks',is_public:false,position:100};
+ t.quickRank('tofu-01');
+ const html=context.document.querySelector('#modal').innerHTML;
+ assert.match(html,/class="quick-rank-button selected" data-rank-tier="F"/);
+ assert.equal(t.st.guest.you['tofu-01'].tier,'F');
+});
