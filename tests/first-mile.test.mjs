@@ -70,3 +70,13 @@ test('35 priority findings use a progressive disclosure control without suppress
  assert.match(script,/See all/);
  assert.match(script,/showAllFields/);
 });
+
+test('36 downloadable fictional PDF is valid, two-page and contains testable discrepancies',()=>{
+ const pdf=readFileSync(new URL('../first-mile/samples/asterion-fictional-test.pdf',import.meta.url));
+ const contents=pdf.toString('latin1');
+ assert.ok(contents.startsWith('%PDF-1.4'));
+ assert.match(contents,/ARR: EUR 240k/);
+ assert.match(contents,/ARR: EUR 180k/);
+ assert.match(contents,/Funding ask: raising EUR 3.1m/);
+ assert.match(contents,/\/Count 2/);
+});
