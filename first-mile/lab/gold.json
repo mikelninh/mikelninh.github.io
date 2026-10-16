@@ -1,0 +1,66 @@
+{
+  "schema": "first-mile-gold/v2",
+  "labels": {
+    "asterion": {
+      "ask": "different",
+      "arr": "different",
+      "customers": "different",
+      "problem": "found",
+      "technology": "found",
+      "market": "found",
+      "ip": "found",
+      "team": "found"
+    },
+    "heliogrid": {
+      "ask": "found",
+      "arr": "found",
+      "customers": "found",
+      "problem": "found",
+      "technology": "found",
+      "market": "found",
+      "ip": "found",
+      "team": "found"
+    },
+    "bioweave": {
+      "ask": "missing",
+      "arr": "missing",
+      "customers": "missing",
+      "problem": "found",
+      "technology": "found",
+      "market": "found",
+      "ip": "missing",
+      "team": "found"
+    },
+    "orchid": {
+      "ask": "found",
+      "arr": "forecast",
+      "customers": "missing",
+      "problem": "found",
+      "technology": "found",
+      "market": "found",
+      "ip": "missing",
+      "team": "found"
+    },
+    "riverbend": {
+      "ask": "found",
+      "arr": "found",
+      "customers": "found",
+      "problem": "found",
+      "technology": "found",
+      "market": "missing",
+      "ip": "missing",
+      "team": "found"
+    },
+    "forecast-split": {
+      "ask": "found",
+      "arr": "forecast",
+      "customers": "missing",
+      "problem": "found",
+      "technology": "found",
+      "market": "found",
+      "ip": "missing",
+      "team": "found"
+    }
+  },
+  "warning": "Labels were authored for these synthetic cases. First four overlap known development fixtures; last two challenge phrasing and context."
+}

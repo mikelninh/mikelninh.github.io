@@ -1,0 +1,135 @@
+{
+  "schema": "first-mile-fixtures/v2",
+  "origin": "developer-authored synthetic test documents, not confidential companies",
+  "cases": [
+    {
+      "id": "asterion",
+      "title": "Asterion Energy",
+      "difficulty": "known-demo",
+      "docs": [
+        {
+          "name": "Asterion Energy · deck (fictional)",
+          "pages": [
+            {
+              "number": 1,
+              "text": "Problem: Commercial sites cannot easily plan battery operation.\nTechnology: Forecasting software optimises local energy storage.\nFounders: energy engineer and software developer."
+            },
+            {
+              "number": 2,
+              "text": "Paying customers: 12\nARR: €240k\nFunding ask: raising €2.4m.\nMarket size: €1.8bn serviceable market, company estimate.\nIP strategy: patent application pending."
+            }
+          ]
+        },
+        {
+          "name": "Asterion Energy · update (fictional)",
+          "pages": [
+            {
+              "number": 1,
+              "text": "October 2026 founder update\nPaying customers: 18\nARR: €180k\nFunding ask: raising €3.1m under a revised plan."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heliogrid",
+      "title": "HelioGrid Labs",
+      "difficulty": "known-demo",
+      "docs": [
+        {
+          "name": "HelioGrid Labs · pitch (fictional)",
+          "pages": [
+            {
+              "number": 1,
+              "text": "Problem: Industrial parks lose money through unpredictable solar output.\nTechnology: Battery-aware control software integrates with existing industrial equipment.\nFounders: two energy engineers and an industrial software lead."
+            },
+            {
+              "number": 2,
+              "text": "Paying customers: 24\nARR: €420k reported September 2026.\nFunding ask: raising €1.7m for implementation and certification.\nMarket size: €950m serviceable market, company estimate.\nIP strategy: licensed optimisation library."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bioweave",
+      "title": "BioWeave Research",
+      "difficulty": "known-demo",
+      "docs": [
+        {
+          "name": "BioWeave Research · pitch (fictional)",
+          "pages": [
+            {
+              "number": 1,
+              "text": "Problem: Bio-based materials struggle with industrial packaging scale.\nTechnology: Engineered fermentation and low-temperature processing.\nFounders: materials scientist, fermentation engineer and product designer."
+            },
+            {
+              "number": 2,
+              "text": "Market size: Global biopolymer packaging market is expanding, independent validation required.\nPilot samples shipped to research partners."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "orchid",
+      "title": "Orchid Robotics",
+      "difficulty": "known-demo",
+      "docs": [
+        {
+          "name": "Orchid Robotics · pitch (fictional)",
+          "pages": [
+            {
+              "number": 1,
+              "text": "Problem: Small warehouses struggle to adopt flexible industrial robots.\nTechnology: Vision-guided mobile robotics.\nFounders: robotics engineer and industrial operations lead."
+            },
+            {
+              "number": 2,
+              "text": "ARR: €1.5m forecast for 2028; not current revenue.\nFunding ask: raising €3m to commercialise pilots.\nMarket size: €2bn addressable segment, internal assumption.\nCustomer trials completed, no current paying customer count supplied."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "riverbend",
+      "title": "Riverbend Materials",
+      "difficulty": "challenge",
+      "docs": [
+        {
+          "name": "Riverbend Materials · pitch (synthetic unseen style)",
+          "pages": [
+            {
+              "number": 1,
+              "text": "The founders use engineered enzymes to recycle mixed textiles.\nThe challenge is the cost of low-grade mixed-fibre sorting at scale.\nOur year-end annualised contracted subscription sales total EUR 360000, representing signed subscriptions, not necessarily recognised revenue."
+            },
+            {
+              "number": 2,
+              "text": "The team requests 1.8 million euros in seed capital.\nWe serve 15 paying industrial partners.\nNo registered patents or market-sizing sources are provided."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "forecast-split",
+      "title": "Tomorrow Mobility",
+      "difficulty": "challenge",
+      "docs": [
+        {
+          "name": "Tomorrow Mobility · forecast (synthetic unseen style)",
+          "pages": [
+            {
+              "number": 1,
+              "text": "Problem: Rural vehicle fleets cannot predict charging downtime.\nTechnology: Scheduling optimiser for electric service fleets.\nFounders: two electrical engineers."
+            },
+            {
+              "number": 2,
+              "text": "2028 TARGET — future performance, not current revenue\nARR: €2m\nWe have not yet reached meaningful commercial recurring revenue.\nFunding ask: raising €2m for the first commercial pilots.\nMarket size: €500m, internal rough estimate."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

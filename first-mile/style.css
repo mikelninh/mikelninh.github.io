@@ -47,3 +47,5 @@
 .outcome-grid .outcome-lesson{margin-top:10px;font-size:11px;color:#5e785f}
 @media(max-width:1000px){.picker-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:570px){.picker-list{grid-template-columns:1fr}.picker-card{min-height:160px}.picker-symbol{margin:5px 0}.picker-top{display:block}.picker-note{display:block;text-align:left;max-width:none;margin-top:15px}}
+
+.lab-inline-link{display:inline-block;margin-top:19px;color:#2b633f;font-size:12px;font-weight:850;text-decoration:underline;text-underline-offset:5px}
