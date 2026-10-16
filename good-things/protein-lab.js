@@ -8,7 +8,7 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const list=(window.GT_CATALOG||[]).filter(p=>p.vegan_status!=='non_vegan');
 const store=()=>{try{const x=JSON.parse(localStorage.getItem(KEY)||'{}');return x&&typeof x==='object'?x:{}}catch(_){return {}}};
-let values=store(),filter='all',query='',onlyComplete=false,loadBusy=false;const OFF_KEY='goodthings_protein_source_v28';let sourceValues={};try{sourceValues=JSON.parse(localStorage.getItem(OFF_KEY)||'{}')||{}}catch(_){}
+let values=store(),filter='all',query=(()=>{try{const id=new URL(location.href).searchParams.get('product');return (window.GT_CATALOG||[]).find(p=>p.id===id)?.name||''}catch(_){return''}})(),onlyComplete=false,loadBusy=false;const OFF_KEY='goodthings_protein_source_v28';let sourceValues={};try{sourceValues=JSON.parse(localStorage.getItem(OFF_KEY)||'{}')||{}}catch(_){}
 const num=v=>{if(v===null||v===undefined||v==='')return null;const x=Number(String(v).replace(',','.'));return Number.isFinite(x)&&x>=0?x:null};
 const local=p=>values[p.id]||{};
 function quantity(p){
