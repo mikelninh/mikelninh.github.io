@@ -102,10 +102,35 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;display:flex;justify
  .fit-list li{grid-template-columns:1fr}.case-view{padding:16px}.case-title{display:block}
  footer{flex-direction:column}
 }
+
+.operator-lab{background:#e7efe4;color:#183b2b;padding:65px 0}
+.operator-lab h2{color:#143827}.operator-lab .section-head p{color:#577362}
+.operator-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:16px}
+.operator-choices,.operator-detail{background:#fffefa;border:1px solid #cbdcce;padding:26px}
+.operator-choices .eyebrow,.operator-detail .eyebrow{color:#5b8b60}
+.op-case{width:100%;display:block;text-align:left;border:1px solid #d6e2d6;background:#f9fbf6;padding:15px;margin-top:12px;cursor:pointer;color:#284b31}
+.op-case.active{border-color:#447e51;background:#e4f0df;box-shadow:inset 3px 0 #447e51}
+.op-case b,.op-case small{display:block}.op-case b{font-size:13px}.op-case small{font-size:11px;color:#68826e;margin-top:5px}
+.op-fine,.op-source p{font-size:11px;color:#69816c;line-height:1.6}
+.operator-detail h3{font:400 34px/1.12 Georgia,serif;margin:20px 0 9px}
+.operator-detail>p{font-size:13px;color:#617968}
+.op-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.op-compare>div{border:1px solid #d0decd;background:#f1f6ee;padding:17px}
+.op-compare small{font-size:9px;font-weight:800;letter-spacing:.04em;display:block;color:#54765d}
+.op-compare strong{display:block;font-size:18px;margin:10px 0 4px}.op-compare span{font-size:11px;color:#799080}
+.op-buttons{display:flex;flex-wrap:wrap;gap:8px}
+.op-buttons button{background:#215039;border:0;color:white;padding:12px 15px;font-weight:800;cursor:pointer;font-size:11px}
+.op-buttons button:nth-child(2){background:#d9ead6;color:#24563b}.op-buttons button:disabled{opacity:.4;cursor:not-allowed}
+.op-feedback{margin-top:13px;border:1px solid #c5dbc6;background:#eef6ea;padding:11px 14px;font-size:12px;color:#42694b}
+.op-source{margin-top:15px;border-top:1px solid #dae5d9;padding-top:13px}
+.op-source summary{font-size:12px;cursor:pointer;font-weight:800}
+.op-source pre{overflow-wrap:anywhere;white-space:pre-wrap;background:#eef4e9;padding:13px;font-size:11px}
+.op-source a{color:#2c5f3d}
+@media(max-width:790px){.operator-grid,.op-compare{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<nav><div class="wrap navin"><div class="brand">MICHAEL NINH <span>× inca</span></div><div class="links"><a href="#claim">Claim</a><a href="#evidence">Evidence</a><a href="#model">Model loop</a><a href="#scale">Scale</a><a href="#fit">Fit</a></div></div></nav>
+<nav><div class="wrap navin"><div class="brand">MICHAEL NINH <span>× inca</span></div><div class="links"><a href="#claim">Claim</a><a href="#operator-lab">Operator lab</a><a href="#evidence">Evidence</a><a href="#model">Model loop</a><a href="#scale">Scale</a><a href="#fit">Fit</a></div></div></nav>
 
 <main>
 <section class="wrap hero">
@@ -143,6 +168,32 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;display:flex;justify
 </div>
 </section>
 
+
+<section id="operator-lab" class="operator-lab" aria-label="Synthetic operator replay">
+ <div class="wrap">
+ <div class="section-head"><div class="num">02</div><div><h2>One failure. A safer next run.</h2><p>Compare the recorded decision to a proposed fix. Two labelled synthetic claims, no external effects.</p></div></div>
+ <div class="operator-grid">
+  <div class="operator-choices">
+    <div class="eyebrow">CHOOSE A SYNTHETIC CLAIM</div>
+    <button type="button" data-op-case="H-A-011" aria-pressed="true" class="op-case active"><b>H-A-011 · Known failure</b><small>Conflicting cancellation dates</small></button>
+    <button type="button" data-op-case="H-A-012" aria-pressed="false" class="op-case"><b>H-A-012 · Control case</b><small>No contradiction flag in case record</small></button>
+    <p class="op-fine">This is a replay of the already-inspected holdout A, not fresh independent evidence. The original error remains visible.</p>
+  </div>
+  <div class="operator-detail">
+   <div class="eyebrow">REVIEW THE ROUTE · <span id="opId">H-A-011</span></div>
+   <h3 id="opName">Conflicting cancellation dates</h3>
+   <p id="opIntro">The two documents disagree; a person should resolve the conflict before further action.</p>
+   <div class="op-compare">
+    <div><small>RECORDED GUARDED V2</small><strong id="opBefore">AUTO_READY</strong><span>Measured holdout A decision</span></div>
+    <div><small>PROPOSED V3 CONTRADICTION GATE</small><strong id="opAfter">HUMAN_REVIEW</strong><span>Local deterministic replay only</span></div>
+   </div>
+   <div class="op-buttons"><button type="button" id="opReplay">Replay this case →</button><button type="button" id="opRunTests" disabled>Check both routes</button></div>
+   <div id="opFeedback" role="status" aria-live="polite" class="op-feedback">Select a case and replay the guard.</div>
+   <details class="op-source"><summary>See the evidence receipt and test boundary</summary><pre id="opReceipt"></pre><p>Source: <a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/data/claims.json">synthetic claims</a> · <a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/reports/deterministic_eval.json">recorded evaluation</a>.</p></details>
+  </div>
+ </div>
+ </div>
+</section>
 <section id="evidence">
 <div class="wrap">
   <div class="section-head"><div class="num">02</div><div><h2>Evidence, not a perfect demo.</h2><p>I expanded the proof into a checked-in synthetic evaluation. The useful part is not the high score — it is the visible failure and the discipline around what we are allowed to claim afterwards.</p></div></div>
@@ -323,4 +374,5 @@ async function init(){
 }
 init();
 </script>
+<script src="./operator-lab.js" defer></script>
 </body></html>

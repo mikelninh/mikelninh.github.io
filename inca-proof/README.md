@@ -81,3 +81,10 @@ https://mikelninh.github.io/inca/
 ## Boundary
 
 This is an independent application work sample. It does not use INCA customer data, confidential workflows, proprietary prompts or MARS internals.
+
+
+## Interactive operator replay
+
+[Try the operator lab](https://mikelninh.github.io/inca/#operator-lab): compare developer-authored synthetic holdout cases H-A-011 (known contradiction miss) and H-A-012 (control). The recorded guarded-v2 outcome and a proposed contradiction-gate route are displayed separately. The holdout has already been inspected, so the replay is **not fresh independent evidence**. No external effect is performed. A separate, two-case local test is available; it is not the original 12/12 fresh regression B.
+
+Run: node --test inca/operator-lab.test.cjs
