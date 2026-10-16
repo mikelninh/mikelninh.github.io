@@ -528,7 +528,8 @@ test('Quick Rank photo is constrained inside its viewport and owner identity is 
  assert.match(css,/GOOD THINGS 2\.9\.2 · Quick Rank/);
  assert.match(css,/\.quick-rank-art\s*\{[^}]*overflow:hidden/);
  assert.match(css,/\.quick-rank-art > img\s*\{[^}]*max-height:100%/);
- assert.match(source,/boardPhoto\(p\)\+'<\/div>'\+window\.GT_OWNERSHIP\.inline\(p\)/);
+ assert.match(source,/gt-quick-identity/);
+ assert.match(source,/GT_OWNERSHIP\.inline\(p\)/);
  assert.match(index,/styles\.css\?v=2\.9\.2/);
 });
 test('Product facts distinguish brand owner from manufacturer',()=>{
