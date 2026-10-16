@@ -1,0 +1,26 @@
+name: FIRST MILE Engineering Review quality gates
+on:
+  push:
+    paths:
+      - "first-mile/core.mjs"
+      - "first-mile/review/**"
+      - "first-mile/service/**"
+      - "tests/first-mile.test.mjs"
+      - ".github/workflows/first-mile-engineering-review.yml"
+  workflow_dispatch:
+jobs:
+  verify-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Existing FIRST MILE behavior tests
+        run: node --test tests/first-mile.test.mjs
+      - name: Benchmark replay and release clinic contracts
+        run: node --test first-mile/review/review.test.mjs
+      - name: Verify Python API dependencies and negative tests
+        run: |
+          python -m pip install -r first-mile/service/requirements.txt
+          python -m pytest first-mile/service/test_api.py -q
