@@ -4,6 +4,8 @@
 (function(){
 'use strict';
 const KEY='goodthings_protein_lab_v28';
+const GOAL=window.GT_PROTEIN_TARGET;
+const PRICE_SNAPSHOTS=(window.GT_RETAIL_PRICE_SNAPSHOTS||[]).filter(x=>x?.source_type==='official_online'&&/^\d{8,14}$/.test(String(x.barcode||''))&&Number.isFinite(x.price)&&x.price>0&&/^https:\/\//.test(x.source||''));
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const list=(window.GT_CATALOG||[]).filter(p=>p.vegan_status!=='non_vegan');
@@ -12,7 +14,7 @@ let values=store(),filter='all',query=(()=>{try{const id=new URL(location.href).
 const num=v=>{if(v===null||v===undefined||v==='')return null;const x=Number(String(v).replace(',','.'));return Number.isFinite(x)&&x>=0?x:null};
 const local=p=>values[p.id]||{};
 function quantity(p){
- const q=String(p.quantity||'').replace(/,/g,'.').toLowerCase().replace(/\s+/g,'');
+ const q=String(p.quantity||'').replace(/,/g,'.').replaceAll('×','x').toLowerCase().replace(/\s+/g,'');
  const match=q.match(/(?:(\d+(?:\.\d+)?)x)?(\d+(?:\.\d+)?)(kg|g|ml|l)(?![a-z])/);
  if(!match)return null;
  const multiplier=Number(match[1]||1),amount=Number(match[2]);
@@ -22,8 +24,20 @@ function quantity(p){
 }
 function protein(p){return num(local(p).protein??p.nutrition?.protein??sourceValues[p.barcode]?.protein)}
 function mass(p){return num(local(p).quantity)??quantity(p)}
-function price(p){return num(local(p).price)}
-function score(p){const v=protein(p),w=mass(p),eur=price(p);return v!==null&&w!==null&&eur>0?v*w/(100*eur):null}
+function priceInfo(p){
+ const v=local(p);
+ const user=num(v.price);
+ if(user!==null&&user>0){
+  const label=v.priceSource==='openprices'?'Open Prices · datierte Beobachtung':'Dein privater Packungspreis';
+  return {amount:user,label,date:v.priceDate||'',place:v.pricePlace||'',url:''};
+ }
+ if(String(p.store||'').toUpperCase()!=='DM'||!p.barcode)return null;
+ const hit=PRICE_SNAPSHOTS.filter(x=>String(x.barcode)===String(p.barcode)&&String(x.store||'').toLowerCase()==='dm online').sort((a,b)=>b.date.localeCompare(a.date))[0];
+ return hit?{amount:hit.price,label:'Offizieller dm-Onlinepreis, kein bestätigter Filialpreis',date:hit.date,place:'dm online',url:hit.source}:null;
+}
+function price(p){return priceInfo(p)?.amount??null}
+function packagedProtein(p){const v=protein(p),w=mass(p);return v!==null&&w!==null&&v>0&&w>0?v*w/100:null}
+function score(p){const v=protein(p),w=mass(p),eur=price(p);return v!==null&&v>0&&w!==null&&w>0&&eur>0?v*w/(100*eur):null}
 function fmt(x,d=1){return x===null||!Number.isFinite(x)?'—':new Intl.NumberFormat('de-DE',{maximumFractionDigits:d}).format(x)}
 function updated(p){
  const x=local(p);
@@ -37,17 +51,19 @@ function render(){
  const ready=items.filter(x=>x.ratio!==null).length;
  const categories=[...new Map(list.map(p=>[p.category_id,p.category])).entries()].sort((a,b)=>a[1].localeCompare(b[1],'de'));
  $('#proteinRoot').innerHTML='<section class="pl-hero"><span>✳ GOOD THINGS · THE SMART PANTRY</span><h1>More protein.<br><em>Less money.</em></h1><p>Der faire Vergleich: Wie viele Gramm Protein bekommst du für einen Euro? Wir zeigen nur berechenbare Werte. Preise ohne aktuelle Quellen sind nicht erfunden – du kannst deinen eigenen Kassenbonpreis eingeben.</p></section>'+
+ '<div id="plGoalMount">'+GOAL.panel()+'</div>'+
  '<section class="pl-explainer"><div><strong>Protein pro Euro</strong><p>(Protein je 100 g × Packungsinhalt / 100) ÷ Packungspreis. Für Getränke rechnen wir mit ml statt g; die Rechnung ist eine Näherung auf Grundlage der Deklaration je 100 ml.</p></div><div><strong>Wirklich vergleichbar?</strong><p>Vergleiche Tofu eher mit Tofu und Drinks mit Drinks. Berücksichtige Portionsgröße, Qualität, Geschmack, Zubereitung und ggf. den Preis je Kilogramm. Kein Gesundheitsranking.</p></div></section>'+
  '<div class="pl-filters"><label>Kategorie<select id="plCategory"><option value="all">Alle Kategorien</option>'+categories.map(([id,name])=>'<option value="'+esc(id)+'" '+(id===filter?'selected':'')+'>'+esc(name)+'</option>').join('')+'</select></label><label>Produkt suchen<input id="plSearch" type="search" value="'+esc(query)+'" placeholder="Tofu, Seitan, Linsen, Vemondo..."></label><label class="pl-check"><input id="plOnly" type="checkbox" '+(onlyComplete?'checked':'')+'> Nur berechenbare Produkte</label></div>'+
  '<div class="pl-count"><strong>'+ready+'</strong> berechenbare Produkte in dieser Auswahl · <strong>'+items.length+'</strong> insgesamt · Eigene Bonpreise oder datierte Open-Prices-Belege, keine Live-Angebote</div><button class="pl-nutrition-button" id="plFetchNutrition" type="button" '+(loadBusy?'disabled':'')+'>'+(loadBusy?'Prüfe Open Food Facts …':'✳ 25 fehlende EAN-Nährwerte aus Open Food Facts prüfen')+'</button><button class="pl-nutrition-button" id="plFetchPrices" type="button" '+(loadBusy?'disabled':'')+'>💶 20 deutsche Preisbelege aus Open Prices suchen</button>'+
- '<div class="pl-table-wrap"><table class="pl-table"><thead><tr><th>Produkt</th><th>Protein / 100 g/ml</th><th>Packungsinhalt</th><th>Preis €</th><th>Protein / €</th><th></th></tr></thead><tbody>'+
- items.slice(0,180).map(({p,ratio})=>{const v=local(p),can=ratio!==null;return '<tr><td><strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+' · '+esc(p.store)+'</small><small>'+esc(updated(p))+'</small></td>'+
+ '<div class="pl-table-wrap"><table class="pl-table"><thead><tr><th>Produkt</th><th>Protein / 100 g/ml</th><th>Packungsinhalt</th><th>Preis €</th><th>Protein / €</th><th>€ für Tagesziel<br><small>Rechenwert / Packungskauf</small></th><th></th></tr></thead><tbody>'+
+ items.slice(0,180).map(({p,ratio})=>{const v=local(p),can=ratio!==null,priced=priceInfo(p);return '<tr><td><strong>'+esc(p.name)+'</strong><small>'+esc(p.brand)+' · '+esc(p.store)+'</small><small>'+esc(updated(p))+'</small></td>'+
  '<td><input aria-label="Protein in g je 100 für '+esc(p.name)+'" data-pl="protein" data-id="'+esc(p.id)+'" placeholder="'+(p.nutrition?.protein!=null?fmt(p.nutrition.protein):'unbekannt')+'" value="'+esc(v.protein??'')+'" inputmode="decimal"></td>'+
  '<td><input aria-label="Packungsmenge für '+esc(p.name)+'" data-pl="quantity" data-id="'+esc(p.id)+'" placeholder="'+(quantity(p)??'g/ml?')+'" value="'+esc(v.quantity??'')+'" inputmode="decimal"></td>'+
- '<td><input aria-label="Dein Kaufpreis in Euro für '+esc(p.name)+'" data-pl="price" data-id="'+esc(p.id)+'" placeholder="€ vom Bon" value="'+esc(v.price??'')+'" inputmode="decimal">'+(v.priceSource==='openprices'?'<small>Open Prices · '+esc(v.priceDate||'')+' · '+esc(v.pricePlace||'DE')+'</small>':'')+'</td>'+
+ '<td><input aria-label="Dein Kaufpreis in Euro für '+esc(p.name)+'" data-pl="price" data-id="'+esc(p.id)+'" placeholder="'+esc(priced&&v.price==null?fmt(priced.amount,2)+' € · dm online':'€ vom Bon')+'" value="'+esc(v.price??'')+'" inputmode="decimal">'+(priced?'<small>'+esc(priced.label)+(priced.date?' · '+esc(priced.date):'')+(priced.place&&priced.place!=='dm online'?' · '+esc(priced.place):'')+(priced.url?' · <a href="'+esc(priced.url)+'" target="_blank" rel="noopener noreferrer">Beleg ↗</a>':'')+'</small>':'<small>Kein bestätigter Kaufpreis</small>')+'</td>'+
  '<td class="pl-score">'+(can?'<strong>'+fmt(ratio,2)+' g</strong>':'<span>—</span>')+'</td>'+
+ '<td class="pl-day-cost"><div class="gt-day-cost">'+GOAL.metric(priced?.amount,packagedProtein(p))+'</div></td>'+
  '<td><a href="./?view=discover&product='+encodeURIComponent(p.id)+'">Produkt ↗</a></td></tr>'}).join('')+'</tbody></table></div>'+
- '<p class="pl-disclaimer">Die Eingaben werden nur in diesem Browser gespeichert und nicht als offiziell verifizierte Produktdaten ausgegeben. Eine Packung, ein Rezept oder ein Preis kann sich ändern. Fehlende Proteinzahlen kannst du direkt vom Nährwertetikett ergänzen.</p>';
+ '<p class="pl-disclaimer">Eigene Preise und Nährwerte werden nur in diesem Browser gespeichert und nicht als offiziell verifizierte Produktdaten ausgegeben. Dein Proteinziel wird nur nach deiner ausdrücklichen Auswahl gespeichert. Ein rechnerischer Proteinpreis ist kein vollständiger Tages-Essenspreis. Getrocknete und verzehrfertige Lebensmittel, Proteinqualität, andere Nährstoffe sowie realistische Portionen sind gesondert zu berücksichtigen. Packungen und Preise können sich ändern.</p>';
 }
 
 async function loadMissingNutrition(){
@@ -114,5 +130,6 @@ document.addEventListener('change',e=>{
  render();
 });
 document.addEventListener('input',e=>{if(e.target.id==='plSearch'){query=e.target.value;render();$('#plSearch')?.focus()}});
+GOAL.subscribe(render);
 render();
 })();
