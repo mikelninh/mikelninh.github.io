@@ -20,8 +20,8 @@ const getProduct=(id)=>ALL.find((p)=>p.id===id);
 const rankableProduct=p=>Boolean(p&&p.vegan_status!=='non_vegan');
 const RANKABLE=ALL.filter(rankableProduct);
 const ORIGINAL_RANKABLE=RANKABLE.filter(p=>p.source_type!=='openfoodfacts');
-const STORE_NAMES={DM:'dm',ROSSMANN:'Rossmann',REWE:'REWE',LIDL:'Lidl',KAUFLAND:'Kaufland',EDEKA:'EDEKA',ALNATURA:'Alnatura',ONLINE:'Online'};
-const STORE_URLS={DM:'https://www.dm.de/',ROSSMANN:'https://www.rossmann.de/',REWE:'https://www.rewe.de/',LIDL:'https://www.lidl.de/',KAUFLAND:'https://www.kaufland.de/',EDEKA:'https://www.edeka.de/',ALNATURA:'https://www.alnatura.de/'};
+const STORE_NAMES={DM:'dm',ROSSMANN:'Rossmann',REWE:'REWE',LIDL:'Lidl',KAUFLAND:'Kaufland',EDEKA:'EDEKA',ALNATURA:'Alnatura',ONLINE:'Online',PENNY:'PENNY'};
+const STORE_URLS={DM:'https://www.dm.de/',ROSSMANN:'https://www.rossmann.de/',REWE:'https://www.rewe.de/',LIDL:'https://www.lidl.de/',KAUFLAND:'https://www.kaufland.de/',EDEKA:'https://www.edeka.de/',ALNATURA:'https://www.alnatura.de/',PENNY:'https://www.penny.de/'};
 const proteinNumber=p=>Number.isFinite(p?.nutrition?.protein)?Number(p.nutrition.protein):null;
 const FLAGGED=ALL.filter(p=>!rankableProduct(p));
 const tryRead=(key,fallback)=>{try{const d=JSON.parse(localStorage.getItem(key)||'null');return d&&typeof d==='object'?d:fallback}catch(_){return fallback}};
@@ -65,10 +65,11 @@ function empty(emoji,heading,body,button){
  return '<div class="empty"><div class="big">'+esc(emoji)+'</div><strong>'+esc(heading)+'</strong><p>'+esc(body)+'</p>'+(button||'')+'</div>';
 }
 function setView(view,extra){
- if(!['board','discover','ours','my','community','awards','duo','solo','shared','profile','list'].includes(view))view='board';
+ if(!['board','discover','ours','my','community','awards','brands','duo','solo','shared','profile','list'].includes(view))view='board';
  st.view=view;
  if(view!=='shared'&&view!=='profile'&&view!=='list'){
   const u=new URL(URL_BASE);u.searchParams.set('view',view);
+  if(view==='brands')u.searchParams.set('brand',window.GT_BRANDS.state.brand);
   if(view==='duo'&&st.duo.mode==='remote'&&st.duo.room?.id)u.searchParams.set('room',st.duo.room.id);
   history.replaceState(null,'',u.toString());
  }
@@ -1180,6 +1181,11 @@ function renderAwards(){
  const personas=st.awardsShared||st.user?'':'<div class="gt-awards-personas"><span>Local shelf:</span>'+['you','mikel','huong'].map(w=>'<button data-action="awards-persona" data-value="'+w+'" class="'+(st.persona===w?'active':'')+'">'+(w==='you'?'You':w==='mikel'?'Mikel':'Huong')+'</button>').join('')+'</div>';
  return personas+window.GT_AWARDS.render({scope,name:owner,products:RANKABLE,ratings:boardAnswers(),publicReviews:publicRated().length,publicProfiles:st.profiles.length,shared:st.awardsShared||null});
 }
+function renderBrands(){
+ const scope=st.user?'account_'+st.user.id:'guest_'+st.persona;
+ const switcher=st.user?'':'<div class="gt-bp-personas"><span>Local tasting shelf:</span>'+['you','mikel','huong'].map(w=>'<button data-action="brand-persona" data-value="'+w+'" class="'+(st.persona===w?'active':'')+'">'+(w==='you'?'You':w==='mikel'?'Mikel':'Huong')+'</button>').join('')+'</div>';
+ return switcher+window.GT_BRANDS.render({scope,products:RANKABLE,ratings:boardAnswers()});
+}
 function render(){
  const content=$('#contentView');
  if(st.view==='solo')content.innerHTML=soloRender();
@@ -1189,6 +1195,7 @@ function render(){
  else if(st.view==='my')content.innerHTML=renderMy();
  else if(st.view==='community')content.innerHTML=renderCommunity();
  else if(st.view==='awards')content.innerHTML=renderAwards();
+ else if(st.view==='brands')content.innerHTML=renderBrands();
  else if(st.view==='shared')content.innerHTML=renderShared();
  else if(st.view==='profile')content.innerHTML=renderProfileView();
  else if(st.view==='list')content.innerHTML=renderListView();
@@ -1595,8 +1602,9 @@ async function openShareLink(){
   }st.view='list';return;
  }
  const view=url.searchParams.get('view');
+ if(view==='brands'){window.GT_BRANDS.setBrand(url.searchParams.get('brand')==='penny'?'penny':'vemondo');st.view='brands';return}
  if(view==='duo'){st.view='duo';if(url.searchParams.get('room')){st.duo.mode='remote';st.duo.requestedRoom=url.searchParams.get('room')}return}
- st.view=['board','discover','ours','my','community','awards','solo'].includes(view)?view:'board';
+ st.view=['board','discover','ours','my','community','awards','brands','solo'].includes(view)?view:'board';
 }
 document.addEventListener('click',async(event)=>{
  const nav=event.target.closest('[data-nav]');
