@@ -19,7 +19,7 @@ test('Default example is 50g, explicitly not a universal nutritional requirement
  assert.match(t.panel(),/keine allgemeingültige Empfehlung/);
  assert.match(t.panel(),/data-gt-target-field="weight"/);
  assert.match(t.panel(),/data-gt-target-field="factor"/);
- assert.match(t.panel(),/Rechnerisch \/ Tag/);
+ assert.match(t.panel(),/Mein Tagesziel/);
  assert.match(t.panel(),/Für 30 Tage/);
  assert.match(t.panel(),/DGE-Referenzwerte/);
 });
@@ -132,7 +132,7 @@ test('Visible weight input auto-switches from 50g example and factor changes upd
  assert.equal(t.target(),50);
  t.set('weight','63');
  assert.equal(t.state.mode,'weight');
- assert.equal(t.target(),50.4);
+ assert.ok(Math.abs(t.target()-50.4)<1e-9);
  t.set('factor','1.2');
  assert.ok(Math.abs(t.target()-75.6)<1e-9);
  t.set('mode','example');
