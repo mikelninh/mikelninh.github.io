@@ -4,7 +4,7 @@
  */
 (function(){
 'use strict';
-const STORE='goodthings_personal_protein_prices_v28',CACHE='goodthings_open_prices_cache_v28',TODAY='2026-10-16';
+const STORE='goodthings_personal_protein_prices_v28',CACHE='goodthings_open_prices_cache_v28',TODAY=new Date().toISOString().slice(0,10);
 const fmt=(x,d=1)=>Number.isFinite(x)?new Intl.NumberFormat('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d}).format(x):'–';
 const esc=x=>String(x==null?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const tiers={S:6,A:5,B:4,C:3,D:2,F:1};
@@ -86,7 +86,7 @@ function row(x,index,local=false){
  const p=x.p,priced=local?own(p.id):x.fact,w=local?priced&&value(p,priced.price):x.worth;
  const grade=x.tier?" · Your grade "+Object.entries(tiers).find(v=>v[1]===x.tier)?.[0]:'';
  const link=safeUrl(priced?.source),priceDate=priced?.date;
- const origin=local?'Dein eingetragener Preis · nicht extern bestätigt':priced?.source_type==='official_online'?'Offizieller Online-Listenpreis':'Open Prices · belegte Ladenbeobachtung';
+ const origin=local?'Dein eingetragener Preis · nicht extern bestätigt':(priced?.source_type==='official_online'?'Offizieller Online-Listenpreis':'Open Prices · belegte Ladenbeobachtung')+(priced&&daysAgo(priced.date)>365?' · VERALTET (älter als 12 Monate)':'');
  return '<article class="gt-value-item"><span class="gt-value-rank">'+(index+1)+'</span><div class="gt-value-art">'+picture(p)+'</div><div class="gt-value-product"><span class="gt-value-category">'+esc(p.brand)+' · '+esc(p.category||'')+'</span><strong>'+esc(p.name)+'</strong><small>'+esc(p.quantity||'')+' · '+fmt(p.nutrition.protein)+' g Protein / 100 '+(quantity(p.quantity)?.basis||'g')+grade+'</small>'+
  '<div class="gt-value-row-foot">'+(priced?'<span>'+esc(origin)+' · '+esc(priceDate)+'</span>':'<span>Preis noch nicht belegt</span>')+(link?' · <a href="'+esc(link)+'" target="_blank" rel="noopener noreferrer">Quelle ↗</a>':'')+'</div></div>'+
  '<div class="gt-value-numbers"><strong>'+(w?fmt(w.euroPer100,2)+' €':'–')+'</strong><small>pro 100 g Protein</small><span>'+(w?fmt(w.proteinPerEuro)+' g Protein / €':'Kein Preisnachweis')+'</span><small>'+(w?fmt(w.euroFor25,2)+' € / 25 g Protein':'')+'</small></div>'+
@@ -110,7 +110,7 @@ function render(context){
  const cats=[...new Set(context.products.filter(p=>nutrition(p)&&quantity(p.quantity)).map(p=>p.category_id))];
  const all=context.products.filter(p=>p.vegan_status!=='non_vegan'),complete=all.filter(p=>Number.isFinite(p.nutrition?.protein)).length;
  const sortedKnown=sourceList().filter(x=>x.worth&&daysAgo(x.fact.date)<=365);
- const top=sorted(sortedKnown)[0];
+ const top=sortedKnown.sort((a,b)=>a.worth.euroPer100-b.worth.euroPer100)[0];
  const example=top?'Aktuell günstigster verfügbarer Quellennachweis in dieser Liste: '+esc(top.p.brand)+' '+esc(top.p.name)+' · '+fmt(top.worth.euroPer100,2)+' € je 100 g Protein.':'Noch kein belegter aktueller Preis in diesem Filter.';
  return '<section class="gt-value-hero"><span class="gt-value-eyebrow">GOOD THINGS · THE REAL DEAL</span><h1>More protein.<br><em>Less money.</em></h1><p>Wie viel Eiweiß bekomme ich wirklich für einen Euro? Mit datierten Quellen, deinem Geschmack und einer ehrlichen Rechnung – statt Marketing-Schlagworten.</p>'+
  '<div class="gt-value-hero-stats"><span><strong>'+complete+'</strong> Produkte mit Proteinwert</span><span><strong>'+all.length+'</strong> bewertbare Produkte</span><span><strong>'+verifiedByBarcode.size+'</strong> datierte Preisquellen im ersten Datensatz</span></div></section>'+
@@ -126,7 +126,7 @@ function render(context){
 function refresh(){
  if(!ctx)return;
  const target=document.querySelector('#gtValueResults');if(target)target.innerHTML=resultHtml();
- const snap=document.querySelector('#gtValueSnapshot');if(snap){const valid=sorted(sourceList().filter(x=>x.worth&&daysAgo(x.fact.date)<=365));snap.textContent=valid.length?'Günstigster beobachteter Proteinpreis im aktuellen Filter: '+valid[0].p.brand+' '+valid[0].p.name+' · '+fmt(valid[0].worth.euroPer100,2)+' € je 100 g Protein.':'Noch kein ausreichend aktueller Preisbeleg im Filter.'}
+ const snap=document.querySelector('#gtValueSnapshot');if(snap){const valid=sourceList().filter(x=>x.worth&&daysAgo(x.fact.date)<=365).sort((a,b)=>a.worth.euroPer100-b.worth.euroPer100);snap.textContent=valid.length?'Günstigster beobachteter Proteinpreis im aktuellen Filter: '+valid[0].p.brand+' '+valid[0].p.name+' · '+fmt(valid[0].worth.euroPer100,2)+' € je 100 g Protein.':'Noch kein ausreichend aktueller Preisbeleg im Filter.'}
 }
 function select(name,value){if(name==='category')state.category=String(value||'all');if(name==='search')state.search=String(value||'').slice(0,100);if(name==='sort'&&['euro100','protein','calories','taste'].includes(value))state.sort=value;if(name==='min'&&[0,5,10,15,20,30].includes(Number(value)))state.min=Number(value);if(name==='old')state.showOld=!!value;state.limit=20;refresh()}
 function more(){state.limit+=20;refresh()}
