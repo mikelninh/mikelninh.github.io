@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const source=fs.readFileSync(path.join(root,'app.js'),'utf8');
 const catalogs=['catalog.js','catalog-extra-1.js','catalog-extra-2.js','catalog-extra-3.js','catalog-merge.js'].map(file=>fs.readFileSync(path.join(root,file),'utf8'));
-const playableModules=['shuffle-extras.js','episodes.js'].map(file=>fs.readFileSync(path.join(root,file),'utf8'));
+const playableModules=['shuffle-extras.js','episodes.js','ownership.js'].map(file=>fs.readFileSync(path.join(root,file),'utf8'));
 const schema=fs.readFileSync(path.join(root,'schema.sql'),'utf8');
 const photoReports=fs.readFileSync(path.join(root,'photo-reports.sql'),'utf8');
 const duoSchema=fs.readFileSync(path.join(root,'duo-v18.sql'),'utf8');
@@ -496,4 +496,29 @@ test('Solo and Together Shuffle have links on mobile and desktop',()=>{
  assert.match(index,/Play Together/);
  assert.match(allCSS,/shuffle-talk/);
  assert.match(allCSS,/shuffle-mode-nav/);
+});
+
+
+test('Behind the Brand uses sourced brand ownership and separates personal political context from donations',()=>{
+ const {context}=fixture();
+ const own=context.window.GT_OWNERSHIP;
+ const berief=own.lookup({brand:'Berief'});
+ assert.equal(berief.owner,'Unternehmensgruppe Theo Müller');
+ assert.match(berief.context,/Meinungsäußerung/);
+ assert.match(berief.context,/bestreitet/);
+ assert.equal(own.lookup({brand:'Unbekannte Neue Marke'}),null);
+ assert.equal(own.lookup({brand:'alpro'}).owner,'Danone');
+ assert.equal(own.lookup({brand:'Taifun'}).kind,'Stiftungsgeführt');
+ assert.equal(own.lookup({brand:'Food for Future'}).owner,'REWE Group');
+ assert.equal(own.lookup({brand:'Vemondo'}).owner,'Schwarz Gruppe');
+ assert.ok(own.panel({brand:'Berief'}).includes('Quellen & Kontext'));
+ assert.ok(index.includes('./ownership.js?v=2.9.1'));
+});
+test('Failed packshots are hidden, source-image retries remain barcode-specific',()=>{
+ const guard=fs.readFileSync(path.join(root,'shuffle-extras.js'),'utf8');
+ const css=fs.readFileSync(path.join(root,'ownership.css'),'utf8');
+ assert.match(guard,/img\.style\.display='none'/);
+ assert.match(guard,/if\(p\.barcode\)/);
+ assert.match(guard,/rememberFailure\(p\)/);
+ assert.match(css,/img\[hidden\]/);
 });
