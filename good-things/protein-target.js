@@ -131,7 +131,7 @@ function referenceHtml(){
    '<div><span>Rechnerisch / Tag</span><strong>'+euro(c.equivalentCost)+'</strong><small>'+number(c.goal)+' g Protein</small></div>'+
    '<div><span>Rechnerisch / 30 Tage</span><strong>'+euro(c.monthlyEquivalentCost)+'</strong><small>'+number(c.monthProtein)+' g Protein</small></div></div>'+
   '<div class="gt-day-pack-note"><strong>Tatsächlich gekaufte Packungen:</strong> Für einen einzelnen Tag '+c.fullPacks+' Packungen ('+euro(c.fullPackCost)+'). Für 30 Tage zusammen '+c.monthlyFullPacks+' Packungen ('+euro(c.monthlyFullPackCost)+'), wenn du den Vorrat über den Monat verteilst.</div>'+
-  '<p class="gt-day-disclaimer">Nur der rechnerische Preis für Protein aus diesem einen Produkt, <strong>nicht</strong> die Kosten für deine gesamte tägliche Ernährung. Kein bestätigter Filialpreis und keine Empfehlung, deinen Bedarf ausschliesslich mit diesem Lebensmittel zu deckcken.</p></section>';
+  '<p class="gt-day-disclaimer">Nur der rechnerische Preis für Protein aus diesem einen Produkt, <strong>nicht</strong> die Kosten für deine gesamte tägliche Ernährung. Kein bestätigter Filialpreis und keine Empfehlung, deinen Bedarf ausschliesslich mit diesem Lebensmittel zu decken.</p></section>';
 }
 function panel(){
  const t=target(),month=t===null?null:t*MONTH_DAYS;
