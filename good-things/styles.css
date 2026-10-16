@@ -1087,3 +1087,34 @@ body:has(.gt-value-hero) .left-rail,body:has(.gt-value-hero) .hero{display:none}
 /* protein value: expansion without ranking missing prices */
 .gt-value-more-candidates{display:block;margin:14px auto 18px;background:#e8f2dc;border:1px solid #c2dcb7;border-radius:99px;color:#476f4b;font-size:12px;font-weight:850;padding:12px 24px;cursor:pointer}
 .gt-value-more-candidates:hover{background:#d6ecbd}
+
+
+/* GOOD THINGS 2.9.2 · Quick Rank image must NEVER obscure the facts or voting controls.
+   The old grid item with img height:100% could overflow its 166px image viewport. */
+.quick-rank-art{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  isolation:isolate;
+  width:100%;
+  height:188px;
+  min-height:0;
+  position:relative;
+}
+.quick-rank-art > img{
+  display:block;
+  flex:0 1 auto;
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:100%;
+  min-width:0;
+  min-height:0;
+  object-fit:contain;
+}
+.quick-rank-art > .board-emoji{max-height:100%}
+@media(max-width:510px){
+  .quick-rank-art{height:165px;margin:12px 0 15px}
+  .quick-rank-art > img{max-width:100%;max-height:100%}
+}
