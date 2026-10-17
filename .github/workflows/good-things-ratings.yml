@@ -1,0 +1,49 @@
+name: GOOD QUESTION · 123 product rating studio
+on:
+  pull_request:
+    paths:
+      - 'good-question/ratings/**'
+      - 'good-question/slow/index.html'
+      - 'good-question/slow/first-letter/index.html'
+      - '.github/workflows/good-things-ratings.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'good-question/ratings/**'
+      - '.github/workflows/good-things-ratings.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  catalog-and-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify product source fields and non-invented nutrient claims
+        run: python3 good-question/ratings/qa_catalog.py
+      - name: Prepare real Chromium browser
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Run responsive two-person-rating and transfer QA
+        run: |
+          python3 -m http.server 8099 --directory good-question >/tmp/gq-rating-http.log 2>&1 &
+          sleep 2
+          node good-question/ratings/qa_browser.mjs
+      - name: Upload actual browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: good-things-rating-mobile-desktop
+          path: good-question/ratings/screenshots/
+          if-no-files-found: ignore
+      - name: Show evidence limitations
+        run: |
+          echo 'Passing tests is not independent label verification, permission to reuse images, authentication of Mikel/Huong identities, or evidence of commercial affiliation.'
