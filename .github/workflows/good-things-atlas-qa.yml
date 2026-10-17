@@ -1,0 +1,47 @@
+name: GOOD THINGS / 70-product Atlas QA
+on:
+  pull_request:
+    paths:
+      - 'good-question/slow/first-letter/staples-atlas/**'
+      - 'good-question/slow/first-letter/index.html'
+      - 'good-question/slow/index.html'
+      - 'vegan/index.html'
+      - '.github/workflows/good-things-atlas-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'good-question/slow/first-letter/staples-atlas/**'
+      - '.github/workflows/good-things-atlas-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  atlas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Catalogue safety, count, source, uniqueness
+        run: python3 good-question/slow/first-letter/staples-atlas/qa_catalog.py
+      - name: Install browser
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Test mobile, interactions, images
+        run: |
+          python3 -m http.server 8099 --directory good-question/slow >/tmp/atlas-http.log 2>&1 &
+          sleep 2
+          node good-question/slow/first-letter/staples-atlas/browser_smoke.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: good-things-atlas-qa
+          path: |
+            good-question/slow/first-letter/staples-atlas/image-audit.json
+            good-question/slow/first-letter/staples-atlas/screenshots/
+          if-no-files-found: ignore
