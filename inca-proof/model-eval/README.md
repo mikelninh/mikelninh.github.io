@@ -1,5 +1,12 @@
 # INCA — Multi-model Document Evaluation (synthetic)
 
+## First completed real API comparison — 2026-10-20
+
+**[Measured results, token-cost estimate, and limitations](reports/RESULTS_2026-10-20.md)** · [GitHub Actions evidence](https://github.com/mikelninh/mikelninh.github.io/actions/runs/39431536440)
+
+Five developer-authored synthetic document-text cases were run against `gpt-4o-mini`, `gpt-6-luna`, and `gpt-6.1-sol`: all three returned 5/5 matching next routes and zero API/schema errors. Combined token cost estimated at $0.0161. **This is a tiny non-independent pilot and not an insurance production benchmark.** Model extra-ambiguity flags differed, so don't infer one model is generally best.
+
+
 A **runnable model-evaluation prototype**, separate from the existing deterministic `inca-proof/src/claims_eval.py` evaluation. This is an independent application work sample, **not an INCA integration**.
 
 ## Why this exists
