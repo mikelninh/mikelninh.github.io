@@ -5,7 +5,7 @@
 "use strict";
 const LABELS={material:"Material / Defekt",delivery:"Lieferung",size:"Größe / Passform",return:"Rückgabe",mixed:"Mehrere Themen",unknown:"Nicht eindeutig"};
 const SIGNALS={
-material:[/\bloch(?:er|e|s)?\b/g,/\bnaht\w*(?:\s+\w+){0,3}\s+(?:gerissen|auf|loest|loesen)\b/g,/\b(?:gerissen|eingerissen|riss|kaputt\w*|defekt|beschaedigt|beschaedigung|beschadigt|beschadigung|franst|verblasst|abgegangen|minderwertig|aufgerissen|fehlerhaft|materialproblem|materialprobleme|stoffproblem|faden|faeden)\b/g,/\b(?:torn|broken|ripped|hole|holes|seam|fraying|damaged|defective)\b/g,/\b(?:materialfehler|nahtfehler|stofffehler|bundfehler|sohlenfehler)\b/g,/\b(?:naht|ferse|sohle|bund|masche)\s+(?:loest sich(?: auf)?|reisst|geht ab|laeuft|gerissen|abgegangen)\b/g],
+material:[/\bloch(?:er|e|s)?\b/g,/\bnaht\w*(?:\s+\w+){0,3}\s+(?:gerissen|auf|loest|loesen)\b/g,/\b(?:gerissen|eingerissen|riss|kaputt\w*|defekt|beschaedigt|beschaedigung|beschadigt|beschadigung|franst|verblasst|abgegangen|minderwertig|aufgerissen|fehlerhaft|materialproblem|materialprobleme|stoffproblem|faden|faeden)\b/g,/\b(?:torn|broken|ripped|hole|holes|seam|fraying|damaged|defective)\b/g,/\b(?:materialfehler|nahtfehler|stofffehler|bundfehler|sohlenfehler)\b/g,/\b(?:naht|ferse|sohle|bund|masche)\s+(?:loest sich(?: auf)?|lost sich(?: auf)?|reisst|geht ab|laeuft|lauft|gerissen|abgegangen)\b/g],
 delivery:[/\b(?:liefer\w*|versand\w*|paket\w*|sendung\w*|tracking\w*|\w*liefer\w*|zustell\w*|zugestellt|verspaetet|lieferstatus|liefertermin)\b/g,/\b(?:delivery|delivered|shipping|shipment|parcel|tracking|late arrival|late)\b/g,/\b(?:wo\s+bleibt|nicht\s+angekommen|noch\s+nicht\s+da|nichts\s+bekommen)\b/g],
 size:[/\b(?:groesse|grosse|passform|zu\s+klein|zu\s+gross|passt\s+nicht|passen\s+nicht|sitzt\s+nicht|fallen\s+klein|fallen\s+gross|size|sizing|too\s+small|too\s+large|doesnt\s+fit)\b/g],
 return:[/\b(?:retoure|rueckgabe|ruckgabe|ruecksenden|rucksenden|ruecksendung|rucksendung|umtausch|tauschen|umtauschen|zurueckgeben|zuruckgeben|zuruecksenden|zurucksenden|zurueckgesendet|zuruckgesendet|widerruf|refund|return|exchange|erstattung)\b/g]
@@ -26,7 +26,7 @@ function classify(raw){
   if(cat==="material"&&(maskedNegation(text,m.index,m[0])||/\b(?:kein|keine|nicht|not|no)\b/.test(m[0])))continue;
   if(cat==="material"&&/\b(?:verpackung|karton)\b/.test(text.slice(Math.max(0,m.index-22),m.index))&&/\b(?:ware unversehrt|artikel unversehrt|produkt okay)\b/.test(text))continue;
   if(cat==="size"&&/\b(?:perfekt|passt gut|ideal)\b/.test(text.slice(m.index,m.index+30)))continue;
-  if(cat==="delivery"&&/\b(?:paket war puenktlich|delivery arrived|paket ist angekommen)\b/.test(text))continue;
+  if(cat==="delivery"&&/\b(?:paket war puenktlich|paket war punktlich|delivery arrived|paket ist angekommen)\b/.test(text))continue;
   found.push(m[0]);if(found.length>8)break;
  }}
  matches[cat]=[...new Set(found)];scores[cat]=matches[cat].length;
