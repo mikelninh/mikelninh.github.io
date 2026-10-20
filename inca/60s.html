@@ -195,6 +195,28 @@ details{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}summar
 @media(max-width:560px){.mc-case-nav{grid-template-columns:1fr}.mc-case-tab{display:grid;grid-template-columns:65px 1fr 52px;align-items:center;gap:10px}.mc-case-tab strong{margin:0}.mc-case-tab>small{text-align:right}.mc-progress-row{margin-bottom:15px}.mc-next-actions{width:100%}}
 
 
+
+.mc-bridge{border:1px solid #d8e4d4;background:#f3f8ef;padding:23px 26px 18px;border-radius:12px;margin:28px 0 12px}
+.mc-bridge-eyebrow{font-size:10px;letter-spacing:.13em;font-weight:850;color:#537455}
+.mc-bridge h2{font-size:clamp(24px,3vw,32px);line-height:1.13;letter-spacing:-.045em;margin:8px 0 8px}
+.mc-bridge p{font-size:13px;line-height:1.6;color:#57665b;margin:0}
+.mc-bridge strong{color:#293e2e}
+.mc-bridge-links{margin-top:13px;display:flex;flex-wrap:wrap;gap:9px 17px}
+.mc-bridge-links a{font-size:11px;color:#2f5f35;font-weight:750}
+.cw-expand{margin:0 0 26px}
+.cw-expand-summary{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;background:#fff;border:1px solid #cbd9ca;border-radius:11px;padding:18px 23px}
+.cw-expand-summary:hover{background:#f8fbf5}
+.cw-expand-summary:focus-visible{outline:3px solid #79b354;outline-offset:3px}
+.cw-expand-summary small,.cw-expand-summary strong,.cw-expand-summary em{display:block}
+.cw-expand-summary small{font-size:10px;font-weight:850;letter-spacing:.1em;color:#548158}
+.cw-expand-summary strong{font-size:20px;font-weight:850;letter-spacing:-.03em;color:#24392b;margin:6px 0}
+.cw-expand-summary em{font-size:12px;font-style:normal;color:#667568}
+.cw-expand-arrow{font-size:25px;color:#476a45;transition:transform .2s}
+.cw-expand[open] .cw-expand-arrow{transform:rotate(45deg)}
+.cw-expand[open] .cw-expand-summary{border-radius:11px 11px 0 0}
+.cw-expand>.cw{margin:0;border-radius:0 0 11px 11px;border-top:0;box-shadow:none}
+@media(max-width:640px){.mc-bridge{padding:18px}.cw-expand-summary{padding:15px}.cw-expand-summary strong{font-size:18px}}
+
 </style>
 </head>
 <body>
@@ -293,7 +315,7 @@ details{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}summar
         <div class="mc-takeaway">
           <div><strong>What this demonstrates</strong><p id="mc-takeaway-text">Failures should lead to safer, testable decisions.</p></div>
           <div class="mc-next-actions">
-            <a href="#case-workshop" class="mc-deep-link">Edit your own documents ↗</a>
+            <a href="#case-workshop" class="mc-deep-link">See the working date-check rule ↗</a>
             <button id="mc-next" type="button" class="mc-next">Next case →</button>
             <button id="mc-reset" type="button" class="mc-retry">Try this again</button>
           </div>
@@ -316,12 +338,20 @@ details{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}summar
       <p class="mc-footnote">All documents are fictional. The travel example ST-104 reconstructs the documented synthetic <a href="/inca/#operator-lab">H-A-011 routing failure</a>; the water-damage and bicycle-theft examples are independent fictional illustrations, not measured results. The original failure relied on an already-structured contradiction flag. No live LLM, insurer action, message or payment is involved.</p>
     </div>
   </section>
-  <section class="cw" id="case-workshop" aria-labelledby="cw-title">
-    <div class="cw-overline">INTERACTIVE CASE WORKSHOP · FICTIONAL TRAVEL CLAIM ST-104</div>
+  <section class="mc-bridge" aria-labelledby="mc-bridge-heading">
+    <span class="mc-bridge-eyebrow">BEHIND THE SCENES · OPTIONAL</span>
+    <h2 id="mc-bridge-heading">You made the decisions. Here's one rule you can actually test.</h2>
+    <p>The three cases above are interactive training scenarios. The workshop below is different: it runs a <strong>real, browser-local date-checking rule for travel case ST-104 only</strong>. Change one document, run the check, and inspect or download a review handoff. The water-damage and bicycle-theft decisions are not calculated by this date checker.</p>
+    <div class="mc-bridge-links"><a href="/inca/#operator-lab">Investigate the original synthetic failure ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/model-eval/reports/RESULTS_2026-10-20.md" target="_blank" rel="noopener">Separate real LLM experiment ↗</a></div>
+  </section>
+  <details class="cw-expand" id="case-workshop">
+    <summary class="cw-expand-summary"><span><small>TECHNICAL DEEP DIVE · TRAVEL ST-104 ONLY</small><strong>Try the working document check</strong><em>Change two fictional dates, see the route, and export a handoff</em></span><span class="cw-expand-arrow" aria-hidden="true">↗</span></summary>
+  <section class="cw" id="case-workshop-panel" aria-labelledby="cw-title">
+    <div class="cw-overline">REAL RULE DEMO · FICTIONAL TRAVEL CASE ST-104 · BROWSER-LOCAL</div>
     <div class="cw-heading">
       <div>
-        <h2 id="cw-title">Two documents. Two dates. What should happen next?</h2>
-        <p>Read the evidence, change a date if you like, and check the next step. The answer is calculated from the text you see, not chosen from a preset outcome.</p>
+        <h2 id="cw-title">Can the safeguard catch a changed date?</h2>
+        <p>This is the next layer of the travel challenge above—not a fourth case. Edit either cancellation date, compare the texts, and generate an evidence-based review handoff. It uses transparent parsing rules, not a live language model.</p>
       </div>
       <span class="cw-local">In your browser · No account</span>
     </div>
@@ -404,49 +434,24 @@ Stornierungsdatum: 12.07.2026</textarea>
       <p class="cw-fine">Transparent rule-based text check, not AI inference. The handoff is a local Markdown file with source excerpts, reason and next step. It never sends messages, approves coverage or triggers payment. For the real LLM evaluation, <a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/model-eval/reports/RESULTS_2026-10-20.md" target="_blank" rel="noopener">see the measured API report ↗</a></p>
     </div>
   </section>
-  <details class="cw-more" id="other-routes">
-    <summary>Explore three additional illustrative claims <span>↓</span></summary>
-  <section class="workspace" id="try-demo" aria-label="Try the interactive claims routing example">
-    <div class="workspace-head"><strong>Try the three sample claims</strong><span>illustrative values · all actions simulated</span></div>
-    <div class="layout">
-      <aside class="queue"><div class="eyebrow" style="margin:3px 4px 9px">Step 1 · Pick a claim</div><div id="cases"></div></aside>
-      <main class="main">
-        <div class="claim-head"><div><div class="eyebrow">Selected claim</div><h2 id="title"></h2><p id="summary" class="summary"></p></div><span id="badge" class="badge review"></span></div>
-
-        <div class="section">
-          <div class="section-title">Step 2 · Check the signals <span style="font-weight:500;text-transform:none;letter-spacing:0">· illustrative demo values</span></div>
-          <div class="signals" id="signals"></div>
-          <div class="threshold" id="threshold"></div>
-        </div>
-
-        <div class="section">
-          <div class="decision-row">
-            <div class="decision"><small>Step 3 · Understand the route</small><h3 id="decision"></h3><ul class="reasons" id="reasons"></ul></div>
-            <div class="next"><small>Step 4 · Preview the next action</small><h3 id="next"></h3><p id="nextWhy"></p><button class="primary" id="actionBtn" onclick="runAction()"></button><div class="result" id="result"></div></div>
-          </div>
-          <details><summary>Show evidence & full agent trace</summary><div class="details-grid"><div><h4>Evidence</h4><div id="sources"></div></div><div><h4>Agent trace</h4><div id="trace"></div></div></div><div class="calibration"><b>Production note:</b> these probabilities are synthetic. In a real 10k+ case environment I would calibrate them against historical outcomes, monitor reliability by segment, and set automation thresholds from measured error/correction rates — not from raw LLM self-confidence.</div></details>
-        </div>
-      </main>
-    </div>
-  </section>
-
   </details>
-  <section class="why"><div><div class="eyebrow">Why this matters</div><h2>Rank risk. Route attention.</h2></div><p>At volume, probabilities make the queue operational: <strong>high-confidence routine cases can move, ambiguous cases can be ranked for review, and hard blockers stop immediately.</strong> Humans spend attention where the expected value of judgement is highest.</p></section>
+  <section class="why"><div><div class="eyebrow">Why this matters</div><h2>Three possible next steps. One responsibility.</h2></div><p>Good AI Operations is not about sending everything to a human—or automating everything. It is about <strong>checking the evidence, explaining the route, and learning from corrections.</strong> The three challenges teach the decisions; the optional travel workshop demonstrates one small safeguard in code.</p></section>
   <div class="pilot"><strong>Real pilot next:</strong> historical cases → shadow mode → calibration curves + expert correction rate → failure analysis → expand automation only where measured reliability supports it.</div>
   <div class="footer"><span>Illustrative routing demo · no live claims, no customer actions.</span><span><a href="/inca/#operator-lab">Investigate H-A-011 ↗</a> · <a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/docs/ST-104_REVIEW_SOP.md" target="_blank" rel="noopener">Operator SOP ↗</a> · <a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/model-eval/reports/RESULTS_2026-10-20.md" target="_blank" rel="noopener">Real model test ↗</a> · <a href="/inca/">Engineering depth ↗</a></span></div>
 </div>
 
 <script src="/inca/catch-the-mistake.js"></script>
 <script src="/inca/interactive-case.js"></script>
+
 <script>
-const claims=[
-{label:'Edge case',title:'Night parking damage',summary:'Complete file, but one anomaly deserves a human look.',route:'HUMAN REVIEW',tone:'review',signals:[['Coverage probability','96%','good','policy + claim fit'],['Review risk','72%','warn','anomaly model'],['Evidence complete','100%','good','required items present'],['Routing confidence','93%','good','decision policy']],threshold:'Review risk 72% > 15% review threshold → HUMAN REVIEW',reasons:[['S2','Coverage is strongly supported.'],['S5','Review-risk score crosses the human-review threshold.']],next:'Claims expert review',nextWhy:'Review only the flagged anomaly; the relevant evidence is already attached.',action:'Open focused review',result:'Review task created. S2, S3 and S5 are attached with the exact review question. The human can confirm or override the concern before settlement.',sources:[['S1','Claim notice','Overnight parking damage, statement and incident time.'],['S2','Policy excerpt · Motor §4.2','Synthetic policy supports accidental exterior damage.'],['S3','Damage evidence','Four synthetic photos + repair estimate.'],['S5','Anomaly signal','Synthetic feature check flags an unusual pattern.']],trace:[['Intake','Claim + policy linked.'],['Coverage agent','p(covered)=0.96.'],['Risk agent','p(review)=0.72.'],['Evidence agent','completeness=1.00.'],['Decision policy','Review threshold exceeded.'],['Coordinator','Route to claims expert.']]},
-{label:'Missing evidence',title:'Water damage',summary:'Clear description, but a required cause document is missing.',route:'NEED INFO',tone:'info',signals:[['Coverage probability','81%','warn','provisional'],['Review risk','8%','good','no anomaly'],['Evidence complete','67%','bad','cause report missing'],['Routing confidence','97%','good','hard blocker']],threshold:'Required evidence < 100% → hard blocker → NEED INFO',reasons:[['S2','Coverage is plausible but not final.'],['S4','A required cause report is missing, so the case cannot advance.']],next:'Request one document',nextWhy:'Pause the case and ask only for the missing cause report.',action:'Request missing report',result:'Request prepared. When the report arrives, evidence + coverage checks rerun automatically instead of restarting the whole case.',sources:[['S1','Claim notice','Water damage, affected room and date.'],['S2','Policy excerpt · Home §7.1','Synthetic policy requires evidence of covered cause.'],['S4','Plumber / cause report','MISSING · required evidence not supplied.']],trace:[['Intake','Claim + policy linked.'],['Coverage agent','p(covered)=0.81.'],['Risk agent','p(review)=0.08.'],['Evidence agent','completeness=0.67.'],['Decision policy','Hard blocker: required evidence missing.'],['Coordinator','Request info.']]},
-{label:'Straightforward',title:'Dental treatment',summary:'Complete routine claim with no configured review trigger.',route:'AUTO READY',tone:'auto',signals:[['Coverage probability','98%','good','policy + treatment fit'],['Review risk','4%','good','below threshold'],['Evidence complete','100%','good','invoice consistent'],['Routing confidence','95%','good','decision policy']],threshold:'Coverage ≥ 95% + evidence 100% + review risk < 15% + no blocker → AUTO READY',reasons:[['S2','Coverage probability clears the auto-ready threshold.'],['S4','Review risk stays below threshold and evidence is complete.']],next:'Continue standard path',nextWhy:'No specialist review is needed; carry evidence + rationale downstream.',action:'Continue workflow',result:'Decision packet prepared for the normal downstream step. This demo does not execute payment or any external action.',sources:[['S1','Claim notice','Routine dental treatment reimbursement request.'],['S2','Policy excerpt · Health §3.4','Synthetic policy supports the treatment category.'],['S3','Invoice + treatment record','Provider, date, treatment and amount are consistent.'],['S4','Review-signal check','No configured review trigger found.']],trace:[['Intake','Claim + policy linked.'],['Coverage agent','p(covered)=0.98.'],['Risk agent','p(review)=0.04.'],['Evidence agent','completeness=1.00.'],['Decision policy','All auto-ready thresholds passed.'],['Coordinator','Continue standard path.']]}
-];
-let idx=0;const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-function render(){const x=claims[idx];document.getElementById('cases').innerHTML=claims.map((c,i)=>`<button class="case ${i===idx?'active':''}" onclick="pick(${i})" aria-pressed="${i===idx?'true':'false'}"><small>${esc(c.label)}</small><b>${esc(c.title)}</b></button>`).join('');document.getElementById('title').textContent=x.title;document.getElementById('summary').textContent=x.summary;const badge=document.getElementById('badge');badge.textContent=x.route;badge.className=`badge ${x.tone}`;document.getElementById('signals').innerHTML=x.signals.map(s=>`<div class="signal ${s[2]}"><small>${esc(s[0])}</small><strong>${esc(s[1])}</strong><span>${esc(s[3])}</span></div>`).join('');document.getElementById('threshold').innerHTML=`<b>Routing rule:</b> ${esc(x.threshold)}`;document.getElementById('decision').textContent=x.route;document.getElementById('reasons').innerHTML=x.reasons.map(r=>`<li><span class="cite">${esc(r[0])}</span>${esc(r[1])}</li>`).join('');document.getElementById('next').textContent=x.next;document.getElementById('nextWhy').textContent=x.nextWhy;document.getElementById('actionBtn').textContent=x.action;const result=document.getElementById('result');result.textContent='';result.className='result';document.getElementById('sources').innerHTML=x.sources.map(s=>`<div class="source"><b><span class="source-id">${esc(s[0])}</span>${esc(s[1])}</b><span>${esc(s[2])}</span></div>`).join('');document.getElementById('trace').innerHTML=x.trace.map(t=>`<div class="trace"><b>${esc(t[0])}</b><span>${esc(t[1])}</span></div>`).join('')}
-function pick(i){idx=i;render()}function runAction(){const r=document.getElementById('result');r.textContent=claims[idx].result;r.className='result show'}render();
+(function(){
+  const lab=document.getElementById('case-workshop');
+  if(!lab)return;
+  const openFromHash=()=>{if(window.location.hash==='#case-workshop'||window.location.hash==='#case-workshop-panel')lab.open=true;};
+  document.querySelectorAll('a[href="#case-workshop"]').forEach(a=>a.addEventListener('click',()=>{lab.open=true;}));
+  window.addEventListener('hashchange',openFromHash);
+  openFromHash();
+})();
 </script>
 </body>
 </html>
