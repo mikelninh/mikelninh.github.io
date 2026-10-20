@@ -182,7 +182,7 @@ const classifier=msg=>{
  if(defect&&shipping)return 'mixed';if(defect)return 'defect';if(shipping)return 'delivery';return 'unknown';
 };
 function snocksInit(){
- text('company','SNOCKS · JUNIOR AI ENGINEER');text('eyebrow','RETURN LOOP · INTERAKTIVE SUPPORT-PRÜFUNG');
+ text('company','SNOCKS · JUNIOR AI ENGINEER');text('eyebrow','RETURN LOOP · KUNDENANFRAGEN SICHER BEARBEITEN');
  $('headline').innerHTML='Eine Reklamation.<br><em>Zwei konkrete Ergebnisse.</em>';
  text('lede','Drei typische Supportfälle. Drei unterschiedliche Ergebnisse. Du siehst, wie Datenprüfung und menschliche Freigabe zusammenarbeiten.');
  text('ex-problem','Eine Beschwerde wird beantwortet. Wiederkehrende Qualitätsprobleme können dabei übersehen werden.');
@@ -229,21 +229,21 @@ function snocksInit(){
 }
 function analyzeTicket(){
  const message=$('ticket').value.trim(),id=$('order').value.trim().toUpperCase(),kind=classifier(message),root=$('result');root.replaceChildren();
- if(kind==='empty'){root.append(panelNote('Bitte eine Kundenanfrage eingeben','Ein ausreichend konkreter Text wird benötigt.'));return}
+ if(kind==='empty'){root.append(panelNote('Bitte eine Nachricht eingeben','Ein ausreichend konkreter Text wird benötigt.'));return}
  const o=orders.find(x=>x.order_id===id);
  const relevant=o?orders.filter(x=>x.sku===o.sku):[],complaintsFor=o?complaints.filter(x=>x.sku===o.sku&&x.category==='material'):[];
  const evid=kind==='defect'||kind==='mixed';
  const denominator=relevant.length,numerator=complaintsFor.length,percent=denominator?(100*numerator/denominator).toFixed(1).replace('.',','):'';
  root.append(e('div','chip',o?'Bestellung in den lokalen Daten gefunden':'Bestellung nicht auffindbar'));
- root.append(facts([['Bestell-ID',id||'Nicht angegeben'],['Prüfung',o?'SKU '+o.sku:'Keine verifizierte Zuordnung'],['Anliegen',kind==='defect'?'Mögliches Qualitätsproblem':kind==='delivery'?'Versandanfrage':kind==='mixed'?'Gemischte Anfrage':'Andere/unklare Anfrage']]));
+ root.append(facts([['Bestell-ID',id||'Nicht angegeben'],['Prüfung',o?'Produktcode '+o.sku:'Keine verifizierte Zuordnung'],['Anliegen',kind==='defect'?'Mögliches Qualitätsproblem':kind==='delivery'?'Versandanfrage':kind==='mixed'?'Gemischte Anfrage':'Andere/unklare Anfrage']]));
  if(evid&&o){
-   const metrics=e('div','metricbar');metrics.append(add(e('div','metric'),e('b','',numerator+' / '+denominator),e('small','','Materialbeschwerden / Bestellungen derselben SKU, lokal berechnet')));
+   const metrics=e('div','metricbar');metrics.append(add(e('div','metric'),e('b','',numerator+' / '+denominator),e('small','','Ähnliche Beschwerden / Bestellungen zu diesem Produkt')));
    metrics.append(add(e('div','metric'),e('b','',percent+' %'),e('small','','Anteil im geladenen Datensatz – keine bewiesene Fehlerquote')));root.append(metrics);
    root.append(panelNote('So entsteht der Qualitäts-Hinweis','Die Materialbeschwerden wurden anhand der SKU gruppiert. Drei beispielhafte Belege: '+complaintsFor.slice(0,3).map(x=>x.id).join(', ')+'. Ein Mensch muss mögliche Fehlerursachen prüfen.'));
    if(kind==='mixed')root.append(panelNote('Zusätzliches Versandproblem','Ein Carrier-Feed ist nicht verbunden. Lieferstatus und Zustellung können hier nicht verifiziert werden.','warning'));
  } else if(kind==='delivery'||kind==='mixed'){
    root.append(panelNote('Wichtige Daten fehlen','Es ist kein Carrier-Tracking verbunden. Lieferstatus und Zustelldatum dürfen deshalb nicht erfunden werden.','warning'));
- }else root.append(panelNote(o?'Keine sichere Produkt-Klassifikation':'Kein Bestellbeleg','Ohne passenden Bestellbeleg und eindeutige Einordnung geben wir keine produktspezifische Aussage ab.','warning'));
+ }else root.append(panelNote(o?'Keine sichere Produkt-Klassifikation':'Bestellung nicht gefunden','Ohne passenden Bestellbeleg und eindeutige Einordnung geben wir keine produktspezifische Aussage ab.','warning'));
  let draft='';
  if(!o)draft='Danke für deine Nachricht. Wir würden deinen Fall gern prüfen. Bitte teile uns dazu eine gültige Bestellnummer mit. Wir bestätigen noch keine Erstattung oder Lieferung.';
  else if(kind==='defect')draft='Danke für deinen Hinweis. Es tut uns leid, dass du ein Problem mit den Socken hast. Wir prüfen deinen Fall und melden uns mit den nächsten Schritten. Wir können eine Erstattung derzeit nicht bestätigen.';
@@ -252,7 +252,7 @@ function analyzeTicket(){
  root.append(e('h3','','Antwortentwurf · noch nicht versendet'));
  const edit=e('textarea');edit.id='draft';edit.value=draft;edit.setAttribute('aria-label','Editierbarer Antwortentwurf');edit.style.marginTop='9px';root.append(edit);
  root.append(p('Du kannst den Vorschlag bearbeiten. Erst nach menschlicher Prüfung dürfte eine echte Support-Aktion erfolgen.','fine'));
- root.append(panelNote('Interner nächster Schritt',!o?'Bestellnummer prüfen, danach Fall erneut analysieren.':evid?'Supportfall dokumentieren und das Muster bei diesem Produkt zur Qualitätsprüfung vormerken.':'Zuständige Stelle prüfen lassen; keine automatische Aussage über Versand oder Erstattung.'));
+ root.append(panelNote('Was das Team als Nächstes tun sollte',!o?'Bestellnummer prüfen, danach Fall erneut analysieren.':evid?'Supportfall dokumentieren und das Muster bei diesem Produkt zur Qualitätsprüfung vormerken.':'Zuständige Stelle prüfen lassen; keine automatische Aussage über Versand oder Erstattung.'));
  const bar=e('div','decision-row');bar.append(button('Zur Prüfung vormerken',()=>ticketDecision(true,{id,message,kind,sku:o?.sku||null,numerator,denominator}), 'choice'),button('Erst Daten ergänzen',()=>ticketDecision(false,{id,message,kind,sku:o?.sku||null,numerator,denominator}),'choice'));
  root.append(bar);
  currentTicket={id,message,kind,sku:o?.sku||null,numerator,denominator};text('result-title','Vom Ticket zum überprüfbaren Vorgang');
@@ -265,7 +265,7 @@ function ticketDecision(flag,data){
  },'btn btn-subtle'));
 }
 function bidInit(){
- text('company','A11 · JUNIOR PRODUCT MANAGER');text('eyebrow','BIDPILOT · EVIDENCE-FIRST PRODUCT DISCOVERY');
+ text('company','A11 · JUNIOR PRODUCT MANAGER');text('eyebrow','BIDPILOT · ÖFFENTLICHE AUFTRÄGE VERSTÄNDLICH PRÜFEN');
  $('headline').innerHTML='Passende Aufträge finden.<br><em>Früh die Hürden erkennen.</em>';
  text('lede','Wenn eine Behörde Software oder IT-Hilfe braucht, sucht sie Unternehmen für den Auftrag. Prüfe drei echte Beispiele und entscheide, welcher Auftrag zu deinem Team passen könnte.');
  text('ex-problem','Welche öffentlichen Aufträge passen zu deinem Unternehmen?');
