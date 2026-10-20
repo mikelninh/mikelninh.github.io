@@ -57,8 +57,8 @@ function line(label,value){const e=elem('div','fact');const a=elem('label','',la
 function addBox(title,body){const n=elem('div','why');n.append(elem('strong','',title),elem('p','',body));output.append(n);return n}
 function addButton(label,fn,cl){const b=elem('button',cl||'choice',label);b.type='button';b.addEventListener('click',fn);output.append(b);return b}
 function resetState(){stage=0;chosen='';output.replaceChildren();output.classList.add('hidden');$('empty').classList.remove('hidden');reset.classList.add('hidden');primary.classList.remove('hidden');primary.disabled=false;set('result-kicker','02 / NACHVOLLZIEHEN');set('result-title','Was ergibt die Prüfung?');progress(0)}
-function progress(x){[1,2,3].forEach(n=>$('p'+n).classList.toggle('on',n<=x));$('.none');}
-function $(id){return doc.getElementById(id)}
+function progress(x){[1,2,3].forEach(n=>$('p'+n).classList.toggle('on',n<=x));const panel=document.querySelector('.progress');panel.setAttribute('aria-label','Fortschritt: '+x+' von drei Schritten');}
+
 function begin(){stage=1;primary.classList.add('hidden');reset.classList.remove('hidden');$('empty').classList.add('hidden');output.classList.remove('hidden');output.replaceChildren();progress(1);if(snocks)snocksEvidence();else bidEvidence()}
 function finish(answer){chosen=answer;stage=3;progress(3);output.replaceChildren();set('result-kicker','03 / ENTSCHEIDUNG');set('result-title',snocks?'Freigabe bleibt beim Menschen.':'Eine begründete nächste Frage.');
 const d=elem('div','done show');
