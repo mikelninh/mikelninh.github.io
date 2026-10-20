@@ -72,7 +72,11 @@ function screen(profile,data,nowDate){
  candidate.push({...n,shortTitle:hit.subject,hit:hit.best.hits,matchedCategory:hit.best.skill,score:hit.score,rank,known,barriers,unknowns,status,source:"Datensatz der öffentlichen Bekanntmachungen",next:barriers.length?"Erst fehlende Nachweise klären – keine voreilige Bewerbung.":"Original-Ausschreibung und Teilnahmebedingungen prüfen, bevor Zeit in ein Angebot fließt."});
  }
  candidate.sort((a,b)=>b.rank-a.rank||a.deadline.localeCompare(b.deadline)||a.id.localeCompare(b.id));
- return{dataCount:notices.length,available,matched:eligible,excludedScope,shown:candidate.slice(0,5),all:candidate,threshold,asOf:today};
+ // A ranked shortlist should also teach when *not* to pursue a relevant tender.
+ // Reserve the final slot for a clearly explained self-declared blocker when present.
+ const shown=candidate.slice(0,5),blocked=candidate.find(x=>x.barriers.length&&!shown.includes(x));
+ if(blocked && shown.length===5)shown[4]=blocked;
+ return{dataCount:notices.length,available,matched:eligible,excludedScope,shown,all:candidate,threshold,asOf:today};
 }
 root.BidScreening={screen,subject,match,keywords,LABELS};
 })(window);
