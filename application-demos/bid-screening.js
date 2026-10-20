@@ -64,9 +64,11 @@ function screen(profile,data,nowDate){
  else if(profile.security!=="yes")unknowns.push("Sicherheitsnachweis noch prüfen");
  unknowns.push("Weitere Anforderungen in Originalunterlagen prüfen");
  }else unknowns.push("Teilnahmebedingungen noch nicht aus den Originalunterlagen geprüft");
+ const adjacent=Object.keys(SIGNALS).filter(k=>k!==hit.best.skill&&match(subj,k).length>0&&!skills.includes(k));
+ if(adjacent.length)unknowns.push("Im Auftragsgegenstand kommen zusätzlich vor: "+adjacent.map(k=>LABELS[k]).join(", ")+". Fähigkeiten oder Partner prüfen.");
  const status=barriers.length?"Hürde zuerst klären":"Interessant – Anforderungen prüfen";
- // A known self-declared barrier must never be masked by a relevance ranking.
- const rank=hit.score-(barriers.length?10:0);
+ // If the title suggests work beyond the declared team's competencies, don't prioritize blindly.
+ const rank=hit.score-(barriers.length?10:0)-adjacent.length*3;
  candidate.push({...n,shortTitle:hit.subject,hit:hit.best.hits,matchedCategory:hit.best.skill,score:hit.score,rank,known,barriers,unknowns,status,source:"Datensatz der öffentlichen Bekanntmachungen",next:barriers.length?"Erst fehlende Nachweise klären – keine voreilige Bewerbung.":"Original-Ausschreibung und Teilnahmebedingungen prüfen, bevor Zeit in ein Angebot fließt."});
  }
  candidate.sort((a,b)=>b.rank-a.rank||a.deadline.localeCompare(b.deadline)||a.id.localeCompare(b.id));
