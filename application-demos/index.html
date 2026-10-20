@@ -79,6 +79,7 @@ if(snocks){
  $('go').onclick=()=>{const c=cases[selected];if(!c)return;put('source',c.tag);put('resultTitle',c.title);put('resultBody',c.body);put('decision',c.decision);$('sourceLink').hidden=true;$('output').hidden=false;$('placeholder').hidden=true;$('outTitle').textContent='Vom Ticket zur Entscheidung.'};
  a('Open full technical demo ↗','https://return-loop-proof-mn-2026.vercel.app/','primarylink');
  a('How the workflow is tested ↗','https://return-loop-proof-mn-2026.vercel.app/#lab','secondary');
+ document.querySelector('.time').lastChild.textContent='60–90 Sekunden · interaktive Demo · ohne Konto';
  put('disclosure','Independent, read-only illustration using synthetic data. The server-side reference includes Python, FastAPI, SQLite and an approval gate. No live ecommerce connection, refund or outbound message. The deterministic baseline gets 21/24 synthetic classifications correct; model efficacy is not proven.');
 }else{
  document.title='BIDPILOT · 60 seconds · Michael Ninh';
@@ -86,18 +87,18 @@ if(snocks){
  put('eyebrow','BIDPILOT / PRODUCT DISCOVERY');
  $('headline').innerHTML='Less searching.<br><em>Better decisions.</em>';
  put('intro','Small studios scan public tenders without knowing what deserves attention. Choose a focus, inspect one real TED notice, then decide whether it is worth further research.');
- put('question','What does your team do?');
+ put('question','What would you like to review?');
  put('instruction','Choose a focus. We show a public notice from our current TED data snapshot—not a verified match or a qualified lead.');
- const filters=[['Software & IT','72','48'],['Data & AI','72','48'],['IT infrastructure','72','48']];
- filters.forEach((f,i)=>addChoice(f[0],i));
+ const filters=['IT services','Software products','General market scan'];
+ filters.forEach((f,i)=>addChoice(f,i));
  $('go').textContent='Inspect one notice →';
  const fallback=()=>{put('source','LIVE FEED UNAVAILABLE');put('resultTitle','No verified notice to show.');put('resultBody','The TED data snapshot could not be loaded. We never invent a tender to fill the screen.');put('decision','Next step: check the current official notice feed or visit the full product to understand the source requirements.');$('sourceLink').hidden=true};
  $('go').onclick=()=>{
    $('output').hidden=false;$('placeholder').hidden=true;$('outTitle').textContent='One source-backed candidate.';
    if(!notices.length){fallback();return}
-   const cp=selected===2?'48':'72';
-   const eligible=notices.filter(n=>n&&n.stage==='competition'&&Array.isArray(n.cpv)&&n.cpv.some(x=>String(x).startsWith(cp))&&n.url&&n.title);
-   const n=(eligible.length?eligible:notices.filter(n=>n&&n.stage==='competition'&&n.url&&n.title))[0];
+   const eligible=notices.filter(n=>n&&n.stage==='competition'&&Array.isArray(n.cpv)&&n.cpv.some(x=>String(x).startsWith(selected===0?'72':'48'))&&n.url&&n.title);
+   const fallbackList=notices.filter(n=>n&&n.stage==='competition'&&n.url&&n.title);
+   const n=(selected===2?fallbackList:eligible)[0];
    if(!n){fallback();return}
    put('source','TED '+n.id+' · PUBLISHED '+n.published+(feedDate?' · SNAPSHOT '+feedDate:''));
    put('resultTitle',n.title);
