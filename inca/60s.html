@@ -88,24 +88,160 @@ details{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}summar
 .cw-qa-body button{padding:10px 13px;border:0;background:#223728;color:#fff;font-size:12px;font-weight:800;border-radius:6px;cursor:pointer}
 .cw-qa-body button:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:760px){.cw-qa-inputs{grid-template-columns:1fr}}
+
+/* INCA 60-second challenge — editorial document-led interaction */
+.mc-hero{padding:34px 0 26px}.mc-hero h1{font-size:clamp(38px,5.8vw,66px);max-width:1000px;line-height:1.02}
+.mc-hero-em{color:#526d43}.mc-hero-intro{max-width:780px;color:#4f5c52;font-size:16px;line-height:1.55}
+.mc-outline{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
+.mc-outline span{padding:10px 12px;background:#fff;border:1px solid #e1e5dd;font-size:12px;color:#57645a;border-radius:5px}
+.mc-outline b{margin-right:5px;font-size:10px;letter-spacing:.05em;color:#273629}
+.mc{border:1px solid #d4ded0;border-radius:13px;background:#fafbf7;overflow:hidden;box-shadow:0 18px 60px rgba(22,39,25,.07);margin:8px 0 22px}
+.mc-header{background:#1c2921;color:#d4f2c0;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 24px;font-size:10px;font-weight:850;letter-spacing:.13em}
+.mc-header span:last-child{color:#aabcae;font-weight:650}
+.mc-inner{padding:24px 25px 17px}.mc-heading-row{display:flex;align-items:center;justify-content:space-between;gap:22px;margin-bottom:18px}
+.mc-step{font-size:10px;letter-spacing:.15em;font-weight:850;color:#5b8060;margin:0 0 9px}
+.mc h2{font-size:clamp(27px,4vw,40px);line-height:1.07;letter-spacing:-.045em;margin:0 0 9px}
+.mc-prompt{font-size:13px;line-height:1.5;color:#5b665d;margin:0;max-width:650px}
+.mc-claim-ticket{flex-shrink:0;border:1px solid #cfdaca;padding:13px 16px;background:#fff;text-align:right;min-width:158px}
+.mc-claim-ticket span,.mc-claim-ticket small{display:block;font-size:9px;color:#768575;letter-spacing:.1em;font-weight:750}
+.mc-claim-ticket strong{display:block;font-size:24px;letter-spacing:-.065em;margin:3px 0 0}
+.mc-claim-ticket small{font-weight:400;letter-spacing:0;margin-top:3px}
+.mc-doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mc-doc{border:1px solid #d4d9cf;min-width:0;background:#f2f5ee;padding:11px;border-radius:9px}
+.mc-doc-top{display:flex;align-items:center;gap:9px;font-size:10px;font-weight:850;letter-spacing:.12em;color:#2c402f;padding:0 4px 10px}
+.mc-doc-symbol{display:inline-grid;place-items:center;width:27px;height:27px;background:#e2edd9;border-radius:5px;font-size:15px;letter-spacing:0}
+.mc-doc-num{margin-left:auto;color:#849086;font-weight:600}
+.mc-doc-paper{padding:19px 20px 13px;background:#fff;box-shadow:0 4px 12px rgba(21,33,23,.055);min-height:222px;display:flex;flex-direction:column}
+.mc-paper-label{font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:#7c877b;margin:0 0 4px}
+.mc-paper-title{font-size:17px;font-weight:800;letter-spacing:-.03em;margin:0}
+.mc-paper-rule{height:1px;background:#e6e9e4;margin:13px 0}
+.mc-date-caption{font-size:10px;font-weight:850;letter-spacing:.1em;color:#818e81;margin:0 0 5px}
+.mc-date-value{display:inline-block;width:fit-content;position:relative;font-size:26px;letter-spacing:-.04em;color:#27392c;font-variant-numeric:tabular-nums;border-radius:3px;transition:background .2s}
+.mc-paper-body{margin:11px 0 17px;font-size:11px;color:#637063;max-width:320px}
+.mc-paper-footer{display:flex;justify-content:space-between;gap:12px;margin-top:auto;padding-top:9px;border-top:1px dashed #e2e8e0;font-size:9px;color:#95a095;letter-spacing:.06em}
+.mc-promptbar{display:flex;align-items:center;justify-content:space-between;gap:22px;background:#ecf2e8;border:1px solid #dae4d6;border-radius:9px;margin-top:13px;padding:15px 18px}
+.mc-promptbar strong{font-size:15px}.mc-promptbar p:last-child{font-size:11px;color:#627364;margin:5px 0 0}
+.mc-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.mc-action{min-height:43px;font-size:12px;font-weight:800;border-radius:6px;border:1px solid #36483a;cursor:pointer;padding:10px 13px;white-space:nowrap;transition:transform .14s}
+.mc-action:hover{transform:translateY(-1px)}
+.mc-action:focus-visible,.mc-retry:focus-visible,.mc-deep-link:focus-visible{outline:3px solid #8bbc48;outline-offset:3px}
+.mc-continue{background:#fff;color:#273529}.mc-review{background:#243d2d;color:#fff}
+.mc-action[aria-pressed="true"]{outline:2px solid #8aaf48;outline-offset:2px}
+.mc-reveal{margin-top:15px}.mc-reveal[hidden]{display:none}
+.mc-answered .mc-date-value{background:#fff2bd;box-shadow:0 0 0 5px #fff2bd;color:#762f1e}
+.mc-answered .mc-doc{border-color:#d9b07b}
+.mc-discovery{display:flex;align-items:center;gap:14px;padding:17px 18px;background:#fff9eb;border:1px solid #efdaae;border-radius:8px}
+.mc-discovery-icon{display:grid;place-items:center;border-radius:50%;background:#9a4d2b;color:#fff;font-size:17px;font-weight:850;min-width:28px;height:28px}
+.mc-discovery h3{font-size:17px;line-height:1.2;margin:0 0 5px;letter-spacing:-.02em}
+.mc-discovery p:not(.mc-step){font-size:12px;color:#5f6258;margin:0;line-height:1.55}
+.mc-difference{margin-left:auto;flex-shrink:0;font-size:10px;letter-spacing:.08em;font-weight:850;padding:9px 11px;color:#8c4224;border:1px solid #e9c9aa;background:#fff}
+.mc-compare-heading{margin:19px 0 9px}
+.mc-before-after{display:grid;grid-template-columns:1fr 34px 1fr;align-items:center;gap:8px}
+.mc-route-old,.mc-route-new{border-radius:8px;padding:16px 18px;min-height:135px}
+.mc-route-old{background:#fff0ec;border:1px solid #f0d6cd}.mc-route-new{background:#e6f4dd;border:1px solid #d0e8c2}
+.mc-route-old span,.mc-route-new span{display:block;font-size:10px;letter-spacing:.06em;font-weight:850;margin:0 0 8px}
+.mc-route-old span{color:#985a45}.mc-route-new span{color:#40754b}
+.mc-route-old strong,.mc-route-new strong{display:block;font-size:21px;letter-spacing:-.04em}
+.mc-route-old strong{color:#9b392b}.mc-route-new strong{color:#206640}
+.mc-route-old p,.mc-route-new p{font-size:11px;line-height:1.5;color:#58655a;margin:7px 0 0}
+.mc-change-arrow{font-size:25px;font-weight:800;text-align:center;color:#618961}
+.mc-takeaway{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:16px 0 6px}
+.mc-takeaway strong{font-size:13px}.mc-takeaway p{font-size:11px;line-height:1.5;color:#5e6d5d;margin:5px 0 0;max-width:560px}
+.mc-next-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.mc-deep-link{display:inline-block;color:#fff;background:#253b2a;border-radius:6px;text-decoration:none;font-size:11px;font-weight:800;padding:11px 13px}
+.mc-retry{background:transparent;border:1px solid #c8d5c5;border-radius:6px;font-size:11px;padding:10px 12px;cursor:pointer;color:#415341;font-weight:700}
+.mc-footnote{font-size:10px;line-height:1.55;margin:15px 0 0;color:#778278;border-top:1px solid #e3e9e1;padding-top:10px}
+.mc-footnote a{color:#3c6542}
+@media(max-width:800px){.mc-heading-row{align-items:start}.mc-claim-ticket{min-width:135px}.mc-promptbar,.mc-takeaway{align-items:flex-start;flex-direction:column}.mc-buttons,.mc-next-actions{width:100%}.mc-action{flex:1}.mc-deep-link{flex:1;text-align:center}}
+@media(max-width:600px){.mc-hero h1{font-size:clamp(35px,9vw,50px)}.mc-header{padding:12px 14px}.mc-inner{padding:16px 14px}.mc-doc-grid{grid-template-columns:1fr}.mc-heading-row{flex-direction:column}.mc-claim-ticket{display:none}.mc-doc-paper{min-height:175px}.mc-before-after{grid-template-columns:1fr}.mc-change-arrow{transform:rotate(90deg);font-size:22px}.mc-discovery{align-items:flex-start;flex-wrap:wrap}.mc-difference{margin-left:0}.mc-buttons{flex-direction:column}.mc-next-actions{flex-direction:column;align-items:stretch}}
+@media(prefers-reduced-motion:reduce){.mc-action,.mc-date-value{transition:none}.mc-action:hover{transform:none}}
+
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top"><b>MICHAEL NINH × INCA</b><span>AI Operations Associate · independent work sample</span></div>
-  <section class="hero">
+  <section class="hero mc-hero">
     <div class="accent"></div>
-    <div class="eyebrow">60-second work sample</div>
-    <h1>Which claims can move forward—and which need a human?</h1>
-    <div class="intro-grid" aria-label="Problem, solution and interactive demo">
-      <div class="intro-step"><b>01 / THE PROBLEM</b><p>Not every claim is ready. Missing evidence and risk signals need different next steps.</p></div>
-      <div class="intro-step"><b>02 / WHAT I BUILT</b><p>A small interactive routing prototype: <strong>review, request information or continue</strong>—with an explanation for each decision.</p></div>
-      <div class="intro-step"><b>03 / TRY IT NOW</b><p>Compare two synthetic documents, edit a date, calculate the next step and download a review handoff. No account required.</p></div>
+    <div class="eyebrow">Independent INCA work sample · 60-second experience</div>
+    <h1>A claim looked ready.<br><span class="mc-hero-em">One detail changed everything.</span></h1>
+    <p class="mc-hero-intro">A documented mistake in a synthetic claims workflow inspired this interactive challenge. Make the decision yourself, see the missed evidence, then explore the safeguard.</p>
+    <div class="mc-outline" aria-label="Problem, solution and participation">
+      <span><b>01 · PROBLEM</b> Conflicting documents</span>
+      <span><b>02 · BUILT</b> A safer routing check</span>
+      <span><b>03 · TRY</b> Make the decision</span>
     </div>
-    <div class="demo-start"><a class="start-link" href="#case-workshop">Try a case <span aria-hidden="true">↓</span></a><span>About 60 seconds · synthetic simulation · no upload needed</span></div>
+    <div class="demo-start"><a class="start-link" href="#mistake-challenge">Catch the mistake <span aria-hidden="true">↓</span></a><span>1 minute · synthetic case · nothing is sent</span></div>
   </section>
 
 
+  <section class="mc" id="mistake-challenge" aria-labelledby="mc-heading">
+    <div class="mc-header">
+      <span>THE 60-SECOND CHALLENGE</span>
+      <span>ST-104 · FICTIONAL RECONSTRUCTION</span>
+    </div>
+    <div class="mc-inner">
+      <div class="mc-heading-row">
+        <div>
+          <p class="mc-step">01 / YOU DECIDE</p>
+          <h2 id="mc-heading">Would you let this claim continue?</h2>
+          <p class="mc-prompt">Both documents are about the same cancellation. Look closely at the dates before you choose a next step.</p>
+        </div>
+        <div class="mc-claim-ticket"><span>TRAVEL CLAIM</span><strong>ST—104</strong><small>Synthetic · no insurer data</small></div>
+      </div>
+      <div class="mc-doc-grid" aria-label="Two fictional source documents">
+        <article class="mc-doc mc-doc-a" aria-label="Customer notice">
+          <div class="mc-doc-top"><span class="mc-doc-symbol" aria-hidden="true">✉</span><span>CUSTOMER NOTICE</span><span class="mc-doc-num">01 / 02</span></div>
+          <div class="mc-doc-paper">
+            <p class="mc-paper-label">Reise ST-104</p>
+            <p class="mc-paper-title">Stornierungsbestätigung</p>
+            <div class="mc-paper-rule"></div>
+            <p class="mc-date-caption">STORNIERUNGSDATUM</p>
+            <strong class="mc-date-value">11.07.2026</strong>
+            <p class="mc-paper-body">Die Kundin meldet die Stornierung vor Reiseantritt.</p>
+            <div class="mc-paper-footer"><span>QUELLE A</span><span>FIKTIVER AUSZUG</span></div>
+          </div>
+        </article>
+        <article class="mc-doc mc-doc-b" aria-label="Booking record">
+          <div class="mc-doc-top"><span class="mc-doc-symbol" aria-hidden="true">▤</span><span>BOOKING RECORD</span><span class="mc-doc-num">02 / 02</span></div>
+          <div class="mc-doc-paper">
+            <p class="mc-paper-label">Reise ST-104</p>
+            <p class="mc-paper-title">Buchungssystem-Auszug</p>
+            <div class="mc-paper-rule"></div>
+            <p class="mc-date-caption">STORNIERUNGSDATUM</p>
+            <strong class="mc-date-value">12.07.2026</strong>
+            <p class="mc-paper-body">Das Buchungssystem führt die Stornierung unter diesem Datum.</p>
+            <div class="mc-paper-footer"><span>QUELLE B</span><span>FIKTIVER AUSZUG</span></div>
+          </div>
+        </article>
+      </div>
+      <div class="mc-promptbar">
+        <div><p class="mc-step">02 / MAKE THE CALL</p><strong>What is the safest next step?</strong><p id="mc-status" aria-live="polite">Inspect the two source dates, then make your call.</p></div>
+        <div class="mc-buttons" role="group" aria-label="Choose what should happen to this claim">
+          <button type="button" data-mc-choice="continue" aria-pressed="false" class="mc-action mc-continue">Continue processing <span aria-hidden="true">→</span></button>
+          <button type="button" data-mc-choice="review" aria-pressed="false" class="mc-action mc-review">Human review <span aria-hidden="true">↗</span></button>
+        </div>
+      </div>
+      <div id="mc-reveal" class="mc-reveal" hidden>
+        <div class="mc-discovery">
+          <span class="mc-discovery-icon" aria-hidden="true">!</span>
+          <div><p class="mc-step">THE DETAIL THAT MATTERS</p><h3 id="mc-result-heading"></h3><p id="mc-result-description"></p></div>
+          <span class="mc-difference">1 DAY APART</span>
+        </div>
+        <p class="mc-step mc-compare-heading">03 / SEE WHAT CHANGED</p>
+        <div class="mc-before-after">
+          <div class="mc-route-old"><span>BEFORE · RECORDED GUARDED V2</span><strong>AUTO_READY</strong><p>The synthetic case was allowed to proceed despite its contradiction flag.</p></div>
+          <div class="mc-change-arrow" aria-hidden="true">→</div>
+          <div class="mc-route-new"><span>AFTER · PROPOSED V3 REPLAY</span><strong>HUMAN_REVIEW</strong><p>An added contradiction gate prevents automatic clearance in the local deterministic replay.</p></div>
+        </div>
+        <div class="mc-takeaway">
+          <div><strong>What this demonstrates</strong><p>Not just finding a bug: preserving the miss, adding a bounded safeguard, and checking that the next decision is safer.</p></div>
+          <div class="mc-next-actions"><a href="#case-workshop" class="mc-deep-link">Change the dates yourself ↗</a><button id="mc-reset" type="button" class="mc-retry">Try again</button></div>
+        </div>
+      </div>
+      <p class="mc-footnote">Evidence boundary: the recorded <a href="/inca/#operator-lab">H-A-011 failure</a> is from a synthetic rule-based evaluation. These two document excerpts and dates are an illustrative reconstruction (ST-104), not the original holdout documents. No real claim or API is processed here.</p>
+    </div>
+  </section>
   <section class="cw" id="case-workshop" aria-labelledby="cw-title">
     <div class="cw-overline">INTERACTIVE CASE WORKSHOP · FICTIONAL TRAVEL CLAIM ST-104</div>
     <div class="cw-heading">
@@ -226,6 +362,7 @@ Stornierungsdatum: 12.07.2026</textarea>
   <div class="footer"><span>Illustrative routing demo · no live claims, no customer actions.</span><span><a href="/inca/#operator-lab">Investigate H-A-011 ↗</a> · <a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/docs/ST-104_REVIEW_SOP.md" target="_blank" rel="noopener">Operator SOP ↗</a> · <a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/model-eval/reports/RESULTS_2026-10-20.md" target="_blank" rel="noopener">Real model test ↗</a> · <a href="/inca/">Engineering depth ↗</a></span></div>
 </div>
 
+<script src="/inca/catch-the-mistake.js"></script>
 <script src="/inca/interactive-case.js"></script>
 <script>
 const claims=[
