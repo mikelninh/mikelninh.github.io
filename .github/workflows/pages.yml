@@ -115,6 +115,8 @@ jobs:
           fetch_until_ready "$base/broker-signup-lab/" "Wo verlieren wir Nutzer"
           fetch_until_ready "$base/doctolib-ai-ops/" "AI Operations Workbench"
           fetch_until_ready "$base/doctolib-onboarding/" "Onboarding Shift"
-          fetch_until_ready "$base/first-mile/" "See the potential."
+          fetch_until_ready "$base/first-mile/" "Better questions."
           fetch_until_ready "$base/first-mile/app.mjs" "async function parsePdf"
           fetch_until_ready "$base/first-mile/core.mjs" "export const analyze"
+          fetch_until_ready "$base/inca/60s.html" 'id="case-workshop"'
+          fetch_until_ready "$base/inca/interactive-case.js" "IncaCaseWorkshop"
