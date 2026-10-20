@@ -108,9 +108,9 @@ test('browser-style interactions switch cases, record decisions and replay all w
     return n;
   }
   const tags=['mistake-challenge','mc-reveal','mc-status','mc-result-heading','mc-result-description',
-    'mc-reset','mc-next','mc-heading','mc-case-id','mc-case-name','mc-case-caption',
-    'mc-case-progress','mc-correct-count','mc-progress-bar',
-    'mc-doc-a-type','mc-doc-a-title','mc-doc-a-date','mc-doc-a-body',
+    'mc-reset','mc-next','mc-heading','mc-case-id','mc-case-name','mc-case-caption','mc-claim-type',
+    'mc-case-progress','mc-correct-count','mc-progress-bar','mc-finish','mc-finish-score','mc-finish-copy',
+    'mc-doc-a-check','mc-doc-b-check','mc-doc-a-type','mc-doc-a-title','mc-doc-a-date','mc-doc-a-body',
     'mc-doc-b-type','mc-doc-b-title','mc-doc-b-date','mc-doc-b-body',
     'mc-old-label','mc-old-route','mc-old-explanation','mc-new-label','mc-new-route',
     'mc-new-explanation','mc-difference','mc-takeaway-text','mc-provenance'];
