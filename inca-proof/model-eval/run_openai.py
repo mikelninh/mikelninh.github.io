@@ -50,16 +50,20 @@ def schema():
 
 def request_body(case, model):
     visible={k:case[k] for k in ('id','insurance_line','required_evidence','documents')}
-    return {
+    body = {
         'model':model,
         'messages':[
             {'role':'system','content':SYSTEM},
             {'role':'user','content':'Please extract findings from these UNTRUSTED synthetic source documents:\n'+json.dumps(visible, ensure_ascii=False, indent=2)},
         ],
         'response_format': {'type':'json_schema','json_schema':{'name':'claims_document_extract','strict':True,'schema':schema()}},
-        'temperature':0,
-        'max_completion_tokens':750,
+        'max_completion_tokens':1600,
     }
+    if model.startswith(('gpt-5', 'gpt-6')):
+        body['reasoning_effort'] = 'low'
+    else:
+        body['temperature'] = 0
+    return body
 
 
 def call(model, case, key, timeout=65):
@@ -91,7 +95,7 @@ def call(model, case, key, timeout=65):
 
 def main():
     ap=argparse.ArgumentParser(description='Synthetic text extraction benchmark: no insurer data.')
-    ap.add_argument('--models',default='gpt-4o-mini,gpt-4.1-mini,gpt-4.1',help='Comma-separated model IDs that your API project can access.')
+    ap.add_argument('--models',default='gpt-4o-mini,gpt-6-luna,gpt-6.1-sol',help='Comma-separated model IDs that your API project can access.')
     ap.add_argument('--split',choices=('dev','holdout','stress','all'),default='holdout')
     ap.add_argument('--limit',type=int,default=5,help='Max calls PER MODEL (default 5).')
     ap.add_argument('--dry-run',action='store_true',help='Show plan, zero billable requests.')
@@ -104,7 +108,12 @@ def main():
         ap.error('Provide 1–10 model IDs')
     dataset=ROOT/'data'/'document_cases.jsonl'
     cases=load_cases(dataset)
-    cases=[c for c in cases if args.split=='all' or c['split']==args.split][:args.limit]
+    cases=[c for c in cases if args.split=='all' or c['split']==args.split]
+    if args.split=='holdout' and args.limit <= 5:
+        families=('date_conflict','date_match','amount_conflict','missing_evidence','document_injection')
+        cases=[next(c for c in cases if c['family']==family) for family in families[:args.limit]]
+    else:
+        cases=cases[:args.limit]
     fingerprint=hashlib.sha256(dataset.read_bytes()).hexdigest()
     print(f'Cases: {len(cases)}  |  Models: {len(models)}  |  Planned API calls: {len(cases)*len(models)}')
     print(f'Dataset SHA-256: {fingerprint}')
