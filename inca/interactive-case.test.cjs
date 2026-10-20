@@ -49,3 +49,13 @@ test('ISO and localized equivalent dates match',()=>{
 test('missing both dates does not get clearance',()=>{
  assert.equal(api.evaluate('No date','None').route,'NEED_INFO');
 });
+test('the application landing page exposes every working control',()=>{
+ const html=fs.readFileSync(path.join(__dirname,'60s.html'),'utf8');
+ for(const id of ['case-workshop','cw-doc-a','cw-doc-b','cw-run','cw-result','cw-route','cw-evidence-a','cw-evidence-b','cw-notes','cw-export']){
+   assert.match(html,new RegExp('id=["\\x27]'+id+'["\\x27]'),'Missing UI control '+id);
+ }
+ assert.match(html,/script src="\/inca\/interactive-case\.js"/);
+ assert.match(html,/01 \/ THE PROBLEM/);
+ assert.match(html,/02 \/ WHAT I BUILT/);
+ assert.match(html,/03 \/ TRY IT NOW/);
+});
