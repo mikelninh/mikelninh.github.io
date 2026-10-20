@@ -31,7 +31,7 @@ const tier=!expertise?3:obstacles.length?2:1;
 const status=tier===3?"Nicht priorisieren":tier===2?"Erst Hürden klären":"Fachlich interessant – Prüfung offen";
 const next=tier===3?"Nur weiterverfolgen, wenn das Team tatsächlich die nötigen Fähigkeiten hat.":tier===2?"Fehlende Nachweise prüfen. Ob Partner zugelassen sind, steht ausschließlich in den Originalunterlagen.":"Die Originalanzeige öffnen und Anforderungen prüfen, bevor Zeit in ein Angebot fließt.";
 return{...j,good,obstacles,unknown,tier,status,next};
-}).sort((a,b)=>a.tier-b.tier||a.id.localeCompare(b.id));
+}).sort((a,b)=>a.tier-b.tier||(a.skill===profile.focus?0:1)-(b.skill===profile.focus?0:1)||a.id.localeCompare(b.id));
 }
 const names={SOCKS:"Socken",HOODIE:"Kapuzenpullover",TEE:"T-Shirt"};
 function seed(){
@@ -93,15 +93,15 @@ const reference=rowlabel(left,"Erfahrung mit vergleichbaren Behördenprojekten?"
 const insurance=rowlabel(left,"Passende Berufshaftpflicht?","v6-ins",[["unknown","Weiß ich nicht"],["no","Noch nicht"],["yes","Ja"]]);
 const security=rowlabel(left,"IT-Sicherheitsnachweis vorhanden?","v6-sec",[["unknown","Weiß ich nicht"],["no","Noch nicht"],["yes","Ja"]]);
 const presets=[["Webstudio",["web"],"no","unknown","unknown"],["KI-Team",["web","ai"],"unknown","unknown","unknown"],["IT-Betrieb",["cloud"],"unknown","unknown","unknown"]];
-let last=[],profile={},choices={};
-function usePreset(i){let v=presets[i];Object.entries(skills).forEach(([key,box])=>box.checked=v[1].includes(key));reference.value=v[2];insurance.value=v[3];security.value=v[4];Array.from(presetRow.children).forEach((b,j)=>b.setAttribute("aria-pressed",String(i===j)))}
+let last=[],profile={},choices={},active=0;
+function usePreset(i){active=i;let v=presets[i];Object.entries(skills).forEach(([key,box])=>box.checked=v[1].includes(key));reference.value=v[2];insurance.value=v[3];security.value=v[4];Array.from(presetRow.children).forEach((b,j)=>b.setAttribute("aria-pressed",String(i===j)))}
 presets.forEach((a,i)=>presetRow.append(button(a[0],()=>{usePreset(i);run()},"v6-sub")));
 const result=el("div");right.append(result);
 left.append(add(el("div","v6-actions"),button("Drei Aufträge vergleichen →",run)));
 left.append(p("Deine Angaben sind Selbstauskünfte, keine geprüften Nachweise.","v6-tiny"));
 bottom("Öffentliche Aufträge aus einem datierten Datensatz vom 20.10.2026. Nur für das Kundenportal liegen hier einzelne veröffentlichte Anforderungen vor. Vollständige Originalunterlagen und aktuelle Fristen müssen geprüft werden.","https://mikelninh.github.io/bidpilot/#product-study","Ausführliche Produktstudie ↗");
 function run(){
-profile={skills:Object.entries(skills).filter(([,v])=>v.checked).map(([k])=>k),reference:reference.value,insurance:insurance.value,security:security.value};last=evaluate(profile);choices={};paint();
+profile={skills:Object.entries(skills).filter(([,v])=>v.checked).map(([k])=>k),focus:presets[active][1][0],reference:reference.value,insurance:insurance.value,security:security.value};last=evaluate(profile);choices={};paint();
 }
 function paint(){result.replaceChildren();const top=last[0];
 summaryBox(result,"Dein sinnvollster nächster Schritt",top.tier===1?top.name+": fachlich naheliegend. Prüfe die Teilnahmebedingungen.":top.tier===2?top.name+": mögliche Hürden zuerst klären.":"Bei diesen drei Beispielen ist keine fachlich naheliegende Gelegenheit erkennbar.");
