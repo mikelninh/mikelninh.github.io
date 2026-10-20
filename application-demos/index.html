@@ -191,8 +191,8 @@ function snocksInit(){
  text('input-kicker','01 / FALL WÄHLEN');text('input-title','Welches Ticket willst du prüfen?');
  text('input-desc','Starte mit einem von drei typischen Supportfällen. Oder ändere die Nachricht und prüfe deinen eigenen Fall.');
  text('input-note','Alle Eingaben bleiben im Browser. Keine externe Nachricht, Erstattung oder Shop-Änderung. Der separate FastAPI-/SQLite-Prototyp wird hier nicht live aufgerufen.');
- text('why-title','Wobei BIDPILOT hilft');
- text('why','Das Tool ordnet eine Anfrage ein, gleicht eine Bestell-ID mit den geladenen Daten ab, berechnet ähnliche Beschwerden zum selben Produkt, erstellt einen vorsichtigen editierbaren Antwortentwurf und exportiert einen Prüfvermerk. Alles nachvollziehbar und ohne Versand.');
+ text('why-title','Was RETURN LOOP dir abnimmt');
+ text('why','Das Tool erkennt, worum es bei einer Kundenanfrage geht, prüft die Bestellnummer und sucht nach ähnlichen Problemen beim selben Produkt. Es schlägt eine Antwort vor und erstellt eine interne Zusammenfassung, ohne etwas zu versenden.');
  text('limits','Referenzdaten sind synthetisch. Die Einordnung läuft regelbasiert im Browser, nicht über ein live angeschlossenes KI-Modell. Ein Muster ist kein bewiesener Produktdefekt.');
  $('full').href='https://return-loop-proof-mn-2026.vercel.app/';
  const controls=$('controls');
@@ -276,7 +276,7 @@ function bidInit(){
  text('input-note','Kein Login. Deine Antworten bleiben im Browser. Die vollständigen Unterlagen des Auftraggebers sind verbindlich.');
  text('result-title','Was solltest du jetzt prüfen?');
  $('result').replaceChildren(add(e('div','empty'),e('strong','','Wähle links einen Auftrag aus.'),e('span','','Du siehst den echten Auftrag, offene Anforderungen und deinen nächsten Schritt.')));
- text('why-title','Was tatsächlich erledigt wird');
+ text('why-title','Wobei BIDPILOT hilft');
  text('why','Du findest öffentliche Aufträge, prüfst bekannte Anforderungen und hältst offene Fragen fest. Nur für das Kundenportal haben wir fünf veröffentlichte Anforderungen recherchiert. Du kannst deine Entscheidung herunterladen.');
  text('limits','Die Daten sind nur eine Auswahl und haben einen angezeigten Stand. TED ist das europäische Portal für öffentliche Aufträge. Das Tool kann nicht bestätigen, dass du alle Teilnahmebedingungen erfüllst.');
  $('full').href='https://mikelninh.github.io/bidpilot/#product-study';
@@ -356,10 +356,10 @@ function bidDetail(n,hits){
  const subject=tenderSubject(n.title);
  root.append(e('div','notice-title',subject.length>135?subject.slice(0,132)+'…':subject));
  const quick=e('div','bid-facts');
- quick.append(e('span','','Frist: '+(n.deadline||'unbekannt')),e('span','','TED '+n.id));
+ quick.append(e('span','','Angebotsfrist: '+(n.deadline||'unbekannt')),e('span','','Auftragsnummer '+n.id));
  root.append(quick);
  const row=e('div','bid-inline');row.append(link('Original-Auftrag ansehen ↗',n.url));root.append(row);
- root.append(p('Warum angezeigt: '+hits.join(' · ')+' im konkreten Ausschreibungsgegenstand. Das ist nur ein Vergleich des Titels – noch keine Zusage, dass dein Unternehmen den Auftrag erfüllen kann.','bid-why'));
+ root.append(p('Warum angezeigt? Diese Wörter passen zu deinem Suchprofil: '+hits.join(', ')+'. Ob du den Auftrag übernehmen könntest, muss noch geprüft werden.','bid-why'));
  const deeper=e('details','bid-more');deeper.append(e('summary','','Weitere Angaben zum Auftrag'));
  deeper.append(facts([['Auftraggeber',n.buyer||'Nicht angegeben'],['Vollständiger Auftragstitel',n.title],['Frist laut Datensammlung',n.deadline||'Nicht angegeben'],['CPV',Array.isArray(n.cpv)?n.cpv.join(', '):'Unbekannt'],['Datenstand',asof||'Unbekannt']]));
  root.append(deeper);
@@ -370,8 +370,8 @@ function bidDetail(n,hits){
    '719791-2026':['Welche persönlichen Daten soll die Software verarbeiten?','Muss die Software mit den vorhandenen Systemen des Amts verbunden werden?','Welche Regeln für Datenschutz, Sicherheit und Barrierefreiheit gelten?'],
    '723707-2026':['Wann muss der Support erreichbar sein und wie schnell reagieren?','Welche technischen Systeme sollen genau betreut werden?','Muss das Unternehmen ähnliche Projekte oder Zertifikate nachweisen?']
   };
-  const questions=basedOnTitle[n.id]||['Welche Eignungskriterien gelten?','Welche fachlichen Anforderungen und Fristen sind verbindlich?','Welche Unternehmensnachweise müssen erbracht werden?'];
-  const box=e('div','demo-faq');box.append(e('h3','','Diese Fragen solltest du vor einer Bewerbung klären'));
+  const questions=basedOnTitle[n.id]||['Welche Bedingungen muss das Unternehmen erfüllen?','Welche Arbeiten und Termine sind gefordert?','Welche Dokumente muss das Unternehmen einreichen?'];
+  const box=e('div','demo-faq');box.append(e('h3','','Diese Fragen solltest du vor einem Angebot klären'));
   const labels=[];
   for(const q of questions){
     const lab=e('label'),cb=e('input');cb.type='checkbox';cb.setAttribute('aria-label','Geprüft: '+q);
@@ -382,7 +382,7 @@ function bidDetail(n,hits){
  }
  const final=e('section','bid-final');
  final.append(e('div','eyebrow','03 / DEINE ENTSCHEIDUNG'));
- final.append(e('h3','','Soll dein Team diesen Auftrag genauer prüfen?'));
+ final.append(e('h3','','Soll dein Unternehmen diesen Auftrag genauer prüfen?'));
  final.append(p('Wähle einen nächsten Schritt. Du kannst deine Entscheidung samt Quelle herunterladen.','fine'));
  const memo=e('details','bid-memo');memo.append(e('summary','','Eigene Begründung ergänzen (optional)'));
  memo.append(field('Kurze Begründung','decision-note','Offene Nachweise und Originalunterlagen prüfen.','textarea','Kann vor dem Export bearbeitet werden.'));
