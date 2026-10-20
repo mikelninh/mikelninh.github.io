@@ -93,3 +93,21 @@ test('workshop includes user-feedback, regression and customer-draft controls',(
   assert.match(html,new RegExp('id=["\\x27]'+id+'["\\x27]'));
  }
 });
+
+test('advanced travel-only workshop is clearly connected to three-case challenge',()=>{
+ const html=fs.readFileSync(path.join(__dirname,'60s.html'),'utf8');
+ assert.match(html,/<details class="cw-expand" id="case-workshop">/);
+ assert.match(html,/The three cases above are interactive training scenarios/);
+ assert.match(html,/travel case ST-104 only/);
+ assert.match(html,/water-damage and bicycle-theft decisions are not calculated by this date checker/);
+ assert.match(html,/This is the next layer of the travel challenge above—not a fourth case/);
+ assert.match(html,/<section class="cw" id="case-workshop-panel"/);
+ assert.match(html,/openFromHash/);
+});
+test('no duplicate legacy three-case cards distract from technical proof',()=>{
+ const html=fs.readFileSync(path.join(__dirname,'60s.html'),'utf8');
+ assert.doesNotMatch(html,/id="other-routes"/);
+ assert.doesNotMatch(html,/const claims=\[/);
+ assert.doesNotMatch(html,/id="try-demo"/);
+ assert.match(html,/Separate real LLM experiment/);
+});
