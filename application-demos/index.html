@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f5f5f1">
 <meta name="description" content="BIDPILOT und RETURN LOOP: zwei interaktive Arbeitsproben, die ein echtes Problem bearbeiten – mit nachvollziehbaren Quellen, lokalen Eingaben und ehrlichen Grenzen.">
-<title>Mini-Produkte · Michael Ninh</title>
+<title>BIDPILOT · Eignung prüfen · Michael Ninh</title>
 <style>
 :root{--bg:#f7f7f3;--ink:#202725;--muted:#5b6862;--line:#dee2db;--purple:#4e42ad;--wash:#eeebf9;--accent:#4e42ad;--paper:#fff;--green:#245e48;--danger:#8e5b22}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.52 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}body[data-app="snocks"]{--accent:#176149;--wash:#ebf4ed}
@@ -81,8 +81,8 @@ body[data-app="a11"] .notice-title{font-size:18px;line-height:1.32;margin:10px 0
 <main class="wrap">
 <section class="hero">
   <div class="eyebrow" id="eyebrow">60–90 SEKUNDEN · EIN FUNKTIONIERENDER ABLAUF</div>
-  <h1 id="headline">Ein echtes Problem.<br><em>Eine funktionierende Hilfe.</em></h1>
-  <p id="lede">Aus einem konkreten Input entsteht ein überprüfbares Ergebnis. Keine bloße Animation.</p>
+  <h1 id="headline">Passende Aufträge finden.<br><em>Früh die Hürden erkennen.</em></h1>
+  <p id="lede">Ein Suchprofil, eine echte Ausschreibung und fünf wichtige Anforderungen. Keine bloße Animation.</p>
   <div class="note"><span class="dot"></span> 60–90 Sekunden · ausprobieren, entscheiden, Ergebnis mitnehmen</div>
 </section>
 <section class="explain" aria-label="In 15 Sekunden verstehen">
@@ -238,6 +238,8 @@ function bidInit(){
  text('input-kicker','01 / START');text('input-title','Ein Fall. Eine Entscheidung.');
  text('input-desc','Starte mit einem recherchierten Beispiel. Oder suche anschließend selbst nach passenden Projekten.');
  text('input-note','Keine Registrierung. Die Selbstauskünfte bleiben im Browser. Originalunterlagen sind für die verbindliche Eignung maßgeblich.');
+ text('result-title','Dein Eignungscheck');
+ $('result').replaceChildren(add(e('div','empty'),e('strong','','Ein Klick zum prüfbaren Fall.'),e('span','','Starte links „Beispiel jetzt prüfen“. Danach markierst du fünf Nachweise und kannst deine Entscheidung exportieren.')));
  text('why-title','Was tatsächlich erledigt wird');
  text('why','Das Tool durchsucht einen realen, datierten Import öffentlicher TED-Ausschreibungen, entfernt verstrichene Fristen, gewichtet passende Begriffe und zeigt drei prüfbare Kandidaten mit Trefferbegründungen. Deine Entscheidung wird als lokales Briefing exportiert.');
  text('limits','Die Shortlist ist ein Recherche-Einstieg, keine rechtliche Teilnahmeprüfung. Die Daten sind ein nicht vollständiger Snapshot, dessen Datum sichtbar bleibt.');
