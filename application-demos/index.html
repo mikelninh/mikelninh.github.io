@@ -49,7 +49,8 @@ header{background:#fff;border-bottom:1px solid var(--line)}header .wrap{display:
 </div>
 </main>
 <footer class="wrap">© Michael Ninh · Unabhängiger Bewerbungsprototyp · Berlin, 2026</footer>
-<script>
+<script src="./fit-check.js" defer></script>
+<script defer>
 (function(){
 'use strict';
 const isSnocks=new URLSearchParams(location.search).get('demo')==='return-loop';
@@ -229,17 +230,17 @@ function bidDetail(n,hits){
  root.append(facts([['Vergabestelle',n.buyer||'Nicht angegeben'],['TED-Kennung',n.id],['Frist im Import',n.deadline||'Nicht angegeben'],['CPV',Array.isArray(n.cpv)?n.cpv.join(', '):'Unbekannt'],['Quelle',asof||'Datum unbekannt']]));
  root.append(link('Originalbekanntmachung prüfen ↗',n.url));
  root.append(panelNote('Warum dieser Treffer?','Deine Suchbegriffe „'+hits.join('“, „')+'“ treffen auf den konkreten Ausschreibungsgegenstand, nicht nur auf die allgemeine TED-Kategorie. Das ist ein einfacher überprüfbarer Titelabgleich – keine Eignungs- oder KI-Prognose.'));
- root.append(e('div','warning','Ungeprüft: konkrete Vergabebedingungen, Losumfang, Anforderungen, Teilnahmeberechtigung und aktuelle Änderungen. Ein Treffer ist noch keine geeignete Ausschreibung.'));
+ if(window.BidQualification && n.id===window.BidQualification.id){root.append(window.BidQualification.build(n));root.append(e('div','warning','Eignungskriterien aus veröffentlichten Angaben zusammengefasst. Fehlende Originalunterlagen und Nachweise müssen verbindlich geprüft werden.'));}else{root.append(e('div','warning','Für diesen Treffer sind noch keine belegten Eignungskriterien eingelesen. Bitte TED/Originalunterlagen selbst öffnen und prüfen.'))}
  root.append(field('Deine kurze Begründung','decision-note','Wir prüfen zunächst Leistungsbeschreibung und Referenzanforderungen.','textarea','Du kannst die Notiz für dein Team anpassen.'));
  const row=e('div','decision-row');
  row.append(button('Zur Prüfung vormerken',()=>bidDecision('prüfen'),'choice'),button('Nicht passend',()=>bidDecision('nicht passend'),'choice'));root.append(row);
  root.append(button('← Andere Treffer',bidSearch,'examplelink'));text('result-title','Quelle prüfen, dann entscheiden');
 }
 function bidDecision(choice){
- if(!activeCandidate)return;const {n,hits}=activeCandidate,why=$('decision-note')?.value.trim()||'Keine Begründung';const root=$('result');const done=e('div','done');
+ if(!activeCandidate)return;const {n,hits}=activeCandidate,why=$('decision-note')?.value.trim()||'Keine Begründung';const fit=(window.BidQualification&&n.id===window.BidQualification.id)?window.BidQualification:null;const root=$('result');const done=e('div','done');
  done.append(e('b','',choice==='prüfen'?'Vorgemerkt: Als nächstes die Ausschreibung öffnen.':'Als vorerst nicht passend markiert.'));
  done.append(p('Das Briefing enthält deine Notiz, die TED-Quelle und ungeprüfte Risiken. Es wurde nichts an TED oder andere Systeme übertragen.'));root.append(done);
- root.append(button('Entscheidungsbriefing herunterladen ↗',()=>download('bidpilot-'+n.id+'.txt',['BIDPILOT · ENTSCHEIDUNGSBRIEFING','Erstellt: '+new Date().toISOString(),'Profil: '+$('keywords').value,'Ausschlüsse: '+$('exclude').value,'Titel: '+n.title,'TED-ID: '+n.id,'Vergabestelle: '+n.buyer,'Frist im Import: '+n.deadline,'Originalquelle: '+n.url,'Quelle abgerufen: '+asof,'Treffer: '+hits.join(', '),'Entscheidung: '+choice,'Begründung: '+why,'WICHTIG: Eignung, Anforderungen und aktueller Stand nicht verifiziert.'].join('\n')),'btn btn-subtle'));
+ root.append(button('Entscheidungsbriefing herunterladen ↗',()=>download('bidpilot-'+n.id+'.txt',['BIDPILOT · ENTSCHEIDUNGSBRIEFING','Erstellt: '+new Date().toISOString(),'Profil: '+$('keywords').value,'Ausschlüsse: '+$('exclude').value,'Titel: '+n.title,'TED-ID: '+n.id,'Vergabestelle: '+n.buyer,'Frist im Import: '+n.deadline,'Originalquelle: '+n.url,'Quelle abgerufen: '+asof,'Treffer: '+hits.join(', '),'Entscheidung: '+choice,'Begründung: '+why,...(fit?['Eignungs-Vorprüfung: '+fit.status().decision,'Quelle für Eignungsanforderungen: '+fit.source,...fit.requirements.map(r=>r.name+': '+(fit.answers[r.id]||'unknown'))]:['Eignungsanforderungen im Detail noch NICHT geprüft']),'WICHTIG: Letztverbindlich ist das Original-Vergabeportal. Keine automatische Eignungsbestätigung.'].join('\n')),'btn btn-subtle'));
 }
 if(isSnocks)snocksInit();else bidInit();
 })();
