@@ -73,6 +73,21 @@ details{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}summar
 .cw-more>.workspace{margin-top:12px}
 @media(max-width:760px){.cw-heading{display:block;padding:18px}.cw-local{display:inline-block;margin-top:12px}.cw-scenario,.cw-process{padding-left:18px;padding-right:18px}.cw-doc-grid,.cw-result-grid{grid-template-columns:1fr}.cw-receipt{border-left:0;border-top:1px solid #dfe4dc;padding:14px 0 0}.cw-handoff{grid-template-columns:1fr}.cw-actions{align-items:flex-start;flex-direction:column}.cw-run{width:100%}}
 
+.cw-customer{margin:14px 0 0;padding:14px 16px;background:#eef5eb;border-left:3px solid #81b35c}
+.cw-customer strong{font-size:11px;color:#254631}
+.cw-customer p{font-size:12px;line-height:1.55;margin:8px 0 5px;color:#29422d}
+.cw-customer span{font-size:10px;color:#647864}
+.cw-qa{margin-top:20px;border:1px solid #d6dfd3;border-radius:9px;background:#fff;overflow:hidden}
+.cw-qa>summary{cursor:pointer;padding:15px;font-size:12px;font-weight:850;color:#27392d}
+.cw-qa>summary span{float:right}
+.cw-qa-body{border-top:1px solid #e3e9e0;padding:15px}
+.cw-qa-body>p{font-size:12px;line-height:1.5;color:#5a665b;margin:0 0 12px}
+.cw-qa-inputs{display:grid;grid-template-columns:1fr 1.6fr;gap:12px;margin:12px 0}
+.cw-qa-inputs label{display:grid;gap:5px;font-size:11px;font-weight:750}
+.cw-qa-inputs input,.cw-qa-inputs select{width:100%;font:12px system-ui,sans-serif;border:1px solid #c8d3c8;padding:10px;border-radius:5px;background:#fff;color:#263126}
+.cw-qa-body button{padding:10px 13px;border:0;background:#223728;color:#fff;font-size:12px;font-weight:800;border-radius:6px;cursor:pointer}
+.cw-qa-body button:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:760px){.cw-qa-inputs{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -145,11 +160,37 @@ Stornierungsdatum: 12.07.2026</textarea>
           </div>
         </div>
       </div>
+      <div class="cw-customer">
+        <strong>Customer communication · draft for human review</strong>
+        <p id="cw-customer">—</p>
+        <span>Not sent. Must be checked against the actual insurer's policy and facts.</span>
+      </div>
       <div class="cw-handoff">
         <label for="cw-notes">Optional operator note</label>
         <input id="cw-notes" maxlength="2000" placeholder="What should the claims expert verify?">
         <button type="button" id="cw-export" disabled>Download case handoff ↗</button>
       </div>
+      <details class="cw-qa">
+        <summary>Was the routing wrong? Turn your correction into a test <span aria-hidden="true">↗</span></summary>
+        <div class="cw-qa-body">
+          <p>Record what a human reviewer would decide. Download a machine-readable regression fixture instead of silently forgetting the mistake.</p>
+          <div class="cw-qa-inputs">
+            <label for="cw-expected">Reviewed next route
+              <select id="cw-expected">
+                <option value="HUMAN_REVIEW">Human review</option>
+                <option value="NEED_INFO">Request information</option>
+                <option value="CONTINUE_CHECKS">Continue remaining checks</option>
+              </select>
+            </label>
+            <label for="cw-review-reason">Why? (optional)
+              <input id="cw-review-reason" placeholder="What should change in the routing rule?">
+            </label>
+          </div>
+          <button type="button" id="cw-regression" disabled>Download regression case ↗</button>
+          <p id="cw-quality-status" role="status" aria-live="polite">Run the document check first.</p>
+          <p class="cw-fine">This creates a local JSON candidate, not an automatic CI test or approved production change. Review and integrate it before using it as a release gate.</p>
+        </div>
+      </details>
       <p class="cw-fine">Transparent rule-based text check, not AI inference. The handoff is a local Markdown file with source excerpts, reason and next step. It never sends messages, approves coverage or triggers payment. For the real LLM evaluation, <a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/model-eval/reports/RESULTS_2026-10-20.md" target="_blank" rel="noopener">see the measured API report ↗</a></p>
     </div>
   </section>
