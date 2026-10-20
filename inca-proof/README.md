@@ -89,12 +89,13 @@ This is an independent application work sample. It does not use INCA customer da
 
 Run: node --test inca/operator-lab.test.cjs
 
-## New: cross-model document-text evaluation (not yet run on an API)
+## Measured multi-model document-text evaluation
 
-[`model-eval/`](model-eval/) adds **100 developer-authored synthetic document-text cases** and a runnable OpenAI multi-model benchmark. It evaluates what a model extracts from document texts *before* deterministic routing, using identical inputs and strict structured outputs. This is separate from the original 72-case rule-based suite.
+[`model-eval/`](model-eval/) includes **100 developer-authored synthetic document-text fixtures** across ten scenario families. Unlike the original deterministic routing test, this pipeline sends unstructured document text to real OpenAI models and then applies deterministic routing to their extracted findings.
 
-- 10 failure/control families, including document contradictions, missing evidence and prompt injection
-- 60 development, 20 holdout, 20 stress cases; all synthetically generated and publicly visible
-- 8 local infrastructure/unit tests pass; **no real OpenAI or Claude inference scores have been run or claimed**
-- See [`model-eval/README.md`](model-eval/README.md) for the zero-cost dry run, paid API run and limitations
+The **first completed live pilot** used five selected synthetic cases per model: `gpt-4o-mini`, `gpt-6-luna`, and `gpt-6.1-sol` each produced **5/5 expected next-step routes** with no API or schema errors. Estimated total API token cost was **$0.0161**. Some models flagged additional ambiguity; current routing accuracy alone does not capture those false positives. Five developer-authored cases do **not** demonstrate production reliability or establish a model winner.
+
+- [Measured run, costs, caveats and cases](model-eval/reports/RESULTS_2026-10-20.md)
+- [Reproducible evaluation setup](model-eval/README.md)
+- [GitHub Actions execution](https://github.com/mikelninh/mikelninh.github.io/actions/runs/39431536440)
 
