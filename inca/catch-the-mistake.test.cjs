@@ -39,7 +39,8 @@ test('visible HTML contains two sources, exact reconstructed dates, reveal and t
     'id="case-workshop"','src="/inca/catch-the-mistake.js"']){
       assert.ok(html.includes(x), 'Missing challenge feature '+x);
   }
-  assert.match(html,/illustrative reconstruction/);
+  assert.match(html,/All documents are fictional/);
+  assert.match(html,/Only ST-104 is inspired by/);
   assert.match(html,/01 · PROBLEM/);
   assert.match(html,/02 · BUILT/);
   assert.match(html,/03 · TRY/);
