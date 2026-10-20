@@ -88,3 +88,13 @@ This is an independent application work sample. It does not use INCA customer da
 [Try the operator lab](https://mikelninh.github.io/inca/#operator-lab): compare developer-authored synthetic holdout cases H-A-011 (known contradiction miss) and H-A-012 (control). The recorded guarded-v2 outcome and a proposed contradiction-gate route are displayed separately. The holdout has already been inspected, so the replay is **not fresh independent evidence**. No external effect is performed. A separate, two-case local test is available; it is not the original 12/12 fresh regression B.
 
 Run: node --test inca/operator-lab.test.cjs
+
+## New: cross-model document-text evaluation (not yet run on an API)
+
+[`model-eval/`](model-eval/) adds **100 developer-authored synthetic document-text cases** and a runnable OpenAI multi-model benchmark. It evaluates what a model extracts from document texts *before* deterministic routing, using identical inputs and strict structured outputs. This is separate from the original 72-case rule-based suite.
+
+- 10 failure/control families, including document contradictions, missing evidence and prompt injection
+- 60 development, 20 holdout, 20 stress cases; all synthetically generated and publicly visible
+- 8 local infrastructure/unit tests pass; **no real OpenAI or Claude inference scores have been run or claimed**
+- See [`model-eval/README.md`](model-eval/README.md) for the zero-cost dry run, paid API run and limitations
+
