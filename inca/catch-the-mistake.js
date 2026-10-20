@@ -78,7 +78,7 @@
     return Object.freeze({
       choice,caseId,caught,correct:caught,expected:example.correct,route:example.route,
       example,original:caseId==='ST-104'?original:null,effects:0,
-      heading:caught?example.heading:'Not quite — this case needs: '+choiceNames[example.correct]+'.',
+      heading:caught?example.heading:(caseId==='ST-104'&&choice==='continue'?'That was the mistake the original router made.':'Not quite — this case needs: '+choiceNames[example.correct]+'.'),
       explanation:example.explanation,
       oldRoute:example.before.value,updatedRoute:example.after.value
     });
