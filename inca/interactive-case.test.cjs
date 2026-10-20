@@ -55,9 +55,9 @@ test('the application landing page exposes every working control',()=>{
    assert.match(html,new RegExp('id=["\\x27]'+id+'["\\x27]'),'Missing UI control '+id);
  }
  assert.match(html,/script src="\/inca\/interactive-case\.js"/);
- assert.match(html,/01 \/ THE PROBLEM/);
- assert.match(html,/02 \/ WHAT I BUILT/);
- assert.match(html,/03 \/ TRY IT NOW/);
+ assert.match(html,/01 · PROBLEM/);
+ assert.match(html,/02 · BUILT/);
+ assert.match(html,/03 · TRY/);
 });
 
 test('every evaluated case has a customer-safe draft marked as unsent',()=>{
