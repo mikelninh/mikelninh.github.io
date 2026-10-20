@@ -92,7 +92,7 @@ const line=el("div","v6-check"),box=el("input");box.type="checkbox";box.id="v6-"
 const reference=rowlabel(left,"Erfahrung mit vergleichbaren Behördenprojekten?","v6-ref",[["unknown","Weiß ich nicht"],["no","Noch nicht"],["yes","Ja"]]);
 const insurance=rowlabel(left,"Passende Berufshaftpflicht?","v6-ins",[["unknown","Weiß ich nicht"],["no","Noch nicht"],["yes","Ja"]]);
 const security=rowlabel(left,"IT-Sicherheitsnachweis vorhanden?","v6-sec",[["unknown","Weiß ich nicht"],["no","Noch nicht"],["yes","Ja"]]);
-const presets=[["Webstudio",["web"],"no","unknown","unknown"],["KI-Team",["web","ai"],"unknown","unknown","unknown"],["IT-Betrieb",["cloud"],"unknown","unknown","unknown"]];
+const presets=[["Webstudio",["web"],"no","unknown","unknown"],["KI-Team",["ai","web"],"unknown","unknown","unknown"],["IT-Betrieb",["cloud"],"unknown","unknown","unknown"]];
 let last=[],profile={},choices={},active=0;
 function usePreset(i){active=i;let v=presets[i];Object.entries(skills).forEach(([key,box])=>box.checked=v[1].includes(key));reference.value=v[2];insurance.value=v[3];security.value=v[4];Array.from(presetRow.children).forEach((b,j)=>b.setAttribute("aria-pressed",String(i===j)))}
 presets.forEach((a,i)=>presetRow.append(button(a[0],()=>{usePreset(i);run()},"v6-sub")));
