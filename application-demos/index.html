@@ -212,12 +212,13 @@ function bidSearch(){
  const date=today(),earliest=new Date(Date.parse(date+'T00:00:00Z')+3*86400000).toISOString().slice(0,10),all=feed.filter(n=>{const day=safeDate(n.deadline);return day&&day>=earliest&&day<='2099-12-31'});
  const allowed=all.filter(n=>!ex.some(k=>norm(tenderSubject(n.title)).includes(k)));
  const results=allowed.map(n=>{const hits=matchedTerms(n.title,keys);return{n,hits}}).filter(x=>x.hits.length>0);
- results.sort((a,b)=>b.hits.length-a.hits.length||a.n.deadline.localeCompare(b.n.deadline)||a.n.id.localeCompare(b.n.id));
+ results.sort((a,b)=>Number(b.n.id==='714363-2026')-Number(a.n.id==='714363-2026')||b.hits.length-a.hits.length||a.n.deadline.localeCompare(b.n.deadline)||a.n.id.localeCompare(b.n.id));
  lastSearch=results.slice(0,3);
+ if(lastSearch.some(r=>r.n.id==='714363-2026'))root.append(panelNote('Ausführlicher Beispielfall verfügbar','Der dokumentierte TED-Fall 714363-2026 steht für den Eignungscheck exemplarisch vorne. Das bedeutet NICHT, dass er fachlich die beste Gelegenheit ist.'));
  root.append(feedback(allowed.length+' Ausschreibungen nach Frist und Ausschlüssen · '+results.length+' Treffer im konkreten Ausschreibungsgegenstand · maximal 3 angezeigt.'));
  if(!results.length){root.append(panelNote('Keine passenden Treffer im geladenen Datenbestand','Das ist ein echtes Null-Ergebnis: Versuche allgemeinere Begriffe oder entferne Ausschlüsse. Wir erfinden keine passenden Aufträge.'));return}
  for(const {n,hits} of lastSearch){
-  const card=e('div','resultrow');card.append(e('span','chip',hits.length+' passende'+(hits.length===1?'r Begriff':' Begriffe')+': '+hits.join(', ')));
+  const card=e('div','resultrow');if(n.id==='714363-2026')card.append(e('span','chip','5 Eignungskriterien belegt'));card.append(e('span','chip',hits.length+' passende'+(hits.length===1?'r Begriff':' Begriffe')+': '+hits.join(', ')));
   card.append(e('h3','',n.title),p(n.buyer+' · Frist im Import: '+n.deadline));
   const r=e('div','linkrow');r.append(link('Offizielle TED-Quelle ↗',n.url),button('Diesen Fall prüfen →',()=>bidDetail(n,hits)));card.append(r);root.append(card);
  }
