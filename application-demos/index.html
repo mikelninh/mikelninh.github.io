@@ -186,20 +186,20 @@ function snocksInit(){
  $('headline').innerHTML='Eine Reklamation.<br><em>Zwei konkrete Ergebnisse.</em>';
  text('lede','Drei typische Supportfälle. Drei unterschiedliche Ergebnisse. Du siehst, wie Datenprüfung und menschliche Freigabe zusammenarbeiten.');
  text('ex-problem','Eine Beschwerde wird beantwortet. Wiederkehrende Qualitätsprobleme können dabei übersehen werden.');
- text('ex-built','Ein lokaler Triage-Workflow mit Bestellabgleich, Musterprüfung, Antwortentwurf und menschlicher Freigabe.');
+ text('ex-built','Ein lokaler Prüfablauf mit Bestellabgleich, Musterprüfung, Antwortvorschlag und menschlicher Freigabe.');
  text('ex-try','Drei Fälle wählen, Unterschiede sehen, den Prüfvermerk mitnehmen.');
  text('input-kicker','01 / FALL WÄHLEN');text('input-title','Welches Ticket willst du prüfen?');
  text('input-desc','Starte mit einem von drei typischen Supportfällen. Oder ändere die Nachricht und prüfe deinen eigenen Fall.');
  text('input-note','Alle Eingaben bleiben im Browser. Keine externe Nachricht, Erstattung oder Shop-Änderung. Der separate FastAPI-/SQLite-Prototyp wird hier nicht live aufgerufen.');
- text('why-title','Was tatsächlich erledigt wird');
- text('why','Das Tool ordnet eine Anfrage ein, gleicht eine Bestell-ID mit den geladenen Daten ab, berechnet Beschwerdehäufigkeiten je SKU, erstellt einen vorsichtigen editierbaren Antwortentwurf und exportiert einen Prüfvermerk. Alles nachvollziehbar und ohne Versand.');
+ text('why-title','Wobei BIDPILOT hilft');
+ text('why','Das Tool ordnet eine Anfrage ein, gleicht eine Bestell-ID mit den geladenen Daten ab, berechnet ähnliche Beschwerden zum selben Produkt, erstellt einen vorsichtigen editierbaren Antwortentwurf und exportiert einen Prüfvermerk. Alles nachvollziehbar und ohne Versand.');
  text('limits','Referenzdaten sind synthetisch. Die Einordnung läuft regelbasiert im Browser, nicht über ein live angeschlossenes KI-Modell. Ein Muster ist kein bewiesener Produktdefekt.');
  $('full').href='https://return-loop-proof-mn-2026.vercel.app/';
  const controls=$('controls');
  const samples=e('div','demo-choices');
  const scenarios=[
   {title:'Qualitätsproblem',description:'Löcher nach zwei Wäschen · Muster prüfen',text:'Hallo! Meine Socken haben nach zwei Wäschen Löcher an der Naht. Könnt ihr helfen?',order:'DEMO-007'},
-  {title:'Lieferung unklar',description:'Kein Carrier-Tracking · nichts erfinden',text:'Wo bleibt mein Paket? Ich habe noch keine Sendungsnummer bekommen.',order:'DEMO-025'},
+  {title:'Lieferung unklar',description:'Kein Zugriff auf den Versandstatus · nichts erfinden',text:'Wo bleibt mein Paket? Ich habe noch keine Sendungsnummer bekommen.',order:'DEMO-025'},
   {title:'Bestellung fehlt',description:'Keine Zuordnung · um Nachweis bitten',text:'Die Socken haben nach zwei Wäschen Löcher.',order:'UNBEKANNT'}
  ];
  const scenarioButtons=[];
@@ -252,7 +252,7 @@ function analyzeTicket(){
  root.append(e('h3','','Antwortentwurf · noch nicht versendet'));
  const edit=e('textarea');edit.id='draft';edit.value=draft;edit.setAttribute('aria-label','Editierbarer Antwortentwurf');edit.style.marginTop='9px';root.append(edit);
  root.append(p('Du kannst den Vorschlag bearbeiten. Erst nach menschlicher Prüfung dürfte eine echte Support-Aktion erfolgen.','fine'));
- root.append(panelNote('Interner nächster Schritt',!o?'Bestellnummer prüfen, danach Fall erneut analysieren.':evid?'Supportfall dokumentieren und das SKU-Muster zur Qualitätsprüfung vormerken.':'Zuständige Stelle prüfen lassen; keine automatische Aussage über Versand oder Erstattung.'));
+ root.append(panelNote('Interner nächster Schritt',!o?'Bestellnummer prüfen, danach Fall erneut analysieren.':evid?'Supportfall dokumentieren und das Muster bei diesem Produkt zur Qualitätsprüfung vormerken.':'Zuständige Stelle prüfen lassen; keine automatische Aussage über Versand oder Erstattung.'));
  const bar=e('div','decision-row');bar.append(button('Zur Prüfung vormerken',()=>ticketDecision(true,{id,message,kind,sku:o?.sku||null,numerator,denominator}), 'choice'),button('Erst Daten ergänzen',()=>ticketDecision(false,{id,message,kind,sku:o?.sku||null,numerator,denominator}),'choice'));
  root.append(bar);
  currentTicket={id,message,kind,sku:o?.sku||null,numerator,denominator};text('result-title','Vom Ticket zum überprüfbaren Vorgang');
@@ -267,26 +267,26 @@ function ticketDecision(flag,data){
 function bidInit(){
  text('company','A11 · JUNIOR PRODUCT MANAGER');text('eyebrow','BIDPILOT · EVIDENCE-FIRST PRODUCT DISCOVERY');
  $('headline').innerHTML='Passende Aufträge finden.<br><em>Früh die Hürden erkennen.</em>';
- text('lede','Wähle einen von drei echten TED-Fällen. Prüfe, was schon belegt ist, was fehlt und was sich für dein Team lohnt.');
- text('ex-problem','Welche Gelegenheit lohnt deine Zeit?');
- text('ex-built','Quellenbasierte Shortlist + Eignungscheck.');
- text('ex-try','Einen von drei Fällen wählen und entscheiden.');
- text('input-kicker','01 / WÄHLE EINEN FALL');text('input-title','Was möchtest du prüfen?');
- text('input-desc','Drei echte TED-Bekanntmachungen mit unterschiedlichen Prüfaufgaben. Keine fiktiven Aufträge.');
- text('input-note','Keine Registrierung. Die Selbstauskünfte bleiben im Browser. Originalunterlagen sind für die verbindliche Eignung maßgeblich.');
- text('result-title','Ein Fall. Ein nächster Schritt.');
- $('result').replaceChildren(add(e('div','empty'),e('strong','','Ein Klick zum prüfbaren Fall.'),e('span','','Wähle links einen Fall. Du bekommst die Originalquelle und eine passende Prüffrage – und kannst ein Briefing mitnehmen.')));
+ text('lede','Wenn eine Behörde Software oder IT-Hilfe braucht, sucht sie Unternehmen für den Auftrag. Prüfe drei echte Beispiele und entscheide, welcher Auftrag zu deinem Team passen könnte.');
+ text('ex-problem','Welche öffentlichen Aufträge passen zu deinem Unternehmen?');
+ text('ex-built','Eine Suche nach Aufträgen mit verständlicher Checkliste.');
+ text('ex-try','Auftrag auswählen, Anforderungen prüfen und Entscheidung speichern.');
+ text('input-kicker','01 / BEISPIEL AUSWÄHLEN');text('input-title','Welchen Auftrag möchtest du anschauen?');
+ text('input-desc','Drei echte öffentliche Aufträge. Ein Auftrag ist zum Beispiel ein Projekt, für das eine Behörde eine Softwarefirma sucht.');
+ text('input-note','Kein Login. Deine Antworten bleiben im Browser. Die vollständigen Unterlagen des Auftraggebers sind verbindlich.');
+ text('result-title','Was solltest du jetzt prüfen?');
+ $('result').replaceChildren(add(e('div','empty'),e('strong','','Wähle links einen Auftrag aus.'),e('span','','Du siehst den echten Auftrag, offene Anforderungen und deinen nächsten Schritt.')));
  text('why-title','Was tatsächlich erledigt wird');
- text('why','Du kannst reale Fälle vergleichen: Wo veröffentlichte Kriterien vorliegen, werden diese belegt geprüft. Andernfalls erstellt das Tool eine Liste offener Prüffragen. Eigene Suchbegriffe liefern eine separate Shortlist. Deine Entscheidung kannst du exportieren.');
- text('limits','Die Shortlist ist ein Recherche-Einstieg, keine rechtliche Teilnahmeprüfung. Die Daten sind ein nicht vollständiger Snapshot, dessen Datum sichtbar bleibt.');
+ text('why','Du findest öffentliche Aufträge, prüfst bekannte Anforderungen und hältst offene Fragen fest. Nur für das Kundenportal haben wir fünf veröffentlichte Anforderungen recherchiert. Du kannst deine Entscheidung herunterladen.');
+ text('limits','Die Daten sind nur eine Auswahl und haben einen angezeigten Stand. TED ist das europäische Portal für öffentliche Aufträge. Das Tool kann nicht bestätigen, dass du alle Teilnahmebedingungen erfüllst.');
  $('full').href='https://mikelninh.github.io/bidpilot/#product-study';
  const c=$('controls');
  const options=e('div','demo-choices');
- options.append(e('p','demo-choices-intro','Alle drei Fälle stammen aus demselben datierten TED-Import.'));
+ options.append(e('p','demo-choices-intro','Drei echte Aufträge, veröffentlicht auf Europas Ausschreibungsplattform.'));
  const samples=[
-  {id:'714363-2026',title:'Kundenportal entwickeln',kind:'Software / digitale Verwaltung',tag:'5 veröffentlichte Eignungskriterien',hits:['kundenportal','web']},
-  {id:'719791-2026',title:'KI-Assistent für die Wohngeldstelle',kind:'KI / öffentlicher Service',tag:'Anforderungen noch offen',hits:['KI-Assistent']},
-  {id:'723707-2026',title:'OpenStack-Supportvertrag',kind:'IT-Betrieb / Infrastruktur',tag:'Betriebsanforderungen prüfen',hits:['OpenStack']}
+  {id:'714363-2026',title:'Kundenportal für eine Behörde bauen',kind:'Softwareentwicklung · Kreis Offenbach',tag:'5 bekannte Anforderungen',hits:['kundenportal','web']},
+  {id:'719791-2026',title:'KI-Hilfe für eine Behörde',kind:'KI-Anwendung · Wohngeldstelle',tag:'Offene Fragen sammeln',hits:['KI-Assistent']},
+  {id:'723707-2026',title:'IT-Systeme betreuen',kind:'Technischer Support · Dataport',tag:'Offene Fragen sammeln',hits:['OpenStack']}
  ];
  const exampleButtons=[];
  for(const item of samples){
@@ -294,26 +294,26 @@ function bidInit(){
    const inner=e('span');inner.append(e('div','demo-case-tag',item.tag),e('strong','',item.title),e('small','',item.kind));
    b.append(inner,e('span','demo-arrow','↗'));b.addEventListener('click',()=>{
      const n=feed.find(n=>n.id===item.id);
-     if(!n){$('result').replaceChildren(panelNote('TED-Fall nicht geladen','Der Datensatz konnte nicht geprüft werden. Bitte den offiziellen TED-Link verwenden.'));return}
+     if(!n){$('result').replaceChildren(panelNote('Auftrag nicht verfügbar','Der Auftrag konnte nicht geladen werden. Öffne die Originalanzeige über den Quellenlink.'));return}
      for(const bt of exampleButtons)bt.setAttribute('aria-pressed',String(bt===b));
      bidDetail(n,item.hits);
    });
    exampleButtons.push(b);options.append(b);
  }
  c.append(options);
- const custom=e('details','bid-custom');custom.append(e('summary','','Oder eigenes Suchprofil verwenden'));
- custom.append(field('Schwerpunkte (kommagetrennt)','keywords','Softwareentwicklung, Kundenportal, Web','textarea','z. B. Softwareentwicklung, KI, Datenanalyse'));
+ const custom=e('details','bid-custom');custom.append(e('summary','','Oder selbst nach Aufträgen suchen'));
+ custom.append(field('Welche Projekte sucht dein Team?','keywords','Softwareentwicklung, Kundenportal, Web','textarea','z. B. Softwareentwicklung, KI, Datenanalyse'));
  custom.append(field('Ausschließen','exclude','Lizenz, Hardware, Personal','text','Begriffe im tatsächlichen Ausschreibungsgegenstand'));
- const v=e('div','actions');v.append(button('KI & Daten testen',()=>{$('keywords').value='KI, Datenanalyse, künstliche Intelligenz';$('exclude').value='Lizenz, Hardware';bidSearch()},'examplelink'));v.append(button('Null-Treffer testen',()=>{$('keywords').value='Zebraschutz in der Antarktis';$('exclude').value='';bidSearch()},'examplelink'));custom.append(v);c.append(custom);
- $('run').textContent='Eigene Suche starten →';$('run').addEventListener('click',bidSearch);
+ const v=e('div','actions');v.append(button('KI & Daten testen',()=>{$('keywords').value='KI, Datenanalyse, künstliche Intelligenz';$('exclude').value='Lizenz, Hardware';bidSearch()},'examplelink'));v.append(button('Suche ohne Treffer testen',()=>{$('keywords').value='Zebraschutz in der Antarktis';$('exclude').value='';bidSearch()},'examplelink'));custom.append(v);c.append(custom);
+ $('run').textContent='Aufträge suchen →';$('run').addEventListener('click',bidSearch);
  const formActions=e('div','actions');formActions.append($('run'),$('reset'));custom.append(formActions);
  $('reset').addEventListener('click',()=>{$('keywords').value='Softwareentwicklung, Kundenportal, Web';$('exclude').value='Lizenz, Hardware, Personal';clear('result');$('result').append(e('div','empty','Zurückgesetzt. Passe die Suchkriterien an und starte eine neue Suche.'));});
- $('snapshot').textContent='TED-Daten werden geladen …';
+ $('snapshot').textContent='Aufträge werden geladen …';
  fetch('/bidpilot/notices.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Datenimport nicht erreichbar');return r.json()}).then(d=>{
    if(d.schema!==2||!Array.isArray(d.notices))throw Error('Ungültiges Datenformat');
    feed=d.notices.filter(n=>n&&n.stage==='competition'&&/^https:\/\/ted\.europa\.eu\/en\/notice\/-\/detail\/[0-9]+-[0-9]{4}$/.test(n.url||'')&&n.id&&n.title);
    asof=String(d.fetched_at||'').slice(0,10);
-   text('snapshot','TED-Import: '+asof);for(let i=0;i<samples.length;i++)exampleButtons[i].disabled=!feed.some(n=>n.id===samples[i].id);
+   text('snapshot','Stand der Daten: '+asof);for(let i=0;i<samples.length;i++)exampleButtons[i].disabled=!feed.some(n=>n.id===samples[i].id);
  }).catch(err=>{text('snapshot','Daten nicht geladen');for(const b of exampleButtons)b.disabled=true;$('result').replaceChildren(panelNote('Quellenimport nicht erreichbar','Diese Demo erfindet keine Treffer. Bitte später erneut versuchen oder die offizielle TED-Seite öffnen.'));});
 }
 const aliases={'softwareentwicklung':['software development','softwareentwickl','software'],'software':['software development','software','programmierung'],'web':['web','portal','internet'],'kundenportal':['kundenportal','kundenport','kundenverwaltung'],'ki':['künstliche intelligenz','artificial intelligence','machine learning','ki-','ki ','ki-basierte','ai '],'datenanalyse':['datenanalyse','data analysis','data science'],'cybersecurity':['cybersecurity','security','soc','sicherheit','digital forensics'],'digitalisierung':['digitalisier','digitale'],'automation':['automation','automatisier']};
@@ -336,70 +336,70 @@ function bidSearch(){
  const results=allowed.map(n=>{const hits=matchedTerms(n.title,keys);return{n,hits}}).filter(x=>x.hits.length>0);
  results.sort((a,b)=>Number(b.n.id==='714363-2026')-Number(a.n.id==='714363-2026')||b.hits.length-a.hits.length||a.n.deadline.localeCompare(b.n.deadline)||a.n.id.localeCompare(b.n.id));
  lastSearch=results.slice(0,3);
- if(lastSearch.some(r=>r.n.id==='714363-2026'))root.append(panelNote('Ausführlicher Beispielfall verfügbar','Der dokumentierte TED-Fall 714363-2026 steht für den Eignungscheck exemplarisch vorne. Das bedeutet NICHT, dass er fachlich die beste Gelegenheit ist.'));
+ if(lastSearch.some(r=>r.n.id==='714363-2026'))root.append(panelNote('Für dieses Beispiel gibt es einen genauen Check','Beim Kundenportal sind fünf Anforderungen veröffentlicht. Deshalb zeigen wir diesen Auftrag als Beispiel zuerst – nicht, weil er automatisch am besten passt.'));
  root.append(feedback(allowed.length+' Ausschreibungen nach Frist und Ausschlüssen · '+results.length+' Treffer im konkreten Ausschreibungsgegenstand · maximal 3 angezeigt.'));
- if(!results.length){root.append(panelNote('Keine passenden Treffer im geladenen Datenbestand','Das ist ein echtes Null-Ergebnis: Versuche allgemeinere Begriffe oder entferne Ausschlüsse. Wir erfinden keine passenden Aufträge.'));return}
+ if(!results.length){root.append(panelNote('Keinen passenden Auftrag gefunden','Versuche allgemeinere Wörter oder entferne Ausschlüsse. Wir zeigen keine erfundenen Ergebnisse.'));return}
  for(const {n,hits} of lastSearch){
-  const card=e('div','resultrow');if(n.id==='714363-2026')card.append(e('span','chip','5 Eignungskriterien belegt'));card.append(e('span','chip','Treffer: '+hits.join(', ')));
+  const card=e('div','resultrow');if(n.id==='714363-2026')card.append(e('span','chip','5 veröffentlichte Anforderungen'));card.append(e('span','chip','Treffer: '+hits.join(', ')));
   const subj=tenderSubject(n.title);card.append(e('h3','',subj.length>105?subj.slice(0,102)+'…':subj),p(n.buyer+' · Frist: '+n.deadline));
-  const r=e('div','linkrow');r.append(link('Offizielle TED-Quelle ↗',n.url),button('Diesen Fall prüfen →',()=>bidDetail(n,hits)));card.append(r);root.append(card);
+  const r=e('div','linkrow');r.append(link('Original-Auftrag öffnen ↗',n.url),button('Diesen Auftrag prüfen →',()=>bidDetail(n,hits)));card.append(r);root.append(card);
  }
- root.append(panelNote('Was wir nicht automatisch wissen','Vollständige Leistungsbeschreibung, Referenzanforderungen, wirtschaftliche Eignung, Lots und aktuelle Änderungen müssen auf TED geprüft werden.'));
- text('result-title','Gefundene Projekte');
+ root.append(panelNote('Was noch zu klären ist','Der Titel allein reicht nicht: Vollständige Anforderungen und Teilnahmebedingungen stehen in der Originalanzeige.'));
+ text('result-title','Gefundene öffentliche Aufträge');
 }
 function bidDetail(n,hits){
  activeCandidate={n,hits};activeData=null;
  const root=$('result');root.replaceChildren();
  const stage=e('div','bid-stage');
- stage.append(e('span','','01 · Ausschreibung'),e('span','','02 · Eignung'),e('span','','03 · Entscheidung'));root.append(stage);
- root.append(e('span','chip',n.id==='714363-2026'?'Reale Ausschreibung · Eignungskriterien dokumentiert':'Reale Ausschreibung · Erstprüfung'));
+ stage.append(e('span','','01 · Auftrag'),e('span','','02 · Anforderungen'),e('span','','03 · Entscheidung'));root.append(stage);
+ root.append(e('span','chip',n.id==='714363-2026'?'Echter Auftrag · Anforderungen veröffentlicht':'Echter Auftrag · Fragen noch offen'));
  const subject=tenderSubject(n.title);
  root.append(e('div','notice-title',subject.length>135?subject.slice(0,132)+'…':subject));
  const quick=e('div','bid-facts');
  quick.append(e('span','','Frist: '+(n.deadline||'unbekannt')),e('span','','TED '+n.id));
  root.append(quick);
- const row=e('div','bid-inline');row.append(link('Originalbekanntmachung öffnen ↗',n.url));root.append(row);
- root.append(p('Warum ausgewählt: '+hits.join(' · ')+' im konkreten Ausschreibungsgegenstand. Das ist ein Titelabgleich, keine Eignungsaussage.','bid-why'));
- const deeper=e('details','bid-more');deeper.append(e('summary','','Alle Vergabedaten anzeigen'));
- deeper.append(facts([['Vergabestelle',n.buyer||'Nicht angegeben'],['Vollständiger Titel',n.title],['Frist laut Import',n.deadline||'Nicht angegeben'],['CPV',Array.isArray(n.cpv)?n.cpv.join(', '):'Unbekannt'],['Datenstand',asof||'Unbekannt']]));
+ const row=e('div','bid-inline');row.append(link('Original-Auftrag ansehen ↗',n.url));root.append(row);
+ root.append(p('Warum angezeigt: '+hits.join(' · ')+' im konkreten Ausschreibungsgegenstand. Das ist nur ein Vergleich des Titels – noch keine Zusage, dass dein Unternehmen den Auftrag erfüllen kann.','bid-why'));
+ const deeper=e('details','bid-more');deeper.append(e('summary','','Weitere Angaben zum Auftrag'));
+ deeper.append(facts([['Auftraggeber',n.buyer||'Nicht angegeben'],['Vollständiger Auftragstitel',n.title],['Frist laut Datensammlung',n.deadline||'Nicht angegeben'],['CPV',Array.isArray(n.cpv)?n.cpv.join(', '):'Unbekannt'],['Datenstand',asof||'Unbekannt']]));
  root.append(deeper);
  if(window.BidQualification && n.id===window.BidQualification.id){
   root.append(window.BidQualification.build(n));
  }else{
   const basedOnTitle={
-   '719791-2026':['Welche Daten verarbeitet der KI-Assistent und wer darf sie sehen?','Gibt es verpflichtende Schnittstellen zu Fachverfahren?','Welche Nachweise zur IT-Sicherheit und Barrierefreiheit sind erforderlich?'],
-   '723707-2026':['Welche Betriebszeiten und Reaktionsfristen werden verlangt?','Welche OpenStack-Versionen, Umgebungen und Zugriffsrechte sind betroffen?','Welche Referenzen, Zertifizierungen und Nachweise sind gefordert?']
+   '719791-2026':['Welche persönlichen Daten soll die Software verarbeiten?','Muss die Software mit den vorhandenen Systemen des Amts verbunden werden?','Welche Regeln für Datenschutz, Sicherheit und Barrierefreiheit gelten?'],
+   '723707-2026':['Wann muss der Support erreichbar sein und wie schnell reagieren?','Welche technischen Systeme sollen genau betreut werden?','Muss das Unternehmen ähnliche Projekte oder Zertifikate nachweisen?']
   };
   const questions=basedOnTitle[n.id]||['Welche Eignungskriterien gelten?','Welche fachlichen Anforderungen und Fristen sind verbindlich?','Welche Unternehmensnachweise müssen erbracht werden?'];
-  const box=e('div','demo-faq');box.append(e('h3','','Prüfagenda: Was muss noch geklärt werden?'));
+  const box=e('div','demo-faq');box.append(e('h3','','Diese Fragen solltest du vor einer Bewerbung klären'));
   const labels=[];
   for(const q of questions){
     const lab=e('label'),cb=e('input');cb.type='checkbox';cb.setAttribute('aria-label','Geprüft: '+q);
     const span=e('span','',q);lab.append(cb,span);box.append(lab);labels.push({q,cb});
   }
-  box.append(p('Diese Fragen sind vom Produkt aus dem Fallthema abgeleitete Arbeitshilfen – keine angeblich veröffentlichten Pflichtkriterien. Verbindlich sind die Unterlagen des Vergabeportals.','fine'));
+  box.append(p('Diese Fragen helfen bei der Prüfung. Sie sind keine bestätigten Bedingungen des Auftraggebers. Die verbindlichen Regeln stehen in der Originalanzeige.','fine'));
   root.append(box);activeData={questions:labels};
  }
  const final=e('section','bid-final');
- final.append(e('div','eyebrow','03 / ENTSCHEIDUNG'));
- final.append(e('h3','','Lohnt sich eine nähere Prüfung?'));
- final.append(p('Markiere einen nächsten Schritt. Das Briefing hält deine Einschätzung und die Quellen fest.','fine'));
- const memo=e('details','bid-memo');memo.append(e('summary','','Notiz für mein Team ergänzen (optional)'));
+ final.append(e('div','eyebrow','03 / DEINE ENTSCHEIDUNG'));
+ final.append(e('h3','','Soll dein Team diesen Auftrag genauer prüfen?'));
+ final.append(p('Wähle einen nächsten Schritt. Du kannst deine Entscheidung samt Quelle herunterladen.','fine'));
+ const memo=e('details','bid-memo');memo.append(e('summary','','Eigene Begründung ergänzen (optional)'));
  memo.append(field('Kurze Begründung','decision-note','Offene Nachweise und Originalunterlagen prüfen.','textarea','Kann vor dem Export bearbeitet werden.'));
  final.append(memo);
  const choices=e('div','decision-row');
- choices.append(button('Näher prüfen →',()=>bidDecision('prüfen'),'choice'));
- choices.append(button('Vorerst nicht passend',()=>bidDecision('nicht passend'),'choice'));
+ choices.append(button('Genauer prüfen →',()=>bidDecision('prüfen'),'choice'));
+ choices.append(button('Diesen Auftrag überspringen',()=>bidDecision('nicht passend'),'choice'));
  final.append(choices);
- final.append(button('← Zurück zur Shortlist',bidSearch,'examplelink'));
+ final.append(button('← Zurück zur Übersicht',bidSearch,'examplelink'));
  root.append(final);
- text('result-title','Passt dieser Auftrag?');
+ text('result-title','Lohnt sich dieser Auftrag?');
 }
 function bidDecision(choice){
  if(!activeCandidate)return;const {n,hits}=activeCandidate,why=$('decision-note')?.value.trim()||'Keine Begründung';const fit=(window.BidQualification&&n.id===window.BidQualification.id)?window.BidQualification:null;const root=$('result');const done=e('div','done');
  done.append(e('b','',choice==='prüfen'?'Vorgemerkt: Als nächstes die Ausschreibung öffnen.':'Als vorerst nicht passend markiert.'));
- done.append(p('Das Briefing enthält deine Notiz, die TED-Quelle und ungeprüfte Risiken. Es wurde nichts an TED oder andere Systeme übertragen.'));root.append(done);
- root.append(button('Entscheidungsbriefing herunterladen ↗',()=>download('bidpilot-'+n.id+'.txt',['BIDPILOT · ENTSCHEIDUNGSBRIEFING','Erstellt: '+new Date().toISOString(),'Profil: '+$('keywords').value,'Ausschlüsse: '+$('exclude').value,'Titel: '+n.title,'TED-ID: '+n.id,'Vergabestelle: '+n.buyer,'Frist im Import: '+n.deadline,'Originalquelle: '+n.url,'Quelle abgerufen: '+asof,'Treffer: '+hits.join(', '),'Entscheidung: '+choice,'Begründung: '+why,...(fit?['Eignungs-Vorprüfung: '+fit.status().decision,'Quelle für Eignungsanforderungen: '+fit.source,...fit.requirements.map(r=>r.name+': '+(fit.answers[r.id]||'unknown'))]:['Eignungsanforderungen im Detail noch NICHT geprüft',...(activeData?.questions||[]).map(x=>(x.cb.checked?'Als geprüft markiert: ':'Noch offen: ')+x.q)]),'WICHTIG: Letztverbindlich ist das Original-Vergabeportal. Keine automatische Eignungsbestätigung.'].join('\n')),'btn btn-subtle'));
+ done.append(p('Dein Ergebnis enthält die Originalquelle und offene Fragen. Es wurde nichts an den Auftraggeber gesendet.'));root.append(done);
+ root.append(button('Entscheidung herunterladen ↗',()=>download('bidpilot-'+n.id+'.txt',['BIDPILOT · ENTSCHEIDUNGSBRIEFING','Erstellt: '+new Date().toISOString(),'Profil: '+$('keywords').value,'Ausschlüsse: '+$('exclude').value,'Titel: '+n.title,'TED-ID: '+n.id,'Vergabestelle: '+n.buyer,'Frist im Import: '+n.deadline,'Originalquelle: '+n.url,'Quelle abgerufen: '+asof,'Treffer: '+hits.join(', '),'Entscheidung: '+choice,'Begründung: '+why,...(fit?['Eignungs-Vorprüfung: '+fit.status().decision,'Quelle für Eignungsanforderungen: '+fit.source,...fit.requirements.map(r=>r.name+': '+(fit.answers[r.id]||'unknown'))]:['Eignungsanforderungen im Detail noch NICHT geprüft',...(activeData?.questions||[]).map(x=>(x.cb.checked?'Als geprüft markiert: ':'Noch offen: ')+x.q)]),'WICHTIG: Letztverbindlich ist das Original-Vergabeportal. Keine automatische Eignungsbestätigung.'].join('\n')),'btn btn-subtle'));
 }
 if(isSnocks)snocksInit();else bidInit();
 })();
