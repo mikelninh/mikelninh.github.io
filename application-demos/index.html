@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f5f1">
+<title>60 Sekunden · Interaktive Arbeitsprobe</title>
+<meta name="description" content="Eine ehrliche, interaktive 60-Sekunden-Arbeitsprobe. Problem verstehen, einen echten oder synthetischen Fall prüfen, Entscheidung sehen.">
+<style>
+:root{--ink:#1c2626;--mute:#647071;--bg:#f6f6f2;--paper:#fff;--accent:#5044b8;--soft:#efedfb;--line:#dedfdd}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}
+body[data-theme="snocks"]{--accent:#155a48;--soft:#e8f3ee}
+.wrap{max-width:990px;margin:0 auto;padding:0 28px}
+nav{border-bottom:1px solid var(--line);background:var(--paper)}.navline{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:21px;padding-bottom:21px}
+.mark{font-size:15px;font-weight:800;letter-spacing:-.04em}.mark em{font-style:normal;color:var(--accent)}.navmeta{color:var(--mute);font-size:12px}
+main{padding:46px 0 68px}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:750;color:var(--accent)}
+h1{font-size:clamp(37px,6.5vw,72px);line-height:1.04;letter-spacing:-.055em;font-weight:750;max-width:830px;margin:15px 0 18px}h1 em{font-family:Georgia,serif;font-weight:400}
+.intro{font-size:17px;line-height:1.6;color:var(--mute);max-width:710px;margin:0 0 24px}
+.time{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:99px;padding:8px 12px;background:white;font-size:12px;font-weight:650}
+.dot{width:8px;height:8px;background:var(--accent);border-radius:100%}
+.board{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:18px;margin-top:33px}
+.panel{background:white;border:1px solid var(--line);border-radius:10px;padding:27px;min-height:315px}
+.step{font-size:11px;color:var(--accent);letter-spacing:.1em;font-weight:800;text-transform:uppercase}h2{font-family:Georgia,serif;font-weight:400;font-size:29px;letter-spacing:-.03em;line-height:1.2;margin:11px 0 12px}
+p{line-height:1.55}.fine{font-size:12px;color:var(--mute);line-height:1.5}.choices{display:grid;gap:9px;margin:20px 0}
+button{font:inherit;cursor:pointer}.choice{width:100%;background:var(--paper);border:1px solid var(--line);padding:13px 14px;text-align:left;border-radius:6px;color:var(--ink);font-size:14px;transition:background .15s,border-color .15s}.choice:hover,.choice:focus-visible{border-color:var(--accent);outline:0}.choice[aria-pressed=true]{background:var(--soft);border-color:var(--accent);font-weight:700}
+.primary{background:var(--accent);border:0;color:white;border-radius:6px;padding:14px 19px;font-weight:750;font-size:13px;min-height:46px}
+.primary:disabled{opacity:.5;cursor:not-allowed}
+.result{border-left:3px solid var(--accent);padding-left:16px;margin-top:20px}
+.result h3{font-size:18px;letter-spacing:-.02em;line-height:1.25;margin:0 0 9px}
+.result p{font-size:13px;color:var(--mute);margin:7px 0}.result a{font-size:12px;color:var(--accent);font-weight:700}
+.stamp{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:700}
+#output[hidden],#decision[hidden]{display:none}
+.next{margin-top:17px;background:var(--soft);padding:15px;border-radius:6px;font-size:13px;line-height:1.5}
+.links{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:22px}.links a{font-size:13px;font-weight:750;text-decoration:none}.links .primarylink{background:var(--accent);color:white;border-radius:5px;padding:12px 16px}
+.links .secondary{border-bottom:1px solid currentColor;padding:9px 0;color:var(--accent)}
+.foot{border-top:1px solid var(--line);margin-top:36px;padding-top:16px;color:var(--mute);font-size:11px;max-width:850px;line-height:1.7}
+@media(max-width:720px){main{padding-top:32px}.board{grid-template-columns:1fr}.panel{min-height:auto;padding:22px}.navmeta{font-size:10px}.intro{font-size:15px}}
+</style>
+</head>
+<body>
+<nav><div class="wrap navline"><span class="mark">MICHAEL NINH <em>/ LAB</em></span><span class="navmeta" id="meta">Independent application project · 2026</span></div></nav>
+<main class="wrap">
+<p class="eyebrow" id="eyebrow"></p>
+<h1 id="headline"></h1>
+<p class="intro" id="intro"></p>
+<span class="time"><span class="dot"></span>60-90 second guided walkthrough · no account</span>
+<div class="board">
+<section class="panel" aria-labelledby="question"><span class="step">01 / Choose a case</span><h2 id="question"></h2><p id="instruction" class="fine"></p><div class="choices" id="choices"></div><button class="primary" id="go" disabled>Show the result →</button></section>
+<section class="panel" aria-labelledby="outTitle"><span class="step">02 / Understand the result</span><h2 id="outTitle">One decision. With context.</h2><div id="placeholder"><p class="fine">Pick a case on the left. You'll see what the prototype surfaces, where the evidence comes from, and what a human still needs to decide.</p></div><div id="output" hidden aria-live="polite"><div class="stamp" id="source"></div><div class="result"><h3 id="resultTitle"></h3><p id="resultBody"></p><a id="sourceLink" href="#" target="_blank" rel="noopener noreferrer" hidden>Open official source ↗</a></div><div class="next" id="decision"></div></div></section>
+</div>
+<div class="links" id="links"></div>
+<p class="foot" id="disclosure"></p>
+</main>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const snocks=new URLSearchParams(location.search).get('demo')==='return-loop';
+document.body.dataset.theme=snocks?'snocks':'a11';
+document.documentElement.lang=snocks?'de':'en';
+const cases=[
+ {name:'Faden löst sich',tag:'T-101 · SYNTHETISCH',title:'Wiederkehrendes Produktproblem, kein bewiesener Defekt',body:'In erfundenen Testdaten tauchen 18 vergleichbare Beschwerden bei 260 Bestellungen auf (6,9 %). Der Workflow verknüpft Support und Bestelldaten und markiert ein Signal zur Qualitätsprüfung.',decision:'Vorschlag: Ticket beantworten und das Muster intern zur Prüfung markieren. Keine eigenständige Erstattung, keine Behauptung eines bestätigten Produktfehlers.'},
+ {name:'Wo bleibt meine Sendung?',tag:'T-100 · SYNTHETISCH',title:'Bestellung gefunden. Tracking fehlt.',body:'Die Bestellung steht im Beispieldatensatz. Ein Carrier-Feed ist nicht angeschlossen. Der Workflow kann den Lieferstatus daher nicht verifizieren.',decision:'Vorschlag: menschliche Prüfung und ehrliche Rückmeldung statt eines erfundenen Zustelldatums.'},
+ {name:'Bestellung nicht zuordenbar',tag:'T-102 · SYNTHETISCH',title:'Ein fehlender Beleg wird sichtbar.',body:'Die Anfrage lässt sich mit den vorliegenden Beispieldaten keiner Bestellung zuordnen. Genau diese Unsicherheit ist das Ergebnis.',decision:'Vorschlag: um Bestelldaten bitten oder an Support eskalieren. Keine automatische Auszahlung oder externe Aktion.'}
+];
+let selected=null,notices=[],feedDate='',focus='';
+function addChoice(label,idx){const b=document.createElement('button');b.type='button';b.className='choice';b.textContent=label;b.setAttribute('aria-pressed','false');b.onclick=()=>{selected=idx;document.querySelectorAll('.choice').forEach((n,i)=>n.setAttribute('aria-pressed',String(i===idx)));$('go').disabled=false};$('choices').appendChild(b)}
+function put(id,t){$(id).textContent=t}
+function a(label,url,cls){const n=document.createElement('a');n.textContent=label;n.href=url;n.className=cls;n.target='_blank';n.rel='noopener noreferrer';$('links').appendChild(n)}
+if(snocks){
+ document.title='RETURN LOOP · 60 Sekunden · Michael Ninh';
+ put('meta','SNOCKS · Junior AI Engineer');
+ put('eyebrow','RETURN LOOP / E-COMMERCE AI OPERATIONS');
+ $('headline').innerHTML='Eine Kundenfrage.<br><em>Ein besserer Prozess.</em>';
+ put('intro','Wähle eine typische Support-Anfrage. Sieh, welche Daten der Prototyp prüft und wo ein Mensch entscheiden muss.');
+ put('question','Welche Anfrage kommt rein?');
+ put('instruction','Drei bewusst erfundene Testfälle. Kein SNOCKS-System und keine echten Kundendaten.');
+ cases.forEach((c,i)=>addChoice(c.name,i));
+ $('go').onclick=()=>{const c=cases[selected];if(!c)return;put('source',c.tag);put('resultTitle',c.title);put('resultBody',c.body);put('decision',c.decision);$('sourceLink').hidden=true;$('output').hidden=false;$('placeholder').hidden=true;$('outTitle').textContent='Vom Ticket zur Entscheidung.'};
+ a('Open full technical demo ↗','https://return-loop-proof-mn-2026.vercel.app/','primarylink');
+ a('How the workflow is tested ↗','https://return-loop-proof-mn-2026.vercel.app/#lab','secondary');
+ put('disclosure','Independent, read-only illustration using synthetic data. The server-side reference includes Python, FastAPI, SQLite and an approval gate. No live ecommerce connection, refund or outbound message. The deterministic baseline gets 21/24 synthetic classifications correct; model efficacy is not proven.');
+}else{
+ document.title='BIDPILOT · 60 seconds · Michael Ninh';
+ put('meta','A11 · Junior Product Manager');
+ put('eyebrow','BIDPILOT / PRODUCT DISCOVERY');
+ $('headline').innerHTML='Less searching.<br><em>Better decisions.</em>';
+ put('intro','Small studios scan public tenders without knowing what deserves attention. Choose a focus, inspect one real TED notice, then decide whether it is worth further research.');
+ put('question','What does your team do?');
+ put('instruction','Choose a focus. We show a public notice from our current TED data snapshot—not a verified match or a qualified lead.');
+ const filters=[['Software & IT','72','48'],['Data & AI','72','48'],['IT infrastructure','72','48']];
+ filters.forEach((f,i)=>addChoice(f[0],i));
+ $('go').textContent='Inspect one notice →';
+ const fallback=()=>{put('source','LIVE FEED UNAVAILABLE');put('resultTitle','No verified notice to show.');put('resultBody','The TED data snapshot could not be loaded. We never invent a tender to fill the screen.');put('decision','Next step: check the current official notice feed or visit the full product to understand the source requirements.');$('sourceLink').hidden=true};
+ $('go').onclick=()=>{
+   $('output').hidden=false;$('placeholder').hidden=true;$('outTitle').textContent='One source-backed candidate.';
+   if(!notices.length){fallback();return}
+   const cp=selected===2?'48':'72';
+   const eligible=notices.filter(n=>n&&n.stage==='competition'&&Array.isArray(n.cpv)&&n.cpv.some(x=>String(x).startsWith(cp))&&n.url&&n.title);
+   const n=(eligible.length?eligible:notices.filter(n=>n&&n.stage==='competition'&&n.url&&n.title))[0];
+   if(!n){fallback();return}
+   put('source','TED '+n.id+' · PUBLISHED '+n.published+(feedDate?' · SNAPSHOT '+feedDate:''));
+   put('resultTitle',n.title);
+   put('resultBody',(n.buyer?'Buyer: '+n.buyer+'. ':'')+(n.deadline?'Date in source data: '+n.deadline+'. ':'')+'This is title/CPV screening only, not a validated fit. Check the source and all participation requirements.');
+   put('decision','Decision prompt: Would you investigate this notice further? Why? The value of the prototype is a traceable first screening decision—not an automated bid recommendation.');
+   const l=$('sourceLink');l.href=n.url;l.hidden=false;
+ };
+ a('Try the full product study ↗','https://mikelninh.github.io/bidpilot/#product-study','primarylink');
+ a('See FIRST MILE ↗','https://mikelninh.github.io/first-mile/','secondary');
+ put('disclosure','Independent research prototype, not an A11 product. Live public-source data is a non-exhaustive, timestamped import. Selection here is a simple CPV prefix filter, not the full product ranking. We have not observed real users, quantified time savings, or proven bid eligibility. No personal data is sent.');
+ fetch('/bidpilot/notices.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('feed');return r.json()}).then(j=>{if(j.schema===2&&Array.isArray(j.notices)){notices=j.notices;feedDate=(j.fetched_at||'').slice(0,10)}}).catch(()=>{});
+}
+})();
+</script>
+</body>
+</html>
