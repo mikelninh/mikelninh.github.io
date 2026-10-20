@@ -57,3 +57,13 @@ Primary: **unsafe AUTO_READY** (would the workflow falsely let a case through?).
 - Have claims specialists label and independently review a distinct blind test set.
 - Measure robustness to multilingual variations, duplicates, OCR errors, conflicting insurance terms and prompt injection.
 - Define production thresholds and regression approvals with INCA's domain experts.
+## Run directly from GitHub (no local Python required)
+
+A **manual-only** GitHub Actions workflow is available at [INCA Synthetic Model Eval](../../.github/workflows/inca-model-eval.yml).
+
+1. Repository → **Settings → Secrets and variables → Actions → New repository secret**.
+2. Add one project-scoped secret named `OPENAI_API_KEY`; do not paste the key in issues, commits, logs or chat.
+3. Repository → **Actions → INCA Synthetic Model Eval → Run workflow**.
+4. Start with `dry-run` (free). For real model calls select `live` and `cases_per_model=5`. The workflow caps this at **3 models × 5 cases = 15 billable calls**, runs pipeline tests first and uploads the resulting synthetic aggregate JSON report to the workflow artifacts. Only manual runs are configured.
+
+This does not publish any model results to the live INCA application. If the API key is absent, live mode fails before making requests. The repository is public; GitHub Actions logs are visible to visitors, but the code does not print the secret. The reports contain aggregate synthetic evaluation data only. Review actual API usage/billing in your OpenAI Platform account.
