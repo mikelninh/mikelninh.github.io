@@ -40,7 +40,7 @@ test('visible HTML contains two sources, exact reconstructed dates, reveal and t
       assert.ok(html.includes(x), 'Missing challenge feature '+x);
   }
   assert.match(html,/All documents are fictional/);
-  assert.match(html,/Only ST-104 is inspired by/);
+  assert.match(html,/travel example ST-104 reconstructs/);
   assert.match(html,/01 · PROBLEM/);
   assert.match(html,/02 · BUILT/);
   assert.match(html,/03 · TRY/);
@@ -59,8 +59,8 @@ test('three fictional cases have different valid next steps and no payout',()=>{
   assert.equal(api.cases[0].before.value,'AUTO_READY');
   assert.equal(api.cases[0].after.value,'HUMAN_REVIEW');
   for(const c of api.cases){
-    assert.ok(c.docA.date);
-    assert.ok(c.docB.date);
+    assert.ok(c.docA.value);
+    assert.ok(c.docB.value);
     assert.equal(api.decide(c.correct,c.id).correct,true);
     assert.equal(api.decide(c.correct,c.id).effects,0);
     assert.ok(c.provenance.includes('fictional')||c.provenance.includes('illustrative'));
@@ -88,7 +88,8 @@ test('challenge UI includes three named cases, three route choices and score cou
   for(const choice of ['continue','need_info','review']){
     assert.ok(html.includes('data-mc-choice="'+choice+'"'));
   }
-  for(const id of ['mc-case-progress','mc-correct-count','mc-progress-bar','mc-next','mc-old-route','mc-new-route','mc-doc-b-date']){
+  for(const id of ['mc-case-progress','mc-correct-count','mc-progress-bar','mc-claim-type',
+    'mc-doc-a-check','mc-doc-b-check','mc-finish','mc-finish-score','mc-finish-copy','mc-next','mc-old-route','mc-new-route','mc-doc-b-date']){
     assert.ok(html.includes('id="'+id+'"'));
   }
 });
@@ -127,7 +128,9 @@ test('browser-style interactions switch cases, record decisions and replay all w
   assert.equal(nodes['mc-case-progress'].textContent,'0 / 3 decisions');
   tabs[1].click();
   assert.equal(nodes['mc-case-id'].textContent,'ST-207');
-  assert.equal(nodes['mc-doc-b-date'].textContent,'NOT PROVIDED');
+  assert.equal(nodes['mc-doc-b-date'].textContent,'NOT RECEIVED');
+  assert.equal(nodes['mc-doc-a-check'].textContent,'PHOTO EVIDENCE');
+  assert.equal(nodes['mc-claim-type'].textContent,'HOME CLAIM');
   actions.find(x=>x.attrs['data-mc-choice']==='need_info').click();
   assert.equal(nodes['mc-new-route'].textContent,'NEED_INFO');
   assert.equal(nodes['mc-case-progress'].textContent,'1 / 3 decisions');
@@ -140,9 +143,37 @@ test('browser-style interactions switch cases, record decisions and replay all w
   assert.equal(nodes['mc-case-id'].textContent,'ST-318');
   actions.find(x=>x.attrs['data-mc-choice']==='continue').click();
   assert.equal(nodes['mc-new-route'].textContent,'CONTINUE_CHECKS');
+  assert.equal(nodes['mc-doc-a-check'].textContent,'FRAME NUMBER');
+  assert.equal(nodes['mc-doc-b-date'].textContent,'BIKE-4832');
+  assert.equal(nodes['mc-claim-type'].textContent,'THEFT CLAIM');
   assert.equal(nodes['mc-case-progress'].textContent,'3 / 3 decisions');
   assert.equal(nodes['mc-correct-count'].textContent,'3 correct');
+  assert.equal(nodes['mc-finish'].hidden,false);
+  assert.equal(nodes['mc-finish-score'].textContent,'3 / 3');
   nodes['mc-next'].click();
   assert.equal(nodes['mc-case-progress'].textContent,'0 / 3 decisions');
   assert.equal(nodes['mc-case-id'].textContent,'ST-104');
+  assert.equal(nodes['mc-finish'].hidden,true);
+});
+
+test('sample cases cover three distinct evidence types, not only travel dates',()=>{
+ assert.deepEqual(Array.from(api.cases,c=>c.claimType),['TRAVEL CLAIM','HOME CLAIM','THEFT CLAIM']);
+ assert.deepEqual(Array.from(api.cases,c=>c.checkLabel),['CANCELLATION DATE','PHOTO EVIDENCE','FRAME NUMBER']);
+ const home=api.cases.find(c=>c.id==='ST-207');
+ assert.match(home.docA.body,/Fotos/);
+ assert.match(home.docB.body,/fehlen/);
+ assert.equal(home.docB.value,'NOT RECEIVED');
+ const bike=api.cases.find(c=>c.id==='ST-318');
+ assert.equal(bike.docA.value,bike.docB.value);
+ assert.equal(bike.docA.type,'POLICE REPORT');
+ assert.equal(bike.docB.type,'PURCHASE RECEIPT');
+ assert.match(api.decide('continue',bike.id).explanation,/not approval/);
+});
+test('final screen is explicitly synthetic and does not claim production throughput',()=>{
+ const html=fs.readFileSync(path.join(__dirname,'60s.html'),'utf8');
+ assert.match(html,/YOUR OPERATIONS SHIFT · COMPLETED/);
+ assert.match(html,/Correct decisions/);
+ assert.match(html,/External actions/);
+ assert.match(html,/Continue checks ≠ payment approval/);
+ assert.match(html,/These are synthetic training cases/);
 });
