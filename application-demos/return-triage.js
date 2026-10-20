@@ -59,6 +59,8 @@ const CASES=[
 ["Die Socken sind kaputt und die Lieferung war spät","mixed"],["Die Socken sind zu klein und ich möchte eine Retoure","mixed"],["Paket fehlt und das Shirt ist gerissen","mixed"],["Ich will die kaputten Schuhe zurückgeben","mixed"],
 ["Keine Löcher, alles bestens","unknown"],["Die Socken sind nicht kaputt","unknown"],["Naht nicht gerissen, aber Größe passt nicht","size"],["Mein Versand war schnell, das Material ist aber kaputt","mixed"]
 ];
+const CHALLENGE=[["Die Naht ist heil, aber der Stoff verblasst","material"],["Das Paket war pünktlich, aber der Reißverschluss ist defekt","material"],["Noch kein Tracking erhalten","delivery"],["Können Sie mir ein Etikett für die Retoure mailen?","return"],["Klappt der Umtausch, wenn die Größe nicht passt?","mixed"],["Haben Sie mein Paket?","delivery"],["Alles okay, nur die Farbe entspricht nicht der Bestellung","unknown"],["Heute ist die Sohle vom Schuh abgegangen","material"],["Leider läuft eine Masche an der Seite","material"],["Delivery arrived; socks torn","material"],["Das Teil wirkt minderwertig","material"],["Die Größe ist perfekt, ich möchte aber die Farbe tauschen","return"],["Wo ist das Paket geblieben?","delivery"],["Hab nichts bekommen","delivery"],["Verpackung eingerissen, Ware unversehrt","unknown"],["Es fehlt eine Socke in der Packung","unknown"],["Wird meine Lieferung zurückgesendet?","mixed"],["Die Hose kam in Größe M statt L","size"],["Der Bund löst sich nach einer Woche auf","material"],["Ich benötige Hilfe beim Login","unknown"],["Paket verspätet und Hose zu klein","mixed"],["Keine Materialprobleme, nur die Retoure dauert lange","return"],["Ich möchte wissen, ob meine bestellte Größe noch verfügbar ist","size"],["My order is late and the seam ripped","mixed"]];
+function challenge(){const rows=CHALLENGE.map(([message,expected],i)=>({id:"C-"+String(i+1).padStart(2,"0"),message,expected,...classify(message)}));const correct=rows.filter(r=>r.expected===r.category).length;return{total:rows.length,correct,accuracy:correct/rows.length,errors:rows.filter(r=>r.expected!==r.category),rows,label:"Schwierige synthetische Beispiele; offen ausgewiesene Fehlfälle, keine echte Support-Evaluation"};}
 function evaluate(){
  const rows=CASES.map(([message,expected],i)=>({id:"E-"+String(i+1).padStart(2,"0"),message,expected,...classify(message)}));
  const ok=rows.filter(r=>r.category===r.expected).length;
@@ -68,5 +70,5 @@ function evaluate(){
  const recall=expectedMaterial?trueMaterial/expectedMaterial:0,precision=predictedMaterial.length?trueMaterial/predictedMaterial.length:0;
  return{total:rows.length,correct:ok,accuracy:ok/rows.length,materialPrecision:precision,materialRecall:recall,errors:wrong,rows,label:"Manuell erstellte synthetische Beispielsätze – keine unabhängige Validierung"};
 }
-root.ReturnTriage={classify,analyze,evaluate,CASES,LABELS};
+root.ReturnTriage={classify,analyze,evaluate,challenge,CASES,CHALLENGE,LABELS};
 })(window);
