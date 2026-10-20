@@ -234,6 +234,12 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;display:flex;justify
     <div class="mstep"><span class="eyebrow">04</span><b>Inspect failures</b><small>What changed — and why?</small></div>
     <div class="mstep"><span class="eyebrow">05</span><b>Promote or reject</b><small>No vibes. No silent regressions.</small></div>
   </div>
+  <div class="status-card" role="note">
+    <div><strong>Real LLM test completed · 3 models · 5 synthetic document cases each</strong>
+      <span>GPT-4o mini, GPT-6 Luna and GPT-6.1 Sol each returned 5/5 correct next-step routes with no API/schema errors. Estimated total token cost: $0.016. This tiny pilot is not an independent claims benchmark and does not establish a model winner. A few extracted ambiguity flags differed.</span>
+    </div>
+    <a class="btn" href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/model-eval/reports/RESULTS_2026-10-20.md" target="_blank" rel="noopener">Measured results ↗</a>
+  </div>
   <div class="status-card"><div><strong>Claude benchmark harness: implemented · public score: NOT RUN</strong><span>No Anthropic credential is available here, so I will not fabricate a model result. The harness is ready for a real Messages API run.</span></div><a class="btn" href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/src/run_claude_benchmark.py" target="_blank">Inspect harness ↗</a></div>
 </div>
 </section>
