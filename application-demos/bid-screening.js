@@ -6,7 +6,7 @@
 "use strict";
 const LABELS={web:"Webseiten & Portale",ai:"KI-Anwendungen",cloud:"Server / IT-Betrieb"};
 const SIGNALS={
- web:[/\bkundenportal\b/g,/\bweb(?:site|seite|portal|anwendung|app|plattform|entwicklung|design)\w*\b/g,/\binternetauftritt\b/g,/\b(?:frontend|onlineportal|website|webdesign|anwendungsentwicklung|mobile\s+app)\b/g,/\bsoftwareentwicklung\b/g],
+ web:[/\bkundenportal\b/g,/\bweb(?:basiert\w*|site|seite|portal|anwendung|app|plattform|entwicklung|design)\w*\b/g,/\binternetauftritt\b/g,/\b(?:frontend|onlineportal|website|webdesign|anwendungsentwicklung|mobile\s+app)\b/g,/\bsoftwareentwicklung\b/g],
  ai:[/\bki[- ](?:assistent\w*|basierte?\w*|gestuetzte?\w*|anwendung\w*|loesung\w*)\b/g,/\b(?:kuenstliche intelligenz|artificial intelligence|machine learning|llm|chatbot|sprachmodell|datenanalyse|data science|deep learning|computer vision)\b/g],
  cloud:[/\b(?:openstack|kubernetes|cloud|rechenzentrum|serverbetrieb|systembetreuung|containerplattform|it-infrastruktur|infrastrukturbetrieb|netzwerkbetrieb|managed services|monitoring|devops|hosting|virtualisierung|serverinfrastruktur)\b/g]
 };
@@ -36,15 +36,19 @@ function screen(profile,data,nowDate){
  const exclusions=keywords(profile.exclusions||"");
  const queries=keywords(profile.query||"");
  const notices=Array.isArray(data)?data:[];
- let available=0,eligible=0;
+ let available=0,eligible=0,excludedScope=0;
  const candidate=[];
- const seen=new Set();
+ const seen=new Set(),dedup=new Set();
  for(const n of notices){
  if(!n||n.stage!=="competition"||!/^\d{4}-\d{2}-\d{2}$/.test(n.deadline||"")||n.deadline<threshold)continue;
  if(!/^https:\/\/ted\.europa\.eu\/en\/notice\/-\/detail\/\d+-\d{4}$/.test(n.url||""))continue;
  if(!n.id||!n.title||!n.buyer||seen.has(n.id))continue;seen.add(n.id);
  available++;
  const subj=subject(n.title),lower=normalize(subj);
+ const duplicateKey=normalize(n.buyer)+'|'+lower.replace(/\s+/g,' ').slice(0,180);
+ if(dedup.has(duplicateKey))continue;dedup.add(duplicateKey);
+ // An AI-related title can still be a hardware lot; a cloud title can still be a license sale.
+ if(/\b(?:hardware|kioske|monitore|lizenz\w*|licen[sc]e\w*|subscription\w*|lieferung\s+von)\b/.test(lower)) {excludedScope++;continue;}
  if(exclusions.some(k=>lower.includes(k)))continue;
  const hit=classifyNotice(n,skills,profile.focus,queries);
  if(!hit)continue;
@@ -66,7 +70,7 @@ function screen(profile,data,nowDate){
  candidate.push({...n,shortTitle:hit.subject,hit:hit.best.hits,matchedCategory:hit.best.skill,score:hit.score,rank,known,barriers,unknowns,status,source:"Datensatz der öffentlichen Bekanntmachungen",next:barriers.length?"Erst fehlende Nachweise klären – keine voreilige Bewerbung.":"Original-Ausschreibung und Teilnahmebedingungen prüfen, bevor Zeit in ein Angebot fließt."});
  }
  candidate.sort((a,b)=>b.rank-a.rank||a.deadline.localeCompare(b.deadline)||a.id.localeCompare(b.id));
- return{dataCount:notices.length,available,matched:eligible,shown:candidate.slice(0,5),all:candidate,threshold,asOf:today};
+ return{dataCount:notices.length,available,matched:eligible,excludedScope,shown:candidate.slice(0,5),all:candidate,threshold,asOf:today};
 }
 root.BidScreening={screen,subject,match,keywords,LABELS};
 })(window);
