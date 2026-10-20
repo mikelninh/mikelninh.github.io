@@ -74,6 +74,14 @@ python -m unittest discover inca-proof/tests -v
 
 See [`docs/REVIEW_GUIDE.md`](docs/REVIEW_GUIDE.md).
 
+## Try the interactive evidence-to-handoff case
+
+[Open the 60-second case workshop](https://mikelninh.github.io/inca/60s.html#case-workshop).
+
+This new synthetic scenario **ST-104** is a separate, editable exercise inspired by the cross-document contradiction failure, **not** one of the measured H-A-011 test records. The visitor can change two document texts, recompute the next step and download a real Markdown handoff containing source excerpts, the reason for review, operator notes and the recommended next action. Inputs stay local in the browser.
+
+The workshop uses simple deterministic date extraction and validation—**no live LLM, PDF reading, insurer integration, communication or payout**. It only clears the date-consistency gate when both sources agree; it does not clear the whole claim. Eight automated checks cover conflicting, matching, missing, invalid and injection-like inputs.
+
 ## Public proof
 
 https://mikelninh.github.io/inca/
