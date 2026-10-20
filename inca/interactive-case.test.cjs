@@ -1,6 +1,13 @@
 const test=require('node:test');
 const assert=require('node:assert/strict');
-const api=require('./interactive-case.js');
+// This site is an ESM package, but interactive-case.js also supports CommonJS.
+ // Execute the browser bundle in an isolated CommonJS-style context to test it directly.
+const fs=require('node:fs');
+const path=require('node:path');
+const vm=require('node:vm');
+const context={module:{exports:{}}};
+vm.runInNewContext(fs.readFileSync(path.join(__dirname,'interactive-case.js'),'utf8'),context,{filename:'interactive-case.js'});
+const api=context.module.exports;
 test('conflicting dates require human review with traceable quotes',()=>{
  const r=api.evaluate(...api.examples.conflict);
  assert.equal(r.route,'HUMAN_REVIEW');
