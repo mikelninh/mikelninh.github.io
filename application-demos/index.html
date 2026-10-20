@@ -74,6 +74,24 @@ body[data-app="a11"] .notice-title{font-size:18px;line-height:1.32;margin:10px 0
 .bid-final .decision-row button{font-size:12px}
 @media(max-width:760px){body[data-app="a11"] .workspace{grid-template-columns:1fr}body[data-app="a11"] .hero{padding:30px 0 19px}body[data-app="a11"] .explain{gap:7px}body[data-app="a11"] .explainer{padding:11px 14px}.qual-line{align-items:flex-start}.qual-select{min-width:128px}}
 
+
+/* Demo library: a few distinct cases, but never a wall of options */
+.demo-choices{display:grid;gap:9px;margin:13px 0 18px}
+.demo-case{position:relative;background:#fff;border:1px solid #dfe3dd;border-radius:8px;padding:14px 15px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:74px;color:var(--ink)}
+.demo-case:hover,.demo-case:focus-visible{background:var(--wash);border-color:var(--accent)}
+.demo-case[aria-pressed="true"]{background:var(--wash);border-color:var(--accent);box-shadow:inset 3px 0 var(--accent)}
+.demo-case strong{display:block;font-size:13px;line-height:1.35;letter-spacing:-.01em}
+.demo-case small{display:block;color:#69756e;font-size:11px;line-height:1.45;margin-top:3px}
+.demo-case .demo-arrow{color:var(--accent);font-weight:800;flex-shrink:0;font-size:17px}
+.demo-case-tag{font-size:9px;font-weight:780;text-transform:uppercase;color:var(--accent);letter-spacing:.09em;margin:0 0 2px}
+.demo-choices-intro{font-size:11px;color:var(--muted);margin:8px 0 10px}
+.demo-faq{margin:12px 0;border-radius:7px;background:#f7f8f5;padding:14px;border:1px solid #e5e8e2}
+.demo-faq h3{font-size:12px;margin-bottom:9px}
+.demo-faq label{display:flex;align-items:flex-start;gap:10px;font-size:12px;line-height:1.5;color:#43524b;margin:10px 0}
+.demo-faq input[type=checkbox]{width:16px;height:16px;flex-shrink:0;accent-color:var(--accent);margin-top:2px}
+.demo-faq .fine{font-size:10px;margin-top:8px}
+@media(min-width:760px){body[data-app="a11"] .demo-choices{gap:9px}}
+
 </style>
 </head>
 <body>
@@ -231,28 +249,40 @@ function ticketDecision(flag,data){
 function bidInit(){
  text('company','A11 · JUNIOR PRODUCT MANAGER');text('eyebrow','BIDPILOT · EVIDENCE-FIRST PRODUCT DISCOVERY');
  $('headline').innerHTML='Passende Aufträge finden.<br><em>Früh die Hürden erkennen.</em>';
- text('lede','Ein Suchprofil, eine echte Ausschreibung und fünf wichtige Anforderungen. In einer Minute findest du heraus, was du vor einer Bewerbung prüfen musst.');
- text('ex-problem','Welche Ausschreibung lohnt eine Prüfung?');
+ text('lede','Wähle einen von drei echten TED-Fällen. Prüfe, was schon belegt ist, was fehlt und was sich für dein Team lohnt.');
+ text('ex-problem','Welche Gelegenheit lohnt deine Zeit?');
  text('ex-built','Quellenbasierte Shortlist + Eignungscheck.');
- text('ex-try','Beispiel prüfen, Nachweise markieren, Briefing speichern.');
- text('input-kicker','01 / START');text('input-title','Ein Fall. Eine Entscheidung.');
- text('input-desc','Starte mit einem recherchierten Beispiel. Oder suche anschließend selbst nach passenden Projekten.');
+ text('ex-try','Einen von drei Fällen wählen und entscheiden.');
+ text('input-kicker','01 / WÄHLE EINEN FALL');text('input-title','Was möchtest du prüfen?');
+ text('input-desc','Drei echte TED-Bekanntmachungen mit unterschiedlichen Prüfaufgaben. Keine fiktiven Aufträge.');
  text('input-note','Keine Registrierung. Die Selbstauskünfte bleiben im Browser. Originalunterlagen sind für die verbindliche Eignung maßgeblich.');
- text('result-title','Dein Eignungscheck');
- $('result').replaceChildren(add(e('div','empty'),e('strong','','Ein Klick zum prüfbaren Fall.'),e('span','','Starte links „Beispiel jetzt prüfen“. Danach markierst du fünf Nachweise und kannst deine Entscheidung exportieren.')));
+ text('result-title','Ein Fall. Ein nächster Schritt.');
+ $('result').replaceChildren(add(e('div','empty'),e('strong','','Ein Klick zum prüfbaren Fall.'),e('span','','Wähle links einen Fall. Du bekommst die Originalquelle und eine passende Prüffrage – und kannst ein Briefing mitnehmen.')));
  text('why-title','Was tatsächlich erledigt wird');
- text('why','Das Tool durchsucht einen realen, datierten Import öffentlicher TED-Ausschreibungen, entfernt verstrichene Fristen, gewichtet passende Begriffe und zeigt drei prüfbare Kandidaten mit Trefferbegründungen. Deine Entscheidung wird als lokales Briefing exportiert.');
+ text('why','Du kannst reale Fälle vergleichen: Wo veröffentlichte Kriterien vorliegen, werden diese belegt geprüft. Andernfalls erstellt das Tool eine Liste offener Prüffragen. Eigene Suchbegriffe liefern eine separate Shortlist. Deine Entscheidung kannst du exportieren.');
  text('limits','Die Shortlist ist ein Recherche-Einstieg, keine rechtliche Teilnahmeprüfung. Die Daten sind ein nicht vollständiger Snapshot, dessen Datum sichtbar bleibt.');
  $('full').href='https://mikelninh.github.io/bidpilot/#product-study';
- const c=$('controls'),launch=e('div','bid-launch');
- launch.append(e('strong','','Beispiel: Digitales Kundenportal'));
- launch.append(p('Reale TED-Bekanntmachung · 5 wichtige Eignungskriterien · 1 Entscheidung'));
- const featured=button('Beispiel jetzt prüfen →',()=>{
-   const n=feed.find(n=>n.id==='714363-2026');
-   if(!n){$('result').replaceChildren(panelNote('Beispiel nicht verfügbar','Der offizielle TED-Import ist gerade nicht erreichbar. Bitte Quelle direkt öffnen.'));return;}
-   bidDetail(n,['kundenportal','web']);
- },'btn');
- featured.disabled=true;launch.append(featured);c.append(launch);
+ const c=$('controls');
+ const options=e('div','demo-choices');
+ options.append(e('p','demo-choices-intro','Alle drei Fälle stammen aus demselben datierten TED-Import.'));
+ const samples=[
+  {id:'714363-2026',title:'Kundenportal entwickeln',kind:'Software / digitale Verwaltung',tag:'5 veröffentlichte Eignungskriterien',hits:['kundenportal','web']},
+  {id:'719791-2026',title:'KI-Assistent für die Wohngeldstelle',kind:'KI / öffentlicher Service',tag:'Anforderungen noch offen',hits:['KI-Assistent']},
+  {id:'723707-2026',title:'OpenStack-Supportvertrag',kind:'IT-Betrieb / Infrastruktur',tag:'Betriebsanforderungen prüfen',hits:['OpenStack']}
+ ];
+ const exampleButtons=[];
+ for(const item of samples){
+   const b=e('button','demo-case');b.type='button';b.disabled=true;b.setAttribute('aria-pressed','false');
+   const inner=e('span');inner.append(e('div','demo-case-tag',item.tag),e('strong','',item.title),e('small','',item.kind));
+   b.append(inner,e('span','demo-arrow','↗'));b.addEventListener('click',()=>{
+     const n=feed.find(n=>n.id===item.id);
+     if(!n){$('result').replaceChildren(panelNote('TED-Fall nicht geladen','Der Datensatz konnte nicht geprüft werden. Bitte den offiziellen TED-Link verwenden.'));return}
+     for(const bt of exampleButtons)bt.setAttribute('aria-pressed',String(bt===b));
+     bidDetail(n,item.hits);
+   });
+   exampleButtons.push(b);options.append(b);
+ }
+ c.append(options);
  const custom=e('details','bid-custom');custom.append(e('summary','','Oder eigenes Suchprofil verwenden'));
  custom.append(field('Schwerpunkte (kommagetrennt)','keywords','Softwareentwicklung, Kundenportal, Web','textarea','z. B. Softwareentwicklung, KI, Datenanalyse'));
  custom.append(field('Ausschließen','exclude','Lizenz, Hardware, Personal','text','Begriffe im tatsächlichen Ausschreibungsgegenstand'));
@@ -265,8 +295,8 @@ function bidInit(){
    if(d.schema!==2||!Array.isArray(d.notices))throw Error('Ungültiges Datenformat');
    feed=d.notices.filter(n=>n&&n.stage==='competition'&&/^https:\/\/ted\.europa\.eu\/en\/notice\/-\/detail\/[0-9]+-[0-9]{4}$/.test(n.url||'')&&n.id&&n.title);
    asof=String(d.fetched_at||'').slice(0,10);
-   text('snapshot','TED-Import: '+asof);featured.disabled=!feed.some(n=>n.id==='714363-2026');
- }).catch(err=>{text('snapshot','Daten nicht geladen');featured.disabled=true;$('result').replaceChildren(panelNote('Quellenimport nicht erreichbar','Diese Demo erfindet keine Treffer. Bitte später erneut versuchen oder die offizielle TED-Seite öffnen.'));});
+   text('snapshot','TED-Import: '+asof);for(let i=0;i<samples.length;i++)exampleButtons[i].disabled=!feed.some(n=>n.id===samples[i].id);
+ }).catch(err=>{text('snapshot','Daten nicht geladen');for(const b of exampleButtons)b.disabled=true;$('result').replaceChildren(panelNote('Quellenimport nicht erreichbar','Diese Demo erfindet keine Treffer. Bitte später erneut versuchen oder die offizielle TED-Seite öffnen.'));});
 }
 const aliases={'softwareentwicklung':['software development','softwareentwickl','software'],'software':['software development','software','programmierung'],'web':['web','portal','internet'],'kundenportal':['kundenportal','kundenport','kundenverwaltung'],'ki':['künstliche intelligenz','artificial intelligence','machine learning','ki-','ki ','ki-basierte','ai '],'datenanalyse':['datenanalyse','data analysis','data science'],'cybersecurity':['cybersecurity','security','soc','sicherheit','digital forensics'],'digitalisierung':['digitalisier','digitale'],'automation':['automation','automatisier']};
 function tenderSubject(title){
@@ -300,7 +330,7 @@ function bidSearch(){
  text('result-title','Gefundene Projekte');
 }
 function bidDetail(n,hits){
- activeCandidate={n,hits};
+ activeCandidate={n,hits};activeData=null;
  const root=$('result');root.replaceChildren();
  const stage=e('div','bid-stage');
  stage.append(e('span','','01 · Ausschreibung'),e('span','','02 · Eignung'),e('span','','03 · Entscheidung'));root.append(stage);
@@ -318,7 +348,19 @@ function bidDetail(n,hits){
  if(window.BidQualification && n.id===window.BidQualification.id){
   root.append(window.BidQualification.build(n));
  }else{
-  root.append(panelNote('Eignungskriterien noch nicht eingelesen','Für diesen Treffer sind keine belegten Teilnahmebedingungen im Demo-Datensatz verfügbar. Nutze das Originalportal; eine Eignungszusage wird nicht abgeleitet.','warning'));
+  const basedOnTitle={
+   '719791-2026':['Welche Daten verarbeitet der KI-Assistent und wer darf sie sehen?','Gibt es verpflichtende Schnittstellen zu Fachverfahren?','Welche Nachweise zur IT-Sicherheit und Barrierefreiheit sind erforderlich?'],
+   '723707-2026':['Welche Betriebszeiten und Reaktionsfristen werden verlangt?','Welche OpenStack-Versionen, Umgebungen und Zugriffsrechte sind betroffen?','Welche Referenzen, Zertifizierungen und Nachweise sind gefordert?']
+  };
+  const questions=basedOnTitle[n.id]||['Welche Eignungskriterien gelten?','Welche fachlichen Anforderungen und Fristen sind verbindlich?','Welche Unternehmensnachweise müssen erbracht werden?'];
+  const box=e('div','demo-faq');box.append(e('h3','','Prüfagenda: Was muss noch geklärt werden?'));
+  const labels=[];
+  for(const q of questions){
+    const lab=e('label'),cb=e('input');cb.type='checkbox';cb.setAttribute('aria-label','Geprüft: '+q);
+    const span=e('span','',q);lab.append(cb,span);box.append(lab);labels.push({q,cb});
+  }
+  box.append(p('Diese Fragen sind vom Produkt aus dem Fallthema abgeleitete Arbeitshilfen – keine angeblich veröffentlichten Pflichtkriterien. Verbindlich sind die Unterlagen des Vergabeportals.','fine'));
+  root.append(box);activeData={questions:labels};
  }
  const final=e('section','bid-final');
  final.append(e('div','eyebrow','03 / ENTSCHEIDUNG'));
@@ -339,7 +381,7 @@ function bidDecision(choice){
  if(!activeCandidate)return;const {n,hits}=activeCandidate,why=$('decision-note')?.value.trim()||'Keine Begründung';const fit=(window.BidQualification&&n.id===window.BidQualification.id)?window.BidQualification:null;const root=$('result');const done=e('div','done');
  done.append(e('b','',choice==='prüfen'?'Vorgemerkt: Als nächstes die Ausschreibung öffnen.':'Als vorerst nicht passend markiert.'));
  done.append(p('Das Briefing enthält deine Notiz, die TED-Quelle und ungeprüfte Risiken. Es wurde nichts an TED oder andere Systeme übertragen.'));root.append(done);
- root.append(button('Entscheidungsbriefing herunterladen ↗',()=>download('bidpilot-'+n.id+'.txt',['BIDPILOT · ENTSCHEIDUNGSBRIEFING','Erstellt: '+new Date().toISOString(),'Profil: '+$('keywords').value,'Ausschlüsse: '+$('exclude').value,'Titel: '+n.title,'TED-ID: '+n.id,'Vergabestelle: '+n.buyer,'Frist im Import: '+n.deadline,'Originalquelle: '+n.url,'Quelle abgerufen: '+asof,'Treffer: '+hits.join(', '),'Entscheidung: '+choice,'Begründung: '+why,...(fit?['Eignungs-Vorprüfung: '+fit.status().decision,'Quelle für Eignungsanforderungen: '+fit.source,...fit.requirements.map(r=>r.name+': '+(fit.answers[r.id]||'unknown'))]:['Eignungsanforderungen im Detail noch NICHT geprüft']),'WICHTIG: Letztverbindlich ist das Original-Vergabeportal. Keine automatische Eignungsbestätigung.'].join('\n')),'btn btn-subtle'));
+ root.append(button('Entscheidungsbriefing herunterladen ↗',()=>download('bidpilot-'+n.id+'.txt',['BIDPILOT · ENTSCHEIDUNGSBRIEFING','Erstellt: '+new Date().toISOString(),'Profil: '+$('keywords').value,'Ausschlüsse: '+$('exclude').value,'Titel: '+n.title,'TED-ID: '+n.id,'Vergabestelle: '+n.buyer,'Frist im Import: '+n.deadline,'Originalquelle: '+n.url,'Quelle abgerufen: '+asof,'Treffer: '+hits.join(', '),'Entscheidung: '+choice,'Begründung: '+why,...(fit?['Eignungs-Vorprüfung: '+fit.status().decision,'Quelle für Eignungsanforderungen: '+fit.source,...fit.requirements.map(r=>r.name+': '+(fit.answers[r.id]||'unknown'))]:['Eignungsanforderungen im Detail noch NICHT geprüft',...(activeData?.questions||[]).map(x=>(x.cb.checked?'Als geprüft markiert: ':'Noch offen: ')+x.q)]),'WICHTIG: Letztverbindlich ist das Original-Vergabeportal. Keine automatische Eignungsbestätigung.'].join('\n')),'btn btn-subtle'));
 }
 if(isSnocks)snocksInit();else bidInit();
 })();
