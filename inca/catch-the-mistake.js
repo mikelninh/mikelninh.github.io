@@ -24,7 +24,7 @@
         body:'Das Buchungssystem führt die Stornierung unter diesem Datum.'}),
       correct:'review',route:'HUMAN_REVIEW',signal:'1 DAY APART',
       heading:'Two dates, one claim — human review required.',
-      explanation:'The cancellation dates conflict. A claims expert should verify the originals before further processing.',
+      explanation:'The cancellation dates conflict. Human review by a claims expert is needed before further processing.',
       before:Object.freeze({label:'BEFORE · RECORDED GUARDED V2',value:'AUTO_READY',
         note:'The recorded synthetic H-A-011 case passed the original router despite its contradiction flag.'}),
       after:Object.freeze({label:'AFTER · PROPOSED V3 REPLAY',value:'HUMAN_REVIEW',
