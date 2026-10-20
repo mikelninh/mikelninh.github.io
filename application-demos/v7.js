@@ -71,7 +71,8 @@ function renderBid(){
  if(!last.shown.length){box(output,"Kein passender Auftrag gefunden","Probiere ein anderes Teamprofil, kürzere Suchbegriffe oder weniger Ausschlüsse. Wir erfinden keine Treffer.");return}
  const top=last.shown[0];
  box(output,"Dein erster sinnvoller Blick",top.shortTitle.slice(0,120)+(top.barriers.length?" – aber zuerst erkannte Hürden klären.":" – fachlich interessant, jetzt die Anforderungen prüfen."));
- for(const item of last.shown){
+ const moreResults=el("details");moreResults.append(el("summary","","Weitere passende Aufträge anzeigen ("+Math.max(0,last.shown.length-3)+")"));const hiddenCards=el("div");moreResults.append(hiddenCards);
+ for(const [index,item] of last.shown.entries()){
  const card=el("article","v6-item");
  card.append(badge(item.status,item.barriers.length?"warn":""));
  card.append(el("h3","",item.shortTitle.length>155?item.shortTitle.slice(0,152)+"…":item.shortTitle));
@@ -86,8 +87,9 @@ function renderBid(){
  for(const [value,title]of [["review","Weiter prüfen"],["hold","Offene Fragen"],["skip","Überspringen"]]){
  const b=btn(title,()=>{decisions[item.id]=value;Array.from(actions.children).forEach(n=>n.setAttribute("aria-pressed",String(n===b)))},"v6-sub");b.setAttribute("aria-pressed","false");actions.append(b);
  }
- card.append(actions);output.append(card);
+ card.append(actions);(index<3?output:hiddenCards).append(card);
  }
+ if(last.shown.length>3)output.append(moreResults);
  output.append(add(el("div","v6-actions"),btn("Meine Auswahl herunterladen ↗",()=>{
  const lines=["BIDPILOT · ÖFFENTLICHE AUFTRÄGE",new Date().toISOString(),"Datenstand: "+stamp,"Datensätze: "+dataset.length,"Ausreichend Frist: "+last.available,"Passende Titel: "+last.matched,"Team: "+profile.skills.join(", "),"Eigene Begriffe: "+profile.query,"Ausschlüsse: "+profile.exclusions,"Behördenreferenz: "+profile.reference,"Versicherung: "+profile.insurance,"IT-Sicherheit: "+profile.security,""];
  last.shown.forEach(it=>lines.push("AUFTRAG: "+it.shortTitle,"Originalquelle: "+it.url,"Auftraggeber: "+it.buyer,"Frist: "+it.deadline,"Titel-Treffer: "+it.hit.join(", "),"Hinweis: "+it.status,"Selbstauskunft-Hürden: "+it.barriers.join("; "),"Offene Punkte: "+it.unknowns.join("; "),"Nächster Schritt: "+it.next,"Meine Entscheidung: "+(decisions[it.id]||"Noch offen"),""));
@@ -211,6 +213,19 @@ function renderSupport(){
  flag.addEventListener("change",()=>{reviewNotes[g.sku]={text:draft.value,approved:flag.checked}});
  }
  results.append(area);
+ }
+ const withoutProduct=report.tickets.filter(t=>!t.sku);
+ if(withoutProduct.length){
+  const unmatched=el("details");unmatched.append(el("summary","",withoutProduct.length+" Nachrichten ohne Produktzuordnung prüfen"));
+  unmatched.append(p("Hier entscheidet ein Mensch, zu welchem Produkt die Anfrage gehört. Keine automatische Zuordnung ohne Bestellbeleg.","v6-tiny"));
+  for(const t of withoutProduct){
+   const row=el("div","v6-ticket");row.append(p(t.id+" · "+t.message),p("Erkannt: "+T.LABELS[t.predicted]+". "+t.reason,"v6-tiny"));
+   const picker=select([["","Noch ungeklärt"],["SOCKS","Socken"],["HOODIE","Kapuzenpullover"],["TEE","T-Shirt"]]);
+   picker.setAttribute("aria-label","Produkt zuordnen: "+t.id);
+   picker.addEventListener("change",()=>{const source=tickets.find(x=>x.id===t.id);if(source){source.sku=picker.value;run()}});
+   row.append(picker);unmatched.append(row);
+  }
+  results.append(unmatched);
  }
  results.append(add(el("div","v6-actions"),btn("Prüfbericht herunterladen ↗",()=>{
  const lines=["RETURN LOOP · QUALITÄTSAUSWERTUNG",new Date().toISOString(),"Quelle: "+(imported?"anonymisierte CSV (lokal)":"synthetische Beispielnachrichten"),"Tickets: "+report.total,"Mögliche Materialmeldungen: "+report.materials,"Unklare Fälle: "+report.needsReview,"Einordnungsregel: Transparenter Textregel-Klassifikator","Künstliche Regression: "+reg.correct+"/"+reg.total,"Schwierige synthetische Fälle: "+challenge.correct+"/"+challenge.total,""];
