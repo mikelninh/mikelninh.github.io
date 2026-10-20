@@ -95,7 +95,7 @@
       'mc-claim-type','mc-doc-a-check','mc-doc-b-check','mc-doc-a-type','mc-doc-a-title','mc-doc-a-date','mc-doc-a-body',
       'mc-doc-b-type','mc-doc-b-title','mc-doc-b-date','mc-doc-b-body',
       'mc-old-label','mc-old-route','mc-old-explanation','mc-new-label','mc-new-route',
-      'mc-new-explanation','mc-difference','mc-takeaway-text','mc-provenance','mc-finish','mc-finish-score','mc-finish-copy';
+      'mc-new-explanation','mc-difference','mc-takeaway-text','mc-provenance','mc-finish','mc-finish-score','mc-finish-copy'];
     if(!reveal||!status||!heading||!explanation||!reset||!next||actions.length!==3||tabs.length!==3||
       required.some(id=>!get(id)))throw Error('challenge_markup_incomplete');
     const answers=new Map();
