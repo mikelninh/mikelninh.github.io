@@ -174,7 +174,7 @@ function bidInit(){
  text('ex-built','Eine Suche und Priorisierung mit nachvollziehbaren Titel-Treffern, Fristen und Originalquellen aus TED-Daten.');
  text('ex-try','Schwerpunkte ändern, Shortlist erzeugen, TED-Quelle prüfen und Entscheidung als Briefing exportieren.');
  text('input-kicker','01 / DEIN STUDIO');text('input-title','Was kann dein Team?');
- text('input-desc','Passe die Suchbegriffe an. Das Ergebnis wird aus dem veröffentlichten TED-Datensatz berechnet – keine vorgefertigten Antworten.');
+ text('input-desc','Passe die Suchbegriffe an. Das Ergebnis wird aus dem veröffentlichten TED-Datensatz berechnet. Fälle mit weniger als drei Tagen Frist werden ausgeblendet.');
  text('input-note','Keine Eignungsprüfung und keine Aussage zur Gewinnchance. Originalbekanntmachung und Teilnahmebedingungen unbedingt selbst prüfen.');
  text('why-title','Was tatsächlich erledigt wird');
  text('why','Das Tool durchsucht einen realen, datierten Import öffentlicher TED-Ausschreibungen, entfernt verstrichene Fristen, gewichtet passende Begriffe und zeigt drei prüfbare Kandidaten mit Trefferbegründungen. Deine Entscheidung wird als lokales Briefing exportiert.');
@@ -208,7 +208,7 @@ function bidSearch(){
  const keys=cleanCSV($('keywords').value),ex=cleanCSV($('exclude').value);activeCandidate=null;
  if(!keys.length){root.append(panelNote('Suchprofil fehlt','Bitte mindestens einen konkreten Schwerpunkt eingeben.'));return}
  if(!feed.length){root.append(panelNote('Noch keine verifizierten Daten','Der TED-Import wurde noch nicht geladen oder ist nicht erreichbar.','warning'));return}
- const date=today(),all=feed.filter(n=>{const day=safeDate(n.deadline);return day&&day>=date&&day<='2099-12-31'});
+ const date=today(),earliest=new Date(Date.parse(date+'T00:00:00Z')+3*86400000).toISOString().slice(0,10),all=feed.filter(n=>{const day=safeDate(n.deadline);return day&&day>=earliest&&day<='2099-12-31'});
  const allowed=all.filter(n=>!ex.some(k=>norm(tenderSubject(n.title)).includes(k)));
  const results=allowed.map(n=>{const hits=matchedTerms(n.title,keys);return{n,hits}}).filter(x=>x.hits.length>0);
  results.sort((a,b)=>b.hits.length-a.hits.length||a.n.deadline.localeCompare(b.n.deadline)||a.n.id.localeCompare(b.n.id));
