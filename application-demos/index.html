@@ -103,7 +103,7 @@ const classifier=msg=>{
 };
 function snocksInit(){
  text('company','SNOCKS · JUNIOR AI ENGINEER');text('eyebrow','RETURN LOOP · INTERAKTIVE SUPPORT-PRÜFUNG');
- $('headline').innerHTML='Eine Reklamation.<br><em>Zwei Probleme gelöst.</em>';
+ $('headline').innerHTML='Eine Reklamation.<br><em>Zwei konkrete Ergebnisse.</em>';
  text('lede','Eine verständliche Antwort für den Kundenservice – und ein sichtbarer Hinweis auf mögliche Qualitätsmuster. Beides aus nachvollziehbaren Daten, nicht aus erfundenen Behauptungen.');
  text('ex-problem','Eine Beschwerde wird beantwortet. Wiederkehrende Qualitätsprobleme können dabei übersehen werden.');
  text('ex-built','Ein lokaler Triage-Workflow mit Bestellabgleich, Musterprüfung, Antwortentwurf und menschlicher Freigabe.');
@@ -142,6 +142,7 @@ function analyzeTicket(){
    const metrics=e('div','metricbar');metrics.append(add(e('div','metric'),e('b','',numerator+' / '+denominator),e('small','','Materialbeschwerden / Bestellungen derselben SKU, lokal berechnet')));
    metrics.append(add(e('div','metric'),e('b','',percent+' %'),e('small','','Anteil im geladenen Datensatz – keine bewiesene Fehlerquote')));root.append(metrics);
    root.append(panelNote('So entsteht der Qualitäts-Hinweis','Die Materialbeschwerden wurden anhand der SKU gruppiert. Drei beispielhafte Belege: '+complaintsFor.slice(0,3).map(x=>x.id).join(', ')+'. Ein Mensch muss mögliche Fehlerursachen prüfen.'));
+   if(kind==='mixed')root.append(panelNote('Zusätzliches Versandproblem','Ein Carrier-Feed ist nicht verbunden. Lieferstatus und Zustellung können hier nicht verifiziert werden.','warning'));
  } else if(kind==='delivery'||kind==='mixed'){
    root.append(panelNote('Wichtige Daten fehlen','Es ist kein Carrier-Tracking verbunden. Lieferstatus und Zustelldatum dürfen deshalb nicht erfunden werden.','warning'));
  }else root.append(panelNote(o?'Keine sichere Produkt-Klassifikation':'Kein Bestellbeleg','Ohne passenden Bestellbeleg und eindeutige Einordnung geben wir keine produktspezifische Aussage ab.','warning'));
