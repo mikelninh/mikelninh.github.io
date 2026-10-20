@@ -111,3 +111,16 @@ The first *full shareable letter* lives at `good-question/slow/first-letter/` an
 - Publish when the user clearly authorises a shareable release, but not fabricated human reviews. A content release is not medical or ecological expert certification.
 
 Remember that it won't and can't be perfect: ship one charming, useful, honest edition rather than a thousand half-truths.
+
+
+## GOOD THINGS · The dual rating studio (October 2026)
+
+Public destination after release: https://mikelninh.github.io/good-question/ratings/ . Canonical JSON: good-question/ratings/products.json . There are 123 named products; 101 image URLs with source links, including many exact REWE article packshots, and 12 selected sourced protein/sugar labels. Unknown nutrition values must remain JSON null; unknown is not zero. Photos are third-party image assets with source credit and possible hotlink failure. No permission to copy or commercially reproduce them is implied. Production site, agricultural ingredient origin and legal company address are independent fields and must never be conflated.
+
+Mikel and Huong have TWO independent locally editable S/A/B/C/D grade columns, tried flags, buy-again options, private free-text notes, and optional user-entered package information. Neither identity is remotely authenticated. A shared URL includes only compact voluntary ratings (not tasting notes); a recipient can merge missing entries or explicitly approve replacing conflicting grades. No automatic overwrite or remote account sync. Backup/export JSON and import are available.
+
+Next action for PROOF: verify 25 more exact pack labels including sugar/protein per 100g or ml, ingredient/allergen labels and reliable manufacturing/ingredient origin separately. Next for ATELIER: obtain own/licensed product photographs for favourite 20. Next for QUILL: publish a genuine two-person taste feature only after each person's own rating and explicit approval; never fabricate tiers. Affiliate recommendations must be transparently labelled and independent of commission rates; no active deals are claimed.
+
+Release gate: python3 good-question/ratings/qa_catalog.py and node good-question/ratings/qa_browser.mjs with a local HTTP server (see ratings/README.md); confirm responsive screenshots 360/390/768/1440, live-image fallbacks, two-device round-trip, explicit conflict handling, labels, existing WUNDERPOST navigation. Passing QA establishes software function, not factual independent certification or photograph licensing.
+
+The product backlog should grow slowly from actual evidence and genuine purchases rather than creating an endless list of placeholders.
