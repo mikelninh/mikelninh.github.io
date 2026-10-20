@@ -156,6 +156,30 @@ details{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}summar
 @media(max-width:600px){.mc-hero h1{font-size:clamp(35px,9vw,50px)}.mc-header{padding:12px 14px}.mc-inner{padding:16px 14px}.mc-doc-grid{grid-template-columns:1fr}.mc-heading-row{flex-direction:column}.mc-claim-ticket{display:none}.mc-doc-paper{min-height:175px}.mc-before-after{grid-template-columns:1fr}.mc-change-arrow{transform:rotate(90deg);font-size:22px}.mc-discovery{align-items:flex-start;flex-wrap:wrap}.mc-difference{margin-left:0}.mc-buttons{flex-direction:column}.mc-next-actions{flex-direction:column;align-items:stretch}}
 @media(prefers-reduced-motion:reduce){.mc-action,.mc-date-value{transition:none}.mc-action:hover{transform:none}}
 
+.mc-case-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:1px 0 11px}
+.mc-case-tab{position:relative;min-width:0;text-align:left;cursor:pointer;background:#fff;border:1px solid #d9e1d6;border-radius:8px;padding:11px 13px;color:#2c3d30}
+.mc-case-tab>span,.mc-case-tab>small{display:block;font-size:9px;color:#748575;font-weight:750;letter-spacing:.07em}
+.mc-case-tab strong{display:block;font-size:14px;line-height:1.2;margin:6px 0 5px;font-weight:820}
+.mc-case-tab[aria-pressed="true"]{background:#edf8e5;border-color:#74a75a;box-shadow:inset 0 3px #87bc5f}
+.mc-case-tab.mc-case-done:after{content:"✓";position:absolute;top:9px;right:11px;color:#347343;font-weight:850;font-size:15px}
+.mc-case-tab:focus-visible,.mc-next:focus-visible{outline:3px solid #8bbc48;outline-offset:3px}
+.mc-progress-row{display:flex;align-items:center;gap:11px;margin-bottom:21px;font-size:10px;font-weight:700;color:#627263}
+.mc-progress-row progress{appearance:none;flex:1;height:6px;border:0;border-radius:99px;background:#e4ebe2;overflow:hidden}
+.mc-progress-row progress::-webkit-progress-bar{background:#e4ebe2;border-radius:99px}
+.mc-progress-row progress::-webkit-progress-value{background:#7fad58;border-radius:99px}
+.mc-progress-row progress::-moz-progress-bar{background:#7fad58;border-radius:99px}
+.mc-info{background:#fffdf5;color:#6b572c;border-color:#c8a76f}
+.mc-action:disabled{cursor:default;opacity:.62;transform:none}
+.mc-success .mc-discovery{border-color:#bdd9a9;background:#f2faed}
+.mc-success .mc-discovery-icon{background:#2f864f}
+.mc-clean-case.mc-answered .mc-date-value{background:#e4f4df;box-shadow:0 0 0 5px #e4f4df;color:#266e43}
+.mc-clean-case.mc-answered .mc-doc{border-color:#abd29e}
+.mc-provenance{font-size:10px;color:#718071;line-height:1.5;background:#f0f4ee;padding:9px 12px;border-radius:6px;margin:10px 0 0}
+.mc-next{background:#b9ef72;color:#26392a;border:1px solid #80b048;font-size:11px;font-weight:850;padding:10px 12px;border-radius:6px;cursor:pointer}
+@media(max-width:780px){.mc-case-nav{grid-template-columns:1fr 1fr 1fr}.mc-case-tab{padding:10px}.mc-case-tab strong{font-size:12px}.mc-buttons .mc-action{white-space:normal}}
+@media(max-width:560px){.mc-case-nav{grid-template-columns:1fr}.mc-case-tab{display:grid;grid-template-columns:65px 1fr 52px;align-items:center;gap:10px}.mc-case-tab strong{margin:0}.mc-case-tab>small{text-align:right}.mc-progress-row{margin-bottom:15px}.mc-next-actions{width:100%}}
+
+
 </style>
 </head>
 <body>
@@ -177,69 +201,91 @@ details{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}summar
 
   <section class="mc" id="mistake-challenge" aria-labelledby="mc-heading">
     <div class="mc-header">
-      <span>THE 60-SECOND CHALLENGE</span>
-      <span>ST-104 · FICTIONAL RECONSTRUCTION</span>
+      <span>THE 3-CASE CHALLENGE</span>
+      <span>3 FICTIONAL CLAIMS · 3 DIFFERENT NEXT STEPS</span>
     </div>
     <div class="mc-inner">
+      <div class="mc-case-nav" role="group" aria-label="Choose a synthetic claim">
+        <button type="button" class="mc-case-tab" data-mc-case="ST-104" aria-pressed="true">
+          <span>01 / TRAVEL CLAIM</span><strong>Summer escape</strong><small>ST-104</small>
+        </button>
+        <button type="button" class="mc-case-tab" data-mc-case="ST-207" aria-pressed="false">
+          <span>02 / TRAVEL CLAIM</span><strong>City weekend</strong><small>ST-207</small>
+        </button>
+        <button type="button" class="mc-case-tab" data-mc-case="ST-318" aria-pressed="false">
+          <span>03 / TRAVEL CLAIM</span><strong>Mountain getaway</strong><small>ST-318</small>
+        </button>
+      </div>
+      <div class="mc-progress-row" aria-live="polite">
+        <span id="mc-case-progress">0 / 3 decisions</span>
+        <progress id="mc-progress-bar" value="0" max="3" aria-label="Cases decided"></progress>
+        <span id="mc-correct-count">0 correct</span>
+      </div>
       <div class="mc-heading-row">
         <div>
           <p class="mc-step">01 / YOU DECIDE</p>
-          <h2 id="mc-heading">Would you let this claim continue?</h2>
-          <p class="mc-prompt">Both documents are about the same cancellation. Look closely at the dates before you choose a next step.</p>
+          <h2 id="mc-heading" tabindex="-1">What should happen next?</h2>
+          <p class="mc-prompt"><span id="mc-case-caption">Two cancellation records for the same trip.</span> Look at the source documents, then choose one next step.</p>
         </div>
-        <div class="mc-claim-ticket"><span>TRAVEL CLAIM</span><strong>ST—104</strong><small>Synthetic · no insurer data</small></div>
+        <div class="mc-claim-ticket"><span>TRAVEL CLAIM</span><strong id="mc-case-id">ST-104</strong><small id="mc-case-name">Summer escape</small></div>
       </div>
       <div class="mc-doc-grid" aria-label="Two fictional source documents">
         <article class="mc-doc mc-doc-a" aria-label="Customer notice">
-          <div class="mc-doc-top"><span class="mc-doc-symbol" aria-hidden="true">✉</span><span>CUSTOMER NOTICE</span><span class="mc-doc-num">01 / 02</span></div>
+          <div class="mc-doc-top"><span class="mc-doc-symbol" aria-hidden="true">✉</span><span id="mc-doc-a-type">CUSTOMER NOTICE</span><span class="mc-doc-num">01 / 02</span></div>
           <div class="mc-doc-paper">
-            <p class="mc-paper-label">Reise ST-104</p>
-            <p class="mc-paper-title">Stornierungsbestätigung</p>
+            <p class="mc-paper-label">REISE · QUELLE A</p>
+            <p class="mc-paper-title" id="mc-doc-a-title">Stornierungsbestätigung</p>
             <div class="mc-paper-rule"></div>
             <p class="mc-date-caption">STORNIERUNGSDATUM</p>
-            <strong class="mc-date-value">11.07.2026</strong>
-            <p class="mc-paper-body">Die Kundin meldet die Stornierung vor Reiseantritt.</p>
+            <strong class="mc-date-value" id="mc-doc-a-date">11.07.2026</strong>
+            <p class="mc-paper-body" id="mc-doc-a-body">Die Kundin meldet die Stornierung.</p>
             <div class="mc-paper-footer"><span>QUELLE A</span><span>FIKTIVER AUSZUG</span></div>
           </div>
         </article>
         <article class="mc-doc mc-doc-b" aria-label="Booking record">
-          <div class="mc-doc-top"><span class="mc-doc-symbol" aria-hidden="true">▤</span><span>BOOKING RECORD</span><span class="mc-doc-num">02 / 02</span></div>
+          <div class="mc-doc-top"><span class="mc-doc-symbol" aria-hidden="true">▤</span><span id="mc-doc-b-type">BOOKING RECORD</span><span class="mc-doc-num">02 / 02</span></div>
           <div class="mc-doc-paper">
-            <p class="mc-paper-label">Reise ST-104</p>
-            <p class="mc-paper-title">Buchungssystem-Auszug</p>
+            <p class="mc-paper-label">REISE · QUELLE B</p>
+            <p class="mc-paper-title" id="mc-doc-b-title">Buchungssystem-Auszug</p>
             <div class="mc-paper-rule"></div>
             <p class="mc-date-caption">STORNIERUNGSDATUM</p>
-            <strong class="mc-date-value">12.07.2026</strong>
-            <p class="mc-paper-body">Das Buchungssystem führt die Stornierung unter diesem Datum.</p>
+            <strong class="mc-date-value" id="mc-doc-b-date">12.07.2026</strong>
+            <p class="mc-paper-body" id="mc-doc-b-body">Abweichendes Datum im Buchungssystem.</p>
             <div class="mc-paper-footer"><span>QUELLE B</span><span>FIKTIVER AUSZUG</span></div>
           </div>
         </article>
       </div>
       <div class="mc-promptbar">
-        <div><p class="mc-step">02 / MAKE THE CALL</p><strong>What is the safest next step?</strong><p id="mc-status" aria-live="polite">Inspect the two source dates, then make your call.</p></div>
+        <div><p class="mc-step">02 / MAKE THE CALL</p><strong>What is the safest next step?</strong><p id="mc-status" role="status" aria-live="polite">Inspect both sources, then make your call.</p></div>
         <div class="mc-buttons" role="group" aria-label="Choose what should happen to this claim">
-          <button type="button" data-mc-choice="continue" aria-pressed="false" class="mc-action mc-continue">Continue processing <span aria-hidden="true">→</span></button>
+          <button type="button" data-mc-choice="continue" aria-pressed="false" class="mc-action mc-continue">Continue checks <span aria-hidden="true">→</span></button>
+          <button type="button" data-mc-choice="need_info" aria-pressed="false" class="mc-action mc-info">Request information <span aria-hidden="true">↗</span></button>
           <button type="button" data-mc-choice="review" aria-pressed="false" class="mc-action mc-review">Human review <span aria-hidden="true">↗</span></button>
         </div>
       </div>
-      <div id="mc-reveal" class="mc-reveal" hidden>
+      <div id="mc-reveal" class="mc-reveal" hidden aria-live="polite">
         <div class="mc-discovery">
           <span class="mc-discovery-icon" aria-hidden="true">!</span>
           <div><p class="mc-step">THE DETAIL THAT MATTERS</p><h3 id="mc-result-heading"></h3><p id="mc-result-description"></p></div>
-          <span class="mc-difference">1 DAY APART</span>
+          <span class="mc-difference" id="mc-difference">1 DAY APART</span>
         </div>
-        <p class="mc-step mc-compare-heading">03 / SEE WHAT CHANGED</p>
+        <p class="mc-step mc-compare-heading">03 / UNDERSTAND THE ROUTE</p>
         <div class="mc-before-after">
-          <div class="mc-route-old"><span>BEFORE · RECORDED GUARDED V2</span><strong>AUTO_READY</strong><p>The synthetic case was allowed to proceed despite its contradiction flag.</p></div>
+          <div class="mc-route-old"><span id="mc-old-label">BEFORE · RECORDED GUARDED V2</span><strong id="mc-old-route">AUTO_READY</strong><p id="mc-old-explanation">The original synthetic example was routed despite a contradiction.</p></div>
           <div class="mc-change-arrow" aria-hidden="true">→</div>
-          <div class="mc-route-new"><span>AFTER · PROPOSED V3 REPLAY</span><strong>HUMAN_REVIEW</strong><p>An added contradiction gate prevents automatic clearance in the local deterministic replay.</p></div>
+          <div class="mc-route-new"><span id="mc-new-label">AFTER · PROPOSED V3 REPLAY</span><strong id="mc-new-route">HUMAN_REVIEW</strong><p id="mc-new-explanation">A contradiction check requires review.</p></div>
         </div>
         <div class="mc-takeaway">
-          <div><strong>What this demonstrates</strong><p>Not just finding a bug: preserving the miss, adding a bounded safeguard, and checking that the next decision is safer.</p></div>
-          <div class="mc-next-actions"><a href="#case-workshop" class="mc-deep-link">Change the dates yourself ↗</a><button id="mc-reset" type="button" class="mc-retry">Try again</button></div>
+          <div><strong>What this demonstrates</strong><p id="mc-takeaway-text">Failures should lead to safer, testable decisions.</p></div>
+          <div class="mc-next-actions">
+            <a href="#case-workshop" class="mc-deep-link">Edit your own documents ↗</a>
+            <button id="mc-next" type="button" class="mc-next">Next case →</button>
+            <button id="mc-reset" type="button" class="mc-retry">Try this again</button>
+          </div>
         </div>
+        <p class="mc-provenance" id="mc-provenance">This is fictional training data.</p>
       </div>
-      <p class="mc-footnote">Evidence boundary: the recorded <a href="/inca/#operator-lab">H-A-011 failure</a> is from a synthetic rule-based evaluation. These two document excerpts and dates are an illustrative reconstruction (ST-104), not the original holdout documents. No real claim or API is processed here.</p>
+      <p class="mc-footnote">All documents are fictional. Only ST-104 is inspired by the documented synthetic <a href="/inca/#operator-lab">H-A-011 routing failure</a>; the other two are invented control cases. The historical failure used a contradiction flag, not PDF reading. This experience does not call an LLM, handle an insurer claim, or approve a payout.</p>
     </div>
   </section>
   <section class="cw" id="case-workshop" aria-labelledby="cw-title">
