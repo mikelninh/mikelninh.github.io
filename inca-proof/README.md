@@ -78,9 +78,9 @@ See [`docs/REVIEW_GUIDE.md`](docs/REVIEW_GUIDE.md).
 
 [Open the 60-second case workshop](https://mikelninh.github.io/inca/60s.html#case-workshop).
 
-This new synthetic scenario **ST-104** is a separate, editable exercise inspired by the cross-document contradiction failure, **not** one of the measured H-A-011 test records. The visitor can change two document texts, recompute the next step and download a real Markdown handoff containing source excerpts, the reason for review, operator notes and the recommended next action. Inputs stay local in the browser.
+This new synthetic scenario **ST-104** is a separate, editable exercise inspired by the cross-document contradiction failure, **not** one of the measured H-A-011 test records. The visitor can change two document texts, recompute the next step and download a real Markdown handoff containing source excerpts, the reason for review, operator notes and the recommended next action. The result also includes an **unsent customer-communication draft**. A reviewer can correct the suggested route and download a **machine-readable regression-fixture candidate** for human validation and later test integration. Inputs stay local in the browser.
 
-The workshop uses simple deterministic date extraction and validation—**no live LLM, PDF reading, insurer integration, communication or payout**. It only clears the date-consistency gate when both sources agree; it does not clear the whole claim. Eight automated checks cover conflicting, matching, missing, invalid and injection-like inputs.
+The workshop uses simple deterministic date extraction and validation—**no live LLM, PDF reading, insurer integration, communication or payout**. It only clears the date-consistency gate when both sources agree; it does not clear the whole claim. Automated checks cover conflicting, matching, missing, invalid and injection-like inputs, as well as customer-draft and reviewer-feedback artifacts. Generating a fixture does not automatically update CI.
 
 ## Public proof
 
