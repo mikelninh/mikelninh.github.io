@@ -184,21 +184,39 @@ const classifier=msg=>{
 function snocksInit(){
  text('company','SNOCKS · JUNIOR AI ENGINEER');text('eyebrow','RETURN LOOP · INTERAKTIVE SUPPORT-PRÜFUNG');
  $('headline').innerHTML='Eine Reklamation.<br><em>Zwei konkrete Ergebnisse.</em>';
- text('lede','Eine verständliche Antwort für den Kundenservice – und ein sichtbarer Hinweis auf mögliche Qualitätsmuster. Beides aus nachvollziehbaren Daten, nicht aus erfundenen Behauptungen.');
+ text('lede','Drei typische Supportfälle. Drei unterschiedliche Ergebnisse. Du siehst, wie Datenprüfung und menschliche Freigabe zusammenarbeiten.');
  text('ex-problem','Eine Beschwerde wird beantwortet. Wiederkehrende Qualitätsprobleme können dabei übersehen werden.');
  text('ex-built','Ein lokaler Triage-Workflow mit Bestellabgleich, Musterprüfung, Antwortentwurf und menschlicher Freigabe.');
- text('ex-try','Nachricht oder Order-ID ändern, Analyse ausführen, Entwurf bearbeiten und einen Fall exportieren.');
- text('input-kicker','01 / SUPPORT-TICKET');text('input-title','Was schreibt die Kundin?');
- text('input-desc','Der vorausgefüllte Fall ist fiktiv. Du kannst den Text und die Order-ID ändern – die Analyse muss darauf reagieren.');
+ text('ex-try','Drei Fälle wählen, Unterschiede sehen, den Prüfvermerk mitnehmen.');
+ text('input-kicker','01 / FALL WÄHLEN');text('input-title','Welches Ticket willst du prüfen?');
+ text('input-desc','Starte mit einem von drei typischen Supportfällen. Oder ändere die Nachricht und prüfe deinen eigenen Fall.');
  text('input-note','Alle Eingaben bleiben im Browser. Keine externe Nachricht, Erstattung oder Shop-Änderung. Der separate FastAPI-/SQLite-Prototyp wird hier nicht live aufgerufen.');
  text('why-title','Was tatsächlich erledigt wird');
  text('why','Das Tool ordnet eine Anfrage ein, gleicht eine Bestell-ID mit den geladenen Daten ab, berechnet Beschwerdehäufigkeiten je SKU, erstellt einen vorsichtigen editierbaren Antwortentwurf und exportiert einen Prüfvermerk. Alles nachvollziehbar und ohne Versand.');
  text('limits','Referenzdaten sind synthetisch. Die Einordnung läuft regelbasiert im Browser, nicht über ein live angeschlossenes KI-Modell. Ein Muster ist kein bewiesener Produktdefekt.');
  $('full').href='https://return-loop-proof-mn-2026.vercel.app/';
- const controls=$('controls');controls.append(field('Kundenanfrage','ticket','Hallo! Meine Socken haben nach zwei Wäschen Löcher an der Naht. Könnt ihr helfen?','textarea','Fiktive Beschwerde – ändere etwa „Löcher“ zu „Sendung noch nicht da“.'));
- controls.append(field('Bestellnummer','order','DEMO-007','text','DEMO-001 bis DEMO-260 liegen in den synthetischen Beispieldaten.'));
- const inline=e('div','actions');inline.append(button('Lieferfrage testen',()=>{$('ticket').value='Wo bleibt mein Paket? Ich habe noch keine Sendungsnummer bekommen.';$('order').value='DEMO-025';analyzeTicket()},'examplelink'));
- inline.append(button('Unbekannte Bestellung',()=>{$('ticket').value='Die Socken haben nach zwei Wäschen Löcher.';$('order').value='UNBEKANNT';analyzeTicket()},'examplelink'));controls.append(inline);
+ const controls=$('controls');
+ const samples=e('div','demo-choices');
+ const scenarios=[
+  {title:'Qualitätsproblem',description:'Löcher nach zwei Wäschen · Muster prüfen',text:'Hallo! Meine Socken haben nach zwei Wäschen Löcher an der Naht. Könnt ihr helfen?',order:'DEMO-007'},
+  {title:'Lieferung unklar',description:'Kein Carrier-Tracking · nichts erfinden',text:'Wo bleibt mein Paket? Ich habe noch keine Sendungsnummer bekommen.',order:'DEMO-025'},
+  {title:'Bestellung fehlt',description:'Keine Zuordnung · um Nachweis bitten',text:'Die Socken haben nach zwei Wäschen Löcher.',order:'UNBEKANNT'}
+ ];
+ const scenarioButtons=[];
+ scenarios.forEach((item,i)=>{
+  const b=e('button','demo-case');b.type='button';b.setAttribute('aria-pressed',String(i===0));
+  const inner=e('span');inner.append(e('strong','',item.title),e('small','',item.description));b.append(inner,e('span','demo-arrow','↗'));
+  b.addEventListener('click',()=>{
+   $('ticket').value=item.text;$('order').value=item.order;
+   for(const bt of scenarioButtons)bt.setAttribute('aria-pressed',String(bt===b));
+   analyzeTicket();
+  });scenarioButtons.push(b);samples.append(b);
+ });
+ controls.append(samples);
+ const custom=e('details','bid-custom');custom.append(e('summary','','Oder eigenen Tickettext ausprobieren'));
+ custom.append(field('Kundenanfrage','ticket',scenarios[0].text,'textarea','Testdaten – bitte keine echten personenbezogenen Inhalte eingeben.'));
+ custom.append(field('Bestellnummer','order','DEMO-007','text','DEMO-001 bis DEMO-260 liegen in den synthetischen Beispieldaten.'));
+ controls.append(custom);
  const det=e('details','details');const summary=e('summary','','Optional: Eigene anonymisierte CSV-Daten verwenden');det.append(summary,p('Nur lokal im Browser verarbeitet; keine Namen, Adressen oder anderen personenbezogenen Daten hochladen. CSV-Format: order_id,sku,category. category = material oder leer. Jede Zeile steht für eine Bestellung.'));
  const example=button('Beispiel-CSV kopieren',()=>navigator.clipboard?.writeText('order_id,sku,category\nTEST-001,SOCKS-01,material\nTEST-002,SOCKS-01,\nTEST-003,SOCKS-01,material\nTEST-004,SOCKS-01,'),'examplelink');det.append(example);
  const file=e('input');file.type='file';file.accept='.csv,text/csv';file.id='csvfile';file.style.margin='12px 0';file.setAttribute('aria-label','Anonymisierte CSV auswählen');
@@ -206,8 +224,8 @@ function snocksInit(){
   const f=file.files&&file.files[0];if(!f)return;if(f.size>300000){text('upload-note','Maximal 300 KB CSV');return}
   try{const raw=await f.text();const counts=processCSV(raw);text('upload-note',counts.orders+' Bestellungen eingelesen. '+counts.complaints+' Materialbeschwerden. Nur lokal; keine Serverübertragung.');analyzeTicket()}catch(err){text('upload-note','Fehler: '+err.message)}
  });det.append(file,e('div','field-help','Die vorhandenen Demo-Daten werden nur für diese Sitzung ersetzt.'));det.append(e('div','field-help','',));const status=e('p','field-help','Noch keine eigene CSV geladen');status.id='upload-note';det.append(status);controls.append(det);
- seedData();$('run').textContent='Ticket tatsächlich prüfen →';$('run').addEventListener('click',analyzeTicket);
- $('reset').addEventListener('click',()=>{$('ticket').value='Hallo! Meine Socken haben nach zwei Wäschen Löcher an der Naht. Könnt ihr helfen?';$('order').value='DEMO-007';seedData();$('csvfile').value='';text('upload-note','Demo-Datensatz wiederhergestellt.');clear('result');$('result').append(e('div','empty','Eingabe zurückgesetzt. Jetzt kannst du den Fall erneut prüfen.'));});
+ seedData();$('run').textContent='Eigenen Text prüfen →';$('run').addEventListener('click',()=>{custom.open=true;analyzeTicket();});const actions=$('run').parentNode;if(actions)custom.append(actions);
+ $('reset').addEventListener('click',()=>{$('ticket').value=scenarios[0].text;$('order').value=scenarios[0].order;seedData();$('csvfile').value='';for(let i=0;i<scenarioButtons.length;i++)scenarioButtons[i].setAttribute('aria-pressed',String(i===0));text('upload-note','Demo-Datensatz wiederhergestellt.');clear('result');$('result').append(e('div','empty','Zurückgesetzt. Wähle oben einen Fall.'));});
 }
 function analyzeTicket(){
  const message=$('ticket').value.trim(),id=$('order').value.trim().toUpperCase(),kind=classifier(message),root=$('result');root.replaceChildren();
