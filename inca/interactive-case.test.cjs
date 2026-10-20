@@ -59,3 +59,37 @@ test('the application landing page exposes every working control',()=>{
  assert.match(html,/02 \/ WHAT I BUILT/);
  assert.match(html,/03 \/ TRY IT NOW/);
 });
+
+test('every evaluated case has a customer-safe draft marked as unsent',()=>{
+ for(const x of Object.values(api.examples)){
+  const r=api.evaluate(...x);
+  assert.equal(typeof r.customerUpdate,'string');
+  assert.ok(r.customerUpdate.length>40);
+  assert.equal(r.externalActions,0);
+  assert.match(api.makeNote(r,...x,'QA reviewer'),/NOT SENT/);
+ }
+});
+test('reviewed disagreements create transparent JSON regression candidates',()=>{
+ const fixture=api.makeRegressionCase(...api.examples.conflict,'NEED_INFO','Missing original source');
+ assert.equal(fixture.observed_route,'HUMAN_REVIEW');
+ assert.equal(fixture.expected_route,'NEED_INFO');
+ assert.equal(fixture.disagreement,true);
+ assert.equal(fixture.production_case,false);
+ assert.match(fixture.reviewer_reason,/Missing original source/);
+ assert.equal(fixture.documents.length,2);
+ assert.match(fixture.source,/not an independently held-out case/);
+});
+test('reviewer agreement creates control fixture without fabricated errors',()=>{
+ const fixture=api.makeRegressionCase(...api.examples.consistent,'CONTINUE_CHECKS','Dates match');
+ assert.equal(fixture.disagreement,false);
+ assert.equal(fixture.production_case,false);
+});
+test('unknown reviewed route fails closed',()=>{
+ assert.throws(()=>api.makeRegressionCase(...api.examples.conflict,'AUTO_READY'),/Invalid reviewed outcome/);
+});
+test('workshop includes user-feedback, regression and customer-draft controls',()=>{
+ const html=fs.readFileSync(path.join(__dirname,'60s.html'),'utf8');
+ for(const id of ['cw-customer','cw-expected','cw-review-reason','cw-regression','cw-quality-status']){
+  assert.match(html,new RegExp('id=["\\x27]'+id+'["\\x27]'));
+ }
+});
