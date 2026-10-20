@@ -1,6 +1,9 @@
 name: INCA Synthetic Model Eval
 
 on:
+  push:
+    paths:
+      - 'inca-proof/model-eval/START_LIVE_RUN_ONCE.md'
   workflow_dispatch:
     inputs:
       run_mode:
@@ -15,7 +18,7 @@ on:
         description: "Comma-separated OpenAI model IDs"
         required: true
         type: string
-        default: "gpt-4o-mini,gpt-4.1-mini,gpt-4.1"
+        default: "gpt-4o-mini,gpt-6-luna,gpt-6.1-sol"
       cases_per_model:
         description: "Cases per model; charged mode capped at 5"
         required: true
@@ -39,9 +42,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      MODEL_IDS: ${{ inputs.models }}
-      CASE_LIMIT: ${{ inputs.cases_per_model }}
-      RUN_MODE: ${{ inputs.run_mode }}
+      MODEL_IDS: ${{ github.event_name == 'push' && 'gpt-4o-mini,gpt-6-luna,gpt-6.1-sol' || inputs.models }}
+      CASE_LIMIT: ${{ github.event_name == 'push' && '5' || inputs.cases_per_model }}
+      RUN_MODE: ${{ github.event_name == 'push' && 'live' || inputs.run_mode }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
       - name: Check out repository
@@ -74,13 +77,13 @@ jobs:
           python inca-proof/model-eval/run_openai.py --dry-run \
             --models "$MODEL_IDS" --split holdout --limit "$CASE_LIMIT"
       - name: Live OpenAI model comparison (billable)
-        if: ${{ inputs.run_mode == 'live' }}
+        if: ${{ github.event_name == 'push' || inputs.run_mode == 'live' }}
         run: |
           python inca-proof/model-eval/run_openai.py \
             --models "$MODEL_IDS" --split holdout --limit "$CASE_LIMIT" \
             --out "inca-proof/model-eval/reports/github_run_${GITHUB_RUN_ID}.json"
       - name: Attach report (synthetic aggregate results only)
-        if: ${{ inputs.run_mode == 'live' && always() }}
+        if: ${{ (github.event_name == 'push' || inputs.run_mode == 'live') && always() }}
         uses: actions/upload-artifact@v4
         with:
           name: inca-model-eval-${{ github.run_id }}
