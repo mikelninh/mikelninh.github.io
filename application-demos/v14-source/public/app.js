@@ -168,8 +168,8 @@ async function run(model){if(model==='rules'){showStatus('Regelbaseline lokal be
 function showStatus(txt){$('run-status').textContent=txt;}
 function renderEvaluation(){const baselineRows=fixtures.map(c=>({gold:c.gold,pred:baseline(c.text)}));const sc=evaluate(baselineRows);$('baseline-f1').textContent=fmt(sc.macroF1);$('baseline-fn').textContent=sc.qualityFN+' / '+fixtures.filter(c=>c.gold.includes('quality')).length;
  const out=[{name:'Keyword rules',metric:sc.macroF1,n:fixtures.length}];let complete=0,covered=0;
- for(let m of MODELS.slice(1)){let rows=fixtures.filter(c=>results[c.id]?.[m.id]?.ok).map(c=>({gold:c.gold,pred:predicted(results[c.id][m.id],m.id)}));if(rows.length===fixtures.length){let score=evaluate(rows);out.push({name:m.name,metric:score.macroF1,n:rows.length});complete++;}else out.push({name:m.name,metric:null,n:rows.length});if(m.id==='decisions'||m.id==='jev')covered+=rows.length;}
- $('leaderboard').replaceChildren(...out.map(r=>{let row=el('div','board-row');row.append(el('strong','',r.name));let bar=el('div','bar');if(r.metric!==null){let inner=el('span');inner.style.width=(r.metric*100).toFixed(1)+'%';bar.append(inner);}row.append(bar,el('small','',r.metric===null?`${r.n}/${fixtures.length} getestet`:`${Math.round(r.metric*100)}% · ${r.n}/${fixtures.length}`));return row;}));
+ for(let m of MODELS.slice(1)){if(m.id==='llm'&&fullStudy?.successful===fixtures.length){out.push({name:m.name+' · archivierter Live-Test',metric:fullStudy.llm_on_same_successful_cases.macro_f1,n:fixtures.length,archived:true});continue;}let rows=fixtures.filter(c=>results[c.id]?.[m.id]?.ok).map(c=>({gold:c.gold,pred:predicted(results[c.id][m.id],m.id)}));if(rows.length===fixtures.length){let score=evaluate(rows);out.push({name:m.name,metric:score.macroF1,n:rows.length});complete++;}else out.push({name:m.name,metric:null,n:rows.length});if(m.id==='decisions'||m.id==='jev')covered+=rows.length;}
+ $('leaderboard').replaceChildren(...out.map(r=>{let row=el('div','board-row');row.append(el('strong','',r.name));let bar=el('div','bar');if(r.metric!==null){let inner=el('span');inner.style.width=(r.metric*100).toFixed(1)+'%';bar.append(inner);}row.append(bar,el('small','',r.metric===null?`${r.n}/${fixtures.length} getestet`:`${Math.round(r.metric*100)}% · ${r.n}/${fixtures.length}${r.archived?' · archiviert':''}`));return row;}));
  const observed=fixtures.flatMap(c=>['decisions','jev'].filter(m=>results[c.id]?.[m]?.ok).map(m=>({gold:c.gold,pred:predicted(results[c.id][m],m),model:m})));$('threshold-note').textContent=observed.length===0?'Noch keine echten Decision-Scores gemessen. Der Regler beeinflusst deshalb keine Modellvorhersagen.':`Schwelle ${Math.round(threshold*100)}% · ${observed.length} echte Decision-Prognosen auf bekannten Entwicklungsfällen. Für faire Modellvergleiche werden Kennzahlen erst bei vollständiger Abdeckung (24/24 je Modell) veröffentlicht.`;
 }
 
@@ -233,7 +233,7 @@ function renderPaired(){
  $('paired-run-all').textContent=pairedBatchRunning?'Messung läuft …':done.length?'Übrige '+(total-done.length)+' Fälle mit KI testen ↗':'Acht Fälle mit echter KI testen ↗';
  $('paired-cancel').hidden=!pairedBatchRunning;
  $('paired-download').disabled=done.length===0;
- if(!done.length){$('paired-results').textContent='Noch keine neuen Live-Messwerte. Der frühere Einzeltest zählt nicht als Benchmark.';return;}
+ if(!done.length){$('paired-results').textContent='Noch keine eigenen Wiederholungstests. Die Ergebnisse aus 24 echten KI-Aufrufen sind oben dokumentiert.';return;}
  const stats=pairedSummary(done),container=el('div','paired-metrics');
  const metricRows=[
   ['Alle Anliegen korrekt erkannt',stats.baseline.exact+' / '+stats.n,stats.llm.exact+' / '+stats.n],
