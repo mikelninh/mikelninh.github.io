@@ -18,6 +18,11 @@
     NEED_INFO:'Request missing information',
     CONTINUE_CHECKS:'Continue remaining checks'
   });
+  const handBack=Object.freeze({
+    HUMAN_REVIEW:'Original cancellation date verified by claims expert; outcome logged before returning to checks.',
+    NEED_INFO:'Required dated source received and reviewed before running verification again.',
+    CONTINUE_CHECKS:'Coverage, eligibility and other outstanding evidence checks finished by authorized operators.'
+  });
   const nextSteps=Object.freeze({
     HUMAN_REVIEW:'Claims expert verifies conflicting dates against the originals before any further routing.',
     NEED_INFO:'Request reliable dated evidence from the customer or booking provider.',
@@ -49,14 +54,14 @@
     const header=[
       '# ST-104 | Synthetic operator handoff',
       '',
-      'Status: PREPARED FOR HUMAN HANDOFF — NOT SENT',
+      'Status: PREPARED OPERATOR HANDOFF — NOT SENT',
       'Case representation: fictional ST-104 documents inspired by a separate H-A-011 synthetic routing failure',
       'Policy reference: REI-COV-01 (illustrative only)',
       'Reviewed next step: '+route+' — '+labels[route],
       'Reviewer / proposed owner: '+reviewer,
       'Owner acceptance: NOT CONFIRMED (local demo only)',
       'Review action: '+latest.action,
-      'Hand-back condition: original dates verified or missing evidence resolved before further checks',
+      'Hand-back condition: '+handBack[route],
       'Verified by operator in browser: YES (self-attested, not independently audited)',
       'Operator note: '+comment,
       '',
@@ -78,7 +83,7 @@
     ].join('\n');
     return Object.freeze({route,reviewer,comment,text:header+'\n\n'+trace+'\n'+footer,externalActions:0,
       preview:{owner:reviewer,route,nextAction:latest.action,sourceQuotes:latest.snippets,
-        draft:latest.result.customerUpdate,handBack:'Confirm the original cancellation date with a claims expert.'}});
+        draft:latest.result.customerUpdate,handBack:handBack[route]}});
   }
   function regression(core,{a,b,expected,why}){
     if(!validRoutes.includes(expected))throw Error('invalid_expected_route');
@@ -98,7 +103,7 @@
     const a=$('sh-a'),b=$('sh-b'),owner=$('sh-owner'),notes=$('sh-notes');
     const required=['sh-scan','sh-review','sh-export','sh-regression','sh-status','sh-route','sh-reason',
       'sh-quote-a','sh-quote-b','sh-old','sh-new','sh-preview','sh-review-step','sh-export-step','sh-qa-step',
-      'sh-confirm','sh-next','sh-draft','sh-route-next','sh-fixture-expected','sh-fixture-why','sh-a','sh-b'];
+      'sh-confirm','sh-next','sh-draft','sh-route-next','sh-fixture-expected','sh-fixture-why','sh-a','sh-b','sh-preview-handback'];
     if(required.some(id=>!$(id)))throw Error('operator_shift_markup_incomplete');
     let analysis=null,receipt=null;
     const set=(id,text)=>$(id).textContent=text;
@@ -144,6 +149,7 @@
         set('sh-preview-owner',receipt.preview.owner);
         set('sh-preview-route',receipt.route);
         set('sh-preview-action',receipt.preview.nextAction);
+        set('sh-preview-handback',receipt.preview.handBack);
         set('sh-draft',receipt.preview.draft);
       }catch(e){receipt=null;$('sh-export').disabled=true;$('sh-regression').disabled=true;
         set('sh-review-error',String(e.message).replace(/_/g,' '));}
