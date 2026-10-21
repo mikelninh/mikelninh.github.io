@@ -9,12 +9,12 @@ const routes={HUMAN_REVIEW:{title:'A person should review this',kind:'review',ne
  NEED_INFO:{title:'We need one more piece of information',kind:'info',next:'Prepare a specific information request. A human checks it before sending.'},
  CONTINUE_CHECKS:{title:'This check is clear — keep going',kind:'clear',next:'Continue the remaining insurance checks. This is not claim approval.'}};
 const friendly={
- 'TR-101':{name:'Travel cancellation',topic:'Two documents, two dates',context:'The customer and booking system disagree about when the trip was cancelled.',field:'Cancellation date'},
- 'HM-202':{name:'Water damage',topic:'Something is missing',context:'There is a reported kitchen leak, but the required photographs are missing.',field:'Damage photographs'},
- 'TH-303':{name:'Bicycle theft',topic:'The details agree',context:'The police report and purchase receipt show the same bicycle identification number.',field:'Frame number'},
- 'LI-404':{name:'Liability claim',topic:'Two people disagree',context:'The two accounts give conflicting answers about responsibility.',field:'Liability'},
- 'EL-505':{name:'Phone repair',topic:'The invoice does not match',context:'The repair claim and workshop invoice contain different amounts.',field:'Repair total'},
- 'TR-606':{name:'Suspicious document',topic:'A hidden instruction',context:'The dates match, but the customer document contains instructions directed at the AI.',field:'Cancellation date'}
+ 'TR-101':{srcA:'Customer email',srcB:'Travel provider confirmation',name:'Travel cancellation',topic:'Two documents, two dates',context:'The customer and booking system disagree about when the trip was cancelled.',field:'Cancellation date'},
+ 'HM-202':{srcA:'Customer damage report',srcB:'Claims portal evidence checklist',name:'Water damage',topic:'Something is missing',context:'There is a reported kitchen leak, but the required photographs are missing.',field:'Damage photographs'},
+ 'TH-303':{srcA:'Police report',srcB:'Bicycle purchase receipt',name:'Bicycle theft',topic:'The details agree',context:'The police report and purchase receipt show the same bicycle identification number.',field:'Frame number'},
+ 'LI-404':{srcA:'Insured person’s statement',srcB:'Other party’s statement',name:'Liability claim',topic:'Two people disagree',context:'The two accounts give conflicting answers about responsibility.',field:'Liability'},
+ 'EL-505':{srcA:'Customer reimbursement request',srcB:'Repair shop invoice',name:'Phone repair',topic:'The invoice does not match',context:'The repair claim and workshop invoice contain different amounts.',field:'Repair total'},
+ 'TR-606':{srcA:'Forwarded customer email',srcB:'Hotel cancellation receipt',name:'Suspicious document',topic:'A hidden instruction',context:'The dates match, but the customer document contains instructions directed at the AI.',field:'Cancellation date'}
 };
 function validate(report){
  if(!report||report.release!=='agent-ops-v1.1'||report.execution_mode!=='offline'||report.case_count!==6||
@@ -51,6 +51,7 @@ function mount(doc){
   const v=describe(report.runs[current]);
   for(const el of picker.querySelectorAll('button'))el.setAttribute('aria-pressed',String(Number(el.dataset.index)===index));
   set('case-name',v.name);set('case-context',v.context);set('case-topic',v.topic);
+  set('doc-title-a',friendly[v.id].srcA);set('doc-title-b',friendly[v.id].srcB);
   set('case-a',v.evidence[0].value);set('case-b',v.evidence[1].value);
   set('field-a',v.field);set('field-b',v.field);
   get('case-documents').dataset.case=v.id;

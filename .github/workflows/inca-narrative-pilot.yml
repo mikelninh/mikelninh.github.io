@@ -1,0 +1,46 @@
+name: INCA Narrative AI Pilot (six fictional cases)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'inca-proof/agent-ops/RUN_NARRATIVE_PILOT_ONCE.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: inca-narrative-pilot-once
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    name: Model extraction on six authored narrative cases, capped at six API calls
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    env:
+      OPENAI_API_KEY: \${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify local safety contract and narratives (zero calls)
+        run: |
+          python -m unittest discover inca-proof/agent-ops -p 'test_*.py' -v
+          python inca-proof/agent-ops/narrative_pilot.py --mode dry-run
+      - name: Real GPT evidence extraction + tool selection (billable, max 6 calls)
+        run: |
+          test -n "$OPENAI_API_KEY"
+          python inca-proof/agent-ops/narrative_pilot.py \
+            --mode live \
+            --out "inca-proof/agent-ops/reports/narrative_\${GITHUB_RUN_ID}.json"
+      - name: Attach original report even when models fail
+        if: \${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: inca-real-narrative-pilot-\${{ github.run_id }}
+          path: inca-proof/agent-ops/reports/narrative_*.json
+          retention-days: 30
+          if-no-files-found: warn
