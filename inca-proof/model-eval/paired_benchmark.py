@@ -16,6 +16,7 @@ JEV_PATH = HERE / "cost_quality.py"
 spec = importlib.util.spec_from_file_location("inca_cost_quality", JEV_PATH)
 jev = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(jev)
+from safety_guard import guarded_decision
 
 GPT_SYSTEM = (
     "You classify whether two fictional travel cancellation records NEED ATTENTION. "
@@ -137,6 +138,14 @@ def evaluate(cases, jev_fn=None, gpt_fn=None):
                     row[model+"_error"]="HTTP_"+str(e.code)
                 except Exception as e:
                     row[model+"_error"]=type(e).__name__
+        # Separate the raw model decision from the deterministic safety guard.
+        # NEVER count this as model-only accuracy. Missing API results stay unscored.
+        for base in ("jev","gpt"):
+            measured=row[base]
+            row["guarded_"+base] = ({**measured,
+               "decision": guarded_decision(measured["decision"],case["a"],case["b"])["needs_attention"],
+               "guard_triggered": guarded_decision(measured["decision"],case["a"],case["b"])["guard_triggered"]}
+               if measured is not None else None)
         rows.append(row)
     return {
         "status":"LIVE_API_RUN" if jev_fn is not None or gpt_fn is not None else "OFFLINE_NO_API_CALLS",
@@ -145,9 +154,9 @@ def evaluate(cases, jev_fn=None, gpt_fn=None):
         "provenance":"40 developer-authored fictional cases, labels not independently expert-reviewed; no production claim decisions.",
         "threshold":0.5,
         "rows":rows,
-        "summary":{model:metrics(rows,model) for model in ("jev","gpt")},
-        "by_split":{split:{model:metrics([r for r in rows if r["split"]==split],model) for model in ("jev","gpt")} for split in ("dev","holdout")},
-        "by_family":{family:{model:metrics([r for r in rows if r["family"]==family],model) for model in ("jev","gpt")} for family in sorted({r["family"] for r in rows})},
+        "summary":{model:metrics(rows,model) for model in ("jev","gpt","guarded_jev","guarded_gpt")},
+        "by_split":{split:{model:metrics([r for r in rows if r["split"]==split],model) for model in ("jev","gpt","guarded_jev","guarded_gpt")} for split in ("dev","holdout")},
+        "by_family":{family:{model:metrics([r for r in rows if r["family"]==family],model) for model in ("jev","gpt","guarded_jev","guarded_gpt")} for family in sorted({r["family"] for r in rows})},
     }
 
 def main():
