@@ -181,7 +181,7 @@ function render(){
  const approval=n("input");approval.type="checkbox";approval.checked=!!notes[g.sku]?.approved;approval.id="v9-approval";
  row.append(message,add(n("div","v9-check"),approval,label("Für menschliche Prüfung vormerken",approval.id)));
  const store=()=>{notes[g.sku]={message:message.value,approved:approval.checked};audit.push({type:"review-note",sku:g.sku,approved:approval.checked})};
- message.addEventListener("input",store);approval.addEventListener("change",store);output.append(row);
+ message.addEventListener("input",()=>{notes[g.sku]={message:message.value,approved:approval.checked}});message.addEventListener("change",store);approval.addEventListener("change",store);output.append(row);
  }else output.append(callout("Keine Häufung über unserer Beispielschwelle","Das bedeutet nicht, dass alle Produkte fehlerfrei sind. Prüfe insbesondere Widersprüche und unbekannte Fälle."));
  const risks=disclosure(result.ambiguous.length+" unsichere oder widersprüchliche Nachrichten prüfen");
  for(const r of result.ambiguous)ticketEditor(r,risks);
