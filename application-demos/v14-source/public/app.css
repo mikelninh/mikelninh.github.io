@@ -145,3 +145,15 @@
 .paired-case strong{font-size:11px;color:#2a6040}
 .paired-case span{color:#627467}
 @media(max-width:620px){.paired-batch-actions>.btn{width:100%}.paired-case{grid-template-columns:1fr;gap:3px}.paired-export .btn{width:100%}}
+
+/* Verified real model evidence and human-in-the-loop customer reply release */
+.release-proof{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin:18px 0;padding:16px 20px;background:#eff4ed;border:1px solid #d5e5d8;border-radius:9px}
+.release-proof strong{display:block;font-size:18px;font-weight:750;color:#205a3a;margin:6px 0}
+.release-proof p{font-size:11px;color:#5a6e61;line-height:1.5}
+.release-proof a{font-size:11px;color:#215a3b;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.reply-check{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:#315b3d}
+.reply-check input{width:17px;height:17px;accent-color:#2a6850;cursor:pointer}
+.reply-draft.risky{border-color:#d4b28f;background:#fffdfa}
+.reply-draft.risky .reply-source{background:#fff0db;color:#85552d}
+.reply-actions .btn:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:650px){.release-proof{padding:15px}.release-proof strong{font-size:16px}.reply-check{width:100%}}
