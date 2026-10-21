@@ -7,6 +7,252 @@
 <div class="main"><section class="panel case"><div class="case-title"><span class="label">01 / Eine echte Entscheidung</span><span class="num" id="case-id">—</span></div><h2 id="product">Supportfall öffnen</h2><div class="sub" id="case-meta"></div><div class="quote" id="message">Lade synthetische Fallbeispiele …</div><div class="btnrow"><button id="analyze" class="btn primary" disabled>Mit echter KI analysieren ↗</button><span id="elapsed" class="sub"></span></div><div class="compare"><div class="mini"><span class="tagline">Regelbaseline</span><strong id="rule-result">—</strong><p>Lokale Textmuster, ohne Modellaufruf</p></div><div class="mini"><span class="tagline ai">OpenAI · Responses API</span><strong id="ai-result">Noch nicht analysiert</strong><p id="ai-details">Strukturiertes JSON · keine automatische Aktion</p></div></div><div id="ai-message" class="action-result" role="status" aria-live="polite"></div><div class="audit" id="ai-evidence"></div></section>
 <section class="panel review"><span class="label">02 / Menschliche Kontrolle</span><h3>Was ist deine Entscheidung?</h3><p class="sub">Die KI liefert Hinweise. Menschen überprüfen unklare oder kritische Aussagen, bevor etwas weitergeht.</p><div class="three"><div><label for="categories">Primäres Anliegen</label><select id="categories"><option value="quality">Produktqualität</option><option value="fit">Größe / Passform</option><option value="shipping">Versand</option><option value="return">Retoure</option><option value="order_issue">Falsche Ware</option><option value="other">Sonstiges</option></select></div><div><label for="subtype">Untertyp</label><select id="subtype"><option value="unknown">Noch ungeklärt</option><option value="seam_failure">Nahtfehler</option><option value="hole">Loch / Riss</option><option value="premature_wear">Vorzeitige Abnutzung</option><option value="fabric_failure">Material / Faser</option><option value="discolouration">Verfärbung</option><option value="hardware_failure">Verschluss</option><option value="comfort">Tragekomfort</option><option value="sizing">Passform</option><option value="other">Sonstiges</option></select></div><div><label for="decision">Nächste Prüfung</label><select id="decision"><option value="needs_review">Menschlich prüfen</option><option value="quality_review">Produktqualität informieren</option><option value="support_reply">Supportantwort prüfen</option><option value="no_signal">Kein Produktsignal</option></select></div></div><label for="notes">Prüfnotiz (optional)</label><textarea id="notes" maxlength="500" placeholder="Was müsste ein Mensch klären, bevor gehandelt wird?"></textarea><div class="btnrow"><button class="btn primary" id="approve">Prüfung lokal dokumentieren</button><button class="btn" id="report">Review-Protokoll herunterladen ↓</button></div><div class="action-result" id="review-status" role="status"></div></section></div></div>
 <details class="explain"><summary>Wie funktioniert die KI? Architektur, Evaluation und ehrliche Grenzen</summary><p>Der Browser ruft ausschliesslich synthetische Ticket-IDs auf der Serverroute <code>/api/classify</code> auf. Nur der Server besitzt <code>OPENAI_API_KEY</code> und sendet den vorgegebenen Nachrichtentext an die OpenAI Responses API. Structured Outputs erzwingen ein JSON-Schema; der Server prüft Belegzitate gegen den Originaltext, markiert Mehrfachanliegen und protokolliert Modellkennung, Dauer sowie Tokenverbrauch. Das LLM führt keine Versand-, Retoure- oder Erstattungsaktionen aus.</p><p>Die lokal ausgeführte Regelbaseline ist bewusst simpel. Ihre Fehler sind ein Vergleichspunkt, kein gemessener Produktionsstandard. Ein echter Qualitätsnachweis benötigt ein unabhängiges, menschlich annotiertes Holdout, mindestens Precision/Recall/F1 je Klasse, gemessene Sicherheitsfehler, Kosten und Latenz sowie eine Schwelle für menschliche Kontrolle. Die 24 gezeigten Fälle sind demonstrativ – nicht ein unabhängiger Test eines live eingesetzten Modells.</p><p>Für öffentliche, kostenpflichtige API-Nutzung muss vor breiter Freigabe zusätzlich ein verteiltes Rate Limit und Budgetlimit aktiviert werden. Keine Kundendaten, keine Shop-Konten, keine realen Produktdefekte. Dies ist ein unabhängiges Bewerbungsprojekt – keine offizielle SNOCKS-Software.</p></details></div>
+<script type="application/json" id="fixtures-inline">[
+  {
+    "id": "RL-301",
+    "day": "12 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Nach zweimaligem Tragen kann ich durch die Ferse fast schon Zeitung lesen. Ist das normal?",
+    "baseline": [
+      "other"
+    ]
+  },
+  {
+    "id": "RL-302",
+    "day": "12 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Bei beiden Paaren ist die Naht an der Ferse aufgegangen. Könnt ihr mir helfen?",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-303",
+    "day": "13 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Die Socken haben nach drei Wäschen winzige Löcher am Zeh.",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-304",
+    "day": "13 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Das Bündchen ist nach einer Woche ausgeleiert und der Stoff wird immer dünner.",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-305",
+    "day": "14 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Leider franst das Material schon beim ersten Tragen aus.",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-306",
+    "day": "14 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Ein Faden an der Naht zieht sich komplett heraus. Sieht nach einem Verarbeitungsfehler aus.",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-307",
+    "day": "14 Oct",
+    "product": "Rib Tee · White M",
+    "sku": "TEE-WHT-M",
+    "text": "Das Shirt passt mir nicht. Es sitzt sehr eng an den Schultern.",
+    "baseline": [
+      "fit"
+    ]
+  },
+  {
+    "id": "RL-308",
+    "day": "15 Oct",
+    "product": "Rib Tee · White M",
+    "sku": "TEE-WHT-M",
+    "text": "Das T-Shirt kam in XL statt M. Ich würde es gern umtauschen.",
+    "baseline": [
+      "return"
+    ]
+  },
+  {
+    "id": "RL-309",
+    "day": "15 Oct",
+    "product": "Heavy Hoodie · Stone L",
+    "sku": "HOO-STN-L",
+    "text": "Laut Tracking wurde zugestellt, aber ich habe keine Ware bekommen.",
+    "baseline": [
+      "shipping"
+    ]
+  },
+  {
+    "id": "RL-310",
+    "day": "15 Oct",
+    "product": "Heavy Hoodie · Stone L",
+    "sku": "HOO-STN-L",
+    "text": "Kann ich die Retoure noch anmelden? Ich brauche ein neues Etikett.",
+    "baseline": [
+      "return"
+    ]
+  },
+  {
+    "id": "RL-311",
+    "day": "16 Oct",
+    "product": "Rib Tee · Black S",
+    "sku": "TEE-BLK-S",
+    "text": "Der Stoff hat sich nach dem ersten Waschen stark verfärbt.",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-312",
+    "day": "16 Oct",
+    "product": "Heavy Hoodie · Black M",
+    "sku": "HOO-BLK-M",
+    "text": "Mein Paket hängt seit fünf Tagen im Verteilzentrum.",
+    "baseline": [
+      "shipping"
+    ]
+  },
+  {
+    "id": "RL-313",
+    "day": "17 Oct",
+    "product": "Rib Tee · White L",
+    "sku": "TEE-WHT-L",
+    "text": "Ich möchte meinen Kauf widerrufen und hätte gern die Erstattung.",
+    "baseline": [
+      "return"
+    ]
+  },
+  {
+    "id": "RL-314",
+    "day": "17 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Die Socken sind zu klein und an der Ferse ist bereits ein Loch.",
+    "baseline": [
+      "quality",
+      "fit"
+    ]
+  },
+  {
+    "id": "RL-315",
+    "day": "17 Oct",
+    "product": "Heavy Hoodie · Stone L",
+    "sku": "HOO-STN-L",
+    "text": "Das Paket kam verspätet, der Reißverschluss ist zudem defekt.",
+    "baseline": [
+      "quality",
+      "shipping"
+    ]
+  },
+  {
+    "id": "RL-316",
+    "day": "18 Oct",
+    "product": "Everyday Socks · Navy 3-Pack",
+    "sku": "SOCK-3-NVY",
+    "text": "Leider fehlt ein Paar in der Packung, sonst alles gut.",
+    "baseline": [
+      "other"
+    ]
+  },
+  {
+    "id": "RL-317",
+    "day": "18 Oct",
+    "product": "Rib Tee · White M",
+    "sku": "TEE-WHT-M",
+    "text": "Könnt ihr meine Rechnungsadresse auf der Rechnung ändern?",
+    "baseline": [
+      "other"
+    ]
+  },
+  {
+    "id": "RL-318",
+    "day": "18 Oct",
+    "product": "Heavy Hoodie · Black M",
+    "sku": "HOO-BLK-M",
+    "text": "Danke für die tolle Lieferung! Alles perfekt.",
+    "baseline": [
+      "other"
+    ]
+  },
+  {
+    "id": "RL-319",
+    "day": "19 Oct",
+    "product": "Rib Tee · Black S",
+    "sku": "TEE-BLK-S",
+    "text": "Am Ärmel hängen zwei lose Fäden und die Naht löst sich.",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-320",
+    "day": "19 Oct",
+    "product": "Heavy Hoodie · Black M",
+    "sku": "HOO-BLK-M",
+    "text": "Welche Größe wäre bei 1,82 m passend?",
+    "baseline": [
+      "fit"
+    ]
+  },
+  {
+    "id": "RL-321",
+    "day": "20 Oct",
+    "product": "Everyday Socks · Navy 3-Pack",
+    "sku": "SOCK-3-NVY",
+    "text": "Wie bekomme ich das Versandetikett für eine Rücksendung?",
+    "baseline": [
+      "shipping",
+      "return"
+    ]
+  },
+  {
+    "id": "RL-322",
+    "day": "20 Oct",
+    "product": "Heavy Hoodie · Stone L",
+    "sku": "HOO-STN-L",
+    "text": "Der Stoff ist rau und kratzt am Hals, obwohl ich ihn noch nicht gewaschen habe.",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-323",
+    "day": "20 Oct",
+    "product": "Rib Tee · White M",
+    "sku": "TEE-WHT-M",
+    "text": "Habt ihr das gleiche Shirt auch in Schwarz?",
+    "baseline": [
+      "other"
+    ]
+  },
+  {
+    "id": "RL-324",
+    "day": "20 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Die Rückzahlung fehlt noch und zwei Socken haben Löcher.",
+    "baseline": [
+      "quality",
+      "return"
+    ]
+  }
+]</script>
 <script>
 const labels={quality:'Produktqualität / Defekt',fit:'Größe & Passform',shipping:'Versand',return:'Retoure & Erstattung',order_issue:'Falsche oder fehlende Ware',other:'Sonstiges'};
 let cases=[],selected='RL-301',filter='all',results={},reviews={},online=false,busy=false;
@@ -21,5 +267,5 @@ $('analyze').addEventListener('click',async()=>{let c=chosen();if(!c||busy)retur
 );
 $('approve').onclick=()=>{const c=chosen();reviews[c.id]={category:$('categories').value,subtype:$('subtype').value,decision:$('decision').value,notes:$('notes').value.trim().slice(0,500),time:new Date().toISOString(),model_result:results[c.id]||null};try{localStorage.setItem('returnloop-v13-reviews',JSON.stringify(reviews))}catch{}render();};
 $('report').onclick=()=>{const reviewed=Object.entries(reviews).map(([id,r])=>{const c=cases.find(x=>x.id===id);return{id,product:c?.product||'',message:c?.text||'',rule_baseline:c?.baseline||[],llm_result:r.model_result||null,human_review:{category:r.category,subtype:r.subtype,decision:r.decision,notes:r.notes,reviewed_at:r.time}}});const report={name:'RETURN LOOP v13 · unabhängige AI-Engineering-Arbeitsprobe',generated:new Date().toISOString(),data:'ausschliesslich synthetische Beispiele',real_api_calls:Object.values(results).length,items:reviewed,limitations:['keine echten Kundendaten','keine gemessene unabhängige LLM-Modellqualität','kein produktiver Shop-Zugriff','keine automatische Ausführung']};const blob=new Blob([JSON.stringify(report,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='return-loop-review.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),500);$('review-status').textContent='✓ Export erzeugt – '+reviewed.length+' geprüfte Fälle.'};
-(async()=>{try{const [data,status]=await Promise.all([fetch('./fixtures.json').then(r=>r.json()),fetch('/api/status').then(r=>r.ok?r.json():{configured:false}).catch(()=>({configured:false}))]);cases=data;online=Boolean(status.configured);$('api-pill').textContent=online?'● OpenAI live verfügbar':'○ OpenAI-Schlüssel noch nicht konfiguriert';$('api-pill').className='pill '+(online?'ok':'warn');if(!online)$('api-pill').title='Nur der Betreiber kann OPENAI_API_KEY sicher als Server-Umgebungsvariable einrichten';render()}catch(e){$('api-pill').textContent='Demo kann nicht geladen werden';$('api-pill').className='pill warn';$('message').textContent=e.message}})();
+(async()=>{try{const [data,status]=await Promise.all([fetch('./fixtures.json').then(r=>{if(!r.ok)throw Error('fixture fetch');return r.json()}).catch(()=>JSON.parse(document.getElementById('fixtures-inline').textContent)),fetch('/api/status').then(r=>r.ok?r.json():{configured:false}).catch(()=>({configured:false}))]);cases=data;online=Boolean(status.configured);$('api-pill').textContent=online?'● OpenAI live verfügbar':'○ OpenAI-Schlüssel noch nicht konfiguriert';$('api-pill').className='pill '+(online?'ok':'warn');if(!online)$('api-pill').title='Nur der Betreiber kann OPENAI_API_KEY sicher als Server-Umgebungsvariable einrichten';render()}catch(e){$('api-pill').textContent='Demo kann nicht geladen werden';$('api-pill').className='pill warn';$('message').textContent=e.message}})();
 </script></body></html>
