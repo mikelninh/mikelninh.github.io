@@ -325,6 +325,7 @@ async function init(){try{const embedded=document.getElementById('embedded-fixtu
  $('copy-reply').addEventListener('click',copyReply);
  $('open-ai-reply').addEventListener('click',()=>{$('tech-lab').open=true;$('tech-lab').scrollIntoView({behavior:'smooth',block:'center'});showStatus('Privater KI-Test: unter „Generatives LLM“ auf „Jetzt testen“ klicken. Falls erforderlich, vorher bei „Verbinden“ den Demo-Zugang eingeben. Der generierte Entwurf erscheint danach im Antwortfeld.');});
  $('open-evaluation').addEventListener('click',()=>{$('more').open=true;$('paired-study').scrollIntoView({behavior:'smooth',block:'start'});});
+ $('proof-to-evaluation').addEventListener('click',()=>{$('more').open=true;$('paired-study').scrollIntoView({behavior:'smooth',block:'start'});});
  $('open-tech-lab').addEventListener('click',()=>{$('tech-lab').open=true;});
  $('paired-next').addEventListener('click',pairedNext);
  $('paired-run-all').addEventListener('click',pairedBatch);
