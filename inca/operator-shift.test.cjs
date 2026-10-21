@@ -33,6 +33,8 @@ test('missing information and matching values lead to different safe next checks
  const same=shift.analyze(core,shift.sample.a,shift.sample.b.replace('12.07.2026','11.07.2026'));
  assert.equal(same.route,'CONTINUE_CHECKS');
  assert.match(same.action,/No payout/);
+ const hand=shift.prepareHandoff(core,{a:shift.sample.a,b:shift.sample.b.replace('12.07.2026','11.07.2026'),verified:true,owner:'Routine check operator',notes:'Dates match. Remaining coverage checks must still be completed.',route:'CONTINUE_CHECKS'});
+ assert.match(hand.preview.handBack,/Coverage, eligibility/);
  assert.equal(same.externalActions,0);
 });
 test('review packet requires evidence confirmation, owner and substantive question',()=>{
@@ -44,6 +46,7 @@ test('review packet requires evidence confirmation, owner and substantive questi
  const h=shift.prepareHandoff(core,base);
  assert.equal(h.route,'HUMAN_REVIEW');
  assert.equal(h.externalActions,0);
+ assert.match(h.preview.handBack,/Original cancellation date verified/);
  assert.equal(h.preview.owner,base.owner);
  assert.match(h.text,/NOT SENT/);
  assert.match(h.text,/Owner acceptance: NOT CONFIRMED/);
@@ -72,7 +75,7 @@ test('page publishes complete operator sequence, controls and explicit caveats',
  const html=fs.readFileSync(path.join(__dirname,'operator-shift.html'),'utf8');
  for(const id of ['shift-app','sh-a','sh-b','sh-scan','sh-review','sh-export','sh-regression',
    'sh-owner','sh-notes','sh-confirm','sh-preview','sh-preview-action','sh-draft',
-   'sh-fixture-expected','sh-fixture-why','sh-reset','sh-review-error','sh-qa-status']){
+   'sh-fixture-expected','sh-fixture-why','sh-reset','sh-review-error','sh-qa-status','sh-preview-handback']){
    assert.ok(html.includes('id="'+id+'"'), 'Missing operator control: '+id);
  }
  assert.match(html,/Intake/);assert.match(html,/Verify/);assert.match(html,/Review/);
@@ -96,7 +99,7 @@ test('browser workflow: a changed source invalidates the approved local handoff'
    'sh-review-step','sh-export-step','sh-qa-step','sh-confirm','sh-next','sh-draft',
    'sh-route-next','sh-fixture-expected','sh-fixture-why','sh-owner','sh-notes',
    'sh-stage-2','sh-stage-3','sh-stage-4','sh-stage-5','sh-review-error',
-   'sh-preview-owner','sh-preview-route','sh-preview-action','sh-preview-draft',
+   'sh-preview-owner','sh-preview-route','sh-preview-action','sh-preview-draft','sh-preview-handback',
    'sh-qa-status','sh-reset'];
  for(const id of ids)n[id]=element();
  const doc={getElementById:id=>n[id]||null};
