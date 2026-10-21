@@ -8,8 +8,8 @@ export default async function handler(req,res){res.setHeader('Cache-Control','no
  try{const result=await inferModel(model,item);return res.status(200).json({ok:true,id:item.id,model_type:model,...result,baseline:baseline(item.text),data:'synthetic',notice:'No customer actions. Scores are uncalibrated until an evaluation establishes suitable thresholds.'});}
  catch(err){
   // Classify failures without reflecting provider bodies, user input, or credentials.
-  const known=new Set(['key_not_configured','model_refusal','no_model_output','invalid_probability','invalid_decision_response','missing_questions','invalid_jev_response','invalid_jev_answer']);
-  const code=typeof err.code==='string'&&['provider_unavailable','provider_rate_limit'].includes(err.code)?err.code:
+  const known=new Set(['key_not_configured','model_refusal','no_model_output','invalid_probability','invalid_decision_response','missing_questions','invalid_jev_response','invalid_jev_answer','invalid_model_response_shape','invalid_model_categories']);
+  const code=typeof err.code==='string'&&['provider_unavailable','provider_rate_limit','provider_network_error'].includes(err.code)?err.code:
     known.has(err.message)?err.message:
     err.name==='AbortError'?'provider_timeout':
     err instanceof SyntaxError?'invalid_model_json':
