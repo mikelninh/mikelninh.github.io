@@ -161,7 +161,7 @@
     }
     function invalidate(){
       analysis=null;receipt=null;proposal=null;
-      $('sh-feedback-result').hidden=true;$('sh-feedback-next').textContent='';
+      $('sh-feedback-result').hidden=true;$('sh-feedback-next').textContent='';$('sh-auto-preview').hidden=true;
       $('sh-review').disabled=true;$('sh-export').disabled=true;$('sh-regression').disabled=true;
       $('sh-preview').hidden=true;$('sh-review-step').hidden=true;$('sh-export-step').hidden=true;$('sh-qa-step').hidden=true;
       $('sh-scan').disabled=false;
