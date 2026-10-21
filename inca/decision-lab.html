@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="An honest comparison of three AI claims workflows on six fictional cases, with real GPT/Jev API measurements and clear limits.">
+<title>INCA · Which AI workflow makes sense?</title>
+<style>
+:root{--ink:#1c3024;--muted:#627066;--bg:#f5f5f0;--paper:#fffefa;--line:#dce3d9;--lime:#c2ee8c;--moss:#244332}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.56 Inter,ui-sans-serif,system-ui,sans-serif}a{color:inherit}button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #59995f;outline-offset:3px}
+.wrap{width:min(1060px,calc(100% - 36px));margin:auto}.top{padding:23px 0;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.brand{text-decoration:none;letter-spacing:-.04em;font-weight:900}.chip{background:var(--lime);padding:5px 9px;border-radius:5px;font-size:11px;margin-left:7px}.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted)}.nav a{text-decoration:none}
+.hero{padding:56px 0 30px;max-width:770px}.eye{font-size:10px;font-weight:850;letter-spacing:.13em;text-transform:uppercase;color:#708273}.hero h1{font-size:clamp(44px,6vw,72px);letter-spacing:-.07em;line-height:1.02;margin:12px 0 19px}.hero p{font-size:18px;color:#57675a;margin:0}.small{font-size:12px;color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:15px 0}.card{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:20px}.card.best{border-color:#7ab080;box-shadow:inset 0 0 0 1px #c5e5be}.letter{background:#e7f2e0;color:#346a41;border-radius:7px;display:inline-block;font-size:13px;padding:5px 10px;font-weight:900}.card h2{font-size:20px;letter-spacing:-.04em;margin:11px 0 5px}.card p{font-size:12px;color:var(--muted);min-height:53px}.value{font-size:27px;letter-spacing:-.06em;font-weight:800}.metric{margin-top:12px;border-top:1px solid var(--line);padding-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:5px;font-size:12px}.metric span{color:var(--muted)}.metric b{text-align:right}
+.highlight{background:#e7f3e0;padding:21px 23px;border:1px solid #cee3c9;border-radius:12px;margin:18px 0 42px}.highlight strong{font-size:17px}.highlight p{font-size:13px;margin:5px 0;color:#4e6554}.section{margin:45px 0}.section h2{font-size:29px;letter-spacing:-.05em;margin:8px 0 16px}
+.case-layout{display:grid;grid-template-columns:255px 1fr;gap:16px}.choices{display:flex;flex-direction:column;gap:7px}.choices button{border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:12px 15px;color:var(--ink);text-align:left;font-size:12px;font-weight:750}
+.choices button[aria-pressed=true]{background:#e5f4dc;border-color:#8ab38b}
+.case-panel{border:1px solid var(--line);border-radius:12px;padding:23px;background:var(--paper)}
+.case-panel h3{margin:7px 0 12px;font-size:23px;letter-spacing:-.045em}.scores{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 15px}
+.score{padding:12px 10px;background:#f1f5ee;border-radius:8px}.score b{display:block;font-size:12px}.score span{font-size:12px;color:#53665a}
+.note{padding:13px 15px;background:#f3f7ef;border-radius:8px;font-size:13px;color:#4e6554}
+.boundary{border:1px solid var(--line);background:#e9ede6;padding:18px 21px;border-radius:11px;font-size:13px;color:#536455}.proof{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;margin:15px 0 22px}.proof a{font-weight:750}
+.footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 38px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+@media(max-width:760px){.cards{grid-template-columns:1fr}.card p{min-height:0}.case-layout{grid-template-columns:1fr}.choices{flex-direction:row;overflow:auto;scroll-snap-type:x mandatory}.choices button{min-width:170px;scroll-snap-align:start}.scores{grid-template-columns:1fr}.hero{padding:38px 0 25px}}
+</style></head><body><div class="wrap">
+<header class="top"><a class="brand" href="/inca/agent-ops.html">MICHAEL NINH <span class="chip">× INCA</span></a><nav class="nav"><a href="/inca/agent-ops.html">← Main work sample</a><a href="#comparison">Three alternatives</a><a href="#cases">Individual cases</a></nav></header>
+<main><section class="hero"><div class="eye">An independent AI Operations experiment · Real API requests</div><h1>Which AI workflow actually helps?</h1>
+<p>We tested three ways to review the same six fictional insurance cases. A cheaper decision model isn't automatically a cheaper claims process.</p>
+<div class="small" style="margin-top:15px">Six GPT-4o mini + six Jev API requests · Same documents · Same safety boundaries · Development experiment, not production evidence.</div></section>
+<section id="comparison" aria-label="Three workflow alternatives">
+ <div id="summary-state" class="small" role="status">Loading original experiment results…</div>
+ <div id="arms" class="cards"></div>
+ <div class="highlight"><strong>What did we learn?</strong><p id="learning">The cheaper model must save downstream work without creating unnecessary reviews. We compare that, not just token prices.</p></div>
+</section>
+<section id="cases" class="section"><div class="eye">The actual cases</div><h2>Where did the decision change?</h2>
+ <div class="case-layout"><div id="case-choices" class="choices" role="group" aria-label="Choose fictional case"></div>
+  <div class="case-panel"><div class="eye" id="case-id">Recorded case</div><h3 id="case-name">Select a case</h3>
+    <div class="small">Jev attention score · exploratory threshold 0.50</div><div id="jev-score" class="value">—</div>
+    <div id="case-scores" class="scores"></div><div class="note" id="case-learning">Loading case evidence…</div>
+  </div></div>
+</section>
+<section class="section"><div class="eye">Engineering judgment</div><h2>What this test cannot prove</h2>
+<div class="boundary">The six scenarios are self-authored and were already used during development, not new blind cases. Jev's 0.5 score threshold is uncalibrated. We measured real model latencies and token usage; the C workflow's conditional skipping was calculated from the same recorded responses, not executed as an independent backend. No human review minutes, insurer operating costs, claims approvals or real-customer outcomes were measured. If extraction is skipped, a person must verify the documents before they can proceed.</div>
+<div class="proof"><a href="https://github.com/mikelninh/mikelninh.github.io/actions/runs/39669379581">Original GitHub Actions run ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/agent-ops/ABC_EXPERIMENT.md">Read our method ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/agent-ops/abc_comparison.py">Inspect working Python code ↗</a></div>
+<p class="small">The next real validation would use unseen, expert-labelled cases and actual reviewer effort. We wouldn't deploy any of these models as autonomous coverage or payment decision-makers.</p></section></main>
+<footer class="footer"><span>INCA Decision Lab · Michael Ninh · fictional development study</span><a href="/inca/agent-ops.html">Back to the main work sample ↗</a></footer></div>
+<script>
+(async function(){
+const $=id=>document.getElementById(id);
+const fmtNum=x=>typeof x==="number"?x.toLocaleString('en-US',{maximumFractionDigits:4}):'—';
+try{
+  const response=await fetch('/inca/abc-proof.json',{cache:'no-store'});
+  if(!response.ok)throw Error("no verified report");
+  const d=await response.json();
+  if(d.schema!=="INCA-ABC-PROOF-1"||d.arms?.length!==3||d.cases?.length!==6||d.arms.some(x=>typeof x.price_usd!=="number"))throw Error("unverified report");
+  const names={A:"GPT + verification",B:"GPT + Jev",C:"Jev first"};
+  const descriptions={A:"One LLM finds evidence; fixed safety checks determine the next action.",B:"Jev adds an attention signal after the LLM. It may escalate, never downgrade.",C:"Jev scores first, then calls the LLM when needed. No unverified case may be cleared."};
+  for(const arm of d.arms){
+    const card=document.createElement('article');card.className='card'+(arm.id==='A'?' best':'');
+    const letter=document.createElement('span');letter.className='letter';letter.textContent='OPTION '+arm.id;card.append(letter);
+    const h=document.createElement('h2');h.textContent=names[arm.id];card.append(h);
+    const p=document.createElement('p');p.textContent=descriptions[arm.id];card.append(p);
+    const v=document.createElement('div');v.className='value';v.textContent=arm.gpt_calls+' GPT / '+arm.jev_calls+' Jev';card.append(v);
+    const metrics=document.createElement('div');metrics.className='metric';
+    for(const [label,value] of [['Evidence verified',arm.verified_evidence+'/6'],['Human review routes',arm.human_reviews+'/6'],['Mean model time',(arm.serial_latency_ms/1000).toFixed(2)+' s'],['Est. API cost','$'+arm.price_usd.toFixed(6)]]){
+      const l=document.createElement('span');l.textContent=label;const b=document.createElement('b');b.textContent=value;metrics.append(l,b);
+    }card.append(metrics);$('arms').append(card);
+  }
+  $('summary-state').textContent='Recorded October 21, 2026 · Actual Jev and GPT model responses; prices calculated from provider token usage.';
+  $('learning').textContent='On these six cases, A needed fewer model calls, took less model time and produced one fewer human-review route. Jev scored the clean bicycle-theft case at 0.62, leading to an extra review; all six Jev scores exceeded 0.5, so Jev-first could not skip GPT. This does not prove A is universally best.';
+  function show(index){
+    const x=d.cases[index];$('case-id').textContent=x.id;$('case-name').textContent=x.name;
+    $('jev-score').textContent=x.jev_score.toFixed(2);$('case-learning').textContent=x.learning;
+    $('case-scores').replaceChildren();
+    for(const arm of d.arms){const box=document.createElement('div');box.className='score';
+      const b=document.createElement('b');b.textContent='OPTION '+arm.id;const v=document.createElement('span');v.textContent=x[arm.id];box.append(b,v);$('case-scores').append(box);}
+    for(const [i,button] of [...$('case-choices').children].entries())button.setAttribute('aria-pressed',String(i===index));
+  }
+  for(const [i,x] of d.cases.entries()){const b=document.createElement('button');b.textContent=x.name;b.type='button';b.setAttribute('aria-pressed','false');b.onclick=()=>show(i);$('case-choices').append(b);}show(2);
+}catch(e){$('summary-state').textContent='The recorded report is unavailable or invalid; no results are being simulated.';$('learning').textContent='See the original GitHub Actions run for source evidence.';}
+})();
+</script>
+</body></html>
