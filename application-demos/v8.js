@@ -112,14 +112,14 @@ function returnLoop(){
  const stats=M.evaluate();
  const cases=add(e("div","v8-evidence"),e("h3","","Testvergleich · andere Beispielsätze"));
  const metrics=e("div","v6-metrics");metrics.append(add(e("div","v6-metric"),e("strong","",stats.model.correct+"/"+stats.model.total),e("span","","Trainiertes Modell")),add(e("div","v6-metric"),e("strong","",stats.rules.correct+"/"+stats.rules.total),e("span","","Feste Regeln")));
- cases.append(metrics,p("29 separat formulierte, synthetische Testnachrichten. Nicht aus dem Training des Modells. Keine Kundendaten, keine unabhängige Produktionsmessung.","v6-tiny"));
- const errors=add(e("div"),p("Das Modell liegt bei diesen Beispielen noch "+stats.model.errors.length+"-mal falsch. Die Fehler werden nicht versteckt.","v6-mute"));
+ cases.append(metrics,para("29 separat formulierte, synthetische Testnachrichten. Nicht aus dem Training des Modells. Keine Kundendaten, keine unabhängige Produktionsmessung.","v6-tiny"));
+ const errors=add(e("div"),para("Das Modell liegt bei diesen Beispielen noch "+stats.model.errors.length+"-mal falsch. Die Fehler werden nicht versteckt.","v6-mute"));
  const errDetails=e("details");errDetails.append(e("summary","","Alle Modellfehler anschauen"));
- stats.model.errors.forEach(item=>errDetails.append(p("„"+item.text+"“ · Soll: "+T.LABELS[item.expected]+" · Modell: "+T.LABELS[item.got],"v6-tiny")));errors.append(errDetails);cases.append(errors);
+ stats.model.errors.forEach(item=>errDetails.append(para("„"+item.text+"“ · Soll: "+T.LABELS[item.expected]+" · Modell: "+T.LABELS[item.got],"v6-tiny")));errors.append(errDetails);cases.append(errors);
  left.append(cases);
  const review=add(e("div","v8-review"),e("h3","","Was würdest du entscheiden?"));
  const decision=select([["review","Zur menschlichen Prüfung"],["material","Als mögliches Materialproblem markieren"],["delivery","Lieferfrage"],["size","Größe / Passform"],["return","Rückgabe"],["unknown","Unklar"]]);decision.id="v8-decision";review.append(label("Manuelle Entscheidung","v8-decision"),decision);
- const decisionStatus=p("","v6-tiny");review.append(decisionStatus);
+ const decisionStatus=para("","v6-tiny");review.append(decisionStatus);
  decision.addEventListener("change",()=>{decisionStatus.textContent="Manuelle Entscheidung: "+T.LABELS[decision.value]+" – wird im Prüfbericht dokumentiert."});right.append(review);
  function compare(){
  const msg=tidy(text.value,1000);if(msg.length<8){result.replaceChildren(status("Bitte eine längere Nachricht eingeben","Mindestens acht Zeichen sind für einen sinnvollen Vergleich erforderlich."));return}
@@ -129,7 +129,7 @@ function returnLoop(){
  const row=e("div","v8-comparison");
  for(const [labelText,o,description]of [["REGELN · BASELINE",r,"Findet bekannte Formulierungen"],["TRAINIERTES MODELL · NAIVE BAYES",m,"Lernt Muster aus synthetischen Beispielen"]]){
  const card=e("div","v8-model");card.append(e("div","v6-k",labelText),e("h3","",T.LABELS[o.category]));
- card.append(p(labelText.startsWith("REGELN")?(r.evidence?.length?"Gefundene Wörter: "+r.evidence.join(", "):"Keine eindeutigen Signalwörter."):(m.matched?.length?"Gelernte Wortsignale: "+m.matched.join(", "):"Wenige bekannte Wortmuster."),"v6-tiny"));card.append(p(description,"v6-mute"));row.append(card);
+ card.append(para(labelText.startsWith("REGELN")?(r.evidence?.length?"Gefundene Wörter: "+r.evidence.join(", "):"Keine eindeutigen Signalwörter."):(m.matched?.length?"Gelernte Wortsignale: "+m.matched.join(", "):"Wenige bekannte Wortmuster."),"v6-tiny"));card.append(para(description,"v6-mute"));row.append(card);
  }
  result.append(row);
  result.append(status(agree?"Nächster Schritt: Ergebnis prüfen":"Nächster Schritt: Mensch entscheidet",agree?"Auch Übereinstimmung ist kein Beweis, dass die Klassifikation korrekt ist.":"Bei widersprüchlichen Ergebnissen wird keine automatische Aktion ausgelöst."));
