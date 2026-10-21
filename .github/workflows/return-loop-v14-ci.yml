@@ -1,0 +1,29 @@
+name: RETURN LOOP v14 - quality gate
+on:
+  push:
+    paths:
+      - 'application-demos/v14-source/**'
+      - '.github/workflows/return-loop-v14-ci.yml'
+  pull_request:
+    paths:
+      - 'application-demos/v14-source/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unit-and-integration-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate source JS syntax
+        run: |
+          node --check application-demos/v14-source/public/app.js
+          node --check application-demos/v14-source/lib/providers.js
+          node --check application-demos/v14-source/api/infer.js
+      - name: Run deterministic and mocked inference tests (no paid API calls)
+        working-directory: application-demos/v14-source
+        run: npm test
