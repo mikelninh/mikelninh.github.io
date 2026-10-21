@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="INCA AI Operations work sample — six fictional claims, explainable evidence checks, safe handoffs and transparent regression evidence.">
+<title>INCA · Case to Learning · Independent AI Operations Work Sample</title>
+<style>
+:root{--bg:#f4f5ef;--surface:#fffefa;--ink:#17271d;--muted:#5c6c62;--line:#d9e2d9;--green:#baff70;--deep:#203b2b;--red:#a34431;--amber:#b87520;--font:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--font)}
+a{color:inherit}button,textarea,select,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,textarea:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #528d59;outline-offset:3px}
+.wrap{width:min(1090px,calc(100% - 40px));margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}
+.brand{font-size:14px;font-weight:900;letter-spacing:-.03em;text-decoration:none}
+.brand span{padding:3px 7px;background:var(--green);border-radius:4px;margin-left:5px}
+.nav{display:flex;gap:20px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.nav a{text-decoration:none}.nav a:hover{text-decoration:underline}
+.hero{padding:51px 0 30px;display:grid;grid-template-columns:1.35fr .65fr;gap:35px;align-items:end}
+.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:10px;font-weight:800;color:#496c51}
+h1{font-size:clamp(40px,5.7vw,68px);letter-spacing:-.063em;line-height:.99;margin:11px 0 19px;max-width:770px}
+.hero p{font-size:17px;color:#526258;max-width:630px;margin:0 0 16px}
+.hint{font-size:12px;color:var(--muted)}.intro{border-left:3px solid #a8e773;padding:4px 0 4px 17px;max-width:320px;font-size:14px;color:#445848}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);border:1px solid var(--line);border-radius:11px;overflow:hidden;margin:20px 0 28px}
+.step{background:var(--surface);padding:13px 16px;font-size:12px}.step b{font-size:10px;color:#759080;margin-right:7px}.step:first-child{background:#e6f7d9}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:12px}
+h2{font-size:25px;letter-spacing:-.045em;line-height:1.1;margin:4px 0}.section-head p{margin:0;color:var(--muted);font-size:13px}
+.case-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0 17px}
+.case-tab{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:13px 15px;border-radius:10px;text-align:left;min-height:90px;transition:border-color .15s,background .15s}
+.case-tab[aria-pressed=true]{background:#e8f8d7;border-color:#6db26d;box-shadow:inset 0 0 0 1px #9cd88b}
+.case-tab:hover{border-color:#8fb79b}
+.case-tab b{display:block;font-size:14px;margin:4px 0 2px}
+.case-tab small{display:block;color:var(--muted);font-size:11px;line-height:1.25}
+.tag{font-size:9px;letter-spacing:.09em;text-transform:uppercase;font-weight:800;color:#6a8c70}
+.workspace{border:1px solid var(--line);border-radius:13px;background:var(--surface);overflow:hidden;box-shadow:0 12px 32px #21382609}
+.workhead{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:19px 21px;border-bottom:1px solid var(--line)}
+.workhead h3{margin:1px 0;font-size:20px;letter-spacing:-.035em}
+.pill{border:1px solid var(--line);background:#f3f5ef;border-radius:99px;padding:5px 10px;font-size:10px;color:#596a5b;font-weight:800;text-transform:uppercase}
+.docs{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.doc{padding:20px 21px;border-bottom:1px solid var(--line)}
+.doc:first-child{border-right:1px solid var(--line)}
+.doc .label{display:flex;justify-content:space-between;font-size:10px;font-weight:800;letter-spacing:.085em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.doc textarea{display:block;width:100%;height:135px;resize:vertical;border-radius:7px;background:#f7f8f4;border:1px solid #dde5da;color:var(--ink);font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;padding:12px}
+.actionbar{display:flex;gap:15px;align-items:center;justify-content:space-between;padding:16px 21px}
+.btn{background:var(--deep);border:1px solid var(--deep);border-radius:8px;padding:12px 18px;color:white;font-size:13px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{background:#355642}.btn.alt{background:transparent;color:var(--deep);border-color:#b7cabb}.btn.alt:hover{background:#eaf3e7}
+.result{border-top:1px solid var(--line);background:#fbfcf8;padding:22px}.result[hidden]{display:none}
+.result-kicker{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:800}
+.route{display:inline-block;padding:5px 9px;border-radius:6px;background:#fff0df;color:#8c4d1d;font:800 12px ui-monospace,Consolas,monospace}
+.route[data-route="HUMAN_REVIEW"]{background:#fae8e3;color:#a43d2e}.route[data-route="NEED_INFO"]{background:#fff2d8;color:#8a5d18}.route[data-route="CONTINUE_CHECKS"]{background:#e5f4e6;color:#2c7045}
+.result h3{font-size:22px;line-height:1.2;letter-spacing:-.035em;margin:10px 0 8px}
+.reason{color:#526158;margin:0 0 18px;font-size:14px}
+.outcomes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.outcome{padding:12px;border:1px solid var(--line);border-radius:9px;background:white}
+.outcome b{display:block;font-size:10px;letter-spacing:.06em;color:var(--muted);margin-bottom:5px}
+.outcome code{font:12px ui-monospace,Consolas,monospace;word-break:break-word}
+.result-footer{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.next{font-size:13px;color:var(--muted);margin-bottom:14px}
+.feedback{margin-top:16px;padding:16px;background:white;border:1px solid var(--line);border-radius:9px}
+.feedback strong{display:block;font-size:13px}.feedback p{color:var(--muted);font-size:12px;margin:5px 0 10px}
+.feedback select,.feedback input{max-width:100%;border:1px solid var(--line);background:white;border-radius:6px;padding:10px}
+.feedback input{width:100%;margin-top:8px}.feedback .btn{margin-top:10px}
+.proof{padding:55px 0 50px}.proof-head{max-width:730px}.proof-head p{color:var(--muted)}
+.proofgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}
+.proofcard{background:var(--surface);padding:20px;border:1px solid var(--line);border-radius:10px}
+.proofcard .index{font-size:10px;letter-spacing:.1em;color:#638469;font-weight:900}
+.proofcard h3{font-size:17px;margin:12px 0 8px;letter-spacing:-.03em}
+.proofcard p{margin:0 0 15px;color:var(--muted);font-size:13px}
+.proofcard a{font-size:12px;font-weight:800}
+.boundary{background:#e9efe7;border:1px solid #d4dfd1;padding:18px 20px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:22px}
+.boundary b{font-size:13px}.boundary p{margin:4px 0 0;color:#5c7060;font-size:12px;max-width:770px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px;padding:22px 0 42px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:780px){.hero{grid-template-columns:1fr;padding-top:33px;gap:15px}.case-options{grid-template-columns:repeat(2,minmax(0,1fr))}.proofgrid{grid-template-columns:1fr}.intro{max-width:none}.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.wrap{width:min(100% - 24px,1090px)}.hero h1{font-size:40px}.nav{gap:9px}.case-options{grid-template-columns:1fr 1fr}.case-tab{padding:12px;min-height:96px}.docs{grid-template-columns:1fr}.doc:first-child{border-right:none}.doc{padding:15px}.actionbar{align-items:stretch;flex-direction:column}.actionbar .btn{width:100%}.outcomes{grid-template-columns:1fr}.boundary{display:block}.step{padding:11px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/inca/release.html">MICHAEL NINH <span>× INCA</span></a>
+    <nav class="nav" aria-label="Work sample">
+      <a href="#try">Try a case</a>
+      <a href="#proof">Evidence &amp; limits</a>
+      <a href="/inca/operator-shift.html">Operator Shift ↗</a>
+      <a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof">Code ↗</a>
+    </nav>
+  </header>
+  <section class="hero" aria-labelledby="hero-title">
+    <div>
+      <div class="eyebrow">INCA Release 1.0 · AI Operations Associate · Independent work sample</div>
+      <h1>One missed detail.<br>A safer next step.</h1>
+      <p>An AI workflow can miss a contradiction, accept incomplete evidence, or obey an instruction hidden in a document. I built a small, inspectable way to catch those exceptions before a claim moves forward.</p>
+      <div class="hint"><strong>Try it in ~60 seconds.</strong> Six fictional cases. No account, no real customer data, no external actions.</div>
+    </div>
+    <aside class="intro">
+      <strong>My principle</strong><br>Model-agnostic AI for evidence extraction. Deterministic checks for non-negotiable guardrails. Human judgment where the evidence is uncertain.
+    </aside>
+  </section>
+  <div class="steps" aria-label="Demo flow">
+    <div class="step"><b>01</b>Choose a claim</div>
+    <div class="step"><b>02</b>Inspect two sources</div>
+    <div class="step"><b>03</b>See the safe route</div>
+    <div class="step"><b>04</b>Export a review draft</div>
+  </div>
+  <main id="try">
+    <div class="section-head">
+      <div><div class="eyebrow">01 / Live, browser-local evidence check</div><h2>Which case should we inspect?</h2></div>
+      <p>Choose a scenario, then edit the fictional documents if you like.</p>
+    </div>
+    <div id="case-options" class="case-options" role="group" aria-label="Fictional claim scenarios"></div>
+    <div class="workspace">
+      <div class="workhead">
+        <div><div class="eyebrow" id="case-id">TR-101</div><h3 id="case-title">Travel cancellation</h3><div class="hint" id="case-subtitle"></div></div>
+        <span class="pill">Fictional evidence</span>
+      </div>
+      <div class="docs">
+        <div class="doc"><div class="label"><span>Source A</span><span>Editable</span></div><textarea id="source-a" aria-label="Fictional source A" spellcheck="false"></textarea></div>
+        <div class="doc"><div class="label"><span>Source B</span><span>Editable</span></div><textarea id="source-b" aria-label="Fictional source B" spellcheck="false"></textarea></div>
+      </div>
+      <div class="actionbar"><span id="check-status" class="hint" role="status" aria-live="polite">Ready. Compare these two documents.</span><button class="btn" id="check-case" type="button">Check the evidence →</button></div>
+      <section id="result" class="result" aria-label="Route and handoff" hidden>
+        <div class="result-kicker">02 / Deterministic evidence check · not a live LLM prediction</div>
+        <h3>Next route: <span id="route" class="route"></span></h3>
+        <p id="reason" class="reason"></p>
+        <div class="outcomes"><div class="outcome"><b>SOURCE A · PARSED FIELD</b><code id="evidence-a">—</code></div><div class="outcome"><b>SOURCE B · PARSED FIELD</b><code id="evidence-b">—</code></div></div>
+        <p class="next" id="next-step"></p>
+        <div class="result-footer"><button class="btn" id="handoff" type="button">Download unsent handoff ↓</button><span class="hint">Proposed owner only · nothing assigned or sent</span></div>
+        <div class="feedback">
+          <strong>Found a mistake? Keep it as a test candidate.</strong>
+          <p>Choose the route you believe is correct. Download a fictional regression candidate for later independent review. It does not automatically change CI or a production workflow.</p>
+          <label for="reviewer-route" class="hint">Your proposed correct next route</label><br>
+          <select id="reviewer-route" aria-label="Reviewer proposed next route">
+            <option value="HUMAN_REVIEW">Human review</option><option value="NEED_INFO">Request information</option><option value="CONTINUE_CHECKS">Continue remaining checks</option>
+          </select>
+          <input id="reviewer-why" type="text" maxlength="500" placeholder="Why should this route be used? (required)" aria-label="Reason for feedback"/>
+          <button type="button" id="feedback-download" class="btn alt">Download regression candidate ↓</button>
+          <p id="feedback-status" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+    </div>
+  </main>
+  <section id="proof" class="proof">
+    <div class="proof-head"><div class="eyebrow">02 / What is actually evidenced?</div>
+      <h2>From one exception to a safer process.</h2>
+      <p>The interactive cases above use a transparent local rule, not a hidden model call. Separately, I ran real API comparisons on fictional travel-document pairs and kept the misses visible.</p>
+    </div>
+    <div class="proofgrid">
+      <article class="proofcard"><div class="index">01 · THE FAILURE</div><h3>A contradiction passed a gate</h3><p>In the earlier synthetic H-A-011 evaluation, a structured contradiction flag did not stop an unsafe next route. The independent ST-104 reconstruction is interactive.</p><a href="/inca/operator-shift.html">See the original failure and handoff ↗</a></article>
+      <article class="proofcard"><div class="index">02 · THE FIX</div><h3>Guardrails before promotion</h3><p>Cross-document checks and suspicious embedded instructions are flagged regardless of what the LLM suggests. Corrections become test candidates, not silent changes.</p><a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof">Inspect code and regression tests ↗</a></article>
+      <article class="proofcard"><div class="index">03 · THE EXPERIMENT</div><h3>Model-independent evaluation</h3><p>On 20 authored travel cases, Jev missed 0 attention cases and GPT-4o mini missed 2. Jev over-flagged 3; GPT over-flagged 2. The sample is small, not expert-labelled.</p><a href="/inca/model-lab.html">Model Lab and measured limitations ↗</a></article>
+    </div>
+    <div class="boundary"><div><b>What is NOT built</b><p>This is not production software. No real insurer connection, PDF OCR, full coverage review, approved payout, customer communication, expert sign-off, or automated regression deployment. Six local cross-document rules do not constitute end-to-end claims handling. The model experiment concerns travel cancellations only.</p></div><span class="pill">Synthetic only</span></div>
+  </section>
+  <footer><span>INCA Release 1.0 · Independent application work sample · Berlin</span><span>Safety first · Evidence over demos · Improve from feedback</span></footer>
+</div>
+<script src="/inca/release-engine.js"></script>
+<script>
+(function(){
+'use strict';
+const api=window.IncaReleaseEngine;
+if(!api)return;
+const $=id=>document.getElementById(id);
+let current=api.cases[0],latest=null;
+const options=$('case-options');
+const routeNames={HUMAN_REVIEW:'Human review',NEED_INFO:'Request information',CONTINUE_CHECKS:'Continue checks'};
+function invalidate(){
+  latest=null;$('result').hidden=true;$('check-status').textContent='Document changed. Check the current evidence again.';
+  $('feedback-status').textContent='';
+}
+function showCase(c){
+  current=c;$('source-a').value=c.a;$('source-b').value=c.b;
+  $('case-id').textContent=c.id;$('case-title').textContent=c.label;$('case-subtitle').textContent=c.subtitle;
+  options.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.id===c.id)));
+  invalidate();$('check-status').textContent='Ready. Compare these two fictional documents.';
+}
+for(const c of api.cases){
+  const b=document.createElement('button');b.type='button';b.className='case-tab';b.dataset.id=c.id;b.setAttribute('aria-pressed','false');
+  const tag=document.createElement('span');tag.className='tag';tag.textContent=c.difficulty;
+  const name=document.createElement('b');name.textContent=c.label;
+  const short=document.createElement('small');short.textContent=c.subtitle;
+  b.append(tag,name,short);b.addEventListener('click',()=>showCase(c));options.appendChild(b);
+}
+for(const id of ['source-a','source-b'])$(id).addEventListener('input',invalidate);
+$('check-case').addEventListener('click',()=>{
+  latest=api.evaluate(current.type,$('source-a').value,$('source-b').value);
+  $('route').textContent=routeNames[latest.route];$('route').dataset.route=latest.route;
+  $('reason').textContent=latest.why;
+  $('evidence-a').textContent=latest.evidence[0];$('evidence-b').textContent=latest.evidence[1];
+  $('next-step').textContent=latest.next;
+  $('reviewer-route').value=latest.route;$('reviewer-why').value='';
+  $('feedback-status').textContent='';
+  $('result').hidden=false;$('check-status').textContent='Check complete. No external actions executed.';
+  $('result').scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+function download(name,text,contentType){
+ const blob=new Blob([text],{type:contentType});const url=URL.createObjectURL(blob);
+ const link=document.createElement('a');link.href=url;link.download=name;document.body.appendChild(link);link.click();link.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+$('handoff').addEventListener('click',()=>{
+ if(!latest)return;
+ download('INCA-'+current.id+'-handoff.md',api.handoff(current,latest,$('source-a').value,$('source-b').value),'text/markdown;charset=utf-8');
+});
+$('feedback-download').addEventListener('click',()=>{
+ if(!latest)return;
+ const why=$('reviewer-why').value.trim();
+ if(why.length<8){$('feedback-status').textContent='Please explain your proposed route in at least 8 characters.';return;}
+ const fixture={case_id:current.id+'-review-candidate',origin:'USER-SIMULATED · NOT EXPERT-VERIFIED',
+  claim_type:current.type,observed_route:latest.route,proposed_route:$('reviewer-route').value,
+  reviewer_reason:why,source_a:$('source-a').value,source_b:$('source-b').value,
+  independent_validation:false,automatically_added_to_tests:false,production_case:false};
+ download('INCA-'+current.id+'-regression-candidate.json',JSON.stringify(fixture,null,2)+'\n','application/json;charset=utf-8');
+ $('feedback-status').textContent='Downloaded locally. A reviewer must validate the label before CI integration.';
+});
+showCase(api.cases[0]);
+})();
+</script>
+</body></html>

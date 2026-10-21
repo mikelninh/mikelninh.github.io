@@ -1,32 +1,21 @@
-# INCA Proof — reviewer guide
+# INCA reviewer guide
 
-This work sample is intentionally layered.
+**Start here:** [INCA Release 1.0 — six fictional claim cases](https://mikelninh.github.io/inca/release.html)
 
-## 20 seconds — HR / Recruiting
-1. Open `/inca/`.
-2. Pick a claim.
-3. Read **Decision → Why → Next step**.
-4. The intended signal: Michael can make a high-stakes AI workflow understandable without hiding uncertainty.
+The full [Release 1.0 reviewer guide](RELEASE_GUIDE_1_0.md) explains the claim-type demonstrations, what was actually measured, the observed model misses, new model-agnostic safety guard, independent-test limitations and routes to code.
 
-## 90 seconds — Founder / Operations
-1. Read the measured-evidence section.
-2. Inspect the known failure.
-3. Follow the loop: edge case → reason code → regression → release gate → SOP/handoff.
-4. The intended signal: the operator improves the system, not merely the individual claim.
+## 20–90 seconds
 
-## 5 minutes — Engineering
-1. Inspect `data/claims.json` and `data/synthetic_policy_pack.json`.
-2. Run `python inca-proof/src/claims_eval.py`.
-3. Run `python -m unittest discover inca-proof/tests -v`.
-4. Inspect `reports/deterministic_eval.json`.
-5. Inspect `src/run_claude_benchmark.py` and the two versioned prompts.
+1. Pick any of six fictional cases across five claim types; inspect the two text sources.
+2. Click **Check the evidence**: see a transparent, browser-local next route and reason code.
+3. Download an unsent handoff, or record simulated feedback as a regression candidate.
+4. To investigate a real development failure, open the [Operator Shift](https://mikelninh.github.io/inca/operator-shift.html) and its H-A-011 origin note.
 
-## Evidence boundaries
-- All claim and policy data is developer-authored and synthetic.
-- The deterministic evaluation is measured locally on the checked-in fixtures.
-- Holdout A: v1 = 13/20; v2 = 19/20.
-- The single v2 failure is intentionally visible.
-- v3 was written after inspecting that failure, so its Holdout-A score is not fresh evidence.
-- A fresh post-fix regression set B has 12 cases; v3 = 12/12.
-- The Claude harness is implemented, but no model score is published until a real Anthropic API run succeeds.
-- No customer communication, payment or other external action is executed by this proof.
+## 5 minutes for engineering
+
+- `node --test inca/release-engine.test.cjs`
+- `python -m unittest discover inca-proof/model-eval -p 'test_*.py' -v`
+- `python inca-proof/src/claims_eval.py`
+- Compare [recorded Jev vs GPT evidence](https://github.com/mikelninh/mikelninh.github.io/actions/runs/39633113245) with `inca/guard-evidence.json` (offline retrospective guard replay, **not** new model accuracy).
+
+All documents and policy excerpts are developer-authored fiction. All routes require remaining checks or human responsibility; no customer communication, real case mutation or payment takes place. The Anthropic harness is optional and has no published Claude live result; our engineering approach is model-independent.

@@ -1,5 +1,12 @@
 # INCA AI Operations Proof
 
+**Release 1.0 work sample:** https://mikelninh.github.io/inca/release.html
+
+**Reviewer guide:** [Six fictional claims, transparent checks, recorded model failures and a replayed safety guard](docs/RELEASE_GUIDE_1_0.md).
+
+This is independent of the SNOCKS RETURN LOOP project. Our INCA architecture and evaluation are **LLM-provider-agnostic**: choose and validate the model for each task rather than relying on one vendor.
+
+
 A role-specific, synthetic work sample for INCA's **AI Operations Associate** role.
 
 The point is not to recreate MARS. The point is to demonstrate the operating discipline needed around an AI-first claims system:
