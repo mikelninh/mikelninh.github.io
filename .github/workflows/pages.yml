@@ -122,3 +122,5 @@ jobs:
           fetch_until_ready "$base/inca/60s.html" 'id="mistake-challenge"'
           fetch_until_ready "$base/inca/interactive-case.js" "IncaCaseWorkshop"
           fetch_until_ready "$base/inca/catch-the-mistake.js" "IncaMistakeChallenge"
+          fetch_until_ready "$base/inca/operator-shift.html" 'id="shift-app"'
+          fetch_until_ready "$base/inca/operator-shift.js" "IncaOperatorShift"
