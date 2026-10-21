@@ -29,6 +29,36 @@
 @media(max-width:870px){.hero{grid-template-columns:1fr}.hero-note{max-width:610px}.steps{gap:10px}.step{min-width:auto;font-size:10px}.step:not(:last-child):after{display:none}.step{flex:0 0 auto}.record-head{display:block}.record-tag{margin-top:16px;text-align:left;display:inline-block}.source-grid,.scope{grid-template-columns:1fr}.field-grid{grid-template-columns:1fr}}
 @media(max-width:580px){.top{align-items:flex-start}.top-right{flex-wrap:wrap;justify-content:flex-end}.top-right .top-pill{display:none}.hero{padding:30px 0 20px}.hero h1{font-size:39px}.lead{font-size:15px}.record-head{padding:20px}.record-head h2{font-size:27px}.workflow{padding:0 16px 18px}.module{padding:21px 0}.module h3{font-size:22px}.module-head{display:block}.module-note{display:inline-block;margin-top:12px;white-space:normal}.result-grid{grid-template-columns:1fr}.result-grid>div+div{border:0;border-top:1px solid #e2e9dc}.comparison{grid-template-columns:1fr}.comparison>strong{transform:rotate(90deg)}.handoff dl{grid-template-columns:1fr;gap:2px}.handoff dd{margin-bottom:7px}.record-bar span:last-child{display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Operator Shift final release: route-specific suggestions, operator gating and feedback loop */
+.auto-proposal{border:1px solid #cfdec6;border-radius:9px;overflow:hidden;background:#f0f7ed;margin:0 0 17px}
+.auto-proposal[hidden],.feedback-result[hidden]{display:none}
+.auto-proposal-head{background:#e0efd9;padding:10px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:10px;letter-spacing:.09em;color:#3b6942}
+.auto-proposal-head span{color:#727f66;font-size:9px;font-weight:750}
+.auto-proposal-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:13px;padding:15px}
+.auto-proposal-grid>div{min-width:0}.auto-proposal-grid small{display:block;font-size:9px;letter-spacing:.1em;font-weight:850;color:#6a8968;margin-bottom:5px}
+.auto-proposal-grid strong{font-size:13px;font-weight:780;line-height:1.4}
+.auto-proposal-grid p{font-size:12px;line-height:1.5;color:#526955}
+.auto-full{grid-column:1/-1;border-top:1px solid #d3e3cf;padding-top:11px}
+.auto-evidence{padding:0 15px 13px}.auto-evidence summary{font-size:11px;font-weight:850;color:#3b6641;cursor:pointer}
+.auto-evidence p{font-size:11px;margin-top:9px;overflow-wrap:anywhere}.auto-evidence b{display:inline-block;margin-right:7px;color:#416d43}
+.suggested-questions{margin-top:15px}
+.suggested-questions>p{font-size:10px;letter-spacing:.1em;font-weight:850;color:#6b7d6c;margin-bottom:8px}
+.question-chips{display:flex;gap:7px;flex-wrap:wrap}
+.question-chips button{border:1px solid #cfe0cb;background:#f6faf3;border-radius:6px;padding:8px 10px;font-size:11px;font-weight:700;text-align:left;color:#415e43;max-width:310px}
+.question-chips button:hover{background:#e4f3da}
+.inline-apply{border:0;background:transparent;color:#376d42;text-decoration:underline;font-size:11px;padding:2px 4px;cursor:pointer;font-weight:800}
+.learning-loop{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:17px 0}
+.learning-loop>div{border:1px solid #d9e5d1;background:#fff;border-radius:8px;padding:10px 9px;min-width:0}
+.learning-loop span{display:grid;place-items:center;width:22px;height:22px;margin-bottom:9px;background:#e9efdf;border-radius:99px;color:#647969;font-weight:850;font-size:10px}
+.learning-loop span.loop-current{background:#adf07a;color:#28502f}
+.learning-loop strong{display:block;font-size:11px;line-height:1.35}
+.learning-loop small{display:block;font-size:10px;color:#7a8578;margin-top:4px;line-height:1.35}
+.feedback-result{background:#eaf7e4;border:1px solid #c9dfbf;padding:14px;border-radius:9px;margin:17px 0}
+.feedback-result strong{font-size:14px}.feedback-result p{font-size:12px;margin:7px 0 0;color:#47654c}
+.feedback-limit{margin-top:11px;border-top:1px solid #cbdcc5;padding-top:9px;font-size:10px;color:#5b6d5d}
+@media(max-width:850px){.learning-loop{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:570px){.auto-proposal-grid{grid-template-columns:1fr}.auto-full{grid-column:auto}.learning-loop{grid-template-columns:1fr 1fr}.question-chips button{max-width:none;width:100%}}
 </style>
 </head>
 <body>
@@ -89,14 +119,30 @@ Hinweis: Buchungssystem nennt einen anderen Tag.</textarea></div>
         </div>
       </section>
       <section id="sh-review-step" class="module review-block" hidden>
-        <div class="module-head"><div><div class="module-index">03 / REVIEW & ASSIGN</div><h3>Turn the finding into an owned next action.</h3><p class="module-text">A recommendation is not a handoff. Identify who should take the next step, record the unresolved question, and explicitly verify the source excerpts.</p></div></div>
+        <div class="module-head"><div><div class="module-index">03 / AUTOMATIC DRAFT → HUMAN CONFIRMATION</div><h3>Your review packet is already prepared.</h3><p class="module-text">The check proposes a relevant reviewer, an evidence-specific question and the next action automatically. These are editable suggestions, <strong>not an assigned ticket</strong>. Verify the originals and confirm before exporting.</p></div></div>
+        <div id="sh-auto-preview" class="auto-proposal" hidden>
+          <div class="auto-proposal-head"><strong>AUTO-DRAFT FROM CURRENT EVIDENCE</strong><span>UNVERIFIED · NOT SENT</span></div>
+          <div class="auto-proposal-grid">
+            <div><small>PROPOSED OWNER</small><strong id="sh-auto-owner">—</strong></div>
+            <div><small>PRIMARY REVIEW QUESTION</small><strong id="sh-auto-question">—</strong></div>
+            <div class="auto-full"><small>RECOMMENDED NEXT ACTION</small><p id="sh-auto-action">—</p></div>
+          </div>
+          <details class="auto-evidence"><summary>See evidence attached to the draft</summary><p><b>SOURCE A</b> <span id="sh-auto-a">—</span></p><p><b>SOURCE B</b> <span id="sh-auto-b">—</span></p></details>
+        </div>
         <p class="module-note" style="margin-bottom:15px" id="sh-route-next">Escalate to claims expert</p>
         <div class="field-grid">
-          <div class="field"><label for="sh-owner">Proposed review owner (fictional name or role)</label><input id="sh-owner" maxlength="100" value="" placeholder="e.g. Claims expert · Travel queue" autocomplete="off"><div class="field-help">This does not assign a real owner or create a task.</div></div>
-          <div class="field"><label for="sh-notes">Specific unresolved question / operator note</label><textarea id="sh-notes" maxlength="2000" placeholder="Which original date should the claims expert verify?"></textarea></div>
+          <div class="field"><label for="sh-owner">Proposed review owner · editable</label><input id="sh-owner" maxlength="100" value="" placeholder="Suggested role appears after the check" autocomplete="off"><div class="field-help">Suggested: <span id="sh-suggested-owner">—</span> <button type="button" class="inline-apply" id="sh-use-owner">Use suggestion ↗</button></div><div class="field-help">Fictional role only. No real owner is assigned or notified.</div></div>
+          <div class="field"><label for="sh-notes">Specific unresolved question · editable</label><textarea id="sh-notes" maxlength="2000" placeholder="A relevant question appears after the check"></textarea><div class="field-help">Suggested: <span id="sh-suggested-note">—</span></div></div>
+        </div>
+        <div class="suggested-questions"><p>COMMON QUESTIONS · TAP TO USE ONE</p>
+          <div class="question-chips">
+            <button type="button" data-sh-question="0">What must we verify?</button>
+            <button type="button" data-sh-question="1">What remains uncertain?</button>
+            <button type="button" data-sh-question="2">What closes the review?</button>
+          </div>
         </div>
         <label class="tick"><input type="checkbox" id="sh-confirm"><span>I reviewed the displayed source excerpts. I understand this is a fictional case, not a coverage approval, customer message or real operator assignment.</span></label>
-        <div class="actions"><button type="button" id="sh-review" class="btn btn-lime" disabled>Prepare operator handoff →</button><span class="hint">Owner, specific note and source confirmation are required.</span></div>
+        <div class="actions"><button type="button" id="sh-review" class="btn btn-lime" disabled>Confirm &amp; prepare handoff →</button><span class="hint">The draft is automatic. Human source confirmation is required before local export.</span></div>
         <p id="sh-review-error" class="inline-error" role="alert"></p>
       </section>
       <section id="sh-export-step" class="module handoff" hidden>
@@ -106,10 +152,39 @@ Hinweis: Buchungssystem nennt einen anderen Tag.</textarea></div>
         <div class="actions"><button type="button" id="sh-export" class="btn btn-primary" disabled>Download complete Markdown handoff ↗</button><span class="hint">Includes the source quotes, next step, review note and limitations.</span></div>
       </section>
       <section id="sh-qa-step" class="module qa" hidden>
-        <div class="module-index">05 / IMPROVE</div><h4>Capture a review correction as a test candidate.</h4><p>This is how a real team could stop repeating the same mistake. If a reviewer believes the expected next route differs from the rule's current output, record the alternative and why. The download is <strong>not automatically integrated into CI</strong>.</p>
-        <div class="field-grid"><div class="field"><label for="sh-fixture-expected">Reviewer-expected route</label><select id="sh-fixture-expected"><option value="HUMAN_REVIEW">Human review</option><option value="NEED_INFO">Request information</option><option value="CONTINUE_CHECKS">Continue other checks</option></select></div><div class="field"><label for="sh-fixture-why">Review rationale</label><input id="sh-fixture-why" placeholder="e.g. Contradictory date in two labelled sources" maxlength="2000"></div></div>
-        <button type="button" id="sh-regression" class="btn" disabled>Download regression candidate · JSON ↗</button>
-        <p class="small-print" id="sh-qa-status" role="status" aria-live="polite">Review the expected result before downloading.</p>
+        <div class="module-index">05 / CLOSE THE FEEDBACK LOOP</div>
+        <h4>What happens after the handoff?</h4>
+        <p><strong>In a real pilot</strong>, a claims expert would receive the packet, verify the original evidence and record whether the suggested route was right. Here you can simulate that response. No actual INCA expert reviews anything on this page.</p>
+        <div class="learning-loop" aria-label="How a case correction becomes a safer release">
+          <div><span class="loop-current">1</span><strong>Handoff draft</strong><small>Prepared locally · not sent</small></div>
+          <div><span class="loop-current">2</span><strong>Reviewer response</strong><small>Simulate below</small></div>
+          <div><span>3</span><strong>Test candidate</strong><small>Download JSON</small></div>
+          <div><span>4</span><strong>Independent review + CI</strong><small>Not automated here</small></div>
+          <div><span>5</span><strong>Shadow-mode metrics</strong><small>Requires real pilot</small></div>
+        </div>
+        <div class="field-grid">
+          <div class="field">
+            <label for="sh-fixture-expected">Simulated reviewer decision · expected next route</label>
+            <select id="sh-fixture-expected">
+              <option value="HUMAN_REVIEW">Human review</option>
+              <option value="NEED_INFO">Request information</option>
+              <option value="CONTINUE_CHECKS">Continue other checks</option>
+            </select>
+            <div class="field-help">Select the same route to record agreement; a different route proposes a correction. This does not change the deployed rule.</div>
+          </div>
+          <div class="field">
+            <label for="sh-fixture-why">Why does the simulated reviewer agree or disagree?</label>
+            <input id="sh-fixture-why" placeholder="e.g. Both dated originals need review before continuation" maxlength="2000">
+          </div>
+        </div>
+        <button type="button" id="sh-regression" class="btn" disabled>Capture feedback · download test candidate ↗</button>
+        <p class="small-print" id="sh-qa-status" role="status" aria-live="polite">The response is fictional and requires independent review.</p>
+        <div class="feedback-result" id="sh-feedback-result" hidden aria-live="polite">
+          <strong id="sh-feedback-title">Feedback recorded locally</strong>
+          <p id="sh-feedback-next">—</p>
+          <div class="feedback-limit">NEXT GATES · Real expert validates → engineer approves → CI checks → new holdout evaluation → shadow-mode monitoring. <strong>None of these gates are automatic.</strong></div>
+        </div>
+        <p class="small-print">What would make the product better? A verified correction becomes a regression test that blocks reintroducing the same routing failure. A real pilot would separately measure false clearance, unnecessary escalation, reviewer correction rate and turnaround time. None of those outcomes have been measured here.</p>
       </section>
     </div>
   </main>
