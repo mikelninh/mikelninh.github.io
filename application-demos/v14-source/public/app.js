@@ -15,6 +15,7 @@ const record=()=>fixtures.find(c=>c.id===selected);
 function renderInsights(){
  const x=record();if(!x)return;
  const actual=baseline(x.text),expected=x.gold||[];
+ $('live-proof').hidden=x.id!=='RL-301';
  $('insight-labels').replaceChildren(...expected.map(c=>el('span','insight-tag',NAMES[c]||c)));
  const missed=expected.filter(c=>!actual.includes(c));
  const extra=actual.filter(c=>!expected.includes(c));
