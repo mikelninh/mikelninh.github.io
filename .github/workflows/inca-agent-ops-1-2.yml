@@ -1,0 +1,64 @@
+name: INCA Agent Ops 1.2 Model Trial
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_mode:
+        description: "dry-run is free; live calls one model once (potentially billable)"
+        type: choice
+        default: dry-run
+        required: true
+        options:
+          - dry-run
+          - live
+      fictional_case:
+        description: "Choose exactly one fictional claim"
+        type: choice
+        default: TR-101
+        required: true
+        options:
+          - TR-101
+          - HM-202
+          - TH-303
+          - LI-404
+          - EL-505
+          - TR-606
+
+permissions:
+  contents: read
+
+jobs:
+  trial:
+    name: Offline contract tests, optional one-case model extraction
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      RUN_MODE: ${{ inputs.run_mode }}
+      CASE_ID: ${{ inputs.fictional_case }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify evidence grounding and safety (no API calls)
+        run: python -m unittest discover inca-proof/agent-ops -p 'test_*.py' -v
+      - name: Explicit zero-call dry run
+        if: ${{ inputs.run_mode == 'dry-run' }}
+        run: |
+          python inca-proof/agent-ops/model_trial.py --mode dry-run --case "$CASE_ID"
+      - name: One bounded real model extraction call (billable)
+        if: ${{ inputs.run_mode == 'live' }}
+        run: |
+          test -n "$OPENAI_API_KEY"
+          python inca-proof/agent-ops/model_trial.py --mode live --case "$CASE_ID" \
+            --model gpt-4o-mini \
+            --out "inca-proof/agent-ops/reports/trial_${GITHUB_RUN_ID}.json"
+      - name: Attach private run artifact for reviewer (not published to site)
+        if: ${{ inputs.run_mode == 'live' && always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: inca-agent-ops-1-2-${{ github.run_id }}
+          path: inca-proof/agent-ops/reports/trial_*.json
+          retention-days: 14
+          if-no-files-found: warn
