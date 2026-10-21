@@ -2,7 +2,10 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
-const api=require('./ai-proof.js');
+const vm=require('node:vm');
+const context={module:{exports:{}}};
+vm.runInNewContext(fs.readFileSync(path.join(__dirname,'ai-proof.js'),'utf8'),context,{filename:'ai-proof.js'});
+const api=context.module.exports;
 
 test('100-case queue is unmistakably fictional, prioritizes exceptions and never pays',()=>{
  const queue=api.simulateQueue();
