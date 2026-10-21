@@ -7,7 +7,8 @@ C cannot continue/clear claims when model extraction is skipped: an
 independent verified-evidence gate is mandatory; otherwise manual work.
 """
 from __future__ import annotations
-import argparse, json, math, os, pathlib, statistics, time, urllib.request
+import argparse, json, math, os, pathlib, statistics, time, urllib.request, sys
+sys.path.insert(0,str(pathlib.Path(__file__).resolve().parents[1] / 'model-eval'))
 import narrative_pilot as narrative
 import cost_quality as jev_lib
 import agent_ops as guard_lib
