@@ -85,10 +85,7 @@ def check_recorded_pairs(report,doc):
     """Optional independent verification using the real Actions JSON artifact."""
     if report.get("status")!="LIVE_API_RUN" or len(report.get("rows",[]))!=SAMPLE_SIZE:
         raise ValueError("Original complete paired API report required")
-    if report.get("dataset_sha256")!="1dd06cf82b9bd98ac1bcc7e489d6dfc8b1696a44ea25d57fd29519255fbd35c":
-        # Snapshot has no trusted exact known checksum; verify by case IDs and
-        # all numeric totals below, rather than guessing a hash.
-        pass
+    # Verify unique development IDs, both models, token totals and every confusion cell.
     ids=[r["id"] for r in report["rows"]]
     if len(set(ids))!=SAMPLE_SIZE or not all(r["split"]=="dev" for r in report["rows"]):
         raise ValueError("Need unique development cases")
