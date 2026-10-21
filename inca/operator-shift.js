@@ -28,6 +28,44 @@
     NEED_INFO:'Request reliable dated evidence from the customer or booking provider.',
     CONTINUE_CHECKS:'Complete policy, coverage and other outstanding checks. No payout or clearance.'
   });
+  const proposalTemplates=Object.freeze({
+    HUMAN_REVIEW:Object.freeze({
+      owner:'Claims expert · Travel queue',
+      questions:Object.freeze([
+        'Which cancellation date is supported by the original documents?',
+        'Could one date be a booking-system update rather than the cancellation itself?',
+        'Who verifies the source of truth and records the final date?'
+      ])}),
+    NEED_INFO:Object.freeze({
+      owner:'Claims intake · Evidence request',
+      questions:Object.freeze([
+        'Which original dated booking or cancellation document is still missing?',
+        'Who should request the missing evidence and from which source?',
+        'What must be received before we rerun the document check?'
+      ])}),
+    CONTINUE_CHECKS:Object.freeze({
+      owner:'Claims operations · Coverage checks',
+      questions:Object.freeze([
+        'Which coverage and policy checks remain open?',
+        'Which required documents must be checked before settlement?',
+        'Who records completion of the remaining checks?'
+      ])})
+  });
+  function suggestHandoff(analysis){
+    if(!analysis||!validRoutes.includes(analysis.route))throw Error('invalid_route_for_proposal');
+    const t=proposalTemplates[analysis.route];
+    return Object.freeze({
+      owner:t.owner,
+      note:t.questions[0],
+      questions:t.questions.slice(),
+      route:analysis.route,
+      action:analysis.action,
+      handBack:handBack[analysis.route],
+      evidence:analysis.snippets.slice(),
+      draft:analysis.result.customerUpdate,
+      status:'AUTO-DRAFT · UNVERIFIED · NOT SENT'
+    });
+  }
   function analyze(core,docA,docB){
     if(!core||typeof core.evaluate!=='function')throw Error('missing_evaluation_engine');
     const result=core.evaluate(docA,docB);
@@ -92,7 +130,16 @@
     if(out.production_case!==false)throw Error('unsafe_fixture_type');
     return Object.freeze({...out,
       prepared_by:'INCA Operator Shift synthetic workshop',
-      note:'Candidate only. Not a verified correction, not part of the independently held-out evaluation, and not automatically added to CI.',
+      note:'Candidate only. Simulated reviewer feedback; not a real expert response, not a verified correction, not independent holdout and not automatically added to CI.',
+      feedback_origin:'USER-SIMULATED · NOT AN INCA CLAIMS EXPERT',
+      candidate_kind:out.disagreement?'CORRECTION_PROPOSAL':'AGREEMENT_CONTROL',
+      improvement_steps:Object.freeze([
+        '1. Candidate recorded locally: completed',
+        '2. Independent expert validates source and expected label: NOT DONE',
+        '3. Approved test fixture added to repository and CI: NOT DONE',
+        '4. Fix passes regression and separately held-out validation: NOT DONE',
+        '5. Shadow-mode expert corrections and false escalations measured: NOT DONE'
+      ]),
       external_actions:0});
   }
   function mount(doc,core){
@@ -103,15 +150,18 @@
     const a=$('sh-a'),b=$('sh-b'),owner=$('sh-owner'),notes=$('sh-notes');
     const required=['sh-scan','sh-review','sh-export','sh-regression','sh-status','sh-route','sh-reason',
       'sh-quote-a','sh-quote-b','sh-old','sh-new','sh-preview','sh-review-step','sh-export-step','sh-qa-step',
-      'sh-confirm','sh-next','sh-draft','sh-route-next','sh-fixture-expected','sh-fixture-why','sh-a','sh-b','sh-preview-handback'];
+      'sh-confirm','sh-next','sh-draft','sh-route-next','sh-fixture-expected','sh-fixture-why','sh-a','sh-b','sh-preview-handback',
+      'sh-suggested-owner','sh-suggested-note','sh-auto-preview','sh-auto-owner','sh-auto-question','sh-auto-action',
+      'sh-auto-a','sh-auto-b','sh-feedback-result','sh-feedback-next','sh-feedback-title'];
     if(required.some(id=>!$(id)))throw Error('operator_shift_markup_incomplete');
-    let analysis=null,receipt=null;
+    let analysis=null,receipt=null,proposal=null;
     const set=(id,text)=>$(id).textContent=text;
     function setStage(number,status){
       const el=$('sh-stage-'+number);if(el){el.setAttribute('data-status',status);el.textContent=status==='done'?'✓':String(number);}
     }
     function invalidate(){
-      analysis=null;receipt=null;
+      analysis=null;receipt=null;proposal=null;
+      $('sh-feedback-result').hidden=true;$('sh-feedback-next').textContent='';
       $('sh-review').disabled=true;$('sh-export').disabled=true;$('sh-regression').disabled=true;
       $('sh-preview').hidden=true;$('sh-review-step').hidden=true;$('sh-export-step').hidden=true;$('sh-qa-step').hidden=true;
       $('sh-scan').disabled=false;
@@ -122,10 +172,19 @@
       set('sh-next','Run the check before routing.');
     }
     function scan(){
-      analysis=analyze(core,a.value,b.value);receipt=null;
+      analysis=analyze(core,a.value,b.value);receipt=null;proposal=suggestHandoff(analysis);
+      owner.value=proposal.owner;notes.value=proposal.note;$('sh-confirm').checked=false;
+      set('sh-suggested-owner',proposal.owner);set('sh-suggested-note',proposal.note);
+      set('sh-auto-owner',proposal.owner);set('sh-auto-question',proposal.note);
+      set('sh-auto-action',proposal.action);
+      set('sh-auto-a',proposal.evidence[0]);set('sh-auto-b',proposal.evidence[1]);
+      $('sh-auto-preview').hidden=false;$('sh-feedback-result').hidden=true;
+      const chips=Array.from(doc.querySelectorAll('[data-sh-question]'));
+      chips.forEach((chip,i)=>{chip.textContent=proposal.questions[i]||'';chip.hidden=!proposal.questions[i];});
       $('sh-preview').hidden=false;$('sh-review-step').hidden=false;$('sh-export-step').hidden=true;$('sh-qa-step').hidden=true;
       $('sh-review').disabled=false;
       $('sh-export').disabled=true;$('sh-regression').disabled=true;
+      set('sh-review-error','');set('sh-qa-status','');
       set('sh-route',analysis.route);set('sh-reason',analysis.reason);
       set('sh-next',analysis.action);
       set('sh-quote-a',analysis.snippets[0]);set('sh-quote-b',analysis.snippets[1]);
@@ -133,7 +192,7 @@
       set('sh-draft',analysis.result.customerUpdate);
       set('sh-route-next',labels[analysis.route]);
       $('sh-fixture-expected').value=analysis.route;
-      set('sh-status','Evidence checked locally. Proposed route: '+analysis.route+'. No claim was sent or approved.');
+      set('sh-status','Evidence checked. A proposed owner, review question and evidence-linked handoff draft were prepared automatically. Verify them before exporting; nothing has been sent.');
       setStage(2,'done');setStage(3,'pending');setStage(4,'pending');setStage(5,'pending');
     }
     function review(){
@@ -142,8 +201,9 @@
         receipt=prepareHandoff(core,{a:a.value,b:b.value,owner:owner.value,notes:notes.value,
           route:analysis.route,verified:$('sh-confirm').checked});
         $('sh-export-step').hidden=false;$('sh-qa-step').hidden=false;
+        $('sh-feedback-result').hidden=true;
         $('sh-export').disabled=false;$('sh-regression').disabled=false;
-        set('sh-status','Review prepared for '+receipt.reviewer+'. Handoff is local and unsent.');
+        set('sh-status','Operator confirmed the local handoff draft for '+receipt.reviewer+'. No real assignment, message or case update occurred.');
         set('sh-review-error','');
         setStage(3,'done');setStage(4,'done');
         set('sh-preview-owner',receipt.preview.owner);
@@ -173,22 +233,36 @@
       try{
         const fixture=regression(core,{a:a.value,b:b.value,expected:$('sh-fixture-expected').value,
           why:$('sh-fixture-why').value});
-        download('ST-104-regression-CANDIDATE.json',JSON.stringify(fixture,null,2)+'\n','application/json;charset=utf-8');
-        set('sh-qa-status','Candidate downloaded for independent review. Not installed in CI.');
+        download('ST-104-'+(fixture.disagreement?'correction':'agreement')+'-CANDIDATE.json',JSON.stringify(fixture,null,2)+'\n','application/json;charset=utf-8');
+        $('sh-feedback-result').hidden=false;
+        set('sh-feedback-title',fixture.disagreement?'Simulated disagreement captured':'Simulated agreement captured');
+        set('sh-feedback-next',fixture.disagreement
+          ? 'The simulated reviewer suggests '+fixture.expected_route+' rather than '+fixture.observed_route+'. This does NOT modify the rule. A real expert must validate the evidence and label, an engineer must approve the change, and CI plus fresh holdout tests must pass before any rollout.'
+          : 'The simulated reviewer agrees with '+fixture.observed_route+'. This control candidate helps prevent future unintended changes only after independent validation and integration into CI. Nothing has been deployed.');
+        set('sh-qa-status','Local candidate downloaded. Expert review → versioned test → CI → shadow mode are still pending.');
         setStage(5,'done');
       }catch(e){set('sh-qa-status',String(e.message).replace(/_/g,' '));}
     });
     [a,b].forEach(el=>el.addEventListener('input',invalidate));
+    Array.from(doc.querySelectorAll('[data-sh-question]')).forEach((chip,i)=>chip.addEventListener('click',()=>{
+      if(!proposal||!proposal.questions[i])return;
+      notes.value=proposal.questions[i];
+      notes.dispatchEvent(new Event('input',{bubbles:true}));
+    }));
+    const useOwner=$('sh-use-owner');
+    if(useOwner)useOwner.addEventListener('click',()=>{
+      if(!proposal)return;owner.value=proposal.owner;owner.dispatchEvent(new Event('input',{bubbles:true}));
+    });
     [owner,notes,$('sh-confirm')].forEach(el=>el.addEventListener('input',()=>{
-      if(receipt){receipt=null;$('sh-export').disabled=true;$('sh-regression').disabled=true;$('sh-export-step').hidden=true;$('sh-qa-step').hidden=true;setStage(3,'pending');setStage(4,'pending');setStage(5,'pending');set('sh-status','Reviewer details changed. Prepare the handoff again before exporting.');}
+      if(receipt){receipt=null;$('sh-export').disabled=true;$('sh-regression').disabled=true;$('sh-export-step').hidden=true;$('sh-qa-step').hidden=true;$('sh-feedback-result').hidden=true;setStage(3,'pending');setStage(4,'pending');setStage(5,'pending');set('sh-status','Reviewer details changed. Reconfirm the handoff before exporting.');}
     }));
     $('sh-reset').addEventListener('click',()=>{
-      a.value=sample.a;b.value=sample.b;owner.value='';notes.value='';$('sh-confirm').checked=false;
+      a.value=sample.a;b.value=sample.b;owner.value='';notes.value='';$('sh-confirm').checked=false;$('sh-auto-preview').hidden=true;
       $('sh-fixture-why').value='';set('sh-review-error','');set('sh-qa-status','');
       invalidate();set('sh-status','Case reset. Start with the two fictional source excerpts.');
     });
     invalidate();
     set('sh-status','Start here: read the two synthetic documents, then run the evidence check.');
   }
-  return {sample,validRoutes,labels,nextSteps,analyze,prepareHandoff,regression,mount};
+  return {sample,validRoutes,labels,nextSteps,proposalTemplates,suggestHandoff,analyze,prepareHandoff,regression,mount};
 });
