@@ -86,6 +86,60 @@
 .historical-proof>a{font-size:11px;color:#37663e;font-weight:800;display:inline-block;margin-top:11px}
 .historical-proof .comparison{grid-template-columns:1fr 1fr}
 @media(max-width:670px){.hero-dates{gap:8px}.hero-dates>div{padding:10px}.hero-dates small{font-size:9px}.hero-dates strong{font-size:19px}.follow-next{align-items:stretch;flex-direction:column}.follow-next .btn{width:100%}.historical-proof .comparison{grid-template-columns:1fr}}
+
+/* Recorded OpenAI evidence with explicit source provenance; workload simulation separately labelled */
+.hero-proof-link{font-size:12px;font-weight:800;color:#3e7748}
+.ai-evidence,.ai-simulator{background:#fff;border:1px solid #d4e1d1;border-radius:14px;margin:28px 0 22px;overflow:hidden;padding:25px}
+.ai-eyebrow{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #dce7d8;padding-bottom:12px;font-size:10px;font-weight:850;letter-spacing:.08em;color:#648068;flex-wrap:wrap}
+.ai-eyebrow span:last-child{color:#284d30;font-size:10px;font-weight:700;letter-spacing:0}
+.ai-head{display:flex;justify-content:space-between;gap:20px;align-items:start;margin:18px 0}
+.ai-head h2,.ai-simulator h2{font-size:clamp(27px,4vw,39px);line-height:1.1;letter-spacing:-.05em;margin:8px 0 12px}
+.ai-head p,.ai-simulator>p{font-size:13px;color:#586d5a;line-height:1.6;max-width:785px}
+.ai-source-link{font-size:11px;color:#376f41;min-width:145px;font-weight:800}
+.ai-loading{padding:19px;color:#59715b;font-size:13px;background:#f3f7f0;border-radius:8px}
+.ai-metrics,.ai-queue-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:15px}
+.ai-metrics>div,.ai-queue-metrics>div{padding:14px;border:1px solid #dbe6d7;background:#f7faf5;border-radius:8px;min-width:0}
+.ai-metrics small{display:block;font-size:9px;font-weight:850;color:#56765a;letter-spacing:.09em}
+.ai-metrics strong,.ai-queue-metrics strong{display:block;font-size:23px;letter-spacing:-.05em;margin:6px 0 0;overflow-wrap:anywhere}
+.ai-metrics span,.ai-queue-metrics span{display:block;font-size:10px;color:#819083;margin-top:4px}
+.ai-note,.ai-caveat{font-size:11px;color:#6d7d70;line-height:1.6;margin:14px 0}
+.ai-select-label{font-size:11px;font-weight:850;color:#476548;display:block;margin:17px 0 7px}
+#ai-case-select{width:100%;max-width:570px;padding:11px 12px;border:1px solid #ccdcca;border-radius:6px;background:white;color:#263b29}
+.ai-doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}
+.ai-document{min-width:0;background:#fafbf9;border:1px solid #dfe7dc;border-radius:8px;padding:14px}
+.ai-document small,.ai-extract-grid small,.ai-route-block small{display:block;font-size:10px;color:#667f67;font-weight:850;letter-spacing:.08em;margin-bottom:8px}
+.ai-document pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.65 ui-monospace,Consolas,monospace;margin:0;color:#354b38}
+.ai-inspector{margin-top:15px;border:1px solid #c7dbc3;border-radius:9px;overflow:hidden}
+.ai-inspector-head{background:#24432d;color:white;padding:12px 15px;display:flex;justify-content:space-between;gap:10px;font-size:12px}
+.ai-inspector-head span{color:#c5ddc9}
+.ai-extract-grid,.ai-route-block{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.ai-extract-grid>div,.ai-route-block>div{min-width:0;padding:16px;border-right:1px solid #dae7d8}
+.ai-extract-grid>div:last-child,.ai-route-block>div:last-child{border-right:none}
+.ai-extract-grid b,.ai-route-block b{font-size:22px;letter-spacing:-.035em;color:#2b5e39}
+.ai-extract-grid p{background:#eef5eb;padding:10px;margin-top:10px;font:11px/1.5 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+.ai-uncertainty{font-size:11px;color:#6e7c6f;padding:11px 15px;border-top:1px solid #e5ede3}
+.ai-route-block{background:#f0f8ec;border-top:1px solid #c9dec3}
+.ai-route-block p{font-size:11px;color:#617464;margin-top:8px;line-height:1.5}
+.ai-baseline{padding:15px;background:#f8faf6;border-top:1px solid #d9e5d6}
+.ai-baseline strong{font-size:13px}.ai-baseline p{font-size:12px;color:#596c5b;margin:6px 0 0}.ai-baseline code{font-size:12px;color:#245b34;font-weight:850}
+.ai-simulator{background:#f8faf6}
+.ai-queue-metrics{grid-template-columns:repeat(5,minmax(0,1fr));margin:19px 0}
+.ai-queue-metrics strong{font-size:28px}
+.ai-queue-row{display:grid;grid-template-columns:70px 1fr auto;gap:13px;align-items:center;border-bottom:1px solid #dfe8da;font-size:11px;padding:10px 3px}
+.ai-queue-row strong{color:#537553;font-size:10px}.ai-queue-row span:first-child{color:#7d917e}
+.ai-measure{margin-top:25px;padding-top:20px;border-top:1px solid #d8e3d4}.ai-measure h3{font-size:22px;letter-spacing:-.04em}
+.ai-five{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:14px 0}
+.ai-five>div{background:white;padding:12px;border:1px solid #dfe8d9;border-radius:7px}
+.ai-five strong{display:block;font-size:11px;line-height:1.3}.ai-five span{display:block;font-size:10px;color:#728475;line-height:1.5;margin-top:6px}
+.ai-measure>p{font-size:12px;color:#566d5a;line-height:1.6}
+.ai-engineering{background:white;border:1px solid #d6e5d0;padding:20px;border-radius:11px;margin:15px 0 27px}
+.ai-engineering summary{font-size:15px;font-weight:850;color:#244a2d;cursor:pointer}
+.ai-engineering-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:17px 0}
+.ai-engineering-grid>div{padding:14px;background:#f7faf5;border:1px solid #dce8d9;border-radius:7px}
+.ai-engineering-grid code{font-size:12px;color:#2d5933;font-weight:800;overflow-wrap:anywhere}
+.ai-engineering-grid p,.ai-engineering>p{font-size:12px;color:#607564;line-height:1.6;margin-top:8px}
+@media(max-width:860px){.ai-metrics,.ai-queue-metrics{grid-template-columns:repeat(2,1fr)}.ai-five{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:580px){.ai-evidence,.ai-simulator{padding:16px}.ai-head{flex-direction:column}.ai-doc-grid,.ai-extract-grid,.ai-route-block,.ai-engineering-grid{grid-template-columns:1fr}.ai-extract-grid>div+div,.ai-route-block>div+div{border-top:1px solid #d9e5d6}.ai-five{grid-template-columns:1fr}.ai-queue-row{grid-template-columns:70px 1fr}.ai-queue-row strong{grid-column:2}}
 </style>
 </head>
 <body>
@@ -107,7 +161,7 @@
       <p class="hero-problem"><strong>The question:</strong> Which date is right? Someone needs to verify the originals before the claim continues.</p>
       <div class="hero-actions">
         <button id="sh-start" type="button" class="btn btn-primary">Run the prepared example →</button>
-        <a href="#sh-intake">Or explore the editable documents ↓</a>
+        <a href="#sh-intake">Or explore the editable documents ↓</a><a href="#ai-evidence" class="hero-proof-link">Explore recorded OpenAI extraction ↓</a>
       </div>
       <p class="hero-safety">No typing or account required · Nothing gets sent · Fictional data only</p>
     </div>
@@ -118,7 +172,7 @@
         <li><strong>Prepare</strong> an unsent handoff.</li>
         <li><strong>Optional:</strong> simulate feedback for a future test.</li>
       </ol>
-      <p>Built with AI coding assistance. This is a bounded rule demo, not PDF reading, an LLM decision or insurer access. <a href="#sh-boundaries">Evidence and limitations ↓</a></p>
+      <p>Built with AI coding assistance. <strong>The editable workflow uses a transparent rule, not an LLM.</strong> A separate recorded OpenAI extraction experiment appears below. <a href="#sh-boundaries">Evidence and limitations ↓</a></p>
     </aside>
   </section>
   <main id="shift-app" class="record">
@@ -244,6 +298,82 @@ Hinweis: Buchungssystem nennt einen anderen Tag.</textarea></div>
       </section>
     </div>
   </main>
+
+  <section class="ai-evidence" id="ai-evidence" aria-labelledby="ai-heading">
+    <div class="ai-eyebrow"><span>AI EVIDENCE LAB · EXPERIMENT 02</span><span id="ai-status">Checking recorded model evidence…</span></div>
+    <div class="ai-head">
+      <div>
+        <div class="kicker">REAL MODEL OUTPUT · FICTIONAL INPUTS</div>
+        <h2 id="ai-heading">What does the AI actually read?</h2>
+        <p>In the interactive case above, <strong>rules</strong> read explicitly labelled dates. Here is a different experiment: an OpenAI model was asked to extract dates and exact source quotations from eight fictional document pairs. <strong>A separate validator checks those quotes before suggesting a route.</strong></p>
+      </div>
+      <a href="/inca-proof/model-eval/shift_cases.json" class="ai-source-link">Inspect the eight fictional source pairs ↗</a>
+    </div>
+    <div id="ai-loading" class="ai-loading" role="status">Loading the saved extraction report. If no model run has been recorded yet, results will remain unavailable rather than simulated.</div>
+    <div id="ai-snapshot" hidden>
+      <div class="ai-metrics" aria-label="Recorded model metrics on developer-authored synthetic cases">
+        <div><small>RECORDING</small><strong id="ai-model">—</strong><span id="ai-run-date">—</span></div>
+        <div><small>ROUTE MATCHES*</small><strong id="ai-score">—</strong><span>Developer-authored labels</span></div>
+        <div><small>UNSAFE CONTINUATIONS*</small><strong id="ai-unsafe">—</strong><span>On these eight examples</span></div>
+        <div><small>QUOTES VALIDATED</small><strong id="ai-source">—</strong><span>Exact excerpts checked</span></div>
+      </div>
+      <p id="ai-run-note" class="ai-note"></p>
+      <label for="ai-case-select" class="ai-select-label">Choose a real recorded API example</label>
+      <select id="ai-case-select" aria-label="Fictional scenario selected from recorded AI extraction"></select>
+      <div class="ai-doc-grid">
+        <article class="ai-document"><small>SOURCE A · ORIGINAL FICTIONAL TEXT</small><pre id="ai-doc-a"></pre></article>
+        <article class="ai-document"><small>SOURCE B · ORIGINAL FICTIONAL TEXT</small><pre id="ai-doc-b"></pre></article>
+      </div>
+      <div class="ai-inspector">
+        <div class="ai-inspector-head"><strong>01 · Model extracted, without routing authority</strong><span id="ai-latency">—</span></div>
+        <div class="ai-extract-grid">
+          <div><small>SOURCE A DATE</small><b id="ai-extract-a">—</b><p id="ai-quote-a">—</p></div>
+          <div><small>SOURCE B DATE</small><b id="ai-extract-b">—</b><p id="ai-quote-b">—</p></div>
+        </div>
+        <p class="ai-uncertainty"><strong>Model uncertainty:</strong> <span id="ai-model-uncertainty">—</span></p>
+        <div class="ai-route-block">
+          <div><small>02 · INDEPENDENT SAFETY GATE</small><b id="ai-result">—</b><p id="ai-result-reason">—</p><p id="ai-source-valid">—</p></div>
+          <div><small>DEVELOPER-EXPECTED ROUTE</small><b id="ai-expected">—</b><p id="ai-row-match">—</p></div>
+        </div>
+        <div class="ai-baseline"><strong>Why combine models and rules?</strong><p>Regex-only text checker: <code id="ai-rules-only">—</code></p><p id="ai-rule-comparison">—</p></div>
+      </div>
+      <p class="ai-caveat">*Small developer-authored test set, not independent validation. This is a <strong>recording of prior paid API calls</strong>, not a new API request when you change a selection. The editable documents above continue to use the rule-only path. No policy eligibility, payments, or customer actions.</p>
+    </div>
+  </section>
+  <section class="ai-simulator" id="shadow-mode" aria-labelledby="shadow-heading">
+    <div class="kicker">OPERATIONS SIMULATION · NOT MODEL PERFORMANCE</div>
+    <h2 id="shadow-heading">How would I operate 100 open claims?</h2>
+    <p>A separate <strong>invented</strong> 100-case queue shows the first operational decisions: protect critical cases, route contradictions, request missing evidence, and continue other checks. These counts come from a generated workload, <strong>not</strong> from insurer data or the eight API calls above.</p>
+    <div class="ai-queue-metrics">
+      <div><strong id="ai-queue-count">100</strong><span>Synthetic open cases</span></div>
+      <div><strong id="ai-queue-critical">—</strong><span>Critical priority</span></div>
+      <div><strong id="ai-queue-review">—</strong><span>Human review route</span></div>
+      <div><strong id="ai-queue-info">—</strong><span>Information needed</span></div>
+      <div><strong id="ai-queue-continue">—</strong><span>Continue other checks</span></div>
+    </div>
+    <div id="ai-queue-preview" aria-label="Top five hypothetical cases"></div>
+    <div class="ai-measure">
+      <h3>What would prove it's better?</h3>
+      <div class="ai-five">
+        <div><strong>01 · Unsafe clearance</strong><span>How often does an exception pass when it should stop?</span></div>
+        <div><strong>02 · Unnecessary escalation</strong><span>How often do reviewers receive avoidable cases?</span></div>
+        <div><strong>03 · Expert correction rate</strong><span>When do claims experts disagree with the proposed route?</span></div>
+        <div><strong>04 · Turnaround time</strong><span>Is the process faster without sacrificing safety?</span></div>
+        <div><strong>05 · Deadline compliance</strong><span>Are overdue cases and high-priority exceptions decreasing?</span></div>
+      </div>
+      <p><strong>Actual pilot gate:</strong> establish a human-reviewed baseline → run AI proposals in shadow mode → compare with experts → investigate errors → approve a limited rollout only if independently measured safety and quality support it.</p>
+    </div>
+  </section>
+  <details class="ai-engineering" id="engineering-tour">
+    <summary>How does the code work? Four functions explained ↗</summary>
+    <div class="ai-engineering-grid">
+      <div><code>analyze(core, docA, docB)</code><p>Reads two fictional text documents, runs the <strong>deterministic</strong> date checker, and returns a route, explanation and supporting excerpts. It does not read PDFs, call an LLM or approve coverage.</p></div>
+      <div><code>suggestHandoff(analysis)</code><p>Takes the route and source evidence and prepares a suggested reviewer, questions and next action. Suggestions are editable; nobody is notified.</p></div>
+      <div><code>prepareHandoff(core, input)</code><p>Checks operator confirmation, reviewer details and route consistency. Produces an unsent downloadable handoff; it does not create a real task.</p></div>
+      <div><code>regression(core, feedback)</code><p>Produces a JSON candidate describing a simulated reviewer correction. A real expert and engineer would still have to validate and integrate the test into CI.</p></div>
+    </div>
+    <p>The real OpenAI extraction experiment uses separate Python functions: <code>api_call → evaluate_extraction → build_report</code>. Provider adapters can replace the OpenAI call without changing the underlying evidence verification or routing logic.</p>
+  </details>
   <section class="scope" id="sh-boundaries" aria-label="Evidence and limitations">
     <div class="scope-card">
       <div class="kicker">WHAT I ACTUALLY TESTED</div><h3>One small check, with a clear limit.</h3>
@@ -264,5 +394,6 @@ Hinweis: Buchungssystem nennt einen anderen Tag.</textarea></div>
 </div>
 <script src="/inca/interactive-case.js"></script>
 <script src="/inca/operator-shift.js"></script>
+<script src="/inca/ai-proof.js"></script>
 </body>
 </html>
