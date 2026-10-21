@@ -1,9 +1,4 @@
-(function(root,factory){
- const api=factory();
- if(typeof module==='object'&&module.exports)module.exports=api;
- else{root.IncaAiEvidence=api;if(typeof document!=='undefined')api.mount(document);}
-})(typeof globalThis==='object'?globalThis:this,function(){
- 'use strict';
+'use strict';
  function simulateQueue(){
    const records=[];
    const classes=[
@@ -113,5 +108,7 @@
       $('ai-snapshot').hidden=true;
    }
  }
- return {simulateQueue,summarize,comparison,mount};
-});
+const IncaAiEvidence = {simulateQueue,summarize,comparison,mount};
+if (typeof module === 'object' && module.exports) module.exports=IncaAiEvidence;
+if (typeof window !== 'undefined') window.IncaAiEvidence=IncaAiEvidence;
+if (typeof document !== 'undefined') mount(document);
