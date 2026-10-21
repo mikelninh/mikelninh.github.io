@@ -1,0 +1,427 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f5f0"><meta name="description" content="RETURN LOOP v14 Model Arena — echte KI-Modellentscheidungen, sichere Evaluation und menschliche Prüfung an synthetischen Support-Fällen."><title>RETURN LOOP — Which model earns your trust?</title><style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap');
+:root{--paper:#f5f5f0;--white:#fff;--ink:#202e2a;--soft:#6e7870;--green:#173f34;--accent:#537966;--line:#dedfd7;--tint:#e8eee8;--peach:#f2dac9;--rust:#ad6143;--serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:82px}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.57 var(--sans);-webkit-font-smoothing:antialiased}a{color:inherit}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.42}h1,h2,h3,p{margin:0}.skip{position:absolute;left:10px;top:-100px;background:var(--green);color:#fff;padding:10px}.skip:focus{top:10px}.container{width:min(1170px,calc(100% - 68px));margin-inline:auto}.topbar{height:66px;border-bottom:1px solid var(--line);background:rgba(245,245,240,.92)}.topinner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-size:21px;font-weight:800;text-decoration:none;letter-spacing:-.06em}.brand-dot{color:var(--rust)}.brand-caption{letter-spacing:.08em;font-size:10px;font-weight:800;margin-left:14px}.topright{display:flex;gap:25px;align-items:center;font-size:11px;letter-spacing:.01em}.header-note{color:var(--soft)}.toplink{font-weight:700;text-underline-offset:4px;text-decoration-color:#9cb7a8}.hero{min-height:386px;display:grid;grid-template-columns:1.3fr .7fr;gap:58px;padding:65px 0 45px}.eyebrow{font-size:10px;letter-spacing:.18em;font-weight:800;color:#55765e;display:flex;align-items:center;gap:10px;text-transform:uppercase}.eyebrow-dot{height:7px;width:7px;background:#6a9c7b;border-radius:50%}.eyebrow .v{border:1px solid #bccbc0;font-size:9px;padding:2px 5px;letter-spacing:0}.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(58px,6.1vw,91px);line-height:1;letter-spacing:-.055em;margin:18px 0 20px}.hero h1 em,.hero-card em,.manifesto em{font-weight:400;color:#668c76}.lead{font-size:17px;color:#53665c;max-width:560px;line-height:1.66}.hero-actions{display:flex;align-items:center;gap:18px;margin-top:25px;flex-wrap:wrap}.hero-small{color:#79867c;font-size:11px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:43px;padding:11px 17px;border-radius:6px;text-decoration:none;border:1px solid var(--line);font-size:12px;font-weight:800;transition:background .18s,transform .18s}.btn:hover:not(:disabled){transform:translateY(-1px)}.btn.primary{background:var(--green);border-color:var(--green);color:#fff}.btn.dark{background:var(--ink);border-color:var(--ink);color:#fff}.btn.outline{background:transparent;color:var(--ink)}.hero-side{display:flex;align-items:flex-end;justify-content:flex-end;position:relative;padding:33px 0 0}.hero-orb{font-family:Georgia,serif;position:absolute;top:-24px;left:28%;font-size:260px;line-height:1;opacity:.11;color:#3d7161;transform:rotate(-30deg);user-select:none}.hero-card{width:100%;max-width:355px;padding:28px;background:var(--green);color:#eef7ee;position:relative;z-index:1;border-radius:7px;box-shadow:0 22px 50px #244a3617}.mini-eyebrow{font-weight:800;font-size:9px;letter-spacing:.18em;color:#aecabc}.hero-card p{font-family:var(--serif);font-size:30px;line-height:1.19;letter-spacing:-.02em;margin:22px 0 32px}.hero-card em{color:#b5d1ba}.hero-card-foot{font-size:10px;display:flex;justify-content:space-between;border-top:1px solid #5a7666;padding-top:13px;color:#cad9cb}.data-strip{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:17px 0;color:#596a61;font-size:11px}.data-strip b{color:var(--ink);font-weight:800}.circle{display:inline-block;width:8px;height:8px;background:#8fad96;border-radius:50%;margin-right:7px}.circle.hollow{background:transparent;border:2px solid #9daea0}.circle.warm{background:#ca9e7e}.provider-badge{color:#8b694e;background:#f5eadd;padding:6px 11px;border-radius:4px}.provider-badge.ready{background:#e5eee5;color:#286049}.section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin:68px 0 24px}.section-heading .plain{margin-bottom:12px}.section-heading h2,.methods h2{font:400 clamp(31px,3.8vw,45px)/1.12 var(--serif);letter-spacing:-.035em}.section-heading p{color:var(--soft);font-size:13px;max-width:640px;line-height:1.6;margin-top:11px}.workstep{font-size:10px;letter-spacing:.12em;color:#72907d;font-weight:800;white-space:nowrap;padding-bottom:5px}.workgrid{display:grid;grid-template-columns:1fr 1.02fr;gap:18px;align-items:start}.panel{background:var(--white);border:1px solid var(--line);border-radius:9px}.case-pane,.result-pane{padding:29px 30px;min-height:512px}.panehead{display:flex;justify-content:space-between;gap:10px;color:#76907e;font-weight:850;letter-spacing:.14em;font-size:9px}.panehead span:last-child{letter-spacing:0;color:#87938a;font-weight:600}.product-chip{display:flex;align-items:center;gap:12px;margin-top:28px}.product-icon{width:42px;height:42px;border-radius:7px;background:#e5ede6;color:#547a61;display:grid;place-items:center;font-size:27px}.product-chip strong{font-size:15px;display:block}.product-chip small{display:block;font-size:11px;color:var(--soft)}.customer-quote{font-family:var(--serif);font-size:clamp(23px,2.6vw,32px);line-height:1.32;margin:22px 0 22px;letter-spacing:-.018em;color:#273b33;min-height:116px;overflow-wrap:break-word}.divider{border-top:1px solid var(--line)}.case-nav-title{margin:20px 0 9px;display:flex;justify-content:space-between;gap:10px;font-size:12px;font-weight:800}.case-nav-title small{font-size:11px;color:#87958c;font-weight:500}.ticket-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ticket-tile{min-height:55px;background:#fafbf9;text-align:left;border:1px solid #e8ede7;padding:11px 12px;border-radius:6px}.ticket-tile[aria-pressed=true]{background:#e8f0e8;border-color:#92b59d}.ticket-tile strong{font-size:11px;display:block;color:#284536}.ticket-tile span{font-size:11px;display:block;color:#63776b;margin-top:2px}.case-nav-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}.case-nav-footer small{font-size:10px;color:#87978a}.subtle-btn{border:0;background:transparent;padding:0;color:var(--green);font-size:11px;font-weight:800;text-decoration:underline;text-underline-offset:4px}.result-pane h3{font:400 29px/1.18 var(--serif);margin:27px 0 10px}.panelead{color:#6c7c6e;font-size:12px;line-height:1.6;max-width:430px}.models{display:grid;gap:8px;margin-top:24px}.model{padding:13px 14px;border:1px solid #e5e9e4;border-radius:7px;background:#fcfdfa;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px}.model.ready{border-color:#aed0b9;background:#f7fbf7}.model-name{font-weight:800;font-size:13px}.model-desc{color:#89978b;font-size:10px;margin-top:4px}.model-result{grid-column:1/-1;background:#eef4ed;border-radius:4px;padding:9px 11px;color:#395344;font-size:11px;line-height:1.5;overflow-wrap:anywhere}.model-result em{font-style:normal;font-weight:750}.model-btn{border:1px solid #ccdacf;background:white;color:#244a35;padding:8px 11px;border-radius:5px;font-size:11px;font-weight:750;white-space:nowrap}.model-btn[disabled]{background:#edf0eb}.callout{background:#edf4ec;border-radius:4px;padding:4px 7px}.connect{background:#f4f5f0;border-radius:6px;padding:16px 17px;margin-top:17px;border:1px solid #e5e9e2}.connect-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.connect strong{font-size:12px}.connect p,.hint{font-size:11px;color:#6d7d70;line-height:1.55;margin:4px 0 0}.connect label{display:block;font-size:11px;margin:13px 0 5px;font-weight:800}.connect input{width:100%;min-height:40px;background:#fff;border:1px solid #cfd9cc;padding:10px;border-radius:5px}.run-status{min-height:12px;font-size:11px;color:#6f7e71;margin-top:11px}.reviewbar{display:flex;align-items:center;justify-content:space-between;gap:28px;margin-top:17px;padding:25px 30px;background:#eaf0e8}.review-copy h3{font:400 27px/1.2 var(--serif);margin:10px 0 6px}.review-copy p{font-size:12px;color:#728174;max-width:560px}.review-actions{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:240px}.review-actions select{width:100%;min-height:38px;border:1px solid #ccd9ca;background:#fff;border-radius:5px;padding:8px;color:var(--ink);font-size:12px}.review-actions .btn{width:100%}#review-message{font-size:11px;color:#417451}.arena-heading{margin-top:78px}.arena-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.eval-panel,.threshold-panel{padding:28px}.metricrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;border-bottom:1px solid #e4e8e2;margin:23px 0 20px;padding-bottom:25px}.metric-caption{font-size:11px;color:#657669;display:block}.bigmetric{display:block;font-family:var(--serif);font-size:52px;font-weight:400;letter-spacing:-.05em;line-height:1.3}.metricrow small{color:#97a298;font-size:10px}.boardtitle{display:flex;justify-content:space-between;font-size:10px;font-weight:900;letter-spacing:.11em;color:#6c7e71;margin-bottom:12px}.boardtitle span{font-size:9px;color:#a2ada3}.board-row{display:grid;grid-template-columns:1.2fr 1fr auto;gap:12px;align-items:center;border-bottom:1px solid #f0f2ee;padding:10px 0;font-size:11px}.board-row strong{font-weight:800}.board-row .bar{height:7px;background:#edf1ea;border-radius:5px;overflow:hidden}.bar span{height:100%;display:block;background:#779d80}.board-row small{color:#748374;font-size:10px;text-align:right}.fineprint{color:#889389;font-size:10px;line-height:1.55;margin-top:17px}.threshold-panel h3{font:400 30px/1.18 var(--serif);margin:24px 0 12px}.threshold-panel p{color:#748477;font-size:12px;line-height:1.6}.thresholdtop{display:flex;justify-content:space-between;gap:10px;margin:28px 0 9px;font-size:11px;font-weight:800}.thresholdtop strong{font-size:20px}input[type=range]{width:100%;accent-color:#487d61;cursor:pointer}.threshold-labels{display:flex;justify-content:space-between;gap:12px;font-size:9px;color:#9aa69c}.threshold-panel .policy-note{background:#f0f3ee;border-radius:5px;padding:15px;margin-top:25px}.policy-footer{display:flex;flex-direction:column;gap:6px;border-top:1px solid #e1e9dd;padding-top:18px;margin-top:22px}.policy-footer span{font-size:9px;letter-spacing:.15em;color:#9bab9d}.policy-footer strong{font-size:12px;color:#356848}.bottom-grid{display:grid;grid-template-columns:1fr .87fr;gap:80px;margin:105px 0 100px}.methods h2{margin:14px 0 18px}.methods>p{font-size:13px;max-width:440px;color:#728075;margin-bottom:30px}.methods-list details{border-top:1px solid #cfd8ce}.methods-list details:last-child{border-bottom:1px solid #cfd8ce}.methods-list summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;font-weight:700;padding:16px 0}.methods-list summary::-webkit-details-marker{display:none}.methods-list details p{font-size:12px;color:#697a6b;margin:0 0 17px;line-height:1.75}.manifesto{background:#234737;color:#f4f7f1;border-radius:8px;padding:29px 33px;min-height:400px;display:flex;flex-direction:column;justify-content:space-between}.manifesto-top,.manifesto-bottom{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.09em;color:#bad1c1}.manifesto p{font:400 clamp(34px,4vw,55px)/1.13 var(--serif);letter-spacing:-.03em}.manifesto em{color:#adcbb2}.manifesto-bottom{font-size:11px;letter-spacing:0;border-top:1px solid #557565;padding-top:15px}footer{border-top:1px solid var(--line);padding:22px 0 35px;display:flex;justify-content:space-between;gap:25px;font-size:10px;color:#919b91;letter-spacing:.09em;font-weight:700}.sr{position:absolute;left:-9999px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #88b99b;outline-offset:3px}@media(max-width:980px){.hero{gap:25px}.container{width:min(1170px,calc(100% - 36px))}.hero-card p{font-size:25px}.workgrid,.arena-grid{grid-template-columns:1fr}.case-pane,.result-pane{min-height:unset}.bottom-grid{gap:25px}}@media(max-width:650px){.header-note,.hero-side,.workstep{display:none}.topbar{height:58px}.brand-caption{font-size:9px}.container{width:calc(100% - 28px)}.hero{display:block;min-height:unset;padding:32px 0 25px}.hero h1{font-size:clamp(45px,12vw,61px);margin:14px 0 13px}.lead{font-size:14px}.hero-actions{margin-top:19px}.hero-actions .btn{width:100%}.hero-small{display:none}.data-strip{font-size:10px;gap:10px;padding:12px 0}.provider-badge{width:100%}.section-heading{display:block;margin:34px 0 17px}.section-heading h2{font-size:33px}.section-heading p{font-size:12px}.case-pane,.result-pane{padding:19px 17px}.customer-quote{font-size:25px;min-height:0;margin:18px 0}.ticket-tiles{grid-template-columns:1fr 1fr}.case-nav-footer small{display:none}.model{padding:12px}.reviewbar{display:block;padding:20px 17px}.review-actions{margin-top:17px;min-width:0}.arena-heading{margin-top:48px}.eval-panel,.threshold-panel{padding:19px 17px}.bigmetric{font-size:44px}.bottom-grid{grid-template-columns:1fr;margin:63px 0;gap:32px}.manifesto{min-height:320px}.manifesto p{font-size:43px}footer{display:block;font-size:9px}footer span{display:block;margin-bottom:8px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto;transition:none!important}}
+</style></head><body>
+<a href="#workspace" class="skip">Zum Arbeitsbereich springen</a>
+<header class="topbar"><div class="container topinner"><a class="brand" href="https://mikelninh.github.io/">M<span class="brand-dot">✳</span> <span class="brand-caption">MICHAEL NINH / LAB</span></a><div class="topright"><span class="header-note">Independent AI Engineering work sample</span><a class="toplink" href="https://github.com/mikelninh/mikelninh.github.io">Source ↗</a></div></div></header>
+<main class="container"><section class="hero"><div class="hero-main"><div class="eyebrow"><span class="eyebrow-dot"></span> RETURN LOOP / MODEL ARENA <span class="v">V14</span></div><h1>Which model<br><em>earns your trust?</em></h1><p class="lead">Kunden melden Probleme. Ein gutes KI-System erkennt Muster, kennt seine Grenzen und kostet nicht mehr als nötig.</p><div class="hero-actions"><a href="#workspace" class="btn primary">Einen echten Fall untersuchen <span aria-hidden="true">↗</span></a><span class="hero-small">45 Sekunden · Keine Kundendaten</span></div></div><div class="hero-side" aria-label="Workflow der Model Arena"><div class="hero-orb">◎</div><div class="hero-card"><div class="mini-eyebrow">ENGINEERING QUESTION / 01</div><p>What should be automated — <em>and what should be reviewed?</em></p><div class="hero-card-foot">Quality × Cost × Latency <span>↗</span></div></div></div></section>
+<div class="data-strip"><div><span class="circle"></span><b>24</b> bewusst synthetische Fälle</div><div><span class="circle hollow"></span><b>4</b> Verfahren vergleichbar</div><div><span class="circle warm"></span><b>0</b> Shopaktionen erlaubt</div><div id="provider-badge" class="provider-badge">Live-Status wird geprüft …</div></div>
+<div class="section-heading" id="workspace"><div><span class="eyebrow plain">01 / THE WORKBENCH</span><h2>One message. Four ways to understand it.</h2><p>Öffne einen Fall. Die Regelbaseline antwortet sofort. Echte Modelle werden nur nach ausdrücklicher Freigabe aufgerufen.</p></div><div class="workstep">EXPLORE → COMPARE → REVIEW</div></div>
+<div class="workgrid"><section class="case-pane panel" aria-label="Nachricht analysieren"><div class="panehead"><span>THE CASE FILE</span><span id="case-number">RL-301</span></div><div class="product-chip"><span class="product-icon">▦</span><div><strong id="product-name">Everyday Socks</strong><small id="product-sku">SOCK-3-BLK</small></div></div><blockquote class="customer-quote" id="ticket-message">Nach zweimaligem Tragen kann ich durch die Ferse fast schon Zeitung lesen. Ist das normal?</blockquote><div class="divider"></div><div class="case-nav-title"><span>Weitere Fälle</span><small>Wähle ein echtes Beispiel</small></div><div class="ticket-tiles" id="case-picker"></div><div class="case-nav-footer"><button class="subtle-btn" id="next-case">Nächsten Fall ansehen <span>→</span></button><small>Alle Daten sind frei erfunden, nicht von SNOCKS.</small></div></section>
+<section class="result-pane panel" aria-label="Modelle vergleichen"><div class="panehead"><span>THE EXPERIMENT</span><span class="callout" id="trial-count">0 real calls</span></div><h3>Wie würden vier Verfahren entscheiden?</h3><p class="panelead">Ein Anliegen kann mehrere Kategorien haben. Und ein Defekthinweis ist noch kein nachgewiesener Produktionsfehler.</p><div class="models" id="models"></div><div class="connect" id="connect"><div class="connect-head"><div><strong>Live-Modellvergleich freischalten</strong><p>Erfordert einen geschützten Demo-Zugang und ein serverseitiges API-Setup.</p></div><button id="toggle-access" class="subtle-btn" aria-expanded="false">Verbinden ↓</button></div><div id="access-form" hidden><label for="token">Privater Demo-Zugang</label><input id="token" type="password" autocomplete="off" placeholder="Demo-Token nur für diese Sitzung"><p class="hint">Kein OpenAI-API-Key. Der API-Key bleibt ausschliesslich auf dem Server.</p></div></div><p class="run-status" id="run-status" role="status" aria-live="polite"></p></section></div>
+<div class="reviewbar panel"><div class="review-copy"><span class="eyebrow plain">02 / HUMAN IN THE LOOP</span><h3>Was soll als Nächstes passieren?</h3><p>Die finale Entscheidung bleibt beim Menschen. Kein Modell löst Reklamationen aus oder erstellt echte Qualitätsmeldungen.</p></div><div class="review-actions"><label for="review-decision" class="sr">Prüfentscheidung</label><select id="review-decision"><option value="manual">Menschliche Prüfung anfordern</option><option value="quality">Produktqualität informieren (nur Notiz)</option><option value="support">Support-Nachfrage vorbereiten</option><option value="none">Kein zusätzliches Produktsignal</option></select><button id="save-review" class="btn dark">Entscheidung dokumentieren <span>↗</span></button><span id="review-message" aria-live="polite"></span></div></div>
+<div class="section-heading arena-heading" id="arena"><div><span class="eyebrow plain">03 / MODEL ARENA</span><h2>Measure before you automate.</h2><p>Die 24 sichtbaren, handbeschrifteten Beispiele sind <b>Entwicklungsfälle</b>. Ein separates Holdout bleibt für die spätere abschliessende Bewertung zurückgehalten.</p></div><button class="btn outline" id="download-report">Evaluationsbericht exportieren ↓</button></div>
+<div class="arena-grid"><section class="panel eval-panel"><div class="panehead"><span>MEASURED · SYNTHETIC DEVELOPMENT SET</span><span id="eval-label">24 examples</span></div><div class="metricrow"><div><span class="metric-caption">Regelbaseline · Macro-F1</span><strong class="bigmetric" id="baseline-f1">—</strong><small>Berechnet, nicht geschätzt</small></div><div><span class="metric-caption">Übersehene Qualitätsfälle</span><strong class="bigmetric" id="baseline-fn">—</strong><small>Von Hand gelabelte Beispiele</small></div></div><div class="leaderboard"><div class="boardtitle">VERGLEICH <span>ECHTE MESSWERTE</span></div><div id="leaderboard"></div></div><p class="fineprint">Für Live-Modelle erscheinen Kennzahlen erst, wenn dieselben Beispiele tatsächlich aufgerufen wurden. Keine Fantasie-Genauigkeiten und kein unfairer Vergleich von Teilmengen.</p></section><section class="panel threshold-panel"><div class="panehead"><span>DECISION POLICY</span><span>PROTOTYPE</span></div><h3>Thresholds are product decisions.</h3><p>Wie hoch muss der Modellscore sein, damit die Kategorie als Treffer zählt?</p><div class="thresholdtop"><label for="threshold">Allgemeine Entscheidungsschwelle</label><strong id="threshold-value">50%</strong></div><input id="threshold" type="range" min="5" max="95" step="5" value="50"><div class="threshold-labels"><span>Mehr Treffer, mehr Fehlalarme</span><span>Weniger Treffer, mehr Übersehenes</span></div><p id="threshold-note" class="policy-note">Sobald Decision-Modell-Scores vorliegen, kannst du die Auswirkungen anhand beschrifteter Entwicklungsfälle messen.</p><div class="policy-footer"><span>PRIORITY</span><strong>Missed critical defects → human review</strong></div></section></div>
+<div class="bottom-grid"><section class="methods"><span class="eyebrow plain">04 / PROOF, NOT PROMISES</span><h2>Engineering you can question.</h2><p>Hier sind nicht nur hübsche Kurven, sondern die Designentscheidungen, mit denen wir das System kontrollierbar halten.</p><div class="methods-list"><details><summary>Wie kommen echte Ergebnisse zustande?<span>+</span></summary><p>OpenAI Decisions nutzt <code>POST /v1/decisions</code>, Jev nutzt die OpenRouter Decisions API und das generative LLM die OpenAI Responses API mit Structured Outputs. Nur synthetische, serverseitig bekannte Ticket-IDs sind als Eingabe zulässig. Kostenpflichtige Aufrufe brauchen einen separaten Demo-Zugang.</p></details><details><summary>Warum nicht einfach die beste Zahl auswählen?<span>+</span></summary><p>Die Evaluation ist multilabel-fähig. Entscheidend sind Macro-F1, Recall bei Produktqualität, übersehene Signale, Falschalarme und Review-Quote. Schwellenwerte dürfen nur auf Entwicklungs-/Validierungsdaten optimiert werden. Das Holdout wird einmal zum Abschluss ausgewertet.</p></details><details><summary>Was ist heute nicht bewiesen?<span>+</span></summary><p>Es gibt weder reale Kundendaten noch einen abgeschlossenen Live-Modellbenchmark. Modell-Scores sind ohne Kalibrierung keine belastbaren Wahrscheinlichkeiten. Für echte Produktion brauchen wir ein verteiltes Rate Limit, Kostenbudget, Privacy Review, Monitoring und klare Freigaberegeln.</p></details></div></section><section class="manifesto"><div class="manifesto-top">OUR PRINCIPLE <span>↗</span></div><p>Use intelligence<br>where it <em>helps.</em><br>Use restraint<br>where it <em>matters.</em></p><div class="manifesto-bottom">No automatic refunds. No silent model decisions. No made-up accuracy.</div></section></div>
+<footer><span>RETURN LOOP · INDEPENDENT ENGINEERING WORK SAMPLE · 2026</span><span>Built with care · Synthetic data only</span></footer></main>
+<script type="application/json" id="embedded-fixtures">[
+  {
+    "id": "RL-301",
+    "day": "12 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Nach zweimaligem Tragen kann ich durch die Ferse fast schon Zeitung lesen. Ist das normal?",
+    "gold": [
+      "quality"
+    ],
+    "sub": "premature_wear",
+    "preview": "Vorzeitige Abnutzung",
+    "baseline": [
+      "other"
+    ]
+  },
+  {
+    "id": "RL-302",
+    "day": "12 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Bei beiden Paaren ist die Naht an der Ferse aufgegangen. Könnt ihr mir helfen?",
+    "gold": [
+      "quality"
+    ],
+    "sub": "seam_failure",
+    "preview": "Produktqualität",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-303",
+    "day": "13 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Die Socken haben nach drei Wäschen winzige Löcher am Zeh.",
+    "gold": [
+      "quality"
+    ],
+    "sub": "hole",
+    "preview": "Produktqualität",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-304",
+    "day": "13 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Das Bündchen ist nach einer Woche ausgeleiert und der Stoff wird immer dünner.",
+    "gold": [
+      "quality"
+    ],
+    "sub": "premature_wear",
+    "preview": "Produktqualität",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-305",
+    "day": "14 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Leider franst das Material schon beim ersten Tragen aus.",
+    "gold": [
+      "quality"
+    ],
+    "sub": "fabric_failure",
+    "preview": "Produktqualität",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-306",
+    "day": "14 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Ein Faden an der Naht zieht sich komplett heraus. Sieht nach einem Verarbeitungsfehler aus.",
+    "gold": [
+      "quality"
+    ],
+    "sub": "seam_failure",
+    "preview": "Produktqualität",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-307",
+    "day": "14 Oct",
+    "product": "Rib Tee · White M",
+    "sku": "TEE-WHT-M",
+    "text": "Das Shirt passt mir nicht. Es sitzt sehr eng an den Schultern.",
+    "gold": [
+      "fit"
+    ],
+    "sub": "sizing",
+    "preview": "Passform",
+    "baseline": [
+      "fit"
+    ]
+  },
+  {
+    "id": "RL-308",
+    "day": "15 Oct",
+    "product": "Rib Tee · White M",
+    "sku": "TEE-WHT-M",
+    "text": "Das T-Shirt kam in XL statt M. Ich würde es gern umtauschen.",
+    "gold": [
+      "order_issue",
+      "return"
+    ],
+    "sub": "wrong_item",
+    "preview": "Mehrere Anliegen",
+    "baseline": [
+      "return"
+    ]
+  },
+  {
+    "id": "RL-309",
+    "day": "15 Oct",
+    "product": "Heavy Hoodie · Stone L",
+    "sku": "HOO-STN-L",
+    "text": "Laut Tracking wurde zugestellt, aber ich habe keine Ware bekommen.",
+    "gold": [
+      "shipping"
+    ],
+    "sub": "delivery_missing",
+    "preview": "Versand",
+    "baseline": [
+      "shipping"
+    ]
+  },
+  {
+    "id": "RL-310",
+    "day": "15 Oct",
+    "product": "Heavy Hoodie · Stone L",
+    "sku": "HOO-STN-L",
+    "text": "Kann ich die Retoure noch anmelden? Ich brauche ein neues Etikett.",
+    "gold": [
+      "return"
+    ],
+    "sub": "return_label",
+    "preview": "Retoure",
+    "baseline": [
+      "return"
+    ]
+  },
+  {
+    "id": "RL-311",
+    "day": "16 Oct",
+    "product": "Rib Tee · Black S",
+    "sku": "TEE-BLK-S",
+    "text": "Der Stoff hat sich nach dem ersten Waschen stark verfärbt.",
+    "gold": [
+      "quality"
+    ],
+    "sub": "discolouration",
+    "preview": "Produktqualität",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-312",
+    "day": "16 Oct",
+    "product": "Heavy Hoodie · Black M",
+    "sku": "HOO-BLK-M",
+    "text": "Mein Paket hängt seit fünf Tagen im Verteilzentrum.",
+    "gold": [
+      "shipping"
+    ],
+    "sub": "late_parcel",
+    "preview": "Versand",
+    "baseline": [
+      "shipping"
+    ]
+  },
+  {
+    "id": "RL-313",
+    "day": "17 Oct",
+    "product": "Rib Tee · White L",
+    "sku": "TEE-WHT-L",
+    "text": "Ich möchte meinen Kauf widerrufen und hätte gern die Erstattung.",
+    "gold": [
+      "return"
+    ],
+    "sub": "refund",
+    "preview": "Retoure",
+    "baseline": [
+      "return"
+    ]
+  },
+  {
+    "id": "RL-314",
+    "day": "17 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Die Socken sind zu klein und an der Ferse ist bereits ein Loch.",
+    "gold": [
+      "fit",
+      "quality"
+    ],
+    "sub": "hole",
+    "preview": "Mehrere Anliegen",
+    "baseline": [
+      "quality",
+      "fit"
+    ]
+  },
+  {
+    "id": "RL-315",
+    "day": "17 Oct",
+    "product": "Heavy Hoodie · Stone L",
+    "sku": "HOO-STN-L",
+    "text": "Das Paket kam verspätet, der Reißverschluss ist zudem defekt.",
+    "gold": [
+      "shipping",
+      "quality"
+    ],
+    "sub": "hardware_failure",
+    "preview": "Mehrere Anliegen",
+    "baseline": [
+      "quality",
+      "shipping"
+    ]
+  },
+  {
+    "id": "RL-316",
+    "day": "18 Oct",
+    "product": "Everyday Socks · Navy 3-Pack",
+    "sku": "SOCK-3-NVY",
+    "text": "Leider fehlt ein Paar in der Packung, sonst alles gut.",
+    "gold": [
+      "order_issue"
+    ],
+    "sub": "missing_item",
+    "preview": "Fehlender / falscher Artikel",
+    "baseline": [
+      "other"
+    ]
+  },
+  {
+    "id": "RL-317",
+    "day": "18 Oct",
+    "product": "Rib Tee · White M",
+    "sku": "TEE-WHT-M",
+    "text": "Könnt ihr meine Rechnungsadresse auf der Rechnung ändern?",
+    "gold": [
+      "other"
+    ],
+    "sub": "invoice",
+    "preview": "Sonstiges",
+    "baseline": [
+      "other"
+    ]
+  },
+  {
+    "id": "RL-318",
+    "day": "18 Oct",
+    "product": "Heavy Hoodie · Black M",
+    "sku": "HOO-BLK-M",
+    "text": "Danke für die tolle Lieferung! Alles perfekt.",
+    "gold": [
+      "other"
+    ],
+    "sub": "positive_feedback",
+    "preview": "Sonstiges",
+    "baseline": [
+      "other"
+    ]
+  },
+  {
+    "id": "RL-319",
+    "day": "19 Oct",
+    "product": "Rib Tee · Black S",
+    "sku": "TEE-BLK-S",
+    "text": "Am Ärmel hängen zwei lose Fäden und die Naht löst sich.",
+    "gold": [
+      "quality"
+    ],
+    "sub": "seam_failure",
+    "preview": "Produktqualität",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-320",
+    "day": "19 Oct",
+    "product": "Heavy Hoodie · Black M",
+    "sku": "HOO-BLK-M",
+    "text": "Welche Größe wäre bei 1,82 m passend?",
+    "gold": [
+      "fit"
+    ],
+    "sub": "sizing",
+    "preview": "Passform",
+    "baseline": [
+      "fit"
+    ]
+  },
+  {
+    "id": "RL-321",
+    "day": "20 Oct",
+    "product": "Everyday Socks · Navy 3-Pack",
+    "sku": "SOCK-3-NVY",
+    "text": "Wie bekomme ich das Versandetikett für eine Rücksendung?",
+    "gold": [
+      "return"
+    ],
+    "sub": "return_label",
+    "preview": "Retoure",
+    "baseline": [
+      "shipping",
+      "return"
+    ]
+  },
+  {
+    "id": "RL-322",
+    "day": "20 Oct",
+    "product": "Heavy Hoodie · Stone L",
+    "sku": "HOO-STN-L",
+    "text": "Der Stoff ist rau und kratzt am Hals, obwohl ich ihn noch nicht gewaschen habe.",
+    "gold": [
+      "quality"
+    ],
+    "sub": "comfort",
+    "preview": "Produktqualität",
+    "baseline": [
+      "quality"
+    ]
+  },
+  {
+    "id": "RL-323",
+    "day": "20 Oct",
+    "product": "Rib Tee · White M",
+    "sku": "TEE-WHT-M",
+    "text": "Habt ihr das gleiche Shirt auch in Schwarz?",
+    "gold": [
+      "other"
+    ],
+    "sub": "product_question",
+    "preview": "Sonstiges",
+    "baseline": [
+      "other"
+    ]
+  },
+  {
+    "id": "RL-324",
+    "day": "20 Oct",
+    "product": "Everyday Socks · Black 3-Pack",
+    "sku": "SOCK-3-BLK",
+    "text": "Die Rückzahlung fehlt noch und zwei Socken haben Löcher.",
+    "gold": [
+      "return",
+      "quality"
+    ],
+    "sub": "hole",
+    "preview": "Mehrere Anliegen",
+    "baseline": [
+      "quality",
+      "return"
+    ]
+  }
+]</script><script>// RETURN LOOP v14 • UI is intentionally honest: model numbers appear only after real calls.
+const $=id=>document.getElementById(id);
+const CLASSES=['quality','fit','shipping','return','order_issue','other'];
+const NAMES={quality:'Produktqualität',fit:'Grösse & Passform',shipping:'Versand',return:'Retoure',order_issue:'Falsche / fehlende Ware',other:'Sonstiges'};
+const MODELS=[{id:'rules',name:'Keyword baseline',desc:'Kostenlos · deterministisch',meta:'Keine KI · stets verfügbar'},{id:'decisions',name:'OpenAI Decisions',desc:'gpt-6-luna · probabilistische Scores',meta:'OpenAI · echte API'},{id:'jev',name:'TypeSafe Jev 1.14',desc:'Entscheidungsmodell · probabilistische Scores',meta:'OpenRouter · echte API'},{id:'llm',name:'Generatives LLM',desc:'Structured Outputs · mehrere Anliegen',meta:'OpenAI Responses API'}];
+const PRIVACY_NOTE='Synthetische Testdaten; keine Kundennachrichten oder Shop-Aktionen.';
+let fixtures=[],selected='RL-301',results={},reviews={},busy='',threshold=.5,access='',live={paid_requests_enabled:false,providers:{}},calls=0;
+try{reviews=JSON.parse(localStorage.getItem('return-loop-v14-reviews')||'{}')}catch{}
+const baseline=text=>{let s=text.toLocaleLowerCase('de-DE'),hits=[];if(/loch|löcher|naht|gerissen|faden|franst|dünn|defekt|reißverschluss|verfärbt|kratzt|verarbeitung/.test(s))hits.push('quality');if(/zu klein|zu groß|passt mir nicht|sitzt|größe|grösse/.test(s))hits.push('fit');if(/paket|tracking|versand|zustell|verteilzentrum/.test(s))hits.push('shipping');if(/retoure|rücksendung|etikett|umtausch|widerruf|erstattung|rückzahlung/.test(s))hits.push('return');return hits.length?hits:['other']};
+const el=(tag,cls,content)=>{let n=document.createElement(tag);if(cls)n.className=cls;if(content!==undefined)n.textContent=content;return n};
+const fmt=(n)=>Number.isFinite(n)?n.toFixed(2):'—';
+function evaluate(rows){let byClass={};for(let c of CLASSES){let tp=0,fp=0,fn=0;for(let row of rows){let a=row.gold.includes(c),p=row.pred.includes(c);if(a&&p)tp++;if(!a&&p)fp++;if(a&&!p)fn++;}let prec=tp+fp?tp/(tp+fp):null,rec=tp+fn?tp/(tp+fn):null;byClass[c]={tp,fp,fn,precision:prec,recall:rec,f1:prec===null||rec===null||prec+rec===0?0:2*prec*rec/(prec+rec)};}return{n:rows.length,macroF1:CLASSES.reduce((a,c)=>a+byClass[c].f1,0)/CLASSES.length,qualityFN:byClass.quality.fn,byClass};}
+const predicted=(p,model)=>model==='decisions'||model==='jev'?CLASSES.filter(c=>Number(p.scores?.[c])>=threshold):p.categories||[];
+const record=()=>fixtures.find(c=>c.id===selected);
+function renderCase(){let x=record();if(!x)return;$('case-number').textContent=x.id;$('product-name').textContent=x.product;$('product-sku').textContent=x.sku;$('ticket-message').textContent='“'+x.text+'”';
+ const suggested=[fixtures[0],fixtures[7],fixtures[13],fixtures[14],fixtures[16],fixtures[22]].filter(Boolean);
+ $('case-picker').replaceChildren(...suggested.map(c=>{let b=el('button','ticket-tile');b.type='button';b.setAttribute('aria-pressed',String(selected===c.id));b.append(el('strong','',c.id),el('span','',c.preview||shortType(c)));b.addEventListener('click',()=>choose(c.id));return b}));renderModels();$('review-message').textContent=reviews[selected]?'✓ Bereits lokal dokumentiert':''}
+function shortType(c){return c.id==='RL-301'?'Vorzeitige Abnutzung':c.gold.length>1?'Mehrere Anliegen':NAMES[c.gold[0]]||'Anderes Anliegen'}
+function choose(id){selected=id;renderCase();$('run-status').textContent='';}
+function renderModels(){let x=record();if(!x)return;$('models').replaceChildren(...MODELS.map(m=>{let box=el('div','model');let lead=el('div','');lead.append(el('div','model-name',m.name),el('div','model-desc',m.desc));let btn=el('button','model-btn',m.id==='rules'?'Anzeigen':results[x.id]?.[m.id]?'Erneut prüfen':'Jetzt testen');btn.type='button';btn.disabled=!!busy||(m.id!=='rules'&&!live.paid_requests_enabled);btn.title=m.id!=='rules'&&!live.paid_requests_enabled?'Live-Tests benötigen autorisierten Zugang':'';btn.addEventListener('click',()=>run(m.id));box.append(lead,btn);const result=results[x.id]?.[m.id];if(m.id==='rules'){box.classList.add('ready');box.append(el('div','model-result','Regelergebnis: '+baseline(x.text).map(c=>NAMES[c]).join(' + ')+' · 0 API-Aufrufe'));}else if(result?.ok){box.classList.add('ready');let cap=predicted(result,m.id).map(c=>NAMES[c]).join(' + ')||'Keine Kategorie über Schwelle';let detail=m.id==='llm'?` · ${result.evidence?'Beleg: „'+result.evidence+'“':'Kein gültiges Textzitat'}`:` · Scores: ${Object.entries(result.scores||{}).filter(([k,v])=>Number(v)>.25).map(([k,v])=>NAMES[k]+' '+Math.round(v*100)+'%').join(', ')}`;box.append(el('div','model-result',cap+detail+` · ${result.latency_ms} ms`));}else{box.append(el('div','model-result',live.paid_requests_enabled?'Noch nicht ausgeführt – keine Prognose vorhanden.':'Noch nicht getestet. Der öffentliche Modus benötigt keine API-Kosten.'));}return box;}));}
+async function run(model){if(model==='rules'){showStatus('Regelbaseline lokal berechnet – keine Modellkosten.');return;}if(!live.paid_requests_enabled){showStatus('Live-Modelle sind serverseitig deaktiviert. Das ist keine simulierte Vorhersage.');return;}if(!access){$('access-form').hidden=false;$('toggle-access').setAttribute('aria-expanded','true');$('token').focus();showStatus('Bitte zunächst das private Demo-Passwort eingeben.');return;}
+ busy=model;renderModels();showStatus('Prüfe '+model+' über das Backend …');let id=selected;
+ try{const r=await fetch('/api/infer',{method:'POST',headers:{'Content-Type':'application/json','X-Demo-Token':access},body:JSON.stringify({id,model})});const data=await r.json();if(!r.ok)throw Error(data.error||'HTTP '+r.status);results[id]??={};results[id][model]=data;calls++;$('trial-count').textContent=calls+' real calls';showStatus('✓ Echte '+model+'-Antwort · '+data.latency_ms+' ms · Ergebnis nur in dieser Sitzung.');renderEvaluation();}catch(e){showStatus('Kein gültiges Modellresultat: '+e.message+'. Nichts wurde als korrekt gewertet.');}finally{busy='';renderModels();}}
+function showStatus(txt){$('run-status').textContent=txt;}
+function renderEvaluation(){const baselineRows=fixtures.map(c=>({gold:c.gold,pred:baseline(c.text)}));const sc=evaluate(baselineRows);$('baseline-f1').textContent=fmt(sc.macroF1);$('baseline-fn').textContent=sc.qualityFN+' / '+fixtures.filter(c=>c.gold.includes('quality')).length;
+ const out=[{name:'Keyword rules',metric:sc.macroF1,n:fixtures.length}];let complete=0,covered=0;
+ for(let m of MODELS.slice(1)){let rows=fixtures.filter(c=>results[c.id]?.[m.id]?.ok).map(c=>({gold:c.gold,pred:predicted(results[c.id][m.id],m.id)}));if(rows.length===fixtures.length){let score=evaluate(rows);out.push({name:m.name,metric:score.macroF1,n:rows.length});complete++;}else out.push({name:m.name,metric:null,n:rows.length});if(m.id==='decisions'||m.id==='jev')covered+=rows.length;}
+ $('leaderboard').replaceChildren(...out.map(r=>{let row=el('div','board-row');row.append(el('strong','',r.name));let bar=el('div','bar');if(r.metric!==null){let inner=el('span');inner.style.width=(r.metric*100).toFixed(1)+'%';bar.append(inner);}row.append(bar,el('small','',r.metric===null?`${r.n}/${fixtures.length} getestet`:`${Math.round(r.metric*100)}% · ${r.n}/${fixtures.length}`));return row;}));
+ const observed=fixtures.flatMap(c=>['decisions','jev'].filter(m=>results[c.id]?.[m]?.ok).map(m=>({gold:c.gold,pred:predicted(results[c.id][m],m),model:m})));$('threshold-note').textContent=observed.length===0?'Noch keine echten Decision-Scores gemessen. Der Regler beeinflusst deshalb keine Modellvorhersagen.':`Schwelle ${Math.round(threshold*100)}% · ${observed.length} echte Decision-Prognosen auf bekannten Entwicklungsfällen. Für faire Modellvergleiche werden Kennzahlen erst bei vollständiger Abdeckung (24/24 je Modell) veröffentlicht.`;
+}
+function exportFile(name,obj){let blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);}
+function review(){let x=record();reviews[x.id]={decision:$('review-decision').value,at:new Date().toISOString(),basis:'synthetic',model_predictions:results[x.id]||{},note:'Manual demonstration only; no external action.'};try{localStorage.setItem('return-loop-v14-reviews',JSON.stringify(reviews))}catch{}$('review-message').textContent='✓ Entscheidung lokal dokumentiert – keine Shopaktion.';}
+function report(){let measured={};for(let m of MODELS.slice(1)){const r=fixtures.filter(c=>results[c.id]?.[m.id]?.ok);measured[m.id]={run_count:r.length,full_development_evaluation:r.length===fixtures.length?r.length:null,macro_f1:r.length===fixtures.length?evaluate(r.map(c=>({gold:c.gold,pred:predicted(results[c.id][m.id],m.id)}))).macroF1:null};}exportFile('return-loop-v14-model-arena-report.json',{project:'RETURN LOOP · Model Arena v14',created_at:new Date().toISOString(),dataset:'24 synthetic development fixtures — NOT independent external holdout',calibration:'None. Scores uncalibrated.',policy_threshold:threshold,baseline:evaluate(fixtures.map(c=>({gold:c.gold,pred:baseline(c.text)}))),models:measured,real_results:results,reviews,limitations:['No real customer data','Not a production quality rate','Thresholds not validated independently','No automated customer actions','Paid API limited to authenticated synthetic demo fixture calls']});}
+async function init(){try{const embedded=document.getElementById('embedded-fixtures');if(embedded){fixtures=JSON.parse(embedded.textContent);}else{const response=await fetch('./fixtures.json',{cache:'no-store'});if(!response.ok)throw Error('Fixtures unavailable');fixtures=await response.json();}if(!Array.isArray(fixtures)||fixtures.length!==24)throw Error('Unexpected data length');}catch(e){$('run-status').textContent='Die lokalen synthetischen Fälle konnten nicht geladen werden.';return;}
+ try{const r=await fetch('/api/status',{cache:'no-store'});if(!r.ok)throw Error('no backend');let v=await r.json();if(v.build!=='v14')throw Error('static preview');live=v;}catch{live={paid_requests_enabled:false,providers:{}}}
+ $('provider-badge').textContent=live.paid_requests_enabled?'Live-Anbindung vorhanden · Zugang erforderlich':'Lesemodus · Keine bezahlten Aufrufe';$('provider-badge').classList.toggle('ready',live.paid_requests_enabled);
+ $('next-case').addEventListener('click',()=>choose(fixtures[(fixtures.findIndex(x=>x.id===selected)+1)%fixtures.length].id));
+ $('toggle-access').addEventListener('click',()=>{let open=$('access-form').hidden;$('access-form').hidden=!open;$('toggle-access').setAttribute('aria-expanded',String(open));});
+ $('token').addEventListener('input',e=>{access=e.target.value.trim();});$('save-review').addEventListener('click',review);$('download-report').addEventListener('click',report);
+ $('threshold').addEventListener('input',e=>{threshold=Number(e.target.value)/100;$('threshold-value').textContent=Math.round(threshold*100)+'%';renderModels();renderEvaluation();});
+ renderCase();renderEvaluation();}
+init();
+</script></body></html>
