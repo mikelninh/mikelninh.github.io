@@ -1,5 +1,7 @@
 # INCA AI Operations Proof
 
+**Agent Ops 1.1 (new):** https://mikelninh.github.io/inca/agent-ops.html — [reproducible Python tool execution and audit traces](agent-ops/README.md).
+
 **Release 1.0 work sample:** https://mikelninh.github.io/inca/release.html
 
 **Reviewer guide:** [Six fictional claims, transparent checks, recorded model failures and a replayed safety guard](docs/RELEASE_GUIDE_1_0.md).
