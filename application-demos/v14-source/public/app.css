@@ -24,3 +24,5 @@
 .technical-lab{border-top:1px solid var(--line);margin-top:19px;padding-top:4px}.technical-lab summary{font-weight:750;cursor:pointer;padding:15px 0;display:flex;justify-content:space-between;gap:14px;color:#285441;font-size:12px}.technical-lab summary span{font-weight:400}.lab-inner{padding:0 0 8px}.lab-inner>p{color:#6c7a6e;font-size:11px;line-height:1.65;margin-bottom:16px}.lab-inner>.panehead{margin:13px 0}
 #review{scroll-margin-top:86px}
 @media(max-width:650px){.insight-panel{padding:15px}.demo-bottom{align-items:flex-start}}
+
+.live-proof{margin:0 0 16px;border:1px solid #98beaa;border-radius:8px;background:#fafdf9;overflow:hidden}.live-proof[hidden]{display:none}.live-proof-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#daeee0;padding:11px 15px;font-size:12px;color:#215840}.live-proof-top span{font-size:10px;color:#47755c}.live-proof-content{padding:13px 15px}.live-proof-content .insight-tag{display:inline-block;margin-bottom:8px}.live-proof-content p{font-size:12px;color:#315341;line-height:1.6;margin-bottom:7px}.live-proof-content small{font-size:10px;color:#778a79;line-height:1.5;display:block}
