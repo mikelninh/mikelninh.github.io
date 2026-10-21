@@ -89,19 +89,19 @@ Hinweis: Buchungssystem nennt einen anderen Tag.</textarea></div>
         </div>
       </section>
       <section id="sh-review-step" class="module review-block" hidden>
-        <div class="module-head"><div><div class="module-index">03 / HUMAN REVIEW</div><h3>Turn the finding into an owned next action.</h3><p class="module-text">A recommendation is not a handoff. Identify who should take the next step, record the unresolved question, and explicitly verify the source excerpts.</p></div></div>
+        <div class="module-head"><div><div class="module-index">03 / REVIEW & ASSIGN</div><h3>Turn the finding into an owned next action.</h3><p class="module-text">A recommendation is not a handoff. Identify who should take the next step, record the unresolved question, and explicitly verify the source excerpts.</p></div></div>
         <p class="module-note" style="margin-bottom:15px" id="sh-route-next">Escalate to claims expert</p>
         <div class="field-grid">
           <div class="field"><label for="sh-owner">Proposed review owner (fictional name or role)</label><input id="sh-owner" maxlength="100" value="" placeholder="e.g. Claims expert · Travel queue" autocomplete="off"><div class="field-help">This does not assign a real owner or create a task.</div></div>
           <div class="field"><label for="sh-notes">Specific unresolved question / operator note</label><textarea id="sh-notes" maxlength="2000" placeholder="Which original date should the claims expert verify?"></textarea></div>
         </div>
         <label class="tick"><input type="checkbox" id="sh-confirm"><span>I reviewed the displayed source excerpts. I understand this is a fictional case, not a coverage approval, customer message or real operator assignment.</span></label>
-        <div class="actions"><button type="button" id="sh-review" class="btn btn-lime" disabled>Prepare human-review handoff →</button><span class="hint">Owner, specific note and source confirmation are required.</span></div>
+        <div class="actions"><button type="button" id="sh-review" class="btn btn-lime" disabled>Prepare operator handoff →</button><span class="hint">Owner, specific note and source confirmation are required.</span></div>
         <p id="sh-review-error" class="inline-error" role="alert"></p>
       </section>
       <section id="sh-export-step" class="module handoff" hidden>
         <div class="handoff-title"><div><div class="module-index">04 / HANDOFF</div><h4>Review packet · ready for local export</h4></div><span class="handoff-label">DRAFT · NOT SENT</span></div>
-        <dl><dt>Proposed reviewer</dt><dd id="sh-preview-owner">—</dd><dt>Bounded route</dt><dd id="sh-preview-route">—</dd><dt>Next action</dt><dd id="sh-preview-action">—</dd><dt>Hand-back condition</dt><dd>Verify the original cancellation date and document the resolution.</dd></dl>
+        <dl><dt>Proposed reviewer</dt><dd id="sh-preview-owner">—</dd><dt>Bounded route</dt><dd id="sh-preview-route">—</dd><dt>Next action</dt><dd id="sh-preview-action">—</dd><dt>Hand-back condition</dt><dd id="sh-preview-handback">Verify the outstanding evidence before proceeding.</dd></dl>
         <div class="draft"><b>CUSTOMER COMMUNICATION · UNSENT DRAFT</b><p id="sh-draft">—</p><p class="small-print">A human would check facts and insurer wording before any communication.</p></div>
         <div class="actions"><button type="button" id="sh-export" class="btn btn-primary" disabled>Download complete Markdown handoff ↗</button><span class="hint">Includes the source quotes, next step, review note and limitations.</span></div>
       </section>
