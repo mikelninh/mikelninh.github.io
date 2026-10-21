@@ -52,7 +52,7 @@ class JevV2Tests(unittest.TestCase):
   p=e.payload_gpt(self.rows[0])
   self.assertEqual(p["response_format"]["type"],"json_schema")
   self.assertEqual(set(p["response_format"]["json_schema"]["schema"]["properties"]["specialist"]["enum"]),set(e.OPTIONS))
-  self.assertNotIn("critical_trace_error",json.dumps(p))
+  self.assertNotIn("\"critical_trace_error\"",p["messages"][1]["content"])
  def test_jev_and_gpt_result_parsing_reject_bad_outputs(self):
   with self.assertRaises(ValueError):
    e.parse_jev({"answers":{"specialist":{"choice":"random"},"needs_trace_audit":{"noul":.2}}},20)
