@@ -22,6 +22,12 @@ Both models score all cases in one pre-registered execution, with independent sh
 
 **Upper bound: 300 Jev + 300 GPT API requests = 600 potentially billable calls**, spread across three 100-case parallel jobs (200 calls each). The workflow is intentionally only triggered by the explicit one-time marker or manual dispatch. GitHub secrets are read only in Actions; raw model outputs and labels remain in a 30-day artifact. Real invoice pricing is unknown.
 
+## Executed run and result
+
+[Real 600-request evaluation](https://github.com/mikelninh/mikelninh.github.io/actions/runs/39691808881) · [Public, reader-friendly H3/H4 report](https://mikelninh.github.io/inca/jev-research.html) · [Machine-readable aggregate](https://mikelninh.github.io/inca/jev-research-v2.json).
+
+All 300 Jev and 300 GPT requests returned valid responses. Jev captured 38/49 critical synthetic trace faults in its highest-priority 48 holdout cases; rules captured 44/49. Both Jev and GPT selected the correct specialist 240/240, as did the cheap rule baseline. There is no measured additional business value over rules in this artificial corpus. Do not market either result as general insurer accuracy.
+
 ## Primary success measures
 
 - H3: Top-20%-audited **critical error recall** on frozen 240-case holdout. Pre-registered target: ≥65% critical fault capture and at least twice random sampling at same budget. Compare rules and GPT directly. A missed critical fault remains a failure even if model probability is low.

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="INCA AI Operations Jev research: 300 real Jev + 300 real GPT model requests, 240 synthetic held-out cases, critical error prioritization and tool routing.">
+<title>INCA · Can Jev find the mistakes that matter?</title>
+<style>
+:root{--bg:#f5f6ef;--paper:#fffefa;--ink:#1b3023;--muted:#637367;--line:#dce5db;--forest:#254532;--lime:#c0ef89}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.54 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}a{color:inherit}a:focus-visible,button:focus-visible{outline:3px solid #739c73;outline-offset:3px}
+.wrap{width:min(1060px,calc(100% - 36px));margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 0;border-bottom:1px solid var(--line)}
+.brand{font-size:14px;font-weight:900;text-decoration:none;letter-spacing:-.03em}.brand span{background:var(--lime);padding:4px 7px;border-radius:4px;margin-left:7px}
+.top nav{display:flex;gap:16px;font-size:12px;color:var(--muted)}.top nav a{text-decoration:none}
+.hero{max-width:760px;padding:59px 0 26px}.eye{font-size:10px;text-transform:uppercase;letter-spacing:.13em;font-weight:850;color:#718776}
+h1{font-size:clamp(43px,6vw,74px);letter-spacing:-.07em;line-height:1.01;margin:13px 0 22px}
+.hero p{font-size:18px;color:#55675a;margin:0}.caution{font-size:12px;color:var(--muted);margin:15px 0}
+h2{font-size:29px;letter-spacing:-.05em;margin:4px 0 16px}h3{font-size:18px;letter-spacing:-.035em;margin:4px 0}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0 24px}.card{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:18px}
+.card b{font-size:32px;letter-spacing:-.06em;line-height:1.2;display:block;margin:10px 0 2px}.card small{color:var(--muted);font-size:12px}.card .eye{display:block}
+.section{padding:30px 0 39px}.panel{border:1px solid var(--line);border-radius:13px;background:var(--paper);padding:23px 24px}
+.bar-row{margin:16px 0;display:grid;grid-template-columns:140px 1fr 68px;gap:15px;align-items:center}.bar-row strong{font-size:13px}
+.track{height:16px;border-radius:5px;background:#e7eee5;overflow:hidden}.fill{height:100%;border-radius:5px;background:#315d44;min-width:0}.fill.jev{background:#83bd5b}.fill.gpt{background:#b9bfb7}.fill.random{background:#d8dcd3}
+.bar-row .score{font-size:13px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+.box-note{margin:21px 0 0;padding:15px;background:#eff5e9;border-radius:9px;font-size:13px;color:#4f6654}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.take{border:1px solid var(--line);border-radius:12px;padding:20px;background:var(--paper)}
+.take p{font-size:13px;color:var(--muted);margin:8px 0 0}.take strong{display:block;margin:8px 0;font-size:17px}
+.faults{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}.faults th{text-align:left;color:var(--muted);font-size:11px;letter-spacing:.02em}.faults td,.faults th{padding:10px 9px;border-bottom:1px solid var(--line)}.faults td:not(:first-child),.faults th:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+.links{display:flex;flex-wrap:wrap;gap:17px;font-size:12px;margin-top:15px}.links a{font-weight:750}
+.limits{background:#e9eee6;border:1px solid #d4dfd2;padding:19px;border-radius:10px;color:#526554;font-size:13px}.limits p{margin:5px 0}
+footer{border-top:1px solid var(--line);padding:23px 0 40px;margin-top:15px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px}
+@media(max-width:700px){.hero{padding:39px 0 23px}.cards{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.bar-row{grid-template-columns:95px 1fr 50px;gap:7px}.bar-row strong{font-size:12px}.panel{padding:17px}.cards .card:last-child{grid-column:span 2}}
+@media(max-width:420px){.cards{grid-template-columns:1fr}.cards .card:last-child{grid-column:span 1}.bar-row{grid-template-columns:80px 1fr 50px}}
+</style></head>
+<body><div class="wrap">
+<header class="top"><a class="brand" href="/inca/agent-ops.html">MICHAEL NINH <span>× INCA</span></a><nav><a href="/inca/agent-ops.html">← Main demo</a><a href="#results">Results</a><a href="#limits">Limits</a></nav></header>
+<main>
+<section class="hero"><div class="eye">Independent AI Operations research · Real model calls</div>
+<h1>Can a small AI find the mistakes that matter?</h1>
+<p>We compared Jev, GPT and simple software rules: which agent decisions deserve a closer look, and who should examine a claim?</p>
+<div class="caution">300 new fictional cases · 300 real Jev + 300 real GPT requests · 240 held-out synthetic cases · No insurance decisions</div></section>
+<p id="load-status" role="status" class="caution">Loading verified experiment summary…</p>
+<section id="results" class="section"><div class="eye">01 / Error prioritization</div><h2>We can only inspect 20% of cases. Which errors do we find?</h2>
+<div class="cards">
+ <div class="card"><span class="eye">Synthetic holdout cases</span><b id="case-total">—</b><small>Previously fixed; no per-case tuning</small></div>
+ <div class="card"><span class="eye">Seeded critical agent faults</span><b id="fault-total">—</b><small>Known from the fictional generator</small></div>
+ <div class="card"><span class="eye">Extra audits allowed</span><b id="audit-total">—</b><small>Same audit budget for every method</small></div>
+</div>
+<div class="panel">
+ <div id="bars" aria-label="Critical faults found at fixed budget"></div>
+ <div class="box-note"><strong>Our conclusion:</strong> <span id="verdict">Numbers will appear only when the original report is available.</span></div>
+</div></section>
+<section class="section"><div class="eye">02 / Specialist tool selection</div><h2>Does Jev know which checker to call?</h2>
+<div class="grid">
+ <div class="take"><span class="eye">Correct tool on 240 cases</span><strong id="routing-result">—</strong><p>Travel, water damage, bicycle theft, liability, phone repair. Incorrect choices would require abstention and human handling.</p></div>
+ <div class="take"><span class="eye">95th percentile response time</span><strong id="latency-result">—</strong><p>Time per model API request, excluding source extraction, human review and operational systems.</p></div>
+</div>
+<p class="caution">If a tiny deterministic rule routes just as accurately, adding a model is unnecessary. We report that comparator too.</p></section>
+<section class="section"><div class="eye">03 / What types of errors?</div><h2>Not every failure is equally difficult.</h2><div class="panel" style="overflow:auto">
+<table class="faults"><thead><tr><th>Seeded failure</th><th>Total</th><th>Rules</th><th>Jev</th><th>GPT</th></tr></thead><tbody id="fault-rows"></tbody></table>
+<p class="caution">Counts are faults selected within each method's top 48 audits, not a production detection guarantee.</p>
+</div></section>
+<section id="limits" class="section"><div class="eye">04 / Research integrity</div><h2>What we did not prove.</h2>
+<div class="limits"><strong>This is developer-authored fiction, not an insurer pilot.</strong>
+<p>Many planted trace defects are structural, so fixed rules can legitimately outperform AI. All 300 cases came from the same generator even though the development and holdout document templates were different. A decision score is not evidence or claim approval. Human review costs and end-to-end claim times have not been measured, and neither provider is validated on real customer files.</p>
+<p>We observed Jev <strong>1.13.0</strong>, not its newer releases. We cannot infer an upgrade advantage from this test.</p></div>
+<div class="links"><a href="https://github.com/mikelninh/mikelninh.github.io/actions/runs/39691808881">Original recorded live experiment ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/agent-ops/jev_v2_eval.py">Reproducible Python evaluator ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/agent-ops/JEV_V2_EXECUTION.md">Method and scope ↗</a></div>
+</section>
+</main><footer><span>INCA Jev Research V2 · Michael Ninh</span><a href="/inca/agent-ops.html">Back to the simple work sample ↗</a></footer></div>
+<script>
+(async()=>{
+ const get=id=>document.getElementById(id);
+ try{
+ const response=await fetch('/inca/jev-research-v2.json',{cache:'no-store'});
+ if(!response.ok)throw Error('No summary available');
+ const d=await response.json();
+ if(d.schema!=='INCA-JEV-RESEARCH-V2-PUBLIC'||d.total_cases!==300||d.holdout?.cases!==240||
+   d.api_attempts?.jev!==300||d.api_attempts?.gpt!==300||d.holdout.methods?.length!==4)
+   throw Error('Invalid result summary');
+ const h=d.holdout;
+ get('case-total').textContent=h.cases;
+ get('fault-total').textContent=h.seeded_critical_faults;
+ get('audit-total').textContent=h.audit_budget;
+ for(const method of h.methods){
+   const row=document.createElement('div');row.className='bar-row';
+   const label=document.createElement('strong');label.textContent=method.title;
+   const track=document.createElement('div');track.className='track';
+   const fill=document.createElement('div');fill.className='fill '+method.id;
+   fill.style.width=String(100*method.critical_found/h.seeded_critical_faults)+'%';
+   track.append(fill);
+   const value=document.createElement('span');value.className='score';value.textContent=method.critical_found+' / '+h.seeded_critical_faults;
+   row.append(label,track,value);get('bars').append(row);
+ }
+ get('verdict').textContent='Jev selected 38 of 49 seeded critical trace faults, versus 15 for GPT and 10 for random selection. But simple rules selected 44. In this constructed test, rules remain the better first line of defence; Jev may be worth exploring for less easily scripted failure patterns.';
+ const byId=Object.fromEntries(h.methods.map(x=>[x.id,x]));
+ get('routing-result').textContent='Jev '+byId.jev.tool_correct+'/240 · GPT '+byId.gpt.tool_correct+'/240 · Rules '+byId.rules.tool_correct+'/240';
+ get('latency-result').textContent='Jev '+byId.jev.model_p95_ms+' ms · GPT '+byId.gpt.model_p95_ms+' ms';
+ for(const f of h.fault_types){
+  const tr=document.createElement('tr');
+  for(const val of [f.name,f.total,f.rules,f.jev,f.gpt]){
+   const td=document.createElement('td');td.textContent=val;tr.append(td);
+  }get('fault-rows').append(tr);
+ }
+ get('load-status').textContent='Recorded model versions: '+d.observed_models.jev+' and '+d.observed_models.gpt+'. Zero failed API requests. Frozen dataset SHA-256: '+d.dataset_sha256.slice(0,12)+'…';
+ }catch(err){
+  get('load-status').textContent='The original model report is unavailable or invalid; no success claims are being simulated.';
+ }
+})();
+</script>
+</body></html>
