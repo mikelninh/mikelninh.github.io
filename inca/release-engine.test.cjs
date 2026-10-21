@@ -2,7 +2,13 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
-const engine=require('./release-engine.js');
+const vm=require('node:vm');
+// The site is a browser script; evaluate it under a CommonJS VM rather than
+// relying on package-level ESM handling of .js files.
+const source=fs.readFileSync(path.join(__dirname,'release-engine.js'),'utf8');
+const context={module:{exports:{}}};
+vm.runInNewContext(source,context,{filename:'release-engine.js'});
+const engine=context.module.exports;
 
 test('six cases across five insurance claim lines',()=>{
   assert.equal(engine.cases.length,6);
