@@ -9,7 +9,7 @@ export default async function handler(req,res){res.setHeader('Cache-Control','no
  catch(err){
   // Classify failures without reflecting provider bodies, user input, or credentials.
   const known=new Set(['key_not_configured','model_refusal','no_model_output','invalid_probability','invalid_decision_response','missing_questions','invalid_jev_response','invalid_jev_answer','invalid_model_response_shape','invalid_model_categories']);
-  const code=typeof err.code==='string'&&['provider_unavailable','provider_rate_limit','provider_network_error'].includes(err.code)?err.code:
+  const code=typeof err.code==='string'&&['provider_unavailable','provider_rate_limit','provider_network_error','provider_dns_error','provider_connect_timeout','provider_connection_error','provider_tls_error','provider_fetch_failed','invalid_request_header','invalid_api_key_format'].includes(err.code)?err.code:
     known.has(err.message)?err.message:
     err.name==='AbortError'?'provider_timeout':
     err instanceof SyntaxError?'invalid_model_json':
