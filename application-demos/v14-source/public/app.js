@@ -4,6 +4,9 @@ const CLASSES=['quality','fit','shipping','return','order_issue','other'];
 const NAMES={quality:'Produktqualität',fit:'Grösse & Passform',shipping:'Versand',return:'Retoure',order_issue:'Falsche / fehlende Ware',other:'Sonstiges'};
 const MODELS=[{id:'rules',name:'Keyword baseline',desc:'Kostenlos · deterministisch',meta:'Keine KI · stets verfügbar'},{id:'decisions',name:'OpenAI Decisions · Experiment',desc:'Experimentelle Integration · noch nicht verifiziert',meta:'OpenAI · echte API'},{id:'jev',name:'TypeSafe Jev 1.14 · nicht verbunden',desc:'Separater Anbieter-Key erforderlich',meta:'OpenRouter · echte API'},{id:'llm',name:'Generatives LLM',desc:'Structured Outputs · mehrere Anliegen',meta:'OpenAI Responses API'}];
 const PRIVACY_NOTE='Synthetische Testdaten; keine Kundennachrichten oder Shop-Aktionen.';
+let fullStudy=null,qualityAudit=null;
+const studyRow=id=>fullStudy?.rows?.find(x=>x.id===id&&x.status==='ok');
+const auditFlags=id=>qualityAudit?.flagged_cases?.find(x=>x.id===id)?.flags||[];
 let inboxExpanded=false;
 const replyDrafts={};
 const replySources={};
@@ -18,7 +21,15 @@ const record=()=>fixtures.find(c=>c.id===selected);
 function renderInsights(){
  const x=record();if(!x)return;
  const actual=baseline(x.text),expected=x.gold||[];
- $('live-proof').hidden=x.id!=='RL-301';
+ const observed=studyRow(x.id);
+ $('live-proof').hidden=!observed;
+ if(observed){
+  $('proof-case').textContent='Echter API-Test · '+x.id+' · archiviert';
+  $('proof-categories').textContent=(observed.llm||[]).map(c=>NAMES[c]||c).join(' + ');
+  $('proof-evidence').textContent=observed.evidence_valid?'Beleg aus Originalnachricht: „'+observed.evidence+'“':'Kein belegtes Originalzitat';
+  const agrees=observed.llm?.length===x.gold.length&&x.gold.every(c=>observed.llm.includes(c));
+  $('proof-meta').textContent='OpenAI Responses API · '+observed.latency_ms+' ms · '+(agrees?'Stimmt mit dem menschlichen Testlabel überein.':'Abweichung vom menschlichen Testlabel – Prüfung nötig.')+' Vorher gemessen, kein neuer Live-Aufruf.';
+ }
  $('insight-labels').replaceChildren(...expected.map(c=>el('span','insight-tag',NAMES[c]||c)));
  const missed=expected.filter(c=>!actual.includes(c));
  const extra=actual.filter(c=>!expected.includes(c));
@@ -121,7 +132,13 @@ function templateReply(x){
 }
 function renderReply(){
  const x=record();if(!x)return;
- if(!Object.prototype.hasOwnProperty.call(replyDrafts,x.id))replyDrafts[x.id]=templateReply(x);
+ if(!Object.prototype.hasOwnProperty.call(replyDrafts,x.id)){
+  const recorded=studyRow(x.id);
+  if(recorded?.draft_present&&typeof recorded.draft_reply==='string'){
+   replyDrafts[x.id]=recorded.draft_reply;
+   replySources[x.id]=auditFlags(x.id).length?'⚠ Echt generierter KI-Entwurf · unbelegte Aussagen prüfen':'Echt generierter KI-Entwurf · menschliche Prüfung nötig';
+  }else replyDrafts[x.id]=templateReply(x);
+ }
  $('reply-text').value=replyDrafts[x.id];
  $('reply-source').textContent=replySources[x.id]||'Textvorlage · keine KI-Ausgabe';
  $('reply-status').textContent='Bearbeitbarer Entwurf – es wird nichts versendet.';
@@ -142,7 +159,7 @@ function choose(id){selected=id;renderCase();$('run-status').textContent='';}
 function renderModels(){let x=record();if(!x)return;$('models').replaceChildren(...MODELS.map(m=>{let box=el('div','model');let lead=el('div','');lead.append(el('div','model-name',m.name),el('div','model-desc',m.desc));let btn=el('button','model-btn',m.id==='rules'?'Anzeigen':results[x.id]?.[m.id]?'Erneut prüfen':'Jetzt testen');btn.type='button';btn.disabled=!!busy||(m.id!=='rules'&&(!live.paid_requests_enabled||live.providers?.[m.id]!==true));btn.title=m.id!=='rules'&&live.providers?.[m.id]!==true?'Anbieter derzeit nicht verbunden':m.id!=='rules'&&!live.paid_requests_enabled?'Live-Tests benötigen autorisierten Zugang':'';btn.addEventListener('click',()=>run(m.id));box.append(lead,btn);const result=results[x.id]?.[m.id];if(m.id==='rules'){box.classList.add('ready');box.append(el('div','model-result','Regelergebnis: '+baseline(x.text).map(c=>NAMES[c]).join(' + ')+' · 0 API-Aufrufe'));}else if(result?.ok){box.classList.add('ready');let cap=predicted(result,m.id).map(c=>NAMES[c]).join(' + ')||'Keine Kategorie über Schwelle';let detail=m.id==='llm'?` · ${result.evidence?'Beleg: „'+result.evidence+'“':'Kein gültiges Textzitat'}`:` · Scores: ${Object.entries(result.scores||{}).filter(([k,v])=>Number(v)>.25).map(([k,v])=>NAMES[k]+' '+Math.round(v*100)+'%').join(', ')}`;box.append(el('div','model-result',cap+detail+` · ${result.latency_ms} ms`));}else{box.append(el('div','model-result',live.providers?.[m.id]!==true?'Anbieter derzeit nicht verbunden – keine Vorhersage.':live.paid_requests_enabled?'Nicht ausgeführt. Optionaler geschützter Live-Test.':'Nicht getestet. Öffentliche Demo benötigt keine API-Kosten.'));}return box;}));}
 async function run(model){if(model==='rules'){showStatus('Regelbaseline lokal berechnet – keine Modellkosten.');return;}if(!live.paid_requests_enabled||live.providers?.[model]!==true){showStatus('Dieser Live-Anbieter ist nicht freigeschaltet. Keine Modellvorhersage.');return;}if(!access){$('access-form').hidden=false;$('toggle-access').setAttribute('aria-expanded','true');$('token').focus();showStatus('Bitte zunächst das private Demo-Passwort eingeben.');return;}
  busy=model;renderModels();showStatus('Prüfe '+model+' über das Backend …');let id=selected;
- try{const r=await fetch('/api/infer',{method:'POST',headers:{'Content-Type':'application/json','X-Demo-Token':access},body:JSON.stringify({id,model})});const data=await r.json();if(!r.ok)throw Error(data.error||'HTTP '+r.status);results[id]??={};results[id][model]=data;if(model==='llm'&&typeof data.draft_reply==='string'&&data.draft_reply.trim()){replyDrafts[id]=data.draft_reply.trim();replySources[id]='Echter KI-Entwurf · menschliche Freigabe nötig';if(selected===id)renderReply();}calls++;$('trial-count').textContent=calls+' real calls';if(model==='llm'&&PAIRED_IDS.includes(id))savePairedResults();showStatus('✓ Echte '+model+'-Antwort · '+data.latency_ms+' ms · Ergebnis nur in dieser Sitzung.');renderEvaluation();renderPaired();return true;}catch(e){showStatus('Kein gültiges Modellresultat: '+e.message+'. Nichts wurde als korrekt gewertet.');return false;}finally{busy='';renderModels();}}
+ try{const r=await fetch('/api/infer',{method:'POST',headers:{'Content-Type':'application/json','X-Demo-Token':access},body:JSON.stringify({id,model})});const data=await r.json();if(!r.ok)throw Error(data.error||'HTTP '+r.status);results[id]??={};results[id][model]=data;if(model==='llm'&&typeof data.draft_reply==='string'&&data.draft_reply.trim()){replyDrafts[id]=data.draft_reply.trim();replySources[id]=data.draft_flags?.length?'⚠ Live-KI-Entwurf: potenziell unbelegte Aussagen':'Echter Live-KI-Entwurf · menschliche Freigabe nötig';if(selected===id)renderReply();}calls++;$('trial-count').textContent=calls+' real calls';if(model==='llm'&&PAIRED_IDS.includes(id))savePairedResults();showStatus('✓ Echte '+model+'-Antwort · '+data.latency_ms+' ms · Ergebnis nur in dieser Sitzung.');renderEvaluation();renderPaired();return true;}catch(e){showStatus('Kein gültiges Modellresultat: '+e.message+'. Nichts wurde als korrekt gewertet.');return false;}finally{busy='';renderModels();}}
 function showStatus(txt){$('run-status').textContent=txt;}
 function renderEvaluation(){const baselineRows=fixtures.map(c=>({gold:c.gold,pred:baseline(c.text)}));const sc=evaluate(baselineRows);$('baseline-f1').textContent=fmt(sc.macroF1);$('baseline-fn').textContent=sc.qualityFN+' / '+fixtures.filter(c=>c.gold.includes('quality')).length;
  const out=[{name:'Keyword rules',metric:sc.macroF1,n:fixtures.length}];let complete=0,covered=0;
@@ -292,6 +309,11 @@ function review(){let x=record();reviews[x.id]={decision:$('review-decision').va
 function report(){let measured={};for(let m of MODELS.slice(1)){const r=fixtures.filter(c=>results[c.id]?.[m.id]?.ok);measured[m.id]={run_count:r.length,full_development_evaluation:r.length===fixtures.length?r.length:null,macro_f1:r.length===fixtures.length?evaluate(r.map(c=>({gold:c.gold,pred:predicted(results[c.id][m.id],m.id)}))).macroF1:null};}exportFile('return-loop-v14-model-arena-report.json',{project:'RETURN LOOP · Model Arena v14',created_at:new Date().toISOString(),dataset:'24 synthetic development fixtures — NOT independent external holdout',calibration:'None. Scores uncalibrated.',policy_threshold:threshold,baseline:evaluate(fixtures.map(c=>({gold:c.gold,pred:baseline(c.text)}))),models:measured,real_results:results,reviews,limitations:['No real customer data','Not a production quality rate','Thresholds not validated independently','No automated customer actions','Paid API limited to authenticated synthetic demo fixture calls']});}
 async function init(){try{const embedded=document.getElementById('embedded-fixtures');if(embedded){fixtures=JSON.parse(embedded.textContent);}else{const response=await fetch('./fixtures.json',{cache:'no-store'});if(!response.ok)throw Error('Fixtures unavailable');fixtures=await response.json();}if(!Array.isArray(fixtures)||fixtures.length!==24)throw Error('Unexpected data length');}catch(e){$('run-status').textContent='Die lokalen synthetischen Fälle konnten nicht geladen werden.';return;}
  try{const r=await fetch('/api/status',{cache:'no-store'});if(!r.ok)throw Error('no backend');let v=await r.json();if(v.build!=='v14')throw Error('static preview');live=v;}catch{live={paid_requests_enabled:false,providers:{}}}
+ try{
+ const [studyResp,auditResp]=await Promise.all([fetch('./release-evaluation-full.json',{cache:'no-store'}),fetch('./release-quality-audit.json',{cache:'no-store'})]);
+ if(studyResp.ok){const loaded=await studyResp.json();if(loaded.status==='complete'&&loaded.successful===24&&loaded.rows?.length===24)fullStudy=loaded;}
+ if(auditResp.ok){const loaded=await auditResp.json();if(loaded.total_generated===24)qualityAudit=loaded;}
+ }catch(e){/* Public demo still works offline with template answers. */}
  $('provider-badge').textContent=live.paid_requests_enabled?'Öffentliche Demo kostenlos · KI-Labor geschützt':'Öffentliche Demo kostenlos · Keine bezahlten Aufrufe';$('provider-badge').classList.toggle('ready',live.paid_requests_enabled);
  $('reply-text').addEventListener('input',e=>{replyDrafts[selected]=e.target.value;replySources[selected]=replySources[selected]||'Bearbeitete Textvorlage';});
  $('copy-reply').addEventListener('click',copyReply);
