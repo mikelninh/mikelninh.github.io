@@ -83,7 +83,11 @@ test('page publishes complete operator sequence, controls and explicit caveats',
  assert.match(html,/Intake/);assert.match(html,/Verify/);assert.match(html,/Review/);
  assert.match(html,/Handoff/);assert.match(html,/Improve/);
  assert.match(html,/Not a re-measurement of the old holdout/);
- assert.match(html,/No insurer documents, no real claims expert sign-off/);
+ assert.match(html,/I haven't worked with real insurer documents or received claims-expert feedback/);
+ assert.match(html,/with AI-assisted coding/);
+ assert.match(html,/implementation with AI coding assistance/);
+ assert.match(html,/unsent handoff/);
+ assert.match(html,/15-call \/ 5-case-per-model/);
  assert.match(html,/src="\/inca\/interactive-case\.js"/);
  assert.match(html,/src="\/inca\/operator-shift\.js"/);
 });
