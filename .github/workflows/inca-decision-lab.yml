@@ -1,4 +1,4 @@
-name: INCA Decision Model Lab (manual only)
+name: INCA Official TypeSafe Jev Lab
 
 on:
   # Safe bootstrap: editing the workflow itself runs only the free checks.
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "dry-run makes ZERO API calls; jev makes 8 billed fictional-case calls"
+        description: "dry-run makes ZERO API calls; jev makes 8 billed fictional-case calls with official TypeSafe"
         required: true
         type: choice
         default: dry-run
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      JEV_API_KEY: ${{ secrets.JEV_API_KEY }}
+      TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -n "$JEV_API_KEY" || { echo "::error::Add repository secret JEV_API_KEY. No calls have been made."; exit 1; }
+          test -n "$TYPESAFE_API_KEY" || { echo "::error::Add repository secret TYPESAFE_API_KEY. No calls have been made."; exit 1; }
           echo "User-selected paid mode. Exactly eight invented text cases, at most eight decision requests."
       - name: Run Jev benchmark on eight fictional cases (billable)
         if: ${{ inputs.mode == 'jev' }}
