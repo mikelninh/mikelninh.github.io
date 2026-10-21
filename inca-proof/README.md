@@ -1,6 +1,6 @@
 # INCA AI Operations Proof
 
-**Agent Ops 1.1 (new):** https://mikelninh.github.io/inca/agent-ops.html — [reproducible Python tool execution and audit traces](agent-ops/README.md).
+**Send this recruiter-first link:** https://mikelninh.github.io/inca/agent-ops.html — [60-second reviewer guide](agent-ops/HIRING_MANAGER_GUIDE.md). Technical agent traces are linked on the page.
 
 **Release 1.0 work sample:** https://mikelninh.github.io/inca/release.html
 
