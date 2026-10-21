@@ -2,109 +2,124 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="INCA Agent Ops 1.1: replay the restricted tools, evidence, safety decisions and human handoff of a real offline Python agent runner.">
-<title>INCA Agent Ops 1.1 — Exception Control Tower</title>
+<meta name="description" content="An independent INCA AI Operations work sample: see how a fictional insurance claim gets a clear, safe next step in under a minute.">
+<title>INCA — One claim. A clear next step. · Michael Ninh</title>
 <style>
-:root{--bg:#f4f5f0;--paper:#fffefa;--ink:#18261c;--muted:#637267;--line:#dbe3d9;--deep:#1d3325;--lime:#b8fa62;--warn:#aa5e23}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--bg);margin:0;color:var(--ink);font:14px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}
-button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.35;cursor:not-allowed}
-button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid #6aa16a;outline-offset:3px}
-a{color:inherit}.wrap{width:min(1170px,calc(100% - 38px));margin:auto}
-.top{display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding:19px 0}.brand{font-size:15px;font-weight:900;letter-spacing:-.04em;text-decoration:none}.brand span{padding:3px 8px;margin-left:7px;border-radius:4px;background:var(--lime)}.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted)}.nav a{text-decoration:none}
-.hero{padding:47px 0 29px;display:grid;grid-template-columns:1fr 300px;gap:35px;align-items:end}.eyebrow{font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.14em;color:#64806a}h1{font-size:clamp(42px,5.6vw,72px);line-height:.98;letter-spacing:-.065em;margin:12px 0 16px}h2{font-size:25px;letter-spacing:-.045em;line-height:1.12;margin:0 0 10px}h3{font-size:19px;letter-spacing:-.04em;margin:0}
-.hero p{max-width:720px;color:#4f6054;font-size:16px}.pill{display:inline-flex;background:#e4f2da;padding:6px 10px;border-radius:99px;font-size:11px;font-weight:800;color:#2d603e}.hero-note{border-left:3px solid var(--lime);padding-left:17px;font-size:13px;color:#566657}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:20px 0 27px}.stat{background:var(--paper);padding:19px;border:1px solid var(--line);border-radius:11px}.stat b{font-size:29px;line-height:1;letter-spacing:-.055em;display:block}.stat small{font-size:11px;color:var(--muted);font-weight:700}
-.statusline{color:var(--muted);font-size:12px;margin:0 0 15px}
-.workbench{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 13px 30px #24382709}
-.whead{padding:22px 24px 19px;display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid var(--line)}
-.case-picker{display:flex;gap:7px;flex-wrap:wrap;padding:14px 24px;border-bottom:1px solid var(--line)}.case-pick{background:#f4f6ef;color:var(--muted);border:1px solid var(--line);border-radius:7px;padding:8px 11px;font-size:11px;font-weight:750}
-.case-pick[aria-pressed=true]{background:#e5f8d8;color:#214a2b;border-color:#8bc185}.case-pick:hover{border-color:#76aa7d}
-.sources{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}.source{padding:17px 22px}.source:first-child{border-right:1px solid var(--line)}.source .label,.label{font-size:10px;text-transform:uppercase;letter-spacing:.11em;font-weight:850;color:#6b806e}.source pre{margin:10px 0 0;white-space:pre-wrap;word-break:break-word;color:#405447;font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}
-.run-layout{display:grid;grid-template-columns:245px 1fr;min-height:395px}
-.left{background:#f8faf6;border-right:1px solid var(--line);padding:20px 13px}.left .label{margin:0 8px 14px}.timeline{display:flex;flex-direction:column;gap:6px}
-.trace-step{padding:11px 12px;border:1px solid transparent;border-radius:9px;background:transparent;width:100%;display:flex;align-items:center;gap:12px;color:var(--ink);text-align:left}
-.trace-step[aria-pressed=true]{background:#e7f6d9;border-color:#b3d5aa}.trace-step:hover{border-color:#cadccb}
-.trace-number{font:700 11px ui-monospace,Consolas,monospace;color:#719176}.trace-step-body{display:flex;flex-direction:column;gap:1px}
-.trace-step-body strong{font-size:12px}.trace-step-body small{font-size:10px;color:var(--muted)}
-.right{padding:23px 25px}.stepheading{display:flex;justify-content:space-between;gap:12px;align-items:center}
-.toolname{background:#eaf0e8;color:#3a5a3f;border-radius:5px;padding:3px 8px;font:11px ui-monospace,Consolas,monospace}
-.event-output{padding:17px;margin:14px 0 17px;background:#1f3126;color:#d0ead7;border-radius:10px;min-height:205px;max-height:310px;overflow:auto;white-space:pre-wrap;word-break:break-word;font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}
-.stepactions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.btn{background:var(--deep);color:white;border:1px solid var(--deep);padding:10px 14px;border-radius:8px;font-size:12px;font-weight:750;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.btn.secondary{background:transparent;color:var(--ink);border-color:#bfcfbe}.btn.secondary:hover{background:#eaf1e8}
-.routepanel{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;border-top:1px solid var(--line);background:#fbfcf9;padding:22px 24px}
-.routepanel p{margin:7px 0 0;color:var(--muted);font-size:12px}.route{display:inline-flex;padding:5px 9px;background:#f9e6db;color:#913d30;border-radius:6px;font:800 12px ui-monospace,Consolas,monospace;margin:7px 0}
-.route[data-route="CONTINUE_CHECKS"]{background:#def3df;color:#2e6b3e}.route[data-route="NEED_INFO"]{background:#fff0d4;color:#84551c}
-.feedback{border-top:1px solid var(--line);padding:20px 24px;background:#fffefa}
-.feedback h3{font-size:15px;margin:0 0 4px}.feedback p{color:var(--muted);font-size:12px;margin:0 0 15px}
-.feedback-grid{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
-.feedback input,.feedback select{border:1px solid var(--line);background:white;border-radius:7px;padding:10px;color:var(--ink)}
-.feedback input{flex:1;min-width:170px}.feedback-note{font-size:11px;color:var(--muted);margin-top:9px}
-.footsection{padding:51px 0}.footsection>p{max-width:720px;color:var(--muted)}
-.pieces{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin:20px 0}
-.piece{padding:19px;border:1px solid var(--line);background:var(--paper);border-radius:10px}.piece h3{font-size:16px;margin:9px 0}.piece p{color:var(--muted);font-size:12px;margin:0 0 12px}.piece a{font-size:12px;font-weight:800}
-.boundary{padding:17px 20px;background:#e8eee7;border:1px solid #d5dfd4;border-radius:9px;color:#4e6250;font-size:12px}
-.footer{padding:25px 0 45px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted)}
+:root{--cream:#f5f5f0;--paper:#fffefa;--ink:#17261d;--muted:#657066;--line:#dce3d9;--moss:#244332;--lime:#c2ee8c;--mint:#e6f3dc;--soft:#f3f7f0;--amber:#b46b37}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit}button{cursor:pointer;font:inherit}button:focus-visible,a:focus-visible{outline:3px solid #619b6b;outline-offset:3px}
+.wrap{width:min(1060px,calc(100% - 40px));margin:0 auto}
+.top{border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0}
+.brand{text-decoration:none;letter-spacing:-.035em;font-size:15px;font-weight:900}.brand span{background:var(--lime);border-radius:4px;padding:2px 7px;margin-left:5px;font-size:11px;letter-spacing:0}
+.nav{display:flex;gap:20px;align-items:center;color:var(--muted);font-size:12px}.nav a{text-decoration:none}.nav a:hover{text-decoration:underline}
+.hero{padding:69px 0 31px;max-width:760px}.eyebrow{font-size:10px;font-weight:850;letter-spacing:.14em;text-transform:uppercase;color:#718672}
+h1{font-size:clamp(43px,6.5vw,78px);letter-spacing:-.071em;line-height:.98;margin:12px 0 21px;font-weight:790}
+.hero p{font-size:18px;line-height:1.55;color:#516255;margin:0;max-width:715px}
+.hero-note{margin-top:18px;font-size:12px;color:#66786a}.hero-note strong{color:#395b43}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:24px 0 15px}
+.section-head h2{font-size:24px;letter-spacing:-.046em;margin:5px 0 0}.section-head p{color:var(--muted);font-size:12px;margin:0}
+.loading{font-size:13px;padding:40px 20px;color:var(--muted);border:1px solid var(--line);background:white;border-radius:10px}
+.option-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.option{border:1px solid var(--line);border-radius:10px;padding:13px 15px;background:var(--paper);text-align:left;color:var(--ink);min-height:70px;transition:background .16s,border-color .16s;display:flex;flex-direction:column;gap:2px}
+.option strong{font-size:13px}.option small{color:var(--muted);font-size:11px}
+.option:hover{border-color:#98ba99}.option[aria-pressed=true]{border-color:#75ac76;background:#e9f5df;box-shadow:inset 0 0 0 1px #c0e3b4}
+.case{border:1px solid var(--line);border-radius:15px;background:var(--paper);overflow:hidden;box-shadow:0 15px 36px #1a302209}
+.case-top{padding:27px 31px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;align-items:start}
+.case-top h3{font-size:27px;letter-spacing:-.053em;margin:5px 0 7px;line-height:1.1}
+.case-top p{color:var(--muted);font-size:14px;margin:0;max-width:680px}
+.mark{background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:6px 10px;white-space:nowrap;font-size:10px;color:#56725d}
+.docs{display:grid;grid-template-columns:1fr 1fr}
+.doc{padding:23px 31px 27px}
+.doc:first-child{border-right:1px solid var(--line)}
+.doc-kicker{font-size:10px;font-weight:850;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:11px}
+.doc-field{color:var(--muted);font-size:13px;margin-bottom:7px}.doc-value{font-size:30px;font-weight:750;letter-spacing:-.055em;word-break:break-word;line-height:1.15;min-height:46px}
+.doc-value.a{color:#a25439}.doc-value.b{color:var(--moss)}
+.case-action{border-top:1px solid var(--line);background:#f8faf5;padding:18px 31px 22px;display:flex;gap:20px;align-items:center;justify-content:space-between}
+.btn{background:var(--moss);color:#fff;border:1px solid var(--moss);border-radius:9px;padding:12px 20px;font-size:13px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.btn:hover{background:#395d47}
+.btn.ghost{background:transparent;color:var(--moss);border-color:#b8cbbb}.btn.ghost:hover{background:#edf5e8}
+.case-action span{font-size:12px;color:var(--muted)}
+.outcome{border-top:1px solid var(--line);padding:27px 31px 29px;background:#f2f8ed}
+.outcome h3{font-size:31px;letter-spacing:-.055em;line-height:1.12;margin:11px 0 8px}
+.outcome p{max-width:710px;margin:6px 0;color:#43594a;font-size:14px}
+.badge{display:inline-block;border-radius:99px;padding:6px 11px;background:#f9e4dd;color:#913e2c;font-size:11px;font-weight:850}
+.badge[data-kind=info]{background:#fff0d4;color:#895920}.badge[data-kind=clear]{background:#dff3e0;color:#306c3c}
+.proofdetails{margin:16px 0 0;border:1px solid #d7e3d2;border-radius:10px;padding:13px 15px;background:#fffdf9}
+.proofdetails summary{cursor:pointer;font-size:12px;font-weight:800;color:#425848}
+.proofdetails p{font-size:12px}.proofdetails code{font:12px ui-monospace,SFMono-Regular,Consolas,monospace}
+.outcome-actions{margin-top:18px;display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+.note{font-size:11px;color:#66786a}.warn{background:#fbefda;border-radius:7px;padding:10px 12px;color:#8a5923;font-size:12px;margin-top:14px}
+.takeaway{padding:59px 0 46px}
+.takeaway h2{font-size:34px;letter-spacing:-.059em;line-height:1.12;max-width:690px;margin:10px 0 20px}
+.learn{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.learn-item{border:1px solid var(--line);background:var(--paper);border-radius:11px;padding:19px 20px}
+.learn-item .num{font-size:10px;font-weight:900;letter-spacing:.1em;color:#68836f}
+.learn-item h3{font-size:16px;letter-spacing:-.03em;margin:9px 0 6px}
+.learn-item p{color:var(--muted);font-size:12px;margin:0}
+.learning-evidence{margin-top:21px;background:#e9f1e5;border:1px solid #d9e3d4;border-radius:10px;padding:21px 23px}
+.learning-evidence p{color:#526656;margin:6px 0;font-size:13px}.learning-evidence strong{font-size:14px}
+.learn-links{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:12px}
+.learn-links a{font-weight:750}
+.closing{border-top:1px solid var(--line);padding:33px 0 46px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.closing p{color:var(--muted);font-size:13px;max-width:630px;margin:5px 0}
+.closing strong{font-size:17px}
+footer{padding:21px 0 32px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:14px}
 [hidden]{display:none!important}
-@media(max-width:830px){.hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.pieces{grid-template-columns:1fr}.run-layout{grid-template-columns:1fr}.left{border-right:0;border-bottom:1px solid var(--line)}.timeline{display:grid;grid-template-columns:repeat(3,1fr)}.routepanel{grid-template-columns:1fr}}
-@media(max-width:550px){.wrap{width:calc(100% - 24px)}.sources{grid-template-columns:1fr}.source:first-child{border-right:0;border-bottom:1px solid var(--line)}.timeline{grid-template-columns:1fr 1fr}.trace-step{padding:8px}.whead{flex-direction:column;align-items:start}.right{padding:16px}.case-picker{padding:12px}.hero{padding:32px 0 14px}h1{font-size:43px}}
+@media(max-width:730px){.hero{padding:40px 0 20px}.option-row{grid-template-columns:repeat(2,1fr)}.learn{grid-template-columns:1fr}.case-top{flex-direction:column}.closing{align-items:start;flex-direction:column}.section-head{align-items:start;flex-direction:column}}
+@media(max-width:500px){.wrap{width:calc(100% - 26px)}.nav{gap:11px}.hero h1{font-size:45px}.hero p{font-size:16px}.docs{grid-template-columns:1fr}.doc:first-child{border-right:0;border-bottom:1px solid var(--line)}.doc{padding:18px 20px}.doc-value{min-height:0}.case-top,.outcome{padding:22px 20px}.case-action{padding:18px 20px;flex-direction:column;align-items:stretch}.case-action .btn{width:100%}.section-head h2{font-size:22px}.closing .btn{width:100%}}
 </style>
 </head>
 <body><div class="wrap">
-<header class="top"><a class="brand" href="/inca/release.html">MICHAEL NINH <span>× INCA</span></a><nav class="nav"><a href="/inca/release.html">Release 1.0 ↗</a><a href="#workbench">Trace explorer</a><a href="#implementation">How it works</a><a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof/agent-ops">Source ↗</a></nav></header>
-<section class="hero"><div>
-  <div class="eyebrow">INCA Agent Ops 1.1 · Independent work sample</div>
-  <h1>One claim.<br>Seven visible steps.</h1>
-  <p>Agents are useful when you can explain exactly what they read, which tools they called and why they stopped. Explore a recorded Python agent run — evidence, verification, safe handoff and full trace.</p>
-  <span class="pill">REAL PYTHON TOOL EXECUTION · OFFLINE SCRIPTED PLANNER</span>
-</div><aside class="hero-note"><strong>What's new</strong><p>Release 1.0 compared document fields in a browser. Version 1.1 uses a restricted Python tool runner with distinct agent responsibilities and an independent safety supervisor. The web page replays verified output; it does not call an LLM live.</p></aside></section>
-<section class="stats" aria-label="Offline build snapshot">
-  <div class="stat"><b id="summary-cases">—</b><small>Fictional case runs</small></div>
-  <div class="stat"><b id="summary-steps">—</b><small>Recorded tool steps</small></div>
-  <div class="stat"><b id="summary-reviews">—</b><small>Human review routes</small></div>
-  <div class="stat"><b id="summary-actions">—</b><small>External actions executed</small></div>
+<header class="top"><a class="brand" href="/inca/agent-ops.html">MICHAEL NINH <span>× INCA</span></a><nav class="nav"><a href="#try">Try the case</a><a href="#what-i-built">What I built</a><a href="/inca/agent-ops-technical.html">For engineers ↗</a></nav></header>
+<main>
+<section class="hero">
+ <div class="eyebrow">INCA · AI Operations Associate · Independent work sample</div>
+ <h1>One claim.<br>One detail that matters.</h1>
+ <p>Claims arrive with documents that can disagree, contain missing information or look correct when they're not. I built a small workflow that helps a team catch those problems, explain the next step and learn from mistakes.</p>
+ <div class="hero-note"><strong>Try it in 60 seconds.</strong> Fictional cases, recorded Python execution, nothing sent or approved.</div>
 </section>
-<p id="trace-status" class="statusline" role="status" aria-live="polite">Loading the recorded Python execution trace…</p>
-<main id="agent-ops-app">
-<section id="workbench" class="workbench" aria-label="Recorded agent execution" >
-<div id="workspace" hidden>
-<div class="whead"><div><div class="eyebrow" id="case-ref">Case</div><h2 id="case-head">Recorded case</h2></div><span class="pill">NO AUTO APPROVAL</span></div>
-<div id="case-picker" class="case-picker" role="group" aria-label="Choose fictional case"></div>
-<div class="sources">
-  <div class="source"><span class="label">Untrusted document A</span><pre id="input-a">—</pre></div>
-  <div class="source"><span class="label">Untrusted document B</span><pre id="input-b">—</pre></div>
-</div>
-<div class="run-layout">
-  <aside class="left"><div class="label">Tool execution sequence</div><div id="timeline" class="timeline" aria-label="Seven recorded tool steps"></div></aside>
-  <div class="right"><div class="stepheading"><div><span class="label">Recorded tool response · <span id="selected-step">1 / 7</span></span><h3 id="event-role">Intake agent</h3></div><span class="toolname" id="event-tool">read_source</span></div>
-    <pre class="event-output" id="event-output" aria-label="Recorded tool output"></pre>
-    <div class="stepactions">
-      <button type="button" class="btn secondary" id="previous-step">← Previous</button>
-      <button type="button" class="btn" id="next-step">Next action →</button>
-      <button type="button" class="btn secondary" id="replay">↺ Replay</button>
-      <button type="button" class="btn secondary" id="download-trace">Download trace ↓</button>
-    </div>
+<section id="try">
+ <div class="section-head"><div><div class="eyebrow">01 / See it yourself</div><h2>Choose a claim</h2></div><p>Start with travel cancellation, or explore another kind of damage.</p></div>
+ <p id="loading-state" class="loading" role="status">Loading a verified fictional case…</p>
+ <div id="case-experience" hidden>
+  <div id="claim-options" class="option-row" role="group" aria-label="Choose a fictional claim"></div>
+  <div class="case">
+   <div class="case-top"><div><div class="eyebrow" id="case-topic">Two documents, two dates</div><h3 id="case-name">Travel cancellation</h3><p id="case-context"></p></div><span class="mark">Two fictional records</span></div>
+   <div id="case-documents" class="docs">
+    <div class="doc"><div class="doc-kicker">Customer / Source A</div><div id="field-a" class="doc-field">Cancellation date</div><div id="case-a" class="doc-value a">—</div></div>
+    <div class="doc"><div class="doc-kicker">Second record / Source B</div><div id="field-b" class="doc-field">Cancellation date</div><div id="case-b" class="doc-value b">—</div></div>
+   </div>
+   <div id="case-action" class="case-action"><span id="interaction-state">Read the two records. What should happen next?</span><button id="show-decision" type="button" class="btn">See what happens next →</button></div>
+   <section id="decision-panel" class="outcome" aria-label="Safe next step" hidden>
+    <span id="outcome-badge" class="badge">Needs a person</span>
+    <h3 id="outcome-headline">A person should review this</h3>
+    <p id="outcome-reason">The records disagree.</p>
+    <p><strong>Next step:</strong> <span id="outcome-next">Prepare a review packet.</span></p>
+    <div id="injection-explanation" class="warn" hidden>The document contains an instruction aimed at the AI. Our independent safety rule flags it, even if a model would otherwise miss it.</div>
+    <details class="proofdetails"><summary>What evidence was used?</summary><p><strong>Source A:</strong> <code id="source-evidence-a"></code></p><p><strong>Source B:</strong> <code id="source-evidence-b"></code></p><p>These are exact excerpts extracted by a deterministic Python tool. This small demonstration does not interpret full insurance policies.</p></details>
+    <div class="outcome-actions"><button id="see-another" type="button" class="btn">Try another case →</button><button id="case-reset" type="button" class="btn ghost">Review this case again</button></div>
+    <div class="note" style="margin-top:15px">Nothing was sent to a customer or insurer. “Continue checks” is never a payment decision.</div>
+   </section>
   </div>
-</div>
-<div class="routepanel"><div><span class="label">Supervisor's bounded recommendation</span><div><span class="route" id="current-route">—</span></div><strong id="current-reason">—</strong><p id="current-next">—</p></div>
-<div><span class="label">Human handoff / next mandatory gate</span><h3 id="human-state">—</h3><p>Handoff is only a draft. No real reviewer assigned, no email, no coverage decision and no payment.</p></div></div>
-<div class="feedback">
- <h3>Would you correct this decision?</h3><p>Feedback is an exportable candidate for independent expert review. It does not alter the saved agent trace, a live claim or CI.</p>
- <div class="feedback-grid"><select id="feedback-route" aria-label="Proposed route"><option value="HUMAN_REVIEW">Human review</option><option value="NEED_INFO">Request information</option><option value="CONTINUE_CHECKS">Continue other checks</option></select><input type="text" id="feedback-reason" maxlength="500" placeholder="Reason for correction (min. 8 characters)" aria-label="Reviewer explanation"><button type="button" class="btn secondary" id="feedback-download">Export feedback candidate ↓</button></div>
- <div class="feedback-note" id="feedback-note" role="status"></div>
-</div>
-</div>
+ </div>
 </section>
-<section id="implementation" class="footsection">
-  <div class="eyebrow">Architecture / proof</div><h2>The operator observes the system, not just a final score.</h2>
-  <p>Six developer-authored fictional claims from five claim types are processed by a real local Python tool executor. The supervisor only permits known tools and bounded input. Every tool response is recorded with source references.</p>
-  <div class="pieces">
-    <article class="piece"><span class="label">01 · Actual tool use</span><h3>Read → Extract → Compare</h3><p>Two evidence reads, two fact extractions with quotes and hashes, one deterministic comparison, one unsent handoff draft. The supervisor records the outcome.</p><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/agent-ops/agent_ops.py">Inspect Python runner ↗</a></article>
-    <article class="piece"><span class="label">02 · Boundaries</span><h3>Never trust a tool request blindly</h3><p>An unknown tool, skipped step, missing evidence or invalid plan blocks automatic continuation. Suspicious instructions inside documents are handled by an independent guard.</p><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/agent-ops/test_agent_ops.py">Inspect safety regressions ↗</a></article>
-    <article class="piece"><span class="label">03 · Model independence</span><h3>A planner can be replaced</h3><p>The build uses an offline scripted planner. An optional, explicitly billable one-case OpenAI planning adapter is included, but no live-LLM result is claimed here. Planner choices never grant additional authority.</p><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/agent-ops/README.md">Read reproducibility guide ↗</a></article>
-  </div>
-  <div class="boundary"><strong>Deliberately not production-ready:</strong> This is not live multi-agent inference, independently validated insurance adjudication, PDF/OCR, a customer data integration, expert approval, a deployed review queue or a payout workflow. The browser is a read-only playback of the Python build artifact. A real insurer pilot would require audited integrations, independently labelled cases and human-reviewed SOPs.</div>
+<section id="what-i-built" class="takeaway">
+ <div class="eyebrow">02 / Why this matters</div><h2>Make the next decision easier. Make the next mistake less likely.</h2>
+ <div class="learn">
+  <div class="learn-item"><div class="num">01 · SPOT THE ISSUE</div><h3>Find what matters</h3><p>Specialized checks compare facts and reveal missing evidence or contradictions instead of guessing.</p></div>
+  <div class="learn-item"><div class="num">02 · HELP THE TEAM</div><h3>Prepare the next action</h3><p>A person gets the reason and supporting evidence, rather than a mysterious AI answer.</p></div>
+  <div class="learn-item"><div class="num">03 · IMPROVE THE WORKFLOW</div><h3>Learn from corrections</h3><p>We turn failures into reviewed test cases, so the next version can be measured rather than simply trusted.</p></div>
+ </div>
+ <div class="learning-evidence">
+  <strong>One failure we actually found</strong>
+  <p>In a small, real API comparison using 20 fictional travel-cancellation cases, GPT-4o mini missed two documents containing instructions that attempted to manipulate the AI. We added an independent check that catches those two known examples in an offline replay. This is useful development evidence, not a claim about performance on real claims.</p>
+  <div class="learn-links"><a href="/inca/agent-ops-technical.html">How the agent workflow works ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof/agent-ops">Source code and tests ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/actions/runs/39633113245">Recorded model evaluation ↗</a></div>
+ </div>
+ <p style="color:var(--muted);font-size:12px;margin-top:15px">This public demo replays offline, scripted tool executions. It does not run autonomous LLM agents in your browser. Real model-driven extraction and tool selection are being developed and tested separately; no production insurer access, live policy decisions or customer actions are involved.</p>
 </section>
+<section class="closing"><div><strong>What I would bring to INCA</strong><p>Curiosity about real operational problems, the ability to build working prototypes, and the discipline to measure, document and improve them alongside claims experts.</p></div><a class="btn" href="mailto:mikel_ninh@yahoo.de?subject=INCA%20AI%20Operations%20work%20sample">Discuss a real claims challenge ↗</a></section>
 </main>
-<footer class="footer"><span>INCA Agent Ops 1.1 · Michael Ninh · independent fictional work sample</span><a href="/inca/release.html">Back to the six-case work sample ↗</a></footer>
+<footer><span>Michael Ninh · Independent INCA application work sample</span><span>Fictional records · No external actions · Model-agnostic approach</span></footer>
 </div>
-<script src="/inca/agent-ops-ui.js"></script>
+<script src="/inca/agent-ops-simple.js"></script>
 </body></html>
