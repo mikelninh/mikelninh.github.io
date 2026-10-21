@@ -30,7 +30,7 @@ on:
           - "5"
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: inca-model-eval-${{ github.ref }}
@@ -77,11 +77,26 @@ jobs:
           python inca-proof/model-eval/run_openai.py --dry-run \
             --models "$MODEL_IDS" --split holdout --limit "$CASE_LIMIT"
       - name: Live OpenAI model comparison (billable)
-        if: ${{ github.event_name == 'push' || inputs.run_mode == 'live' }}
+        if: ${{ github.event_name != 'push' && inputs.run_mode == 'live' }}
         run: |
           python inca-proof/model-eval/run_openai.py \
             --models "$MODEL_IDS" --split holdout --limit "$CASE_LIMIT" \
             --out "inca-proof/model-eval/reports/github_run_${GITHUB_RUN_ID}.json"
+      - name: Record eight evidence-grounded synthetic extractions (billable)
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          python -m unittest discover inca-proof/model-eval -p 'test_shift_snapshot.py' -v
+          python inca-proof/model-eval/run_shift_snapshot.py --live --model gpt-6-luna --out inca/ai-evidence.json
+      - name: Publish recorded synthetic extraction evidence
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add inca/ai-evidence.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Add measured fictional OpenAI extraction snapshot [skip ci]"
+            git push origin HEAD:main
+          fi
       - name: Attach report (synthetic aggregate results only)
         if: ${{ (github.event_name == 'push' || inputs.run_mode == 'live') && always() }}
         uses: actions/upload-artifact@v4
