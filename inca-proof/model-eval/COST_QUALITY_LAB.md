@@ -1,27 +1,29 @@
 # INCA Model Lab — Cost × Quality v1
 
-**Live page:** https://mikelninh.github.io/inca/model-lab.html
+**Live demo:** https://mikelninh.github.io/inca/model-lab.html
 
-## What this release actually does
+## Recorded measurements vs. demonstrations
 
-1. Replays the **8 real OpenAI API responses** recorded in `inca/ai-evidence.json` on eight **developer-authored fictional** text cases. Eight next-route labels matched the author's expectations, no unsafe continuation was observed within that tiny set. Quoted excerpts were validated by deterministic substring/date checks.
-2. Shows the separate measured **15-call / 5-cases-per-model** comparison from `reports/RESULTS_2026-10-20.md`. Do **not** combine its sample size with the eight-case experiment.
-3. Estimates token-only costs by using recorded GPT-6 Luna usage (2,596 input + 1,185 output tokens over eight calls) and the published **$0.10/M input, $0.50/M output** standard list rates. Result: about **$0.000852** for eight calls. Prices may change; this excludes hosting, retries, review time, PDFs and the actual invoice.
-4. Provides interactive threshold curves from an **explicitly illustrative** score list. Until measured Jev data exists, there are no claimed Jev scores, AUCs, latency measurements or savings.
-5. Includes an **opt-in, server-side Jev gateway adapter** using documented `POST https://jevtypesafeai.com/api/v1/decisions` and the `noul` decision primitive. Scores measure whether the two fictional documents appear to need **attention** rather than continuing remaining checks.
+1. The 8-case OpenAI extraction run is a real recorded API run on **developer-authored fictional** source texts. All eight route labels matched the authored expectations; none of this establishes real-world insurance performance.
+2. A separate 15-call / 5-cases-per-model OpenAI comparison is documented in `reports/RESULTS_2026-10-20.md`. These are separate datasets.
+3. A cost projection uses recorded token counts (2,596 input / 1,185 output over eight OpenAI calls) and published list prices; it is an **estimate**, not an actual invoice.
+4. Until a recorded Jev result is specifically approved for publication, the public threshold chart shows **clearly labeled illustrative** scores only.
+5. The Jev adapter sends synthetic document texts **only to TypeSafe's official API** at `POST https://api.typesafe.ai/v1/systemone`, using `model=jev-latest`, an explicit `noul` judgment, and bearer authorization. The API answer is read from `answers.needs_attention.noul`.
 
-This is a personal independent work sample, **not** an INCA deployment. Neither provider performs a claim payment, coverage decision, or customer communication.
+This is an independent work sample and not an INCA deployment. No real claim or customer data are processed, and no coverage/payment/customer decisions are taken.
 
-## Security boundary
+## Safe default
 
-- Only known, fictional records are used. They are explicitly treated as untrusted data.
-- Never paste a key into a webpage. The `JEV_API_KEY` secret is read only in GitHub Actions or a trusted local process.
-- A Jev score is **shadow-only**. It may add a review flag, but it cannot override `HUMAN_REVIEW` or `NEED_INFO` returned by the independently verified OpenAI extraction gate.
-- An invalid, missing or failed Jev response has no usable score; if the shadow gate is enabled it fails to `HUMAN_REVIEW`.
-- The public page only reads a saved synthetic report. Opening it makes **no API request to an AI model**.
-- There is no automatic paid workflow on git push. Maximum **8 paid Jev requests** per manual run, with no retries. The report is published only when the operator chooses `publish_snapshot=true` and all eight scores are valid, and only when launched from `main`.
+- **Do not paste API keys into chat, source code or public webpages.** Use the GitHub Actions repository secret `TYPESAFE_API_KEY` (organization-scoped TypeSafe API key).
+- Only developer-authored fictional documents are sent to the model. Document instructions are untrusted data.
+- A model judgment runs strictly **in shadow mode**. It may suggest additional human review but **cannot override** a baseline `HUMAN_REVIEW` or `NEED_INFO`.
+- A failed, missing or malformed Jev response is **unscored** and causes the shadow gate to fail closed to `HUMAN_REVIEW`.
+- Tests and dry runs make **zero billable AI calls**.
+- The established GitHub Actions workflow requires a manual choice of `run_mode=jev`, and caps paid Jev requests to **1, 3, or 8** fictional cases; it never publishes reports to the public site.
+- Any results stay in a short-retention GitHub Actions artifact, pending human inspection.
+- Model version alias `jev-latest` may change; pin a tested version before any real deployment or threshold calibration.
 
-## How to run the free tests
+## Offline (zero cost)
 
 From the repository root:
 
@@ -30,26 +32,18 @@ python -m unittest discover inca-proof/model-eval -p 'test_*.py' -v
 python inca-proof/model-eval/cost_quality.py --mode dry-run --limit 8
 ```
 
-The dry-run makes **zero** external calls and produces no made-up Jev scores.
+## First actual TypeSafe API request (one fictional case)
 
-## Optional live Jev test
+1. Create an API key in the [official TypeSafe console](https://console.typesafe.ai/).
+2. Repository **Settings → Secrets and variables → Actions → New repository secret**: name `TYPESAFE_API_KEY`, value your actual key. Never enter it in this document or commit it.
+3. Open **[INCA Synthetic Model Eval](https://github.com/mikelninh/mikelninh.github.io/actions/workflows/inca-model-eval.yml)** and choose **Run workflow**.
+4. Choose `main` and set `run_mode=jev`, `jev_cases=1` for the first live request. Leave `models` and `cases_per_model` unchanged (they are ignored in Jev mode).
+5. Inspect the logs for API/schema errors and download the short-retention `inca-typesafe-jev-...` report artifact. Never assume a green workflow means a correct model decision.
+6. Only after a successful first call, consider `jev_cases=8` and assess scores, false negatives, failure rates, latency, and provider-reported costs. There is no auto-publishing step.
 
-A separate secret is required. Jev is developed by TypeSafe AI; this particular implementation uses **jevtypesafeai.com**, an **independent, third-party hosted gateway** rather than TypeSafe's direct API. The gateway quotes **$0.42 per million input tokens** for Jev, while TypeSafe's direct advertised price is **$0.042 per million**. Do not confuse them. Verify both privacy/data terms and current prices before using even fictional records; never send real personal data with this demo.
+**Endpoint:** `https://api.typesafe.ai/v1/systemone` (TypeSafe official; NOT the third-party `jevtypesafeai.com` gateway).
 
-1. Obtain a compatible prepaid `jv_live_...` key from the gateway.
-2. GitHub repository → Settings → Secrets and variables → Actions → New repository secret: `JEV_API_KEY`.
-3. GitHub Actions → **INCA Decision Model Lab (manual only)** → Run workflow → first choose **dry-run** (free).
-4. For a bounded measurement choose **jev** (max 8 paid calls) and leave **publish_snapshot=false** at first. Inspect the archived JSON report and the API statement.
-5. If those results are trustworthy, rerun with `publish_snapshot=true` on **main**. A public `inca/jev-evidence.json` report will only be committed if all 8 scores exist and pass validation.
-
-Run locally only with an appropriately secured secret:
-
-```bash
-JEV_API_KEY=<your-secure-shell-secret> python inca-proof/model-eval/cost_quality.py \
-  --mode jev --limit 8 --threshold 0.5 --out inca/jev-evidence.json
-```
-
-The shown shell syntax is illustrative; on Windows PowerShell use an environment variable instead of the inline Unix assignment.
+**Billing:** TypeSafe's public token pricing is indicative; check the account billing page before paid calls. Provider cost is reported only when supplied by the actual API response. An absent provider cost field is `null`, never misrepresented as zero.
 
 ## What is scored (and what is NOT)
 
@@ -72,7 +66,7 @@ The earlier three-model result (five synthetic cases per model) is a different d
 
 - [Recorded 8-case OpenAI run](https://github.com/mikelninh/mikelninh.github.io/blob/main/inca/ai-evidence.json)
 - [Recorded 15-call comparison, provenance and limitations](reports/RESULTS_2026-10-20.md)
-- [Jev hosted gateway request and billing fields](https://jevtypesafeai.com/docs/decisions)
-- [TypeSafe AI's directly advertised Jev pricing](https://typesafe.ai/)
+- [Official TypeSafe OpenAPI reference](https://api.typesafe.ai/redoc)
+- [TypeSafe AI](https://typesafe.ai/)
 - [OpenAI API published token pricing](https://developers.openai.com/api/docs/pricing)
 - [Original independent deterministic claims routing](../src/claims_eval.py)
