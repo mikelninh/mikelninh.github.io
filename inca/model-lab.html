@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="INCA synthetic claims Model Lab: evidence-backed LLM extraction, costs, a shadow-only decision-model experiment and threshold exploration.">
+<title>Model Lab · INCA Independent Work Sample</title>
+<style>
+:root{--bg:#f5f6f0;--ink:#1b2920;--sub:#657165;--line:#dce4d8;--card:#fffefa;--lime:#bded76;--forest:#203c2a;--green:#32845e;--orange:#ad6129;--red:#b24d45}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}a{color:inherit}a:hover{text-decoration-thickness:2px}button,input,select{font:inherit}button{cursor:pointer}:focus-visible{outline:3px solid #529b5e;outline-offset:3px}.wrap{width:min(1110px,calc(100% - 36px));margin:auto}
+header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:21px 0;gap:14px}.brand{font-size:14px;font-weight:850;letter-spacing:-.04em}.brand span{font-weight:500;color:var(--sub)}nav{display:flex;gap:18px;flex-wrap:wrap}nav a{font-size:12px;text-decoration:none;font-weight:720}.tag{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);padding:5px 11px;border-radius:30px;font-size:11px;font-weight:720;color:#42664c;background:#eef5e9}
+.hero{padding:62px 0 43px;display:grid;grid-template-columns:1.45fr .55fr;gap:38px;align-items:end}.eyebrow{color:#477151;text-transform:uppercase;letter-spacing:.16em;font-size:10px;font-weight:850}h1{font-size:clamp(44px,6vw,78px);letter-spacing:-.07em;line-height:1.01;margin:13px 0 18px;max-width:790px}h1 em{font-style:normal;color:#60956b}.lead{font-size:17px;color:#586b5b;max-width:680px;line-height:1.6}.hero-note{border-left:2px solid #8dbd7c;padding-left:18px;color:var(--sub);font-size:13px}.hero-note strong{display:block;color:var(--ink);margin-bottom:8px}.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.btn{background:var(--forest);color:white;text-decoration:none;border-radius:9px;padding:12px 17px;font-size:12px;font-weight:760;display:inline-flex;align-items:center;gap:7px}.btn.alt{background:transparent;border:1px solid #bacabc;color:var(--forest)}.mini{font-size:11px;color:var(--sub)}.section{padding:30px 0 16px}.section-top{display:flex;gap:12px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}.section h2{font-size:clamp(25px,3.2vw,36px);letter-spacing:-.055em;line-height:1.1;margin:7px 0 6px}.desc{font-size:13px;color:var(--sub);max-width:650px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat,.card{border:1px solid var(--line);background:var(--card);border-radius:13px}.stat{padding:19px}.stat small{font-size:11px;color:var(--sub);font-weight:700;display:block}.stat strong{font-size:clamp(24px,3vw,38px);letter-spacing:-.055em;display:block;margin:5px 0 1px;font-variant-numeric:tabular-nums}.stat span{font-size:11px;color:var(--sub)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}.card{padding:23px;min-width:0}.card h3{font-size:17px;letter-spacing:-.035em;margin:0 0 9px}.card p{color:var(--sub);font-size:13px;margin:0}.step{padding:13px 0;border-bottom:1px solid var(--line);display:flex;gap:13px;align-items:flex-start}.step:last-child{border:0}.num{width:26px;height:26px;border:1px solid #c0d5bd;background:#f4f8ef;display:grid;place-items:center;flex-shrink:0;border-radius:7px;font-size:11px;font-weight:900}.step strong{font-size:13px;display:block}.step p{font-size:12px}.dark{background:var(--forest);color:white;border-radius:13px;padding:25px}.dark h3{margin:0 0 9px;font-size:17px}.dark p{font-size:13px;color:#bfd3bd}.dark b{color:#c4f08f}.dark .small-note{margin-top:15px;padding-top:14px;border-top:1px solid #45614b}
+table{border-collapse:collapse;width:100%;text-align:left;font-size:12px}th,td{padding:12px 10px;border-bottom:1px solid var(--line)}th{font-size:10px;text-transform:uppercase;color:var(--sub);letter-spacing:.08em}tr:last-child td{border-bottom:0}td:first-child{font-weight:770}td.number{text-align:right;font-variant-numeric:tabular-nums}th.number{text-align:right}.table-scroll{overflow-x:auto}.hint{color:var(--sub);font-size:11px;margin-top:12px}.pills{display:flex;gap:6px;flex-wrap:wrap}.pill{font-size:10px;padding:3px 8px;background:#edf5e9;color:#48724b;border-radius:50px;font-weight:700}.pill.warn{background:#fff1e0;color:#965621}.threshold-controls{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap}.threshold-value{font-size:35px;letter-spacing:-.06em;font-weight:850}input[type=range]{accent-color:#32845e;width:100%;margin:13px 0}.meter{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.meter>div{background:#f2f5ed;padding:12px;border-radius:8px}.meter b{font-size:26px;display:block;letter-spacing:-.055em}.meter span{font-size:10px;color:var(--sub)}.plot{display:flex;align-items:flex-end;gap:6px;height:128px;border-bottom:1px solid #cbd6c8;padding:7px 0 0}.column{flex:1;min-width:0;background:#a5c8a6;border-radius:5px 5px 0 0;position:relative}.column.positive{background:#e0a56f}.column:hover{filter:brightness(.92)}.column:after{content:attr(data-id);position:absolute;bottom:-23px;left:50%;transform:translateX(-50%);font-size:9px;color:#68796a;white-space:nowrap}.cases{display:grid;grid-template-columns:minmax(200px,.46fr) 1fr;gap:12px}.case-list{display:grid;gap:6px;align-content:start}.case-btn{text-align:left;display:block;width:100%;background:#f7faf5;border:1px solid transparent;border-radius:9px;padding:12px;color:var(--ink)}.case-btn strong{font-size:11px;display:block}.case-btn span{font-size:11px;color:var(--sub)}.case-btn.selected{background:#eaf4e4;border-color:#9ccc8d}.case-detail{background:#f9fbf7;border:1px solid var(--line);border-radius:11px;padding:18px;min-width:0}.case-detail h3{margin:0 0 8px}.case-detail pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.65 ui-monospace,Consolas,monospace;background:white;border:1px solid var(--line);border-radius:8px;padding:12px;margin:9px 0}.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.fact{background:white;border:1px solid var(--line);padding:11px;border-radius:9px;min-width:0}.fact small{color:var(--sub);font-size:10px;display:block}.fact strong{font-size:12px;overflow-wrap:anywhere}.end{padding:42px 0;border-top:1px solid var(--line);margin-top:44px;display:flex;justify-content:space-between;gap:20px;color:var(--sub);font-size:11px}.alert{background:#fcf3e8;border:1px solid #ebd6b8;border-radius:9px;color:#745535;padding:11px 13px;font-size:12px;margin:12px 0}.costline{display:flex;align-items:baseline;gap:14px;margin:14px 0}.costline strong{font-size:36px;letter-spacing:-.055em}.costline span{color:var(--sub);font-size:12px}output{font-variant-numeric:tabular-nums}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:42px;gap:20px}.stats{grid-template-columns:repeat(2,1fr)}.grid2,.cases{grid-template-columns:1fr}.hero-note{max-width:620px}.meter{grid-template-columns:repeat(2,1fr)}}@media(max-width:540px){nav{gap:10px}.stat{padding:14px}.card{padding:17px}.facts{grid-template-columns:1fr}h1{font-size:46px}.plot{gap:3px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand">INCA<span> / independent work sample</span></div><nav aria-label="Page navigation"><a href="/inca/operator-shift.html">Operator Shift ↗</a><a href="#benchmark">Evidence</a><a href="#threshold">Threshold lab</a><a href="#cases">Case explorer</a></nav></header>
+<section class="hero">
+  <div><span class="eyebrow">AI Engineering · Evidence before automation</span><h1>Smarter models.<br><em>Safer decisions.</em></h1><p class="lead">Which model should do the work? We compare measured extraction quality, token costs and review risk. Then we ask whether a fast decision model adds any value at all.</p><div class="cta"><a class="btn" href="#benchmark">See measured results ↓</a><a class="btn alt" href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof/model-eval" target="_blank" rel="noopener">Read the code ↗</a></div></div>
+  <div class="hero-note"><strong>What is real here?</strong>Eight recorded OpenAI calls on fictional text documents. A separate 15-call comparison on five other synthetic cases. Jev integration is opt-in: scores will only be shown as real after an actual API run.<p class="mini" style="margin-top:11px">No uploaded customer documents. No claim approvals, customer contact or payouts.</p></div>
+</section>
+<section class="section" id="benchmark">
+ <div class="section-top"><div><span class="eyebrow">01 / Recorded evidence</span><h2>What we actually measured.</h2><p class="desc">Live API extraction → verbatim quote checks → deterministic next-step routing. These are developer-authored tests, not an insurer benchmark.</p></div><span class="tag" id="baseline-status">Loading recorded evidence…</span></div>
+ <div class="stats">
+  <div class="stat"><small>Route matches</small><strong id="route-matches">—</strong><span>On 8 fictional cases</span></div>
+  <div class="stat"><small>Unsafe continuations</small><strong id="unsafe">—</strong><span>Observed in this tiny run</span></div>
+  <div class="stat"><small>Quote checks passed</small><strong id="quotes">—</strong><span>Exact excerpts + date validation</span></div>
+  <div class="stat"><small>Estimated model token cost</small><strong id="model-cost">—</strong><span>USD · 8 calls, list pricing</span></div>
+ </div>
+ <p class="hint" id="baseline-note">Awaiting saved API record. Never interpreting 8/8 as production reliability.</p>
+</section>
+<section class="section"><div class="grid2">
+ <div class="card"><h3>One safe path through the workflow</h3>
+  <div class="step"><span class="num">01</span><div><strong>LLM extracts evidence</strong><p>Confirmed cancellation dates plus exact supporting quotations.</p></div></div>
+  <div class="step"><span class="num">02</span><div><strong>Independent code checks the evidence</strong><p>Is the quote present? Does it really contain that date? Do sources conflict?</p></div></div>
+  <div class="step"><span class="num">03</span><div><strong>Routing and human review</strong><p>Continue other checks, request missing information, or escalate. Never approve a payout.</p></div></div>
+  <div class="step"><span class="num">04</span><div><strong>Optional decision model in shadow mode</strong><p>Jev adds a risk signal, but cannot overturn a blocked case.</p></div></div>
+ </div>
+ <div class="dark"><span class="eyebrow" style="color:#bfdbb9">Engineering principle</span><h3>Less intelligence, more judgement.</h3><p><b>Using a model is not the success metric.</b> Success means noticing dangerous exceptions, grounding conclusions in evidence, minimising avoidable reviews, and keeping the system inspectable.</p><p class="small-note">An LLM extracts language. Deterministic checks enforce the guardrails. Jev is an experiment — not a magical insurance decision-maker.</p></div>
+</div></section>
+<section class="section">
+ <div class="section-top"><div><span class="eyebrow">02 / Separate model comparison</span><h2>How much does extraction cost?</h2><p class="desc">Three models, the <strong>same five</strong> developer-authored texts, 15 real API calls on 20 October 2026. Separate dataset from the eight-case snapshot above.</p></div></div>
+ <div class="card table-scroll"><table><thead><tr><th>Model</th><th class="number">Route match</th><th class="number">Avg. latency</th><th class="number">Est. USD · 5 calls</th></tr></thead><tbody>
+ <tr><td>GPT-4o mini <span class="pill">Baseline</span></td><td class="number">5/5</td><td class="number">1.95 s</td><td class="number">$0.000769</td></tr>
+ <tr><td>GPT-6 Luna <span class="pill">Current extractor</span></td><td class="number">5/5</td><td class="number">5.22 s</td><td class="number">$0.000857</td></tr>
+ <tr><td>GPT-6.1 Sol</td><td class="number">5/5</td><td class="number">5.07 s</td><td class="number">$0.014484</td></tr></tbody></table>
+ <div class="hint">Same five cases within this table only. Approximate token-list-price costs, not billed invoice amounts. No statistically supported winner. <a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/model-eval/reports/RESULTS_2026-10-20.md" target="_blank" rel="noopener">Original measured report ↗</a></div>
+ </div>
+</section>
+<section class="section">
+ <div class="grid2">
+  <div class="card"><span class="eyebrow">03 / Cost at scale</span><h3 style="margin-top:7px">What would 1,000 similar cases cost?</h3><p>Projection from the eight real GPT-6 Luna API calls. Includes only measured input/output tokens at standard public list prices, not hosting, retries, review time, or document processing.</p>
+    <div class="costline"><strong id="volume-cost">—</strong><span>model tokens only · USD</span></div>
+    <label for="volume" class="mini">Fictional cases per month: <b id="volume-label">1,000</b></label><input id="volume" type="range" min="100" max="100000" step="100" value="1000">
+    <p class="hint">Jev's directly advertised $0.042/M input-token price differs from the independent gateway used in our integration ($0.42/M). We will compare real provider-reported usage, not presume those costs are identical.</p>
+  </div>
+  <div class="card"><span class="eyebrow">04 / Optional Jev experiment</span><h3 style="margin-top:7px">Is another model actually useful?</h3><p id="jev-status">No verified Jev scores have been published. Until then, the threshold explorer below uses explicitly illustrative scores.</p>
+   <div class="alert"><b>Safe default:</b> No billable Jev API call runs on page load, on git push, or in the public browser. Only a manual GitHub Action can perform a maximum of eight synthetic requests.</div>
+   <div class="pills"><span class="pill warn" id="jev-state-pill">Jev not yet measured</span><span class="pill">Human review stays in control</span></div>
+   <div class="cta"><a class="btn alt" href="https://github.com/mikelninh/mikelninh.github.io/actions/workflows/inca-decision-lab.yml" target="_blank" rel="noopener">Launch manual benchmark ↗</a></div>
+  </div>
+ </div>
+</section>
+<section class="section" id="threshold">
+ <div class="section-top"><div><span class="eyebrow">05 / Interactive threshold lab</span><h2>The threshold is a decision.</h2><p class="desc">Treat the score as the chance a case needs attention. Move the threshold to see the cost of missing difficult cases versus reviewing clean ones.</p></div><span id="score-source" class="tag">Illustrative scores · NOT Jev measurements</span></div>
+ <div class="grid2">
+  <div class="card"><div class="threshold-controls"><div><p class="mini">Send for review when score ≥</p><div class="threshold-value" id="threshold-value">0.50</div></div><div><span class="pill warn">Exploratory only</span></div></div><label for="threshold" class="mini">Risk-score threshold</label><input type="range" id="threshold" value=".50" min="0" max="1" step=".05">
+  <div class="meter"><div><b id="tp">—</b><span>Correct review flags</span></div><div><b id="fn">—</b><span>Missed attention cases</span></div><div><b id="fp">—</b><span>Extra reviews</span></div><div><b id="tn">—</b><span>Correctly left alone</span></div></div>
+  <p class="hint">This is the standalone judge's diagnostic confusion matrix, not the actual workflow's safety outcome. The independent deterministic gate still blocks known exceptions.</p>
+  </div>
+  <div class="card"><h3>Each bar is a fictional risk score</h3><p id="chart-caption">Illustrative input, not a model run. Orange: case needs attention. Green: case may continue other checks.</p>
+   <div class="plot" id="plot" aria-label="Risk scores for sample cases" role="img" style="margin:13px 0 29px"></div>
+   <div class="facts"><div class="fact"><small>Attention recall</small><strong id="recall">—</strong></div><div class="fact"><small>Review workload</small><strong id="load">—</strong></div><div class="fact"><small>Brier score · lower is better</small><strong id="brier">—</strong></div><div class="fact"><small>Probability calibration</small><strong>Requires larger independent set</strong></div></div>
+   <p class="hint">Threshold optimisation on these eight known fixtures would overfit. We do not recommend or deploy a threshold based on them.</p>
+  </div>
+ </div>
+</section>
+<section class="section" id="cases">
+ <div class="section-top"><div><span class="eyebrow">06 / Inspect the evidence</span><h2>Don't trust a green badge.</h2><p class="desc">Choose a real recorded OpenAI result. See the two original fictional documents, cited excerpts and independently chosen routing.</p></div><span class="tag">Source-grounded replay</span></div>
+ <div class="card cases"><div class="case-list" id="case-list"><p class="mini">Loading fictional cases…</p></div><div class="case-detail" id="case-detail" aria-live="polite"><p class="mini">Select a case to inspect evidence.</p></div></div>
+</section>
+<section class="section"><div class="card"><span class="eyebrow">What comes next</span><h3 style="margin-top:7px">A real test — with real limitations.</h3><p>Before production: blinded cases created by domain experts, realistic document ingestion and source validation, multilingual/ambiguous cases, calibration on held-out data, regression gates, data protection controls, and human-in-the-loop pilots. This project has none of those production approvals.</p><div class="cta"><a class="btn" href="/inca/operator-shift.html">Try Operator Shift ↗</a><a class="btn alt" href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/model-eval/COST_QUALITY_LAB.md" target="_blank" rel="noopener">Method and reproducibility ↗</a></div></div></section>
+<footer class="end"><span>INCA independent AI Operations work sample · fictional documents only · 2026</span><span>No claims paid or coverage approved.</span></footer></div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const fmt=(v,d=3)=>Number(v).toFixed(d);
+const demoScores=[
+{id:'01',score:.97,positive:true},{id:'02',score:.89,positive:true},{id:'03',score:.76,positive:true},
+{id:'04',score:.66,positive:true},{id:'05',score:.48,positive:true},{id:'06',score:.22,positive:true},
+{id:'07',score:.82,positive:false},{id:'08',score:.61,positive:false},{id:'09',score:.44,positive:false},
+{id:'10',score:.32,positive:false},{id:'11',score:.11,positive:false},{id:'12',score:.05,positive:false}];
+let scores=demoScores,base=null,fixtures=null;
+function measure(rows,t){const m={tp:0,fn:0,fp:0,tn:0};for(const r of rows){
+const positive=r.positive, flag=r.score>=t; m[positive?(flag?'tp':'fn'):(flag?'fp':'tn')]++;
+}const brier=rows.reduce((s,r)=>s+(r.score-Number(r.positive))**2,0)/rows.length;return {...m,recall:(m.tp+m.fn)?m.tp/(m.tp+m.fn):null,load:(m.tp+m.fp)/rows.length,brier};}
+function renderThreshold(){const t=Number($('threshold').value);$('threshold-value').textContent=fmt(t,2);const m=measure(scores,t);for(const k of ['tp','fn','fp','tn'])$(k).textContent=m[k];$('recall').textContent=m.recall===null?'n/a':Math.round(m.recall*100)+'%';$('load').textContent=Math.round(m.load*100)+'%';$('brier').textContent=fmt(m.brier);
+ const plot=$('plot');plot.replaceChildren();for(const r of scores){let el=document.createElement('div');el.className='column'+(r.positive?' positive':'');el.style.height=Math.max(3,r.score*100)+'%';el.dataset.id=r.id.replace(/^ST-/,'');el.title=r.id+' · score '+fmt(r.score,2)+' · '+(r.positive?'Needs attention':'Continue checks')+(r.score>=t?' · review flag':' · no flag');plot.appendChild(el);}}
+$('threshold').addEventListener('input',renderThreshold);renderThreshold();
+function estimatedCost(n){if(!base)return null;const x=base.scoring;return n*((x.input_tokens*.10+x.output_tokens*.50)/1000000)/x.cases;}
+function renderCost(){const n=Number($('volume').value);$('volume-label').textContent=n.toLocaleString('en-US');const c=estimatedCost(n);$('volume-cost').textContent=c===null?'—':'$'+c.toFixed(4);}
+$('volume').addEventListener('input',renderCost);
+function textEl(tag,text,cls){const el=document.createElement(tag);if(cls)el.className=cls;el.textContent=text;return el;}
+function fact(container,name,value){const el=textEl('div','','fact');el.append(textEl('small',name),textEl('strong',String(value)));container.append(el);}
+function showCase(id){const c=fixtures.cases.find(x=>x.id===id),r=base.rows.find(x=>x.id===id);if(!c||!r)return;
+ for(const b of document.querySelectorAll('.case-btn')){const on=b.dataset.id===id;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',String(on));}
+ const d=$('case-detail');d.replaceChildren();
+ d.append(textEl('div','RECORDED API EXTRACTION · '+base.model,'eyebrow'),textEl('h3',c.id+' · '+c.name));
+ const f=textEl('div','','facts');fact(f,'Authored next step',c.expected);fact(f,'Observed next step',r.route);fact(f,'Quote validation',r.evidence_valid?'Passed':'Failed');fact(f,'API latency',r.latency_ms===null?'No response':r.latency_ms+' ms');d.append(f);
+ for(const [name,source,field] of [['Fictional source A',c.a,r.extraction?.source_a],['Fictional source B',c.b,r.extraction?.source_b]]){d.append(textEl('p',name,'mini'),textEl('pre',source));const ff=textEl('div','','facts');fact(ff,'Extracted date',field?.date||'Not found');fact(ff,'Verbatim cited excerpt',field?.quote||'None');d.append(ff);}
+ d.append(textEl('p','Independent routing reason: '+r.reason,'hint'));
+ d.append(textEl('p','Author-supplied expected outcome — not expert-certified. The public page replays a saved run; it does not send these documents to a model.','hint'));
+}
+async function load(){
+ try{const [a,b]=await Promise.all([fetch('/inca/ai-evidence.json',{cache:'no-store'}),fetch('/inca-proof/model-eval/shift_cases.json',{cache:'no-store'})]);if(!a.ok||!b.ok)throw Error('missing evidence');
+ base=await a.json();fixtures=await b.json();if(base.status!=='RECORDED_REAL_OPENAI_API_RUN'||!Array.isArray(base.rows)||base.rows.length!==8||fixtures.cases.length!==8)throw Error('invalid baseline');
+ $('baseline-status').textContent='Recorded real API run · '+base.model;
+ $('route-matches').textContent=base.scoring.route_matches+'/'+base.scoring.cases;
+ $('unsafe').textContent=base.scoring.unsafe_continuations;
+ $('quotes').textContent=base.scoring.evidence_valid+'/'+base.scoring.cases;
+ $('model-cost').textContent='$'+estimatedCost(base.scoring.cases).toFixed(6);
+ $('baseline-note').textContent='Recorded '+base.generated_at_utc.slice(0,10)+' · '+base.scoring.input_tokens+' input / '+base.scoring.output_tokens+' output tokens · estimated list-price charge, not invoice. Labels and cases authored by developer.';
+ renderCost();
+ const list=$('case-list');list.replaceChildren();for(const c of fixtures.cases){const b=document.createElement('button');b.type='button';b.className='case-btn';b.dataset.id=c.id;b.append(textEl('strong',c.id+' · '+c.name),textEl('span',c.expected.replaceAll('_',' ')));b.addEventListener('click',()=>showCase(c.id));list.appendChild(b);}showCase('ST-421');
+ }catch(err){$('baseline-status').textContent='Evidence unavailable';$('baseline-note').textContent='Recorded file could not be verified in browser. No results are being invented.';$('case-list').textContent='Evidence not available.';renderCost();}
+ try{const r=await fetch('/inca/jev-evidence.json',{cache:'no-store'});if(!r.ok)throw Error('unpublished');const report=await r.json();
+ if(report.status!=='RECORDED_REAL_JEV_API_RUN'||report.baseline_dataset_sha256!==base?.dataset_sha256||!Array.isArray(report.rows))throw Error('unverified report');
+ const good=report.rows.filter(r=>typeof r.score==='number'&&Number.isFinite(r.score)&&r.score>=0&&r.score<=1);
+ if(good.length===0)throw Error('no valid scores');
+ scores=good.map(r=>({id:r.id,score:r.score,positive:r.expected!=='CONTINUE_CHECKS'}));
+ $('score-source').textContent='Recorded Jev API · '+good.length+' scored fictional cases';
+ $('jev-state-pill').textContent='Recorded Jev shadow run';
+ $('jev-state-pill').classList.remove('warn');
+ $('jev-status').textContent=good.length+'/'+report.rows.length+' cases received valid Jev scores. These were recorded through a separate paid manual API run, not executed in this browser. Actual reported costs: '+(report.provider_cost_usd_total===null?'not complete':'$'+report.provider_cost_usd_total.toFixed(6))+'.';
+ $('chart-caption').textContent='Recorded shadow scores (orange = attention required). Developer-authored labels; not an independent validation or production-calibrated probability.';
+ renderThreshold();
+ }catch(err){$('jev-status').textContent='No verified Jev scores published. The integration is ready for an explicit, bounded manual run; numbers in the threshold lab are illustrative, not Jev output.';}
+}
+load();
+</script>
+</body></html>
