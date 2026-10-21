@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 14
     env:
-      OPENAI_API_KEY: \${{ secrets.OPENAI_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -35,12 +35,12 @@ jobs:
           test -n "$OPENAI_API_KEY"
           python inca-proof/agent-ops/narrative_pilot.py \
             --mode live \
-            --out "inca-proof/agent-ops/reports/narrative_\${GITHUB_RUN_ID}.json"
+            --out "inca-proof/agent-ops/reports/narrative_${GITHUB_RUN_ID}.json"
       - name: Attach original report even when models fail
-        if: \${{ always() }}
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: inca-real-narrative-pilot-\${{ github.run_id }}
+          name: inca-real-narrative-pilot-${{ github.run_id }}
           path: inca-proof/agent-ops/reports/narrative_*.json
           retention-days: 30
           if-no-files-found: warn
