@@ -1,6 +1,10 @@
 name: INCA Decision Model Lab (manual only)
 
 on:
+  # Safe bootstrap: editing the workflow itself runs only the free checks.
+  push:
+    paths:
+      - '.github/workflows/inca-decision-lab.yml'
   workflow_dispatch:
     inputs:
       mode:
@@ -40,7 +44,7 @@ jobs:
       - name: Run offline regression tests (no API calls)
         run: python -m unittest discover inca-proof/model-eval -p "test_*.py" -v
       - name: Dry-run preview (always free)
-        if: ${{ inputs.mode == 'dry-run' }}
+        if: ${{ github.event_name == 'push' || inputs.mode == 'dry-run' }}
         run: python inca-proof/model-eval/cost_quality.py --mode dry-run --limit 8
       - name: Validate explicit paid-run prerequisites
         if: ${{ inputs.mode == 'jev' }}
