@@ -79,15 +79,15 @@ footer{padding:21px 0 32px;border-top:1px solid var(--line);font-size:11px;color
  <div class="hero-note"><strong>Try it in 60 seconds.</strong> Fictional cases, recorded Python execution, nothing sent or approved.</div>
 </section>
 <section id="try">
- <div class="section-head"><div><div class="eyebrow">01 / See it yourself</div><h2>Choose a claim</h2></div><p>Start with travel cancellation, or explore another kind of damage.</p></div>
+ <div class="section-head"><div><div class="eyebrow">01 / See it yourself</div><h2>Choose a claim</h2></div><p>Real-world example: a customer email and the travel provider’s confirmation. Other cases have different document types.</p></div>
  <p id="loading-state" class="loading" role="status">Loading a verified fictional case…</p>
  <div id="case-experience" hidden>
   <div id="claim-options" class="option-row" role="group" aria-label="Choose a fictional claim"></div>
   <div class="case">
    <div class="case-top"><div><div class="eyebrow" id="case-topic">Two documents, two dates</div><h3 id="case-name">Travel cancellation</h3><p id="case-context"></p></div><span class="mark">Two fictional records</span></div>
    <div id="case-documents" class="docs">
-    <div class="doc"><div class="doc-kicker">Customer / Source A</div><div id="field-a" class="doc-field">Cancellation date</div><div id="case-a" class="doc-value a">—</div></div>
-    <div class="doc"><div class="doc-kicker">Second record / Source B</div><div id="field-b" class="doc-field">Cancellation date</div><div id="case-b" class="doc-value b">—</div></div>
+    <div class="doc"><div class="doc-kicker" id="doc-title-a">Customer email</div><div id="field-a" class="doc-field">Cancellation date</div><div id="case-a" class="doc-value a">—</div></div>
+    <div class="doc"><div class="doc-kicker" id="doc-title-b">Provider confirmation</div><div id="field-b" class="doc-field">Cancellation date</div><div id="case-b" class="doc-value b">—</div></div>
    </div>
    <div id="case-action" class="case-action"><span id="interaction-state">Read the two records. What should happen next?</span><button id="show-decision" type="button" class="btn">See what happens next →</button></div>
    <section id="decision-panel" class="outcome" aria-label="Safe next step" hidden>
@@ -104,18 +104,29 @@ footer{padding:21px 0 32px;border-top:1px solid var(--line);font-size:11px;color
  </div>
 </section>
 <section id="what-i-built" class="takeaway">
- <div class="eyebrow">02 / Why this matters</div><h2>Make the next decision easier. Make the next mistake less likely.</h2>
+ <div class="eyebrow">02 / Where AI adds value</div>
+ <div style="border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:18px 21px;margin:0 0 29px">
+   <strong style="font-size:17px;letter-spacing:-.02em">What does the AI actually do?</strong>
+   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:13px;margin-top:15px;font-size:13px">
+     <div><strong>1. Read messy documents</strong><p style="color:var(--muted);font-size:12px;margin:6px 0">Emails, receipts and reports aren't clean database fields.</p></div>
+     <div><strong>2. Choose a check</strong><p style="color:var(--muted);font-size:12px;margin:6px 0">The model identifies which specialist tool is relevant.</p></div>
+     <div><strong>3. Find evidence</strong><p style="color:var(--muted);font-size:12px;margin:6px 0">It quotes relevant facts, which our code checks against the original.</p></div>
+     <div><strong>4. Keep people in control</strong><p style="color:var(--muted);font-size:12px;margin:6px 0">Deterministic safeguards select a bounded next step. No payout approval.</p></div>
+   </div>
+   <div style="border-top:1px solid var(--line);padding-top:12px;color:var(--muted);font-size:12px">The interactive cards above replay a verified offline workflow. A separate real-model experiment tests whether the AI can perform steps 2–3 on natural-language fictional documents, rather than merely following rules.</div>
+ </div><h2>Make the next decision easier. Make the next mistake less likely.</h2>
  <div class="learn">
   <div class="learn-item"><div class="num">01 · SPOT THE ISSUE</div><h3>Find what matters</h3><p>Specialized checks compare facts and reveal missing evidence or contradictions instead of guessing.</p></div>
   <div class="learn-item"><div class="num">02 · HELP THE TEAM</div><h3>Prepare the next action</h3><p>A person gets the reason and supporting evidence, rather than a mysterious AI answer.</p></div>
   <div class="learn-item"><div class="num">03 · IMPROVE THE WORKFLOW</div><h3>Learn from corrections</h3><p>We turn failures into reviewed test cases, so the next version can be measured rather than simply trusted.</p></div>
  </div>
+ <div id="model-proof-panel" class="learning-evidence" hidden></div>
  <div class="learning-evidence">
   <strong>One failure we actually found</strong>
   <p>In a small, real API comparison using 20 fictional travel-cancellation cases, GPT-4o mini missed two documents containing instructions that attempted to manipulate the AI. We added an independent check that catches those two known examples in an offline replay. This is useful development evidence, not a claim about performance on real claims.</p>
   <div class="learn-links"><a href="/inca/agent-ops-technical.html">How the agent workflow works ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof/agent-ops">Source code and tests ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/actions/runs/39633113245">Recorded model evaluation ↗</a></div>
  </div>
- <p style="color:var(--muted);font-size:12px;margin-top:15px">This public demo replays offline, scripted tool executions. It does not run autonomous LLM agents in your browser. Real model-driven extraction and tool selection are being developed and tested separately; no production insurer access, live policy decisions or customer actions are involved.</p>
+ <p style="color:var(--muted);font-size:12px;margin-top:15px">This public demo replays offline, scripted tool executions. It does not call an LLM when clicked. Separately recorded real-model results are labelled and subject to independent evidence verification; no insurer integration, coverage decision or customer action is involved.</p>
 </section>
 <section class="closing"><div><strong>What I would bring to INCA</strong><p>Curiosity about real operational problems, the ability to build working prototypes, and the discipline to measure, document and improve them alongside claims experts.</p></div><a class="btn" href="mailto:mikel_ninh@yahoo.de?subject=INCA%20AI%20Operations%20work%20sample">Discuss a real claims challenge ↗</a></section>
 </main>
