@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       run_mode:
-        description: "dry-run = free; live = 5-case benchmark; snapshot = 8-case OpenAI evidence for public demo"
+        description: "dry-run free; paired-dry-run free; paired-live uses Jev + GPT on identical fictional cases"
         required: true
         type: choice
         default: dry-run
@@ -16,6 +16,26 @@ on:
           - live
           - snapshot
           - jev
+          - paired-dry-run
+          - paired-live
+      paired_split:
+        description: "Paired Jev/GPT benchmark split"
+        required: true
+        type: choice
+        default: dev
+        options:
+          - dev
+          - holdout
+      paired_cases:
+        description: "Paired cases: up to 2 billed requests per case; first choose 5"
+        required: true
+        type: choice
+        default: "5"
+        options:
+          - "1"
+          - "5"
+          - "10"
+          - "20"
       jev_cases:
         description: "Official TypeSafe Jev shadow judgments: 1 (first test), 3, or 8. Only used when run_mode=jev."
         required: true
@@ -59,6 +79,8 @@ jobs:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
       JEV_CASE_LIMIT: ${{ inputs.jev_cases }}
+      PAIRED_CASE_LIMIT: ${{ inputs.paired_cases }}
+      PAIRED_SPLIT: ${{ inputs.paired_split }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -79,13 +101,17 @@ jobs:
           assert 1 <= len(models) <= 3, 'Only 1-3 models per run'
           assert all(re.fullmatch(r'[a-zA-Z0-9._-]+', m) for m in models), 'Invalid model IDs'
           assert 1 <= limit <= 5, 'At most 5 cases per model'
-          assert os.environ['RUN_MODE'] in ('live', 'dry-run', 'snapshot', 'jev')
+          assert os.environ['RUN_MODE'] in ('live', 'dry-run', 'snapshot', 'jev', 'paired-dry-run', 'paired-live')
           if os.environ['RUN_MODE'] in ('live','snapshot'):
               assert os.environ.get('OPENAI_API_KEY'), 'Add repository secret OPENAI_API_KEY before selecting live or snapshot'
           if os.environ['RUN_MODE'] == 'jev':
               assert os.environ.get('TYPESAFE_API_KEY'), 'Add repository secret TYPESAFE_API_KEY before selecting jev'
               assert os.environ.get('JEV_CASE_LIMIT') in ('1', '3', '8'), 'Only 1, 3 or 8 Jev cases allowed'
-          print('Maximum billable API calls if live:', limit * len(models))
+          if os.environ['RUN_MODE'] == 'paired-live':
+              assert os.environ.get('TYPESAFE_API_KEY') and os.environ.get('OPENAI_API_KEY'), 'Both model secrets required; no model calls made.'
+              assert os.environ.get('PAIRED_CASE_LIMIT') in ('1','5','10','20')
+              assert os.environ.get('PAIRED_SPLIT') in ('dev','holdout')
+          print('Explicit run mode:',os.environ['RUN_MODE'])
           PY
       - name: Dry run (no API calls)
         if: ${{ inputs.run_mode == 'dry-run' }}
@@ -98,6 +124,25 @@ jobs:
           python inca-proof/model-eval/run_openai.py \
             --models "$MODEL_IDS" --split holdout --limit "$CASE_LIMIT" \
             --out "inca-proof/model-eval/reports/github_run_${GITHUB_RUN_ID}.json"
+      - name: Paired benchmark dry run (zero calls)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_mode == 'paired-dry-run' }}
+        run: |
+          python inca-proof/model-eval/paired_benchmark.py --mode dry-run \
+            --split "$PAIRED_SPLIT" --limit "$PAIRED_CASE_LIMIT"
+      - name: Paired Jev + GPT benchmark (explicitly billable)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_mode == 'paired-live' }}
+        run: |
+          python inca-proof/model-eval/paired_benchmark.py --mode live \
+            --split "$PAIRED_SPLIT" --limit "$PAIRED_CASE_LIMIT" --model gpt-4o-mini \
+            --out "inca-proof/model-eval/reports/paired_${GITHUB_RUN_ID}.json"
+      - name: Attach paired report (no auto-publication)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_mode == 'paired-live' && always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: inca-paired-${{ github.run_id }}
+          path: inca-proof/model-eval/reports/paired_*.json
+          if-no-files-found: warn
+          retention-days: 14
       - name: Official TypeSafe Jev shadow run (billable, at most eight fictional cases)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_mode == 'jev' }}
         run: |
