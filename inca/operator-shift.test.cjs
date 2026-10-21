@@ -4,7 +4,9 @@ const fs=require('node:fs');
 const vm=require('node:vm');
 const path=require('node:path');
 function load(file){
- const context={module:{exports:{}},Event:class Event{constructor(type){this.type=type}}};
+ const context={module:{exports:{}},Event:class Event{constructor(type){this.type=type}},
+  Blob:class Blob{constructor(parts,opts){this.parts=parts;this.type=opts.type}},
+  URL:{createObjectURL(){return 'blob:unit-test'},revokeObjectURL(){}}};
  vm.runInNewContext(fs.readFileSync(path.join(__dirname,file),'utf8'),context,{filename:file});
  return context.module.exports;
 }
@@ -106,7 +108,14 @@ test('browser workflow: a changed source invalidates the approved local handoff'
    'sh-feedback-result','sh-feedback-next','sh-feedback-title'];
  for(const id of ids)n[id]=element();
  const questionChips=[element(),element(),element()];
- const doc={getElementById:id=>n[id]||null,querySelectorAll:sel=>sel==='[data-sh-question]'?questionChips:[]};
+ const downloads=[];
+ const doc={getElementById:id=>n[id]||null,
+   querySelectorAll:sel=>sel==='[data-sh-question]'?questionChips:[],
+   body:{appendChild(){}},
+   createElement:tag=>({
+     href:'',download:'',remove(){},
+     click(){downloads.push({name:this.download,href:this.href})}
+   })};
  shift.mount(doc,core);
  n['sh-a'].value=shift.sample.a;n['sh-b'].value=shift.sample.b;
  n['sh-scan'].fire('click');
@@ -132,6 +141,16 @@ test('browser workflow: a changed source invalidates the approved local handoff'
  assert.equal(n['sh-export-step'].hidden,true);
  n['sh-review'].fire('click');
  assert.equal(n['sh-export'].disabled,false);
+ n['sh-export'].fire('click');
+ assert.match(downloads[0].name,/human-review-handoff\.md/);
+ assert.match(n['sh-status'].textContent,/No external case or customer action/);
+ n['sh-fixture-expected'].value='NEED_INFO';
+ n['sh-fixture-why'].value='The original timestamp must be independently checked against the booking provider.';
+ n['sh-regression'].fire('click');
+ assert.equal(n['sh-feedback-result'].hidden,false);
+ assert.match(n['sh-feedback-title'].textContent,/Simulated disagreement/);
+ assert.match(n['sh-feedback-next'].textContent,/NOT modify the rule/);
+ assert.match(downloads[1].name,/correction-CANDIDATE\.json/);
  n['sh-b'].value=n['sh-b'].value.replace('12.07.2026','11.07.2026');
  n['sh-b'].fire('input');
  assert.equal(n['sh-review'].disabled,true);
