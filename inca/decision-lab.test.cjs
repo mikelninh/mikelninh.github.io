@@ -1,0 +1,51 @@
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const proof=JSON.parse(fs.readFileSync(path.join(__dirname,'abc-proof.json'),'utf8'));
+const html=fs.readFileSync(path.join(__dirname,'decision-lab.html'),'utf8');
+test('A/B/C aggregate uses one real source run and expected six fictional cases',()=>{
+ assert.equal(proof.schema,'INCA-ABC-PROOF-1');
+ assert.equal(proof.run_url,'https://github.com/mikelninh/mikelninh.github.io/actions/runs/39669379581');
+ assert.equal(proof.cases.length,6);
+ assert.equal(new Set(proof.cases.map(x=>x.id)).size,6);
+ assert.deepEqual(proof.arms.map(x=>x.id),['A','B','C']);
+ assert.ok(proof.caveats.length>=5);
+});
+test('verify actual recorded aggregate and prices with no invented zero costs',()=>{
+ const [a,b,c]=proof.arms;
+ assert.equal(a.gpt_calls,6);assert.equal(a.jev_calls,0);
+ assert.equal(b.gpt_calls,6);assert.equal(b.jev_calls,6);
+ assert.equal(c.gpt_calls,6);assert.equal(c.jev_calls,6);
+ assert.equal(a.verified_evidence,5);
+ assert.equal(b.verified_evidence,5);
+ assert.equal(c.verified_evidence,5);
+ assert.equal(a.human_reviews,5);
+ assert.equal(b.human_reviews,6);
+ assert.equal(c.human_reviews,6);
+ assert.equal(a.price_usd,0.0006678);
+ assert.equal(b.price_usd,0.000784266);
+ assert.equal(c.price_usd,b.price_usd);
+ assert.equal(a.serial_latency_ms,1569);
+ assert.equal(b.serial_latency_ms,1741);
+ assert.equal(c.serial_latency_ms,b.serial_latency_ms);
+});
+test('clear bicycle triggers additional Jev review, no safe case silently cleared',()=>{
+ const bike=proof.cases.find(x=>x.id==='REAL-TH-03');
+ assert.equal(bike.jev_score,.62);
+ assert.equal(bike.A,'Continue remaining checks');
+ assert.equal(bike.B,'Review');
+ assert.equal(bike.C,'Review');
+ assert.equal(proof.cases.find(x=>x.id==='REAL-HM-02').gpt_verified,false);
+});
+test('present limitations and optional analysis only, not on main hero',()=>{
+ assert.match(html,/counterfactual/i);
+ assert.match(html,/self-authored/i);
+ assert.match(html,/human review/i);
+ assert.match(html,/model time/i);
+ assert.match(html,/\/inca\/abc-proof\.json/);
+ const parent=fs.readFileSync(path.join(__dirname,'agent-ops.html'),'utf8');
+ assert.match(parent,/href="\/inca\/decision-lab\.html"/);
+ const hero=parent.slice(parent.indexOf('<section class="hero">'),parent.indexOf('<section id="try">'));
+ assert.doesNotMatch(hero,/A\/B\/C|which AI workflow wins/i);
+});
