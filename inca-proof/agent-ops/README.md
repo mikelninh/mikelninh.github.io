@@ -1,6 +1,10 @@
 # INCA Agent Ops 1.1 — Exception Control Tower
 
-**Live demo:** https://mikelninh.github.io/inca/agent-ops.html
+**Simple hiring-manager demo:** https://mikelninh.github.io/inca/agent-ops.html
+
+**Technical trace:** https://mikelninh.github.io/inca/agent-ops-technical.html
+
+**Agent Ops 1.2 model experiment:** [Hiring-manager & evaluation guide](HIRING_MANAGER_GUIDE.md). Free dry-run and opt-in live model selection/extraction.
 
 This independent, fictional work sample is for INCA AI Operations. It is **not** the RETURN LOOP project for SNOCKS and does not recreate INCA's proprietary MARS system.
 
