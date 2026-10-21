@@ -131,7 +131,7 @@ jobs:
           fetch_until_ready "$base/inca/catch-the-mistake.js" "IncaMistakeChallenge"
           fetch_until_ready "$base/inca/agent-ops.html" "One claim."
           fetch_until_ready "$base/inca/agent-ops-simple.js" "IncaSimpleCase"
-          fetch_until_ready "$base/inca/agent-ops-technical.html" "Exception Control Tower"
+          fetch_until_ready "$base/inca/agent-ops-technical.html" "Seven visible steps"
           fetch_until_ready "$base/inca/agent-ops-ui.js" "IncaAgentOpsUI"
           fetch_until_ready "$base/inca/agent-ops-traces.json" "agent-ops-v1.1"
           fetch_until_ready "$base/inca/operator-shift.html" 'id="shift-app"'
