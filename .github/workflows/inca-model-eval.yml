@@ -7,13 +7,14 @@ on:
   workflow_dispatch:
     inputs:
       run_mode:
-        description: "Dry run costs nothing; live calls the OpenAI API"
+        description: "dry-run = free; live = 5-case benchmark; snapshot = 8-case OpenAI evidence for public demo"
         required: true
         type: choice
         default: dry-run
         options:
           - dry-run
           - live
+          - snapshot
       models:
         description: "Comma-separated OpenAI model IDs"
         required: true
@@ -66,8 +67,8 @@ jobs:
           assert 1 <= len(models) <= 3, 'Only 1-3 models per run'
           assert all(re.fullmatch(r'[a-zA-Z0-9._-]+', m) for m in models), 'Invalid model IDs'
           assert 1 <= limit <= 5, 'At most 5 cases per model'
-          assert os.environ['RUN_MODE'] in ('live', 'dry-run')
-          if os.environ['RUN_MODE'] == 'live':
+          assert os.environ['RUN_MODE'] in ('live', 'dry-run', 'snapshot')
+          if os.environ['RUN_MODE'] in ('live','snapshot'):
               assert os.environ.get('OPENAI_API_KEY'), 'Add repository secret OPENAI_API_KEY before selecting live'
           print('Maximum billable API calls if live:', limit * len(models))
           PY
@@ -83,12 +84,12 @@ jobs:
             --models "$MODEL_IDS" --split holdout --limit "$CASE_LIMIT" \
             --out "inca-proof/model-eval/reports/github_run_${GITHUB_RUN_ID}.json"
       - name: Record eight evidence-grounded synthetic extractions (billable)
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' || inputs.run_mode == 'snapshot' }}
         run: |
           python -m unittest discover inca-proof/model-eval -p 'test_shift_snapshot.py' -v
           python inca-proof/model-eval/run_shift_snapshot.py --live --model gpt-6-luna --out inca/ai-evidence.json
       - name: Publish recorded synthetic extraction evidence
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' || inputs.run_mode == 'snapshot' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -115,7 +116,7 @@ jobs:
             fi
           fi
       - name: Attach synthetic recorded OpenAI extraction snapshot
-        if: ${{ github.event_name == 'push' && always() }}
+        if: ${{ (github.event_name == 'push' || inputs.run_mode == 'snapshot') && always() }}
         uses: actions/upload-artifact@v4
         with:
           name: inca-shift-snapshot-${{ github.run_id }}
