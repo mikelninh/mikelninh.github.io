@@ -121,12 +121,12 @@ def build_report(cases,model,api_fn):
             total_prompt+=usage.get("prompt_tokens",0)
             total_completion+=usage.get("completion_tokens",0)
             row={"id":case["id"],"label":case["name"],"expected":case["expected"],
-                 "route":checked["route"],"matches_authored_expected":checked["route"]==case["expected"],
+                 "route":checked["route"],"matches_authored_expected":checked["valid_evidence"] and checked["route"]==case["expected"],
                  "evidence_valid":checked["valid_evidence"],"reason":checked["reason"],
                  "extraction":extraction,"latency_ms":elapsed}
         except Exception as err:
             row={"id":case["id"],"label":case["name"],"expected":case["expected"],
-                 "route":"HUMAN_REVIEW","matches_authored_expected":case["expected"]=="HUMAN_REVIEW",
+                 "route":"HUMAN_REVIEW","matches_authored_expected":False,
                  "evidence_valid":False,"reason":"API/validation failure; fail closed.",
                  "error":type(err).__name__,"extraction":None,"latency_ms":None}
         rows.append(row)
