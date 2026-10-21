@@ -28,5 +28,11 @@ jobs:
         run: python -m unittest discover inca-proof/model-eval -p 'test_*.py' -v
       - name: Run INCA Release 1.0 cross-claim regressions (free)
         run: node --test inca/release-engine.test.cjs
+      - name: Test Agent Ops restricted tool runner (offline and free)
+        run: python -m unittest discover inca-proof/agent-ops -p 'test_*.py' -v
+      - name: Produce auditable Agent Ops trace and validate dashboard contract (offline and free)
+        run: |
+          python inca-proof/agent-ops/agent_ops.py --planner offline --out inca/agent-ops-traces.json
+          node --test inca/agent-ops-ui.test.cjs
       - name: Ensure checked-in report is clean
         run: git diff --exit-code -- inca-proof/reports/deterministic_eval.json
