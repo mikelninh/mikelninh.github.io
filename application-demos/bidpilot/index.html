@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f8f5">
+<title>BIDPILOT · Welche Aufträge lohnen unsere Zeit?</title>
+<meta name="description" content="Ein öffentliches Projekt finden, mögliche Hürden verstehen und eine Entscheidung mitnehmen.">
+<style>
+body{margin:0;background:#f7f8f5;color:#1f2923;font-family:Inter,system-ui,sans-serif}
+.site-nav{background:white;border-bottom:1px solid #e1e7de}
+.site-nav>div{max-width:880px;margin:auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.site-brand{font-weight:800;letter-spacing:-.04em;font-size:15px}
+.site-brand span{color:#5548a8}
+.site-nav a{color:#53665a;text-decoration:none;font-size:12px;margin-left:15px}
+.site-nav a[aria-current=page]{color:#5548a8;font-weight:750}
+.loading{max-width:880px;margin:50px auto;padding:20px;color:#5b6d60}
+@media(max-width:470px){.site-nav>div{padding:13px}.site-brand{font-size:12px}.site-nav a{font-size:11px;margin-left:8px}}
+</style>
+<link rel="stylesheet" href="/application-demos/v10.css">
+<script defer src="/application-demos/bid-screening.js"></script>
+<script defer src="/application-demos/return-triage.js"></script>
+<script defer src="/application-demos/ml-triage.js"></script>
+<script defer src="/application-demos/v9-core.js"></script>
+<script defer src="/application-demos/v10.js"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Arbeitsproben"><div>
+  <div class="site-brand">MICHAEL NINH <span>/ LAB</span></div>
+  <div>
+   <a href="/application-demos/bidpilot/" aria-current="page">BIDPILOT</a>
+   <a href="/application-demos/return-loop/">RETURN LOOP</a>
+  </div>
+</div></nav>
+<main class="wrap loading" aria-live="polite">Die Arbeitsprobe wird geladen …</main>
+<noscript><p class="loading">Bitte JavaScript aktivieren, um die interaktive Arbeitsprobe auszuprobieren.</p></noscript>
+</body>
+</html>
