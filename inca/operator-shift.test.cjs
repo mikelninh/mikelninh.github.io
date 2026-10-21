@@ -4,7 +4,7 @@ const fs=require('node:fs');
 const vm=require('node:vm');
 const path=require('node:path');
 function load(file){
- const context={module:{exports:{}}};
+ const context={module:{exports:{}},Event:class Event{constructor(type){this.type=type}}};
  vm.runInNewContext(fs.readFileSync(path.join(__dirname,file),'utf8'),context,{filename:file});
  return context.module.exports;
 }
@@ -91,6 +91,7 @@ test('browser workflow: a changed source invalidates the approved local handoff'
    return {textContent:'',value:'',hidden:false,disabled:false,checked:false,
      listeners:{},attrs:{},setAttribute(k,v){this.attrs[k]=String(v)},
      addEventListener(k,f){this.listeners[k]=f},
+     dispatchEvent(e){this.fire(e.type)},
      fire(k){const fn=this.listeners[k];if(typeof fn!=='function')throw Error('no handler '+k);fn();}
    };
  }
@@ -100,14 +101,24 @@ test('browser workflow: a changed source invalidates the approved local handoff'
    'sh-route-next','sh-fixture-expected','sh-fixture-why','sh-owner','sh-notes',
    'sh-stage-2','sh-stage-3','sh-stage-4','sh-stage-5','sh-review-error',
    'sh-preview-owner','sh-preview-route','sh-preview-action','sh-preview-draft','sh-preview-handback',
-   'sh-qa-status','sh-reset'];
+   'sh-qa-status','sh-reset','sh-auto-preview','sh-auto-owner','sh-auto-question','sh-auto-action',
+   'sh-auto-a','sh-auto-b','sh-suggested-owner','sh-suggested-note','sh-use-owner',
+   'sh-feedback-result','sh-feedback-next','sh-feedback-title'];
  for(const id of ids)n[id]=element();
- const doc={getElementById:id=>n[id]||null};
+ const questionChips=[element(),element(),element()];
+ const doc={getElementById:id=>n[id]||null,querySelectorAll:sel=>sel==='[data-sh-question]'?questionChips:[]};
  shift.mount(doc,core);
  n['sh-a'].value=shift.sample.a;n['sh-b'].value=shift.sample.b;
  n['sh-scan'].fire('click');
+ assert.equal(n['sh-auto-preview'].hidden,false);
+ assert.equal(n['sh-auto-owner'].textContent,'Claims expert · Travel queue');
+ assert.match(n['sh-auto-question'].textContent,/cancellation date/);
+ assert.equal(n['sh-owner'].value,'Claims expert · Travel queue');
+ assert.match(n['sh-notes'].value,/original documents/);
  assert.equal(n['sh-route'].textContent,'HUMAN_REVIEW');
  assert.equal(n['sh-review'].disabled,false);
+ questionChips[1].fire('click');
+ assert.match(n['sh-notes'].value,/booking-system update/);
  n['sh-owner'].value='Claims expert · Queue 1';
  n['sh-notes'].value='Verify which of the two cancellation dates is supported by the originals.';
  n['sh-confirm'].checked=true;
@@ -126,10 +137,60 @@ test('browser workflow: a changed source invalidates the approved local handoff'
  assert.equal(n['sh-review'].disabled,true);
  assert.equal(n['sh-export'].disabled,true);
  assert.equal(n['sh-export-step'].hidden,true);
+ assert.equal(n['sh-auto-preview'].hidden,true);
  n['sh-scan'].fire('click');
  assert.equal(n['sh-route'].textContent,'CONTINUE_CHECKS');
+ assert.equal(n['sh-owner'].value,'Claims operations · Coverage checks');
+ assert.match(n['sh-notes'].value,/coverage and policy checks/);
  n['sh-reset'].fire('click');
  assert.equal(n['sh-a'].value,shift.sample.a);
  assert.equal(n['sh-b'].value,shift.sample.b);
  assert.equal(n['sh-export'].disabled,true);
+});
+
+test('route-aware handoff suggestions are editable, evidence-specific and bounded',()=>{
+ const views=[
+  shift.analyze(core,shift.sample.a,shift.sample.b),
+  shift.analyze(core,shift.sample.a,'Booking record missing'),
+  shift.analyze(core,shift.sample.a,shift.sample.b.replace('12.07.2026','11.07.2026'))
+ ];
+ const suggestions=views.map(v=>shift.suggestHandoff(v));
+ assert.deepEqual(Array.from(suggestions,x=>x.route),['HUMAN_REVIEW','NEED_INFO','CONTINUE_CHECKS']);
+ assert.equal(suggestions[0].owner,'Claims expert · Travel queue');
+ assert.equal(suggestions[1].owner,'Claims intake · Evidence request');
+ assert.equal(suggestions[2].owner,'Claims operations · Coverage checks');
+ for(const suggestion of suggestions){
+  assert.equal(suggestion.questions.length,3);
+  assert.equal(suggestion.questions[0],suggestion.note);
+  assert.match(suggestion.status,/NOT SENT/);
+  assert.equal(suggestion.evidence.length,2);
+ }
+ assert.match(suggestions[0].evidence[0],/11.07.2026/);
+ assert.match(suggestions[0].evidence[1],/12.07.2026/);
+ assert.throws(()=>shift.suggestHandoff({route:'AUTO_READY'}),/invalid_route/);
+});
+test('suggestions, simulated after-handoff response and future release gates are visible',()=>{
+ const html=fs.readFileSync(path.join(__dirname,'operator-shift.html'),'utf8');
+ for(const id of ['sh-auto-preview','sh-auto-owner','sh-auto-question','sh-auto-action','sh-auto-a','sh-auto-b',
+  'sh-suggested-owner','sh-suggested-note','sh-use-owner','sh-feedback-result','sh-feedback-next','sh-feedback-title']){
+   assert.ok(html.includes('id="'+id+'"'),'Missing '+id);
+ }
+ for(const n of [0,1,2])assert.match(html,new RegExp('data-sh-question="'+n+'"'));
+ assert.match(html,/Reviewer response/);
+ assert.match(html,/Independent review \+ CI/);
+ assert.match(html,/Shadow-mode metrics/);
+ assert.match(html,/No actual INCA expert reviews anything on this page/);
+});
+test('simulated reviewer candidate distinguishes agreement from proposed correction without self-training',()=>{
+ const agree=shift.regression(core,{a:shift.sample.a,b:shift.sample.b,
+   expected:'HUMAN_REVIEW',why:'The cancellation dates in the two synthetic texts conflict.'});
+ const change=shift.regression(core,{a:shift.sample.a,b:shift.sample.b,
+   expected:'NEED_INFO',why:'Original sources do not establish a trustworthy cancellation date.'});
+ assert.equal(agree.candidate_kind,'AGREEMENT_CONTROL');
+ assert.equal(change.candidate_kind,'CORRECTION_PROPOSAL');
+ assert.equal(agree.feedback_origin,'USER-SIMULATED · NOT AN INCA CLAIMS EXPERT');
+ assert.equal(agree.improvement_steps.length,5);
+ assert.match(change.improvement_steps[1],/NOT DONE/);
+ assert.match(change.improvement_steps[2],/NOT DONE/);
+ assert.equal(change.external_actions,0);
 });
