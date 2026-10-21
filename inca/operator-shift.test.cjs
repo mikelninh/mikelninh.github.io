@@ -84,7 +84,7 @@ test('page publishes complete operator sequence, controls and explicit caveats',
  assert.match(html,/Handoff/);assert.match(html,/Improve/);
  assert.match(html,/Not a re-measurement of the old holdout/);
  assert.match(html,/I haven't worked with real insurer documents or received claims-expert feedback/);
- assert.match(html,/with AI-assisted coding/);
+ assert.match(html,/Built with AI coding assistance/);
  assert.match(html,/implementation with AI coding assistance/);
  assert.match(html,/unsent handoff/);
  assert.match(html,/15-call \/ 5-case-per-model/);
@@ -98,6 +98,7 @@ test('browser workflow: a changed source invalidates the approved local handoff'
      listeners:{},attrs:{},setAttribute(k,v){this.attrs[k]=String(v)},
      addEventListener(k,f){this.listeners[k]=f},
      dispatchEvent(e){this.fire(e.type)},
+     scrollIntoView(options){this.scrolled=true;this.scrollOptions=options},
      fire(k){const fn=this.listeners[k];if(typeof fn!=='function')throw Error('no handler '+k);fn();}
    };
  }
@@ -109,7 +110,8 @@ test('browser workflow: a changed source invalidates the approved local handoff'
    'sh-preview-owner','sh-preview-route','sh-preview-action','sh-preview-draft','sh-preview-handback',
    'sh-qa-status','sh-reset','sh-auto-preview','sh-auto-owner','sh-auto-question','sh-auto-action',
    'sh-auto-a','sh-auto-b','sh-suggested-owner','sh-suggested-note','sh-use-owner',
-   'sh-feedback-result','sh-feedback-next','sh-feedback-title'];
+   'sh-feedback-result','sh-feedback-next','sh-feedback-title',
+   'sh-start','sh-next-review','sh-next-handoff','sh-reviewed-nav'];
  for(const id of ids)n[id]=element();
  const questionChips=[element(),element(),element()];
  const downloads=[];
@@ -122,7 +124,8 @@ test('browser workflow: a changed source invalidates the approved local handoff'
    })};
  shift.mount(doc,core);
  n['sh-a'].value=shift.sample.a;n['sh-b'].value=shift.sample.b;
- n['sh-scan'].fire('click');
+ n['sh-start'].fire('click');
+ assert.equal(n['sh-preview'].scrolled,true);
  assert.equal(n['sh-auto-preview'].hidden,false);
  assert.equal(n['sh-auto-owner'].textContent,'Claims expert · Travel queue');
  assert.match(n['sh-auto-question'].textContent,/cancellation date/);
@@ -130,6 +133,8 @@ test('browser workflow: a changed source invalidates the approved local handoff'
  assert.match(n['sh-notes'].value,/original documents/);
  assert.equal(n['sh-route'].textContent,'HUMAN_REVIEW');
  assert.equal(n['sh-review'].disabled,false);
+ n['sh-next-review'].fire('click');
+ assert.equal(n['sh-review-step'].scrolled,true);
  questionChips[1].fire('click');
  assert.match(n['sh-notes'].value,/booking-system update/);
  n['sh-owner'].value='Claims expert · Queue 1';
@@ -139,10 +144,14 @@ test('browser workflow: a changed source invalidates the approved local handoff'
  assert.equal(n['sh-export'].disabled,false);
  assert.equal(n['sh-export-step'].hidden,false);
  assert.equal(n['sh-preview-owner'].textContent,'Claims expert · Queue 1');
+ assert.equal(n['sh-reviewed-nav'].hidden,false);
+ n['sh-next-handoff'].fire('click');
+ assert.equal(n['sh-export-step'].scrolled,true);
  n['sh-notes'].value='Confirm the cancellation timestamp with the booking provider and client originals.';
  n['sh-notes'].fire('input');
  assert.equal(n['sh-export'].disabled,true);
  assert.equal(n['sh-export-step'].hidden,true);
+ assert.equal(n['sh-reviewed-nav'].hidden,true);
  n['sh-review'].fire('click');
  assert.equal(n['sh-export'].disabled,false);
  n['sh-export'].fire('click');
@@ -161,6 +170,7 @@ test('browser workflow: a changed source invalidates the approved local handoff'
  assert.equal(n['sh-export'].disabled,true);
  assert.equal(n['sh-export-step'].hidden,true);
  assert.equal(n['sh-auto-preview'].hidden,true);
+ assert.equal(n['sh-reviewed-nav'].hidden,true);
  n['sh-scan'].fire('click');
  assert.equal(n['sh-route'].textContent,'CONTINUE_CHECKS');
  assert.equal(n['sh-owner'].value,'Claims operations · Coverage checks');
@@ -216,4 +226,23 @@ test('simulated reviewer candidate distinguishes agreement from proposed correct
  assert.match(change.improvement_steps[1],/NOT DONE/);
  assert.match(change.improvement_steps[2],/NOT DONE/);
  assert.equal(change.external_actions,0);
+});
+
+test('first-time visitor sees concrete problem, one-click start and separate historical evidence',()=>{
+ const html=fs.readFileSync(path.join(__dirname,'operator-shift.html'),'utf8');
+ assert.match(html,/Two documents disagree/);
+ assert.match(html,/What happens next/);
+ assert.match(html,/11\.07\.2026/);
+ assert.match(html,/12\.07\.2026/);
+ assert.match(html,/Run the prepared example/);
+ assert.match(html,/No typing or account required/);
+ assert.match(html,/The documents are already filled in/);
+ assert.match(html,/id="sh-start"/);
+ assert.match(html,/id="sh-next-review"/);
+ assert.match(html,/id="sh-next-handoff"/);
+ assert.match(html,/id="sh-reviewed-nav"/);
+ assert.match(html,/<details class="historical-proof" id="historical-proof">/);
+ assert.match(html,/different synthetic inputs/);
+ assert.match(html,/not a measured before\/after improvement on the same documents/);
+ assert.match(html,/not an AI prediction/);
 });
