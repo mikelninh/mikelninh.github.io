@@ -181,6 +181,7 @@ async function init(){try{const embedded=document.getElementById('embedded-fixtu
  $('provider-badge').textContent=live.paid_requests_enabled?'Öffentliche Demo kostenlos · KI-Labor geschützt':'Öffentliche Demo kostenlos · Keine bezahlten Aufrufe';$('provider-badge').classList.toggle('ready',live.paid_requests_enabled);
  $('reply-text').addEventListener('input',e=>{replyDrafts[selected]=e.target.value;replySources[selected]=replySources[selected]||'Bearbeitete Textvorlage';});
  $('copy-reply').addEventListener('click',copyReply);
+ $('open-ai-reply').addEventListener('click',()=>{$('tech-lab').open=true;$('tech-lab').scrollIntoView({behavior:'smooth',block:'center'});showStatus('Privater KI-Test: unter „Generatives LLM“ auf „Jetzt testen“ klicken. Falls erforderlich, vorher bei „Verbinden“ den Demo-Zugang eingeben. Der generierte Entwurf erscheint danach im Antwortfeld.');});
  $('open-evaluation').addEventListener('click',()=>{$('more').open=true;$('paired-study').scrollIntoView({behavior:'smooth',block:'start'});});
  $('open-tech-lab').addEventListener('click',()=>{$('tech-lab').open=true;});
  $('paired-next').addEventListener('click',pairedNext);
