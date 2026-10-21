@@ -1,0 +1,38 @@
+
+/* V8: one clear result above the fold; additional evidence stays optional */
+#v6.v8{padding-top:38px}
+#v6.v8 h1{font-size:clamp(40px,5vw,62px);max-width:850px;margin-bottom:12px}
+#v6.v8 .v6-lead{max-width:740px;font-size:16px;line-height:1.57;margin-bottom:26px}
+#v6.v8 .v6-layout{grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:15px}
+#v6.v8 .v6-panel{padding:25px}
+#v6.v8 .v6-panel h2{font-size:26px}
+#v6.v8 .v6-k{letter-spacing:.12em}
+#v6.v8 .v8-options{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:20px 0}
+#v6.v8 .v8-options button{padding:11px 6px;text-align:center;font-size:11px;white-space:nowrap}
+#v6.v8 .v8-decision{padding:15px 0;border-bottom:1px solid var(--line)}
+#v6.v8 .v8-decision:last-child{border-bottom:0}
+#v6.v8 .v8-decision h3{font-size:16px;line-height:1.34;margin:7px 0}
+#v6.v8 .v8-decision p{margin:7px 0}
+#v6.v8 .v8-decision .v6-k{font-size:10px}
+#v6.v8 .v8-decision:first-of-type .v6-k{color:#1a6a4c}
+#v6.v8 .v8-decision:nth-of-type(2) .v6-k{color:#96702b}
+#v6.v8 .v8-summary{background:var(--wash);border-radius:7px;padding:13px 14px;font-size:12px;line-height:1.5;margin:12px 0}
+#v6.v8 .v8-summary strong{display:block;margin-bottom:6px}
+#v6.v8 .v8-details{margin-top:18px;padding-top:11px;border-top:1px solid var(--line)}
+#v6.v8 .v8-details summary{font-size:12px}
+#v6.v8 .v8-resultline{font-weight:730;font-size:13px;padding:12px 13px;background:var(--wash);border-radius:6px;margin-bottom:16px}
+#v6.v8 .v8-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#v6.v8 .v8-model{border:1px solid #dbe2d9;border-radius:7px;padding:15px;min-width:0}
+#v6.v8 .v8-model h3{font-size:17px;margin:11px 0}
+#v6.v8 .v8-model p{margin:10px 0}
+#v6.v8 .v8-evidence{padding:15px;background:#f6f8f5;border:1px solid #e2e7e0;border-radius:8px;margin:18px 0}
+#v6.v8 .v8-evidence .v6-metrics{grid-template-columns:repeat(2,minmax(0,1fr));margin:12px 0}
+#v6.v8 .v8-evidence h3{margin:0 0 9px}
+#v6.v8 .v8-evidence .v6-metric{background:white}
+#v6.v8 .v8-review{padding-top:13px;margin:18px 0;border-top:1px solid var(--line)}
+#v6.v8 .v8-review h3{margin:0 0 10px}
+#v6.v8 .v6-foot{margin-top:24px}
+#v6.v8 button[aria-pressed=true]{background:var(--wash);color:var(--accent);border-color:var(--accent)}
+#v6.v8 button:disabled{opacity:.5;cursor:not-allowed}
+@media(max-width:830px){#v6.v8 .v6-layout{grid-template-columns:1fr}#v6.v8 .v6-panel{padding:18px}#v6.v8 .v8-options button{font-size:12px}}
+@media(max-width:460px){#v6.v8 .v8-options{grid-template-columns:1fr}#v6.v8 .v8-comparison{grid-template-columns:1fr}}
