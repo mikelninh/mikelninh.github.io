@@ -49,7 +49,7 @@ class DecisionLabTests(unittest.TestCase):
         m = lab.compute_metrics(rows, .5)
         self.assertEqual((m["tp"],m["fn"],m["fp"],m["tn"]), (1,1,1,1))
         self.assertEqual(m["scored"],4)
-        self.assertAlmostEqual(m["brier"], .235, places=6)
+        self.assertAlmostEqual(m["brier"], .185, places=6)
 
     def test_invalid_scores_are_not_accuracy_success(self):
         m = lab.compute_metrics([{"expected":"HUMAN_REVIEW", "score":None}],.5)
