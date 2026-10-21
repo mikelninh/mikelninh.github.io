@@ -141,9 +141,14 @@ function renderReply(){
  }
  $('reply-text').value=replyDrafts[x.id];
  $('reply-source').textContent=replySources[x.id]||'Textvorlage · keine KI-Ausgabe';
- $('reply-status').textContent='Bearbeitbarer Entwurf – es wird nichts versendet.';
+ const flags=auditFlags(x.id);
+ $('reply-reviewed').checked=false;$('copy-reply').disabled=true;
+ $('reply-draft').classList.toggle('risky',flags.length>0);
+ $('reply-status').textContent=flags.length?'⚠ '+flags.length+' mögliche unbelegte Aussage(n). Vor Freigabe prüfen und korrigieren.':'Entwurf noch nicht freigegeben. Es wird nichts versendet.';
 }
 async function copyReply(){
+ if(!$('reply-reviewed').checked){$('reply-status').textContent='Bitte Ton, Fakten und Zusagen prüfen und die Freigabe markieren.';return;}
+
  const value=$('reply-text').value;
  try{
   if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(value);
@@ -315,7 +320,8 @@ async function init(){try{const embedded=document.getElementById('embedded-fixtu
  if(auditResp.ok){const loaded=await auditResp.json();if(loaded.total_generated===24)qualityAudit=loaded;}
  }catch(e){/* Public demo still works offline with template answers. */}
  $('provider-badge').textContent=live.paid_requests_enabled?'Öffentliche Demo kostenlos · KI-Labor geschützt':'Öffentliche Demo kostenlos · Keine bezahlten Aufrufe';$('provider-badge').classList.toggle('ready',live.paid_requests_enabled);
- $('reply-text').addEventListener('input',e=>{replyDrafts[selected]=e.target.value;replySources[selected]=replySources[selected]||'Bearbeitete Textvorlage';});
+ $('reply-text').addEventListener('input',e=>{replyDrafts[selected]=e.target.value;replySources[selected]=replySources[selected]||'Bearbeitete Textvorlage';$('reply-reviewed').checked=false;$('copy-reply').disabled=true;$('reply-status').textContent='Entwurf geändert. Bitte vor dem Kopieren erneut prüfen.';});
+ $('reply-reviewed').addEventListener('change',e=>{$('copy-reply').disabled=!e.target.checked;});
  $('copy-reply').addEventListener('click',copyReply);
  $('open-ai-reply').addEventListener('click',()=>{$('tech-lab').open=true;$('tech-lab').scrollIntoView({behavior:'smooth',block:'center'});showStatus('Privater KI-Test: unter „Generatives LLM“ auf „Jetzt testen“ klicken. Falls erforderlich, vorher bei „Verbinden“ den Demo-Zugang eingeben. Der generierte Entwurf erscheint danach im Antwortfeld.');});
  $('open-evaluation').addEventListener('click',()=>{$('more').open=true;$('paired-study').scrollIntoView({behavior:'smooth',block:'start'});});
