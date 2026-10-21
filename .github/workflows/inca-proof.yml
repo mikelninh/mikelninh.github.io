@@ -24,5 +24,7 @@ jobs:
         run: python inca-proof/src/claims_eval.py
       - name: Run proof tests
         run: python -m unittest discover inca-proof/tests -v
+      - name: Run model-lab offline regression tests (free)
+        run: python -m unittest discover inca-proof/model-eval -p 'test_*.py' -v
       - name: Ensure checked-in report is clean
         run: git diff --exit-code -- inca-proof/reports/deterministic_eval.json
