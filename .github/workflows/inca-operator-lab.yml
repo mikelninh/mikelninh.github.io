@@ -15,6 +15,8 @@ jobs:
         with:
           node-version: "22"
       - name: Check operator replay and interactive document handoff
-        run: node --test inca/operator-lab.test.cjs inca/interactive-case.test.cjs inca/catch-the-mistake.test.cjs inca/operator-shift.test.cjs
+        run: node --test inca/operator-lab.test.cjs inca/interactive-case.test.cjs inca/catch-the-mistake.test.cjs inca/operator-shift.test.cjs inca/ai-proof.test.cjs
+      - name: Validate model-extraction evidence grounding (offline, no API calls)
+        run: python -m unittest discover inca-proof/model-eval -p 'test_shift_snapshot.py' -v
       - name: Verify 72 synthetic claims and split discipline
         run: python -m unittest discover inca-proof/tests -v
