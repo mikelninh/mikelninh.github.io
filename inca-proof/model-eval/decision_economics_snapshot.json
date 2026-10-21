@@ -1,0 +1,60 @@
+{
+  "title": "INCA Jev × GPT decision economics — original recorded 20-case development sample",
+  "source_run": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/39633113245",
+  "source_artifact": "inca-paired-39633113245",
+  "date": "2026-10-21",
+  "data_quality": "20 developer-authored synthetic travel cancellation pairs, 10 authored attention true / 10 attention false. Not independent expert labels. Guard-assisted replay is contaminated by known development failures.",
+  "models": {
+    "jev": {
+      "model_id": "jev-1.13.0",
+      "scored": 20,
+      "true_positive": 10,
+      "false_positive": 3,
+      "true_negative": 7,
+      "false_negative": 0,
+      "input_tokens": 8613,
+      "output_tokens": 0,
+      "mean_latency_ms": 191
+    },
+    "gpt": {
+      "model_id": "gpt-4o-mini-2024-07-18",
+      "scored": 20,
+      "true_positive": 8,
+      "false_positive": 2,
+      "true_negative": 8,
+      "false_negative": 2,
+      "input_tokens": 3821,
+      "output_tokens": 120,
+      "mean_latency_ms": 690
+    },
+    "guarded_jev": {
+      "true_positive": 10,
+      "false_positive": 3,
+      "true_negative": 7,
+      "false_negative": 0
+    },
+    "guarded_gpt": {
+      "true_positive": 10,
+      "false_positive": 2,
+      "true_negative": 8,
+      "false_negative": 0
+    }
+  },
+  "list_price_usd_per_million_tokens": {
+    "jev_input": 0.042,
+    "jev_output": 0,
+    "gpt_input": 0.15,
+    "gpt_output": 0.6
+  },
+  "source_for_prices": {
+    "jev": "https://typesafe.ai/",
+    "gpt": "https://developers.openai.com/api/docs/models/gpt-4o-mini"
+  },
+  "caveats": [
+    "Pricing is a dated public-list-price estimate, not provider invoice.",
+    "Jev and GPT have different token usage; compare complete prices, not input rate alone.",
+    "All pricing excludes extraction, OCR, provider plans, infrastructure, retries, downstream models, and human time.",
+    "A flagged 'needs_attention' case may require information collection rather than human review.",
+    "Do not extrapolate this artificial 50% positive-case mix as real insurance prevalence."
+  ]
+}
