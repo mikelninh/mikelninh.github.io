@@ -124,3 +124,5 @@ jobs:
           fetch_until_ready "$base/inca/catch-the-mistake.js" "IncaMistakeChallenge"
           fetch_until_ready "$base/inca/operator-shift.html" 'id="shift-app"'
           fetch_until_ready "$base/inca/operator-shift.js" "IncaOperatorShift"
+          fetch_until_ready "$base/inca/operator-shift.html" 'id="ai-evidence"'
+          fetch_until_ready "$base/inca/ai-proof.js" "IncaAiEvidence"
