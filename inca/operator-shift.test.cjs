@@ -115,6 +115,12 @@ test('browser workflow: a changed source invalidates the approved local handoff'
  assert.equal(n['sh-export'].disabled,false);
  assert.equal(n['sh-export-step'].hidden,false);
  assert.equal(n['sh-preview-owner'].textContent,'Claims expert · Queue 1');
+ n['sh-notes'].value='Confirm the cancellation timestamp with the booking provider and client originals.';
+ n['sh-notes'].fire('input');
+ assert.equal(n['sh-export'].disabled,true);
+ assert.equal(n['sh-export-step'].hidden,true);
+ n['sh-review'].fire('click');
+ assert.equal(n['sh-export'].disabled,false);
  n['sh-b'].value=n['sh-b'].value.replace('12.07.2026','11.07.2026');
  n['sh-b'].fire('input');
  assert.equal(n['sh-review'].disabled,true);
