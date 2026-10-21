@@ -1,0 +1,46 @@
+name: INCA A-B-C Decision Workflow Trial
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'inca-proof/agent-ops/RUN_ABC_EXPERIMENT_ONCE.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: inca-abc-real-comparison-one-at-a-time
+  cancel-in-progress: false
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline architecture and evidence regression tests
+        run: |
+          python -m unittest discover inca-proof/agent-ops -p 'test_*.py' -v
+          python inca-proof/agent-ops/abc_comparison.py --mode dry-run
+      - name: Paired six-case GPT + Jev API calls (explicitly billable, max 12)
+        run: |
+          test -n "$OPENAI_API_KEY"
+          test -n "$TYPESAFE_API_KEY"
+          python inca-proof/agent-ops/abc_comparison.py --mode live \
+            --out "inca-proof/agent-ops/reports/abc_${GITHUB_RUN_ID}.json"
+      - name: Archive every result, including failures
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: inca-abc-results-${{ github.run_id }}
+          path: inca-proof/agent-ops/reports/abc_*.json
+          retention-days: 30
+          if-no-files-found: warn
