@@ -1,6 +1,6 @@
 # INCA · Jev Research Plan V2 — falsifiable hypotheses
 
-**Status:** Experimental design only. **No API calls or new results have been run.**  
+**Status:** H3 + H4 tested on 300 authored fictional cases with 300 real Jev and 300 real GPT responses; other hypotheses remain untested. See [live reviewer report](https://mikelninh.github.io/inca/jev-research.html) and [source run](https://github.com/mikelninh/mikelninh.github.io/actions/runs/39691808881).  
 **Date:** 2026-10-22  
 **Question:** Where can a structured, low-latency decision model *replace or selectively avoid* more expensive work in claims AI Operations, while preserving evidence integrity and human control?
 
@@ -106,3 +106,7 @@ At the workflow level record:
 - [three.dev: Jev vs LLM judge — sampler more useful than full replacement](https://three.dev/blog/jev-vs-the-llm-as-a-judge)
 
 **Shareable recommendation for the INCA application:** “We compared decision-model architectures and found that adding Jev to a small exception-heavy sample increased reviews and costs. Rather than assume a universal winner, we pre-registered tests for high-volume triage, tool routing, trace evaluation and score calibration on a new blinded synthetic holdout. Each has quality, cost and abstention gates.”
+
+## First completed result · H3 and H4 (2026-10-22)
+
+The 240-case frozen synthetic holdout contained 49 seeded critical tool/trace errors. At the 20% audit budget (48 records), Jev prioritized 38/49, GPT-4o mini 15/49, hash-random selection 10/49, and the deliberately simple deterministic rules **44/49**. Jev **passed the preregistered recall-vs-random criterion** but **did not beat simple rules**. Exact tool routing was 240/240 for Jev, GPT and rules, so Jev cannot claim incremental routing value. Model p95 API time was Jev 129ms vs GPT 927ms; full workflow time and human review cost unmeasured. Returned Jev revision was 1.13.0; multilingual/version H7 remains untested. All examples use one deterministic generator with intentionally easy structural fault patterns. No insurer claims or expert labels.
