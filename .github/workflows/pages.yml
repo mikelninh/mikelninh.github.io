@@ -76,6 +76,7 @@ jobs:
           node --test inca/agent-ops-ui.test.cjs
           node --test inca/agent-ops-simple.test.cjs
           node --test inca/decision-lab.test.cjs
+          node --test inca/jev-research.test.cjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site
@@ -131,6 +132,8 @@ jobs:
           fetch_until_ready "$base/inca/interactive-case.js" "IncaCaseWorkshop"
           fetch_until_ready "$base/inca/catch-the-mistake.js" "IncaMistakeChallenge"
           fetch_until_ready "$base/inca/agent-ops.html" "One claim."
+          fetch_until_ready "$base/inca/jev-research.html" "Can a small AI find the mistakes that matter?"
+          fetch_until_ready "$base/inca/jev-research-v2.json" "INCA-JEV-RESEARCH-V2-PUBLIC"
           fetch_until_ready "$base/inca/decision-lab.html" "Which AI workflow actually helps?"
           fetch_until_ready "$base/inca/abc-proof.json" "INCA-ABC-PROOF-1"
           fetch_until_ready "$base/inca/agent-ops-simple.js" "IncaSimpleCase"
