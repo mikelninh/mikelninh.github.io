@@ -1,0 +1,99 @@
+name: INCA Decision Model Lab (manual only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "dry-run makes ZERO API calls; jev makes 8 billed fictional-case calls"
+        required: true
+        type: choice
+        default: dry-run
+        options:
+          - dry-run
+          - jev
+      publish_snapshot:
+        description: "Only for successful 8/8 Jev scores on main: publish shadow report to public site"
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: inca-decision-model-lab-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      JEV_API_KEY: ${{ secrets.JEV_API_KEY }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run offline regression tests (no API calls)
+        run: python -m unittest discover inca-proof/model-eval -p "test_*.py" -v
+      - name: Dry-run preview (always free)
+        if: ${{ inputs.mode == 'dry-run' }}
+        run: python inca-proof/model-eval/cost_quality.py --mode dry-run --limit 8
+      - name: Validate explicit paid-run prerequisites
+        if: ${{ inputs.mode == 'jev' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$JEV_API_KEY" || { echo "::error::Add repository secret JEV_API_KEY. No calls have been made."; exit 1; }
+          echo "User-selected paid mode. Exactly eight invented text cases, at most eight decision requests."
+      - name: Run Jev benchmark on eight fictional cases (billable)
+        if: ${{ inputs.mode == 'jev' }}
+        run: |
+          python inca-proof/model-eval/cost_quality.py --mode jev --limit 8 --threshold 0.5 --out inca/jev-evidence.json
+      - name: Gate public publication on complete valid sample
+        if: ${{ inputs.mode == 'jev' && inputs.publish_snapshot }}
+        run: |
+          python - <<'PY'
+          import json
+          with open("inca/jev-evidence.json", encoding="utf-8") as f:
+              r=json.load(f)
+          assert r['status']=='RECORDED_REAL_JEV_API_RUN'
+          assert len(r['rows']) == 8 and r['scoring']['scored'] == 8, 'Incomplete score set; do not publish.'
+          assert r['scoring']['unscored'] == 0
+          print('Eight real decision scores available; still synthetic-only.')
+          PY
+      - name: Publish safe shadow snapshot on main
+        if: ${{ inputs.mode == 'jev' && inputs.publish_snapshot && github.ref == 'refs/heads/main' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add inca/jev-evidence.json
+          git commit -m "Publish measured fictional Jev shadow benchmark"
+          published=false
+          for attempt in $(seq 1 15); do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              published=true
+              echo "Shadow benchmark safely published on attempt $attempt"
+              break
+            fi
+            sleep 2
+          done
+          if [ "$published" != "true" ]; then
+            echo "::error::Concurrent writes prevented publication; download the report artifact."
+            exit 1
+          fi
+      - name: Attach report artifact
+        if: ${{ inputs.mode == 'jev' && always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: inca-jev-shadow-${{ github.run_id }}
+          path: inca/jev-evidence.json
+          if-no-files-found: warn
+          retention-days: 14
