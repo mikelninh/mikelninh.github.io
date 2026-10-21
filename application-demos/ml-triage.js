@@ -43,7 +43,7 @@ function train(samples){
   }).sort((a,b)=>b.log-a.log);
   const best=scored[0],margin=best.log-scored[1].log,prob=Math.exp(Math.max(-40,Math.min(40,scored[1].log-best.log)));
   const low=best.hit<5||margin<2;
-  return{category:best.category,confidence:low?"niedrig":margin<7?"mittel":"hoch",margin:Number(margin.toFixed(2)),scores:Object.fromEntries(scored.map(x=>[x.category,Number(x.log.toFixed(1))])),matched:best.matched,reason:low?"Modell wenig sicher – manuell prüfen":"Trainiertes Naive-Bayes-Textmodell (synthetische Daten)"};
+  return{category:best.category,confidence:"nicht kalibriert",needsReview:low,margin:Number(margin.toFixed(2)),scores:Object.fromEntries(scored.map(x=>[x.category,Number(x.log.toFixed(1))])),matched:best.matched,reason:low?"Zu wenig bekannte Textsignale – manuell prüfen":"Trainiertes Naive-Bayes-Textmodell auf synthetischen Sätzen (keine Wahrscheinlichkeitskalibrierung)"};
  }
  return{classify,trainingCount:samples.length,classes,vocabSize:v};
 }
