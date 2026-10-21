@@ -165,7 +165,7 @@
     $('sh-review').addEventListener('click',review);
     $('sh-export').addEventListener('click',()=>{
       if(!receipt)return;
-      download('ST-104-human-review-handoff.md',receipt.text,'text/markdown;charset=utf-8');
+      download('ST-104-'+receipt.route.toLowerCase().replace(/_/g,'-')+'-handoff.md',receipt.text,'text/markdown;charset=utf-8');
       set('sh-status','Handoff file downloaded locally. No external case or customer action occurred.');
     });
     $('sh-regression').addEventListener('click',()=>{
@@ -180,7 +180,7 @@
     });
     [a,b].forEach(el=>el.addEventListener('input',invalidate));
     [owner,notes,$('sh-confirm')].forEach(el=>el.addEventListener('input',()=>{
-      if(receipt){receipt=null;$('sh-export').disabled=true;$('sh-regression').disabled=true;setStage(4,'pending');setStage(5,'pending');}
+      if(receipt){receipt=null;$('sh-export').disabled=true;$('sh-regression').disabled=true;$('sh-export-step').hidden=true;$('sh-qa-step').hidden=true;setStage(3,'pending');setStage(4,'pending');setStage(5,'pending');set('sh-status','Reviewer details changed. Prepare the handoff again before exporting.');}
     }));
     $('sh-reset').addEventListener('click',()=>{
       a.value=sample.a;b.value=sample.b;owner.value='';notes.value='';$('sh-confirm').checked=false;
