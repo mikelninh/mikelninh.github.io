@@ -1,0 +1,277 @@
+{
+  "status": "complete",
+  "type": "exploratory_live_test",
+  "label": "Eight preselected fictional development examples – NOT an independent holdout or production benchmark",
+  "config": {
+    "model": "gpt-4.1-mini",
+    "sample": "8 preselected synthetic development cases",
+    "method": "One live OpenAI Responses API inference per case, compared to the same deterministic keyword rules",
+    "measured_at": "2026-10-21T17:56:08.654Z"
+  },
+  "selected_ids": [
+    "RL-301",
+    "RL-302",
+    "RL-308",
+    "RL-309",
+    "RL-314",
+    "RL-316",
+    "RL-317",
+    "RL-324"
+  ],
+  "attempted": 8,
+  "successful": 8,
+  "errors": [],
+  "quality_cases_in_successful_subset": 4,
+  "baseline_on_same_successful_cases": {
+    "exact_match": 0.625,
+    "macro_f1": 0.7261904761904763,
+    "quality_false_negatives": 1,
+    "quality_false_positives": 0
+  },
+  "llm_on_same_successful_cases": {
+    "exact_match": 0.5,
+    "macro_f1": 0.688888888888889,
+    "quality_false_negatives": 0,
+    "quality_false_positives": 0
+  },
+  "human_review_recommendations": 6,
+  "supported_evidence_quotes": 8,
+  "generated_draft_count": 8,
+  "mean_latency_ms": 2080,
+  "limitations": [
+    "Preselected synthetic development cases; not blinded or independently sampled",
+    "Reply drafts not independently checked by a human",
+    "Review flags are not measured workload or time savings",
+    "No customer/shop integration",
+    "Token counts are not precise invoice costs"
+  ],
+  "rows": [
+    {
+      "id": "RL-301",
+      "product": "Everyday Socks · Black 3-Pack",
+      "gold": [
+        "quality"
+      ],
+      "baseline": [
+        "other"
+      ],
+      "input_sha256": "9656b87e96a423abf9c22f4c0e5fd7640bd87b1e978ab028bb8ca6d2f7074be7",
+      "status": "ok",
+      "llm": [
+        "quality"
+      ],
+      "evidence_valid": true,
+      "evidence": "Nach zweimaligem Tragen kann ich durch die Ferse fast schon Zeitung lesen",
+      "latency_ms": 2665,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 30,
+      "draft_reply": "Es tut mir leid zu hören, dass die Socken so schnell abgenutzt sind. Das sollte natürlich nicht passieren. Bitte melde dich bei uns, damit wir gemeinsam eine Lösung finden können.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 455,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": "RL-302",
+      "product": "Everyday Socks · Black 3-Pack",
+      "gold": [
+        "quality"
+      ],
+      "baseline": [
+        "quality"
+      ],
+      "input_sha256": "394866d187de0e6b89cfa8c8a8980e8f1db1dc13517a9ed63734da9ad4a233b3",
+      "status": "ok",
+      "llm": [
+        "quality",
+        "return"
+      ],
+      "evidence_valid": true,
+      "evidence": "Naht an der Ferse aufgegangen",
+      "latency_ms": 2200,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 26,
+      "draft_reply": "Es tut mir leid, dass die Nähte an der Ferse aufgegangen sind. Bitte kontaktiere unseren Kundenservice mit deiner Bestellnummer, damit wir gemeinsam eine Lösung finden können.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 456,
+        "output_tokens": 105
+      }
+    },
+    {
+      "id": "RL-308",
+      "product": "Rib Tee · White M",
+      "gold": [
+        "order_issue",
+        "return"
+      ],
+      "baseline": [
+        "return"
+      ],
+      "input_sha256": "9a83671f3f9eae109261ec713cbe1a4a28c3041bcba613a1ee9c24dfa0a10388",
+      "status": "ok",
+      "llm": [
+        "fit",
+        "return",
+        "order_issue"
+      ],
+      "evidence_valid": true,
+      "evidence": "Das T-Shirt kam in XL statt M",
+      "latency_ms": 2203,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 36,
+      "draft_reply": "Es tut mir leid, dass du das T-Shirt in der falschen Größe erhalten hast. Wir helfen dir gern mit dem Umtausch weiter. Bitte setze dich mit unserem Kundenservice in Verbindung, um die nächsten Schritte zu besprechen.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 450,
+        "output_tokens": 113
+      }
+    },
+    {
+      "id": "RL-309",
+      "product": "Heavy Hoodie · Stone L",
+      "gold": [
+        "shipping"
+      ],
+      "baseline": [
+        "shipping"
+      ],
+      "input_sha256": "975e5248a94811b4ffee566f8c3e1d6569fd1930aed7fe52137143cbd9fec7e9",
+      "status": "ok",
+      "llm": [
+        "shipping",
+        "order_issue"
+      ],
+      "evidence_valid": true,
+      "evidence": "Laut Tracking wurde zugestellt, aber ich habe keine Ware bekommen.",
+      "latency_ms": 2466,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 45,
+      "draft_reply": "Es tut mir leid zu hören, dass du deine Bestellung nicht erhalten hast, obwohl sie als zugestellt markiert wurde. Bitte überprüfe noch einmal bei Nachbarn oder deinem Hausflur. Wenn die Ware weiterhin fehlt, melde dich gerne bei uns, damit wir den Versand gemeinsam klären können.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 446,
+        "output_tokens": 127
+      }
+    },
+    {
+      "id": "RL-314",
+      "product": "Everyday Socks · Black 3-Pack",
+      "gold": [
+        "fit",
+        "quality"
+      ],
+      "baseline": [
+        "quality",
+        "fit"
+      ],
+      "input_sha256": "2f0511f02bac865a166a05a780ac234381658d919c79aae981565df427b66a11",
+      "status": "ok",
+      "llm": [
+        "quality",
+        "fit"
+      ],
+      "evidence_valid": true,
+      "evidence": "Socken sind zu klein und an der Ferse ist bereits ein Loch",
+      "latency_ms": 2079,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 44,
+      "draft_reply": "Es tut mir leid, dass die Socken zu klein sind und ein Loch an der Ferse haben. Bitte überprüfe, ob wir dir bei der Größenwahl helfen können oder ob du die Socken umtauschen möchtest. Wenn du weitere Fragen hast, melde dich gerne bei uns.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 451,
+        "output_tokens": 122
+      }
+    },
+    {
+      "id": "RL-316",
+      "product": "Everyday Socks · Navy 3-Pack",
+      "gold": [
+        "order_issue"
+      ],
+      "baseline": [
+        "other"
+      ],
+      "input_sha256": "40f6388a17b73311fe279baebdfc8f3e7859438d9fcb30737f24d8bdbd572b99",
+      "status": "ok",
+      "llm": [
+        "order_issue"
+      ],
+      "evidence_valid": true,
+      "evidence": "Leider fehlt ein Paar in der Packung",
+      "latency_ms": 2294,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 34,
+      "draft_reply": "Danke für Deine Nachricht. Es tut mir leid, dass ein Paar Socken fehlt. Bitte überprüfe noch einmal den Karton und melde Dich gerne, wenn das Paar endgültig fehlt, damit wir eine Lösung finden können.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 448,
+        "output_tokens": 104
+      }
+    },
+    {
+      "id": "RL-317",
+      "product": "Rib Tee · White M",
+      "gold": [
+        "other"
+      ],
+      "baseline": [
+        "other"
+      ],
+      "input_sha256": "65936829ac19779acf76c14d1dca0bf9bf325f4ed32a1a6398acc44b6006ba51",
+      "status": "ok",
+      "llm": [
+        "order_issue"
+      ],
+      "evidence_valid": true,
+      "evidence": "Könnt ihr meine Rechnungsadresse auf der Rechnung ändern?",
+      "latency_ms": 1306,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 25,
+      "draft_reply": "Vielen Dank für deine Nachricht. Bitte wende dich direkt an unseren Kundenservice, um die Rechnungsadresse auf deiner Rechnung zu ändern. Wir helfen dir gerne weiter!",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 446,
+        "output_tokens": 95
+      }
+    },
+    {
+      "id": "RL-324",
+      "product": "Everyday Socks · Black 3-Pack",
+      "gold": [
+        "return",
+        "quality"
+      ],
+      "baseline": [
+        "quality",
+        "return"
+      ],
+      "input_sha256": "738b5ad562ad1c88c38925ea5247f63851a1a949356e43355018e59f5cf542d4",
+      "status": "ok",
+      "llm": [
+        "quality",
+        "return"
+      ],
+      "evidence_valid": true,
+      "evidence": "zwei Socken haben Löcher",
+      "latency_ms": 1423,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 37,
+      "draft_reply": "Es tut mir leid zu hören, dass zwei der Socken beschädigt sind und die Rückzahlung noch aussteht. Bitte prüfe, ob du bereits eine Rücksendung veranlasst hast, und gib uns Bescheid, falls du Unterstützung bei der Abwicklung brauchst.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 448,
+        "output_tokens": 133
+      }
+    }
+  ]
+}
