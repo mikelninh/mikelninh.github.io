@@ -27,9 +27,81 @@ function renderInsights(){
  $('handoff-message').textContent=quality?'Support sollte das Anliegen klären und den möglichen Qualitätshinweis menschlich prüfen. Keine automatische Fehlerbestätigung.':multiple?'Support sollte alle Teilanliegen prüfen und die jeweils zuständige Bearbeitung vorbereiten.':'Die Nachricht sollte menschlich geprüft und passend beantwortet werden. Keine automatische Shopaktion.';
  $('case-context').textContent=x.id+' · synthetisch';
 }
+const productGroup=x=>x.sku?.startsWith('SOCK-3-BLK')?'Everyday Socks · Black':x.sku?.startsWith('SOCK-3-NVY')?'Everyday Socks · Navy':x.product||'Anderes Produkt';
+function renderInbox(){
+ const filter=$('inbox-filter').value;
+ const items=fixtures.filter(x=>{
+  if(filter==='quality')return x.gold.includes('quality');
+  if(filter==='multiple')return x.gold.length>1;
+  if(filter==='missed')return x.gold.some(c=>!baseline(x.text).includes(c));
+  if(filter==='reviewed')return !!reviews[x.id];
+  return true;
+ });
+ $('inbox-count').textContent=String(items.length);
+ $('inbox-list').replaceChildren(...items.map(x=>{
+  const b=el('button','inbox-ticket');b.type='button';b.setAttribute('aria-pressed',String(x.id===selected));
+  const top=el('span','inbox-ticket-top');top.append(el('strong','',x.id+' · '+x.product),el('small','',x.day||'Beispiel'));
+  b.append(top,el('span','inbox-message',x.text));
+  const meta=el('span','inbox-ticket-meta');
+  meta.append(el('span','',x.gold.map(c=>NAMES[c]).join(' · ')));
+  if(reviews[x.id])meta.append(el('b','','✓ dokumentiert'));
+  else if(x.gold.some(c=>!baseline(x.text).includes(c)))meta.append(el('b','missed-note','Regel übersieht Hinweis'));
+  b.append(meta);
+  b.addEventListener('click',()=>{choose(x.id);$('case-number').scrollIntoView({behavior:'smooth',block:'center'});});
+  return b;
+ }));
+}
+function handoffData(x){
+ const decision=reviews[x.id]?.decision||$('review-decision').value;
+ const actions={manual:'Menschliche Prüfung anfordern',quality:'Produktqualität informieren (Notiz)',support:'Support-Nachfrage vorbereiten',none:'Kein zusätzliches Produktsignal'};
+ const actual=baseline(x.text);
+ const misses=x.gold.filter(c=>!actual.includes(c));
+ return {id:x.id,product:x.product,sku:x.sku,message:x.text,
+  signals:x.gold.map(c=>NAMES[c]||c),label_source:'Manuell gekennzeichnetes synthetisches Entwicklungsbeispiel – keine KI-Prognose',
+  rule_result:actual.map(c=>NAMES[c]||c),missed_by_rules:misses.map(c=>NAMES[c]||c),
+  human_decision:reviews[x.id]?actions[decision]:'Noch nicht dokumentiert',
+  recommended_checks:x.gold.includes('quality')?'Kundenanliegen prüfen; mögliche Produktqualität dokumentieren; keine Ursache behaupten.':x.gold.length>1?'Beide Anliegen klären; Bearbeitung vorbereiten.':'Nachricht und passenden Support-Prozess prüfen.',
+  limits:'Keine echte Bestellung, kein Kundenkonto, keine Rückerstattung, keine externe Mitteilung'};
+}
+function renderHandoff(){
+ const x=record();if(!x)return;const d=handoffData(x);
+ const lines=[['Fall',d.id+' · '+d.product],['Nachricht',d.message],['Relevante Hinweise',d.signals.join(' + ')],['Zu prüfen',d.recommended_checks],['Deine Entscheidung',d.human_decision]];
+ $('handoff-content').replaceChildren(...lines.map(([k,v])=>{const row=el('div','handoff-row');row.append(el('span','',k),el('strong','',v));return row}));
+}
+function downloadHandoff(){
+ const d=handoffData(record());
+ const text=['RETURN LOOP · VORBEREITETE SUPPORT-ÜBERGABE','SYNTHEthisCHE DEMO – KEINE SHOPAKTION','',
+ 'Fall: '+d.id,'Produkt: '+d.product,'SKU: '+d.sku,'','Kundennachricht: '+d.message,'',
+ 'Manuelle Hinweise: '+d.signals.join(', '),'Regelbaseline: '+d.rule_result.join(', '),
+ 'Von der Regel übersehen: '+(d.missed_by_rules.join(', ')||'keine'),'',
+ 'Empfohlene Prüfung: '+d.recommended_checks,'Menschliche Entscheidung: '+d.human_decision,'',
+ 'Quelle: '+d.label_source,'Grenzen: '+d.limits].join('\n').replace('SYNTHEthisCHE','SYNTHETISCHE');
+ const blob=new Blob([text],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download='return-loop-uebergabe-'+d.id+'.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function renderSignals(){
+ const groups=new Map();
+ for(const x of fixtures){
+  const key=productGroup(x);
+  const g=groups.get(key)||{name:key,total:0,quality:0,ids:[],missed:0};
+  g.total++;if(x.gold.includes('quality')){g.quality++;g.ids.push(x.id);if(!baseline(x.text).includes('quality'))g.missed++;}
+  groups.set(key,g);
+ }
+ const data=[...groups.values()].filter(g=>g.quality>0).sort((a,b)=>b.quality-a.quality||b.total-a.total);
+ $('signal-summary').textContent=fixtures.filter(x=>x.gold.includes('quality')).length+' mögliche Qualitätshinweise';
+ $('signal-board').replaceChildren(...data.map(g=>{
+  const item=el('div','signal-item');
+  const head=el('div','signal-head');head.append(el('strong','',g.name),el('span','',g.quality+' von '+g.total+' Beispielen mit Qualitätshinweis'));
+  item.append(head,el('div','signal-meter'));item.lastChild.append(el('span'));item.lastChild.firstChild.style.width=(g.quality/g.total*100)+'%';
+  item.append(el('p','',g.missed?g.missed+' Hinweis(e) dieser Gruppe übersieht die einfache Regel.':'In diesen Beispielen erkennt die Regel die Qualitätshinweise.'));
+  const btn=el('button','subtle-btn','Fälle dieser Gruppe anzeigen ↗');btn.type='button';
+  btn.addEventListener('click',()=>{$('inbox-filter').value='quality';renderInbox();choose(g.ids[0]);$('workspace').scrollIntoView({behavior:'smooth'});});
+  item.append(btn);return item;
+ }));
+}
 function renderCase(){let x=record();if(!x)return;$('case-number').textContent=x.id;$('product-name').textContent=x.product;$('product-sku').textContent=x.sku;$('ticket-message').textContent='“'+x.text+'”';
  const suggested=[fixtures[0],fixtures[7],fixtures[13],fixtures[14],fixtures[16],fixtures[22]].filter(Boolean);
- $('case-picker').replaceChildren(...suggested.map(c=>{let b=el('button','ticket-tile');b.type='button';b.setAttribute('aria-pressed',String(selected===c.id));b.append(el('strong','',c.id),el('span','',c.preview||shortType(c)));b.addEventListener('click',()=>choose(c.id));return b}));renderInsights();renderModels();$('review-message').textContent=reviews[selected]?'✓ Bereits lokal dokumentiert':''}
+ $('case-picker').replaceChildren(...suggested.map(c=>{let b=el('button','ticket-tile');b.type='button';b.setAttribute('aria-pressed',String(selected===c.id));b.append(el('strong','',c.id),el('span','',c.preview||shortType(c)));b.addEventListener('click',()=>choose(c.id));return b}));renderInsights();renderModels();renderHandoff();renderInbox();$('review-message').textContent=reviews[selected]?'✓ Bereits lokal dokumentiert':''}
 function shortType(c){return c.id==='RL-301'?'Vorzeitige Abnutzung':c.gold.length>1?'Mehrere Anliegen':NAMES[c.gold[0]]||'Anderes Anliegen'}
 function choose(id){selected=id;renderCase();$('run-status').textContent='';}
 function renderModels(){let x=record();if(!x)return;$('models').replaceChildren(...MODELS.map(m=>{let box=el('div','model');let lead=el('div','');lead.append(el('div','model-name',m.name),el('div','model-desc',m.desc));let btn=el('button','model-btn',m.id==='rules'?'Anzeigen':results[x.id]?.[m.id]?'Erneut prüfen':'Jetzt testen');btn.type='button';btn.disabled=!!busy||(m.id!=='rules'&&(!live.paid_requests_enabled||live.providers?.[m.id]!==true));btn.title=m.id!=='rules'&&live.providers?.[m.id]!==true?'Anbieter derzeit nicht verbunden':m.id!=='rules'&&!live.paid_requests_enabled?'Live-Tests benötigen autorisierten Zugang':'';btn.addEventListener('click',()=>run(m.id));box.append(lead,btn);const result=results[x.id]?.[m.id];if(m.id==='rules'){box.classList.add('ready');box.append(el('div','model-result','Regelergebnis: '+baseline(x.text).map(c=>NAMES[c]).join(' + ')+' · 0 API-Aufrufe'));}else if(result?.ok){box.classList.add('ready');let cap=predicted(result,m.id).map(c=>NAMES[c]).join(' + ')||'Keine Kategorie über Schwelle';let detail=m.id==='llm'?` · ${result.evidence?'Beleg: „'+result.evidence+'“':'Kein gültiges Textzitat'}`:` · Scores: ${Object.entries(result.scores||{}).filter(([k,v])=>Number(v)>.25).map(([k,v])=>NAMES[k]+' '+Math.round(v*100)+'%').join(', ')}`;box.append(el('div','model-result',cap+detail+` · ${result.latency_ms} ms`));}else{box.append(el('div','model-result',live.providers?.[m.id]!==true?'Anbieter derzeit nicht verbunden – keine Vorhersage.':live.paid_requests_enabled?'Nicht ausgeführt. Optionaler geschützter Live-Test.':'Nicht getestet. Öffentliche Demo benötigt keine API-Kosten.'));}return box;}));}
@@ -44,11 +116,12 @@ function renderEvaluation(){const baselineRows=fixtures.map(c=>({gold:c.gold,pre
  const observed=fixtures.flatMap(c=>['decisions','jev'].filter(m=>results[c.id]?.[m]?.ok).map(m=>({gold:c.gold,pred:predicted(results[c.id][m],m),model:m})));$('threshold-note').textContent=observed.length===0?'Noch keine echten Decision-Scores gemessen. Der Regler beeinflusst deshalb keine Modellvorhersagen.':`Schwelle ${Math.round(threshold*100)}% · ${observed.length} echte Decision-Prognosen auf bekannten Entwicklungsfällen. Für faire Modellvergleiche werden Kennzahlen erst bei vollständiger Abdeckung (24/24 je Modell) veröffentlicht.`;
 }
 function exportFile(name,obj){let blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);}
-function review(){let x=record();reviews[x.id]={decision:$('review-decision').value,at:new Date().toISOString(),basis:'synthetic',model_predictions:results[x.id]||{},note:'Manual demonstration only; no external action.'};try{localStorage.setItem('return-loop-v14-reviews',JSON.stringify(reviews))}catch{}$('review-message').textContent='✓ Entscheidung lokal dokumentiert – keine Shopaktion.';}
+function review(){let x=record();reviews[x.id]={decision:$('review-decision').value,at:new Date().toISOString(),basis:'synthetic',model_predictions:results[x.id]||{},note:'Manual demonstration only; no external action.'};try{localStorage.setItem('return-loop-v14-reviews',JSON.stringify(reviews))}catch{}$('review-message').textContent='✓ Entscheidung lokal dokumentiert – keine Shopaktion.';renderHandoff();renderInbox();}
 function report(){let measured={};for(let m of MODELS.slice(1)){const r=fixtures.filter(c=>results[c.id]?.[m.id]?.ok);measured[m.id]={run_count:r.length,full_development_evaluation:r.length===fixtures.length?r.length:null,macro_f1:r.length===fixtures.length?evaluate(r.map(c=>({gold:c.gold,pred:predicted(results[c.id][m.id],m.id)}))).macroF1:null};}exportFile('return-loop-v14-model-arena-report.json',{project:'RETURN LOOP · Model Arena v14',created_at:new Date().toISOString(),dataset:'24 synthetic development fixtures — NOT independent external holdout',calibration:'None. Scores uncalibrated.',policy_threshold:threshold,baseline:evaluate(fixtures.map(c=>({gold:c.gold,pred:baseline(c.text)}))),models:measured,real_results:results,reviews,limitations:['No real customer data','Not a production quality rate','Thresholds not validated independently','No automated customer actions','Paid API limited to authenticated synthetic demo fixture calls']});}
 async function init(){try{const embedded=document.getElementById('embedded-fixtures');if(embedded){fixtures=JSON.parse(embedded.textContent);}else{const response=await fetch('./fixtures.json',{cache:'no-store'});if(!response.ok)throw Error('Fixtures unavailable');fixtures=await response.json();}if(!Array.isArray(fixtures)||fixtures.length!==24)throw Error('Unexpected data length');}catch(e){$('run-status').textContent='Die lokalen synthetischen Fälle konnten nicht geladen werden.';return;}
  try{const r=await fetch('/api/status',{cache:'no-store'});if(!r.ok)throw Error('no backend');let v=await r.json();if(v.build!=='v14')throw Error('static preview');live=v;}catch{live={paid_requests_enabled:false,providers:{}}}
  $('provider-badge').textContent=live.paid_requests_enabled?'Öffentliche Demo kostenlos · KI-Labor geschützt':'Öffentliche Demo kostenlos · Keine bezahlten Aufrufe';$('provider-badge').classList.toggle('ready',live.paid_requests_enabled);
+ $('inbox-filter').addEventListener('change',renderInbox);$('download-handoff').addEventListener('click',downloadHandoff);renderSignals();
  $('next-case').addEventListener('click',()=>choose(fixtures[(fixtures.findIndex(x=>x.id===selected)+1)%fixtures.length].id));
  $('toggle-access').addEventListener('click',()=>{let open=$('access-form').hidden;$('access-form').hidden=!open;$('toggle-access').setAttribute('aria-expanded',String(open));});
  $('token').addEventListener('input',e=>{access=e.target.value.trim();});$('save-review').addEventListener('click',review);$('download-report').addEventListener('click',report);
