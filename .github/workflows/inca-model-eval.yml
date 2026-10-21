@@ -95,6 +95,8 @@ jobs:
           git add inca/ai-evidence.json
           if ! git diff --cached --quiet; then
             git commit -m "Add measured fictional OpenAI extraction snapshot [skip ci]"
+            git fetch origin main
+            git rebase origin/main
             git push origin HEAD:main
           fi
       - name: Attach report (synthetic aggregate results only)
