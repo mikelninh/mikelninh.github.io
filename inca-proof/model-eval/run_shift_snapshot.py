@@ -133,8 +133,10 @@ def build_report(cases,model,api_fn):
         print(case["id"],row["route"],"vs authored",case["expected"],"OK" if row["matches_authored_expected"] else "DIFFERENT")
     expected_block=sum(c["expected"]!="CONTINUE_CHECKS" for c in cases)
     unsafe_clear=sum(row["expected"]!="CONTINUE_CHECKS" and row["route"]=="CONTINUE_CHECKS" for row in rows)
+    successful_responses=sum(r.get("extraction") is not None for r in rows)
     report={
-        "status":"RECORDED_REAL_OPENAI_API_RUN","provider":"openai","model":model,
+        "status":"RECORDED_REAL_OPENAI_API_RUN" if successful_responses else "API_RUN_WITH_NO_SUCCESSFUL_EXTRACTIONS",
+        "provider":"openai","model":model,
         "generated_at_utc":dt.datetime.now(dt.timezone.utc).isoformat(),
         "dataset_sha256":hashlib.sha256(DATA.read_bytes()).hexdigest(),
         "provenance":"8 developer-authored fictional cases. Expected routes not independently expert-verified. Saved output; the public website does not call the model at view time.",
@@ -144,6 +146,7 @@ def build_report(cases,model,api_fn):
                    "blocked_authored_cases":expected_block,
                    "evidence_valid":sum(r["evidence_valid"] for r in rows),
                    "api_or_schema_errors":sum(bool(r.get("error")) for r in rows),
+                   "api_successful_responses":successful_responses,
                    "input_tokens":total_prompt,"output_tokens":total_completion,
                    "measured_time_saved_seconds":None,"real_expert_corrections":None},
         "rows":rows
@@ -167,6 +170,9 @@ def main():
     args.out.parent.mkdir(parents=True,exist_ok=True)
     args.out.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("Recorded synthetic report: "+str(args.out))
+    if report["scoring"]["api_successful_responses"]==0:
+        print("ERROR: No successful model results; don't publish this as evidence.")
+        return 3
     return 0
 
 if __name__=="__main__": raise SystemExit(main())
