@@ -54,7 +54,7 @@ function triage(tickets,overrides={},products={}){
   const rule=T.classify(x.message),ml=M.classify(x.message);
   const agree=rule.category===ml.category;
   const override=Object.prototype.hasOwnProperty.call(overrides,x.id)?overrides[x.id]:null;
-  const human=override!==null&&Object.values(ISSUE).includes(ISSUE[override])&&override!=="mixed";
+  const human=override!==null&&Object.prototype.hasOwnProperty.call(ISSUE,override);
   const proposal=agree?rule.category:"unknown";
   const category=human?override:proposal;
   const sku=Object.prototype.hasOwnProperty.call(products,x.id)?products[x.id]:x.sku;
