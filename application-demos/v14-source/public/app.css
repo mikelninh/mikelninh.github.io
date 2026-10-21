@@ -95,3 +95,16 @@
  .focus-release .focus-more-inner{padding:12px}
  .focus-release .focus-more>summary{padding:17px;font-size:12px}
 }
+
+/* Focused explainer and opt-in paired evaluation */
+.focus-release .section-heading p strong{color:#285842}
+.paired-study{padding:24px;margin:20px 0 0;background:#f9fbf7}
+.paired-study h3{font:400 27px/1.2 var(--serif);margin:9px 0}
+.paired-study>p{color:#66766a;font-size:12px;line-height:1.7;max-width:740px}
+.paired-progress{color:#285944;font-size:13px;font-weight:800;margin-top:17px}
+.paired-results{margin:12px 0 15px}
+.paired-metrics{display:grid;gap:9px}
+.paired-metric{display:flex;justify-content:space-between;gap:14px;border:1px solid #dbe5da;border-radius:7px;padding:11px 13px;background:#fff;font-size:12px}
+.paired-metric strong{font-weight:700}.paired-metric span{color:#476351;text-align:right}
+.paired-note{font-size:10px!important;color:#758375;line-height:1.6;margin-top:13px}
+@media(max-width:650px){.paired-study{padding:18px}.paired-metric{flex-direction:column;gap:3px}.paired-metric span{text-align:left}}
