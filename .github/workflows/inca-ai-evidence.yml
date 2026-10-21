@@ -1,0 +1,49 @@
+name: INCA AI Evidence Snapshot
+
+on:
+  push:
+    paths:
+      - "inca-proof/model-eval/SHIFT_RUN_REQUEST.md"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: inca-ai-evidence-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit-test source-quote verification and fail-closed gates
+        run: python -m unittest discover inca-proof/model-eval -p 'test_shift_snapshot.py' -v
+      - name: Perform exactly eight synthetic OpenAI extractions
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::error::OPENAI_API_KEY repository secret missing"
+            exit 1
+          fi
+          python inca-proof/model-eval/run_shift_snapshot.py --live --model gpt-6-luna --out inca/ai-evidence.json
+      - name: Commit public synthetic model-evidence snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add inca/ai-evidence.json
+          if git diff --cached --quiet; then
+            echo "Report unchanged"
+          else
+            git commit -m "Record eight real OpenAI synthetic evidence extractions [skip ci]"
+            git push origin HEAD:main
+          fi
