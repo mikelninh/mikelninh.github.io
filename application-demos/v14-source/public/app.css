@@ -10,3 +10,17 @@
 .hero-results{display:grid;gap:6px;margin-bottom:26px}
 .hero-results span{display:block;padding:8px 10px;border:1px solid #6c907b;border-radius:4px;background:#ffffff10;color:#dbeddd;font-size:11px;font-weight:700}
 @media(max-width:650px){.hero-disclaimer{font-size:10px}}
+
+/* Recruiting-friendly message → signals → decision flow */
+.result-pane .panehead{align-items:center}.result-pane h3{margin:20px 0 8px}.result-pane .panelead{max-width:500px}
+.insight-panel{padding:19px 19px 18px;margin-top:22px;background:#e9f1e8;border:1px solid #c4dcc9;border-radius:9px}
+.insight-eyebrow,.tiny-kicker{display:block;font-size:9px;letter-spacing:.13em;font-weight:800;color:#658474}
+.insight-labels{display:flex;flex-wrap:wrap;gap:8px;margin:13px 0}.insight-tag{font-size:13px;font-weight:800;color:#174835;background:white;border:1px solid #a6c6af;padding:7px 11px;border-radius:6px}
+.insight-text{color:#486656;font-size:12px;line-height:1.65}
+.comparison-line{display:grid;grid-template-columns:1fr;gap:11px;padding:19px 0;border-bottom:1px solid #e1e8de}
+.comparison-line strong{font-size:15px;display:block;margin-top:6px}.comparison-line p{font-size:12px;color:#6a756b;line-height:1.65}
+.next-step{padding:18px 0}.next-step p{font-size:13px;line-height:1.65;font-weight:600;color:#244a35;margin-top:7px}
+.demo-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid #e1e8de;padding-top:14px;font-size:10px;color:#7d8b80}
+.technical-lab{border-top:1px solid var(--line);margin-top:19px;padding-top:4px}.technical-lab summary{font-weight:750;cursor:pointer;padding:15px 0;display:flex;justify-content:space-between;gap:14px;color:#285441;font-size:12px}.technical-lab summary span{font-weight:400}.lab-inner{padding:0 0 8px}.lab-inner>p{color:#6c7a6e;font-size:11px;line-height:1.65;margin-bottom:16px}.lab-inner>.panehead{margin:13px 0}
+#review{scroll-margin-top:86px}
+@media(max-width:650px){.insight-panel{padding:15px}.demo-bottom{align-items:flex-start}}
