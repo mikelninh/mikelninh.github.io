@@ -141,7 +141,7 @@ function renderReply(){
  }
  $('reply-text').value=replyDrafts[x.id];
  $('reply-source').textContent=replySources[x.id]||'Textvorlage · keine KI-Ausgabe';
- const flags=auditFlags(x.id);
+ const flags=Array.isArray(results[x.id]?.llm?.draft_flags)?results[x.id].llm.draft_flags:auditFlags(x.id);
  $('reply-reviewed').checked=false;$('copy-reply').disabled=true;
  $('reply-draft').classList.toggle('risky',flags.length>0);
  $('reply-status').textContent=flags.length?'⚠ '+flags.length+' mögliche unbelegte Aussage(n). Vor Freigabe prüfen und korrigieren.':'Entwurf noch nicht freigegeben. Es wird nichts versendet.';
