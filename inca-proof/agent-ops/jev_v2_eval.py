@@ -210,8 +210,8 @@ def metrics(rows,split):
     def agg(name):
         selected=rank(name)
         hits=sum(r["critical_trace_error"] for r in selected)
-        lat=[r[name]["latency_ms"] for r in group if r[name] is not None]
-        tokens=[r[name]["input_tokens"] for r in group if r[name] is not None and type(r[name]["input_tokens"]) is int]
+        lat=[r[name]["latency_ms"] for r in group if r[name] is not None and type(r[name].get("latency_ms")) in (int,float)]
+        tokens=[r[name]["input_tokens"] for r in group if r[name] is not None and type(r[name].get("input_tokens")) is int]
         return {"top20_capture":hits,"top20_critical_recall":round(hits/critical,4) if critical else None,
           "top20_precision":round(hits/k,4),
           "tool_choice":tool_accuracy(name),
