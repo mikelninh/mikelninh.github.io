@@ -32,7 +32,7 @@ SYS=(
 SCHEMA=prior.SCHEMA
 MONTHS={m:i+1 for i,m in enumerate("january february march april may june july august september october november december".split())}
 MONTHS.update({"januar":1,"februar":2,"märz":3,"april":4,"mai":5,"juni":6,"juli":7,"august":8,"september":9,"oktober":10,"november":11,"dezember":12})
-DATE_WORD=re.compile(r"\b([0-3]?\d)\s+("+"|".join(sorted(MONTHS,key=len,reverse=True))+r")\s+(\d{4})\b",re.I)
+DATE_WORD=re.compile(r"\b([0-3]?\d)\.?\s+("+"|".join(sorted(MONTHS,key=len,reverse=True))+r")\s+(\d{4})\b",re.I)
 DATE_NUM=re.compile(r"\b([0-3]?\d)\.([0-1]?\d)\.(\d{4})\b")
 CODE=re.compile(r"\b[A-Z]{2,12}-\d{3,8}\b",re.I)
 EURO=re.compile(r"€\s*(\d+(?:[.,]\d{1,2})?)|(\d+(?:[.,]\d{1,2})?)\s*(?:EUR|€)\b",re.I)
