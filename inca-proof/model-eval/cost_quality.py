@@ -191,6 +191,8 @@ def main():
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    if args.mode == "jev" and report["scoring"]["scored"] == 0:
+        raise SystemExit("No valid Jev scores returned; see report artifact for failure counts.")
 
 if __name__ == "__main__":
     main()
