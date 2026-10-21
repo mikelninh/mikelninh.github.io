@@ -105,7 +105,7 @@ function renderSignals(){
  }));
 }
 function renderCase(){let x=record();if(!x)return;$('case-number').textContent=x.id;$('product-name').textContent=x.product;$('product-sku').textContent=x.sku;$('ticket-message').textContent='“'+x.text+'”';
- const suggested=[fixtures[0],fixtures[7],fixtures[13],fixtures[14],fixtures[16],fixtures[22]].filter(Boolean);
+ const suggested=[fixtures[0],fixtures[7],fixtures[13],fixtures[16]].filter(Boolean);
  $('case-picker').replaceChildren(...suggested.map(c=>{let b=el('button','ticket-tile');b.type='button';b.setAttribute('aria-pressed',String(selected===c.id));b.append(el('strong','',c.id),el('span','',c.preview||shortType(c)));b.addEventListener('click',()=>choose(c.id));return b}));renderInsights();renderModels();renderHandoff();renderInbox();$('review-message').textContent=reviews[selected]?'✓ Bereits lokal dokumentiert':''}
 function shortType(c){return c.id==='RL-301'?'Vorzeitige Abnutzung':c.gold.length>1?'Mehrere Anliegen':NAMES[c.gold[0]]||'Anderes Anliegen'}
 function choose(id){selected=id;renderCase();$('run-status').textContent='';}
