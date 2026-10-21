@@ -144,7 +144,7 @@
         set('sh-preview-owner',receipt.preview.owner);
         set('sh-preview-route',receipt.route);
         set('sh-preview-action',receipt.preview.nextAction);
-        set('sh-preview-draft',receipt.preview.draft);
+        set('sh-draft',receipt.preview.draft);
       }catch(e){receipt=null;$('sh-export').disabled=true;$('sh-regression').disabled=true;
         set('sh-review-error',String(e.message).replace(/_/g,' '));}
     }
