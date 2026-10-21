@@ -1,0 +1,729 @@
+{
+  "status": "complete",
+  "type": "exploratory_live_test",
+  "label": "All 24 hand-labelled fictional DEVELOPMENT cases – NOT independently blinded and not a production benchmark",
+  "config": {
+    "prompt_revision": "v3 – measured category rules and SNOCKS du-tone",
+    "model": "gpt-4.1-mini",
+    "sample": "All 24 synthetic development cases (NOT independent holdout)",
+    "method": "One live OpenAI Responses API inference per case, compared to the same deterministic keyword rules",
+    "measured_at": "2026-10-21T18:11:31.444Z"
+  },
+  "selected_ids": [
+    "RL-301",
+    "RL-302",
+    "RL-303",
+    "RL-304",
+    "RL-305",
+    "RL-306",
+    "RL-307",
+    "RL-308",
+    "RL-309",
+    "RL-310",
+    "RL-311",
+    "RL-312",
+    "RL-313",
+    "RL-314",
+    "RL-315",
+    "RL-316",
+    "RL-317",
+    "RL-318",
+    "RL-319",
+    "RL-320",
+    "RL-321",
+    "RL-322",
+    "RL-323",
+    "RL-324"
+  ],
+  "attempted": 24,
+  "successful": 24,
+  "errors": [],
+  "quality_cases_in_successful_subset": 12,
+  "baseline_on_same_successful_cases": {
+    "exact_match": 0.8333333333333334,
+    "macro_f1": 0.7606107660455486,
+    "quality_false_negatives": 1,
+    "quality_false_positives": 0
+  },
+  "llm_on_same_successful_cases": {
+    "exact_match": 0.9166666666666666,
+    "macro_f1": 0.9277056277056276,
+    "quality_false_negatives": 0,
+    "quality_false_positives": 0
+  },
+  "human_review_recommendations": 13,
+  "supported_evidence_quotes": 24,
+  "generated_draft_count": 24,
+  "mean_latency_ms": 1398,
+  "limitations": [
+    "24 synthetic development cases; 8 were used for prompt tuning; not blinded or independent",
+    "Reply drafts not independently checked by a human",
+    "Review flags are not measured workload or time savings",
+    "No customer/shop integration",
+    "Token counts are not precise invoice costs"
+  ],
+  "du_form_violations": 0,
+  "rows": [
+    {
+      "id": "RL-301",
+      "product": "Everyday Socks · Black 3-Pack",
+      "gold": [
+        "quality"
+      ],
+      "baseline": [
+        "other"
+      ],
+      "input_sha256": "9656b87e96a423abf9c22f4c0e5fd7640bd87b1e978ab028bb8ca6d2f7074be7",
+      "status": "ok",
+      "llm": [
+        "quality"
+      ],
+      "evidence_valid": true,
+      "evidence": "durch die Ferse fast schon Zeitung lesen",
+      "latency_ms": 1379,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 36,
+      "draft_reply": "Das klingt wirklich nicht normal, dass die Ferse deiner Socken so schnell abgenutzt ist. Danke, dass du uns darauf hinweist! Wir schauen uns das genauer an, damit du nicht länger solche Probleme mit deinen Socken hast.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 709,
+        "output_tokens": 119
+      }
+    },
+    {
+      "id": "RL-302",
+      "product": "Everyday Socks · Black 3-Pack",
+      "gold": [
+        "quality"
+      ],
+      "baseline": [
+        "quality"
+      ],
+      "input_sha256": "394866d187de0e6b89cfa8c8a8980e8f1db1dc13517a9ed63734da9ad4a233b3",
+      "status": "ok",
+      "llm": [
+        "quality",
+        "return"
+      ],
+      "evidence_valid": true,
+      "evidence": "Naht an der Ferse aufgegangen",
+      "latency_ms": 1306,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 36,
+      "draft_reply": "Tut mir leid, dass die Naht bei deinen Socken aufgegangen ist. Das sollte natürlich nicht passieren. Wir schauen, wie wir dir hier weiterhelfen können. Melde dich gern, falls du Unterstützung beim Umtausch oder der Rückgabe brauchst.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 710,
+        "output_tokens": 119
+      }
+    },
+    {
+      "id": "RL-303",
+      "product": "Everyday Socks · Black 3-Pack",
+      "gold": [
+        "quality"
+      ],
+      "baseline": [
+        "quality"
+      ],
+      "input_sha256": "1401611c092e1c887cc39fb04622774d4c1e143744c7eedd888f02af168854d5",
+      "status": "ok",
+      "llm": [
+        "quality"
+      ],
+      "evidence_valid": true,
+      "evidence": "winzige Löcher am Zeh",
+      "latency_ms": 1282,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 30,
+      "draft_reply": "Oh nein, das klingt ärgerlich mit den Löchern nach so kurzer Zeit! Das sollte natürlich nicht passieren. Wir schauen uns das gerne genauer an und melden uns wieder bei dir.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 706,
+        "output_tokens": 120
+      }
+    },
+    {
+      "id": "RL-304",
+      "product": "Everyday Socks · Black 3-Pack",
+      "gold": [
+        "quality"
+      ],
+      "baseline": [
+        "quality"
+      ],
+      "input_sha256": "8506f5e9f1dba04a3f67a04a564595ea7195c51f1b1343919a5a4f9b4db0c4ba",
+      "status": "ok",
+      "llm": [
+        "quality"
+      ],
+      "evidence_valid": true,
+      "evidence": "Bündchen ist nach einer Woche ausgeleiert und der Stoff wird immer dünner",
+      "latency_ms": 1786,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 37,
+      "draft_reply": "Danke für deine Rückmeldung! Es tut mir leid, dass die Socken so schnell ausgeleiert sind und der Stoff dünner wird. Das sollte natürlich nicht passieren. Wir schauen uns dein Anliegen genauer an und melden uns bei dir.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 707,
+        "output_tokens": 157
+      }
+    },
+    {
+      "id": "RL-305",
+      "product": "Everyday Socks · Black 3-Pack",
+      "gold": [
+        "quality"
+      ],
+      "baseline": [
+        "quality"
+      ],
+      "input_sha256": "7609b9dbb73654ab103170ac563063a7af3bd177360181d98d7e0f2d3c58a71b",
+      "status": "ok",
+      "llm": [
+        "quality"
+      ],
+      "evidence_valid": true,
+      "evidence": "franst das Material schon beim ersten Tragen aus",
+      "latency_ms": 1220,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 23,
+      "draft_reply": "Das klingt wirklich ärgerlich, dass das Material deiner Socken schon so schnell ausfranst. Wir möchten dir dabei gerne helfen, eine Lösung zu finden.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 701,
+        "output_tokens": 105
+      }
+    },
+    {
+      "id": "RL-306",
+      "product": "Everyday Socks · Black 3-Pack",
+      "gold": [
+        "quality"
+      ],
+      "baseline": [
+        "quality"
+      ],
+      "input_sha256": "741536bbd3e0b08a26b06a916fb060edefc4dd12f826c99b9e345a01a3e846c6",
+      "status": "ok",
+      "llm": [
+        "quality"
+      ],
+      "evidence_valid": true,
+      "evidence": "Ein Faden an der Naht zieht sich komplett heraus",
+      "latency_ms": 1468,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 26,
+      "draft_reply": "Oh je, das klingt nach einem Nahtproblem bei deinen Socken. Das sollte natürlich nicht passieren. Wir schauen uns das gern genauer an und helfen dir weiter!",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 712,
+        "output_tokens": 101
+      }
+    },
+    {
+      "id": "RL-307",
+      "product": "Rib Tee · White M",
+      "gold": [
+        "fit"
+      ],
+      "baseline": [
+        "fit"
+      ],
+      "input_sha256": "ee483db5ae123f469edd872584b12bff9a00121abed3b5df5668f6680c9676b2",
+      "status": "ok",
+      "llm": [
+        "fit"
+      ],
+      "evidence_valid": true,
+      "evidence": "passt mir nicht. Es sitzt sehr eng an den Schultern",
+      "latency_ms": 1202,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 38,
+      "draft_reply": "Danke für dein Feedback! Wenn das Shirt an den Schultern zu eng sitzt, kann das wirklich unangenehm sein. Vielleicht wäre eine andere Größe oder ein anderes Modell besser für dich geeignet. Wir hoffen, du findest bald was Passendes!",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 702,
+        "output_tokens": 110
+      }
+    },
+    {
+      "id": "RL-308",
+      "product": "Rib Tee · White M",
+      "gold": [
+        "order_issue",
+        "return"
+      ],
+      "baseline": [
+        "return"
+      ],
+      "input_sha256": "9a83671f3f9eae109261ec713cbe1a4a28c3041bcba613a1ee9c24dfa0a10388",
+      "status": "ok",
+      "llm": [
+        "order_issue",
+        "return"
+      ],
+      "evidence_valid": true,
+      "evidence": "T-Shirt kam in XL statt M",
+      "latency_ms": 1393,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 31,
+      "draft_reply": "Hey, du hast das T-Shirt in XL bekommen statt in M und möchtest es umtauschen. Wir kümmern uns darum, dass du die richtige Größe bekommst. Danke, dass du Bescheid gesagt hast!",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 704,
+        "output_tokens": 110
+      }
+    },
+    {
+      "id": "RL-309",
+      "product": "Heavy Hoodie · Stone L",
+      "gold": [
+        "shipping"
+      ],
+      "baseline": [
+        "shipping"
+      ],
+      "input_sha256": "975e5248a94811b4ffee566f8c3e1d6569fd1930aed7fe52137143cbd9fec7e9",
+      "status": "ok",
+      "llm": [
+        "shipping"
+      ],
+      "evidence_valid": true,
+      "evidence": "Laut Tracking wurde zugestellt, aber ich habe keine Ware bekommen",
+      "latency_ms": 1555,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 40,
+      "draft_reply": "Das tut mir leid zu hören, dass du dein Paket nicht bekommen hast, obwohl es laut Tracking zugestellt wurde. Bitte prüfe, ob das Paket eventuell bei Nachbarn oder im Haus abgegeben wurde. Wir schauen gern, wie wir dir weiterhelfen können.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 700,
+        "output_tokens": 121
+      }
+    },
+    {
+      "id": "RL-310",
+      "product": "Heavy Hoodie · Stone L",
+      "gold": [
+        "return"
+      ],
+      "baseline": [
+        "return"
+      ],
+      "input_sha256": "d2d2ea85054e8102252cb8400a5b5101fef07ed58c026a2316eaab76f41237b2",
+      "status": "ok",
+      "llm": [
+        "return"
+      ],
+      "evidence_valid": true,
+      "evidence": "Kann ich die Retoure noch anmelden? Ich brauche ein neues Etikett.",
+      "latency_ms": 1198,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 18,
+      "draft_reply": "Klar, ich schicke dir schnell ein neues Rücksendeetikett für deine Retoure. Sag Bescheid, falls du noch Fragen hast!",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 702,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": "RL-311",
+      "product": "Rib Tee · Black S",
+      "gold": [
+        "quality"
+      ],
+      "baseline": [
+        "quality"
+      ],
+      "input_sha256": "ddd342f8a612a89b7659fc0ff6ad2388b63b6c9a9084b202c76e795e40fc2889",
+      "status": "ok",
+      "llm": [
+        "quality"
+      ],
+      "evidence_valid": true,
+      "evidence": "Stoff hat sich nach dem ersten Waschen stark verfärbt",
+      "latency_ms": 1646,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 30,
+      "draft_reply": "Es tut mir leid, dass dein Rib Tee sich so verfärbt hat. Das sollte natürlich nicht passieren. Wir schauen uns das gerne genauer an und melden uns wieder bei dir.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 701,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "RL-312",
+      "product": "Heavy Hoodie · Black M",
+      "gold": [
+        "shipping"
+      ],
+      "baseline": [
+        "shipping"
+      ],
+      "input_sha256": "422f57611dcfd95f07ecdbdd6cc82ab2538bb8c050a264be82c491538bc77faf",
+      "status": "ok",
+      "llm": [
+        "shipping"
+      ],
+      "evidence_valid": true,
+      "evidence": "Mein Paket hängt seit fünf Tagen im Verteilzentrum",
+      "latency_ms": 1177,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 25,
+      "draft_reply": "Hey, das tut mir leid zu hören, dass dein Paket im Verteilzentrum festhängt. Solche Verzögerungen sind ärgerlich. Ich hoffe, es kommt bald bei dir an!",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 697,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": "RL-313",
+      "product": "Rib Tee · White L",
+      "gold": [
+        "return"
+      ],
+      "baseline": [
+        "return"
+      ],
+      "input_sha256": "95e98af7d8a4946e1775669d0199f889f80317ae73f223211ab04a971b70cf3f",
+      "status": "ok",
+      "llm": [
+        "return"
+      ],
+      "evidence_valid": true,
+      "evidence": "Ich möchte meinen Kauf widerrufen und hätte gern die Erstattung",
+      "latency_ms": 1161,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 21,
+      "draft_reply": "Dein Widerruf ist angekommen. Wir schauen uns das an und melden uns bald mit den nächsten Schritten zur Erstattung bei dir.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 701,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": "RL-314",
+      "product": "Everyday Socks · Black 3-Pack",
+      "gold": [
+        "fit",
+        "quality"
+      ],
+      "baseline": [
+        "quality",
+        "fit"
+      ],
+      "input_sha256": "2f0511f02bac865a166a05a780ac234381658d919c79aae981565df427b66a11",
+      "status": "ok",
+      "llm": [
+        "quality",
+        "fit"
+      ],
+      "evidence_valid": true,
+      "evidence": "Socken sind zu klein und an der Ferse ist bereits ein Loch",
+      "latency_ms": 1539,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 33,
+      "draft_reply": "Oh nein, das klingt echt ärgerlich mit den zu kleinen Socken und dem Loch an der Ferse! Danke, dass du uns Bescheid gibst. Wir schauen gemeinsam, wie wir dir am besten helfen können.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 705,
+        "output_tokens": 116
+      }
+    },
+    {
+      "id": "RL-315",
+      "product": "Heavy Hoodie · Stone L",
+      "gold": [
+        "shipping",
+        "quality"
+      ],
+      "baseline": [
+        "quality",
+        "shipping"
+      ],
+      "input_sha256": "0c041cdf4d93edb60025be6940d96d4a5b6e91d47f2df32b720c2990f3273606",
+      "status": "ok",
+      "llm": [
+        "quality",
+        "shipping"
+      ],
+      "evidence_valid": true,
+      "evidence": "Reißverschluss ist zudem defekt",
+      "latency_ms": 1396,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 26,
+      "draft_reply": "Tut mir leid, dass dein Paket verspätet kam und der Reißverschluss defekt ist. Wir kümmern uns darum, dass du eine Lösung bekommst. Danke für deine Geduld!",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 702,
+        "output_tokens": 99
+      }
+    },
+    {
+      "id": "RL-316",
+      "product": "Everyday Socks · Navy 3-Pack",
+      "gold": [
+        "order_issue"
+      ],
+      "baseline": [
+        "other"
+      ],
+      "input_sha256": "40f6388a17b73311fe279baebdfc8f3e7859438d9fcb30737f24d8bdbd572b99",
+      "status": "ok",
+      "llm": [
+        "order_issue"
+      ],
+      "evidence_valid": true,
+      "evidence": "fehlt ein Paar in der Packung",
+      "latency_ms": 1108,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 26,
+      "draft_reply": "Oh nein, es fehlt ein Paar in deiner Packung, das tut mir leid! Wir kümmern uns darum und melden uns bald bei dir mit einer Lösung.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 702,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": "RL-317",
+      "product": "Rib Tee · White M",
+      "gold": [
+        "other"
+      ],
+      "baseline": [
+        "other"
+      ],
+      "input_sha256": "65936829ac19779acf76c14d1dca0bf9bf325f4ed32a1a6398acc44b6006ba51",
+      "status": "ok",
+      "llm": [
+        "other"
+      ],
+      "evidence_valid": true,
+      "evidence": "Rechnungsadresse auf der Rechnung ändern",
+      "latency_ms": 1465,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 27,
+      "draft_reply": "Hallo! Du möchtest die Rechnungsadresse auf der Rechnung ändern. Leider können wir Rechnungen nach Ausstellung nicht mehr anpassen, aber wir helfen dir gerne bei anderen Fragen dazu.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 700,
+        "output_tokens": 93
+      }
+    },
+    {
+      "id": "RL-318",
+      "product": "Heavy Hoodie · Black M",
+      "gold": [
+        "other"
+      ],
+      "baseline": [
+        "other"
+      ],
+      "input_sha256": "e19ad60325ea4805b741db3e32ba08853e5ed3cd6c3855aded478695a85d8073",
+      "status": "ok",
+      "llm": [
+        "other"
+      ],
+      "evidence_valid": true,
+      "evidence": "Danke für die tolle Lieferung! Alles perfekt.",
+      "latency_ms": 2128,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 16,
+      "draft_reply": "Vielen Dank für dein tolles Feedback! Es freut uns sehr, dass alles zu deiner Zufriedenheit war.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 695,
+        "output_tokens": 77
+      }
+    },
+    {
+      "id": "RL-319",
+      "product": "Rib Tee · Black S",
+      "gold": [
+        "quality"
+      ],
+      "baseline": [
+        "quality"
+      ],
+      "input_sha256": "30c6341bbf0271d01b6a646abd2196e1bdb12f70ff9eb506fdcce279d0862c8b",
+      "status": "ok",
+      "llm": [
+        "quality"
+      ],
+      "evidence_valid": true,
+      "evidence": "Am Ärmel hängen zwei lose Fäden und die Naht löst sich",
+      "latency_ms": 1437,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 37,
+      "draft_reply": "Danke für deine Nachricht! Es tut uns leid, dass sich die Naht an deinem Rib Tee am Ärmel löst. Lose Fäden sollten bei einem neuen Artikel natürlich nicht vorkommen. Wir prüfen gern, wie wir dir weiterhelfen können.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 703,
+        "output_tokens": 127
+      }
+    },
+    {
+      "id": "RL-320",
+      "product": "Heavy Hoodie · Black M",
+      "gold": [
+        "fit"
+      ],
+      "baseline": [
+        "fit"
+      ],
+      "input_sha256": "73828a54b42670bbc688815f8bd2852e48fcb438e903b65e7656006ec1a0e253",
+      "status": "ok",
+      "llm": [
+        "other"
+      ],
+      "evidence_valid": true,
+      "evidence": "Welche Größe wäre bei 1,82 m passend?",
+      "latency_ms": 1705,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 38,
+      "draft_reply": "Bei einer Körpergröße von 1,82 m könnte dir Größe M gut passen, je nachdem wie du den Hoodie lieber trägst. Wenn du es etwas lockerer magst, könnte L auch passen. Schau gern in unsere Größentabelle für genaue Maße!",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 697,
+        "output_tokens": 116
+      }
+    },
+    {
+      "id": "RL-321",
+      "product": "Everyday Socks · Navy 3-Pack",
+      "gold": [
+        "return"
+      ],
+      "baseline": [
+        "shipping",
+        "return"
+      ],
+      "input_sha256": "ea610eb838317c68753b43407a332c7818443052e062d564d47b8e45c9d39402",
+      "status": "ok",
+      "llm": [
+        "return"
+      ],
+      "evidence_valid": true,
+      "evidence": "Versandetikett für eine Rücksendung",
+      "latency_ms": 1180,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 36,
+      "draft_reply": "Hallo! Du möchtest also das Versandetikett für eine Rücksendung erhalten. Wir helfen dir gerne dabei. Bitte beachte, dass du das Etikett in deinem Kundenkonto unter Bestellungen finden kannst oder wir schicken es dir auf Anfrage zu.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 702,
+        "output_tokens": 109
+      }
+    },
+    {
+      "id": "RL-322",
+      "product": "Heavy Hoodie · Stone L",
+      "gold": [
+        "quality"
+      ],
+      "baseline": [
+        "quality"
+      ],
+      "input_sha256": "893cfa8d6d7af5af53d3452743d75aa21befd63bb2d698b33286d91a2ba07ba5",
+      "status": "ok",
+      "llm": [
+        "quality"
+      ],
+      "evidence_valid": true,
+      "evidence": "Der Stoff ist rau und kratzt am Hals",
+      "latency_ms": 1381,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 35,
+      "draft_reply": "Danke für dein Feedback! Es tut mir leid, dass der Hoodie am Hals kratzt. Manchmal kann sich das Material noch anfühlen, bevor es gewaschen ist. Vielleicht hilft eine erste Wäsche, um den Tragekomfort zu verbessern.",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 705,
+        "output_tokens": 120
+      }
+    },
+    {
+      "id": "RL-323",
+      "product": "Rib Tee · White M",
+      "gold": [
+        "other"
+      ],
+      "baseline": [
+        "other"
+      ],
+      "input_sha256": "770a114844d44a145eb0ea5f45625369a698672e85ef8989e03f38569ad572d5",
+      "status": "ok",
+      "llm": [
+        "other"
+      ],
+      "evidence_valid": true,
+      "evidence": "Habt ihr das gleiche Shirt auch in Schwarz?",
+      "latency_ms": 1155,
+      "review_recommended": false,
+      "draft_present": true,
+      "draft_word_count": 22,
+      "draft_reply": "Hi! Das Rib Tee in Schwarz findest du eventuell in unserem Shop unter der entsprechenden Kategorie oder Suche. Viel Erfolg beim Stöbern!",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 697,
+        "output_tokens": 87
+      }
+    },
+    {
+      "id": "RL-324",
+      "product": "Everyday Socks · Black 3-Pack",
+      "gold": [
+        "return",
+        "quality"
+      ],
+      "baseline": [
+        "quality",
+        "return"
+      ],
+      "input_sha256": "738b5ad562ad1c88c38925ea5247f63851a1a949356e43355018e59f5cf542d4",
+      "status": "ok",
+      "llm": [
+        "quality",
+        "return"
+      ],
+      "evidence_valid": true,
+      "evidence": "zwei Socken haben Löcher",
+      "latency_ms": 1290,
+      "review_recommended": true,
+      "draft_present": true,
+      "draft_word_count": 29,
+      "draft_reply": "Es tut mir leid, dass zwei Socken Löcher haben und du noch keine Rückzahlung erhalten hast. Wir kümmern uns darum, dass deine Rückzahlung geprüft wird. Danke für deine Geduld!",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 702,
+        "output_tokens": 119
+      }
+    }
+  ]
+}
