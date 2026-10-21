@@ -1,0 +1,82 @@
+name: INCA Jev Research V2 - 300 Fictional Cases
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'inca-proof/agent-ops/RUN_JEV_V2_ONCE.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: inca-jev-v2-300-20261022
+  cancel-in-progress: false
+
+jobs:
+  paired:
+    name: GPT and Jev paired API - shard ${{ matrix.shard }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate frozen dataset and offline contracts
+        run: |
+          python -m unittest discover inca-proof/agent-ops -p 'test_*.py' -v
+          python inca-proof/agent-ops/jev_v2_dataset.py
+      - name: Up to 100 Jev + 100 GPT calls, no retries
+        run: |
+          test -n "$OPENAI_API_KEY"
+          test -n "$TYPESAFE_API_KEY"
+          python inca-proof/agent-ops/jev_v2_eval.py \
+            --mode live --shard ${{ matrix.shard }} \
+            --out "parts/part${{ matrix.shard }}.json"
+      - name: Archive both successful and failed responses
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: jev-v2-shard-${{ matrix.shard }}
+          path: parts/part*.json
+          retention-days: 30
+          if-no-files-found: warn
+
+  evaluate:
+    name: Analyze dev and pre-frozen holdout independently
+    needs: [paired]
+    if: ${{ always() && needs.paired.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: jev-v2-shard-*
+          merge-multiple: true
+          path: parts
+      - name: Combine and validate 300 distinct paired cases
+        run: |
+          python inca-proof/agent-ops/jev_v2_eval.py \
+            --combine parts/part0.json parts/part1.json parts/part2.json \
+            --out results/jev_v2_300_real.json
+      - name: Publish private, inspectable 300-case result artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: inca-jev-v2-300-complete-${{ github.run_id }}
+          path: results/jev_v2_300_real.json
+          retention-days: 30
+          if-no-files-found: warn
