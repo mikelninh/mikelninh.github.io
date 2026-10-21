@@ -140,6 +140,19 @@
 .ai-engineering-grid p,.ai-engineering>p{font-size:12px;color:#607564;line-height:1.6;margin-top:8px}
 @media(max-width:860px){.ai-metrics,.ai-queue-metrics{grid-template-columns:repeat(2,1fr)}.ai-five{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:580px){.ai-evidence,.ai-simulator{padding:16px}.ai-head{flex-direction:column}.ai-doc-grid,.ai-extract-grid,.ai-route-block,.ai-engineering-grid{grid-template-columns:1fr}.ai-extract-grid>div+div,.ai-route-block>div+div{border-top:1px solid #d9e5d6}.ai-five{grid-template-columns:1fr}.ai-queue-row{grid-template-columns:70px 1fr}.ai-queue-row strong{grid-column:2}}
+.claims-lifecycle{background:#1c3023;color:#edf7e9;border-radius:12px;padding:25px;margin:27px 0}
+.claims-lifecycle .kicker{color:#aedb9b}
+.claims-lifecycle h2{font-size:clamp(26px,4vw,36px);line-height:1.12;letter-spacing:-.05em;margin:10px 0}
+.claims-lifecycle>p{font-size:13px;color:#c7d9c8;line-height:1.6;max-width:830px}
+.claims-lifecycle strong{color:#fff}
+.lifecycle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:19px 0}
+.lifecycle-grid>div{background:#2a4432;padding:13px;border:1px solid #456348;border-radius:8px;min-width:0}
+.lifecycle-grid small{font-size:9px;letter-spacing:.08em;color:#b5e39e;font-weight:850;display:block}
+.lifecycle-grid strong{font-size:13px;display:block;margin:6px 0 2px}
+.lifecycle-grid span{font-size:11px;color:#b8cabe;line-height:1.45;display:block}
+.claims-lifecycle .lifecycle-limit{font-size:12px;color:#cee5cf}
+@media(max-width:700px){.lifecycle-grid{grid-template-columns:1fr 1fr}.claims-lifecycle{padding:17px}}
+@media(max-width:440px){.lifecycle-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -339,6 +352,20 @@ Hinweis: Buchungssystem nennt einen anderen Tag.</textarea></div>
       </div>
       <p class="ai-caveat">*Small developer-authored test set, not independent validation. This is a <strong>recording of prior paid API calls</strong>, not a new API request when you change a selection. The editable documents above continue to use the rule-only path. No policy eligibility, payments, or customer actions.</p>
     </div>
+  </section>
+  <section class="claims-lifecycle" id="claims-lifecycle" aria-labelledby="lifecycle-heading">
+    <div class="kicker">THE FULL CLAIMS LIFECYCLE · WHAT HAPPENS NEXT?</div>
+    <h2 id="lifecycle-heading">Continue checks is not the finish line.</h2>
+    <p>If source evidence agrees, the next step is <strong>more verification, not approval</strong>. Real end-to-end claims operations continue through policy interpretation, authorized decisions, communication and audit.</p>
+    <div class="lifecycle-grid">
+      <div><small>01 · DEMONSTRATED</small><strong>Intake &amp; source checks</strong><span>Fictional text + browser rule</span></div>
+      <div><small>02 · DEMONSTRATED</small><strong>Review packet</strong><span>Unsent operator handoff</span></div>
+      <div><small>03 · NOT BUILT</small><strong>Policy &amp; coverage</strong><span>Eligibility, terms, fraud and evidence</span></div>
+      <div><small>04 · NOT BUILT</small><strong>Authorized decision</strong><span>Claim specialist review and sign-off</span></div>
+      <div><small>05 · NOT BUILT</small><strong>Settlement &amp; customer</strong><span>Controlled payment, communication and audit</span></div>
+      <div><small>06 · DESIGNED ONLY</small><strong>Learn &amp; monitor</strong><span>Corrections, metrics, tests, shadow mode</span></div>
+    </div>
+    <p class="lifecycle-limit"><strong>Where I would start at INCA:</strong> sit with operators, map the current SOP and exception paths, measure a human-reviewed baseline, run AI suggestions in shadow mode, and expand automation only with evidence and human approval.</p>
   </section>
   <section class="ai-simulator" id="shadow-mode" aria-labelledby="shadow-heading">
     <div class="kicker">OPERATIONS SIMULATION · NOT MODEL PERFORMANCE</div>
