@@ -152,10 +152,17 @@
       'sh-quote-a','sh-quote-b','sh-old','sh-new','sh-preview','sh-review-step','sh-export-step','sh-qa-step',
       'sh-confirm','sh-next','sh-draft','sh-route-next','sh-fixture-expected','sh-fixture-why','sh-a','sh-b','sh-preview-handback',
       'sh-suggested-owner','sh-suggested-note','sh-auto-preview','sh-auto-owner','sh-auto-question','sh-auto-action',
-      'sh-auto-a','sh-auto-b','sh-feedback-result','sh-feedback-next','sh-feedback-title'];
+      'sh-auto-a','sh-auto-b','sh-feedback-result','sh-feedback-next','sh-feedback-title',
+      'sh-start','sh-next-review','sh-next-handoff','sh-reviewed-nav'];
     if(required.some(id=>!$(id)))throw Error('operator_shift_markup_incomplete');
     let analysis=null,receipt=null,proposal=null;
     const set=(id,text)=>$(id).textContent=text;
+    function moveTo(id){
+      const section=$(id);
+      if(section&&typeof section.scrollIntoView==='function'){
+        section.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+    }
     function setStage(number,status){
       const el=$('sh-stage-'+number);if(el){el.setAttribute('data-status',status);el.textContent=status==='done'?'✓':String(number);}
     }
@@ -163,7 +170,7 @@
       analysis=null;receipt=null;proposal=null;
       $('sh-feedback-result').hidden=true;$('sh-feedback-next').textContent='';$('sh-auto-preview').hidden=true;
       $('sh-review').disabled=true;$('sh-export').disabled=true;$('sh-regression').disabled=true;
-      $('sh-preview').hidden=true;$('sh-review-step').hidden=true;$('sh-export-step').hidden=true;$('sh-qa-step').hidden=true;
+      $('sh-preview').hidden=true;$('sh-review-step').hidden=true;$('sh-export-step').hidden=true;$('sh-qa-step').hidden=true;$('sh-reviewed-nav').hidden=true;
       $('sh-scan').disabled=false;
       for(const step of [2,3,4,5])setStage(step,'pending');
       set('sh-status','Source text changed. Run the evidence check again; previous decisions are invalidated.');
@@ -181,7 +188,7 @@
       $('sh-auto-preview').hidden=false;$('sh-feedback-result').hidden=true;
       const chips=Array.from(doc.querySelectorAll('[data-sh-question]'));
       chips.forEach((chip,i)=>{chip.textContent=proposal.questions[i]||'';chip.hidden=!proposal.questions[i];});
-      $('sh-preview').hidden=false;$('sh-review-step').hidden=false;$('sh-export-step').hidden=true;$('sh-qa-step').hidden=true;
+      $('sh-preview').hidden=false;$('sh-review-step').hidden=false;$('sh-export-step').hidden=true;$('sh-qa-step').hidden=true;$('sh-reviewed-nav').hidden=true;
       $('sh-review').disabled=false;
       $('sh-export').disabled=true;$('sh-regression').disabled=true;
       set('sh-review-error','');set('sh-qa-status','');
@@ -200,7 +207,7 @@
       try{
         receipt=prepareHandoff(core,{a:a.value,b:b.value,owner:owner.value,notes:notes.value,
           route:analysis.route,verified:$('sh-confirm').checked});
-        $('sh-export-step').hidden=false;$('sh-qa-step').hidden=false;
+        $('sh-export-step').hidden=false;$('sh-qa-step').hidden=false;$('sh-reviewed-nav').hidden=false;
         $('sh-feedback-result').hidden=true;
         $('sh-export').disabled=false;$('sh-regression').disabled=false;
         set('sh-status','Operator confirmed the local handoff draft for '+receipt.reviewer+'. No real assignment, message or case update occurred.');
@@ -211,7 +218,7 @@
         set('sh-preview-action',receipt.preview.nextAction);
         set('sh-preview-handback',receipt.preview.handBack);
         set('sh-draft',receipt.preview.draft);
-      }catch(e){receipt=null;$('sh-export').disabled=true;$('sh-regression').disabled=true;
+      }catch(e){receipt=null;$('sh-export').disabled=true;$('sh-regression').disabled=true;$('sh-reviewed-nav').hidden=true;
         set('sh-review-error',String(e.message).replace(/_/g,' '));}
     }
     function download(name,text,mime){
@@ -221,7 +228,16 @@
       link.href=url;link.download=name;doc.body.appendChild(link);link.click();link.remove();
       URL.revokeObjectURL(url);
     }
-    $('sh-scan').addEventListener('click',scan);
+    $('sh-start').addEventListener('click',()=>{
+      scan();
+      moveTo('sh-preview');
+    });
+    $('sh-scan').addEventListener('click',()=>{
+      scan();
+      moveTo('sh-preview');
+    });
+    $('sh-next-review').addEventListener('click',()=>moveTo('sh-review-step'));
+    $('sh-next-handoff').addEventListener('click',()=>moveTo('sh-export-step'));
     $('sh-review').addEventListener('click',review);
     $('sh-export').addEventListener('click',()=>{
       if(!receipt)return;
@@ -254,7 +270,7 @@
       if(!proposal)return;owner.value=proposal.owner;owner.dispatchEvent(new Event('input',{bubbles:true}));
     });
     [owner,notes,$('sh-confirm')].forEach(el=>el.addEventListener('input',()=>{
-      if(receipt){receipt=null;$('sh-export').disabled=true;$('sh-regression').disabled=true;$('sh-export-step').hidden=true;$('sh-qa-step').hidden=true;$('sh-feedback-result').hidden=true;setStage(3,'pending');setStage(4,'pending');setStage(5,'pending');set('sh-status','Reviewer details changed. Reconfirm the handoff before exporting.');}
+      if(receipt){receipt=null;$('sh-export').disabled=true;$('sh-regression').disabled=true;$('sh-export-step').hidden=true;$('sh-qa-step').hidden=true;$('sh-feedback-result').hidden=true;$('sh-reviewed-nav').hidden=true;setStage(3,'pending');setStage(4,'pending');setStage(5,'pending');set('sh-status','Reviewer details changed. Reconfirm the handoff before exporting.');}
     }));
     $('sh-reset').addEventListener('click',()=>{
       a.value=sample.a;b.value=sample.b;owner.value='';notes.value='';$('sh-confirm').checked=false;$('sh-auto-preview').hidden=true;
@@ -262,7 +278,7 @@
       invalidate();set('sh-status','Case reset. Start with the two fictional source excerpts.');
     });
     invalidate();
-    set('sh-status','Start here: read the two synthetic documents, then run the evidence check.');
+    set('sh-status','Ready. The fictional documents are prepared. Choose “Check these documents” or use “Run the prepared example” above.');
   }
   return {sample,validRoutes,labels,nextSteps,proposalTemplates,suggestHandoff,analyze,prepareHandoff,regression,mount};
 });
