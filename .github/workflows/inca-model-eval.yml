@@ -15,6 +15,16 @@ on:
           - dry-run
           - live
           - snapshot
+          - jev
+      jev_cases:
+        description: "Official TypeSafe Jev shadow judgments: 1 (first test), 3, or 8. Only used when run_mode=jev."
+        required: true
+        type: choice
+        default: "1"
+        options:
+          - "1"
+          - "3"
+          - "8"
       models:
         description: "Comma-separated OpenAI model IDs"
         required: true
@@ -47,6 +57,8 @@ jobs:
       CASE_LIMIT: ${{ github.event_name == 'push' && '5' || inputs.cases_per_model }}
       RUN_MODE: ${{ github.event_name == 'push' && 'live' || inputs.run_mode }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+      JEV_CASE_LIMIT: ${{ inputs.jev_cases }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -67,9 +79,12 @@ jobs:
           assert 1 <= len(models) <= 3, 'Only 1-3 models per run'
           assert all(re.fullmatch(r'[a-zA-Z0-9._-]+', m) for m in models), 'Invalid model IDs'
           assert 1 <= limit <= 5, 'At most 5 cases per model'
-          assert os.environ['RUN_MODE'] in ('live', 'dry-run', 'snapshot')
+          assert os.environ['RUN_MODE'] in ('live', 'dry-run', 'snapshot', 'jev')
           if os.environ['RUN_MODE'] in ('live','snapshot'):
-              assert os.environ.get('OPENAI_API_KEY'), 'Add repository secret OPENAI_API_KEY before selecting live'
+              assert os.environ.get('OPENAI_API_KEY'), 'Add repository secret OPENAI_API_KEY before selecting live or snapshot'
+          if os.environ['RUN_MODE'] == 'jev':
+              assert os.environ.get('TYPESAFE_API_KEY'), 'Add repository secret TYPESAFE_API_KEY before selecting jev'
+              assert os.environ.get('JEV_CASE_LIMIT') in ('1', '3', '8'), 'Only 1, 3 or 8 Jev cases allowed'
           print('Maximum billable API calls if live:', limit * len(models))
           PY
       - name: Dry run (no API calls)
@@ -83,6 +98,20 @@ jobs:
           python inca-proof/model-eval/run_openai.py \
             --models "$MODEL_IDS" --split holdout --limit "$CASE_LIMIT" \
             --out "inca-proof/model-eval/reports/github_run_${GITHUB_RUN_ID}.json"
+      - name: Official TypeSafe Jev shadow run (billable, at most eight fictional cases)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_mode == 'jev' }}
+        run: |
+          python inca-proof/model-eval/cost_quality.py --mode jev \
+            --limit "$JEV_CASE_LIMIT" --threshold 0.5 \
+            --out "inca-proof/model-eval/reports/jev_run_${GITHUB_RUN_ID}.json"
+      - name: Attach TypeSafe Jev shadow report (not auto-published)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_mode == 'jev' && always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: inca-typesafe-jev-${{ github.run_id }}
+          path: inca-proof/model-eval/reports/jev_run_*.json
+          if-no-files-found: warn
+          retention-days: 14
       - name: Record eight evidence-grounded synthetic extractions (billable)
         if: ${{ github.event_name == 'push' || inputs.run_mode == 'snapshot' }}
         run: |

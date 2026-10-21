@@ -18,7 +18,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "shift_cases.json"
 BASELINE = HERE.parent.parent / "inca" / "ai-evidence.json"
-JEV_URL = "https://jevtypesafeai.com/api/v1/decisions"
+JEV_URL = "https://api.typesafe.ai/v1/systemone"
 QUESTION = (
     "Do the two supplied fictional cancellation records require attention "
     "(HUMAN_REVIEW or NEED_INFO) instead of proceeding to remaining checks? "
@@ -41,7 +41,7 @@ def load_cases(path=DATA):
 
 def build_payload(case):
     return {
-        "model": "jev",
+        "model": "jev-latest",
         "state": {"source_a": case["a"], "source_b": case["b"]},
         "questions": {"needs_attention": {
             "type": "noul", "instructions": QUESTION
@@ -154,8 +154,8 @@ def make_report(cases, baseline, api_fn=None, threshold=0.5):
     priced = sum(r["provider_cost_usd"] is not None for r in rows)
     return {
         "status": "RECORDED_REAL_JEV_API_RUN" if api_fn is not None else "DRY_RUN_NO_MODEL_CALLS",
-        "provider": "jevtypesafeai.com (independent hosted gateway)",
-        "model": "jev",
+        "provider": "TypeSafe AI (official API: api.typesafe.ai)",
+        "model": "jev-latest",
         "generated_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
         "dataset_sha256": hashlib.sha256(DATA.read_bytes()).hexdigest(),
         "baseline_model": baseline["model"],
@@ -178,9 +178,9 @@ def main():
     args = p.parse_args()
     if args.limit < 1 or args.limit > 8 or not math.isfinite(args.threshold) or not 0 <= args.threshold <= 1:
         p.error("Expected --limit 1..8 and --threshold 0..1")
-    key = os.environ.get("JEV_API_KEY", "") if args.mode == "jev" else ""
+    key = os.environ.get("TYPESAFE_API_KEY", "") if args.mode == "jev" else ""
     if args.mode == "jev" and not key:
-        p.error("JEV_API_KEY is required for paid runs. No calls made.")
+        p.error("TYPESAFE_API_KEY is required for paid runs. No calls made.")
     cases = load_cases()[:args.limit]
     baseline = json.loads(BASELINE.read_text(encoding="utf-8"))
     api_fn = (lambda c: call_jev(c, key)) if args.mode == "jev" else None
@@ -191,6 +191,8 @@ def main():
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    if args.mode == "jev" and report["scoring"]["scored"] == 0:
+        raise SystemExit("No valid Jev scores returned; see report artifact for failure counts.")
 
 if __name__ == "__main__":
     main()

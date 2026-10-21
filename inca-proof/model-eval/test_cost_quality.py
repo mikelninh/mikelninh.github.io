@@ -19,9 +19,13 @@ class DecisionLabTests(unittest.TestCase):
 
     def test_payload_is_noul_and_source_text_only(self):
         p = lab.build_payload(lab.load_cases()[0])
-        self.assertEqual(p["model"], "jev")
+        self.assertEqual(p["model"], "jev-latest")
         self.assertEqual(p["questions"]["needs_attention"]["type"], "noul")
         self.assertNotIn("expected", json.dumps(p))
+
+    def test_official_typesafe_endpoint_only(self):
+        self.assertEqual(lab.JEV_URL, "https://api.typesafe.ai/v1/systemone")
+        self.assertNotIn("jevtypesafeai.com", lab.JEV_URL)
 
     def test_probability_validation(self):
         for bad in [True, "0.7", -0.1, 1.1, float("nan"), float("inf"), None]:
