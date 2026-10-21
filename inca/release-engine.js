@@ -83,6 +83,15 @@ function evaluate(type,a,b){
     else if(submitted&&/eingereicht|received|vorhanden/.test(l)&&/eingereicht|received|vorhanden/.test(r)){
       route=CONTINUE;reason='PHOTO_STATUS_MATCH';why='Both records say photos were submitted. Authenticity and other checks are still required.';
     }else{route=NEED;reason='PHOTO_STATUS_UNCLEAR';why='Photo availability is not clearly established.';}
+  }else if(type==='theft'){
+    const usable=value=>/^[A-Z0-9][A-Z0-9-]{3,}$/i.test(value);
+    if(!usable(left.value)||!usable(right.value)){
+      route=NEED;reason='FRAME_ID_UNVERIFIED';why='The bicycle frame number is incomplete or cannot be reliably parsed.';
+    }else if(left.value.toUpperCase()!==right.value.toUpperCase()){
+      route=REVIEW;reason='FRAME_NUMBER_CONFLICT';why='The police report and purchase record contain different frame numbers.';
+    }else{
+      route=CONTINUE;reason='FRAME_ID_MATCH';why='The frame numbers match. Ownership, evidence authenticity and coverage still require checks.';
+    }
   }else if(type==='liability'){
     const l=left.value.toLowerCase(),r=right.value.toLowerCase();
     if(/bestritten|disputed|unclear/.test(l+' '+r)||l!==r){
