@@ -150,28 +150,142 @@ function renderEvaluation(){const baselineRows=fixtures.map(c=>({gold:c.gold,pre
  $('leaderboard').replaceChildren(...out.map(r=>{let row=el('div','board-row');row.append(el('strong','',r.name));let bar=el('div','bar');if(r.metric!==null){let inner=el('span');inner.style.width=(r.metric*100).toFixed(1)+'%';bar.append(inner);}row.append(bar,el('small','',r.metric===null?`${r.n}/${fixtures.length} getestet`:`${Math.round(r.metric*100)}% · ${r.n}/${fixtures.length}`));return row;}));
  const observed=fixtures.flatMap(c=>['decisions','jev'].filter(m=>results[c.id]?.[m]?.ok).map(m=>({gold:c.gold,pred:predicted(results[c.id][m],m),model:m})));$('threshold-note').textContent=observed.length===0?'Noch keine echten Decision-Scores gemessen. Der Regler beeinflusst deshalb keine Modellvorhersagen.':`Schwelle ${Math.round(threshold*100)}% · ${observed.length} echte Decision-Prognosen auf bekannten Entwicklungsfällen. Für faire Modellvergleiche werden Kennzahlen erst bei vollständiger Abdeckung (24/24 je Modell) veröffentlicht.`;
 }
+
 const PAIRED_IDS=['RL-301','RL-302','RL-308','RL-309','RL-314','RL-316','RL-317','RL-324'];
+const PAIRED_STORAGE_KEY='return-loop-v14-real-llm-evaluation';
+let pairedBatchRunning=false,pairedBatchCancel=false,pairedStatus='';
+const exactMatch=(gold,pred)=>gold.length===pred.length&&gold.every(c=>pred.includes(c));
+const pairedCases=()=>PAIRED_IDS.map(id=>fixtures.find(x=>x.id===id)).filter(Boolean);
+const pairedDone=()=>pairedCases().filter(x=>results[x.id]?.llm?.ok);
+function savePairedResults(){
+ try{
+  const entries=Object.fromEntries(pairedCases().filter(x=>results[x.id]?.llm?.ok).map(x=>[x.id,{llm:results[x.id].llm}]));
+  localStorage.setItem(PAIRED_STORAGE_KEY,JSON.stringify({version:1,savedAt:new Date().toISOString(),entries}));
+ }catch(e){$('paired-note').textContent='Ergebnisse nur in dieser Sitzung gespeichert. Bitte Bericht herunterladen.';}
+}
+function loadPairedResults(){
+ try{
+  const saved=JSON.parse(localStorage.getItem(PAIRED_STORAGE_KEY)||'null');
+  if(!saved||saved.version!==1)return;
+  for(const x of pairedCases()){
+   const r=saved.entries?.[x.id]?.llm;
+   if(r?.ok===true&&r.id===x.id&&Array.isArray(r.categories)&&typeof r.latency_ms==='number'){
+    results[x.id]??={};results[x.id].llm=r;
+    if(typeof r.draft_reply==='string'&&r.draft_reply.trim()){
+     replyDrafts[x.id]=r.draft_reply;
+     replySources[x.id]='Echter KI-Entwurf · menschliche Freigabe nötig';
+    }
+   }
+  }
+ }catch(e){/* Fail closed: corrupt local cache is ignored. */}
+}
+function pairedSummary(done){
+ const rows=done.map(x=>({item:x,model:results[x.id].llm,base:baseline(x.text)}));
+ const calc=which=>{
+  let missed=0,alarms=0,exact=0,review=0;
+  for(const r of rows){
+   const pred=which==='rules'?r.base:r.model.categories;
+   if(r.item.gold.includes('quality')&&!pred.includes('quality'))missed++;
+   if(!r.item.gold.includes('quality')&&pred.includes('quality'))alarms++;
+   if(exactMatch(r.item.gold,pred))exact++;
+   if(which==='rules'?(pred.includes('quality')||pred.length>1):r.model.review)review++;
+  }
+  return {missed,alarms,exact,review};
+ };
+ const latencies=rows.map(r=>r.model.latency_ms).filter(Number.isFinite);
+ const totalTokens=rows.reduce((sum,r)=>sum+(r.model.usage?.input_tokens||0)+(r.model.usage?.output_tokens||0),0);
+ return {n:rows.length,baseline:calc('rules'),llm:calc('llm'),
+  evidence:rows.filter(r=>r.model.evidence&&r.item.text.includes(r.model.evidence)).length,
+  drafts:rows.filter(r=>typeof r.model.draft_reply==='string'&&r.model.draft_reply.trim()).length,
+  mean_latency_ms:latencies.length?Math.round(latencies.reduce((a,b)=>a+b,0)/latencies.length):null,
+  tokens:totalTokens,
+  rows};
+}
 function renderPaired(){
- const done=PAIRED_IDS.map(id=>fixtures.find(x=>x.id===id)).filter(x=>x&&results[x.id]?.llm?.ok);
- $('paired-progress').textContent=done.length+' von '+PAIRED_IDS.length+' Fällen mit echter KI getestet.';
- $('paired-next').disabled=!!busy||done.length===PAIRED_IDS.length||!live.paid_requests_enabled||!live.providers?.llm;
- $('paired-next').textContent=done.length===PAIRED_IDS.length?'Alle acht Fälle geprüft ✓':done.length?('Nächsten Fall einzeln testen ('+(done.length+1)+'/8) ↗'):'Ersten Fall einzeln testen (1/8) ↗';
- if(!done.length){$('paired-results').textContent='Noch keine achtfachen Live-Messwerte. Ein dokumentierter Einzeltest ist kein Benchmark.';return;}
- const count=(kind,model)=>done.filter(x=>{let pred=model==='rules'?baseline(x.text):predicted(results[x.id].llm,'llm');return kind==='miss'?x.gold.includes('quality')&&!pred.includes('quality'):kind==='alarm'?!x.gold.includes('quality')&&pred.includes('quality'):pred.includes('quality')||pred.length!==1;}).length;
- const val=el('div','paired-metrics');
- for(const [label,kind] of [['Qualitätshinweise übersehen','miss'],['Falscher Qualitätsalarm','alarm'],['Prüfung empfohlen (Heuristik)','review']]){
-  const row=el('div','paired-metric');row.append(el('strong','',label),el('span','','Regel: '+count(kind,'rules')+' · KI: '+count(kind,'llm')+' / '+done.length));val.append(row);
+ const done=pairedDone();
+ const total=PAIRED_IDS.length;
+ $('paired-progress').textContent=pairedStatus||done.length+' von '+total+' Fällen mit echter KI geprüft. '+(done.length===total?'Alle ausgewählten Fälle gemessen.':'');
+ $('paired-next').disabled=pairedBatchRunning||!!busy||done.length===total||!live.paid_requests_enabled||!live.providers?.llm;
+ $('paired-next').textContent=done.length===total?'Alle acht Fälle geprüft ✓':'Einen Fall testen ↗';
+ $('paired-run-all').disabled=!!busy||(!pairedBatchRunning&&(done.length===total||!live.paid_requests_enabled||!live.providers?.llm));
+ $('paired-run-all').textContent=pairedBatchRunning?'Messung läuft …':done.length?'Übrige '+(total-done.length)+' Fälle mit KI testen ↗':'Acht Fälle mit echter KI testen ↗';
+ $('paired-cancel').hidden=!pairedBatchRunning;
+ $('paired-download').disabled=done.length===0;
+ if(!done.length){$('paired-results').textContent='Noch keine neuen Live-Messwerte. Der frühere Einzeltest zählt nicht als Benchmark.';return;}
+ const stats=pairedSummary(done),container=el('div','paired-metrics');
+ const metricRows=[
+  ['Alle Anliegen korrekt erkannt',stats.baseline.exact+' / '+stats.n,stats.llm.exact+' / '+stats.n],
+  ['Qualitätshinweise übersehen',String(stats.baseline.missed),String(stats.llm.missed)],
+  ['Falsche Qualitätsalarme',String(stats.baseline.alarms),String(stats.llm.alarms)],
+  ['Vorgeschlagene menschliche Prüfungen',String(stats.baseline.review),String(stats.llm.review)]
+ ];
+ for(const [label,b,m] of metricRows){
+  const row=el('div','paired-metric');
+  row.append(el('strong','',label),el('span','','Regeln: '+b+' · KI: '+m));
+  container.append(row);
  }
- $('paired-results').replaceChildren(val,el('p','paired-note','Zwischenstand nur auf denselben '+done.length+' ausgewählten Fällen. Prüfungen sind eine einfache Policy-Heuristik, keine gemessenen Bearbeitungszeiten. Kein Produktionsnachweis.'));
+ const facts=el('p','paired-note','KI-Textbeleg aus Originalnachricht: '+stats.evidence+'/'+stats.n+' · KI-Antwortentwürfe: '+stats.drafts+'/'+stats.n+' · Ø Modellantwortzeit: '+(stats.mean_latency_ms===null?'—':stats.mean_latency_ms+' ms')+'.');
+ const perCase=el('div','paired-case-list');
+ for(const r of stats.rows){
+  const ok=exactMatch(r.item.gold,r.model.categories);
+  const row=el('div','paired-case');
+  row.append(el('strong','',r.item.id+(ok?' ✓':' · prüfen')),el('span','',r.item.gold.map(c=>NAMES[c]||c).join(' + ')+' → KI: '+r.model.categories.map(c=>NAMES[c]||c).join(' + ')));
+  perCase.append(row);
+ }
+ $('paired-results').replaceChildren(container,facts,perCase,el('p','paired-note','Explorative Messung an ausgewählten synthetischen Entwicklungsfällen. Keine unabhängige Validierung und keine gemessenen Zeitersparnisse. Review-Zahlen sind Policy-Empfehlungen.'));
 }
 async function pairedNext(){
+ if(pairedBatchRunning)return;
  const next=PAIRED_IDS.find(id=>!results[id]?.llm?.ok);
  if(!next)return;
- if(!access){$('more').open=true;$('tech-lab').open=true;$('access-form').hidden=false;$('toggle-access').setAttribute('aria-expanded','true');$('token').focus();$('paired-note').textContent='Bitte zuerst im geschützten KI-Labor den privaten Demo-Zugang eintragen. Noch kein kostenpflichtiger Aufruf.';return;}
- choose(next);$('paired-note').textContent='Starte genau einen echten LLM-Aufruf für '+next+' …';
- await run('llm');
- $('paired-note').textContent=results[next]?.llm?.ok?'Echter KI-Aufruf für '+next+' erfolgreich. Ergebnis in der Messung berücksichtigt.':'Dieser Fall wurde nicht erfolgreich gemessen. Bitte Fehler im KI-Labor prüfen.';
- renderPaired();
+ if(!access){$('paired-note').textContent='Bitte das private Demo-Passwort oben eingeben. Noch kein kostenpflichtiger Aufruf.';$('paired-token').focus();return;}
+ choose(next);pairedStatus='Prüfe '+next+' mit echter KI …';renderPaired();
+ const ok=await run('llm');pairedStatus='';renderPaired();
+ $('paired-note').textContent=ok?'Live-KI-Antwort erfolgreich; Ergebnis lokal gespeichert.':'Kein gültiges Modellresultat für '+next+'. Fehlermeldung im Technikbereich prüfen.';
+}
+async function pairedBatch(){
+ if(pairedBatchRunning)return;
+ if(!access){$('paired-note').textContent='Bitte zuerst das Demo-Passwort eingeben; noch keine API-Kosten.';$('paired-token').focus();return;}
+ const missing=PAIRED_IDS.filter(id=>!results[id]?.llm?.ok);
+ if(!missing.length)return;
+ const approved=window.confirm('Jetzt '+missing.length+' echte kostenpflichtige OpenAI-Aufrufe starten? Nur synthetische Testfälle, keine Shopaktion. Jeder Fall wird maximal einmal aufgerufen; du kannst nach dem aktuellen Aufruf stoppen.');
+ if(!approved)return;
+ pairedBatchRunning=true;pairedBatchCancel=false;let failed=0;
+ try{
+  for(let i=0;i<missing.length;i++){
+   if(pairedBatchCancel)break;
+   const id=missing[i];choose(id);
+   pairedStatus='Live-Test '+(i+1)+' / '+missing.length+': '+id+' … ('+pairedDone().length+'/8 erfolgreich)';
+   renderPaired();
+   const success=await run('llm');
+   if(!success)failed++;
+   pairedStatus='';
+   renderPaired();
+  }
+ }finally{
+  pairedBatchRunning=false;
+  pairedStatus='';
+  renderPaired();
+  $('paired-note').textContent=pairedBatchCancel?'Gestoppt nach dem aktuellen Fall. Bereits gemessene Ergebnisse bleiben erhalten.':failed?'Testlauf beendet, '+failed+' Aufruf(e) ohne gültiges Modellresultat. Bericht enthält nur erfolgreiche Fälle.':'Testlauf beendet. Alle erfolgreichen Live-Antworten sind im Bericht enthalten.';
+ }
+}
+function downloadPaired(){
+ const done=pairedDone(),stats=pairedSummary(done);
+ exportFile('return-loop-v14-reale-ki-auswertung.json',{
+  project:'RETURN LOOP v14 – reale KI-Vergleichsmessung',
+  created_at:new Date().toISOString(),
+  design:'Fixed set of 8 preselected synthetic development cases; same cases for rules and LLM, not an independent holdout',
+  n_successful:stats.n,n_selected:PAIRED_IDS.length,
+  counts:{baseline:stats.baseline,llm:stats.llm,valid_quotes:stats.evidence,generated_drafts:stats.drafts,mean_latency_ms:stats.mean_latency_ms,token_usage_reported:stats.tokens},
+  cases:stats.rows.map(r=>({
+   id:r.item.id,product:r.item.product,message:r.item.text,human_labels:r.item.gold,
+   rules_prediction:r.base,llm_prediction:r.model.categories,
+   evidence:r.model.evidence||'',latency_ms:r.model.latency_ms,
+   llm_model:r.model.model||null,draft_reply:r.model.draft_reply||null,
+   human_review_recommended:!!r.model.review,usage:r.model.usage||null
+  })),
+  limitations:['Only preselected synthetic development data','AI results not independently audited','Draft replies require human approval','No real support integrations','No measured time savings','Costs require current provider pricing']
+ });
 }
 function exportFile(name,obj){let blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);}
 function review(){let x=record();reviews[x.id]={decision:$('review-decision').value,at:new Date().toISOString(),basis:'synthetic',model_predictions:results[x.id]||{},note:'Manual demonstration only; no external action.'};try{localStorage.setItem('return-loop-v14-reviews',JSON.stringify(reviews))}catch{}$('review-message').textContent='✓ Entscheidung lokal dokumentiert – keine Shopaktion.';renderHandoff();renderInbox();}
