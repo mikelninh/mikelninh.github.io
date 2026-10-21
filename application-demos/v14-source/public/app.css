@@ -3,3 +3,10 @@
 
 /* Guided public walkthrough: understandable without API credentials */
 .quickguide{display:flex;flex-wrap:wrap;gap:7px 12px;margin-top:17px;padding:13px 14px;background:#eef3ec;border:1px solid #d8e6d6;border-radius:7px;color:#345744;font-size:11px;line-height:1.55}.quickguide strong{flex-basis:100%;font-size:12px}.quickguide span{white-space:normal}.model-btn:disabled{opacity:.57}.connect{border-style:dashed}.run-status:not(:empty){padding-top:3px}
+
+/* Value-first hero and explicit synthetic illustration */
+.hero-disclaimer{margin-top:14px;color:#738477;font-size:11px;line-height:1.55;max-width:550px}
+.hero-card .hero-quote{font-family:var(--serif);font-size:clamp(21px,2.35vw,28px);line-height:1.33;margin:18px 0 16px;color:#f1f7ef}
+.hero-results{display:grid;gap:6px;margin-bottom:26px}
+.hero-results span{display:block;padding:8px 10px;border:1px solid #6c907b;border-radius:4px;background:#ffffff10;color:#dbeddd;font-size:11px;font-weight:700}
+@media(max-width:650px){.hero-disclaimer{font-size:10px}}
