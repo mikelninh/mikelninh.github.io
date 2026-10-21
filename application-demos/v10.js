@@ -24,7 +24,7 @@ const card=(cls)=>N("section","v10-card "+(cls||""));
 const info=(title,body)=>append(N("div","v10-note"),N("strong","",title),P(body,"v10-muted"));
 function hero(kicker,heading,description){root.append(N("div","v10-eyebrow",kicker));const h=N("h1");h.textContent=heading;root.append(h,P(description,"v10-lead"))}
 function stat(value,label){return append(N("div","v10-stat"),N("strong","",value),N("span","",label))}
-function footer(t){root.append(append(N("footer","v10-foot"),P(t),A("Code und Testdokumentation ↗","https://github.com/mikelninh/mikelninh.github.io/blob/main/application-demos/README-v9.md")))}
+function footer(t){root.append(append(N("footer","v10-foot"),P(t),A("Code und Testdokumentation ↗","https://github.com/mikelninh/mikelninh.github.io/blob/main/application-demos/README-v10.md")))}
 function bid(){
 hero("A11 · PRODUKTENTWICKLUNG","Welche Aufträge lohnen unsere Zeit?","Du leitest ein kleines Softwareteam. Wähle aus, was ihr gut könnt – und sieh, welchen öffentlichen Auftrag ihr näher prüfen solltet.");
 const profilePanel=card("v10-profile");
