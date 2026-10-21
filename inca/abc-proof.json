@@ -1,0 +1,124 @@
+{
+  "schema": "INCA-ABC-PROOF-1",
+  "run_url": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/39669379581",
+  "artifact_name": "inca-abc-results-39669379581",
+  "artifact_sha256": "3634310d669650a5994bf9a5f9bdd817b1e7937421291f4493a1b26a879f242f",
+  "test_date": "2026-10-21",
+  "scenarios": "6 developer-authored fictional claims, reused in previous development",
+  "models": {
+    "gpt": "gpt-4o-mini-2024-07-18",
+    "jev": "jev-1.13.0"
+  },
+  "threshold": 0.5,
+  "price_assumptions": {
+    "jev_input_per_million_usd": 0.042,
+    "gpt_input_per_million_usd": 0.15,
+    "gpt_output_per_million_usd": 0.6
+  },
+  "arms": [
+    {
+      "id": "A",
+      "name": "GPT + verification",
+      "gpt_calls": 6,
+      "jev_calls": 0,
+      "verified_evidence": 5,
+      "human_reviews": 5,
+      "price_usd": 0.0006678,
+      "serial_latency_ms": 1569,
+      "note": "GPT extracts and an independent verifier controls the route."
+    },
+    {
+      "id": "B",
+      "name": "GPT + Jev",
+      "gpt_calls": 6,
+      "jev_calls": 6,
+      "verified_evidence": 5,
+      "human_reviews": 6,
+      "price_usd": 0.000784266,
+      "serial_latency_ms": 1741,
+      "note": "Jev can escalate a case but cannot clear a mandatory safety review."
+    },
+    {
+      "id": "C",
+      "name": "Jev first",
+      "gpt_calls": 6,
+      "jev_calls": 6,
+      "verified_evidence": 5,
+      "human_reviews": 6,
+      "price_usd": 0.000784266,
+      "serial_latency_ms": 1741,
+      "note": "Replayed selective GPT calling: all six Jev scores were ≥0.5, so nothing was skipped. C is a counterfactual, not a separate deployment."
+    }
+  ],
+  "cases": [
+    {
+      "id": "REAL-TR-01",
+      "name": "Travel cancellation",
+      "jev_score": 0.56,
+      "gpt_verified": true,
+      "A": "Review",
+      "B": "Review",
+      "C": "Review",
+      "learning": "Cancellation dates disagree."
+    },
+    {
+      "id": "REAL-HM-02",
+      "name": "Water damage",
+      "jev_score": 0.91,
+      "gpt_verified": false,
+      "A": "Review",
+      "B": "Review",
+      "C": "Review",
+      "learning": "GPT's evidence quotation did not pass literal verification, so the system stopped."
+    },
+    {
+      "id": "REAL-TH-03",
+      "name": "Bicycle theft",
+      "jev_score": 0.62,
+      "gpt_verified": true,
+      "A": "Continue remaining checks",
+      "B": "Review",
+      "C": "Review",
+      "learning": "Matching frame numbers. Jev nevertheless crossed the exploratory review threshold: unnecessary escalation."
+    },
+    {
+      "id": "REAL-LI-04",
+      "name": "Liability",
+      "jev_score": 0.9,
+      "gpt_verified": true,
+      "A": "Review",
+      "B": "Review",
+      "C": "Review",
+      "learning": "Conflicting liability statements need human judgment."
+    },
+    {
+      "id": "REAL-EL-05",
+      "name": "Phone repair",
+      "jev_score": 0.86,
+      "gpt_verified": true,
+      "A": "Review",
+      "B": "Review",
+      "C": "Review",
+      "learning": "Invoice amount conflicts with customer request."
+    },
+    {
+      "id": "REAL-TR-06",
+      "name": "Suspicious document",
+      "jev_score": 0.88,
+      "gpt_verified": true,
+      "A": "Review",
+      "B": "Review",
+      "C": "Review",
+      "learning": "A mandatory independent instruction-in-document guard escalated this case."
+    }
+  ],
+  "caveats": [
+    "All examples were developer-authored, reused from earlier model development. Not blind or expert-labelled.",
+    "A/B outcomes derived from the same six real GPT and six real Jev API results; C is a conservative conditional counterfactual.",
+    "Times are observed individual API durations combined serially, not total operational processing times.",
+    "Costs apply published rate-card prices to recorded tokens, not billed invoices.",
+    "Reviewer effort, time and real claim completion cost were not measured.",
+    "A correctly verified result does not mean insurance coverage was determined. No payouts or customer actions.",
+    "Jev's 0.5 attention cutoff is exploratory, not validated or calibrated; zero critical continuation misses on a six-case authored suite cannot prove reliability."
+  ]
+}
