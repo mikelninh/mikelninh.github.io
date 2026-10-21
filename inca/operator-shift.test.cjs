@@ -71,7 +71,7 @@ test('candidate regression fixture remains unapproved and not counted as fresh e
 test('page publishes complete operator sequence, controls and explicit caveats',()=>{
  const html=fs.readFileSync(path.join(__dirname,'operator-shift.html'),'utf8');
  for(const id of ['shift-app','sh-a','sh-b','sh-scan','sh-review','sh-export','sh-regression',
-   'sh-owner','sh-notes','sh-confirm','sh-preview','sh-preview-action','sh-preview-draft',
+   'sh-owner','sh-notes','sh-confirm','sh-preview','sh-preview-action','sh-draft',
    'sh-fixture-expected','sh-fixture-why','sh-reset','sh-review-error','sh-qa-status']){
    assert.ok(html.includes('id="'+id+'"'), 'Missing operator control: '+id);
  }
