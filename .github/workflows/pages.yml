@@ -74,6 +74,7 @@ jobs:
           python -m unittest discover inca-proof/agent-ops -p 'test_*.py' -v
           python inca-proof/agent-ops/agent_ops.py --planner offline --out inca/agent-ops-traces.json
           node --test inca/agent-ops-ui.test.cjs
+          node --test inca/agent-ops-simple.test.cjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site
@@ -129,6 +130,8 @@ jobs:
           fetch_until_ready "$base/inca/interactive-case.js" "IncaCaseWorkshop"
           fetch_until_ready "$base/inca/catch-the-mistake.js" "IncaMistakeChallenge"
           fetch_until_ready "$base/inca/agent-ops.html" "One claim."
+          fetch_until_ready "$base/inca/agent-ops-simple.js" "IncaSimpleCase"
+          fetch_until_ready "$base/inca/agent-ops-technical.html" "Seven visible steps"
           fetch_until_ready "$base/inca/agent-ops-ui.js" "IncaAgentOpsUI"
           fetch_until_ready "$base/inca/agent-ops-traces.json" "agent-ops-v1.1"
           fetch_until_ready "$base/inca/operator-shift.html" 'id="shift-app"'

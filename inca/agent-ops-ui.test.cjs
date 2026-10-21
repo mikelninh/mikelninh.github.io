@@ -45,7 +45,7 @@ test('six true case IDs exist with no duplicate or execution effects',()=>{
   assert.equal(r.runs.filter(x=>x.route==='CONTINUE_CHECKS').length,1);
 });
 test('dashboard tells users it replays real offline Python outputs, not a live LLM',()=>{
-  const html=fs.readFileSync(path.join(__dirname,'agent-ops.html'),'utf8');
+  const html=fs.readFileSync(path.join(__dirname,'agent-ops-technical.html'),'utf8');
   for(const marker of ['id="agent-ops-app"','id="case-picker"','id="timeline"',
     'id="feedback-download"','id="event-output"','id="workspace"','agent-ops-ui.js',
     'independent safety supervisor','offline scripted planner','read-only playback']){
