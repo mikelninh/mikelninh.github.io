@@ -59,6 +59,33 @@
 .feedback-limit{margin-top:11px;border-top:1px solid #cbdcc5;padding-top:9px;font-size:10px;color:#5b6d5d}
 @media(max-width:850px){.learning-loop{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:570px){.auto-proposal-grid{grid-template-columns:1fr}.auto-full{grid-column:auto}.learning-loop{grid-template-columns:1fr 1fr}.question-chips button{max-width:none;width:100%}}
+
+/* First-visit path — starts with a concrete mismatch and clear action */
+.hero{align-items:start}
+.hero .lead strong{color:#304c32}
+.hero-dates{display:flex;gap:13px;align-items:center;margin-top:19px;max-width:630px}
+.hero-dates>div{background:#fff;border:1px solid #dbe2d6;border-radius:9px;padding:14px 18px;flex:1;min-width:0}
+.hero-dates small{display:block;font-size:10px;color:#71806d;font-weight:850;letter-spacing:.08em}
+.hero-dates strong{display:block;font-size:27px;letter-spacing:-.05em;margin-top:5px;font-variant-numeric:tabular-nums}
+.hero-vs{font-size:25px;color:#a6654b;font-weight:900}
+.hero-problem{margin-top:14px;font-size:13px;color:#586b5b;max-width:640px}
+.hero-actions{display:flex;align-items:center;gap:15px;flex-wrap:wrap;margin-top:18px}
+.hero-actions .btn{padding:14px 19px;background:#253e2c;color:#fff}
+.hero-actions>a{font-size:12px;color:#3b6343;font-weight:700;text-decoration:underline}
+.hero-safety{font-size:11px;color:#778576;margin-top:10px}
+.first-steps{margin:11px 0 13px;padding-left:19px;color:#415748;font-size:12px}
+.first-steps li{margin:0 0 7px}
+.hero-note a{color:#3e693e;text-decoration:underline;font-weight:800}
+.follow-next{margin-top:17px;padding:15px;background:#edf6e9;border:1px solid #d7e6d2;border-radius:8px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.follow-next[hidden]{display:none}
+.follow-next p{font-size:12px;color:#4c644d}
+.historical-proof{margin-top:18px;background:#f6f8f2;border:1px solid #dbe4d6;padding:15px 18px;border-radius:9px}
+.historical-proof summary{font-size:12px;font-weight:850;color:#405b43;cursor:pointer}
+.historical-proof summary:focus-visible{outline:3px solid #8fc555;outline-offset:3px}
+.historical-proof>p{font-size:12px;margin:12px 0;max-width:760px;color:#687369}
+.historical-proof>a{font-size:11px;color:#37663e;font-weight:800;display:inline-block;margin-top:11px}
+.historical-proof .comparison{grid-template-columns:1fr 1fr}
+@media(max-width:670px){.hero-dates{gap:8px}.hero-dates>div{padding:10px}.hero-dates small{font-size:9px}.hero-dates strong{font-size:19px}.follow-next{align-items:stretch;flex-direction:column}.follow-next .btn{width:100%}.historical-proof .comparison{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -69,14 +96,30 @@
   </header>
   <section class="hero">
     <div>
-      <div class="kicker">ONE FICTIONAL CASE · AN HONEST EXPERIMENT</div>
-      <h1>Find the failure.<br><em>Finish the handoff.</em></h1>
-      <p class="lead">I wanted to understand what happens when a claim looks ready, but two documents tell different stories. Try a fictional case: check the source texts, see where a simple rule helps, prepare an unsent handoff, and explore what a reviewer might correct.</p>
-      <div class="storyline" aria-label="Workflow">
-        <span>Intake</span><i>→</i><span>Verify</span><i>→</i><span>Review</span><i>→</i><span>Handoff</span><i>→</i><span>Improve</span>
+      <div class="kicker">INCA OPERATOR SHIFT · ONE FICTIONAL CASE · ABOUT 90 SECONDS</div>
+      <h1>Two documents disagree.<br><em>What happens next?</em></h1>
+      <p class="lead">An earlier synthetic routing test let a claim advance despite a known contradiction. This <strong>separate fictional example</strong> shows how to check two documents, spot a mismatch and prepare a safe next step for a human.</p>
+      <div class="hero-dates" aria-label="Cancellation dates from two invented documents">
+        <div><small>CUSTOMER NOTICE · FICTIONAL</small><strong>11.07.2026</strong></div>
+        <span class="hero-vs" aria-hidden="true">≠</span>
+        <div><small>BOOKING RECORD · FICTIONAL</small><strong>12.07.2026</strong></div>
       </div>
+      <p class="hero-problem"><strong>The question:</strong> Which date is right? Someone needs to verify the originals before the claim continues.</p>
+      <div class="hero-actions">
+        <button id="sh-start" type="button" class="btn btn-primary">Run the prepared example →</button>
+        <a href="#sh-intake">Or explore the editable documents ↓</a>
+      </div>
+      <p class="hero-safety">No typing or account required · Nothing gets sent · Fictional data only</p>
     </div>
-    <aside class="hero-note"><b>How I made this</b><p>I shaped and iterated on this workflow with AI-assisted coding, checked the behaviour with automated tests, and kept the decisions open to human review. It's a learning project, not a production system. No live LLM, insurer access, customer messages or payments.</p></aside>
+    <aside class="hero-note"><b>What you'll do</b>
+      <ol class="first-steps">
+        <li><strong>Run</strong> the working date-check rule.</li>
+        <li><strong>Review</strong> the suggested owner and question.</li>
+        <li><strong>Prepare</strong> an unsent handoff.</li>
+        <li><strong>Optional:</strong> simulate feedback for a future test.</li>
+      </ol>
+      <p>Built with AI coding assistance. This is a bounded rule demo, not PDF reading, an LLM decision or insurer access. <a href="#sh-boundaries">Evidence and limitations ↓</a></p>
+    </aside>
   </section>
   <main id="shift-app" class="record">
     <div class="record-bar"><span>THE EXCEPTION · INCA OPERATOR SHIFT</span><span>TRAINING SCENARIO · NO REAL CUSTOMER DATA</span></div>
@@ -92,8 +135,8 @@
       <div class="step"><span id="sh-stage-5">5</span> Improve</div>
     </nav>
     <div class="workflow">
-      <section class="module">
-        <div class="module-head"><div><div class="module-index">01 / INTAKE</div><h3>Two sources. One claim.</h3><p class="module-text">These are the complete fictional inputs to the browser rule. Edit a date to see how the downstream route and review state change.</p></div><span class="module-note">Fictional text · no upload</span></div>
+      <section class="module" id="sh-intake">
+        <div class="module-head"><div><div class="module-index">01 / INTAKE</div><h3>Two sources. One claim.</h3><p class="module-text"><strong>The documents are already filled in.</strong> You don't have to type anything. Continue to the evidence check below, or edit a date to experiment with a different result.</p></div><span class="module-note">Ready to try · no upload</span></div>
         <div class="source-grid">
           <div class="source"><div class="source-label"><span>SOURCE A · CUSTOMER NOTICE</span><em>Editable</em></div><textarea id="sh-a" spellcheck="false" aria-label="Fictional customer notice">Reise ST-104 | Kundenmitteilung
 Stornierungsdatum: 11.07.2026
@@ -106,17 +149,26 @@ Hinweis: Buchungssystem nennt einen anderen Tag.</textarea></div>
         <div class="actions"><button type="button" class="btn" id="sh-reset">Reset fictional case ↺</button><span class="hint">Changing either document invalidates earlier decisions.</span></div>
       </section>
       <section class="module">
-        <div class="module-head"><div><div class="module-index">02 / VERIFY</div><h3>Find what the original process missed.</h3><p class="module-text">Run the same transparent date-checking engine used by the ST-104 workshop. It extracts source-labelled date evidence, checks for missing values and contradictions, and proposes a bounded next step.</p></div></div>
-        <button type="button" class="btn btn-primary" id="sh-scan">Run evidence check →</button>
-        <p id="sh-status" role="status" aria-live="polite">Start here: read the two fictional documents, then run the evidence check.</p>
+        <div class="module-head"><div><div class="module-index">02 / VERIFY</div><h3>Check the two dates.</h3><p class="module-text">Click the button to compare the <strong>current text of both documents</strong>. A simple browser-local rule checks labelled dates, then recommends human review, more information, or the next check. It is not an AI prediction.</p></div></div>
+        <button type="button" class="btn btn-primary" id="sh-scan">Check these documents →</button>
+        <p id="sh-status" role="status" aria-live="polite">Ready. The documents are prepared; click “Check these documents”.</p>
         <div id="sh-preview" class="result" hidden aria-live="polite">
           <div class="result-bar"><span>WORKING RULE · CURRENT TEXT INPUT</span><strong class="route" id="sh-route">NOT CHECKED</strong></div>
           <div class="result-grid"><div><h4>Why this route?</h4><p id="sh-reason">—</p><div class="quote"><b>SOURCE A</b><div id="sh-quote-a">—</div></div><div class="quote"><b>SOURCE B</b><div id="sh-quote-b">—</div></div></div><div><h4>Recommended next step</h4><p id="sh-next">—</p><p class="small-print">Only a document-consistency gate has been checked. No coverage or payment decision is implied.</p></div></div>
+          <div class="follow-next">
+            <p><strong>Next:</strong> See the proposed owner, question and handoff draft.</p>
+            <button id="sh-next-review" type="button" class="btn btn-lime">Review the suggested handoff ↓</button>
+          </div>
         </div>
-        <div class="comparison">
-          <div class="compare"><small>HISTORICAL SYNTHETIC H-A-011 · GUARDED V2</small><b id="sh-old">AUTO_READY</b><p>The previously inspected structured-case router advanced despite a contradiction flag.</p></div><strong aria-hidden="true">→</strong>
-          <div class="compare new"><small>ST-104 · CURRENT DOCUMENT CHECK</small><b id="sh-new">NOT RUN</b><p>After you run the check, this shows what the rule returns on the two displayed texts. Not a re-measurement of the old holdout.</p></div>
-        </div>
+        <details class="historical-proof" id="historical-proof">
+          <summary>Why I built this: a related synthetic test failure <span aria-hidden="true">↗</span></summary>
+          <p>The earlier test and this editable demo have <strong>different synthetic inputs</strong>. These results are not a measured before/after improvement on the same documents.</p>
+          <div class="comparison">
+            <div class="compare"><small>EARLIER STRUCTURED TEST · H-A-011</small><b id="sh-old">AUTO_READY</b><p>A known contradiction flag did not stop the old synthetic router.</p></div>
+            <div class="compare new"><small>THIS SEPARATE DOCUMENT DEMO · ST-104</small><b id="sh-new">NOT RUN</b><p>The current browser-local rule processes the two fictional texts above. Not a re-measurement of the old holdout.</p></div>
+          </div>
+          <a href="/inca/#operator-lab">See original synthetic test evidence ↗</a>
+        </details>
       </section>
       <section id="sh-review-step" class="module review-block" hidden>
         <div class="module-head"><div><div class="module-index">03 / AUTOMATIC DRAFT → HUMAN CONFIRMATION</div><h3>Your review packet is already prepared.</h3><p class="module-text">The check proposes a relevant reviewer, an evidence-specific question and the next action automatically. These are editable suggestions, <strong>not an assigned ticket</strong>. Verify the originals and confirm before exporting.</p></div></div>
@@ -144,6 +196,10 @@ Hinweis: Buchungssystem nennt einen anderen Tag.</textarea></div>
         <label class="tick"><input type="checkbox" id="sh-confirm"><span>I reviewed the displayed source excerpts. I understand this is a fictional case, not a coverage approval, customer message or real operator assignment.</span></label>
         <div class="actions"><button type="button" id="sh-review" class="btn btn-lime" disabled>Confirm &amp; prepare handoff →</button><span class="hint">The draft is automatic. Human source confirmation is required before local export.</span></div>
         <p id="sh-review-error" class="inline-error" role="alert"></p>
+        <div class="follow-next" id="sh-reviewed-nav" hidden>
+          <p><strong>Draft ready.</strong> Nothing was assigned or sent.</p>
+          <button type="button" id="sh-next-handoff" class="btn btn-primary">See the handoff and optional feedback ↓</button>
+        </div>
       </section>
       <section id="sh-export-step" class="module handoff" hidden>
         <div class="handoff-title"><div><div class="module-index">04 / HANDOFF</div><h4>Review packet · ready for local export</h4></div><span class="handoff-label">DRAFT · NOT SENT</span></div>
@@ -188,7 +244,7 @@ Hinweis: Buchungssystem nennt einen anderen Tag.</textarea></div>
       </section>
     </div>
   </main>
-  <section class="scope" aria-label="Evidence and limitations">
+  <section class="scope" id="sh-boundaries" aria-label="Evidence and limitations">
     <div class="scope-card">
       <div class="kicker">WHAT I ACTUALLY TESTED</div><h3>One small check, with a clear limit.</h3>
       <p>The synthetic test case <strong>H-A-011</strong> originally reached <strong>AUTO_READY</strong> despite a contradiction flag in an already-structured record. We added a rule to stop that route and tested it on developer-authored examples. This ST-104 reconstruction uses fictional documents and a browser-local date check to demonstrate evidence, a proposed next step and a draft for human review. <a href="/inca/#operator-lab">See the original synthetic failure ↗</a></p>
