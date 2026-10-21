@@ -13,3 +13,7 @@ This file is the deliberate one-time trigger for workflow
 - This trigger will NOT be edited to rerun silently.
 
 Date: 2026-10-21.
+
+## Corrected authorized attempt
+
+The first attempt failed locally before any successful provider response because the workflow introduced a backslash before the GitHub secret. The artifact name was also malformed. This commit reruns the same six fictional cases once after correcting those expressions, with the same six-request ceiling and no automatic retries within the runner. Keep both run histories.
