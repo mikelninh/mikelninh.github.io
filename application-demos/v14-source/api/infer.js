@@ -12,7 +12,11 @@ export default async function handler(req,res){res.setHeader('Cache-Control','no
   const code=typeof err.code==='string'&&['provider_unavailable','provider_rate_limit'].includes(err.code)?err.code:
     known.has(err.message)?err.message:
     err.name==='AbortError'?'provider_timeout':
-    err instanceof SyntaxError?'invalid_model_json':'inference_failed';
+    err instanceof SyntaxError?'invalid_model_json':
+    err instanceof TypeError?'runtime_type_error':
+    err instanceof ReferenceError?'runtime_reference_error':
+    err instanceof RangeError?'runtime_range_error':
+    'unclassified_runtime_error';
   console.error('inference_failure',{model,code}); // no secrets, request body, or provider payload
   return res.status(code==='key_not_configured'?503:502).json({error:code,message:'No model prediction is claimed. Please inspect server configuration or retry later.'});
 }
