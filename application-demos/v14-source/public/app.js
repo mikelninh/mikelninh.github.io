@@ -5,6 +5,8 @@ const NAMES={quality:'Produktqualität',fit:'Grösse & Passform',shipping:'Versa
 const MODELS=[{id:'rules',name:'Keyword baseline',desc:'Kostenlos · deterministisch',meta:'Keine KI · stets verfügbar'},{id:'decisions',name:'OpenAI Decisions · Experiment',desc:'Experimentelle Integration · noch nicht verifiziert',meta:'OpenAI · echte API'},{id:'jev',name:'TypeSafe Jev 1.14 · nicht verbunden',desc:'Separater Anbieter-Key erforderlich',meta:'OpenRouter · echte API'},{id:'llm',name:'Generatives LLM',desc:'Structured Outputs · mehrere Anliegen',meta:'OpenAI Responses API'}];
 const PRIVACY_NOTE='Synthetische Testdaten; keine Kundennachrichten oder Shop-Aktionen.';
 let inboxExpanded=false;
+const replyDrafts={};
+const replySources={};
 let fixtures=[],selected='RL-301',results={},reviews={},busy='',threshold=.5,access='',live={paid_requests_enabled:false,providers:{}},calls=0;
 try{reviews=JSON.parse(localStorage.getItem('return-loop-v14-reviews')||'{}')}catch{}
 const baseline=text=>{let s=text.toLocaleLowerCase('de-DE'),hits=[];if(/loch|löcher|naht|gerissen|faden|franst|dünn|defekt|reißverschluss|verfärbt|kratzt|verarbeitung/.test(s))hits.push('quality');if(/zu klein|zu groß|passt mir nicht|sitzt|größe|grösse/.test(s))hits.push('fit');if(/paket|tracking|versand|zustell|verteilzentrum/.test(s))hits.push('shipping');if(/retoure|rücksendung|etikett|umtausch|widerruf|erstattung|rückzahlung/.test(s))hits.push('return');return hits.length?hits:['other']};
@@ -104,9 +106,37 @@ function renderSignals(){
   item.append(btn);return item;
  }));
 }
+function templateReply(x){
+ const labels=x.gold||[];
+ let message;
+ if(labels.includes('quality')&&labels.includes('return'))message='Das klingt ärgerlich. Wir möchten sowohl den Artikel als auch deinen Rückgabewunsch prüfen. Könntest du uns ein Foto der betroffenen Stelle schicken? Dann klären wir gemeinsam die nächsten Schritte.';
+ else if(labels.includes('quality'))message='Das klingt ärgerlich. Danke, dass du uns darauf aufmerksam machst. Könntest du uns ein Foto der betroffenen Stelle schicken? Wir schauen uns den Hinweis an und klären die nächsten Schritte.';
+ else if(labels.includes('shipping'))message='Wir verstehen, dass du Klarheit zur Lieferung möchtest. Wir würden den Versandstatus gern prüfen. Falls noch nicht übermittelt, nenne uns bitte die Bestellnummer, damit wir den Fall zuordnen können.';
+ else if(labels.includes('order_issue'))message='Es tut uns leid, dass die Lieferung nicht wie erwartet angekommen ist. Wir würden das gern überprüfen. Magst du uns kurz sagen, was genau fehlt oder welcher Artikel angekommen ist?';
+ else if(labels.includes('return'))message='Gern schauen wir uns deinen Rückgabe- oder Erstattungswunsch an. Wir prüfen die Angaben zum Fall und melden uns mit den nächsten Schritten. Eine Entscheidung ist damit noch nicht getroffen.';
+ else if(labels.includes('fit'))message='Vielen Dank für deine Rückmeldung zur Passform. Wir helfen dir gern dabei, die richtige Größe beziehungsweise eine mögliche Lösung zu finden. Magst du uns kurz erläutern, wo der Artikel nicht gut sitzt?';
+ else if(x.sub==='positive_feedback')message='Es freut uns sehr, dass du eine gute Erfahrung gemacht hast. Vielen Dank, dass du dir die Zeit für diese Nachricht genommen hast!';
+ else message='Wir kümmern uns gern um dein Anliegen. Wir prüfen deine Nachricht und geben dir eine passende Rückmeldung.';
+ return 'Hallo,\n\nvielen Dank für deine Nachricht. '+message+'\n\nViele Grüße\nDein Support-Team';
+}
+function renderReply(){
+ const x=record();if(!x)return;
+ if(!Object.prototype.hasOwnProperty.call(replyDrafts,x.id))replyDrafts[x.id]=templateReply(x);
+ $('reply-text').value=replyDrafts[x.id];
+ $('reply-source').textContent=replySources[x.id]||'Textvorlage · keine KI-Ausgabe';
+ $('reply-status').textContent='Bearbeitbarer Entwurf – es wird nichts versendet.';
+}
+async function copyReply(){
+ const value=$('reply-text').value;
+ try{
+  if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(value);
+  else{$('reply-text').focus();$('reply-text').select();if(!document.execCommand('copy'))throw Error('copy_not_supported');}
+  $('reply-status').textContent='✓ Antwortentwurf kopiert. Bitte vor dem Versenden prüfen.';
+ }catch{$('reply-status').textContent='Kopieren nicht möglich. Du kannst den Text direkt markieren und kopieren.';}
+}
 function renderCase(){let x=record();if(!x)return;$('case-number').textContent=x.id;$('product-name').textContent=x.product;$('product-sku').textContent=x.sku;$('ticket-message').textContent='“'+x.text+'”';
  const suggested=[fixtures[0],fixtures[7],fixtures[13],fixtures[16]].filter(Boolean);
- $('case-picker').replaceChildren(...suggested.map(c=>{let b=el('button','ticket-tile');b.type='button';b.setAttribute('aria-pressed',String(selected===c.id));b.append(el('strong','',c.id),el('span','',c.preview||shortType(c)));b.addEventListener('click',()=>choose(c.id));return b}));renderInsights();renderModels();renderHandoff();renderInbox();$('review-message').textContent=reviews[selected]?'✓ Bereits lokal dokumentiert':''}
+ $('case-picker').replaceChildren(...suggested.map(c=>{let b=el('button','ticket-tile');b.type='button';b.setAttribute('aria-pressed',String(selected===c.id));b.append(el('strong','',c.id),el('span','',c.preview||shortType(c)));b.addEventListener('click',()=>choose(c.id));return b}));renderInsights();renderModels();renderHandoff();renderInbox();renderReply();$('review-message').textContent=reviews[selected]?'✓ Bereits lokal dokumentiert':''}
 function shortType(c){return c.id==='RL-301'?'Vorzeitige Abnutzung':c.gold.length>1?'Mehrere Anliegen':NAMES[c.gold[0]]||'Anderes Anliegen'}
 function choose(id){selected=id;renderCase();$('run-status').textContent='';}
 function renderModels(){let x=record();if(!x)return;$('models').replaceChildren(...MODELS.map(m=>{let box=el('div','model');let lead=el('div','');lead.append(el('div','model-name',m.name),el('div','model-desc',m.desc));let btn=el('button','model-btn',m.id==='rules'?'Anzeigen':results[x.id]?.[m.id]?'Erneut prüfen':'Jetzt testen');btn.type='button';btn.disabled=!!busy||(m.id!=='rules'&&(!live.paid_requests_enabled||live.providers?.[m.id]!==true));btn.title=m.id!=='rules'&&live.providers?.[m.id]!==true?'Anbieter derzeit nicht verbunden':m.id!=='rules'&&!live.paid_requests_enabled?'Live-Tests benötigen autorisierten Zugang':'';btn.addEventListener('click',()=>run(m.id));box.append(lead,btn);const result=results[x.id]?.[m.id];if(m.id==='rules'){box.classList.add('ready');box.append(el('div','model-result','Regelergebnis: '+baseline(x.text).map(c=>NAMES[c]).join(' + ')+' · 0 API-Aufrufe'));}else if(result?.ok){box.classList.add('ready');let cap=predicted(result,m.id).map(c=>NAMES[c]).join(' + ')||'Keine Kategorie über Schwelle';let detail=m.id==='llm'?` · ${result.evidence?'Beleg: „'+result.evidence+'“':'Kein gültiges Textzitat'}`:` · Scores: ${Object.entries(result.scores||{}).filter(([k,v])=>Number(v)>.25).map(([k,v])=>NAMES[k]+' '+Math.round(v*100)+'%').join(', ')}`;box.append(el('div','model-result',cap+detail+` · ${result.latency_ms} ms`));}else{box.append(el('div','model-result',live.providers?.[m.id]!==true?'Anbieter derzeit nicht verbunden – keine Vorhersage.':live.paid_requests_enabled?'Nicht ausgeführt. Optionaler geschützter Live-Test.':'Nicht getestet. Öffentliche Demo benötigt keine API-Kosten.'));}return box;}));}
@@ -149,6 +179,10 @@ function report(){let measured={};for(let m of MODELS.slice(1)){const r=fixtures
 async function init(){try{const embedded=document.getElementById('embedded-fixtures');if(embedded){fixtures=JSON.parse(embedded.textContent);}else{const response=await fetch('./fixtures.json',{cache:'no-store'});if(!response.ok)throw Error('Fixtures unavailable');fixtures=await response.json();}if(!Array.isArray(fixtures)||fixtures.length!==24)throw Error('Unexpected data length');}catch(e){$('run-status').textContent='Die lokalen synthetischen Fälle konnten nicht geladen werden.';return;}
  try{const r=await fetch('/api/status',{cache:'no-store'});if(!r.ok)throw Error('no backend');let v=await r.json();if(v.build!=='v14')throw Error('static preview');live=v;}catch{live={paid_requests_enabled:false,providers:{}}}
  $('provider-badge').textContent=live.paid_requests_enabled?'Öffentliche Demo kostenlos · KI-Labor geschützt':'Öffentliche Demo kostenlos · Keine bezahlten Aufrufe';$('provider-badge').classList.toggle('ready',live.paid_requests_enabled);
+ $('reply-text').addEventListener('input',e=>{replyDrafts[selected]=e.target.value;replySources[selected]=replySources[selected]||'Bearbeitete Textvorlage';});
+ $('copy-reply').addEventListener('click',copyReply);
+ $('open-evaluation').addEventListener('click',()=>{$('more').open=true;$('paired-study').scrollIntoView({behavior:'smooth',block:'start'});});
+ $('open-tech-lab').addEventListener('click',()=>{$('tech-lab').open=true;});
  $('paired-next').addEventListener('click',pairedNext);
  $('inbox-filter').addEventListener('change',()=>{inboxExpanded=false;renderInbox();});$('inbox-show-more').addEventListener('click',()=>{inboxExpanded=!inboxExpanded;renderInbox();});$('download-handoff').addEventListener('click',downloadHandoff);renderSignals();
  $('next-case').addEventListener('click',()=>choose(fixtures[(fixtures.findIndex(x=>x.id===selected)+1)%fixtures.length].id));
