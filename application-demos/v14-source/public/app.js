@@ -4,6 +4,7 @@ const CLASSES=['quality','fit','shipping','return','order_issue','other'];
 const NAMES={quality:'Produktqualität',fit:'Grösse & Passform',shipping:'Versand',return:'Retoure',order_issue:'Falsche / fehlende Ware',other:'Sonstiges'};
 const MODELS=[{id:'rules',name:'Keyword baseline',desc:'Kostenlos · deterministisch',meta:'Keine KI · stets verfügbar'},{id:'decisions',name:'OpenAI Decisions · Experiment',desc:'Experimentelle Integration · noch nicht verifiziert',meta:'OpenAI · echte API'},{id:'jev',name:'TypeSafe Jev 1.14 · nicht verbunden',desc:'Separater Anbieter-Key erforderlich',meta:'OpenRouter · echte API'},{id:'llm',name:'Generatives LLM',desc:'Structured Outputs · mehrere Anliegen',meta:'OpenAI Responses API'}];
 const PRIVACY_NOTE='Synthetische Testdaten; keine Kundennachrichten oder Shop-Aktionen.';
+let inboxExpanded=false;
 let fixtures=[],selected='RL-301',results={},reviews={},busy='',threshold=.5,access='',live={paid_requests_enabled:false,providers:{}},calls=0;
 try{reviews=JSON.parse(localStorage.getItem('return-loop-v14-reviews')||'{}')}catch{}
 const baseline=text=>{let s=text.toLocaleLowerCase('de-DE'),hits=[];if(/loch|löcher|naht|gerissen|faden|franst|dünn|defekt|reißverschluss|verfärbt|kratzt|verarbeitung/.test(s))hits.push('quality');if(/zu klein|zu groß|passt mir nicht|sitzt|größe|grösse/.test(s))hits.push('fit');if(/paket|tracking|versand|zustell|verteilzentrum/.test(s))hits.push('shipping');if(/retoure|rücksendung|etikett|umtausch|widerruf|erstattung|rückzahlung/.test(s))hits.push('return');return hits.length?hits:['other']};
@@ -37,8 +38,12 @@ function renderInbox(){
   if(filter==='reviewed')return !!reviews[x.id];
   return true;
  });
+ const visible=inboxExpanded?items:items.slice(0,6);
  $('inbox-count').textContent=String(items.length);
- $('inbox-list').replaceChildren(...items.map(x=>{
+ $('inbox-visible-count').textContent=visible.length+' von '+items.length+' Nachrichten';
+ $('inbox-show-more').hidden=items.length<=6;
+ $('inbox-show-more').textContent=inboxExpanded?'Weniger anzeigen ↑':'Weitere '+Math.max(0,items.length-6)+' anzeigen ↓';
+ $('inbox-list').replaceChildren(...visible.map(x=>{
   const b=el('button','inbox-ticket');b.type='button';b.setAttribute('aria-pressed',String(x.id===selected));
   const top=el('span','inbox-ticket-top');top.append(el('strong','',x.id+' · '+x.product),el('small','',x.day||'Beispiel'));
   b.append(top,el('span','inbox-message',x.text));
@@ -121,7 +126,7 @@ function report(){let measured={};for(let m of MODELS.slice(1)){const r=fixtures
 async function init(){try{const embedded=document.getElementById('embedded-fixtures');if(embedded){fixtures=JSON.parse(embedded.textContent);}else{const response=await fetch('./fixtures.json',{cache:'no-store'});if(!response.ok)throw Error('Fixtures unavailable');fixtures=await response.json();}if(!Array.isArray(fixtures)||fixtures.length!==24)throw Error('Unexpected data length');}catch(e){$('run-status').textContent='Die lokalen synthetischen Fälle konnten nicht geladen werden.';return;}
  try{const r=await fetch('/api/status',{cache:'no-store'});if(!r.ok)throw Error('no backend');let v=await r.json();if(v.build!=='v14')throw Error('static preview');live=v;}catch{live={paid_requests_enabled:false,providers:{}}}
  $('provider-badge').textContent=live.paid_requests_enabled?'Öffentliche Demo kostenlos · KI-Labor geschützt':'Öffentliche Demo kostenlos · Keine bezahlten Aufrufe';$('provider-badge').classList.toggle('ready',live.paid_requests_enabled);
- $('inbox-filter').addEventListener('change',renderInbox);$('download-handoff').addEventListener('click',downloadHandoff);renderSignals();
+ $('inbox-filter').addEventListener('change',()=>{inboxExpanded=false;renderInbox();});$('inbox-show-more').addEventListener('click',()=>{inboxExpanded=!inboxExpanded;renderInbox();});$('download-handoff').addEventListener('click',downloadHandoff);renderSignals();
  $('next-case').addEventListener('click',()=>choose(fixtures[(fixtures.findIndex(x=>x.id===selected)+1)%fixtures.length].id));
  $('toggle-access').addEventListener('click',()=>{let open=$('access-form').hidden;$('access-form').hidden=!open;$('toggle-access').setAttribute('aria-expanded',String(open));});
  $('token').addEventListener('input',e=>{access=e.target.value.trim();});$('save-review').addEventListener('click',review);$('download-report').addEventListener('click',report);
