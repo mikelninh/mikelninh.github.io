@@ -84,7 +84,7 @@ function evaluate(type,a,b){
       route=CONTINUE;reason='PHOTO_STATUS_MATCH';why='Both records say photos were submitted. Authenticity and other checks are still required.';
     }else{route=NEED;reason='PHOTO_STATUS_UNCLEAR';why='Photo availability is not clearly established.';}
   }else if(type==='theft'){
-    const usable=value=>/^[A-Z0-9][A-Z0-9-]{3,}$/i.test(value);
+    const usable=value=>/^[A-Z0-9][A-Z0-9-]{1,}$/i.test(value);
     if(!usable(left.value)||!usable(right.value)){
       route=NEED;reason='FRAME_ID_UNVERIFIED';why='The bicycle frame number is incomplete or cannot be reliably parsed.';
     }else if(left.value.toUpperCase()!==right.value.toUpperCase()){
