@@ -47,3 +47,51 @@
 .inbox-more-row .btn{min-height:36px;padding:7px 13px}
 .inbox-more-row button[hidden]{display:none}
 @media(max-width:650px){.inbox-list{grid-template-columns:1fr}.inbox-ticket{min-height:114px}.inbox-more-row{align-items:flex-start;flex-wrap:wrap}.inbox-more-row .btn{width:100%}}
+
+/* Simplified recruiting release: one task before any deep-dive */
+.focus-release .hero{min-height:0;grid-template-columns:1fr;gap:0;padding:43px 0 23px}
+.focus-release .hero-main{max-width:790px}
+.focus-release .hero h1{font-size:clamp(45px,5vw,70px);margin:10px 0 15px;line-height:1.02}
+.focus-release .hero .lead{max-width:680px;font-size:16px;line-height:1.6}
+.focus-release .hero-actions{margin-top:18px}
+.focus-release .hero-side,.focus-release .data-strip{display:none}
+.focus-release .hero-disclaimer{font-size:11px;color:#88948a}
+.focus-release .section-heading{margin:31px 0 18px}
+.focus-release .section-heading h2{font-size:clamp(27px,3vw,37px)}
+.focus-release .section-heading p{font-size:13px;max-width:760px}
+.focus-release .workstep{display:none}
+.focus-release .workgrid{gap:15px}
+.focus-release .case-pane,.focus-release .result-pane{padding:25px;min-height:0}
+.focus-release .customer-quote{font-size:clamp(23px,2.4vw,30px);min-height:90px;margin:16px 0}
+.focus-release .product-chip{margin-top:20px}
+.focus-release .case-nav-title{margin-top:17px}
+.focus-release .ticket-tiles{gap:7px}
+.focus-release .ticket-tile{min-height:49px}
+.focus-release .result-pane h3{font-size:26px;margin:14px 0 8px}
+.focus-release .insight-panel{margin-top:17px;padding:16px}
+.focus-release .comparison-line{padding:13px 0}
+.focus-release .next-step{padding:14px 0}
+.focus-release .demo-bottom{display:none}
+.focus-release .reviewbar{margin-top:15px;padding:23px 26px}
+.focus-release .review-copy h3{font-size:25px;margin:7px 0 5px}
+.focus-release .review-copy p{font-size:12px}
+.focus-release .handoff-preview,.focus-release .signals,.focus-release .arena-heading,.focus-release .bottom-grid{margin-top:20px}
+.focus-release .focus-conclusion{color:#597064;font-size:13px;line-height:1.7;max-width:760px;margin:22px 0 27px}
+.focus-release .focus-more{border:1px solid #d5dfd3;border-radius:9px;margin:0 0 55px;background:#fdfdfa;overflow:hidden}
+.focus-release .focus-more>summary{padding:19px 23px;font-size:14px;font-weight:750;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;list-style:none}
+.focus-release .focus-more>summary::-webkit-details-marker{display:none}
+.focus-release .focus-more[open]>summary{border-bottom:1px solid #d5dfd3;background:#eaf1e8}
+.focus-release .focus-more-inner{padding:20px}
+.focus-release .focus-more-inner .inbox{margin-bottom:17px}
+.focus-release .focus-more-inner .bottom-grid{margin:40px 0}
+.focus-release footer{margin-top:0}
+@media(max-width:650px){
+ .focus-release .hero{padding:25px 0 16px}
+ .focus-release .hero h1{font-size:43px}
+ .focus-release .hero .lead{font-size:14px}
+ .focus-release .section-heading{margin:22px 0 14px}
+ .focus-release .case-pane,.focus-release .result-pane{padding:18px}
+ .focus-release .reviewbar{padding:19px}
+ .focus-release .focus-more-inner{padding:12px}
+ .focus-release .focus-more>summary{padding:17px;font-size:12px}
+}
