@@ -35,5 +35,6 @@ jobs:
           python inca-proof/agent-ops/agent_ops.py --planner offline --out inca/agent-ops-traces.json
           node --test inca/agent-ops-ui.test.cjs
           node --test inca/agent-ops-simple.test.cjs
+          node --test inca/decision-lab.test.cjs
       - name: Ensure checked-in report is clean
         run: git diff --exit-code -- inca-proof/reports/deterministic_eval.json
