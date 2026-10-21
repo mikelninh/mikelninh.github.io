@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="One synthetic claims exception. From intake through evidence checking, operator sign-off, handoff, and regression candidate. INCA independent AI Operations work sample.">
+<title>Operator Shift | INCA AI Operations Work Sample</title>
+<style>
+:root{--bg:#f5f6f0;--ink:#17231b;--deep:#19291e;--muted:#637166;--line:#dae2d5;--paper:#fffefa;--lime:#baff55;--pale:#ecf7e6;--warning:#b95b37;--amber:#fff5e9;--mint:#278355}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.52;cursor:not-allowed}a{color:inherit}a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #8fc555;outline-offset:3px}p,h1,h2,h3,h4{margin:0}
+.shell{width:min(1160px,calc(100% - 36px));margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 0;border-bottom:1px solid #d4dfd2}.top b{font-size:15px;letter-spacing:-.025em}.top span{color:#637163;font-size:12px}.top-right{display:flex;gap:12px;align-items:center}.top-right a{font-size:12px;text-decoration:none;font-weight:750}.top-right a:hover{text-decoration:underline}.top-pill{padding:5px 9px;border-radius:30px;color:#254128;background:var(--lime);font-size:10px;font-weight:850;letter-spacing:.1em}
+.hero{padding:47px 0 28px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(230px,.55fr);align-items:end;gap:28px}
+.kicker{font-size:10px;letter-spacing:.15em;color:#416a43;text-transform:uppercase;font-weight:850}.hero h1{font-size:clamp(40px,6.2vw,75px);letter-spacing:-.064em;line-height:1.01;margin:13px 0 19px;max-width:850px}.hero h1 em{color:#56844f;font-style:normal}.lead{color:#526052;font-size:17px;line-height:1.54;max-width:780px}.hero-note{padding:18px 20px;border-left:3px solid #afd47f;background:#ecf3e7}.hero-note b{font-size:13px}.hero-note p{color:#58685b;font-size:12px;margin-top:5px}
+.storyline{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:23px}.storyline span{background:#fff;border:1px solid var(--line);padding:8px 11px;font-size:11px;font-weight:750;border-radius:5px}.storyline i{font-size:12px;color:#90a18e;font-style:normal}
+.record{margin:19px 0 20px;border:1px solid #cad9c5;border-radius:14px;background:var(--paper);box-shadow:0 20px 60px #1c331308;overflow:hidden}.record-bar{background:var(--deep);color:#d9f6cf;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:15px 23px;font-size:11px;letter-spacing:.08em;font-weight:850}.record-bar span:last-child{font-size:10px;color:#b4c6af}
+.record-head{padding:24px 27px 20px;border-bottom:1px solid var(--line);display:flex;gap:20px;justify-content:space-between;align-items:flex-start}.record-head h2{font-size:33px;line-height:1.1;letter-spacing:-.045em;margin:5px 0}.record-head p{font-size:13px;color:#647163;max-width:690px}.record-tag{background:#eef5e9;border:1px solid #dce8d4;padding:11px 13px;border-radius:7px;min-width:168px;text-align:right}.record-tag small{display:block;font-size:9px;letter-spacing:.09em;color:#638064}.record-tag b{font-size:14px}
+.steps{display:flex;gap:0;flex-wrap:nowrap;border-bottom:1px solid var(--line);background:#f5f8f2;padding:13px 22px;overflow:auto}.step{display:flex;align-items:center;gap:7px;flex:1;min-width:135px;white-space:nowrap;font-size:11px;color:#6a796d;font-weight:750}.step span{display:grid;place-items:center;width:23px;height:23px;border:1px solid #c8d4c5;color:#4e6651;border-radius:50%;font-size:10px;background:#fff}.step span[data-status="done"]{background:#a9ed76;border-color:#83bf59;color:#1e5228;font-weight:900}.step:not(:last-child):after{content:"";height:1px;background:#cbd9c7;flex:1;margin:0 9px}
+.workflow{padding:0 27px 26px}.module{padding:25px 0;border-bottom:1px solid var(--line)}.module:last-child{border-bottom:0}.module-head{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;margin-bottom:18px}.module-index{color:#4e874f;font-size:10px;letter-spacing:.12em;font-weight:850;margin-bottom:7px}.module h3{font-size:24px;line-height:1.15;letter-spacing:-.04em;margin-bottom:8px}.module-text{max-width:730px;font-size:13px;color:#647367}.module-note{font-size:11px;padding:7px 10px;border:1px solid #dfebd9;border-radius:7px;color:#557059;white-space:nowrap;background:#f1f8ed}
+.source-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.source{background:#f8faf6;border:1px solid #dce5d8;border-radius:9px;padding:15px}.source-label{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:10px;font-weight:850;color:#536b56;letter-spacing:.08em;margin-bottom:10px}.source-label em{font-style:normal;color:#809583;font-weight:650}.source textarea{display:block;background:#fff;border:1px solid #d2ded0;border-radius:5px;padding:14px;width:100%;min-height:145px;resize:vertical;color:#273c2b;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}.small-print{font-size:11px;color:#778678;line-height:1.6;margin-top:12px}.small-print a{color:#365f39;font-weight:700}
+.btn{border:1px solid #334736;border-radius:7px;padding:12px 17px;font-weight:800;font-size:12px;background:#fff;color:#24402b}.btn-primary{background:#243b2a;color:#fff}.btn-primary:hover:not(:disabled){background:#34543a}.btn-lime{background:#b5ef78;color:#254028;border-color:#8aba56}.btn-lime:hover:not(:disabled){background:#a9e56e}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}.hint{color:#6b776e;font-size:12px}.inline-error{color:#a4442b;font-size:12px;font-weight:700;margin-top:9px;min-height:2px}
+#sh-status{background:#eaf4e8;color:#3f6347;border:1px solid #cfdfcb;padding:12px 14px;border-radius:7px;font-size:12px;margin-top:15px}
+.result{margin-top:17px;border-radius:10px;overflow:hidden;border:1px solid #d5e1cf}.result[hidden],.review-block[hidden],.handoff[hidden],.qa[hidden]{display:none}.result-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#eaf4e8;padding:13px 18px}.result-bar span{font-size:10px;font-weight:850;letter-spacing:.09em;color:#5f7f5d}.route{font-weight:900;font-size:16px;letter-spacing:-.02em}.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;background:#fff}.result-grid>div{padding:18px;min-width:0}.result-grid>div+div{border-left:1px solid #e2e9dc}.result-grid h4{font-size:12px;margin-bottom:7px}.result-grid p{font-size:12px;color:#617365}.quote{display:block;font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;background:#f4f8f0;border-left:3px solid #88b66b;padding:11px;margin:9px 0;color:#39533b;overflow-wrap:anywhere}
+.comparison{display:grid;grid-template-columns:1fr 38px 1fr;gap:9px;align-items:center;margin-top:16px}.compare{border-radius:8px;padding:15px;background:#fcf1ec;border:1px solid #efdcce}.compare.new{background:#edf8e9;border-color:#cfe4c8}.compare small{font-size:10px;letter-spacing:.08em;color:#8a5a46;font-weight:850}.compare.new small{color:#50815a}.compare b{display:block;font-size:21px;letter-spacing:-.035em;margin:6px 0}.compare p{font-size:11px;color:#6d746b}.comparison>strong{text-align:center;color:#527e54;font-size:23px}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label{display:block;font-size:11px;font-weight:850;color:#526e58;margin-bottom:6px}.field input,.field textarea,.field select{display:block;width:100%;padding:11px 12px;border:1px solid #cfdbcd;background:#fff;border-radius:6px;color:#263a29}.field textarea{min-height:100px;resize:vertical}.field-help{font-size:11px;color:#6e7c6f;margin-top:6px}.tick{display:flex;align-items:flex-start;gap:9px;font-size:12px;color:#4e6353;margin-top:14px;max-width:800px}.tick input{margin-top:3px;accent-color:#588a50}
+.handoff{background:#f2f8ed;border:1px solid #cfe3c7;border-radius:11px;padding:19px;margin-top:17px}.handoff-title{display:flex;justify-content:space-between;gap:12px;align-items:center}.handoff-title h4{font-size:17px;letter-spacing:-.035em}.handoff-label{font-size:10px;font-weight:850;letter-spacing:.1em;color:#427d49}.handoff dl{display:grid;grid-template-columns:142px 1fr;gap:8px 13px;margin:14px 0 0;font-size:12px}.handoff dt{color:#66806a}.handoff dd{margin:0;overflow-wrap:anywhere;color:#263f2c;font-weight:650}.handoff .draft{margin-top:15px;padding:14px;border-radius:6px;border:1px solid #d6e5d2;background:#fff}.handoff .draft b{font-size:11px}.handoff .draft p{font-size:12px;color:#4e6755;margin-top:7px}
+.qa{background:#fbfcf9;border:1px solid #dce7d6;border-radius:10px;padding:20px;margin-top:17px}.qa h4{font-size:17px;margin-bottom:8px}.qa p{font-size:12px;color:#657367;margin-bottom:15px}.qa .field-grid{margin-bottom:12px}
+.links-footer{display:flex;gap:18px;flex-wrap:wrap;margin:12px 0 45px;font-size:12px}.links-footer a{font-weight:750;color:#3d6c44}.scope{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0 30px}.scope-card{background:#fff;border:1px solid #d8e2d3;border-radius:10px;padding:19px}.scope-card h3{font-size:16px;letter-spacing:-.025em;margin-bottom:10px}.scope-card p{font-size:12px;line-height:1.65;color:#637366}.scope-card a{color:#37603c;font-weight:750}.scope-card strong{color:#263f2b}
+.footer{border-top:1px solid #d6e1d1;padding:17px 0 35px;color:#718071;font-size:11px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+@media(max-width:870px){.hero{grid-template-columns:1fr}.hero-note{max-width:610px}.steps{gap:10px}.step{min-width:auto;font-size:10px}.step:not(:last-child):after{display:none}.step{flex:0 0 auto}.record-head{display:block}.record-tag{margin-top:16px;text-align:left;display:inline-block}.source-grid,.scope{grid-template-columns:1fr}.field-grid{grid-template-columns:1fr}}
+@media(max-width:580px){.top{align-items:flex-start}.top-right{flex-wrap:wrap;justify-content:flex-end}.top-right .top-pill{display:none}.hero{padding:30px 0 20px}.hero h1{font-size:39px}.lead{font-size:15px}.record-head{padding:20px}.record-head h2{font-size:27px}.workflow{padding:0 16px 18px}.module{padding:21px 0}.module h3{font-size:22px}.module-head{display:block}.module-note{display:inline-block;margin-top:12px;white-space:normal}.result-grid{grid-template-columns:1fr}.result-grid>div+div{border:0;border-top:1px solid #e2e9dc}.comparison{grid-template-columns:1fr}.comparison>strong{transform:rotate(90deg)}.handoff dl{grid-template-columns:1fr;gap:2px}.handoff dd{margin-bottom:7px}.record-bar span:last-child{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <div><b>MICHAEL NINH × INCA</b> <span>· AI Operations application</span></div>
+    <div class="top-right"><a href="/inca/60s.html#mistake-challenge">3-case challenge ↗</a><a href="/inca/">Engineering evidence ↗</a><span class="top-pill">OPERATOR SHIFT</span></div>
+  </header>
+  <section class="hero">
+    <div>
+      <div class="kicker">ONE SYNTHETIC CASE · A COMPLETE OPERATOR LOOP</div>
+      <h1>Find the failure.<br><em>Finish the handoff.</em></h1>
+      <p class="lead">A routine-looking travel claim passed the original synthetic router despite a contradiction. Here you can inspect the source texts, run a real safeguard, prepare a human-reviewed handoff and propose the next regression case.</p>
+      <div class="storyline" aria-label="Workflow">
+        <span>Intake</span><i>→</i><span>Verify</span><i>→</i><span>Review</span><i>→</i><span>Handoff</span><i>→</i><span>Improve</span>
+      </div>
+    </div>
+    <aside class="hero-note"><b>Built to show actual work, not a magic AI trick.</b><p>Deterministic browser-local checks. Fictitious texts. Real runnable logic. No LLM invocation here, no live insurer integration, and no customer or payment actions.</p></aside>
+  </section>
+  <main id="shift-app" class="record">
+    <div class="record-bar"><span>THE EXCEPTION · INCA OPERATOR SHIFT</span><span>TRAINING SCENARIO · NO REAL CUSTOMER DATA</span></div>
+    <div class="record-head">
+      <div><div class="kicker">ST-104 · INSPIRED BY SYNTHETIC CASE H-A-011</div><h2>Travel cancellation · conflicting dates</h2><p>ST-104 reconstructs the mechanism of an observed H-A-011 test failure. The dates and documents below are illustrative, not the actual original holdout documents.</p></div>
+      <div class="record-tag"><small>ILLUSTRATIVE POLICY REF</small><b>REI-COV-01</b></div>
+    </div>
+    <nav class="steps" aria-label="Operator workflow progress">
+      <div class="step"><span id="sh-stage-1" data-status="done">✓</span> Intake</div>
+      <div class="step"><span id="sh-stage-2">2</span> Verify</div>
+      <div class="step"><span id="sh-stage-3">3</span> Review</div>
+      <div class="step"><span id="sh-stage-4">4</span> Handoff</div>
+      <div class="step"><span id="sh-stage-5">5</span> Improve</div>
+    </nav>
+    <div class="workflow">
+      <section class="module">
+        <div class="module-head"><div><div class="module-index">01 / INTAKE</div><h3>Two sources. One claim.</h3><p class="module-text">These are the complete fictional inputs to the browser rule. Edit a date to see how the downstream route and review state change.</p></div><span class="module-note">Fictional text · no upload</span></div>
+        <div class="source-grid">
+          <div class="source"><div class="source-label"><span>SOURCE A · CUSTOMER NOTICE</span><em>Editable</em></div><textarea id="sh-a" spellcheck="false" aria-label="Fictional customer notice">Reise ST-104 | Kundenmitteilung
+Stornierungsdatum: 11.07.2026
+Hinweis: Kundin meldet Stornierung vor Reiseantritt.</textarea></div>
+          <div class="source"><div class="source-label"><span>SOURCE B · BOOKING RECORD</span><em>Editable</em></div><textarea id="sh-b" spellcheck="false" aria-label="Fictional booking record">Reise ST-104 | Buchungssystem-Auszug
+Stornierungsdatum: 12.07.2026
+Hinweis: Buchungssystem nennt einen anderen Tag.</textarea></div>
+        </div>
+        <p class="small-print">Please use invented information only. The rule recognizes explicitly labelled cancellation dates, not PDFs, emails, coverage or policy wording.</p>
+        <div class="actions"><button type="button" class="btn" id="sh-reset">Reset fictional case ↺</button><span class="hint">Changing either document invalidates earlier decisions.</span></div>
+      </section>
+      <section class="module">
+        <div class="module-head"><div><div class="module-index">02 / VERIFY</div><h3>Find what the original process missed.</h3><p class="module-text">Run the same transparent date-checking engine used by the ST-104 workshop. It extracts source-labelled date evidence, checks for missing values and contradictions, and proposes a bounded next step.</p></div></div>
+        <button type="button" class="btn btn-primary" id="sh-scan">Run evidence check →</button>
+        <p id="sh-status" role="status" aria-live="polite">Start here: read the two fictional documents, then run the evidence check.</p>
+        <div id="sh-preview" class="result" hidden aria-live="polite">
+          <div class="result-bar"><span>WORKING RULE · CURRENT TEXT INPUT</span><strong class="route" id="sh-route">NOT CHECKED</strong></div>
+          <div class="result-grid"><div><h4>Why this route?</h4><p id="sh-reason">—</p><div class="quote"><b>SOURCE A</b><div id="sh-quote-a">—</div></div><div class="quote"><b>SOURCE B</b><div id="sh-quote-b">—</div></div></div><div><h4>Recommended next step</h4><p id="sh-next">—</p><p class="small-print">Only a document-consistency gate has been checked. No coverage or payment decision is implied.</p></div></div>
+        </div>
+        <div class="comparison">
+          <div class="compare"><small>HISTORICAL SYNTHETIC H-A-011 · GUARDED V2</small><b id="sh-old">AUTO_READY</b><p>The previously inspected structured-case router advanced despite a contradiction flag.</p></div><strong aria-hidden="true">→</strong>
+          <div class="compare new"><small>ST-104 · CURRENT DOCUMENT CHECK</small><b id="sh-new">NOT RUN</b><p>After you run the check, this shows what the rule returns on the two displayed texts. Not a re-measurement of the old holdout.</p></div>
+        </div>
+      </section>
+      <section id="sh-review-step" class="module review-block" hidden>
+        <div class="module-head"><div><div class="module-index">03 / HUMAN REVIEW</div><h3>Turn the finding into an owned next action.</h3><p class="module-text">A recommendation is not a handoff. Identify who should take the next step, record the unresolved question, and explicitly verify the source excerpts.</p></div></div>
+        <p class="module-note" style="margin-bottom:15px" id="sh-route-next">Escalate to claims expert</p>
+        <div class="field-grid">
+          <div class="field"><label for="sh-owner">Proposed review owner (fictional name or role)</label><input id="sh-owner" maxlength="100" value="" placeholder="e.g. Claims expert · Travel queue" autocomplete="off"><div class="field-help">This does not assign a real owner or create a task.</div></div>
+          <div class="field"><label for="sh-notes">Specific unresolved question / operator note</label><textarea id="sh-notes" maxlength="2000" placeholder="Which original date should the claims expert verify?"></textarea></div>
+        </div>
+        <label class="tick"><input type="checkbox" id="sh-confirm"><span>I reviewed the displayed source excerpts. I understand this is a fictional case, not a coverage approval, customer message or real operator assignment.</span></label>
+        <div class="actions"><button type="button" id="sh-review" class="btn btn-lime" disabled>Prepare human-review handoff →</button><span class="hint">Owner, specific note and source confirmation are required.</span></div>
+        <p id="sh-review-error" class="inline-error" role="alert"></p>
+      </section>
+      <section id="sh-export-step" class="module handoff" hidden>
+        <div class="handoff-title"><div><div class="module-index">04 / HANDOFF</div><h4>Review packet · ready for local export</h4></div><span class="handoff-label">DRAFT · NOT SENT</span></div>
+        <dl><dt>Proposed reviewer</dt><dd id="sh-preview-owner">—</dd><dt>Bounded route</dt><dd id="sh-preview-route">—</dd><dt>Next action</dt><dd id="sh-preview-action">—</dd><dt>Hand-back condition</dt><dd>Verify the original cancellation date and document the resolution.</dd></dl>
+        <div class="draft"><b>CUSTOMER COMMUNICATION · UNSENT DRAFT</b><p id="sh-draft">—</p><p class="small-print">A human would check facts and insurer wording before any communication.</p></div>
+        <div class="actions"><button type="button" id="sh-export" class="btn btn-primary" disabled>Download complete Markdown handoff ↗</button><span class="hint">Includes the source quotes, next step, review note and limitations.</span></div>
+      </section>
+      <section id="sh-qa-step" class="module qa" hidden>
+        <div class="module-index">05 / IMPROVE</div><h4>Capture a review correction as a test candidate.</h4><p>This is how a real team could stop repeating the same mistake. If a reviewer believes the expected next route differs from the rule's current output, record the alternative and why. The download is <strong>not automatically integrated into CI</strong>.</p>
+        <div class="field-grid"><div class="field"><label for="sh-fixture-expected">Reviewer-expected route</label><select id="sh-fixture-expected"><option value="HUMAN_REVIEW">Human review</option><option value="NEED_INFO">Request information</option><option value="CONTINUE_CHECKS">Continue other checks</option></select></div><div class="field"><label for="sh-fixture-why">Review rationale</label><input id="sh-fixture-why" placeholder="e.g. Contradictory date in two labelled sources" maxlength="2000"></div></div>
+        <button type="button" id="sh-regression" class="btn" disabled>Download regression candidate · JSON ↗</button>
+        <p class="small-print" id="sh-qa-status" role="status" aria-live="polite">Review the expected result before downloading.</p>
+      </section>
+    </div>
+  </main>
+  <section class="scope" aria-label="Evidence and limitations">
+    <div class="scope-card">
+      <div class="kicker">WHAT IS ACTUALLY PROVEN</div><h3>One bounded fix, reproducible locally.</h3>
+      <p>The synthetic holdout case <strong>H-A-011</strong> originally reached <strong>AUTO_READY</strong> despite a contradiction flag. Our earlier analysis added a contradiction gate and a separate developer-authored regression suite. The ST-104 document reconstruction additionally runs a browser-local extractor with source quotes, reviewer preparation and regression candidate generation. <a href="/inca/#operator-lab">Investigate the original synthetic error ↗</a></p>
+    </div>
+    <div class="scope-card">
+      <div class="kicker">WHAT IS NOT YET PROVEN</div><h3>No fake production impact.</h3>
+      <p>No insurer documents, no real claims expert sign-off, no measured staff time saved, no production integration. A separate small <strong>15-call / 5-case-per-model</strong> API evaluation exists but does not validate this interface or measure insurer outcomes. <a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/model-eval/reports/RESULTS_2026-10-20.md" target="_blank" rel="noopener">Inspect the measured model report ↗</a></p>
+    </div>
+  </section>
+  <nav class="links-footer" aria-label="Work sample evidence links">
+    <a href="/inca/60s.html#mistake-challenge">Play the three-case challenge ↗</a>
+    <a href="/inca/#operator-lab">Reproduce H-A-011 routing error ↗</a>
+    <a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/docs/ST-104_REVIEW_SOP.md" target="_blank" rel="noopener">Review the operator SOP ↗</a>
+    <a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof" target="_blank" rel="noopener">Source, tests and model evidence ↗</a>
+  </nav>
+  <footer class="footer"><span>INCA independent application work sample · fictional data only · built by Michael Ninh</span><span>No real claim, communication or payment is executed.</span></footer>
+</div>
+<script src="/inca/interactive-case.js"></script>
+<script src="/inca/operator-shift.js"></script>
+</body>
+</html>
