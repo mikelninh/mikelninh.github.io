@@ -94,11 +94,34 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add inca/ai-evidence.json
           if ! git diff --cached --quiet; then
-            git commit -m "Add measured fictional OpenAI extraction snapshot [skip ci]"
-            git fetch origin main
-            git rebase origin/main
-            git push origin HEAD:main
+            git commit -m "Publish measured fictional OpenAI extraction snapshot"
+            # The portfolio repository receives frequent concurrent commits.
+            # Only append the synthetic snapshot; never force push.
+            published=false
+            for attempt in $(seq 1 30); do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                published=true
+                echo "Synthetic extraction snapshot published on attempt $attempt"
+                break
+              fi
+              echo "Concurrent push detected; retrying ($attempt/30)"
+              sleep 2
+            done
+            if [ "$published" != "true" ]; then
+              echo "::error::Could not publish synthetic extraction after 30 safe attempts"
+              exit 1
+            fi
           fi
+      - name: Attach synthetic recorded OpenAI extraction snapshot
+        if: ${{ github.event_name == 'push' && always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: inca-shift-snapshot-${{ github.run_id }}
+          path: inca/ai-evidence.json
+          if-no-files-found: warn
+          retention-days: 14
       - name: Attach report (synthetic aggregate results only)
         if: ${{ (github.event_name == 'push' || inputs.run_mode == 'live') && always() }}
         uses: actions/upload-artifact@v4
