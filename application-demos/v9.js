@@ -121,7 +121,7 @@ stage.append(left,right);main.append(stage);
 let tickets=C.exampleTickets(),overrides={},routing={},notes={},audit=[],imported=false;
 const source=n("div","v9-tags");left.append(source);
 const output=n("div");right.append(output);
-const refreshTags=()=>source.replaceChildren(pill(tickets.length+" Supportnachrichten"),pill("Zwei unabhängige Methoden"),pill("Keine automatischen Aktionen"));
+const refreshTags=()=>source.replaceChildren(pill(tickets.length+" Supportnachrichten"),pill("Zwei unterschiedliche Verfahren"),pill("Keine automatischen Aktionen"));
 refreshTags();
 const runButton=button("20 Nachrichten prüfen →",render);left.append(add(n("div","v9-actions"),runButton));
 const custom=disclosure("Neue Nachricht oder eigene CSV ausprobieren");
@@ -181,7 +181,7 @@ function render(){
  const approval=n("input");approval.type="checkbox";approval.checked=!!notes[g.sku]?.approved;approval.id="v9-approval";
  row.append(message,add(n("div","v9-check"),approval,label("Für menschliche Prüfung vormerken",approval.id)));
  const store=()=>{notes[g.sku]={message:message.value,approved:approval.checked};audit.push({type:"review-note",sku:g.sku,approved:approval.checked})};
- message.addEventListener("change",store);approval.addEventListener("change",store);output.append(row);
+ message.addEventListener("input",store);approval.addEventListener("change",store);output.append(row);
  }else output.append(callout("Keine Häufung über unserer Beispielschwelle","Das bedeutet nicht, dass alle Produkte fehlerfrei sind. Prüfe insbesondere Widersprüche und unbekannte Fälle."));
  const risks=disclosure(result.ambiguous.length+" unsichere oder widersprüchliche Nachrichten prüfen");
  for(const r of result.ambiguous)ticketEditor(r,risks);
@@ -218,7 +218,7 @@ function render(){
  saveFile("return-loop-qualitaetsbericht.txt",lines.join("\n"));
  })));
 }
-output.append(callout("Noch nichts ausgewertet","Starte links mit den 20 erfundenen Kundenanfragen.","v9-placeholder"));
+render();
 const feature=add(n("div","v9-footnote"),n("strong","","Warum diese Lösung statt eines weiteren Chatbots?"),txt("Der erste Nutzen ist nicht eine automatisch geschriebene Antwort, sondern ein übersehenes gemeinsames Problem. Darum verbinden wir Texterkennung, überprüfbare Fälle und menschliche Entscheidung. Die Anwendung ist eine lokale Demo, kein produktiver Supportservice.","v9-muted"));left.append(feature);
 resourceFooter("Regelbasiertes System + trainiertes Naive-Bayes-Modell, beide lokal im Browser. Künstlich erzeugte Nachrichten und Trainingsbeispiele. Kein LLM, keine Backend-Speicherung, kein automatischer Versand, keine verlässlichen Defektraten.");
 }
