@@ -1,5 +1,7 @@
 # RETURN LOOP · Jev final experiment (2026-10-22)
 
+> **Easy path (no ZIP, Node or PowerShell):** In Vercel Project Settings → Environment Variables, set the private `TYPESAFE_API_KEY` for Production; redeploy. Open [RETURN LOOP](https://return-loop-model-arena.vercel.app/) and choose **Jev in einem Klick vergleichen**. Enter the existing *demo access password* (not the TypeSafe key), then confirm the eight synthetic API requests. The UI shows genuine Jev results beside deterministic rules and archived OpenAI model predictions; export as JSON. No live Jev results may be claimed until the provider key is configured and calls succeed. The saved 16-case challenge / 12-pair safety experiment remains available separately for deeper technical evaluation.
+
 ## Question, not model hype
 
 Before introducing Jev to the production architecture, ask two falsifiable questions:
