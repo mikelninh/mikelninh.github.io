@@ -420,7 +420,7 @@ async function init(){try{const embedded=document.getElementById('embedded-fixtu
  $('jev-stop').addEventListener('click',()=>{jevHalt=true;jevMessage='Nach aktuellem Fall stoppen …';jevShow();});
  $('jev-refresh').addEventListener('click',jevRefresh);
  $('jev-export').addEventListener('click',jevExport);
- $('open-jev').addEventListener('click',()=>{$('more').open=true;$('jev-quick').scrollIntoView({behavior:'smooth',block:'start'});});
+ $('open-jev').addEventListener('click',()=>{$('more').open=true;$('jev-archive').scrollIntoView({behavior:'smooth',block:'start'});});
  $('inbox-filter').addEventListener('change',()=>{inboxExpanded=false;renderInbox();});$('inbox-show-more').addEventListener('click',()=>{inboxExpanded=!inboxExpanded;renderInbox();});$('download-handoff').addEventListener('click',downloadHandoff);renderSignals();
  $('next-case').addEventListener('click',()=>choose(fixtures[(fixtures.findIndex(x=>x.id===selected)+1)%fixtures.length].id));
  $('toggle-access').addEventListener('click',()=>{let open=$('access-form').hidden;$('access-form').hidden=!open;$('toggle-access').setAttribute('aria-expanded',String(open));});
