@@ -2,7 +2,7 @@
 const $=id=>document.getElementById(id);
 const CLASSES=['quality','fit','shipping','return','order_issue','other'];
 const NAMES={quality:'Produktqualität',fit:'Grösse & Passform',shipping:'Versand',return:'Retoure',order_issue:'Falsche / fehlende Ware',other:'Sonstiges'};
-const MODELS=[{id:'rules',name:'Keyword baseline',desc:'Kostenlos · deterministisch',meta:'Keine KI · stets verfügbar'},{id:'decisions',name:'OpenAI Decisions · Experiment',desc:'Experimentelle Integration · noch nicht verifiziert',meta:'OpenAI · echte API'},{id:'jev',name:'TypeSafe Jev 1.14 · nicht verbunden',desc:'Separater Anbieter-Key erforderlich',meta:'OpenRouter · echte API'},{id:'llm',name:'Generatives LLM',desc:'Structured Outputs · mehrere Anliegen',meta:'OpenAI Responses API'}];
+const MODELS=[{id:'rules',name:'Keyword baseline',desc:'Kostenlos · deterministisch',meta:'Keine KI · stets verfügbar'},{id:'decisions',name:'OpenAI Decisions · Experiment',desc:'Experimentelle Integration · noch nicht verifiziert',meta:'OpenAI · echte API'},{id:'jev',name:'TypeSafe Jev 1.14',desc:'Strukturierte Jev-Entscheidungen · geschützter Live-Test',meta:'TypeSafe direct API / OpenRouter'},{id:'llm',name:'Generatives LLM',desc:'Structured Outputs · mehrere Anliegen',meta:'OpenAI Responses API'}];
 const PRIVACY_NOTE='Synthetische Testdaten; keine Kundennachrichten oder Shop-Aktionen.';
 let fullStudy=null,qualityAudit=null;
 const studyRow=id=>fullStudy?.rows?.find(x=>x.id===id&&x.status==='ok');
