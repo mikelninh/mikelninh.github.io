@@ -1,0 +1,102 @@
+{
+  "schema": "INCA-JEV-H1-H5-PUBLIC",
+  "study": "INCA-H1-H5-DECISION-ONLY-1",
+  "source_run": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/39761548020",
+  "source_artifact": "inca-jev-h1-h5-39761548020",
+  "dataset_sha256": "153d73c39a5e329d254a721516d11c3c522b20e9721e53442c73b65af5616622",
+  "test_date": "2026-10-22",
+  "new_authored_fictional_cases": 40,
+  "dev_n": 10,
+  "holdout_n": 30,
+  "real_requests": 208,
+  "provider_errors": 0,
+  "observed_models": {
+    "jev": "jev-1.14.0",
+    "gpt": "gpt-4o-mini-2024-07-18"
+  },
+  "h1": {
+    "metric": "correct next safe workflow gate on authored 30-case holdout",
+    "jev": {
+      "correct": 30,
+      "p95_ms": 149,
+      "api_est_usd": 0.000644028,
+      "critical_under_escalations": 0
+    },
+    "gpt": {
+      "correct": 10,
+      "p95_ms": 879,
+      "api_est_usd": 0.0013116,
+      "critical_under_escalations": 20
+    },
+    "deterministic_rules": {
+      "correct": 30,
+      "external_api_cost_usd": 0
+    },
+    "interpretation": "Jev was faster and cheaper than this GPT decision-only prompt and did not under-escalate authored critical cases; trivial rules were equally accurate with zero inference cost."
+  },
+  "h5": {
+    "metric": "All four bounded next-step questions correct on 30-case holdout",
+    "jev_multi": {
+      "correct_cases": 28,
+      "questions_correct": 118,
+      "questions_total": 120,
+      "p95_ms": 132,
+      "api_est_usd": 0.001054788,
+      "critical_under_escalations": 0
+    },
+    "gpt_multi": {
+      "correct_cases": 13,
+      "questions_correct": 103,
+      "questions_total": 120,
+      "p95_ms": 2087,
+      "api_est_usd": 0.0023652,
+      "critical_under_escalations": 17
+    },
+    "deterministic_rules": {
+      "correct_cases": 30,
+      "external_api_cost_usd": 0
+    },
+    "matched_twelve_case_comparison": {
+      "note": "Exactly the same twelve preselected holdout cases, all travel + home types; no selection based on outcomes.",
+      "jev_multi": {
+        "correct_cases": 10,
+        "median_ms": 94,
+        "p95_ms": 133,
+        "api_est_usd": 0.000421764
+      },
+      "jev_four_serial": {
+        "correct_cases": 12,
+        "median_ms": 306.5,
+        "p95_ms": 451,
+        "api_est_usd": 0.001003632
+      },
+      "gpt_multi": {
+        "correct_cases": 6,
+        "median_ms": 907.5,
+        "p95_ms": 1530,
+        "api_est_usd": 0.0009417
+      }
+    },
+    "interpretation": "Batching reduced Jev latency and tokens versus four sequential Jev requests on the same twelve cases, but 2/12 bundled answers got an unnecessary evidence request wrong; no critical route under-escalation observed."
+  },
+  "all_request_estimate_usd": 0.00814464,
+  "overall_estimate_scope": {
+    "h3_h4_600_requests_usd": 0.03568908,
+    "h7_160_requests_usd": 0.004356912,
+    "h1_h5_208_requests_usd": 0.00814464,
+    "total_requests_for_these_three_studies": 968,
+    "total_inference_est_usd": 0.048190632,
+    "excluded": "Previous six-case GPT extraction, A/B/C six-case study, earlier 20-case decisions and other experiments are not included."
+  },
+  "hiring_summary": "H1: Jev made 30/30 correct narrow workflow decisions versus 10/30 for this GPT prompt, but deterministic rules also got 30/30. H5: batching four Jev choices was roughly 3.3× faster in median latency than four serial Jev calls on the same 12 cases, but it produced two unnecessary evidence requests. Better speed, not identical quality.",
+  "limitations": [
+    "New deterministic synthetic verified-fact records, not expert-labelled insurance claims; upstream source extraction and verification assumed and not measured.",
+    "One developer-authored generator with dev and holdout phrase variants; the benchmark is not real-world or independently evaluated.",
+    "GPT's poor gate performance is specific to this prompt/model/configuration, not general evidence GPT cannot classify or route.",
+    "The exact policy logic can be expressed as inexpensive deterministic Python; simple code matches or beats both models on this test.",
+    "H5 30-case full result and 12-case matched sequential result have different denominators; never compare their costs without matching the same 12 cases.",
+    "No human claims operation cost, actual provider invoice, payment authority or complete production workflow tested.",
+    "Output includes only allowed workflow gates. Continuing remaining checks is not a claims approval.",
+    "Provider API latency is not complete end-to-end handling time; no retries or production rate limits tested."
+  ]
+}
