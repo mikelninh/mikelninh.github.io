@@ -92,7 +92,7 @@ def split_inputs():
  assert len(records)==80 and len({r["pair_id"] for r in records})==40
  return records
 def evaluate(rows):
- if len(rows)!=80:return {"status":"INCOMPLETE","cases":len(rows)}
+ if len(rows)!=160:return {"status":"INCOMPLETE","cases":len(rows)}
  scores={}
  for model in VERSIONS:
   vals=[r for r in rows if r["version_requested"]==model]
@@ -149,7 +149,7 @@ def run():
      "critical_trace_error":c["critical_trace_error"],"result":r,"error":error})
   print(json.dumps({"completed_model":model,"requests":80,"errors":sum(x["error"] is not None for x in results if x["version_requested"]==model)}),flush=True)
  # 160 rows = 80 per version
- report=evaluate(results[:80])
+ report=evaluate(results)
  report["rows"]=results
  report["returned_versions_are_pinned"]=all(
    x.get("result") is not None and x["result"].get("model")==x["version_requested"]
