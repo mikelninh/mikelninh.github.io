@@ -1,6 +1,11 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
-const core=require('./reliability-loop.js');
+const browserSource=fs.readFileSync(path.join(__dirname,'reliability-loop.js'),'utf8');
+// This repository is type=module: execute the classic browser script as a known local source
+// with a CJS module shim to inspect the same pure functions without changing the website.
+const shim={exports:{}};
+new Function('module',browserSource)(shim);
+const core=shim.exports;
 const data=JSON.parse(fs.readFileSync(path.join(__dirname,'reliability-loop-data.json'),'utf8'));
 const page=fs.readFileSync(path.join(__dirname,'reliability-loop.html'),'utf8');
 test('JS guardrail parity with Python for all twelve cases and both releases',()=>{
