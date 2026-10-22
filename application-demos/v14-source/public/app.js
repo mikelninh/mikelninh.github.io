@@ -546,7 +546,7 @@ async function init(){try{const embedded=document.getElementById('embedded-fixtu
  $('v2-export').addEventListener('click',v2Export);
  $('v2-password').addEventListener('input',e=>{access=e.target.value.trim();$('jev-access').value=access;$('token').value=access;$('paired-token').value=access;v2Note='';v2Render();});
 
- $('open-jev').addEventListener('click',()=>{$('more').open=true;$('jev-v2').scrollIntoView({behavior:'smooth',block:'start'});});
+ $('open-jev').addEventListener('click',()=>{$('jev-v2-evidence').scrollIntoView({behavior:'smooth',block:'start'});});
  $('inbox-filter').addEventListener('change',()=>{inboxExpanded=false;renderInbox();});$('inbox-show-more').addEventListener('click',()=>{inboxExpanded=!inboxExpanded;renderInbox();});$('download-handoff').addEventListener('click',downloadHandoff);renderSignals();
  $('next-case').addEventListener('click',()=>choose(fixtures[(fixtures.findIndex(x=>x.id===selected)+1)%fixtures.length].id));
  $('toggle-access').addEventListener('click',()=>{let open=$('access-form').hidden;$('access-form').hidden=!open;$('toggle-access').setAttribute('aria-expanded',String(open));});
