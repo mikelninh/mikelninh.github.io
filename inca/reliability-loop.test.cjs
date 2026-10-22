@@ -51,7 +51,7 @@ test('first-time experience reveals one problem and one action, not the full das
   'The quote is real.','The policy is wrong.','Try the 3-step demo',
   'Spot the mistake','Apply the fix','Test the release','id="loop-app"',
   'id="focus-title"','id="focus-used"','id="focus-required"',
-  'id="guided-gate"','Apply the documented fix','Run 12-case regression gate',
+  'id="guided-gate"','Apply saved example correction','Check all 12 fictional cases',
   'id="remaining-review"','id="remaining-list"','id="remaining-progress"','Start over — undo all sample fixes','id="engineering-details"',
   'id="case-list"','id="gate-checks"','Inject test fault','reliability-loop.js',
   'No access to MARS','no production telemetry','no real agent integration'
@@ -92,7 +92,7 @@ test('guided 90-second path actually updates the page on each button click',asyn
  command('fix');
  assert.equal(el('metric-block').textContent,4);
  assert.equal(el('guided-gate').disabled,false);
- assert.match(el('guided-hint').textContent,/fixing one case does not automatically fix the others/);
+ assert.match(el('guided-hint').textContent,/Fixing this case does not fix the others/);
  command('gate');
  assert.match(el('release-headline').textContent,/BLOCKED/);
  assert.equal(el('remaining-review').hidden,false);
