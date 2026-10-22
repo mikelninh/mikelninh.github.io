@@ -103,7 +103,7 @@ p{margin-top:0}.hero{display:grid;grid-template-columns:1.2fr .8fr;align-items:c
         </div>
         <p class="guided-explain" id="focus-explanation">Both documents contain plausible wording. The older one is not applicable to this claim.</p>
         <div class="guided-actions">
-          <button type="button" class="btn primary" id="apply-fix" data-command="fix">Apply this sample fix: 2024 → 2025</button>
+          <button type="button" class="btn primary" id="apply-fix" data-command="fix">Apply saved example correction: 2024 → 2025</button>
           <button type="button" class="btn primary" id="guided-gate" data-command="gate" disabled>Check all 12 fictional cases ↗</button>
         </div>
         <p class="guided-reset"><button type="button" class="reset-link" id="guided-restart" data-command="reset" hidden>Start over — undo all sample fixes ↻</button></p>
@@ -121,7 +121,7 @@ p{margin-top:0}.hero{display:grid;grid-template-columns:1.2fr .8fr;align-items:c
           <p class="remaining-next" id="remaining-next" role="status" aria-live="polite">Correct the four examples above, then run the same checks again.</p>
         </section>
       </div>
-      <div class="guided-summary">THE LEARNING <strong>A human correction becomes a repeatable test, so the next release can't quietly repeat the same known error.</strong></div>
+      <div class="guided-summary">THE LEARNING <strong>A documented correction can become a repeatable regression test. A future release should be blocked if it repeats the same known mistake.</strong></div>
       <details id="engineering-details" class="engineering-details">
         <summary><span><strong>Curious how it works?</strong><small>Open the 12 cases, source documents, six checks and fault-injection lab</small></span><span aria-hidden="true" class="details-chevron">⌄</span></summary>
         <div class="deep-content">
@@ -160,7 +160,7 @@ p{margin-top:0}.hero{display:grid;grid-template-columns:1.2fr .8fr;align-items:c
               <button type="button" class="btn outline small" id="release-a" data-command="release-a" aria-pressed="true">Reset release A</button>
               <button type="button" class="btn outline small" data-command="gate">Re-run all 12 checks ↗</button>
             </div>
-            <p class="annotations" id="current-release">0/12 corrected fixtures staged locally</p>
+            <p class="annotations" id="current-release">0 sample corrections staged locally</p>
             <div class="divider"></div>
             <div class="label">Challenge the corrected release</div>
             <div class="inject"><label for="fault-select" class="annotations">Reintroduce a problem</label><select id="fault-select">
