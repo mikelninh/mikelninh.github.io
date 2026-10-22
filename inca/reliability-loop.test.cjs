@@ -52,7 +52,7 @@ test('first-time experience reveals one problem and one action, not the full das
   'Spot the mistake','Apply the fix','Test the release','id="loop-app"',
   'id="focus-title"','id="focus-used"','id="focus-required"',
   'id="guided-gate"','Apply the documented fix','Run 12-case regression gate',
-  'id="release-b"','Apply remaining reviewed fixes','id="engineering-details"',
+  'id="remaining-review"','id="remaining-list"','id="remaining-progress"','Start over — undo all sample fixes','id="engineering-details"',
   'id="case-list"','id="gate-checks"','Inject test fault','reliability-loop.js',
   'No access to MARS','no production telemetry','no real agent integration'
  ])assert.ok(page.includes(t),t);
@@ -85,7 +85,9 @@ test('guided 90-second path actually updates the page on each button click',asyn
  assert.equal(el('focus-used').textContent,'Policy 2024');
  assert.equal(el('focus-required').textContent,'Policy 2025');
  assert.equal(el('guided-gate').disabled,true);
- assert.equal(el('release-b').hidden,true);
+ assert.equal(el('remaining-review').hidden,true);
+ assert.equal(el('guided-restart').hidden,true);
+ assert.match(page,/Start over — undo all sample fixes/);
  assert.equal(el('metric-block').textContent,5);
  command('fix');
  assert.equal(el('metric-block').textContent,4);
@@ -93,11 +95,29 @@ test('guided 90-second path actually updates the page on each button click',asyn
  assert.match(el('guided-hint').textContent,/fixing one case does not automatically fix the others/);
  command('gate');
  assert.match(el('release-headline').textContent,/BLOCKED/);
- assert.equal(el('release-b').hidden,false);
+ assert.equal(el('remaining-review').hidden,false);
+ assert.equal(el('remaining-progress').textContent,'1 / 5 planted faults corrected');
+ assert.match(el('remaining-review-title').textContent,/4 other fictional cases still need fixes/);
  assert.equal(el('guided-gate').hidden,true);
- command('release-b');
- assert.equal(el('metric-block').textContent,0);
+ for(const word of ['CASE-028','CASE-029','CASE-030','CASE-031','invented a quotation','unauthorized payment','without a source','skipped source verification',
+                     'Before:','Sample correction:','Apply sample fix']){
+  assert.ok(el('remaining-list').innerHTML.includes(word),word);
+ }
+ assert.doesNotMatch(el('release-detail').textContent,/corrected or blocked/);
+ assert.match(el('release-detail').textContent,/1\/5 planted errors have sample corrections; 4 cases still fail/);
+ const correct=id=>host.on_click({target:{closest:q=>q==='[data-correct-case]'?{getAttribute:()=>id}:null}});
+ const ids=['CASE-028','CASE-029','CASE-030','CASE-031'];
+ for(const [i,id] of ids.entries()){
+   correct(id);
+   assert.equal(el('metric-block').textContent,3-i);
+   assert.equal(el('remaining-progress').textContent,(i+2)+' / 5 planted faults corrected');
+   assert.equal(el('remaining-review').hidden,false);
+   assert.equal(el('focus-case-label').textContent.includes('CASE-027'),true);
+ }
+ assert.match(el('remaining-review-title').textContent,/All five example fixes are staged/);
+ assert.match(el('remaining-next').textContent,/Rerun the 12-case regression test/);
  assert.equal(el('guided-gate').hidden,false);
+ assert.equal(el('release-result').hidden,true);
  command('gate');
  assert.match(el('release-headline').textContent,/PASS/);
  assert.equal(el('metric-pass').textContent,'12 / 12');
@@ -114,4 +134,6 @@ test('guided 90-second path actually updates the page on each button click',asyn
  command('reset');
  assert.equal(el('metric-block').textContent,5);
  assert.equal(el('guided-gate').disabled,true);
+ assert.equal(el('remaining-review').hidden,true);
+ assert.equal(el('guided-restart').hidden,true);
 });
