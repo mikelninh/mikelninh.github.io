@@ -1,0 +1,45 @@
+name: INCA Jev Final Tests - versions and bilingual claims
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'inca-proof/agent-ops/RUN_JEV_H7_ONCE.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: inca-jev-h7-version-test
+  cancel-in-progress: false
+
+jobs:
+  bilingual:
+    name: Jev 1.13 vs 1.14 on EN/DE fictional claims
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    env:
+      TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate model-independent test contracts (no API)
+        run: |
+          python -m unittest discover inca-proof/agent-ops -p 'test_*.py' -v
+          python inca-proof/agent-ops/jev_h7_bilingual.py --mode dry-run
+      - name: Actual Jev 1.13 and 1.14, up to 160 potentially paid calls
+        run: |
+          test -n "$TYPESAFE_API_KEY"
+          python inca-proof/agent-ops/jev_h7_bilingual.py --mode live \
+             --out "inca-proof/agent-ops/reports/jev_h7_${GITHUB_RUN_ID}.json"
+      - name: Keep actual results including errors and unsupported model versions
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: inca-jev-h7-bilingual-${{ github.run_id }}
+          path: inca-proof/agent-ops/reports/jev_h7_*.json
+          retention-days: 30
+          if-no-files-found: warn
