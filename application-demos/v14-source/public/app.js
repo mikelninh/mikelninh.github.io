@@ -349,6 +349,47 @@ function jevShow(){
  );
 }
 
+
+async function jevRefresh(){
+ try{
+  const r=await fetch('/api/status',{cache:'no-store'});if(!r.ok)throw Error('missing status');
+  live=await r.json();
+  jevMessage=live.providers?.jev?'TypeSafe erkannt – Jev ist bereit.':'TypeSafe-Key noch nicht im Server hinterlegt. Bitte Vercel-Einstellung prüfen und neu deployen.';
+ }catch{jevMessage='Serverstatus nicht erreichbar. Bitte Seite neu laden.';}
+ jevShow();renderModels();
+}
+async function jevBegin(){
+ if(jevBusy||busy||pairedBatchRunning)return;
+ if(!live.providers?.jev){jevMessage='Bitte TYPESAFE_API_KEY einmalig in Vercel hinterlegen.';jevShow();return;}
+ if(!access){jevMessage='Bitte oben das vorhandene Demo-Passwort eingeben (niemals den TypeSafe-Key).';jevShow();$('paired-token').focus();return;}
+ const pending=jevCases().filter(x=>!results[x.id]?.jev?.ok);
+ if(!pending.length)return;
+ if(!window.confirm('Jetzt '+pending.length+' echte kostenpflichtige Jev-Aufrufe auf erfundenen Fällen starten?'))return;
+ jevBusy=true;jevHalt=false;
+ try{
+  for(let i=0;i<pending.length;i++){
+   if(jevHalt)break;
+   const x=pending[i];jevMessage='Prüfe '+x.id+' ('+(i+1)+'/'+pending.length+') …';
+   choose(x.id);jevShow();
+   const ok=await run('jev');
+   if(!ok){jevMessage='Bei '+x.id+' gestoppt: '+$('run-status').textContent;break;}
+   jevSave();jevShow();
+  }
+ }finally{
+  jevBusy=false;
+  if(jevHalt)jevMessage='Gestoppt. Die bisherigen Messungen bleiben erhalten.';
+  else if(jevDone().length===8)jevMessage='Acht echte Jev-Aufrufe abgeschlossen. Ergebnisse können exportiert werden.';
+  jevShow();renderEvaluation();
+ }
+}
+function jevExport(){
+ const cases=jevDone().map(x=>({id:x.id,human_labels:x.gold,rule_labels:baseline(x.text),jev_labels:results[x.id].jev.categories,jev_scores:results[x.id].jev.scores,jev_latency_ms:results[x.id].jev.latency_ms,jev_estimated_cost_usd:results[x.id].jev.estimated_cost_usd??null,archived_llm_labels:studyRow(x.id)?.llm||null}));
+ exportFile('return-loop-jev-live-ergebnisse.json',{
+  measured_at:new Date().toISOString(),source:'Actual TypeSafe Jev inference (one server call per measured synthetic fixture)',
+  n:cases.length,design:'Eight fixed, known synthetic development cases, no independent holdout',
+  cases,limitations:['Uncalibrated model scores','Archived LLM comparison was measured earlier','Costs are estimates if reported','No customer or shop actions']});
+}
+
 function exportFile(name,obj){let blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);}
 function review(){let x=record();reviews[x.id]={decision:$('review-decision').value,at:new Date().toISOString(),basis:'synthetic',model_predictions:results[x.id]||{},note:'Manual demonstration only; no external action.'};try{localStorage.setItem('return-loop-v14-reviews',JSON.stringify(reviews))}catch{}$('review-message').textContent='✓ Entscheidung lokal dokumentiert – keine Shopaktion.';renderHandoff();renderInbox();}
 function report(){let measured={};for(let m of MODELS.slice(1)){const r=fixtures.filter(c=>results[c.id]?.[m.id]?.ok);measured[m.id]={run_count:r.length,full_development_evaluation:r.length===fixtures.length?r.length:null,macro_f1:r.length===fixtures.length?evaluate(r.map(c=>({gold:c.gold,pred:predicted(results[c.id][m.id],m.id)}))).macroF1:null};}exportFile('return-loop-v14-model-arena-report.json',{project:'RETURN LOOP · Model Arena v14',created_at:new Date().toISOString(),dataset:'24 synthetic development fixtures — NOT independent external holdout',calibration:'None. Scores uncalibrated.',policy_threshold:threshold,baseline:evaluate(fixtures.map(c=>({gold:c.gold,pred:baseline(c.text)}))),models:measured,real_results:results,reviews,limitations:['No real customer data','Not a production quality rate','Thresholds not validated independently','No automated customer actions','Paid API limited to authenticated synthetic demo fixture calls']});}
@@ -372,10 +413,15 @@ async function init(){try{const embedded=document.getElementById('embedded-fixtu
  $('paired-cancel').addEventListener('click',()=>{pairedBatchCancel=true;$('paired-note').textContent='Stoppen angefordert. Der aktuelle Modellaufruf wird noch beendet.';});
  $('paired-download').addEventListener('click',downloadPaired);
  $('paired-token').addEventListener('input',e=>{access=e.target.value.trim();$('token').value=access;});
+ $('jev-run').addEventListener('click',jevBegin);
+ $('jev-stop').addEventListener('click',()=>{jevHalt=true;jevMessage='Nach aktuellem Fall stoppen …';jevShow();});
+ $('jev-refresh').addEventListener('click',jevRefresh);
+ $('jev-export').addEventListener('click',jevExport);
+ $('open-jev').addEventListener('click',()=>{$('more').open=true;$('jev-quick').scrollIntoView({behavior:'smooth',block:'start'});});
  $('inbox-filter').addEventListener('change',()=>{inboxExpanded=false;renderInbox();});$('inbox-show-more').addEventListener('click',()=>{inboxExpanded=!inboxExpanded;renderInbox();});$('download-handoff').addEventListener('click',downloadHandoff);renderSignals();
  $('next-case').addEventListener('click',()=>choose(fixtures[(fixtures.findIndex(x=>x.id===selected)+1)%fixtures.length].id));
  $('toggle-access').addEventListener('click',()=>{let open=$('access-form').hidden;$('access-form').hidden=!open;$('toggle-access').setAttribute('aria-expanded',String(open));});
  $('token').addEventListener('input',e=>{access=e.target.value.trim();$('paired-token').value=access;});$('save-review').addEventListener('click',review);$('download-report').addEventListener('click',report);
  $('threshold').addEventListener('input',e=>{threshold=Number(e.target.value)/100;$('threshold-value').textContent=Math.round(threshold*100)+'%';renderModels();renderEvaluation();});
- loadPairedResults();renderCase();renderEvaluation();renderPaired();}
+ loadPairedResults();jevRestore();renderCase();renderEvaluation();renderPaired();jevShow();}
 init();
