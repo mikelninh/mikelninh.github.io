@@ -37,5 +37,6 @@ jobs:
           node --test inca/agent-ops-simple.test.cjs
           node --test inca/decision-lab.test.cjs
           node --test inca/jev-research.test.cjs
+          node --test inca/first-30-days.test.cjs
       - name: Ensure checked-in report is clean
         run: git diff --exit-code -- inca-proof/reports/deterministic_eval.json
