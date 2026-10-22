@@ -195,3 +195,11 @@
 .jev-case strong{font-size:11px}
 .jev-case span{color:#627b68;font-size:11px;line-height:1.5}
 @media(max-width:650px){.jev-quick{padding:18px 15px}.jev-quick-top{flex-direction:column;gap:10px}.jev-quick h3{font-size:24px}.jev-case-list{grid-template-columns:1fr}.jev-metric{flex-direction:column;gap:3px}.jev-metric span{text-align:left}.jev-quick-actions .btn{width:100%}}
+
+/* Single, unmistakable Jev setup field */
+.jev-private-access{display:flex;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid #d1e0d3;background:#edf5ee;border-radius:9px;padding:14px 16px;margin-top:17px}
+.jev-private-access label{display:grid;gap:3px;flex:1 1 230px;font-size:12px;color:#30593b}
+.jev-private-access label small{font-size:11px;color:#677b6c;font-weight:400;line-height:1.5}
+.jev-private-access input{flex:1 1 190px;min-width:185px;max-width:330px;border:1px solid #bad1c0;background:#fff;border-radius:6px;padding:11px 12px;color:#24472f;font-size:13px}
+.jev-private-access input:focus-visible{outline:2px solid #8fba9d;outline-offset:2px}
+@media(max-width:650px){.jev-private-access{padding:12px}.jev-private-access input{max-width:none;flex-basis:100%}}
