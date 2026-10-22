@@ -84,12 +84,15 @@ test('guided 90-second path actually updates the page on each button click',asyn
  assert.match(el('focus-explanation').textContent,/outdated policy/);
  assert.equal(el('focus-used').textContent,'Policy 2024');
  assert.equal(el('focus-required').textContent,'Policy 2025');
+ assert.equal(el('focus-compare').hidden,false);
+ assert.equal(el('focus-compare-symbol').textContent,'≠');
  assert.equal(el('guided-gate').disabled,true);
  assert.equal(el('remaining-review').hidden,true);
  assert.equal(el('guided-restart').hidden,true);
  assert.match(page,/Start over — undo all sample fixes/);
  assert.equal(el('metric-block').textContent,5);
  command('fix');
+ assert.equal(el('focus-compare-symbol').textContent,'=');
  assert.equal(el('metric-block').textContent,4);
  assert.equal(el('guided-gate').disabled,false);
  assert.match(el('guided-hint').textContent,/Fixing this case does not fix the others/);
@@ -131,6 +134,9 @@ test('guided 90-second path actually updates the page on each button click',asyn
  command('gate');
  assert.match(el('release-headline').textContent,/PASS/);
  choice('CASE-029');assert.match(el('focus-case-label').textContent,/CASE-029/);
+ assert.equal(el('focus-compare').hidden,true);
+ assert.equal(el('focus-difference').hidden,false);
+ assert.match(el('focus-difference').textContent,/payment request/);
  command('reset');
  assert.equal(el('metric-block').textContent,5);
  assert.equal(el('guided-gate').disabled,true);
