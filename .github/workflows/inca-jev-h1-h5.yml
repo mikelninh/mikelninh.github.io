@@ -1,0 +1,45 @@
+name: INCA Jev H1 H5 final decision benchmarks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'inca-proof/agent-ops/RUN_H1_H5_ONCE.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: inca-h1-h5-one-time-20261022
+  cancel-in-progress: false
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test H1/H5 without paid providers
+        run: |
+          python -m unittest discover inca-proof/agent-ops -p 'test_*.py' -v
+          python inca-proof/agent-ops/jev_h1_h5.py --mode dry-run
+      - name: Run user-authorized real, bounded paired model benchmark
+        run: |
+          test -n "$OPENAI_API_KEY"
+          test -n "$TYPESAFE_API_KEY"
+          python inca-proof/agent-ops/jev_h1_h5.py --mode live --out "results/jev_h1_h5_${GITHUB_RUN_ID}.json"
+      - name: Preserve raw model calls, outcomes and failures
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: inca-jev-h1-h5-${{ github.run_id }}
+          path: results/jev_h1_h5_*.json
+          retention-days: 30
+          if-no-files-found: warn
