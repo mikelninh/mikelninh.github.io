@@ -1,0 +1,123 @@
+{
+  "name": "RETURN LOOP / Jev supplemental challenge v1",
+  "frozen_on": "2026-10-22",
+  "notice": "16 authored synthetic examples from an earlier reserved evaluation script. Not independently collected or annotated, not a production benchmark.",
+  "cases": [
+    {
+      "id": "CH-001",
+      "text": "Zum dritten Mal tritt das Garn an der gleichen Stelle hervor.",
+      "gold": [
+        "quality"
+      ]
+    },
+    {
+      "id": "CH-002",
+      "text": "Die Socken halten kaum zwei Spaziergänge, obwohl ich sie kaum wasche.",
+      "gold": [
+        "quality"
+      ]
+    },
+    {
+      "id": "CH-003",
+      "text": "Beim Yoga ist die Seitennaht aufgerissen.",
+      "gold": [
+        "quality"
+      ]
+    },
+    {
+      "id": "CH-004",
+      "text": "Der Hoodie bleicht bereits nach der ersten Reinigung aus.",
+      "gold": [
+        "quality"
+      ]
+    },
+    {
+      "id": "CH-005",
+      "text": "Die Hose kneift im Bund, aber sonst ist sie prima.",
+      "gold": [
+        "fit"
+      ]
+    },
+    {
+      "id": "CH-006",
+      "text": "Kann ich Größe L statt S erhalten und dafür die kleinere zurückschicken?",
+      "gold": [
+        "fit",
+        "return"
+      ]
+    },
+    {
+      "id": "CH-007",
+      "text": "Im Kundenkonto steht geliefert, ich habe aber nichts erhalten.",
+      "gold": [
+        "shipping"
+      ]
+    },
+    {
+      "id": "CH-008",
+      "text": "Seit Tagen bewegt sich die Sendungsverfolgung nicht.",
+      "gold": [
+        "shipping"
+      ]
+    },
+    {
+      "id": "CH-009",
+      "text": "Das Paket kam beschädigt an, die Ware aber unversehrt.",
+      "gold": [
+        "shipping"
+      ]
+    },
+    {
+      "id": "CH-010",
+      "text": "Bitte das Formular zur Rückerstattung senden.",
+      "gold": [
+        "return"
+      ]
+    },
+    {
+      "id": "CH-011",
+      "text": "Bei meiner Bestellung fehlte das zweite Paar Socken.",
+      "gold": [
+        "order_issue"
+      ]
+    },
+    {
+      "id": "CH-012",
+      "text": "Geliefert wurde schwarz statt weiß, könnt ihr die Lieferung tauschen?",
+      "gold": [
+        "order_issue",
+        "return"
+      ]
+    },
+    {
+      "id": "CH-013",
+      "text": "Könnt ihr meine Anschrift auf der Rechnung anpassen?",
+      "gold": [
+        "other"
+      ]
+    },
+    {
+      "id": "CH-014",
+      "text": "Danke, alles passt super!",
+      "gold": [
+        "other"
+      ]
+    },
+    {
+      "id": "CH-015",
+      "text": "Die Jacke ist zu klein, die Naht ist auch schon offen.",
+      "gold": [
+        "fit",
+        "quality"
+      ]
+    },
+    {
+      "id": "CH-016",
+      "text": "Eine Socke ist gerissen und ich hätte dafür gern eine Erstattung.",
+      "gold": [
+        "quality",
+        "return"
+      ]
+    }
+  ]
+}
