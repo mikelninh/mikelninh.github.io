@@ -49,6 +49,7 @@ export default async function handler(req,res){
    return res.status(502).json({error:response.status===429?'provider_rate_limited':'provider_unavailable',batch:data.batch});
   }
   const normalized=normalizeBatch(rows,body);const measured=scoreBatch(rows,normalized);
+  const baselineMeasured=scoreBatch(rows,rows.map(x=>({id:x.id,categories:baseline(x.text)})));
   const usage=body?.usage||null;
   const cost=typeof usage?.cost_usd==='number'?usage.cost_usd:(typeof usage?.cost==='number'?usage.cost:null);
   return res.status(200).json({ok:true,experiment:VERSION,model:body.model||MODEL,threshold:THRESHOLD,batch:data.batch,
@@ -56,7 +57,8 @@ export default async function handler(req,res){
    provider_latency_ms:Math.round(performance.now()-start),cost_usd_reported:cost,
    input_tokens:typeof usage?.input_tokens==='number'?usage.input_tokens:null,
    metrics:{exact:measured.exact,missed_quality:measured.missed_quality,false_quality_alarms:measured.false_quality_alarms,additional_false_categories:measured.additional_false_categories,missing_expected_categories:measured.missing_expected_categories},
-   cases:measured.cases,limitations:['Synthetic previously authored challenge; not independent human annotation','Threshold and question policy locked before this run','Every batch is a distinct paid API request','No real customers or business actions']});
+   baseline_metrics:{exact:baselineMeasured.exact,missed_quality:baselineMeasured.missed_quality,false_quality_alarms:baselineMeasured.false_quality_alarms,additional_false_categories:baselineMeasured.additional_false_categories,missing_expected_categories:baselineMeasured.missing_expected_categories},
+   cases:measured.cases.map(x=>({...x,baseline:baselineMeasured.cases.find(b=>b.id===x.id)?.pred||[]})),limitations:['Synthetic previously authored challenge; not independent human annotation','Threshold and question policy locked before this run','Every batch is a distinct paid API request','No real customers or business actions']});
  }catch(e){
   const type=e?.name==='AbortError'?'provider_timeout':/^invalid_jev/.test(e?.message||'')?'invalid_provider_response':'provider_call_failed';
   console.error('jev_v2_request_failed',{type,batch:data.batch});
