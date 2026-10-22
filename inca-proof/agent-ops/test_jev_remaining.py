@@ -31,7 +31,7 @@ class RemainingHypothesisTests(unittest.TestCase):
   class BadResponse:
    def __enter__(self):return self
    def __exit__(self,*args):return False
-   def read(self,n):return b\'{"answers":{"specialist":{"choice":"unknown"},"trace_fault":{"noul":0.3}}}\'
+   def read(self,n):return b'{"answers":{"specialist":{"choice":"unknown"},"trace_fault":{"noul":0.3}}}'
   with patch.object(v.urllib.request,"urlopen",return_value=BadResponse()):
    with self.assertRaises(ValueError):
     v.request(v.prompt(v.fixture()[0],"jev-1.13.0"),"fake-key")
