@@ -96,7 +96,7 @@ footer{padding:21px 0 32px;border-top:1px solid var(--line);font-size:11px;color
     <p id="outcome-reason">The records disagree.</p>
     <p><strong>Next step:</strong> <span id="outcome-next">Prepare a review packet.</span></p>
     <div id="selected-model-proof" class="proofdetails" hidden></div>
-    <div id="injection-explanation" class="warn" hidden>The document contains an instruction aimed at the AI. Our independent safety rule flags it, even if a model would otherwise miss it.</div>
+    <div id="injection-explanation" class="warn" hidden>The document contains an instruction aimed at the AI. The independent safety rule flags it, even if a model would otherwise miss it.</div>
     <details class="proofdetails"><summary>What evidence was used?</summary><p><strong>Source A:</strong> <code id="source-evidence-a"></code></p><p><strong>Source B:</strong> <code id="source-evidence-b"></code></p><p>These are exact excerpts extracted by a deterministic Python tool. This small demonstration does not interpret full insurance policies.</p></details>
     <div class="outcome-actions"><button id="see-another" type="button" class="btn">Try another case →</button><button id="case-reset" type="button" class="btn ghost">Review this case again</button></div>
     <div class="note" style="margin-top:15px">Nothing was sent to a customer or insurer. “Continue checks” is never a payment decision.</div>
@@ -111,7 +111,7 @@ footer{padding:21px 0 32px;border-top:1px solid var(--line);font-size:11px;color
    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:13px;margin-top:15px;font-size:13px">
      <div><strong>1. Read messy documents</strong><p style="color:var(--muted);font-size:12px;margin:6px 0">Emails, receipts and reports aren't clean database fields.</p></div>
      <div><strong>2. Choose a check</strong><p style="color:var(--muted);font-size:12px;margin:6px 0">The model identifies which specialist tool is relevant.</p></div>
-     <div><strong>3. Find evidence</strong><p style="color:var(--muted);font-size:12px;margin:6px 0">It quotes relevant facts, which our code checks against the original.</p></div>
+     <div><strong>3. Find evidence</strong><p style="color:var(--muted);font-size:12px;margin:6px 0">It quotes relevant facts, which the verifier checks against the original.</p></div>
      <div><strong>4. Keep people in control</strong><p style="color:var(--muted);font-size:12px;margin:6px 0">Deterministic safeguards select a bounded next step. No payout approval.</p></div>
    </div>
    <div style="border-top:1px solid var(--line);padding-top:12px;color:var(--muted);font-size:12px">The interactive cards above replay a verified offline workflow. A separate real-model experiment tests whether the AI can perform steps 2–3 on natural-language fictional documents, rather than merely following rules.</div>
@@ -119,12 +119,12 @@ footer{padding:21px 0 32px;border-top:1px solid var(--line);font-size:11px;color
  <div class="learn">
   <div class="learn-item"><div class="num">01 · SPOT THE ISSUE</div><h3>Find what matters</h3><p>Specialized checks compare facts and reveal missing evidence or contradictions instead of guessing.</p></div>
   <div class="learn-item"><div class="num">02 · HELP THE TEAM</div><h3>Prepare the next action</h3><p>A person gets the reason and supporting evidence, rather than a mysterious AI answer.</p></div>
-  <div class="learn-item"><div class="num">03 · IMPROVE THE WORKFLOW</div><h3>Learn from corrections</h3><p>We turn failures into reviewed test cases, so the next version can be measured rather than simply trusted.</p></div>
+  <div class="learn-item"><div class="num">03 · IMPROVE THE WORKFLOW</div><h3>Learn from corrections</h3><p>I turn failures into reviewed test cases, so the next version can be measured rather than simply trusted.</p></div>
  </div>
  <div id="model-proof-panel" class="learning-evidence" hidden></div>
  <div class="learning-evidence">
-  <strong>One failure we actually found</strong>
-  <p>In a small, real API comparison using 20 fictional travel-cancellation cases, GPT-4o mini missed two documents containing instructions that attempted to manipulate the AI. We added an independent check that catches those two known examples in an offline replay. This is useful development evidence, not a claim about performance on real claims.</p>
+  <strong>One failure I actually found</strong>
+  <p>In a small, real API comparison using 20 fictional travel-cancellation cases, GPT-4o mini missed two documents containing instructions that attempted to manipulate the AI. I added an independent check that catches those two known examples in an offline replay. This is useful development evidence, not a claim about performance on real claims.</p>
   <div class="learn-links"><a href="/inca/field-notes.html">What I built. What worked. What surprised me. ↗</a><a href="/inca/first-30-days.html">If I joined INCA: what I would test next ↗</a><a href="/inca/jev-research.html">NEW · 300-case Jev research ↗</a><a href="/inca/decision-lab.html">NEW · Which AI workflow wins? (A/B/C) ↗</a><a href="/inca/agent-ops-technical.html">How the agent workflow works ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof/agent-ops">Source code and tests ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/actions/runs/39633113245">Recorded model evaluation ↗</a></div>
  </div>
  <p style="color:var(--muted);font-size:12px;margin-top:15px">This public demo replays offline, scripted tool executions. It does not call an LLM when clicked. Separately recorded real-model results are labelled and subject to independent evidence verification; no insurer integration, coverage decision or customer action is involved.</p>
