@@ -392,6 +392,125 @@ function jevExport(){
   cases,limitations:['Uncalibrated model scores','Archived LLM comparison was measured earlier','Costs are estimates if reported','No customer or shop actions']});
 }
 
+
+/* Jev v2 – independent 16-case synthetic challenge, PRECOMMITTED .80 threshold.
+ * Never optimize questions/threshold after reading CH-* predictions.
+ * The API receives only batch number; demo password stays only in session memory.
+ */
+const V2_VERSION='jev-v2-frozen-2026-10-22',V2_STORE='return-loop-jev-v2-frozen-20261022';
+let v2Stages={},v2Meta=null,v2Busy=false,v2Stop=false,v2Note='';
+const v2Measured=()=>[0,1,2,3].filter(i=>v2Stages[i]?.ok===true);
+const v2Sum=(stages,key)=>stages.reduce((a,s)=>a+Number(s[key]||0),0);
+function v2Valid(r,batch){
+ return !!(r?.ok===true&&r.experiment===V2_VERSION&&r.threshold===.8&&r.batch===batch&&r.n_cases===4&&
+  typeof r.dataset_sha256==='string'&&Array.isArray(r.cases)&&r.cases.length===4&&
+  r.cases.every((x,i)=>x.id==='CH-'+String(batch*4+i+1).padStart(3,'0')&&
+   Array.isArray(x.gold)&&Array.isArray(x.pred)&&Array.isArray(x.baseline)&&
+   ['quality','fit','shipping','return','order_issue'].every(k=>Number.isFinite(x.scores?.[k])&&x.scores[k]>=0&&x.scores[k]<=1)));
+}
+function v2Load(){
+ try{
+  const data=JSON.parse(localStorage.getItem(V2_STORE)||'null');
+  if(data?.version!==V2_VERSION)return;
+  for(let b=0;b<4;b++)if(v2Valid(data.batches?.[b],b)){
+   if(v2Measured().length&&Object.values(v2Stages)[0].dataset_sha256!==data.batches[b].dataset_sha256)continue;
+   v2Stages[b]=data.batches[b];
+  }
+ }catch{/* Untrusted stored model data is not accepted. */}
+}
+function v2Save(){
+ try{localStorage.setItem(V2_STORE,JSON.stringify({version:V2_VERSION,updated_at:new Date().toISOString(),batches:v2Stages}));}
+ catch{v2Note='Lokale Speicherung nicht verfügbar. Bitte den JSON-Bericht jetzt herunterladen.';}
+}
+function v2Report(){
+ const finished=v2Measured(),data=finished.map(i=>v2Stages[i]),n=finished.length*4,fullyMeasured=finished.length===4;
+ const metricKeys=['exact','missed_quality','false_quality_alarms','additional_false_categories','missing_expected_categories'];
+ const stats={};
+ for(const key of metricKeys)stats[key]={jev:v2Sum(data.map(x=>x.metrics),key),rules:v2Sum(data.map(x=>x.baseline_metrics),key)};
+ const rows=data.flatMap(x=>x.cases),lats=data.map(x=>x.provider_latency_ms);
+ const costs=data.map(x=>x.cost_usd_reported);
+ return{version:V2_VERSION,threshold:.8,n_expected:16,n_successful:n,complete:fullyMeasured,model:'jev-1.14.0',
+  dataset_sha256:data[0]?.dataset_sha256||v2Meta?.dataset_sha256||null,
+  questions_policy:'Fixed before CH-* inference, 5 independent Noul questions and deterministic other fallback',
+  metrics:stats,rows,mean_batch_latency_ms:lats.length?Math.round(lats.reduce((a,b)=>a+b,0)/lats.length):null,
+  provider_cost_usd_reported:costs.every(Number.isFinite)?costs.reduce((a,b)=>a+b,0):null,
+  batches:data,limitations:['16 synthetic examples drafted earlier, not independent human annotations','No production data','No blind independent holdout','Questions and 80% threshold frozen before this run','No automatic customer actions','Batch latency is not comparable to single-case latency']};
+}
+function v2Render(){
+ const n=v2Measured().length*4,ready=v2Meta?.provider_ready===true;
+ $('v2-state').textContent=v2Meta===null?'Verbindung prüfen …':ready?'TypeSafe bereit':'TypeSafe noch nicht bereit';
+ $('v2-state').classList.toggle('ready',ready);
+ $('v2-run').disabled=v2Busy||!!busy||pairedBatchRunning||jevBusy||!ready||n===16;
+ $('v2-run').textContent=v2Busy?'Jev v2 läuft …':n===16?'Alle 16 Fälle gemessen ✓':n?'Verbleibende '+(16-n)+' Fälle testen ↗':'16 neue Fälle mit Jev testen ↗';
+ $('v2-stop').hidden=!v2Busy;
+ $('v2-export').disabled=n===0;
+ $('v2-progress').textContent=v2Note||n+' von 16 neuen Fällen mit echtem Jev getestet.';
+ if(!n){$('v2-results').textContent='Vorab eingefrorene Regelbaseline: 7/16 vollständig korrekt, 3 von 6 Qualitätshinweisen übersehen. Jev-Ergebnis: noch nicht gemessen.';return;}
+ const r=v2Report(),grid=el('div','jev-v2-comparison');
+ for(const [label,k] of [['Vollständig richtig','exact'],['Übersehene Qualitätshinweise','missed_quality'],['Falsche Qualitätsalarme','false_quality_alarms'],['Falsche Zusatzkategorien','additional_false_categories']]){
+  const tile=el('div','jev-v2-tile');
+  tile.append(el('span','',label),el('strong','',r.metrics[k].rules+' Regeln → '+r.metrics[k].jev+' Jev'));
+  grid.append(tile);
+ }
+ const detail=el('details','jev-v2-detail'),head=el('summary','','Alle '+n+' getesteten Fälle im Detail anzeigen');
+ const entries=el('div','jev-v2-case-list');
+ for(const x of r.rows){
+  const correct=x.excess.length===0&&x.omitted.length===0;
+  const row=el('div','jev-v2-case');
+  row.append(el('strong','',x.id+(correct?' ✓':' · Abweichung')),
+    el('span','','Erwartet: '+x.gold.join(' + ')+' · Jev: '+x.pred.join(' + ')),
+    el('small','','Jev-Scores: '+Object.entries(x.scores).map(([k,v])=>k+' '+Math.round(v*100)+'%').join(' · ')));
+  entries.append(row);
+ }
+ detail.append(head,entries);
+ const cost=r.provider_cost_usd_reported===null?'Kosten vom Anbieter nicht vollständig gemeldet':'Gemeldete TypeSafe-Kosten: $'+r.provider_cost_usd_reported.toFixed(7);
+ const note=el('p','paired-note','Ø '+r.mean_batch_latency_ms+' ms je Vierer-Batch. '+cost+'. '+(r.complete?'Alle 16 Fälle abgeschlossen; Ergebnis bleibt explorativ.':'Teilresultat – noch keine abschließende Bewertung.'));
+ $('v2-results').replaceChildren(grid,note,detail);
+}
+async function v2Refresh(){
+ try{
+  const resp=await fetch('/api/jev-v2',{cache:'no-store'});
+  if(!resp.ok)throw Error('backend not ready');
+  v2Meta=await resp.json();
+  if(v2Meta.experiment!==V2_VERSION||v2Meta.threshold!==.8||v2Meta.challenge_cases!==16)throw Error('wrong version');
+  v2Note=v2Meta.provider_ready?'TypeSafe bereit. Die 16 noch nicht geprüften Fälle können getestet werden.':'TypeSafe nicht konfiguriert. Bitte Backend-Konfiguration prüfen.';
+ }catch{v2Meta=null;v2Note='V2-Testserver nicht erreichbar. Bitte später erneut prüfen.';}
+ v2Render();
+}
+async function v2Run(){
+ if(v2Busy||busy||pairedBatchRunning||jevBusy)return;
+ if(!v2Meta?.provider_ready){v2Note='TypeSafe-Testserver noch nicht bereit.';v2Render();return;}
+ if(!access){v2Note='Bitte oben im Jev-v2-Feld dein privates Demo-Passwort eingeben (nicht den TypeSafe-Key).';v2Render();$('v2-password').focus();return;}
+ const missing=[0,1,2,3].filter(i=>!v2Stages[i]?.ok);
+ if(!missing.length)return;
+ if(!window.confirm('Jetzt maximal '+missing.length+' kostenpflichtige TypeSafe-Aufrufe auf '+(missing.length*4)+' erfundenen, VORAB FIXIERTEN Fällen starten? Frageformulierungen und 80%-Schwelle bleiben unverändert.'))return;
+ v2Busy=true;v2Stop=false;let failed='';
+ try{
+  for(let index=0;index<missing.length;index++){
+   if(v2Stop)break;
+   const b=missing[index];
+   v2Note='Echter Jev-Aufruf '+(index+1)+'/'+missing.length+' · Fälle '+(b*4+1)+'–'+(b*4+4)+' …';v2Render();
+   try{
+    const resp=await fetch('/api/jev-v2',{method:'POST',headers:{'Content-Type':'application/json','X-Demo-Token':access},body:JSON.stringify({batch:b})});
+    const result=await resp.json();
+    if(!resp.ok)throw Error(result.error||'HTTP '+resp.status);
+    if(!v2Valid(result,b))throw Error('unvollständige oder ungültige Modellantwort');
+    if(v2Meta?.dataset_sha256!==result.dataset_sha256)throw Error('Testdatensatz stimmt nicht überein');
+    v2Stages[b]=result;v2Save();v2Render();
+   }catch(e){failed='Test bei Batch '+(b+1)+' abgebrochen: '+e.message+'. Keine weiteren API-Aufrufe.';break;}
+  }
+ }finally{
+  v2Busy=false;
+  v2Note=failed||(v2Stop?'Gestoppt. Bereits gemessene Ergebnisse bleiben lokal erhalten.':
+    v2Measured().length===4?'16 echte Jev-v2-Fälle vollständig ausgewertet. Exportiere jetzt den Bericht.':'Test unterbrochen. Ergebnisdatei kann gespeichert werden.');
+  v2Render();
+ }
+}
+function v2Export(){
+ const report=v2Report();
+ exportFile('return-loop-jev-v2-16-neue-faelle.json',{...report,exported_at:new Date().toISOString()});
+}
+
 function exportFile(name,obj){let blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);}
 function review(){let x=record();reviews[x.id]={decision:$('review-decision').value,at:new Date().toISOString(),basis:'synthetic',model_predictions:results[x.id]||{},note:'Manual demonstration only; no external action.'};try{localStorage.setItem('return-loop-v14-reviews',JSON.stringify(reviews))}catch{}$('review-message').textContent='✓ Entscheidung lokal dokumentiert – keine Shopaktion.';renderHandoff();renderInbox();}
 function report(){let measured={};for(let m of MODELS.slice(1)){const r=fixtures.filter(c=>results[c.id]?.[m.id]?.ok);measured[m.id]={run_count:r.length,full_development_evaluation:r.length===fixtures.length?r.length:null,macro_f1:r.length===fixtures.length?evaluate(r.map(c=>({gold:c.gold,pred:predicted(results[c.id][m.id],m.id)}))).macroF1:null};}exportFile('return-loop-v14-model-arena-report.json',{project:'RETURN LOOP · Model Arena v14',created_at:new Date().toISOString(),dataset:'24 synthetic development fixtures — NOT independent external holdout',calibration:'None. Scores uncalibrated.',policy_threshold:threshold,baseline:evaluate(fixtures.map(c=>({gold:c.gold,pred:baseline(c.text)}))),models:measured,real_results:results,reviews,limitations:['No real customer data','Not a production quality rate','Thresholds not validated independently','No automated customer actions','Paid API limited to authenticated synthetic demo fixture calls']});}
@@ -420,11 +539,17 @@ async function init(){try{const embedded=document.getElementById('embedded-fixtu
  $('jev-stop').addEventListener('click',()=>{jevHalt=true;jevMessage='Nach aktuellem Fall stoppen …';jevShow();});
  $('jev-refresh').addEventListener('click',jevRefresh);
  $('jev-export').addEventListener('click',jevExport);
- $('open-jev').addEventListener('click',()=>{$('more').open=true;$('jev-archive').scrollIntoView({behavior:'smooth',block:'start'});});
+ $('v2-run').addEventListener('click',v2Run);
+ $('v2-stop').addEventListener('click',()=>{v2Stop=true;v2Note='Stoppen nach aktuellem Teilaufruf angefordert.';v2Render();});
+ $('v2-check').addEventListener('click',v2Refresh);
+ $('v2-export').addEventListener('click',v2Export);
+ $('v2-password').addEventListener('input',e=>{access=e.target.value.trim();$('jev-access').value=access;$('token').value=access;$('paired-token').value=access;v2Note='';v2Render();});
+
+ $('open-jev').addEventListener('click',()=>{$('more').open=true;$('jev-v2').scrollIntoView({behavior:'smooth',block:'start'});});
  $('inbox-filter').addEventListener('change',()=>{inboxExpanded=false;renderInbox();});$('inbox-show-more').addEventListener('click',()=>{inboxExpanded=!inboxExpanded;renderInbox();});$('download-handoff').addEventListener('click',downloadHandoff);renderSignals();
  $('next-case').addEventListener('click',()=>choose(fixtures[(fixtures.findIndex(x=>x.id===selected)+1)%fixtures.length].id));
  $('toggle-access').addEventListener('click',()=>{let open=$('access-form').hidden;$('access-form').hidden=!open;$('toggle-access').setAttribute('aria-expanded',String(open));});
  $('token').addEventListener('input',e=>{access=e.target.value.trim();$('paired-token').value=access;$('jev-access').value=access;});$('save-review').addEventListener('click',review);$('download-report').addEventListener('click',report);
  $('threshold').addEventListener('input',e=>{threshold=Number(e.target.value)/100;$('threshold-value').textContent=Math.round(threshold*100)+'%';renderModels();renderEvaluation();});
- loadPairedResults();jevRestore();renderCase();renderEvaluation();renderPaired();jevShow();if(location.hash==='#jev-quick'){$('more').open=true;setTimeout(()=>$('jev-quick').scrollIntoView({behavior:'smooth',block:'start'}),0);}}
+ loadPairedResults();jevRestore();v2Load();renderCase();renderEvaluation();renderPaired();jevShow();v2Render();v2Refresh();if(location.hash==='#jev-v2'){$('more').open=true;setTimeout(()=>$('jev-v2').scrollIntoView({behavior:'smooth',block:'start'}),0);}if(location.hash==='#jev-quick'){$('more').open=true;setTimeout(()=>$('jev-quick').scrollIntoView({behavior:'smooth',block:'start'}),0);}}
 init();
