@@ -1,6 +1,6 @@
 # INCA · Jev Research Plan V2 — falsifiable hypotheses
 
-**Status:** H3 + H4 tested on 300 authored fictional cases with 300 real Jev and 300 real GPT responses; other hypotheses remain untested. See [live reviewer report](https://mikelninh.github.io/inca/jev-research.html) and [source run](https://github.com/mikelninh/mikelninh.github.io/actions/runs/39691808881).  
+**Status (2026-10-22):** H1–H7 have now been investigated. H1/H5: 208 actual new Jev/GPT API requests; H2/H6: explicitly posthoc analysis of the previously inspected 300-case responses (no new API requests); H3/H4: 600 real model calls; H7: 160 Jev pinned-version calls. No production claims have been validated. See the [applicant's field notes](https://mikelninh.github.io/inca/field-notes.html), the [detailed study](https://mikelninh.github.io/inca/jev-research.html), and [H1/H5 run](https://github.com/mikelninh/mikelninh.github.io/actions/runs/39761548020). See [live reviewer report](https://mikelninh.github.io/inca/jev-research.html) and [source run](https://github.com/mikelninh/mikelninh.github.io/actions/runs/39691808881).  
 **Date:** 2026-10-22  
 **Question:** Where can a structured, low-latency decision model *replace or selectively avoid* more expensive work in claims AI Operations, while preserving evidence integrity and human control?
 
@@ -110,3 +110,13 @@ At the workflow level record:
 ## First completed result · H3 and H4 (2026-10-22)
 
 The 240-case frozen synthetic holdout contained 49 seeded critical tool/trace errors. At the 20% audit budget (48 records), Jev prioritized 38/49, GPT-4o mini 15/49, hash-random selection 10/49, and the deliberately simple deterministic rules **44/49**. Jev **passed the preregistered recall-vs-random criterion** but **did not beat simple rules**. Exact tool routing was 240/240 for Jev, GPT and rules, so Jev cannot claim incremental routing value. Model p95 API time was Jev 129ms vs GPT 927ms; full workflow time and human review cost unmeasured. Returned Jev revision was 1.13.0; multilingual/version H7 remains untested. All examples use one deterministic generator with intentionally easy structural fault patterns. No insurer claims or expert labels.
+
+## Closing experiments: H1 and H5 (actual run 39761548020)
+
+40 new developer-authored, *already-verified* fictional claim fact bundles, 10 dev / 30 fixed holdout; one `jev-1.14.0` choice versus one GPT-4o-mini structured-output choice (H1), then four typed Jev choices in one request against GPT batched and four serial Jev requests on 12 matched holdout cases (H5). **208 actual API calls**, zero provider errors. These labels are synthetic policy decisions, *not* adjudicated insurance claims; source extraction is explicitly out of scope.
+
+- **H1:** Jev 30/30 correct bounded next actions vs GPT 10/30 on the frozen synthetic holdout; Jev 149ms p95 versus GPT 879ms; rate-card inference cost $0.000644 vs $0.001312. But deterministic Python rules also achieved 30/30 with no model calls. GPT under-escalated 20 authored conflict/instruction cases: an important prompt-specific failure, **not general GPT capability evidence**.
+- **H5:** Jev batched four questions correct on 28/30 cases (118/120 individual choices), GPT on 13/30 (103/120), code on 30/30. On exactly the same **12 preselected cases**, Jev batch had 94ms median and estimated $0.000422 versus 4 sequential Jev requests 306.5ms and $0.001004. **Quality trade-off:** batch 10/12 cases all correct vs sequential 12/12; two unnecessary document-request decisions, none of the safety-gate routes missed.
+- **Research verdict:** H1 reaches its isolated Jev-versus-GPT gates on this artificial decision-only task, but does not improve on straightforward code. H5 saves model cost and time but fails strict exact-quality equivalence. Neither demonstrates a cheaper end-to-end insurer process.
+
+Source: [H1/H5 recorded GitHub API run](https://github.com/mikelninh/mikelninh.github.io/actions/runs/39761548020); [method](JEV_H1_H5_METHOD.md); [public measured summary](https://mikelninh.github.io/inca/jev-h1-h5.json). Note: six-case, 20-case and other historical pilot tests are not included in the 968-call / ~$0.04819 consolidated later-study cost summary.
