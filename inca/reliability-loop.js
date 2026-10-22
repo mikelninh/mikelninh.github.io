@@ -129,6 +129,16 @@
     $('focus-title').textContent=out.pass?'This case now passes the checks.':headings[firstFailed]||'This trace needs human review.';
     $('focus-used').textContent=sourceRevision==='(missing)'?'No version recorded':'Policy '+sourceRevision;
     $('focus-required').textContent='Policy '+c.required_policy_revision;
+    const policyCase=c.fault_type==='wrong_revision';
+    $('focus-compare').hidden=!policyCase;
+    $('focus-compare-symbol').textContent=out.pass?'=':'≠';
+    $('focus-difference').hidden=policyCase;
+    if(!policyCase){
+      const sample=c.fault_type==='none'?null:changeSummary(c);
+      $('focus-difference').textContent=sample
+        ?(out.pass?'The saved example correction is staged: ':'Initial error: ')+(out.pass?sample.after:sample.before+' → '+sample.after)
+        :'No error was deliberately planted in this sample. Its structural checks pass.';
+    }
     $('focus-status').textContent=out.pass?'Checks passed':'Needs review';
     $('focus-status').className='status '+(out.pass?'ok':'warn');
     $('focus-explanation').textContent=out.pass
