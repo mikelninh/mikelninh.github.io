@@ -52,6 +52,25 @@ p{margin-top:0}.hero{display:grid;grid-template-columns:1.2fr .8fr;align-items:c
 .advanced-tools{padding:21px 23px;background:var(--paper);border:1px solid var(--line);border-radius:10px;margin-top:15px}.advanced-tools p{font-size:12px;color:#708173}
 .scope-note{max-width:930px;margin:18px auto 0;color:#758575;font-size:11px;line-height:1.6}
 @media(max-width:650px){.guided-hero{padding:32px 0 24px}.guided-section{padding-top:27px}.section-head{align-items:start;flex-direction:column;gap:9px}.fiction-label{font-size:9px}.guided-card{padding:21px 17px}.guided-steps{gap:2px}.guided-step{font-size:10px;gap:6px;padding:5px 0}.guided-step span{width:24px;height:24px}.version-pair{grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr);gap:4px}.version-item{padding:13px 9px}.version-item strong{font-size:19px}.version-item small{font-size:9px}.compare-arrow{font-size:17px}.guided-actions{flex-direction:column;align-items:stretch}.guided-actions button{width:100%}.engineering-details>summary{padding:15px}.engineering-details summary small{font-size:11px}.deep-content{padding:0 9px 12px}.guided-card-head{align-items:start;flex-direction:column}.advanced-tools{padding:16px 12px}}
+
+/* Explain the batch release failure as four transparent, individually fixable traces. */
+.guided-reset{margin:13px 0 0}.reset-link{border:0;background:none;padding:5px 0;font-size:12px;text-decoration:underline;text-underline-offset:3px;color:#647d6b;font-weight:660;cursor:pointer}
+.remaining-review{margin:18px 0 0;border:1px solid #e8d8c0;background:#fffaf2;border-radius:12px;padding:21px}
+.remaining-head{display:flex;gap:12px;align-items:center;justify-content:space-between}
+.remaining-head h4{font-size:20px;line-height:1.2;letter-spacing:-.045em;margin:6px 0 0}
+.remaining-progress{background:#fff2dc;border-radius:999px;padding:7px 11px;white-space:nowrap;color:#97682c;font-size:11px;font-weight:800}
+.remaining-intro{font-size:12px;color:#67766a;margin:15px 0;max-width:780px;line-height:1.55}
+.remaining-list{display:grid;gap:8px}
+.review-case{border:1px solid #e5d6bf;border-radius:9px;padding:15px;display:flex;gap:16px;align-items:center;justify-content:space-between;background:#fff}
+.review-case.resolved{background:#f0f8ed;border-color:#d2e4cb}
+.review-case h5{font-size:14px;line-height:1.3;margin:2px 0 7px;letter-spacing:-.02em}
+.review-case small{display:block;color:#778676;font-size:10px;font-weight:760;letter-spacing:.05em}
+.review-diff{font-size:12px;color:#617364;margin:0;line-height:1.5}
+.review-diff .before{color:#a46e3b}.review-diff .after{color:#3f7d4b}
+.review-case .btn{white-space:nowrap;flex:none}
+.review-ok{font-size:12px;color:#437148;font-weight:820}
+.remaining-next{font-size:12px;font-weight:730;color:#56785a;margin:14px 0 0}
+@media(max-width:650px){.remaining-review{padding:16px 12px}.remaining-head{align-items:start;flex-direction:column}.remaining-progress{white-space:normal}.review-case{flex-direction:column;align-items:stretch;gap:10px}.review-case .btn{width:100%}}
 </style></head><body>
 <header class="top"><div class="wrap bar"><a class="brand" href="/inca/field-notes.html">MICHAEL NINH <span>/ INCA · LAB</span></a><nav class="nav"><a href="/inca/field-notes.html">← Hiring overview</a><a href="/inca/agent-ops.html">Claims demo</a><a href="#engineering">Engineering proof</a></nav></div></header>
 <main>
@@ -77,24 +96,33 @@ p{margin-top:0}.hero{display:grid;grid-template-columns:1.2fr .8fr;align-items:c
       </div>
       <div class="guided-card">
         <div class="guided-card-head"><div><span class="eyelabel" id="focus-case-label">CASE-027 · Fictional repair claim</span><h3 id="focus-title">An agent picked the wrong policy version.</h3></div><span id="focus-status" class="status warn">Needs review</span></div>
-        <div class="version-pair" aria-label="Policy version comparison">
+        <div class="version-pair" id="focus-compare" aria-label="Policy version comparison">
           <div class="version-item wrong"><small>AGENT USED</small><strong id="focus-used">Policy 2024</strong></div>
-          <span class="compare-arrow" aria-hidden="true">≠</span>
+          <span class="compare-arrow" id="focus-compare-symbol" aria-hidden="true">≠</span>
           <div class="version-item expected"><small>CORRECT SOURCE</small><strong id="focus-required">Policy 2025</strong></div>
         </div>
+        <p class="guided-explain" id="focus-difference" hidden></p>
         <p class="guided-explain" id="focus-explanation">Both documents contain plausible wording. The older one is not applicable to this claim.</p>
         <div class="guided-actions">
-          <button type="button" class="btn primary" id="apply-fix" data-command="fix">Apply the documented fix →</button>
-          <button type="button" class="btn primary" id="guided-gate" data-command="gate" disabled>Run 12-case regression gate ↗</button>
-          <button type="button" class="btn secondary" id="release-b" data-command="release-b" hidden>Apply remaining reviewed fixes →</button>
-          <button type="button" class="btn outline" id="guided-restart" data-command="reset" hidden>Start again ↻</button>
+          <button type="button" class="btn primary" id="apply-fix" data-command="fix">Apply saved example correction: 2024 → 2025</button>
+          <button type="button" class="btn primary" id="guided-gate" data-command="gate" disabled>Check all 12 fictional cases ↗</button>
         </div>
-        <p class="guided-hint" id="guided-hint" role="status" aria-live="polite">The verifier found a mismatch. Apply a pre-written, fictional expert correction to this case.</p>
+        <p class="guided-reset"><button type="button" class="reset-link" id="guided-restart" data-command="reset" hidden>Start over — undo all sample fixes ↻</button></p>
+        <p class="guided-hint" id="guided-hint" role="status" aria-live="polite">The verifier found a mismatch. Apply a pre-written example correction to this case. No live human review or new AI call.</p>
         <div class="release-result guided-result" id="release-result" hidden aria-live="polite">
           <strong id="release-headline">—</strong><p id="release-detail">—</p><p id="release-failures">—</p>
         </div>
+        <section id="remaining-review" class="remaining-review" aria-labelledby="remaining-review-title" hidden>
+          <div class="remaining-head">
+            <div><span class="eyelabel">What the test found</span><h4 id="remaining-review-title">Four other fictional cases still need fixes</h4></div>
+            <span id="remaining-progress" class="remaining-progress">1 / 5 planted faults corrected</span>
+          </div>
+          <p class="remaining-intro">These are <strong>four separate, invented agent mistakes</strong>. Each button below swaps only that case's saved faulty trace for its pre-written corrected trace. Nothing is reviewed by a person or generated by AI when you click.</p>
+          <div id="remaining-list" class="remaining-list"></div>
+          <p class="remaining-next" id="remaining-next" role="status" aria-live="polite">Correct the four examples above, then run the same checks again.</p>
+        </section>
       </div>
-      <div class="guided-summary">THE LEARNING <strong>A human correction becomes a repeatable test, so the next release can't quietly repeat the same known error.</strong></div>
+      <div class="guided-summary">THE LEARNING <strong>A documented correction can become a repeatable regression test. A future release should be blocked if it repeats the same known mistake.</strong></div>
       <details id="engineering-details" class="engineering-details">
         <summary><span><strong>Curious how it works?</strong><small>Open the 12 cases, source documents, six checks and fault-injection lab</small></span><span aria-hidden="true" class="details-chevron">⌄</span></summary>
         <div class="deep-content">
@@ -133,7 +161,7 @@ p{margin-top:0}.hero{display:grid;grid-template-columns:1.2fr .8fr;align-items:c
               <button type="button" class="btn outline small" id="release-a" data-command="release-a" aria-pressed="true">Reset release A</button>
               <button type="button" class="btn outline small" data-command="gate">Re-run all 12 checks ↗</button>
             </div>
-            <p class="annotations" id="current-release">0/12 corrected fixtures staged locally</p>
+            <p class="annotations" id="current-release">0 sample corrections staged locally</p>
             <div class="divider"></div>
             <div class="label">Challenge the corrected release</div>
             <div class="inject"><label for="fault-select" class="annotations">Reintroduce a problem</label><select id="fault-select">

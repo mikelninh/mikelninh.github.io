@@ -10,10 +10,10 @@ This is a **working controlled simulation**, not a connection to INCA's MARS pla
 
 1. Start on **CASE-027**. The agent quotes **policy revision 2024** accurately, but the case's independently supplied policy metadata requires **2025**. A quotation from the wrong revision is not valid grounds to continue.
 2. Inspect the three source documents, original agent trace and **six checks**. The policy revision gate fails and the handoff becomes HUMAN_REVIEW_REQUIRED.
-3. Click **Apply reviewed correction**: the browser stages a **pre-authored fictional correction** (not real operator input and not self-learning).
-4. Click **Run 12-case regression gate**: release A still fails because four other scenarios remain unresolved.
-5. Click **Load corrected release B**, then rerun the gate: all 12 scripted traces pass the structural checks.
-6. Choose a failure type, click **Inject test fault**, and rerun the gate. The injected defect blocks the corrected release again. **Clear injected fault** to recover.
+3. Click **Apply saved example correction**: only CASE-027's old agent trace is replaced by a previously written, fictional corrected trace. No human or AI reviews anything on click.
+4. Click **Check all 12 fictional cases**: the suite reports **8/12 passing, four still blocked**. The output explicitly says **one planted fault corrected, four not corrected**, never "corrected or blocked" as a single ambiguous outcome.
+5. The page reveals **four separate fault cards** (CASE-028 to CASE-031). Each shows the initial failure, the exact saved source/action/check change and its own **Apply sample fix** button. The visitor controls all four replacements individually; the page never silently applies them in bulk.
+6. Click the same 12-case check again. **12/12** pass only after all four corrections are staged. Optionally open **Curious how it works?** to inspect the original traces and inject one of five planted defects, proving the gate blocks it again. **Start over — undo all sample fixes** restores the initial fictional state.
 
 Everything in the workbench is recalculated client-side and remains ephemeral. The Python evaluator is the authoritative offline test reference; Node tests check parity against Python results.
 
