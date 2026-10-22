@@ -203,3 +203,25 @@
 .jev-private-access input{flex:1 1 190px;min-width:185px;max-width:330px;border:1px solid #bad1c0;background:#fff;border-radius:6px;padding:11px 12px;color:#24472f;font-size:13px}
 .jev-private-access input:focus-visible{outline:2px solid #8fba9d;outline-offset:2px}
 @media(max-width:650px){.jev-private-access{padding:12px}.jev-private-access input{max-width:none;flex-basis:100%}}
+
+/* Final Jev evidence: confirmed small-sample scores without overclaiming generalization. */
+.jev-archive{margin:20px 0;padding:24px 27px;background:#eef5ec;border:1px solid #c6dbc9;border-radius:12px;scroll-margin-top:20px}
+.jev-archive-top{display:flex;justify-content:space-between;align-items:flex-start;gap:18px}
+.jev-archive h3{font:400 27px/1.2 var(--serif);margin:6px 0}
+.jev-archive p{font-size:12px;line-height:1.7;color:#576e5f}
+.jev-archive-tag{font-size:10px;color:#2a6a43;background:#f6fff5;border:1px solid #b8d4bb;padding:7px 10px;border-radius:20px;white-space:nowrap;font-weight:700}
+.jev-archive-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:17px 0}
+.jev-archive-results>div{display:grid;gap:3px;background:#fff;border:1px solid #d5e4d6;border-radius:8px;padding:14px}
+.jev-archive-results small{font-size:10px;color:#647d69}
+.jev-archive-results strong{font:500 34px/1.16 var(--serif);color:#254f36}
+.jev-archive-results strong em{font:400 14px/1.2 var(--serif);color:#788d7b;font-style:normal}
+.jev-archive-results span{font-size:10px;color:#647d69}
+.jev-archive-insight{padding:13px 0;border-bottom:1px solid #cfded0}
+.jev-archive-insight strong{color:#31563a}
+.jev-archive-detail{font-size:12px;border-bottom:1px solid #cfded0;padding:10px 0}
+.jev-archive-detail summary{font-weight:700;color:#31563a;cursor:pointer}
+.jev-archive-detail p{padding:8px 0}
+.jev-archive-actions{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding-top:15px;font-size:11px}
+.jev-archive-actions a{font-weight:700;color:#276f44;text-underline-offset:3px}
+.jev-archive-actions span{color:#5a7564}
+@media(max-width:650px){.jev-archive{padding:18px 16px}.jev-archive-top{flex-direction:column;gap:6px}.jev-archive-tag{white-space:normal}.jev-archive h3{font-size:24px}.jev-archive-results{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.jev-archive-results>div{padding:9px 7px}.jev-archive-results strong{font-size:27px}.jev-archive-results small{font-size:9px}}
