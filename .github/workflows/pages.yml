@@ -79,6 +79,12 @@ jobs:
           node --test inca/jev-research.test.cjs
           node --test inca/field-notes.test.cjs
           node --test inca/first-30-days.test.cjs
+      - name: Generate and validate ClaimsOps reliability report before publishing
+        run: |
+          set -euo pipefail
+          python inca-proof/reliability-loop/reliability.py --out inca/reliability-loop-data.json
+          python -m unittest discover inca-proof/reliability-loop -p 'test_*.py' -v
+          node --test inca/reliability-loop.test.cjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site
@@ -137,6 +143,9 @@ jobs:
           fetch_until_ready "$base/inca/first-30-days.html" "If I joined INCA"
           fetch_until_ready "$base/inca/jev-research.html" "Can a small AI find the mistakes that matter?"
           fetch_until_ready "$base/inca/field-notes.html" "What I built."
+          fetch_until_ready "$base/inca/reliability-loop.html" "One exception."
+          fetch_until_ready "$base/inca/reliability-loop.js" "IncaReliabilityLoop"
+          fetch_until_ready "$base/inca/reliability-loop-data.json" "INCA-RELIABILITY-LOOP-V1"
           fetch_until_ready "$base/inca/jev-h1-h5.json" "INCA-JEV-H1-H5-PUBLIC"
           fetch_until_ready "$base/inca/jev-research-v2.json" "INCA-JEV-RESEARCH-V2-PUBLIC"
           fetch_until_ready "$base/inca/jev-h2-h6.json" "INCA-JEV-H2-H6-EXPLORATORY"
