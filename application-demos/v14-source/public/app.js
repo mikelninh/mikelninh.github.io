@@ -309,6 +309,46 @@ function downloadPaired(){
   limitations:['Only preselected synthetic development data','AI results not independently audited','Draft replies require human approval','No real support integrations','No measured time savings','Costs require current provider pricing']
  });
 }
+
+const JEV_IDS=['RL-301','RL-302','RL-308','RL-309','RL-314','RL-316','RL-317','RL-324'];
+let jevBusy=false,jevHalt=false,jevMessage='';
+const jevCases=()=>JEV_IDS.map(id=>fixtures.find(x=>x.id===id)).filter(Boolean);
+const jevDone=()=>jevCases().filter(x=>results[x.id]?.jev?.ok===true);
+function jevRestore(){
+ try{const saved=JSON.parse(localStorage.getItem('return-loop-jev-scores')||'{}');for(const x of jevCases()){if(saved[x.id]?.id===x.id&&saved[x.id]?.provider==='jev'&&saved[x.id]?.ok){results[x.id]??={};results[x.id].jev=saved[x.id];}}}catch{}
+}
+function jevSave(){
+ try{localStorage.setItem('return-loop-jev-scores',JSON.stringify(Object.fromEntries(jevDone().map(x=>[x.id,results[x.id].jev]))));}catch{}
+}
+function jevShow(){
+ const done=jevDone(),n=done.length,ready=live.providers?.jev===true&&live.paid_requests_enabled;
+ $('jev-provider-pill').textContent=live.providers?.jev?'TypeSafe verbunden':'TypeSafe-Key fehlt';
+ $('jev-setup').hidden=!!live.providers?.jev;
+ $('jev-run').disabled=jevBusy||busy||pairedBatchRunning||!ready||n===8;
+ $('jev-stop').hidden=!jevBusy;
+ $('jev-export').disabled=n===0;
+ $('jev-progress').textContent=jevMessage||n+' von 8 Fällen mit Jev gemessen.';
+ if(!n){$('jev-results').textContent='Noch keine echten Jev-Ergebnisse.';return;}
+ let rc=0,jc=0,lc=0,rm=0,jm=0,rf=0,jf=0;
+ for(const x of done){
+  const b=baseline(x.text),j=results[x.id].jev.categories||[],l=studyRow(x.id)?.llm||[];
+  if(exactMatch(x.gold,b))rc++;
+  if(exactMatch(x.gold,j))jc++;
+  if(exactMatch(x.gold,l))lc++;
+  if(x.gold.includes('quality')&&!b.includes('quality'))rm++;
+  if(x.gold.includes('quality')&&!j.includes('quality'))jm++;
+  if(!x.gold.includes('quality')&&b.includes('quality'))rf++;
+  if(!x.gold.includes('quality')&&j.includes('quality'))jf++;
+ }
+ const avg=Math.round(done.reduce((a,x)=>a+results[x.id].jev.latency_ms,0)/n);
+ $('jev-results').replaceChildren(
+ el('p','', 'Exakte Zuordnung: Regeln '+rc+'/'+n+' · Jev '+jc+'/'+n+' · archiviertes LLM '+lc+'/'+n),
+ el('p','', 'Übersehene Qualitätshinweise: Regeln '+rm+' · Jev '+jm),
+ el('p','', 'Falsche Qualitätsalarme: Regeln '+rf+' · Jev '+jf),
+ el('p','paired-note','Gemessene Jev-Latenz Ø '+avg+' ms. Acht bekannte synthetische Fälle – kein unabhängiger Benchmark.')
+ );
+}
+
 function exportFile(name,obj){let blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);}
 function review(){let x=record();reviews[x.id]={decision:$('review-decision').value,at:new Date().toISOString(),basis:'synthetic',model_predictions:results[x.id]||{},note:'Manual demonstration only; no external action.'};try{localStorage.setItem('return-loop-v14-reviews',JSON.stringify(reviews))}catch{}$('review-message').textContent='✓ Entscheidung lokal dokumentiert – keine Shopaktion.';renderHandoff();renderInbox();}
 function report(){let measured={};for(let m of MODELS.slice(1)){const r=fixtures.filter(c=>results[c.id]?.[m.id]?.ok);measured[m.id]={run_count:r.length,full_development_evaluation:r.length===fixtures.length?r.length:null,macro_f1:r.length===fixtures.length?evaluate(r.map(c=>({gold:c.gold,pred:predicted(results[c.id][m.id],m.id)}))).macroF1:null};}exportFile('return-loop-v14-model-arena-report.json',{project:'RETURN LOOP · Model Arena v14',created_at:new Date().toISOString(),dataset:'24 synthetic development fixtures — NOT independent external holdout',calibration:'None. Scores uncalibrated.',policy_threshold:threshold,baseline:evaluate(fixtures.map(c=>({gold:c.gold,pred:baseline(c.text)}))),models:measured,real_results:results,reviews,limitations:['No real customer data','Not a production quality rate','Thresholds not validated independently','No automated customer actions','Paid API limited to authenticated synthetic demo fixture calls']});}
