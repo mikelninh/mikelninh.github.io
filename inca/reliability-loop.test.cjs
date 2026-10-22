@@ -46,9 +46,72 @@ test('invalid cases and HTML injection are rejected or escaped',()=>{
  assert.throws(()=>m.select('UNKNOWN'));
  assert.equal(core.escapeHTML('<img src=x onerror="alert(1)">'),'&lt;img src=x onerror=&quot;alert(1)&quot;&gt;');
 });
-test('actual clickable controls and transparent simulated scope',()=>{
- for(const t of ['One exception.','A safer next release.','id="loop-app"','reliability-loop.js','Run 12-case regression gate','Apply reviewed correction','Load corrected release B','Inject test fault','No access to MARS','no production telemetry','no real agent integration'])assert.ok(page.includes(t),t);
+test('first-time experience reveals one problem and one action, not the full dashboard',()=>{
+ for(const t of [
+  'The quote is real.','The policy is wrong.','Try the 3-step demo',
+  'Spot the mistake','Apply the fix','Test the release','id="loop-app"',
+  'id="focus-title"','id="focus-used"','id="focus-required"',
+  'id="guided-gate"','Apply the documented fix','Run 12-case regression gate',
+  'id="release-b"','Apply remaining reviewed fixes','id="engineering-details"',
+  'id="case-list"','id="gate-checks"','Inject test fault','reliability-loop.js',
+  'No access to MARS','no production telemetry','no real agent integration'
+ ])assert.ok(page.includes(t),t);
+ assert.ok(page.indexOf('id="engineering-details"')<page.indexOf('id="case-list"'));
+ assert.ok(page.indexOf('id="engineering-details"')<page.indexOf('id="gate-checks"'));
+ assert.ok(page.indexOf('id="engineering-details"')<page.indexOf('id="metric-pass"'));
  assert.match(page,/not connected to INCA/i);
- assert.match(page,/No AI API calls/i);
+ assert.match(page,/no new AI API calls/i);
  assert.match(page,/never decides coverage or payment/i);
+ assert.match(page,/\[hidden\]\{display:none!important\}/);
+});
+test('guided 90-second path actually updates the page on each button click',async()=>{
+ const nodes={};
+ function el(id){return nodes[id]??=( {textContent:'',innerHTML:'',style:{},hidden:false,disabled:false,className:'',attributes:{},
+   setAttribute(k,v){this.attributes[k]=v;},
+   addEventListener(k,fn){this['on_'+k]=fn;}
+ });}
+ const doc={readyState:'complete',getElementById:el,addEventListener(){}};
+ const mockWindow={document:doc};
+ const cjs={exports:{}};
+ const mockFetch=async()=>({ok:true,json:async()=>data});
+ new Function('module','window','fetch',browserSource)(cjs,mockWindow,mockFetch);
+ await new Promise(setImmediate);
+ const host=el('loop-app');
+ assert.equal(typeof host.on_click,'function');
+ const command=name=>host.on_click({target:{closest:q=>q==='[data-command]'?{getAttribute:()=>name}:null}});
+ const choice=id=>host.on_click({target:{closest:q=>q==='[data-case]'?{getAttribute:()=>id}:null}});
+ assert.match(el('focus-title').textContent,/wrong policy version/);
+ assert.match(el('focus-explanation').textContent,/outdated policy/);
+ assert.equal(el('focus-used').textContent,'Policy 2024');
+ assert.equal(el('focus-required').textContent,'Policy 2025');
+ assert.equal(el('guided-gate').disabled,true);
+ assert.equal(el('release-b').hidden,true);
+ assert.equal(el('metric-block').textContent,5);
+ command('fix');
+ assert.equal(el('metric-block').textContent,4);
+ assert.equal(el('guided-gate').disabled,false);
+ assert.match(el('guided-hint').textContent,/fixing one case does not automatically fix the others/);
+ command('gate');
+ assert.match(el('release-headline').textContent,/BLOCKED/);
+ assert.equal(el('release-b').hidden,false);
+ assert.equal(el('guided-gate').hidden,true);
+ command('release-b');
+ assert.equal(el('metric-block').textContent,0);
+ assert.equal(el('guided-gate').hidden,false);
+ command('gate');
+ assert.match(el('release-headline').textContent,/PASS/);
+ assert.equal(el('metric-pass').textContent,'12 / 12');
+ assert.equal(el('guided-restart').hidden,false);
+ el('fault-select').value='wrong_revision';
+ command('inject');
+ assert.equal(el('metric-block').textContent,1);
+ command('gate');
+ assert.match(el('release-headline').textContent,/BLOCKED/);
+ command('clear');
+ command('gate');
+ assert.match(el('release-headline').textContent,/PASS/);
+ choice('CASE-029');assert.match(el('focus-case-label').textContent,/CASE-029/);
+ command('reset');
+ assert.equal(el('metric-block').textContent,5);
+ assert.equal(el('guided-gate').disabled,true);
 });
