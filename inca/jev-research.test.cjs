@@ -54,7 +54,7 @@ test('posthoc H2 filter savings and costs audited against real prior model reque
  assert.equal(a.h2.goal_met,false);
  assert.equal(a.h6.calibration_goal_met,false);
  assert.ok(a.h2.jev_first_cost_est_usd>a.h2.gpt_only_cost_est_usd);
- assert.match(a.repeat_holdout_warning,/already inspected/i);
+ assert.match(a.repeat_holdout_warning,/previously been inspected/i);
 });
 test('recorded H7 160-call 1.13 vs 1.14 version pins and costs correctly reported',()=>{
  const b=JSON.parse(fs.readFileSync(path.join(__dirname,'jev-h7.json'),'utf8'));
