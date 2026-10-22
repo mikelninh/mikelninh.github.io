@@ -180,7 +180,7 @@
             :inj&&!last
               ?'A fault was reintroduced. Run the same checks to confirm it is blocked.'
               :'The quoted text exists, but comes from an outdated policy. This button swaps in a saved fictional corrected trace; no person or AI reviews the case on click.';
-    const step=last?.passed?4:allCorrected||fi||hasFix?3:1;
+    const step=last?.passed?4:(reviewQueueOpen&&waiting.length)?2:(hasFix?3:1);
     for(const i of [1,2,3])$('guide-step-'+i).className='guided-step'+(step>i?' complete':step===i?' active':'');
 
     // Primary guided button state is owned by the progressive-disclosure block above.
