@@ -1,0 +1,913 @@
+{
+  "version": "jev-v2-frozen-2026-10-22",
+  "threshold": 0.8,
+  "n_expected": 16,
+  "n_successful": 16,
+  "complete": true,
+  "model": "jev-1.14.0",
+  "dataset_sha256": "d6bdd47fe81ea811e792ad9084a0cc90b2d2333b8ca843e893ff7282fe489291",
+  "questions_policy": "Fixed before CH-* inference, 5 independent Noul questions and deterministic other fallback",
+  "metrics": {
+    "exact": {
+      "jev": 15,
+      "rules": 7
+    },
+    "missed_quality": {
+      "jev": 0,
+      "rules": 3
+    },
+    "false_quality_alarms": {
+      "jev": 0,
+      "rules": 0
+    },
+    "additional_false_categories": {
+      "jev": 0,
+      "rules": 8
+    },
+    "missing_expected_categories": {
+      "jev": 1,
+      "rules": 10
+    }
+  },
+  "rows": [
+    {
+      "id": "CH-001",
+      "text": "Zum dritten Mal tritt das Garn an der gleichen Stelle hervor.",
+      "gold": [
+        "quality"
+      ],
+      "pred": [
+        "quality"
+      ],
+      "scores": {
+        "quality": 0.96,
+        "fit": 0.01,
+        "shipping": 0.01,
+        "return": 0.02,
+        "order_issue": 0.02
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "other"
+      ]
+    },
+    {
+      "id": "CH-002",
+      "text": "Die Socken halten kaum zwei Spaziergänge, obwohl ich sie kaum wasche.",
+      "gold": [
+        "quality"
+      ],
+      "pred": [
+        "quality"
+      ],
+      "scores": {
+        "quality": 0.96,
+        "fit": 0.02,
+        "shipping": 0.01,
+        "return": 0.02,
+        "order_issue": 0.01
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "other"
+      ]
+    },
+    {
+      "id": "CH-003",
+      "text": "Beim Yoga ist die Seitennaht aufgerissen.",
+      "gold": [
+        "quality"
+      ],
+      "pred": [
+        "quality"
+      ],
+      "scores": {
+        "quality": 0.98,
+        "fit": 0.02,
+        "shipping": 0.01,
+        "return": 0.02,
+        "order_issue": 0.02
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "quality"
+      ]
+    },
+    {
+      "id": "CH-004",
+      "text": "Der Hoodie bleicht bereits nach der ersten Reinigung aus.",
+      "gold": [
+        "quality"
+      ],
+      "pred": [
+        "quality"
+      ],
+      "scores": {
+        "quality": 0.98,
+        "fit": 0.01,
+        "shipping": 0.01,
+        "return": 0.02,
+        "order_issue": 0.02
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "other"
+      ]
+    },
+    {
+      "id": "CH-005",
+      "text": "Die Hose kneift im Bund, aber sonst ist sie prima.",
+      "gold": [
+        "fit"
+      ],
+      "pred": [
+        "fit"
+      ],
+      "scores": {
+        "quality": 0.43,
+        "fit": 0.88,
+        "shipping": 0.02,
+        "return": 0.02,
+        "order_issue": 0.07
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "other"
+      ]
+    },
+    {
+      "id": "CH-006",
+      "text": "Kann ich Größe L statt S erhalten und dafür die kleinere zurückschicken?",
+      "gold": [
+        "fit",
+        "return"
+      ],
+      "pred": [
+        "return"
+      ],
+      "scores": {
+        "quality": 0.03,
+        "fit": 0.3,
+        "shipping": 0.07,
+        "return": 0.99,
+        "order_issue": 0.45
+      },
+      "excess": [],
+      "omitted": [
+        "fit"
+      ],
+      "baseline": [
+        "fit"
+      ]
+    },
+    {
+      "id": "CH-007",
+      "text": "Im Kundenkonto steht geliefert, ich habe aber nichts erhalten.",
+      "gold": [
+        "shipping"
+      ],
+      "pred": [
+        "shipping"
+      ],
+      "scores": {
+        "quality": 0.01,
+        "fit": 0.01,
+        "shipping": 0.99,
+        "return": 0.03,
+        "order_issue": 0.02
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "other"
+      ]
+    },
+    {
+      "id": "CH-008",
+      "text": "Seit Tagen bewegt sich die Sendungsverfolgung nicht.",
+      "gold": [
+        "shipping"
+      ],
+      "pred": [
+        "shipping"
+      ],
+      "scores": {
+        "quality": 0.01,
+        "fit": 0.01,
+        "shipping": 0.98,
+        "return": 0.02,
+        "order_issue": 0.02
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "other"
+      ]
+    },
+    {
+      "id": "CH-009",
+      "text": "Das Paket kam beschädigt an, die Ware aber unversehrt.",
+      "gold": [
+        "shipping"
+      ],
+      "pred": [
+        "shipping"
+      ],
+      "scores": {
+        "quality": 0.02,
+        "fit": 0.01,
+        "shipping": 0.94,
+        "return": 0.02,
+        "order_issue": 0.03
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "shipping"
+      ]
+    },
+    {
+      "id": "CH-010",
+      "text": "Bitte das Formular zur Rückerstattung senden.",
+      "gold": [
+        "return"
+      ],
+      "pred": [
+        "return"
+      ],
+      "scores": {
+        "quality": 0.01,
+        "fit": 0.01,
+        "shipping": 0.03,
+        "return": 0.97,
+        "order_issue": 0.02
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "return"
+      ]
+    },
+    {
+      "id": "CH-011",
+      "text": "Bei meiner Bestellung fehlte das zweite Paar Socken.",
+      "gold": [
+        "order_issue"
+      ],
+      "pred": [
+        "order_issue"
+      ],
+      "scores": {
+        "quality": 0.01,
+        "fit": 0.01,
+        "shipping": 0.16,
+        "return": 0.02,
+        "order_issue": 0.99
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "other"
+      ]
+    },
+    {
+      "id": "CH-012",
+      "text": "Geliefert wurde schwarz statt weiß, könnt ihr die Lieferung tauschen?",
+      "gold": [
+        "order_issue",
+        "return"
+      ],
+      "pred": [
+        "return",
+        "order_issue"
+      ],
+      "scores": {
+        "quality": 0.02,
+        "fit": 0.02,
+        "shipping": 0.13,
+        "return": 0.99,
+        "order_issue": 0.99
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "other"
+      ]
+    },
+    {
+      "id": "CH-013",
+      "text": "Könnt ihr meine Anschrift auf der Rechnung anpassen?",
+      "gold": [
+        "other"
+      ],
+      "pred": [
+        "other"
+      ],
+      "scores": {
+        "quality": 0.01,
+        "fit": 0.01,
+        "shipping": 0.02,
+        "return": 0.01,
+        "order_issue": 0.01
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "other"
+      ]
+    },
+    {
+      "id": "CH-014",
+      "text": "Danke, alles passt super!",
+      "gold": [
+        "other"
+      ],
+      "pred": [
+        "other"
+      ],
+      "scores": {
+        "quality": 0.01,
+        "fit": 0.01,
+        "shipping": 0.01,
+        "return": 0.01,
+        "order_issue": 0.01
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "other"
+      ]
+    },
+    {
+      "id": "CH-015",
+      "text": "Die Jacke ist zu klein, die Naht ist auch schon offen.",
+      "gold": [
+        "fit",
+        "quality"
+      ],
+      "pred": [
+        "quality",
+        "fit"
+      ],
+      "scores": {
+        "quality": 0.98,
+        "fit": 0.91,
+        "shipping": 0.03,
+        "return": 0.04,
+        "order_issue": 0.36
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "quality",
+        "fit"
+      ]
+    },
+    {
+      "id": "CH-016",
+      "text": "Eine Socke ist gerissen und ich hätte dafür gern eine Erstattung.",
+      "gold": [
+        "quality",
+        "return"
+      ],
+      "pred": [
+        "quality",
+        "return"
+      ],
+      "scores": {
+        "quality": 0.98,
+        "fit": 0.02,
+        "shipping": 0.02,
+        "return": 0.99,
+        "order_issue": 0.03
+      },
+      "excess": [],
+      "omitted": [],
+      "baseline": [
+        "quality",
+        "return"
+      ]
+    }
+  ],
+  "mean_batch_latency_ms": 100,
+  "provider_cost_usd_reported": null,
+  "batches": [
+    {
+      "ok": true,
+      "experiment": "jev-v2-frozen-2026-10-22",
+      "model": "jev-1.14.0",
+      "threshold": 0.8,
+      "batch": 0,
+      "dataset_sha256": "d6bdd47fe81ea811e792ad9084a0cc90b2d2333b8ca843e893ff7282fe489291",
+      "request_sha256": "96c16ee2b88f6d745829b1d88e1b4f01a793dc29aec653adbde1e2719507ce62",
+      "n_cases": 4,
+      "provider_latency_ms": 153,
+      "cost_usd_reported": null,
+      "input_tokens": 4057,
+      "metrics": {
+        "exact": 4,
+        "missed_quality": 0,
+        "false_quality_alarms": 0,
+        "additional_false_categories": 0,
+        "missing_expected_categories": 0
+      },
+      "baseline_metrics": {
+        "exact": 1,
+        "missed_quality": 3,
+        "false_quality_alarms": 0,
+        "additional_false_categories": 3,
+        "missing_expected_categories": 3
+      },
+      "cases": [
+        {
+          "id": "CH-001",
+          "text": "Zum dritten Mal tritt das Garn an der gleichen Stelle hervor.",
+          "gold": [
+            "quality"
+          ],
+          "pred": [
+            "quality"
+          ],
+          "scores": {
+            "quality": 0.96,
+            "fit": 0.01,
+            "shipping": 0.01,
+            "return": 0.02,
+            "order_issue": 0.02
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "other"
+          ]
+        },
+        {
+          "id": "CH-002",
+          "text": "Die Socken halten kaum zwei Spaziergänge, obwohl ich sie kaum wasche.",
+          "gold": [
+            "quality"
+          ],
+          "pred": [
+            "quality"
+          ],
+          "scores": {
+            "quality": 0.96,
+            "fit": 0.02,
+            "shipping": 0.01,
+            "return": 0.02,
+            "order_issue": 0.01
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "other"
+          ]
+        },
+        {
+          "id": "CH-003",
+          "text": "Beim Yoga ist die Seitennaht aufgerissen.",
+          "gold": [
+            "quality"
+          ],
+          "pred": [
+            "quality"
+          ],
+          "scores": {
+            "quality": 0.98,
+            "fit": 0.02,
+            "shipping": 0.01,
+            "return": 0.02,
+            "order_issue": 0.02
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "quality"
+          ]
+        },
+        {
+          "id": "CH-004",
+          "text": "Der Hoodie bleicht bereits nach der ersten Reinigung aus.",
+          "gold": [
+            "quality"
+          ],
+          "pred": [
+            "quality"
+          ],
+          "scores": {
+            "quality": 0.98,
+            "fit": 0.01,
+            "shipping": 0.01,
+            "return": 0.02,
+            "order_issue": 0.02
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "other"
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic previously authored challenge; not independent human annotation",
+        "Threshold and question policy locked before this run",
+        "Every batch is a distinct paid API request",
+        "No real customers or business actions"
+      ]
+    },
+    {
+      "ok": true,
+      "experiment": "jev-v2-frozen-2026-10-22",
+      "model": "jev-1.14.0",
+      "threshold": 0.8,
+      "batch": 1,
+      "dataset_sha256": "d6bdd47fe81ea811e792ad9084a0cc90b2d2333b8ca843e893ff7282fe489291",
+      "request_sha256": "1720ced91e440981f75222b64551b0e24901b4a4759d5792b4913702a428fbab",
+      "n_cases": 4,
+      "provider_latency_ms": 96,
+      "cost_usd_reported": null,
+      "input_tokens": 4055,
+      "metrics": {
+        "exact": 3,
+        "missed_quality": 0,
+        "false_quality_alarms": 0,
+        "additional_false_categories": 0,
+        "missing_expected_categories": 1
+      },
+      "baseline_metrics": {
+        "exact": 0,
+        "missed_quality": 0,
+        "false_quality_alarms": 0,
+        "additional_false_categories": 3,
+        "missing_expected_categories": 4
+      },
+      "cases": [
+        {
+          "id": "CH-005",
+          "text": "Die Hose kneift im Bund, aber sonst ist sie prima.",
+          "gold": [
+            "fit"
+          ],
+          "pred": [
+            "fit"
+          ],
+          "scores": {
+            "quality": 0.43,
+            "fit": 0.88,
+            "shipping": 0.02,
+            "return": 0.02,
+            "order_issue": 0.07
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "other"
+          ]
+        },
+        {
+          "id": "CH-006",
+          "text": "Kann ich Größe L statt S erhalten und dafür die kleinere zurückschicken?",
+          "gold": [
+            "fit",
+            "return"
+          ],
+          "pred": [
+            "return"
+          ],
+          "scores": {
+            "quality": 0.03,
+            "fit": 0.3,
+            "shipping": 0.07,
+            "return": 0.99,
+            "order_issue": 0.45
+          },
+          "excess": [],
+          "omitted": [
+            "fit"
+          ],
+          "baseline": [
+            "fit"
+          ]
+        },
+        {
+          "id": "CH-007",
+          "text": "Im Kundenkonto steht geliefert, ich habe aber nichts erhalten.",
+          "gold": [
+            "shipping"
+          ],
+          "pred": [
+            "shipping"
+          ],
+          "scores": {
+            "quality": 0.01,
+            "fit": 0.01,
+            "shipping": 0.99,
+            "return": 0.03,
+            "order_issue": 0.02
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "other"
+          ]
+        },
+        {
+          "id": "CH-008",
+          "text": "Seit Tagen bewegt sich die Sendungsverfolgung nicht.",
+          "gold": [
+            "shipping"
+          ],
+          "pred": [
+            "shipping"
+          ],
+          "scores": {
+            "quality": 0.01,
+            "fit": 0.01,
+            "shipping": 0.98,
+            "return": 0.02,
+            "order_issue": 0.02
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "other"
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic previously authored challenge; not independent human annotation",
+        "Threshold and question policy locked before this run",
+        "Every batch is a distinct paid API request",
+        "No real customers or business actions"
+      ]
+    },
+    {
+      "ok": true,
+      "experiment": "jev-v2-frozen-2026-10-22",
+      "model": "jev-1.14.0",
+      "threshold": 0.8,
+      "batch": 2,
+      "dataset_sha256": "d6bdd47fe81ea811e792ad9084a0cc90b2d2333b8ca843e893ff7282fe489291",
+      "request_sha256": "f7f95a5a24ebb2bfeb7a8aba869daf688ecc634bf39010a5b5324e68d8a1b473",
+      "n_cases": 4,
+      "provider_latency_ms": 77,
+      "cost_usd_reported": null,
+      "input_tokens": 4053,
+      "metrics": {
+        "exact": 4,
+        "missed_quality": 0,
+        "false_quality_alarms": 0,
+        "additional_false_categories": 0,
+        "missing_expected_categories": 0
+      },
+      "baseline_metrics": {
+        "exact": 2,
+        "missed_quality": 0,
+        "false_quality_alarms": 0,
+        "additional_false_categories": 2,
+        "missing_expected_categories": 3
+      },
+      "cases": [
+        {
+          "id": "CH-009",
+          "text": "Das Paket kam beschädigt an, die Ware aber unversehrt.",
+          "gold": [
+            "shipping"
+          ],
+          "pred": [
+            "shipping"
+          ],
+          "scores": {
+            "quality": 0.02,
+            "fit": 0.01,
+            "shipping": 0.94,
+            "return": 0.02,
+            "order_issue": 0.03
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "shipping"
+          ]
+        },
+        {
+          "id": "CH-010",
+          "text": "Bitte das Formular zur Rückerstattung senden.",
+          "gold": [
+            "return"
+          ],
+          "pred": [
+            "return"
+          ],
+          "scores": {
+            "quality": 0.01,
+            "fit": 0.01,
+            "shipping": 0.03,
+            "return": 0.97,
+            "order_issue": 0.02
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "return"
+          ]
+        },
+        {
+          "id": "CH-011",
+          "text": "Bei meiner Bestellung fehlte das zweite Paar Socken.",
+          "gold": [
+            "order_issue"
+          ],
+          "pred": [
+            "order_issue"
+          ],
+          "scores": {
+            "quality": 0.01,
+            "fit": 0.01,
+            "shipping": 0.16,
+            "return": 0.02,
+            "order_issue": 0.99
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "other"
+          ]
+        },
+        {
+          "id": "CH-012",
+          "text": "Geliefert wurde schwarz statt weiß, könnt ihr die Lieferung tauschen?",
+          "gold": [
+            "order_issue",
+            "return"
+          ],
+          "pred": [
+            "return",
+            "order_issue"
+          ],
+          "scores": {
+            "quality": 0.02,
+            "fit": 0.02,
+            "shipping": 0.13,
+            "return": 0.99,
+            "order_issue": 0.99
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "other"
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic previously authored challenge; not independent human annotation",
+        "Threshold and question policy locked before this run",
+        "Every batch is a distinct paid API request",
+        "No real customers or business actions"
+      ]
+    },
+    {
+      "ok": true,
+      "experiment": "jev-v2-frozen-2026-10-22",
+      "model": "jev-1.14.0",
+      "threshold": 0.8,
+      "batch": 3,
+      "dataset_sha256": "d6bdd47fe81ea811e792ad9084a0cc90b2d2333b8ca843e893ff7282fe489291",
+      "request_sha256": "5fc2a286941661134f5ae39c81fb156fb1baf03311f2d85c7e52b15c35142d92",
+      "n_cases": 4,
+      "provider_latency_ms": 74,
+      "cost_usd_reported": null,
+      "input_tokens": 4053,
+      "metrics": {
+        "exact": 4,
+        "missed_quality": 0,
+        "false_quality_alarms": 0,
+        "additional_false_categories": 0,
+        "missing_expected_categories": 0
+      },
+      "baseline_metrics": {
+        "exact": 4,
+        "missed_quality": 0,
+        "false_quality_alarms": 0,
+        "additional_false_categories": 0,
+        "missing_expected_categories": 0
+      },
+      "cases": [
+        {
+          "id": "CH-013",
+          "text": "Könnt ihr meine Anschrift auf der Rechnung anpassen?",
+          "gold": [
+            "other"
+          ],
+          "pred": [
+            "other"
+          ],
+          "scores": {
+            "quality": 0.01,
+            "fit": 0.01,
+            "shipping": 0.02,
+            "return": 0.01,
+            "order_issue": 0.01
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "other"
+          ]
+        },
+        {
+          "id": "CH-014",
+          "text": "Danke, alles passt super!",
+          "gold": [
+            "other"
+          ],
+          "pred": [
+            "other"
+          ],
+          "scores": {
+            "quality": 0.01,
+            "fit": 0.01,
+            "shipping": 0.01,
+            "return": 0.01,
+            "order_issue": 0.01
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "other"
+          ]
+        },
+        {
+          "id": "CH-015",
+          "text": "Die Jacke ist zu klein, die Naht ist auch schon offen.",
+          "gold": [
+            "fit",
+            "quality"
+          ],
+          "pred": [
+            "quality",
+            "fit"
+          ],
+          "scores": {
+            "quality": 0.98,
+            "fit": 0.91,
+            "shipping": 0.03,
+            "return": 0.04,
+            "order_issue": 0.36
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "quality",
+            "fit"
+          ]
+        },
+        {
+          "id": "CH-016",
+          "text": "Eine Socke ist gerissen und ich hätte dafür gern eine Erstattung.",
+          "gold": [
+            "quality",
+            "return"
+          ],
+          "pred": [
+            "quality",
+            "return"
+          ],
+          "scores": {
+            "quality": 0.98,
+            "fit": 0.02,
+            "shipping": 0.02,
+            "return": 0.99,
+            "order_issue": 0.03
+          },
+          "excess": [],
+          "omitted": [],
+          "baseline": [
+            "quality",
+            "return"
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic previously authored challenge; not independent human annotation",
+        "Threshold and question policy locked before this run",
+        "Every batch is a distinct paid API request",
+        "No real customers or business actions"
+      ]
+    }
+  ],
+  "limitations": [
+    "16 synthetic examples drafted earlier, not independent human annotations",
+    "No production data",
+    "No blind independent holdout",
+    "Questions and 80% threshold frozen before this run",
+    "No automatic customer actions",
+    "Batch latency is not comparable to single-case latency"
+  ],
+  "exported_at": "2026-10-22T11:44:43.177Z"
+}
