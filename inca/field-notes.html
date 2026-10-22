@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>INCA · What I built. What worked. What surprised me. — Michael Ninh</title>
+<meta name="description" content="An independent, evidence-first INCA AI Operations application: a working insurance-claims workflow, real model experiments, honest costs, and a thoughtful plan for working with claims experts.">
+<style>
+:root{--cream:#f5f5ef;--paper:#fffefa;--ink:#192b20;--moss:#31513c;--soft:#e8f2e1;--acid:#c5ef88;--line:#dbe3d7;--muted:#647367;--rust:#996240}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{font:15px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--cream);margin:0}button{font:inherit;cursor:pointer}a{color:inherit}a:hover{text-decoration-color:var(--moss)}a:focus-visible,button:focus-visible{outline:3px solid #6caa74;outline-offset:3px}
+.shell{max-width:1120px;margin:auto;padding:0 30px}.top{border-bottom:1px solid var(--line);background:rgba(245,245,239,.9)}
+.topinner{display:flex;align-items:center;justify-content:space-between;min-height:86px;gap:22px}.wordmark{font-weight:900;letter-spacing:-.045em;font-size:18px;text-decoration:none}.wordmark span{color:#4b7758;font-weight:600}.nav{display:flex;gap:22px;align-items:center;color:#53665a;font-size:12px;font-weight:600}.nav a{text-decoration:none}
+.pill{display:inline-flex;background:var(--acid);padding:7px 12px;border-radius:6px;color:#284631;font-size:11px;font-weight:850;letter-spacing:.02em;text-transform:uppercase}
+.hero{padding:84px 0 66px;display:grid;grid-template-columns:1.3fr .7fr;align-items:end;gap:42px}.eyebrow{font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:820;color:#6a7d70}
+h1{font-size:clamp(49px,6.2vw,83px);letter-spacing:-.075em;line-height:1.03;margin:19px 0 24px;font-weight:820}h2{font-size:clamp(28px,3vw,39px);letter-spacing:-.06em;line-height:1.13;margin:8px 0 16px}h3{font-size:20px;letter-spacing:-.042em;margin:4px 0 11px}
+.intro{font-size:18px;line-height:1.55;color:#4e6254;max-width:670px;margin:0}.hero-side{padding:23px;border-left:1px solid var(--line)}.hero-side strong{display:block;font-size:15px;letter-spacing:-.02em}.hero-side p{color:var(--muted);font-size:13px;margin:10px 0 19px}
+.ctas{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:30px 0 0}.cta{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:8px;padding:13px 20px;font-size:13px;font-weight:780;background:var(--ink);color:white}.cta.alt{background:var(--soft);color:var(--moss)}
+.persona{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 0}.persona button{border:1px solid var(--line);background:var(--paper);border-radius:7px;padding:9px 14px;color:#415948;font-size:12px;font-weight:760}.persona button[aria-selected=true]{background:var(--moss);color:#fff;border-color:var(--moss)}
+.small{font-size:12px;color:var(--muted)}.section{padding:36px 0 70px}.separate{border-top:1px solid var(--line)}.story{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:22px}.storycard{background:var(--paper);border:1px solid var(--line);border-radius:15px;min-height:296px;padding:25px 25px 20px;display:flex;flex-direction:column}.storycard .num{font-size:11px;letter-spacing:.13em;color:#748978;font-weight:860}.storycard h3{font-size:26px;margin-top:23px}.storycard p{color:#506356;font-size:14px;margin:0;line-height:1.55}.storycard .more{margin-top:auto;padding-top:27px;font-size:12px;font-weight:800;color:#436e4e;text-decoration:none}.storycard.surprise{background:#e8f0df;border-color:#bfd2b6}
+.proofstrip{margin:36px 0 0;display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:2px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}.proofunit{padding:21px 23px;background:var(--paper)}.proofunit strong{display:block;font-size:32px;letter-spacing:-.07em;line-height:1.1}.proofunit small{display:block;line-height:1.4;color:#617368;font-size:12px;margin-top:9px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px}.panel.featured{background:var(--moss);color:#fff;border-color:var(--moss);position:relative;overflow:hidden}.panel.featured:after{content:"↗";position:absolute;font-size:158px;right:-15px;bottom:-105px;opacity:.12;line-height:1}.panel.featured p{color:#dcece0}.panel.featured a{color:#fff}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.split-note{display:grid;grid-template-columns:1fr 1fr;gap:38px;align-items:start}.split-note p{color:#53665a}
+.results-table{width:100%;border-collapse:collapse;text-align:left;font-size:13px}.results-table th{font-size:11px;letter-spacing:.045em;text-transform:uppercase;color:#64766a;font-weight:800}.results-table th,.results-table td{padding:13px 9px;border-bottom:1px solid var(--line)}.results-table tr:last-child td{border-bottom:0}.results-table td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:730}
+.result-box{background:var(--soft);border-radius:11px;padding:21px 22px;margin-top:16px}.result-box strong{display:block;font-size:17px}.result-box p{margin:4px 0 0;color:#516855;font-size:13px}
+.lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:22px}.lab-card{padding:21px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}.lab-card .k{font-size:10px;color:#547b5d;font-weight:880;letter-spacing:.12em}.lab-card p{color:var(--muted);font-size:13px;margin:7px 0 0}.lab-card b{font-size:19px;letter-spacing:-.04em}
+.path{display:flex;gap:9px;align-items:center;flex-wrap:wrap;font-size:12px;margin-top:17px}.path span{padding:10px;background:#edf3e9;border-radius:7px;font-weight:760}.path em{font-size:17px;color:#81a38b;font-style:normal}
+.questions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.question{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px;font-size:14px;font-weight:640;line-height:1.55}
+.links{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;margin-top:18px}.links a{font-weight:780;color:#395d44}.ethics{font-size:12px;line-height:1.6;color:#66756b;max-width:840px;margin-top:24px}
+footer{border-top:1px solid var(--line);padding:28px 0 50px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.tabpane[hidden]{display:none!important}
+@media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:54px;gap:24px}.hero-side{padding:13px 20px}.story{grid-template-columns:1fr}.storycard{min-height:235px}.proofstrip{grid-template-columns:1fr}.two,.split-note,.questions,.lab-grid{grid-template-columns:1fr}.nav{gap:9px;flex-wrap:wrap}}
+@media(max-width:500px){.shell{padding:0 19px}.nav{font-size:11px}.topinner{align-items:flex-start;flex-direction:column;padding:15px 0;gap:7px}.hero{padding:33px 0 32px}h1{font-size:49px}.storycard{padding:20px}.panel{padding:19px}}
+</style></head><body>
+<header class="top"><div class="shell topinner">
+<a href="/inca/agent-ops.html" class="wordmark">MICHAEL NINH <span>/ INCA</span></a>
+<nav class="nav" aria-label="Primary navigation"><a href="/inca/agent-ops.html">Try the demo ↗</a><a href="/inca/jev-research.html">Research</a><a href="/inca/first-30-days.html">First month</a></nav>
+</div></header>
+<main class="shell">
+<section class="hero">
+ <div><div class="eyebrow">Independent application · AI Operations Associate · Berlin, October 2026</div>
+ <h1>What I built.<br>What worked.<br><span style="color:#668d64">What surprised me.</span></h1>
+ <p class="intro">I built a fictional claims workflow to explore a simple question: how can AI help people make a better next decision, without hiding uncertainty or taking control away?</p>
+ <div class="ctas"><a class="cta" href="/inca/agent-ops.html">Try one claim · 60 seconds ↗</a><a class="cta alt" href="#evidence">See what I learned ↓</a></div>
+ </div>
+ <aside class="hero-side"><span class="pill">Evidence, not promises</span><p><strong style="margin-top:14px">My approach</strong>Start with the people and the problem. Build a bounded prototype. Test real model outputs. Make mistakes visible. Improve only when the evidence supports it.</p>
+ <div class="small">The case records are invented. The API calls, code and test outputs are real. No insurer data or payment actions.</div></aside>
+</section>
+<section id="evidence" class="section separate">
+ <div class="eyebrow">01 · The short version</div><h2>Three things I'd want INCA to know.</h2>
+ <div class="story">
+  <article class="storycard"><div class="num">01 · WHAT I BUILT</div><h3>A small claims loop, end to end.</h3><p>Two documents. One relevant check. Evidence with source quotations. A safe next action for a human operator — never an automatic coverage decision.</p><a class="more" href="/inca/agent-ops.html">Explore the live work sample ↗</a></article>
+  <article class="storycard"><div class="num">02 · WHAT WORKED</div><h3>A verifier caught what the model couldn't support.</h3><p>Six real GPT responses on authored fictional claims: five passed independent quote validation; one failed safely. I kept the failed case visible.</p><a class="more" href="https://github.com/mikelninh/mikelninh.github.io/actions/runs/39648745136">See the recorded run ↗</a></article>
+  <article class="storycard surprise"><div class="num">03 · WHAT SURPRISED ME</div><h3>Sometimes the best AI decision is not to add AI.</h3><p>In my 300-case synthetic trace study, fixed rules found 44 of 49 planted critical faults at the same review budget; Jev found 38, GPT 15. The simpler system won.</p><a class="more" href="/inca/jev-research.html">See the full comparison ↗</a></article>
+ </div>
+ <div class="proofstrip">
+  <div class="proofunit"><strong>5/6</strong><small>GPT document extractions verified<br>1 blocked, not silently accepted</small></div>
+  <div class="proofunit"><strong>300</strong><small>New fictional agent-trace cases<br>paired Jev/GPT requests</small></div>
+  <div class="proofunit"><strong>968</strong><small>Real provider requests in H3/H4, H7 and H1/H5<br>earlier pilots excluded</small></div>
+ </div>
+</section>
+<section class="section separate">
+<div class="eyebrow">02 · One project, three different readers</div><h2>Choose the detail you care about.</h2>
+<div class="persona" role="tablist" aria-label="Choose your perspective">
+ <button id="tab-hiring" type="button" role="tab" aria-selected="true" aria-controls="pane-hiring" data-show="hiring">Hiring manager · 60 sec</button>
+ <button id="tab-engineer" type="button" role="tab" aria-selected="false" aria-controls="pane-engineer" data-show="engineer" tabindex="-1">Engineer · evidence & costs</button>
+ <button id="tab-team" type="button" role="tab" aria-selected="false" aria-controls="pane-team" data-show="team" tabindex="-1">Claims team · what's next?</button>
+</div>
+<div id="pane-hiring" role="tabpanel" aria-labelledby="tab-hiring" class="tabpane" style="margin-top:20px">
+ <div class="two"><div class="panel featured"><div class="eyebrow" style="color:#c7e4ca">Try the work</div><h2>Can a model find the important detail?</h2><p>Select a real fictional sample claim. Watch how the bounded check compares facts, reveals a contradiction, and stops short of a coverage decision.</p><div class="links"><a href="/inca/agent-ops.html">Open the interactive demo ↗</a></div></div>
+ <div class="panel"><div class="eyebrow">What I can contribute</div><h3>Builder's curiosity + operational ownership.</h3><p>I have worked with customers, teams and complex operations. I bring Python, applied LLM engineering, evaluation and an appetite for debugging real workflows with the people who use them.</p><p class="small">What I don't claim: prior professional claims-adjusting experience or a production-grade insurer platform.</p></div></div>
+ </div>
+<div id="pane-engineer" role="tabpanel" aria-labelledby="tab-engineer" class="tabpane" hidden style="margin-top:20px">
+ <div class="two"><div class="panel"><div class="eyebrow">What was actually measured</div><h3>Errors, not just happy paths.</h3>
+ <table class="results-table"><thead><tr><th>Recorded experiment</th><th>Outcome</th></tr></thead><tbody>
+ <tr><td>6 authored claims · evidence verification</td><td>5/6 passed</td></tr>
+ <tr><td>300-case trace audit · rules</td><td>44/49 caught</td></tr>
+ <tr><td>300-case trace audit · Jev</td><td>38/49 caught</td></tr>
+ <tr><td>300-case trace audit · GPT</td><td>15/49 caught</td></tr>
+ <tr><td>Jev-first optional GPT audit</td><td>+35% API cost*</td></tr>
+ </tbody></table><p class="small">*Retrospective replay with the same 240 already-inspected synthetic cases, not an adaptive production run.</p></div>
+ <div class="panel"><div class="eyebrow">Question I still wanted to answer</div><h3>Can Jev do narrow decisions better?</h3>
+ <p>I designed two additional measured comparisons using verified canonical states: H1 replaces one decision-only GPT call; H5 batches four choices in Jev versus four serial Jev calls and a GPT structured-output call.</p>
+ <div class="result-box"><strong id="h1-h5-headline">H1/H5 · Recorded model comparisons</strong><p id="h1-h5-detail">A final experiment compares one decision (H1) and four typed decisions (H5) using fresh fictional verified facts, a GPT JSON baseline and plain Python rules.</p><div class="links"><a href="/inca/jev-research.html#h1h5">Inspect H1/H5 results and limitations ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/actions/runs/39761548020">Original 208-call run ↗</a></div></div></div></div>
+ <div class="links"><a href="/inca/jev-research.html">Full Jev study ↗</a><a href="/inca/decision-lab.html">Three architectures ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca-proof/agent-ops">Python source and tests ↗</a></div>
+ </div>
+<div id="pane-team" role="tabpanel" aria-labelledby="tab-team" class="tabpane" hidden style="margin-top:20px">
+ <div class="panel"><div class="eyebrow">If I joined INCA</div><h2>I'd listen before shipping.</h2>
+ <div class="path"><span>Shadow Claims Experts</span><em>→</em><span>Measure one bottleneck</span><em>→</em><span>Test in shadow mode</span><em>→</em><span>Review together</span></div>
+ <p style="max-width:740px;color:#526656">I wouldn't start by pitching a new agent framework. I'd want to understand the real handoffs, the mistakes that matter to customers, and which additional work actually creates value.</p></div>
+ <div class="questions" style="margin-top:12px">
+  <div class="question">Where do missing documents or unclear handoffs repeatedly slow the team down?</div>
+  <div class="question">Which errors are harmless inconveniences, and which could hurt a customer?</div>
+  <div class="question">What does a useful, evidence-backed AI suggestion look like to a Claims Expert?</div>
+  <div class="question">Which existing Claude workflows require the most corrections, monitoring or model-context tuning?</div>
+ </div><div class="links"><a href="/inca/first-30-days.html">Read my first-month plan ↗</a></div>
+ </div>
+</section>
+<section id="costs" class="section separate">
+ <div class="eyebrow">03 · What about the money?</div>
+ <div class="split-note"><div><h2>Fast decisions can be cheap. Bad decisions are not.</h2><p>Jev's inference was inexpensive in these API tests. But putting Jev before an optional GPT review cost <strong>more</strong> on my six and 240-case experiments — because it didn't save enough downstream work. That's the business question I care about.</p></div>
+ <div class="panel"><div class="eyebrow">Measured tokens · estimated provider rates</div><h3 style="font-size:37px;margin:11px 0 4px">$0.04819</h3>
+ <p class="small" style="margin-top:4px">Estimated inference cost for 968 recorded requests across the 300-case H3/H4 study, 160-call H7 version trial and 208-call H1/H5 decision study. Earlier pilots, infrastructure, reviewing and insurer case handling excluded.</p>
+ <div class="links"><a href="/inca/jev-research.html#last-tests">Cost sensitivity & failed H2 result ↗</a></div></div></div>
+ <p class="ethics">These are rate-card calculations from recorded token counts, not paid invoices. They do not demonstrate euros saved at an insurance company. The three included research studies are identified explicitly; earlier pilot call costs are excluded.</p>
+</section>
+<section class="section separate">
+ <div class="eyebrow">04 · An engineering boundary</div><h2>AI suggests. Evidence and people decide.</h2>
+ <div class="two">
+  <div class="panel"><h3>I would automate</h3><p>Structured evidence gathering, source checks, missing-information drafts, failure replay, safe specialist routing, operational dashboards and regression tests.</p></div>
+  <div class="panel"><h3>I would not automate without explicit authority</h3><p>Coverage determinations, liability acceptance, payments, consequential customer communications, or silent decisions based on unverified model confidence.</p></div>
+ </div>
+ <p class="ethics">This is a portfolio experiment using wholly fictional documents and code executed in a controlled environment. The model comparisons are exploratory, developer-authored experiments; they are not expert-reviewed real-claims benchmarks or evidence of production reliability. AI tools helped me build and test this work; I remain accountable for the approach, checks, interpretations and what is presented here.</p>
+</section>
+<section class="section separate" style="padding-bottom:45px">
+ <div class="eyebrow">05 · The invitation</div><h2>I'd love to work on a real problem together.</h2>
+ <p class="intro">Show me a workflow that frustrates the Claims Experts. I'll ask questions, try to understand it, and help turn what we learn into a small, testable improvement.</p>
+ <div class="ctas"><a class="cta" href="/inca/agent-ops.html">Try the main work sample ↗</a><a class="cta alt" href="/inca/first-30-days.html">What I'd test first ↗</a></div>
+</section>
+</main>
+<footer class="shell"><span>Michael Ninh · Independent AI Operations application · 2026</span><span>Built with curiosity. Tested with evidence. Improved with people.</span></footer>
+<script>
+(function(){
+ const tabs=[...document.querySelectorAll('[role=tab][data-show]')];
+ function choose(id){for(const t of tabs){const active=t.dataset.show===id;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1;document.getElementById('pane-'+t.dataset.show).hidden=!active;}}
+ for(const [i,t] of tabs.entries()){t.addEventListener('click',()=>choose(t.dataset.show));t.addEventListener('keydown',e=>{let next=null;if(e.key==='ArrowRight')next=(i+1)%tabs.length;if(e.key==='ArrowLeft')next=(i-1+tabs.length)%tabs.length;if(next!==null){e.preventDefault();tabs[next].focus();choose(tabs[next].dataset.show);}})}
+ const sp=new URLSearchParams(location.search).get('view');if(['hiring','engineer','team'].includes(sp))choose(sp);
+ fetch('/inca/jev-h1-h5.json',{cache:'no-store'}).then(async r=>{if(!r.ok)throw Error('pending');const x=await r.json();
+  if(x.schema!=='INCA-JEV-H1-H5-PUBLIC' || x.holdout_n!==30)throw Error('unverified');
+  document.getElementById('h1-h5-headline').textContent='H1 '+x.h1.jev.correct+'/30 Jev, '+x.h1.gpt.correct+'/30 GPT, '+x.h1.deterministic_rules.correct+'/30 rules';
+  document.getElementById('h1-h5-detail').textContent=x.hiring_summary;
+ }).catch(()=>{});
+})();
+</script>
+</body></html>

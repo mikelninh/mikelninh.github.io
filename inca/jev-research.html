@@ -69,12 +69,38 @@ footer{border-top:1px solid var(--line);padding:23px 0 40px;margin-top:15px;colo
 <table class="faults"><thead><tr><th>40 new fictional cases per language</th><th>Jev 1.13</th><th>Jev 1.14</th></tr></thead>
 <tbody><tr><td>German specialist selection</td><td id="h7-routing-de-old">—</td><td id="h7-routing-de-new">—</td></tr>
 <tr><td>German critical trace recall (score ≥0.5)</td><td id="h7-fault-de-old">—</td><td id="h7-fault-de-new">—</td></tr>
-<tr><td>Median German API time</td><td id="h7-time-de-old">—</td><td id="h7-time-de-new">—</td></tr></tbody></table>
+<tr><td>Median German API time</td><td id="h7-time-de-old">—</td><td id="h7-time-de-new">—</td></tr>
+<tr><td>English specialist selection</td><td id="h7-routing-en-old">—</td><td id="h7-routing-en-new">—</td></tr>
+<tr><td>English critical trace recall (score ≥0.5)</td><td id="h7-fault-en-old">—</td><td id="h7-fault-en-new">—</td></tr>
+<tr><td>Median English API time</td><td id="h7-time-en-old">—</td><td id="h7-time-en-new">—</td></tr></tbody></table>
 <p class="caution">Both English and German language pairs were tested. Version order and server load affect speed; synthetic templates are not insurer validation.</p>
 <div class="links"><a href="https://github.com/mikelninh/mikelninh.github.io/actions/runs/39751482592">Real 160-call H7 test ↗</a>
 <a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/agent-ops/JEV_FINAL_H2_H6_H7.md">Full cost/quality method ↗</a></div>
 </div></section>
-<section id="limits" class="section"><div class="eye">05 / Research integrity</div><h2>What we did not prove.</h2>
+<section id="h1h5" class="section"><div class="eye">05 / Final questions · H1 and H5</div>
+<h2>Can Jev replace one decision — or bundle four?</h2>
+<p class="caution">40 new invented verified-fact states; 10 development and 30 held-out synthetic cases. Jev 1.14 vs GPT-4o mini vs free deterministic rules. All 208 model requests were actually executed, with zero provider errors.</p>
+<div class="panel" style="overflow-x:auto">
+<div class="eye">H1 · One bounded next action</div>
+<table class="faults"><thead><tr><th>30 held-out cases</th><th>Jev</th><th>GPT</th><th>Rules</th></tr></thead><tbody>
+<tr><td>Correct next workflow gate</td><td>30 / 30</td><td>10 / 30</td><td>30 / 30</td></tr>
+<tr><td>Model p95 API time</td><td>149 ms</td><td>879 ms</td><td>No model</td></tr>
+<tr><td>Estimated API cost for 30</td><td>$0.000644</td><td>$0.001312</td><td>$0</td></tr>
+</tbody></table>
+<div class="box-note"><strong>H1 learning:</strong> Jev beat this GPT prompt on a narrow decision task. But Python rules were equally correct and cost no inference tokens. This is not proof that Jev should replace a model that already extracts documents and decides in one call.</div>
+</div>
+<div class="panel" style="margin-top:13px;overflow-x:auto">
+<div class="eye">H5 · Four decisions in a single request</div>
+<table class="faults"><thead><tr><th>30 held-out cases</th><th>Jev multi</th><th>GPT multi</th><th>Rules</th></tr></thead><tbody>
+<tr><td>All four choices correct</td><td>28 / 30</td><td>13 / 30</td><td>30 / 30</td></tr>
+<tr><td>Correct individual questions</td><td>118 / 120</td><td>103 / 120</td><td>120 / 120</td></tr>
+<tr><td>Model p95 API time</td><td>132 ms</td><td>2,087 ms</td><td>No model</td></tr></tbody></table>
+<p style="font-size:13px;margin:16px 0 5px"><strong>A fair twelve-case comparison:</strong> One Jev request with four answers had a 94 ms median and estimated cost of $0.000422; four sequential Jev requests took 306.5 ms and cost $0.001004. But bundled responses were completely correct on only 10/12, compared with 12/12 sequential responses.</p>
+<div class="box-note"><strong>H5 learning:</strong> Batching cuts model latency and cost but doesn't automatically preserve quality. The two Jev errors were unnecessary evidence requests, not missed mandatory escalations. For safety-critical gates, I would retain deterministic verification.</div>
+<div class="links"><a href="https://github.com/mikelninh/mikelninh.github.io/actions/runs/39761548020">Original 208 API requests ↗</a><a href="/inca/field-notes.html?view=engineer">All results in one place ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/agent-ops/JEV_H1_H5_METHOD.md">Read the test design ↗</a></div>
+</div><p class="caution">The verified inputs deliberately contain explicit canonical facts. This artificial test is easy for simple rules and does not predict performance on varied real insurance documents. GPT's results reflect this specific prompt/model, not its general capabilities.</p>
+</section>
+<section id="limits" class="section"><div class="eye">06 / Research integrity</div><h2>What we did not prove.</h2>
 <div class="limits"><strong>This is developer-authored fiction, not an insurer pilot.</strong>
 <p>Many planted trace defects are structural, so fixed rules can legitimately outperform AI. All 300 cases came from the same generator even though the development and holdout document templates were different. A decision score is not evidence or claim approval. Human review costs and end-to-end claim times have not been measured, and neither provider is validated on real customer files.</p>
 <p>The original 300-case experiment used Jev <strong>1.13.0</strong>. A separate real, 160-call bilingual version test compared pinned Jev 1.13.0 and 1.14.0. Neither version demonstrated a quality advantage on its authored cases; this does not establish general model superiority.</p></div>
@@ -146,6 +172,12 @@ footer{border-top:1px solid var(--line);padding:23px 0 40px;margin-top:15px;colo
   text('h7-fault-de-new',p['jev-1.14.0'].de.critical_found_at_0_5+'/20');
   text('h7-time-de-old',p['jev-1.13.0'].de.median_api_ms+' ms');
   text('h7-time-de-new',p['jev-1.14.0'].de.median_api_ms+' ms');
+  text('h7-routing-en-old',p['jev-1.13.0'].en.tool_correct+'/40');
+  text('h7-routing-en-new',p['jev-1.14.0'].en.tool_correct+'/40');
+  text('h7-fault-en-old',p['jev-1.13.0'].en.critical_found_at_0_5+'/20');
+  text('h7-fault-en-new',p['jev-1.14.0'].en.critical_found_at_0_5+'/20');
+  text('h7-time-en-old',p['jev-1.13.0'].en.median_api_ms+' ms');
+  text('h7-time-en-new',p['jev-1.14.0'].en.median_api_ms+' ms');
  }catch(e){text('h2-heading','Source report not available; see the archived run.');text('h7-heading','Model version report temporarily unavailable.');}
 })();
 </script>
