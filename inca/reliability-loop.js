@@ -105,7 +105,7 @@
       return '<button type="button" class="case-choice'+(sel?' active':'')+'" data-case="'+escapeHTML(x.id)+'" aria-pressed="'+sel+'"><span class="case-choice-id">'+escapeHTML(x.id)+' <span aria-hidden="true">'+(ok?'✓':'!')+'</span></span><small>'+escapeHTML(x.kind)+'</small></button>';
     }).join('');
     $('case-id').textContent=c.id;$('case-kind').textContent=c.kind;$('case-description').textContent=c.fault_description;
-    $('case-phase').textContent=inj?'Fault reintroduced':fi?'Reviewed correction applied':'Initial agent trace';
+    $('case-phase').textContent=inj?'Fault reintroduced':fi?'Saved sample correction staged':'Initial agent trace';
     $('case-status').textContent=out.pass?'All six guardrails passed':'Human review required';
     $('case-status').className='status '+(out.pass?'ok':'warn');
     $('source-docs').innerHTML=v.documents.map(d=>'<div class="doc"><div class="doc-top"><strong>'+escapeHTML(d.title)+'</strong><span>'+escapeHTML(d.revision?'v'+d.revision:'Intake')+'</span></div><div class="doc-id">'+escapeHTML(d.id)+'</div><p>'+escapeHTML(d.text)+'</p></div>').join('');
@@ -201,9 +201,19 @@
     $('progress-bar').style.width=(passed/data.cases.length*100)+'%';
     if(m.state.lastSuite){const r=m.state.lastSuite;$('release-result').hidden=false;
       $('release-result').className='release-result '+(r.passed?'success':'failure');
-      $('release-headline').textContent=r.passed?'PASS · 12/12 gates clear':'BLOCKED · '+r.blocked_cases+' cases need review';
-      $('release-detail').textContent=r.passed_cases+'/12 fictional traces passed. '+fixedPlanted+'/'+planted.length+
-        ' planted errors have sample corrections; '+r.blocked_cases+' cases still fail the checks. No claim/payment action.';
+      const firstRepairPassed=m.state.corrected.has('CASE-027')&&m.result('CASE-027').pass;
+      const firstGateBlocked=firstRepairPassed&&!r.passed&&r.blocked_cases===4&&fixedPlanted===1;
+      $('release-headline').textContent=r.passed
+        ?'PASS · All 12 fictional cases passed these checks'
+        :firstGateBlocked
+          ?'BLOCKED · Your first correction worked. Four more cases need fixes.'
+          :'BLOCKED · '+r.blocked_cases+' fictional cases need fixes';
+      $('release-detail').textContent=r.passed
+        ?'12/12 fictional cases pass the six structural checks. Five saved example corrections passed this test. No claim or payment approved.'
+        :firstGateBlocked
+          ?'8/12 fictional cases pass. CASE-027 now passes these checks, but four other invented cases still fail. Review each example below, stage its saved correction and test again. No claim or payment approved.'
+          :r.passed_cases+'/12 fictional cases pass. '+fixedPlanted+'/'+planted.length+
+           ' planted faults have passing example corrections; '+r.blocked_cases+' cases still fail. No claim or payment approved.';
       $('release-failures').textContent=r.passed
         ?'All 12 traces passed the six structural checks. Further claim checks would still be required.'
         :'Failed cases: '+r.rows.filter(x=>!x.pass).map(x=>x.id).join(', ')+'. Each must be fixed and retested.';
@@ -233,7 +243,7 @@
     const command=event.target.closest('[data-command]');if(!command)return;
     try{
      const key=command.getAttribute('data-command');
-     if(key==='fix'){m.applyCorrection();notice='Pre-authored expert correction replayed locally. Run the gate to verify.';}
+     if(key==='fix'){m.applyCorrection();notice='Saved sample correction staged for '+m.state.selected+'. No new AI call or human review. Run the 12-case check to verify.';}
      else if(key==='release-a'){m.loadReleaseA();reviewQueueOpen=false;notice='Original fictional release A restored. All sample corrections undone.';}
      else if(key==='gate'){
        const x=m.suite();

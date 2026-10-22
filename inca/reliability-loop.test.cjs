@@ -49,6 +49,7 @@ test('invalid cases and HTML injection are rejected or escaped',()=>{
 test('first-time experience reveals one problem and one action, not the full dashboard',()=>{
  for(const t of [
   'The quote is real.','The policy is wrong.','Try the 3-step demo',
+  'One fictional case · One saved example correction · One automated release test.',
   'Spot the mistake','Apply the fix','Test the release','id="loop-app"',
   'id="focus-title"','id="focus-used"','id="focus-required"',
   'id="guided-gate"','Apply saved example correction','Check all 12 fictional cases',
@@ -93,11 +94,14 @@ test('guided 90-second path actually updates the page on each button click',asyn
  assert.equal(el('metric-block').textContent,5);
  command('fix');
  assert.equal(el('focus-compare-symbol').textContent,'=');
+ assert.equal(el('case-phase').textContent,'Saved sample correction staged');
  assert.equal(el('metric-block').textContent,4);
  assert.equal(el('guided-gate').disabled,false);
  assert.match(el('guided-hint').textContent,/Fixing this case does not fix the others/);
  command('gate');
- assert.match(el('release-headline').textContent,/BLOCKED/);
+ assert.match(el('release-headline').textContent,/BLOCKED · Your first correction worked/);
+ assert.match(el('release-detail').textContent,/8\/12 fictional cases pass/);
+ assert.match(el('release-detail').textContent,/four other invented cases still fail/);
  assert.equal(el('remaining-review').hidden,false);
  assert.equal(el('remaining-progress').textContent,'1 / 5 planted faults corrected');
  assert.match(el('remaining-review-title').textContent,/4 other fictional cases still need fixes/);
@@ -107,7 +111,7 @@ test('guided 90-second path actually updates the page on each button click',asyn
   assert.ok(el('remaining-list').innerHTML.includes(word),word);
  }
  assert.doesNotMatch(el('release-detail').textContent,/corrected or blocked/);
- assert.match(el('release-detail').textContent,/1\/5 planted errors have sample corrections; 4 cases still fail/);
+ assert.match(el('release-detail').textContent,/Review each example below, stage its saved correction and test again/);
  const correct=id=>host.on_click({target:{closest:q=>q==='[data-correct-case]'?{getAttribute:()=>id}:null}});
  const ids=['CASE-028','CASE-029','CASE-030','CASE-031'];
  for(const [i,id] of ids.entries()){
@@ -123,6 +127,7 @@ test('guided 90-second path actually updates the page on each button click',asyn
  assert.equal(el('release-result').hidden,true);
  command('gate');
  assert.match(el('release-headline').textContent,/PASS/);
+ assert.match(el('release-detail').textContent,/Five saved example corrections passed this test/);
  assert.equal(el('metric-pass').textContent,'12 / 12');
  assert.equal(el('guided-restart').hidden,false);
  el('fault-select').value='wrong_revision';

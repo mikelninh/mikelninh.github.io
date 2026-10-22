@@ -143,7 +143,7 @@ jobs:
           fetch_until_ready "$base/inca/first-30-days.html" "If I joined INCA"
           fetch_until_ready "$base/inca/jev-research.html" "Can a small AI find the mistakes that matter?"
           fetch_until_ready "$base/inca/field-notes.html" "What I built."
-          fetch_until_ready "$base/inca/reliability-loop.html" "One exception."
+          fetch_until_ready "$base/inca/reliability-loop.html" 'id="remaining-review"'
           fetch_until_ready "$base/inca/reliability-loop.js" "IncaReliabilityLoop"
           fetch_until_ready "$base/inca/reliability-loop-data.json" "INCA-RELIABILITY-LOOP-V1"
           fetch_until_ready "$base/inca/jev-h1-h5.json" "INCA-JEV-H1-H5-PUBLIC"
