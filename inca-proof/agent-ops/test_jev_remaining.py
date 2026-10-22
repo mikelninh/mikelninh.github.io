@@ -28,8 +28,13 @@ class RemainingHypothesisTests(unittest.TestCase):
    for marker in ("expected_specialist","critical_trace_error","pair_id","kind"):
     self.assertNotIn('"'+marker+'"',json.dumps(p))
  def test_h7_invalid_model_result_not_silently_successful(self):
-  with self.assertRaises(ValueError):
-   v.request({"model":"bogus"},"")
+  class BadResponse:
+   def __enter__(self):return self
+   def __exit__(self,*args):return False
+   def read(self,n):return b\'{"answers":{"specialist":{"choice":"unknown"},"trace_fault":{"noul":0.3}}}\'
+  with patch.object(v.urllib.request,"urlopen",return_value=BadResponse()):
+   with self.assertRaises(ValueError):
+    v.request(v.prompt(v.fixture()[0],"jev-1.13.0"),"fake-key")
  def test_h7_empty_synthesis_does_not_claim_success(self):
   self.assertEqual(v.evaluate([])["status"],"INCOMPLETE")
  def test_h7_summary_with_mocked_results(self):
