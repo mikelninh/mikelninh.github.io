@@ -9,7 +9,7 @@ const demo=at('agent-ops.html');
 const proof=JSON.parse(at('jev-h1-h5.json'));
 
 test('hiring manager first-person editorial story and perspectives',()=>{
- for(const phrase of ['What I built.','What worked.','What surprised me.','Hiring manager · 60 sec','Engineer · evidence & costs','Claims team · what\\'s next?','I would not automate']){
+ for(const phrase of ['What I built.','What worked.','What surprised me.','Hiring manager · 60 sec','Engineer · evidence & costs','Claims team · what\'s next?','I would not automate']){
   assert.ok(hub.includes(phrase),phrase);
  }
  assert.match(hub,/role="tablist"/);
