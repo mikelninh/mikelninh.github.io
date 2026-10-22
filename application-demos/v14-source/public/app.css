@@ -172,3 +172,26 @@
 .proof-safety strong{color:#315843}
 .proof-snapshot>.subtle-btn{justify-self:start;grid-column:1/-1}
 @media(max-width:650px){.proof-snapshot{grid-template-columns:1fr;padding:18px}.proof-comparison{grid-template-columns:1fr 1fr;gap:8px}.proof-comparison strong{font-size:25px}}
+
+/* Jev quickstart: one clear action, protected secret remains on server. */
+.jev-quick{padding:24px 26px;margin:20px 0 24px;background:#fbfcf9;border:1px solid #d5e4d6;scroll-margin-top:24px}
+.jev-quick-top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+.jev-quick h3{font:400 27px/1.16 var(--serif);margin:8px 0}
+.jev-quick p{font-size:12px;line-height:1.65;color:#607465;max-width:750px}
+.jev-provider-pill{flex-shrink:0;background:#f6ede4;border:1px solid #e4cbb2;border-radius:20px;padding:7px 11px;font-size:10px;color:#865c3e;font-weight:700}
+.jev-provider-pill.ready{background:#e8f2ea;border-color:#bcdac4;color:#2a7546}
+.jev-setup{font-size:12px;line-height:1.8;background:#f7f3ed;border-left:3px solid #c7a984;padding:13px 15px;margin:17px 0;color:#4c594e}
+.jev-setup[hidden]{display:none}
+.jev-setup code{padding:2px 5px;background:#ecefe9;border-radius:4px;font-size:11px}
+.jev-setup a{color:#366e50;text-underline-offset:3px}
+.jev-quick-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin:18px 0 12px}
+.jev-quick-actions .btn{min-height:39px}
+.jev-quick .paired-progress{margin:10px 0}
+.jev-metrics{display:grid;gap:8px}
+.jev-metric{display:flex;justify-content:space-between;gap:12px;background:#fff;border:1px solid #dae6db;border-radius:7px;padding:11px 13px;font-size:12px}
+.jev-metric span{color:#486b57;text-align:right}
+.jev-case-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:12px}
+.jev-case{background:#fff;border:1px solid #e0e7de;border-radius:6px;padding:10px 12px;display:grid;gap:3px}
+.jev-case strong{font-size:11px}
+.jev-case span{color:#627b68;font-size:11px;line-height:1.5}
+@media(max-width:650px){.jev-quick{padding:18px 15px}.jev-quick-top{flex-direction:column;gap:10px}.jev-quick h3{font-size:24px}.jev-case-list{grid-template-columns:1fr}.jev-metric{flex-direction:column;gap:3px}.jev-metric span{text-align:left}.jev-quick-actions .btn{width:100%}}
