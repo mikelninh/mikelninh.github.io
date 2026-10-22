@@ -56,10 +56,28 @@ footer{border-top:1px solid var(--line);padding:23px 0 40px;margin-top:15px;colo
 <table class="faults"><thead><tr><th>Seeded failure</th><th>Total</th><th>Rules</th><th>Jev</th><th>GPT</th></tr></thead><tbody id="fault-rows"></tbody></table>
 <p class="caution">Counts are faults selected within each method's top 48 audits, not a production detection guarantee.</p>
 </div></section>
-<section id="limits" class="section"><div class="eye">04 / Research integrity</div><h2>What we did not prove.</h2>
+<section id="last-tests" class="section"><div class="eye">04 / The last two research questions</div><h2>Does it save money? Can we trust the score?</h2>
+<div class="grid">
+ <div class="take"><span class="eye">H2 · Selective optional GPT review</span><strong id="h2-heading">Loading recorded results…</strong>
+ <p id="h2-detail">We measure skipped GPT calls, missed synthetic critical faults and the complete model-call costs.</p></div>
+ <div class="take"><span class="eye">H6 · Score confidence</span><strong id="h6-heading">Loading recorded results…</strong>
+ <p id="h6-detail">A useful ranking score isn't automatically calibrated well enough for autonomous decisions.</p></div>
+</div>
+<div class="box-note"><strong>Model costs, not salaries:</strong> <span id="h2-cost">A Jev-first design is economical only if its skipped downstream work costs more than the added Jev requests and misses no mandatory safety checks.</span></div>
+<h2 style="margin-top:35px">H7 · Is Jev 1.14 better for German?</h2>
+<div class="panel"><p id="h7-heading" style="font-weight:760">Loading recorded bilingual version test…</p>
+<table class="faults"><thead><tr><th>40 new fictional cases per language</th><th>Jev 1.13</th><th>Jev 1.14</th></tr></thead>
+<tbody><tr><td>German specialist selection</td><td id="h7-routing-de-old">—</td><td id="h7-routing-de-new">—</td></tr>
+<tr><td>German critical trace recall (score ≥0.5)</td><td id="h7-fault-de-old">—</td><td id="h7-fault-de-new">—</td></tr>
+<tr><td>Median German API time</td><td id="h7-time-de-old">—</td><td id="h7-time-de-new">—</td></tr></tbody></table>
+<p class="caution">Both English and German language pairs were tested. Version order and server load affect speed; synthetic templates are not insurer validation.</p>
+<div class="links"><a href="https://github.com/mikelninh/mikelninh.github.io/actions/runs/39751482592">Real 160-call H7 test ↗</a>
+<a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/agent-ops/JEV_FINAL_H2_H6_H7.md">Full cost/quality method ↗</a></div>
+</div></section>
+<section id="limits" class="section"><div class="eye">05 / Research integrity</div><h2>What we did not prove.</h2>
 <div class="limits"><strong>This is developer-authored fiction, not an insurer pilot.</strong>
 <p>Many planted trace defects are structural, so fixed rules can legitimately outperform AI. All 300 cases came from the same generator even though the development and holdout document templates were different. A decision score is not evidence or claim approval. Human review costs and end-to-end claim times have not been measured, and neither provider is validated on real customer files.</p>
-<p>We observed Jev <strong>1.13.0</strong>, not its newer releases. We cannot infer an upgrade advantage from this test.</p></div>
+<p>The original 300-case experiment used Jev <strong>1.13.0</strong>. A separate real, 160-call bilingual version test compared pinned Jev 1.13.0 and 1.14.0. Neither version demonstrated a quality advantage on its authored cases; this does not establish general model superiority.</p></div>
 <div class="links"><a href="https://github.com/mikelninh/mikelninh.github.io/actions/runs/39691808881">Original recorded live experiment ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/agent-ops/jev_v2_eval.py">Reproducible Python evaluator ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/agent-ops/JEV_V2_EXECUTION.md">Method and scope ↗</a></div>
 </section>
 </main><footer><span>INCA Jev Research V2 · Michael Ninh</span><a href="/inca/agent-ops.html">Back to the simple work sample ↗</a></footer></div>
@@ -101,6 +119,34 @@ footer{border-top:1px solid var(--line);padding:23px 0 40px;margin-top:15px;colo
  }catch(err){
   get('load-status').textContent='The original model report is unavailable or invalid; no success claims are being simulated.';
  }
+})();
+</script>
+
+<script>
+(async()=>{
+ const text=(id,v)=>document.getElementById(id).textContent=String(v);
+ try{
+  const [a,b]=await Promise.all(['/inca/jev-h2-h6.json','/inca/jev-h7.json'].map(x=>fetch(x,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('No research summary');return r.json();})));
+  if(a.schema!=='INCA-JEV-H2-H6-EXPLORATORY'||b.schema!=='INCA-JEV-H7-BILINGUAL-REAL-API'||
+     a.h2?.holdout_gpt_calls_baseline!==240||b.real_provider_calls!==160)
+     throw Error('Invalid source summary');
+  text('h2-heading',a.h2.calls_skipped+' of '+a.h2.holdout_gpt_calls_baseline+' optional GPT calls skipped');
+  text('h2-detail',a.h2.critical_missed+' of '+a.seeded_faults_holdout+' seeded critical faults would no longer be audited. This retrospective Jev-first replay fails our safety and savings gate.');
+  text('h2-cost','GPT-only audit estimated 
++a.h2.gpt_only_cost_est_usd.toFixed(5)+' vs Jev-first + selected GPT 
++a.h2.jev_first_cost_est_usd.toFixed(5)+
+       ' (+35% on this artificial sample), based on real token counts and published prices — not actual invoices or total claims costs.');
+  text('h6-heading','Jev Brier '+a.h6.jev_brier.toFixed(3)+' vs GPT '+a.h6.gpt_brier.toFixed(3));
+  text('h6-detail','Jev ranks synthetic failures better but ECE '+a.h6.jev_ece_five_bins.toFixed(3)+' does not meet the preregistered 0.10 calibration gate. No automatic coverage decisions.');
+  const p=b.models;
+  text('h7-heading','80 paired English/German inputs × two pinned versions. No API failures. No measured gain for the newer version.');
+  text('h7-routing-de-old',p['jev-1.13.0'].de.tool_correct+'/40');
+  text('h7-routing-de-new',p['jev-1.14.0'].de.tool_correct+'/40');
+  text('h7-fault-de-old',p['jev-1.13.0'].de.critical_found_at_0_5+'/20');
+  text('h7-fault-de-new',p['jev-1.14.0'].de.critical_found_at_0_5+'/20');
+  text('h7-time-de-old',p['jev-1.13.0'].de.median_api_ms+' ms');
+  text('h7-time-de-new',p['jev-1.14.0'].de.median_api_ms+' ms');
+ }catch(e){text('h2-heading','Source report not available; see the archived run.');text('h7-heading','Model version report temporarily unavailable.');}
 })();
 </script>
 </body></html>
