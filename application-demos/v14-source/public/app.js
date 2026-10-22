@@ -363,7 +363,7 @@ async function jevRefresh(){
 async function jevBegin(){
  if(jevBusy||busy||pairedBatchRunning)return;
  if(!live.providers?.jev){jevMessage='Bitte TYPESAFE_API_KEY einmalig in Vercel hinterlegen.';jevShow();return;}
- if(!access){jevMessage='Bitte oben das vorhandene Demo-Passwort eingeben (niemals den TypeSafe-Key).';jevShow();$('paired-token').focus();return;}
+ if(!access){jevMessage='Bitte das Demo-Passwort im Jev-Bereich eingeben (nicht den TypeSafe-Key).';jevShow();$('jev-access').focus();return;}
  const pending=jevCases().filter(x=>!results[x.id]?.jev?.ok);
  if(!pending.length)return;
  if(!window.confirm('Jetzt '+pending.length+' echte kostenpflichtige Jev-Aufrufe auf erfundenen Fällen starten?'))return;
@@ -414,7 +414,8 @@ async function init(){try{const embedded=document.getElementById('embedded-fixtu
  $('paired-run-all').addEventListener('click',pairedBatch);
  $('paired-cancel').addEventListener('click',()=>{pairedBatchCancel=true;$('paired-note').textContent='Stoppen angefordert. Der aktuelle Modellaufruf wird noch beendet.';});
  $('paired-download').addEventListener('click',downloadPaired);
- $('paired-token').addEventListener('input',e=>{access=e.target.value.trim();$('token').value=access;});
+ $('paired-token').addEventListener('input',e=>{access=e.target.value.trim();$('token').value=access;$('jev-access').value=access;});
+ $('jev-access').addEventListener('input',e=>{access=e.target.value.trim();$('token').value=access;$('paired-token').value=access;jevMessage='';jevShow();});
  $('jev-run').addEventListener('click',jevBegin);
  $('jev-stop').addEventListener('click',()=>{jevHalt=true;jevMessage='Nach aktuellem Fall stoppen …';jevShow();});
  $('jev-refresh').addEventListener('click',jevRefresh);
@@ -423,7 +424,7 @@ async function init(){try{const embedded=document.getElementById('embedded-fixtu
  $('inbox-filter').addEventListener('change',()=>{inboxExpanded=false;renderInbox();});$('inbox-show-more').addEventListener('click',()=>{inboxExpanded=!inboxExpanded;renderInbox();});$('download-handoff').addEventListener('click',downloadHandoff);renderSignals();
  $('next-case').addEventListener('click',()=>choose(fixtures[(fixtures.findIndex(x=>x.id===selected)+1)%fixtures.length].id));
  $('toggle-access').addEventListener('click',()=>{let open=$('access-form').hidden;$('access-form').hidden=!open;$('toggle-access').setAttribute('aria-expanded',String(open));});
- $('token').addEventListener('input',e=>{access=e.target.value.trim();$('paired-token').value=access;});$('save-review').addEventListener('click',review);$('download-report').addEventListener('click',report);
+ $('token').addEventListener('input',e=>{access=e.target.value.trim();$('paired-token').value=access;$('jev-access').value=access;});$('save-review').addEventListener('click',review);$('download-report').addEventListener('click',report);
  $('threshold').addEventListener('input',e=>{threshold=Number(e.target.value)/100;$('threshold-value').textContent=Math.round(threshold*100)+'%';renderModels();renderEvaluation();});
- loadPairedResults();jevRestore();renderCase();renderEvaluation();renderPaired();jevShow();}
+ loadPairedResults();jevRestore();renderCase();renderEvaluation();renderPaired();jevShow();if(location.hash==='#jev-quick'){$('more').open=true;setTimeout(()=>$('jev-quick').scrollIntoView({behavior:'smooth',block:'start'}),0);}}
 init();
