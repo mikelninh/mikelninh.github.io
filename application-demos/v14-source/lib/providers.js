@@ -13,9 +13,9 @@ function classifyFetchFailure(err){
  if(/CERT|TLS|SSL|SELF_SIGNED/.test(cause))return 'provider_tls_error';
  return 'provider_fetch_failed';
 }
-async function callJson(url,key,payload){
+async function callJson(url,key,payload,{officialTypeSafe=false}={}){
  const cleanKey=typeof key==='string'?key.trim():'';
- if(!cleanKey||!cleanKey.startsWith('sk-')||/[\s"'\x00-\x1f\x7f]/.test(cleanKey)){
+ if(!cleanKey||(!officialTypeSafe&&!cleanKey.startsWith('sk-'))||/[\s"'\x00-\x1f\x7f]/.test(cleanKey)){
   const err=new Error('invalid_api_key_format');err.code='invalid_api_key_format';throw err;
  }
  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),TIMEOUT);const start=performance.now();
@@ -41,7 +41,16 @@ export async function inferModel(model,caseItem){const input=JSON.stringify({pro
  if(model==='decisions'){
   if(!process.env.OPENAI_API_KEY)throw Error('key_not_configured');const questions=CLASSES.map(c=>({type:'predicate',name:c,instructions:QUESTION_TEXT[c]}));response=await callJson('https://api.openai.com/v1/decisions',process.env.OPENAI_API_KEY,{model:'gpt-6-luna',input,questions});const scores=normalizeDecisions(response.body);output={scores,categories:CLASSES.filter(c=>scores[c]>=.5),review:CLASSES.some(c=>c==='quality'&&scores[c]>=.25),usage:response.body.usage||null,estimated_cost_usd:safeNumericCosts(response.body.usage||null,.10,0)};
  }else if(model==='jev'){
-  if(!process.env.OPENROUTER_API_KEY)throw Error('key_not_configured');const questions=Object.fromEntries(CLASSES.map(c=>[c,{type:'noul',instructions:QUESTION_TEXT[c]}]));response=await callJson('https://openrouter.ai/api/alpha/decisions',process.env.OPENROUTER_API_KEY,{model:'typesafe/jev-1.14',state:{product:caseItem.product,customer_message:caseItem.text},questions});const scores=normalizeJev(response.body);output={scores,categories:CLASSES.filter(c=>scores[c]>=.5),review:scores.quality>=.25,usage:response.body.usage||null,estimated_cost_usd:response.body.usage?.cost??safeNumericCosts(response.body.usage||null,.042,0)};
+  const officialTypeSafe=!!process.env.TYPESAFE_API_KEY;
+  const key=officialTypeSafe?process.env.TYPESAFE_API_KEY:process.env.OPENROUTER_API_KEY;
+  if(!key)throw Error('key_not_configured');
+  const questions=Object.fromEntries(CLASSES.map(c=>[c,{type:'noul',instructions:QUESTION_TEXT[c]}]));
+  const url=officialTypeSafe?'https://api.typesafe.ai/v1/systemone':'https://openrouter.ai/api/alpha/decisions';
+  const modelName=officialTypeSafe?'jev-1.14.0':'typesafe/jev-1.14';
+  response=await callJson(url,key,{model:modelName,state:{product:caseItem.product,customer_message:caseItem.text},questions},{officialTypeSafe});
+  const scores=normalizeJev(response.body);
+  const usage=response.body.usage||null;
+  output={scores,categories:CLASSES.filter(c=>scores[c]>=.5),review:scores.quality>=.25,usage,estimated_cost_usd:usage?.cost_usd??usage?.cost??safeNumericCosts(usage,.042,0)};
  }else if(model==='llm'){
   if(!process.env.OPENAI_API_KEY)throw Error('key_not_configured');const mdl=process.env.OPENAI_TEXT_MODEL||DEFAULT_MODEL;response=await callJson('https://api.openai.com/v1/responses',process.env.OPENAI_API_KEY,{model:mdl,store:false,max_output_tokens:700,instructions:SYSTEM,input:[{role:'user',content:[{type:'input_text',text:input}]}],text:{format:{type:'json_schema',name:'return_loop_v14_classify',strict:true,schema}}});output={...validateLLM(response.body,caseItem.text),usage:response.body.usage||null,estimated_cost_usd:null};
  }else throw Error('invalid_model');
