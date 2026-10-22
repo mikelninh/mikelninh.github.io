@@ -11,7 +11,7 @@ Jev is not a text generator. It cannot replace an LLM when the workflow requires
 
 ## Pre-registered experimental design
 
-* Model: `typesafe/jev-1.14`, via `POST https://openrouter.ai/api/alpha/decisions`, not the chat endpoint.
+* Model: `jev-1.14.0`, via **official direct TypeSafe** `POST https://api.typesafe.ai/v1/systemone` and `TYPESAFE_API_KEY`, not the OpenRouter gateway.
 * Questions: 5 independent typed `noul` judgments per ticket; `other` is derived in code when none passes.
 * Threshold: 0.5 for classification; 0.5 for reply risk, plus *precommitted* sensitivity analysis at 0.3.
 * Inputs: 24 existing synthetic development cases; 16 distinct synthetic challenge cases from an earlier reserved evaluation; 12 deliberate safe/unsafe reply pairs, shuffled and sent without their expected labels.
@@ -34,9 +34,9 @@ The archived OpenAI LLM results are a development-only exploratory experiment an
 
 ## Implementation status and blocker
 
-A standalone Node.js 20+ experimental harness, frozen synthetic datasets, 7 successful local tests, offline preflight, validated OpenRouter calls and report viewer have been produced for this conversation and can be downloaded there. The harness deliberately defaults to zero API calls. It requires `OPENROUTER_API_KEY` plus an explicit `--live --confirm-cost` argument for real inference; up to four batched provider requests are made.
+A standalone Node.js 20+ experimental harness, frozen synthetic datasets, 8 successful local tests, offline preflight, validated OpenRouter calls and report viewer have been produced for this conversation and can be downloaded there. The harness deliberately defaults to zero API calls. The direct version requires `TYPESAFE_API_KEY` plus explicit `--smoke --confirm-cost` and `--live --confirm-cost` arguments for real inference; up to four batched provider requests are made after the one-case smoke test.
 
-The Vercel project `return-loop-model-arena` currently has no `OPENROUTER_API_KEY`, so the Jev integration in its public application remains disabled. **No Jev effectiveness or speed numbers are claimed.**
+The Vercel project `return-loop-model-arena` currently has no `TYPESAFE_API_KEY` or `OPENROUTER_API_KEY`; the public Jev integration therefore remains disabled until a secret is added. The backend now supports the official TypeSafe endpoint when `TYPESAFE_API_KEY` exists (OpenRouter remains an optional fallback). **No Jev effectiveness or speed numbers are claimed.**
 
 ### Decision gate
 
@@ -47,3 +47,7 @@ Test, then decide:
 - **Otherwise:** retain deterministic rules and human approvals; use the proven generative LLM only where actual prose is needed.
 
 Source references: [TypeSafe Jev 1.14](https://openrouter.ai/typesafe/jev-1.14), [Jev batch decisions documentation](https://openrouter.ai/labs/jev), [RETURN LOOP live demo](https://return-loop-model-arena.vercel.app/).
+
+## Official TypeSafe direct integration, 2026-10-22
+
+Use official [TypeSafe System One API](https://docs.typesafe.ai/api), server-side `TYPESAFE_API_KEY`, and pinned model `jev-1.14.0` (preview access may vary). The standalone experiment ZIP from this conversation is named `RETURN_LOOP_JEV_TYPESAFE_DIRECT_2026-10-22.zip`; it has eight passing offline tests and a one-case smoke gate. Do not paste the key into messages or client-side input. For a web test set the secret via Vercel Project Settings → Environment Variables for **Production**, redeploy, then use the existing protected Jev model lab. No TypeSafe API calls or costs have been claimed yet.
