@@ -128,9 +128,9 @@ footer{border-top:1px solid var(--line);padding:23px 0 40px;margin-top:15px;colo
  try{
   const [a,b]=await Promise.all(['/inca/jev-h2-h6.json','/inca/jev-h7.json'].map(x=>fetch(x,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('No research summary');return r.json();})));
   if(a.schema!=='INCA-JEV-H2-H6-EXPLORATORY'||b.schema!=='INCA-JEV-H7-BILINGUAL-REAL-API'||
-     a.h2?.holdout_gpt_calls_baseline!==240||b.real_provider_calls!==160)
+     a.h2?.holdout_optional_gpt_calls_all!==240||b.real_provider_calls!==160)
      throw Error('Invalid source summary');
-  text('h2-heading',a.h2.calls_skipped+' of '+a.h2.holdout_gpt_calls_baseline+' optional GPT calls skipped');
+  text('h2-heading',a.h2.calls_skipped+' of '+a.h2.holdout_optional_gpt_calls_all+' optional GPT calls skipped');
   text('h2-detail',a.h2.critical_missed+' of '+a.seeded_faults_holdout+' seeded critical faults would no longer be audited. This retrospective Jev-first replay fails our safety and savings gate.');
   text('h2-cost','GPT-only audit estimated 
 +a.h2.gpt_only_cost_est_usd.toFixed(5)+' vs Jev-first + selected GPT 
