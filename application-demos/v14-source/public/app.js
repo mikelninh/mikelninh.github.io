@@ -405,7 +405,7 @@ function v2Valid(r,batch){
  return !!(r?.ok===true&&r.experiment===V2_VERSION&&r.threshold===.8&&r.batch===batch&&r.n_cases===4&&
   typeof r.dataset_sha256==='string'&&Array.isArray(r.cases)&&r.cases.length===4&&
   r.cases.every((x,i)=>x.id==='CH-'+String(batch*4+i+1).padStart(3,'0')&&
-   Array.isArray(x.gold)&&Array.isArray(x.pred)&&Array.isArray(x.baseline)&&
+   Array.isArray(x.gold)&&Array.isArray(x.pred)&&Array.isArray(x.baseline)&&Array.isArray(x.excess)&&Array.isArray(x.omitted)&&
    ['quality','fit','shipping','return','order_issue'].every(k=>Number.isFinite(x.scores?.[k])&&x.scores[k]>=0&&x.scores[k]<=1)));
 }
 function v2Load(){
@@ -473,6 +473,7 @@ async function v2Refresh(){
   if(!resp.ok)throw Error('backend not ready');
   v2Meta=await resp.json();
   if(v2Meta.experiment!==V2_VERSION||v2Meta.threshold!==.8||v2Meta.challenge_cases!==16)throw Error('wrong version');
+  if(v2Measured().some(i=>v2Stages[i].dataset_sha256!==v2Meta.dataset_sha256)){v2Stages={};v2Note='Der eingefrorene Datensatz wurde geändert; gespeicherte Ergebnisse nicht übernommen.';v2Save();}
   v2Note=v2Meta.provider_ready?'TypeSafe bereit. Die 16 noch nicht geprüften Fälle können getestet werden.':'TypeSafe nicht konfiguriert. Bitte Backend-Konfiguration prüfen.';
  }catch{v2Meta=null;v2Note='V2-Testserver nicht erreichbar. Bitte später erneut prüfen.';}
  v2Render();
