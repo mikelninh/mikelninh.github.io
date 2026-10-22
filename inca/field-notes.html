@@ -8,7 +8,7 @@
 .shell{max-width:1120px;margin:auto;padding:0 30px}.top{border-bottom:1px solid var(--line);background:rgba(245,245,239,.9)}
 .topinner{display:flex;align-items:center;justify-content:space-between;min-height:86px;gap:22px}.wordmark{font-weight:900;letter-spacing:-.045em;font-size:18px;text-decoration:none}.wordmark span{color:#4b7758;font-weight:600}.nav{display:flex;gap:22px;align-items:center;color:#53665a;font-size:12px;font-weight:600}.nav a{text-decoration:none}
 .pill{display:inline-flex;background:var(--acid);padding:7px 12px;border-radius:6px;color:#284631;font-size:11px;font-weight:850;letter-spacing:.02em;text-transform:uppercase}
-.hero{padding:84px 0 66px;display:grid;grid-template-columns:1.3fr .7fr;align-items:end;gap:42px}.eyebrow{font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:820;color:#6a7d70}
+.hero{padding:56px 0 49px;display:grid;grid-template-columns:minmax(0,1.07fr) minmax(0,.93fr);align-items:center;gap:38px}.hero-copy{min-width:0}.hero h1{font-size:clamp(45px,5.2vw,70px);line-height:1.055;letter-spacing:-.069em;margin:19px 0 20px}.hero .intro{max-width:570px;font-size:17px;line-height:1.55}.hero-explain{max-width:570px;margin:16px 0 0;color:#506558;font-size:14px;line-height:1.58}.hero-evidence{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:19px;font-size:12px;color:#566b5b}.hero-evidence strong{color:#284f37}.hero-evidence .mark{display:inline-grid;place-items:center;width:20px;height:20px;background:#e2f0dc;border-radius:100%;font-weight:900;color:#2d6944}.case-card{background:var(--paper);border:1px solid #d2e0cf;border-radius:15px;padding:23px;box-shadow:0 18px 40px rgba(35,68,39,.055);min-width:0}.case-card .case-kicker{display:flex;gap:8px;justify-content:space-between;align-items:center;color:#6b8070;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.065em}.case-card .case-heading{font-weight:810;font-size:19px;letter-spacing:-.042em;margin:15px 0}.case-doc{border:1px solid var(--line);border-radius:8px;padding:12px 15px;background:#fff;display:flex;gap:12px;justify-content:space-between;align-items:center}.case-doc+.case-doc{margin-top:8px}.case-doc .source{font-size:11px;font-weight:760;color:#66766c}.case-doc .date{font-size:17px;font-weight:850;letter-spacing:-.04em;white-space:nowrap}.case-arrow{font-size:15px;color:#7e9a80;padding:7px 0;text-align:center}.case-route{display:flex;gap:12px;align-items:center;background:#e8f3df;border-radius:9px;padding:13px 15px;margin-top:9px}.case-route .symbol{font-size:19px;flex:none}.case-route strong{display:block;color:#285037;font-size:13px}.case-route small{display:block;color:#637567;font-size:11px}.case-caveat{font-size:11px;line-height:1.55;color:#66796a;margin:14px 0 0}.eyebrow{font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:820;color:#6a7d70}
 h1{font-size:clamp(49px,6.2vw,83px);letter-spacing:-.075em;line-height:1.03;margin:19px 0 24px;font-weight:820}h2{font-size:clamp(28px,3vw,39px);letter-spacing:-.06em;line-height:1.13;margin:8px 0 16px}h3{font-size:20px;letter-spacing:-.042em;margin:4px 0 11px}
 .intro{font-size:18px;line-height:1.55;color:#4e6254;max-width:670px;margin:0}.hero-side{padding:23px;border-left:1px solid var(--line)}.hero-side strong{display:block;font-size:15px;letter-spacing:-.02em}.hero-side p{color:var(--muted);font-size:13px;margin:10px 0 19px}
 .ctas{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:30px 0 0}.cta{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:8px;padding:13px 20px;font-size:13px;font-weight:780;background:var(--ink);color:white}.cta.alt{background:var(--soft);color:var(--moss)}
@@ -25,8 +25,8 @@ h1{font-size:clamp(49px,6.2vw,83px);letter-spacing:-.075em;line-height:1.03;marg
 .links{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;margin-top:18px}.links a{font-weight:780;color:#395d44}.ethics{font-size:12px;line-height:1.6;color:#66756b;max-width:840px;margin-top:24px}
 footer{border-top:1px solid var(--line);padding:28px 0 50px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .tabpane[hidden]{display:none!important}
-@media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:54px;gap:24px}.hero-side{padding:13px 20px}.story{grid-template-columns:1fr}.storycard{min-height:235px}.proofstrip{grid-template-columns:1fr}.two,.split-note,.questions,.lab-grid{grid-template-columns:1fr}.nav{gap:9px;flex-wrap:wrap}}
-@media(max-width:500px){.shell{padding:0 19px}.nav{font-size:11px}.topinner{align-items:flex-start;flex-direction:column;padding:15px 0;gap:7px}.hero{padding:33px 0 32px}h1{font-size:49px}.storycard{padding:20px}.panel{padding:19px}}
+@media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:38px;gap:22px}.hero h1{font-size:clamp(45px,8vw,64px)}.case-card{max-width:600px}.hero-side{padding:13px 20px}.story{grid-template-columns:1fr}.storycard{min-height:235px}.proofstrip{grid-template-columns:1fr}.two,.split-note,.questions,.lab-grid{grid-template-columns:1fr}.nav{gap:9px;flex-wrap:wrap}}
+@media(max-width:500px){.shell{padding:0 19px}.nav{font-size:11px}.topinner{align-items:flex-start;flex-direction:column;padding:15px 0;gap:7px}.hero{padding:27px 0 35px}.hero h1{font-size:clamp(42px,10.5vw,53px);margin:13px 0 16px}.hero .intro{font-size:16px}.hero-explain{font-size:13px}.hero .ctas{margin-top:21px}.case-card{padding:17px}.case-doc{padding:10px}.case-doc .date{font-size:15px}.storycard{padding:20px}.panel{padding:19px}}
 </style></head><body>
 <header class="top"><div class="shell topinner">
 <a href="/inca/agent-ops.html" class="wordmark">MICHAEL NINH <span>/ INCA</span></a>
@@ -34,18 +34,28 @@ footer{border-top:1px solid var(--line);padding:28px 0 50px;font-size:12px;color
 </div></header>
 <main class="shell">
 <section class="hero">
- <div><div class="eyebrow">Independent application · AI Operations Associate · Berlin, October 2026</div>
- <h1>What I built.<br>What worked.<br><span style="color:#668d64">What surprised me.</span></h1>
- <p class="intro">I built a fictional claims workflow to explore a simple question: how can AI help people make a better next decision, without hiding uncertainty or taking control away?</p>
- <div class="ctas"><a class="cta" href="/inca/agent-ops.html">Try one claim · 60 seconds ↗</a><a class="cta alt" href="#evidence">See what I learned ↓</a></div>
+ <div class="hero-copy">
+  <div class="eyebrow">What I built. What worked. What surprised me.</div>
+  <h1>Two documents.<br>Two dates.<br><span style="color:#668d64">One clear next step.</span></h1>
+  <p class="intro">A cancellation email and a travel provider's confirmation disagree. A Claims Expert needs to see <strong>what conflicts, where it came from, and what to do next</strong> — not another confident AI guess.</p>
+  <p class="hero-explain">I built a small fictional claims workflow that finds the relevant evidence, verifies source quotations independently, and prepares a human handoff. No claim is approved or paid.</p>
+  <div class="ctas"><a class="cta" href="/inca/agent-ops.html">Try the recorded demo · 60 seconds ↗</a><a class="cta alt" href="#evidence">See the evidence ↓</a></div>
+  <div class="hero-evidence"><span class="mark" aria-hidden="true">✓</span><span><strong>5 of 6</strong> real GPT responses passed quote verification; <strong>1</strong> was safely blocked.</span></div>
  </div>
- <aside class="hero-side"><span class="pill">Evidence, not promises</span><p><strong style="margin-top:14px">My approach</strong>Start with the people and the problem. Build a bounded prototype. Test real model outputs. Make mistakes visible. Improve only when the evidence supports it.</p>
- <div class="small">The case records are invented. The API calls, code and test outputs are real. No insurer data or payment actions.</div></aside>
+ <aside class="case-card" aria-label="Example fictional cancellation documents and human-review outcome">
+  <div class="case-kicker"><span>From my recorded fictional test</span><span>TR-101</span></div>
+  <div class="case-heading">Which cancellation date is correct?</div>
+  <div class="case-doc"><span class="source">Customer email</span><span class="date">11 July 2026</span></div>
+  <div class="case-doc"><span class="source">Provider confirmation</span><span class="date">12 July 2026</span></div>
+  <div class="case-arrow" aria-hidden="true">↓ Independent source verification</div>
+  <div class="case-route"><span class="symbol" aria-hidden="true">↗</span><div><strong>Conflicting evidence → Human review</strong><small>Explain the mismatch. Keep the decision with a person.</small></div></div>
+  <p class="case-caveat">Illustrative fictional case from a real, recorded model evaluation. The public demo replays a checked workflow; clicking it does not start a new LLM call.</p>
+ </aside>
 </section>
 <section id="evidence" class="section separate">
- <div class="eyebrow">01 · The short version</div><h2>Three things I'd want INCA to know.</h2>
+ <div class="eyebrow">01 · Problem → approach → learning</div><h2>What I built, proved and learned.</h2>
  <div class="story">
-  <article class="storycard"><div class="num">01 · WHAT I BUILT</div><h3>A small claims loop, end to end.</h3><p>Two documents. One relevant check. Evidence with source quotations. A safe next action for a human operator — never an automatic coverage decision.</p><a class="more" href="/inca/agent-ops.html">Explore the live work sample ↗</a></article>
+  <article class="storycard"><div class="num">01 · WHAT I BUILT</div><h3>From conflicting evidence to a safe handoff.</h3><p>A relevant specialist check, exact source quotations and independent verification turn two different cancellation dates into a clear human-review recommendation — not a coverage decision.</p><a class="more" href="/inca/agent-ops.html">Explore the live work sample ↗</a></article>
   <article class="storycard"><div class="num">02 · WHAT WORKED</div><h3>A verifier caught what the model couldn't support.</h3><p>Six real GPT responses on authored fictional claims: five passed independent quote validation; one failed safely. I kept the failed case visible.</p><a class="more" href="https://github.com/mikelninh/mikelninh.github.io/actions/runs/39648745136">See the recorded run ↗</a></article>
   <article class="storycard surprise"><div class="num">03 · WHAT SURPRISED ME</div><h3>Sometimes the best AI decision is not to add AI.</h3><p>In my 300-case synthetic trace study, fixed rules found 44 of 49 planted critical faults at the same review budget; Jev found 38, GPT 15. The simpler system won.</p><a class="more" href="/inca/jev-research.html">See the full comparison ↗</a></article>
  </div>

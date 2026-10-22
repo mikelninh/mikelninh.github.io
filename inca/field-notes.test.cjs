@@ -65,3 +65,30 @@ test('H1 H5 in detailed research, H7 German and English view now visible',()=>{
  const hero=demo.slice(demo.indexOf('<section class="hero">'),demo.indexOf('<section id="try">'));
  assert.doesNotMatch(hero,/H1\/H5|968|0\.04819/);
 });
+
+test('first screen starts with a concrete fictional conflict, solution, validation and next step',()=>{
+ const hero=hub.slice(hub.indexOf('<section class="hero">'),hub.indexOf('</section>',hub.indexOf('<section class="hero">')));
+ const recorded=JSON.parse(at('real-model-proof.json'));
+ const claim=recorded.cases.find(c=>c.id==='TR-101');
+ assert.ok(claim && claim.verified && claim.route==='HUMAN_REVIEW');
+ for(const detail of [claim.value_a,claim.value_b,'Customer email','Provider confirmation',
+                       'Two documents.','Two dates.','One clear next step.',
+                       'Independent source verification','Human review',
+                       'Try the recorded demo · 60 seconds','5 of 6','1</strong> was safely blocked']){
+  assert.ok(hero.includes(detail),'Missing visible hero fact: '+detail);
+ }
+ assert.match(hero,/public demo replays a checked workflow/);
+ assert.match(hero,/does not start a new LLM call/);
+ assert.match(hero,/No claim is approved or paid/);
+ const originalClaimSources=[claim.quote_a,claim.quote_b];
+ assert.ok(originalClaimSources[0].includes(claim.value_a)&&originalClaimSources[1].includes(claim.value_b));
+});
+test('hero preserves readable responsive layout and keeps evidence-first research accessible',()=>{
+ assert.match(hub,/\.hero\{padding:56px 0 49px/);
+ assert.match(hub,/@media\(max-width:850px\)/);
+ assert.match(hub,/@media\(max-width:500px\)/);
+ assert.match(hub, /href="#evidence"/);
+ assert.match(hub,/href="\/inca\/jev-research\.html"/);
+ assert.match(hub,/href="\/inca\/first-30-days\.html"/);
+ assert.match(hub,/role="tablist"/);
+});
