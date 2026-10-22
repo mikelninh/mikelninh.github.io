@@ -17,39 +17,136 @@ p{margin-top:0}.hero{display:grid;grid-template-columns:1.2fr .8fr;align-items:c
 .three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.article{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:24px}.article .n{font-size:11px;color:#7d9b7b;font-weight:800}.article h3{margin:14px 0}.article p{font-size:13px;color:#607568}.article strong{font-size:12px}.citations{display:flex;gap:18px;flex-wrap:wrap;margin-top:19px;font-size:13px;font-weight:750}.limits{font-size:12px;color:#647b69;margin-top:22px;max-width:940px}footer{border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;padding:27px 0 44px;color:#7b8c7e;font-size:12px}.load-failed{padding:30px;background:var(--paper)}
 @media(max-width:850px){.hero,.twocol{grid-template-columns:1fr}.hero{gap:20px}.preview{max-width:630px}.story,.three{grid-template-columns:1fr}.checks{grid-template-columns:1fr}.workbench{grid-template-columns:170px 1fr}}
 @media(max-width:620px){.bar{flex-direction:column;align-items:start;padding:16px 0;gap:8px}.nav{flex-wrap:wrap}.hero{padding:36px 0}h1{font-size:46px}.section{padding:36px 0}.metrics{grid-template-columns:repeat(2,1fr)}.metric strong{font-size:26px}.workbench{grid-template-columns:1fr}.sidebar{border:0;border-bottom:1px solid var(--line)}.case-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.console{padding:17px 14px}.console-header{flex-wrap:wrap}.docline strong{white-space:normal}.actions .btn{padding:10px}}
+
+/* V2: progressive disclosure for first-time readers; original full evaluator stays accessible */
+[hidden]{display:none!important}
+.guided-hero{grid-template-columns:minmax(0,1fr);max-width:850px;padding:47px 0 32px}.guided-hero h1{font-size:clamp(42px,6vw,69px);margin:13px 0 15px}.guided-hero p{max-width:710px;font-size:16px}.guided-hero .buttons{margin-top:16px}.guided-hero .small{margin:8px 0 0;font-size:12px!important}
+.text-link{align-self:center;font-size:12px;font-weight:750;color:var(--green);padding:9px 0}
+.guided-section{padding:36px 0 56px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:18px}.section-head h2{font-size:clamp(27px,3.6vw,39px);margin:7px 0 0}.fiction-label{flex:none;font-size:10px;letter-spacing:.07em;border:1px solid #cedcc8;border-radius:999px;padding:7px 10px;color:#54775c;font-weight:800}
+.guided-steps{max-width:930px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:0 auto 12px}
+.guided-step{display:flex;align-items:center;gap:9px;color:#748578;font-size:12px;font-weight:790;padding:6px 9px}
+.guided-step span{display:grid;place-items:center;width:27px;height:27px;flex:none;border-radius:50%;background:#e4ebe0;color:#6e8771}
+.guided-step.active{color:#254d36}.guided-step.active span{background:#315d3d;color:white}
+.guided-step.complete span{background:#dcefd2;color:#326242}
+.guided-card{max-width:930px;margin:auto;background:var(--paper);border:1px solid #cfdec9;border-radius:16px;padding:29px 33px;box-shadow:0 13px 36px #213a2511}
+.guided-card-head{display:flex;gap:14px;align-items:center;justify-content:space-between}.guided-card-head h3{font-size:clamp(21px,3vw,27px);margin:6px 0 0}
+.eyelabel{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#738777;font-weight:800}
+.version-pair{margin:24px 0 17px;display:grid;grid-template-columns:minmax(0,1fr) 33px minmax(0,1fr);gap:8px;align-items:center}
+.version-item{border:1px solid #e2e8dc;background:#f9fbf7;border-radius:10px;padding:15px 19px}
+.version-item.wrong{background:#fff8ed;border-color:#edd8b7}.version-item.expected{background:#eff7e9;border-color:#d4e8c9}
+.version-item small{display:block;font-size:10px;font-weight:850;letter-spacing:.095em;color:#819081;margin-bottom:4px}
+.version-item strong{display:block;font-size:clamp(20px,3vw,29px);letter-spacing:-.05em;line-height:1.3}
+.compare-arrow{text-align:center;font-size:23px;font-weight:900;color:#9b8160}
+.guided-explain{color:#58705e;font-size:14px;line-height:1.55;max-width:750px;margin:0 0 18px}
+.guided-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.guided-actions button{min-height:45px}
+.guided-hint{font-size:12px;color:#748778;margin:15px 0 0;line-height:1.55}.guided-result{margin-top:15px}
+.guided-summary{max-width:930px;margin:16px auto 0;padding:15px 20px;border-left:3px solid #7fa978;font-size:12px;color:#57745e;background:#edf5e8;border-radius:0 8px 8px 0}
+.guided-summary strong{display:block;font-size:13px;color:#31563a;font-weight:740;margin-top:4px}
+.engineering-details{max-width:930px;margin:24px auto 0;border:1px solid var(--line);border-radius:12px;background:#f9fbf6;overflow:hidden}
+.engineering-details>summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;list-style:none;padding:19px 23px;color:#33583e}
+.engineering-details>summary::-webkit-details-marker{display:none}
+.engineering-details summary strong{display:block;font-size:14px}
+.engineering-details summary small{display:block;color:#768a7a;font-size:12px;margin-top:2px}
+.details-chevron{font-size:27px;line-height:1;transition:transform .15s}.engineering-details[open] .details-chevron{transform:rotate(180deg)}
+.deep-content{padding:0 15px 18px}.deep-content .workbench{margin-top:14px}.deep-content .metrics{margin-top:5px}
+.advanced-tools{padding:21px 23px;background:var(--paper);border:1px solid var(--line);border-radius:10px;margin-top:15px}.advanced-tools p{font-size:12px;color:#708173}
+.scope-note{max-width:930px;margin:18px auto 0;color:#758575;font-size:11px;line-height:1.6}
+@media(max-width:650px){.guided-hero{padding:32px 0 24px}.guided-section{padding-top:27px}.section-head{align-items:start;flex-direction:column;gap:9px}.fiction-label{font-size:9px}.guided-card{padding:21px 17px}.guided-steps{gap:2px}.guided-step{font-size:10px;gap:6px;padding:5px 0}.guided-step span{width:24px;height:24px}.version-pair{grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr);gap:4px}.version-item{padding:13px 9px}.version-item strong{font-size:19px}.version-item small{font-size:9px}.compare-arrow{font-size:17px}.guided-actions{flex-direction:column;align-items:stretch}.guided-actions button{width:100%}.engineering-details>summary{padding:15px}.engineering-details summary small{font-size:11px}.deep-content{padding:0 9px 12px}.guided-card-head{align-items:start;flex-direction:column}.advanced-tools{padding:16px 12px}}
 </style></head><body>
 <header class="top"><div class="wrap bar"><a class="brand" href="/inca/field-notes.html">MICHAEL NINH <span>/ INCA · LAB</span></a><nav class="nav"><a href="/inca/field-notes.html">← Hiring overview</a><a href="/inca/agent-ops.html">Claims demo</a><a href="#engineering">Engineering proof</a></nav></div></header>
-<main><div class="wrap"><section class="hero">
-<div><div class="kicker">Independent AI Operations work sample · Reliability Engineering</div><h1>One exception.<br>One correction.<br><span style="color:#74956e">A safer next release.</span></h1>
-<p>INCA already builds and operates AI agents. I'm curious about the work <strong>after an agent gets something wrong</strong>: reproducing the issue, helping a Claims Expert resolve it, and making sure it doesn't come back.</p>
-<p class="small">This is a stand-alone prototype inspired by the role — not connected to INCA's MARS platform or real customer records.</p>
-<div class="buttons"><a class="btn primary" href="#workbench">Investigate the incident · 90 seconds ↗</a><a class="btn secondary" href="#engineering">Read the methodology ↓</a></div>
-</div><aside class="preview"><div class="preview-head"><span>EXAMPLE · CASE-027</span><span>SIMULATED AGENT TRACE</span></div><h3>The quote is real.<br>The policy is wrong.</h3>
-<div class="docline old"><span>Agent cited</span><strong>Policy v2024</strong></div><div class="docline"><span>Applicable version</span><strong>Policy v2025</strong></div><div class="arrow">↓ Deterministic evidence gate</div><div class="outcome">Blocked → Human review required</div>
-<p>A valid excerpt from the wrong document is still the wrong evidence. The simulator never decides coverage or payment.</p></aside></section>
-<div class="story"><div><b>Problem</b><p>Existing agents can produce plausible but unsafe outputs. An operator needs the failing rule and the original source.</p></div><div><b>Approach</b><p>Validate each trace, quarantine failures, and make a documented human correction before resuming mandatory checks.</p></div><div><b>Proof</b><p>Rerun the same executable checks on intentionally flawed and pre-authored corrected releases.</p></div></div></div>
-<section class="section" id="workbench"><div class="wrap"><div class="kicker">01 · Interactive operations simulation</div><h2>Reproduce it. Fix it. Prove it stays fixed.</h2>
-<p class="lead">The Python evaluator really executes these checks in CI. Here the browser recalculates them from the same fictional traces. Changes stay locally in your browser; no AI API calls, insurer integration or hidden server state.</p>
-<div id="loop-app">
-<div class="metrics" aria-live="polite"><div class="metric"><strong id="metric-pass">—</strong><small>Current traces passing checks</small></div><div class="metric"><strong id="metric-block">—</strong><small>Traces blocked for review</small></div><div class="metric"><strong id="metric-faults">—</strong><small>Seeded fault categories tested</small></div><div class="metric"><strong id="metric-escape">—</strong><small>Seeded critical faults escaping initial guardrails*</small></div></div>
-<div class="progress"><div id="progress-bar" style="width:0%"></div></div>
-<div class="workbench"><aside class="sidebar"><div class="label">12 synthetic traces</div><div class="case-list" id="case-list"></div></aside>
-<div class="console"><div class="console-header"><div><div class="kicker" id="case-id">CASE-027</div><h3 id="case-kind">Loading…</h3><p class="description" id="case-description">Loading invented case…</p></div><div id="case-status" class="status warn">Loading</div></div>
-<div class="notice" id="incident-alert" role="status" aria-live="polite">Loading deterministic tests…</div>
-<div class="twocol"><div><div class="label">Fictional source documents</div><div id="source-docs"></div></div><div><div class="label">Agent trace · <span id="case-phase">Initial trace</span></div><div class="trace"><dl>
-<dt>Cited source</dt><dd id="agent-source">—</dd><dt>Selected policy revision</dt><dd id="agent-revision">—</dd><dt>Claimed excerpt</dt><dd id="agent-quote">—</dd><dt>Requested external action</dt><dd id="agent-action">—</dd><dt>Tool sequence</dt><dd id="agent-steps">—</dd><dt>Next workflow gate</dt><dd id="agent-next">—</dd></dl></div></div></div>
-<div class="divider"></div><div class="label">Six independent operational guardrails</div><ul class="checks" id="gate-checks"></ul>
-<div class="divider"></div><div class="label">Operator handoff · reviewed fix</div><p class="hint" id="case-explain">Review the evidence.</p>
-<div class="actions"><button type="button" class="btn primary" id="apply-fix" data-command="fix">Apply reviewed correction</button><button type="button" class="btn outline" id="release-a" data-command="release-a" aria-pressed="true">Reset release A</button><button type="button" class="btn secondary" id="release-b" data-command="release-b" aria-pressed="false">Load corrected release B</button></div>
-<p class="annotations">Applying a reviewed correction replays a pre-written fictional expert change locally. It never approves a claim or contacts an external system.</p>
-</div></div>
-<section class="release"><div class="release-top"><div><div class="label">02 · Executable release gate</div><h3>Would this release pass?</h3></div><button type="button" class="btn primary" data-command="gate">Run 12-case regression gate ↗</button></div>
-<p id="current-release">0/12 corrected fixtures staged locally</p><div class="release-result" id="release-result" hidden aria-live="polite"><strong id="release-headline">—</strong><p id="release-detail">—</p><p id="release-failures">—</p></div>
-<div class="divider"></div><div class="label">03 · Challenge the corrected release</div><p>After loading release B, deliberately reintroduce a failure. The gate should block it again.</p>
-<div class="inject"><label for="fault-select" class="annotations">Inject into selected case</label><select id="fault-select"><option value="wrong_revision">Outdated policy revision</option><option value="invented_quote">Invented citation quote</option><option value="external_action">Unauthorized payment request</option><option value="missing_citation">Missing source reference</option><option value="skipped_verifier">Skipped verifier</option></select>
-<button type="button" id="inject-fault" class="btn warning small" data-command="inject" disabled>Inject test fault</button><button type="button" id="clear-fault" class="btn outline small" data-command="clear" hidden>Clear injected fault</button><button type="button" class="btn outline small" data-command="reset">Reset lab</button></div>
-</section><p class="annotations">*“0 escaped” refers only to five deliberately planted structural failures, not any measured real-world agent error rate.</p>
-</div></div></section>
+<main>
+<div class="wrap">
+  <section class="hero guided-hero" aria-labelledby="hero-title">
+    <div>
+      <div class="kicker">AI Operations · A 90-second interactive experiment</div>
+      <h1 id="hero-title">The quote is real.<br><span style="color:#759675">The policy is wrong.</span></h1>
+      <p>INCA already has AI agents. I wanted to explore a different challenge: <strong>what happens when an agent makes a mistake?</strong></p>
+      <p class="small">One fictional case · One reviewed correction · One automated release test. The demo never decides coverage or payment.</p>
+      <div class="buttons"><a class="btn primary" href="#workbench">Try the 3-step demo ↓</a><a class="text-link" href="#engineering">For engineers: code & evidence ↗</a></div>
+    </div>
+  </section>
+</div>
+<section class="section guided-section" id="workbench">
+  <div class="wrap">
+    <div class="section-head"><div><div class="kicker">Try it yourself</div><h2>Can you stop the same mistake twice?</h2></div><span class="fiction-label">SIMULATED · NO REAL CLAIMS</span></div>
+    <div id="loop-app">
+      <div class="guided-steps" aria-label="Three steps to explore">
+        <div id="guide-step-1" class="guided-step active"><span>1</span> Spot the mistake</div>
+        <div id="guide-step-2" class="guided-step"><span>2</span> Apply the fix</div>
+        <div id="guide-step-3" class="guided-step"><span>3</span> Test the release</div>
+      </div>
+      <div class="guided-card">
+        <div class="guided-card-head"><div><span class="eyelabel" id="focus-case-label">CASE-027 · Fictional repair claim</span><h3 id="focus-title">An agent picked the wrong policy version.</h3></div><span id="focus-status" class="status warn">Needs review</span></div>
+        <div class="version-pair" aria-label="Policy version comparison">
+          <div class="version-item wrong"><small>AGENT USED</small><strong id="focus-used">Policy 2024</strong></div>
+          <span class="compare-arrow" aria-hidden="true">≠</span>
+          <div class="version-item expected"><small>CORRECT SOURCE</small><strong id="focus-required">Policy 2025</strong></div>
+        </div>
+        <p class="guided-explain" id="focus-explanation">Both documents contain plausible wording. The older one is not applicable to this claim.</p>
+        <div class="guided-actions">
+          <button type="button" class="btn primary" id="apply-fix" data-command="fix">Apply the documented fix →</button>
+          <button type="button" class="btn primary" id="guided-gate" data-command="gate" disabled>Run 12-case regression gate ↗</button>
+          <button type="button" class="btn secondary" id="release-b" data-command="release-b" hidden>Apply remaining reviewed fixes →</button>
+          <button type="button" class="btn outline" id="guided-restart" data-command="reset" hidden>Start again ↻</button>
+        </div>
+        <p class="guided-hint" id="guided-hint" role="status" aria-live="polite">The verifier found a mismatch. Apply a pre-written, fictional expert correction to this case.</p>
+        <div class="release-result guided-result" id="release-result" hidden aria-live="polite">
+          <strong id="release-headline">—</strong><p id="release-detail">—</p><p id="release-failures">—</p>
+        </div>
+      </div>
+      <div class="guided-summary">THE LEARNING <strong>A human correction becomes a repeatable test, so the next release can't quietly repeat the same known error.</strong></div>
+      <details id="engineering-details" class="engineering-details">
+        <summary><span><strong>Curious how it works?</strong><small>Open the 12 cases, source documents, six checks and fault-injection lab</small></span><span aria-hidden="true" class="details-chevron">⌄</span></summary>
+        <div class="deep-content">
+          <div class="metrics" aria-live="polite">
+            <div class="metric"><strong id="metric-pass">—</strong><small>Traces passing all checks</small></div>
+            <div class="metric"><strong id="metric-block">—</strong><small>Traces blocked for review</small></div>
+            <div class="metric"><strong id="metric-faults">—</strong><small>Deliberately planted fault types</small></div>
+            <div class="metric"><strong id="metric-escape">—</strong><small>Seeded faults escaping these checks*</small></div>
+          </div>
+          <div class="progress" aria-hidden="true"><div id="progress-bar" style="width:0%"></div></div>
+          <div class="workbench">
+            <aside class="sidebar"><div class="label">Choose another fictional case</div><div class="case-list" id="case-list"></div></aside>
+            <div class="console">
+              <div class="console-header"><div><div class="kicker" id="case-id">CASE-027</div><h3 id="case-kind">Loading…</h3><p class="description" id="case-description">Loading case…</p></div><div id="case-status" class="status warn">Loading…</div></div>
+              <div class="notice" id="incident-alert" role="status">Loading deterministic tests…</div>
+              <div class="twocol">
+                <div><div class="label">Fictional source documents</div><div id="source-docs"></div></div>
+                <div><div class="label">Complete agent trace · <span id="case-phase">Before correction</span></div>
+                  <div class="trace"><dl>
+                    <dt>Cited source</dt><dd id="agent-source">—</dd>
+                    <dt>Selected policy revision</dt><dd id="agent-revision">—</dd>
+                    <dt>Claimed excerpt</dt><dd id="agent-quote">—</dd>
+                    <dt>Requested external action</dt><dd id="agent-action">—</dd>
+                    <dt>Tool sequence</dt><dd id="agent-steps">—</dd>
+                    <dt>Next workflow gate</dt><dd id="agent-next">—</dd>
+                  </dl></div>
+                </div>
+              </div>
+              <div class="divider"></div><div class="label">Six independently evaluated guardrails</div><ul class="checks" id="gate-checks"></ul>
+              <div class="divider"></div><div class="label">Why the checker reacted</div><p class="hint" id="case-explain">Review the evidence.</p>
+            </div>
+          </div>
+          <div class="advanced-tools">
+            <div><div class="label">Engineering controls · Optional</div><p>Use these controls to explore the difference between the initial and corrected fictional releases. Nothing is persisted or sent to an insurer.</p></div>
+            <div class="actions">
+              <button type="button" class="btn outline small" id="release-a" data-command="release-a" aria-pressed="true">Reset release A</button>
+              <button type="button" class="btn outline small" data-command="gate">Re-run all 12 checks ↗</button>
+            </div>
+            <p class="annotations" id="current-release">0/12 corrected fixtures staged locally</p>
+            <div class="divider"></div>
+            <div class="label">Challenge the corrected release</div>
+            <div class="inject"><label for="fault-select" class="annotations">Reintroduce a problem</label><select id="fault-select">
+              <option value="wrong_revision">Wrong policy version</option><option value="invented_quote">Invented quotation</option><option value="external_action">Unauthorized payment request</option><option value="missing_citation">Missing citation</option><option value="skipped_verifier">Skipped verification</option>
+            </select><button type="button" id="inject-fault" class="btn warning small" data-command="inject" disabled>Inject test fault</button><button type="button" id="clear-fault" class="btn outline small" data-command="clear" hidden>Clear injected fault</button></div>
+            <p class="annotations">*Zero escaped faults refers only to five deliberately planted structural faults. It is not a measured real-world reliability rate.</p>
+          </div>
+        </div>
+      </details>
+    </div>
+    <p class="scope-note">This prototype is not connected to INCA or MARS. It replays invented agent traces and pre-written corrections. The browser runs genuine rule checks; it makes no new AI API calls, uses no insurer data, makes no payments, and does not claim production savings.</p>
+  </div>
+</section>
 <section class="section" id="engineering"><div class="wrap"><div class="kicker">02 · For engineers and operations</div><h2>From one correction to a regression gate.</h2><p class="lead">A small production-quality test pattern — not a production claims platform. Its actual business value would have to be measured on approved operational logs and human review time.</p>
 <div class="three"><article class="article"><div class="n">01 / OBSERVE</div><h3>Capture the incident</h3><p>Keep the trace, source ID, policy revision, quotation, tool order and requested actions available for an operator to inspect.</p><strong>Output: replayable trace</strong></article>
 <article class="article"><div class="n">02 / CORRECT</div><h3>Human-guided resolution</h3><p>Identify the failed invariant, locate the applicable evidence, and stage a documented correction with no external side effects.</p><strong>Output: reviewed fixture</strong></article>

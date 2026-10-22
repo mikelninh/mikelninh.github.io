@@ -83,7 +83,55 @@
     for(const [el,val] of Object.entries({'agent-source':t.source_id||'(missing citation)','agent-revision':t.selected_policy_revision||'(missing)','agent-quote':t.quote||'(no quote)','agent-action':t.external_action||'(missing)','agent-steps':Array.isArray(t.steps)?t.steps.join(' → '):'(malformed)','agent-next':t.next_gate||'(missing)'}))$(el).textContent=val;
     $('gate-checks').innerHTML=out.checks.map(x=>'<li class="check '+(x.pass?'pass':'fail')+'"><span class="check-icon" aria-hidden="true">'+(x.pass?'✓':'!')+'</span><div><strong>'+escapeHTML(x.label)+'</strong><small>'+escapeHTML(x.detail)+'</small></div></li>').join('');
     $('case-explain').textContent=fi?c.human_correction.note+' This is a pre-authored fictional correction, not an insurer decision.':c.fault_description;
-    $('apply-fix').disabled=fi&&!inj;$('apply-fix').textContent=fi&&!inj?'Reviewed correction applied ✓':'Apply reviewed correction';
+
+    // Hiring-manager layer: one plain-language decision at a time.
+    // The complete checked trace remains inspectable, but hidden by default.
+    const headings={
+      policy_revision:'The agent used the wrong policy version.',
+      source_reference:'The source reference is missing.',
+      source_quote:"The quotation isn't supported by the document.",
+      no_external_action:'The agent requested an unauthorized action.',
+      verification_step:'The agent skipped a required verification.',
+      bounded_gate:'The suggested next step is not allowed.'
+    };
+    const firstFailed=out.failures[0];
+    const sourceRevision=t.selected_policy_revision||'(missing)';
+    $('focus-case-label').textContent=c.id+' · Fictional '+c.kind.toLowerCase()+' claim';
+    $('focus-title').textContent=out.pass?'This case now passes the checks.':headings[firstFailed]||'This trace needs human review.';
+    $('focus-used').textContent=sourceRevision==='(missing)'?'No version recorded':'Policy '+sourceRevision;
+    $('focus-required').textContent='Policy '+c.required_policy_revision;
+    $('focus-status').textContent=out.pass?'Checks passed':'Needs review';
+    $('focus-status').className='status '+(out.pass?'ok':'warn');
+    $('focus-explanation').textContent=out.pass
+      ?'This trace passes the six structural checks. Other mandatory claim checks still apply; no approval is given.'
+      :firstFailed==='policy_revision'
+        ?'The quoted text may be genuine, but this case needs policy '+c.required_policy_revision+'. A valid quote from an outdated policy is still the wrong evidence.'
+        :c.fault_description+' The checker blocks the next step for review.';
+    const last=m.state.lastSuite;
+    const hasFix=m.state.corrected.size>0;
+    const allCorrected=m.state.corrected.size===data.cases.length;
+    $('apply-fix').hidden=(fi&&!inj)||(!inj&&out.pass);
+    $('apply-fix').disabled=(!inj&&out.pass);
+    $('apply-fix').textContent=inj?'Apply the documented correction again →':'Apply the documented fix →';
+    $('guided-gate').disabled=!hasFix;
+    $('guided-gate').hidden=!!(last&&!last.passed&&!allCorrected);
+    $('release-b').hidden=!(last&&!last.passed&&hasFix&&!allCorrected);
+    $('guided-restart').hidden=!hasFix&&!last;
+    $('guided-hint').textContent=last?.passed
+      ?'All 12 fictional traces passed. To prove this check catches a recurring problem, open Engineer details and inject a test fault.'
+      :last&&!last.passed&&!allCorrected
+        ?'The corrected case is fine, but '+last.blocked_cases+' other cases still fail. Apply their pre-written corrections and run the checks again.'
+        :allCorrected&&!last
+          ?'All 12 pre-written corrections are staged. Run the regression checks to confirm they pass.'
+          :fi&&!last
+            ?'This case is corrected. Now test all 12 traces — fixing one case does not automatically fix the others.'
+            :inj&&!last
+              ?'You reintroduced a defect. Run the regression checks: the release should be blocked.'
+              :'The agent used outdated evidence. Apply a pre-written, fictional expert correction to this case.';
+    const step=last?.passed?4:allCorrected||fi||hasFix?3:1;
+    for(const i of [1,2,3])$('guide-step-'+i).className='guided-step'+(step>i?' complete':step===i?' active':'');
+
+    // Primary guided button state is owned by the progressive-disclosure block above.
     $('inject-fault').disabled=!fi;$('clear-fault').hidden=!inj;$('incident-alert').textContent=notice;
     const passed=data.cases.filter(x=>m.result(x.id).pass).length;
     $('metric-pass').textContent=passed+' / '+data.cases.length;$('metric-block').textContent=data.cases.length-passed;
