@@ -200,7 +200,7 @@
     }else $('release-result').hidden=true;
     $('release-a').setAttribute('aria-pressed',String(m.state.corrected.size===0));
 
-    $('current-release').textContent=m.state.corrected.size+'/12 corrected fixtures staged locally'+(inj?' · fault injection active':'');
+    $('current-release').textContent=fixedPlanted+'/5 planted error cases have sample corrections; '+waiting.length+' traces remain blocked'+(inj?' · reintroduced test fault active':'')+'.';
    }
    host.addEventListener('click',event=>{
     const remaining=event.target.closest('[data-correct-case]');
