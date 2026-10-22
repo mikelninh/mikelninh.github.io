@@ -315,7 +315,7 @@ let jevBusy=false,jevHalt=false,jevMessage='';
 const jevCases=()=>JEV_IDS.map(id=>fixtures.find(x=>x.id===id)).filter(Boolean);
 const jevDone=()=>jevCases().filter(x=>results[x.id]?.jev?.ok===true);
 function jevRestore(){
- try{const saved=JSON.parse(localStorage.getItem('return-loop-jev-scores')||'{}');for(const x of jevCases()){if(saved[x.id]?.id===x.id&&saved[x.id]?.provider==='jev'&&saved[x.id]?.ok){results[x.id]??={};results[x.id].jev=saved[x.id];}}}catch{}
+ try{const saved=JSON.parse(localStorage.getItem('return-loop-jev-scores')||'{}');for(const x of jevCases()){if(saved[x.id]?.id===x.id&&saved[x.id]?.provider==='jev'&&saved[x.id]?.ok&&Number.isFinite(saved[x.id]?.latency_ms)&&CLASSES.every(c=>Number.isFinite(saved[x.id]?.scores?.[c])&&saved[x.id].scores[c]>=0&&saved[x.id].scores[c]<=1)){results[x.id]??={};results[x.id].jev=saved[x.id];}}}catch{}
 }
 function jevSave(){
  try{localStorage.setItem('return-loop-jev-scores',JSON.stringify(Object.fromEntries(jevDone().map(x=>[x.id,results[x.id].jev]))));}catch{}
@@ -341,11 +341,13 @@ function jevShow(){
   if(!x.gold.includes('quality')&&j.includes('quality'))jf++;
  }
  const avg=Math.round(done.reduce((a,x)=>a+results[x.id].jev.latency_ms,0)/n);
+ const costs=done.map(x=>results[x.id].jev.estimated_cost_usd);
+ const costLabel=costs.every(x=>typeof x==='number'&&Number.isFinite(x))?' · geschätzte Jev-Kosten $'+costs.reduce((a,b)=>a+b,0).toFixed(6):' · Kosten nicht vollständig gemeldet';
  $('jev-results').replaceChildren(
  el('p','', 'Exakte Zuordnung: Regeln '+rc+'/'+n+' · Jev '+jc+'/'+n+' · archiviertes LLM '+lc+'/'+n),
  el('p','', 'Übersehene Qualitätshinweise: Regeln '+rm+' · Jev '+jm),
  el('p','', 'Falsche Qualitätsalarme: Regeln '+rf+' · Jev '+jf),
- el('p','paired-note','Gemessene Jev-Latenz Ø '+avg+' ms. Acht bekannte synthetische Fälle – kein unabhängiger Benchmark.')
+ el('p','paired-note','Gemessene Jev-Latenz Ø '+avg+' ms'+costLabel+'. Bekannte synthetische Fälle – kein unabhängiger Benchmark; LLM-Antworten früher gemessen.')
  );
 }
 
