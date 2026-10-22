@@ -71,5 +71,5 @@ test('recorded H7 160-call 1.13 vs 1.14 version pins and costs correctly reporte
  assert.ok(Math.abs(b.cost.both_versions_estimated_usd-103736*.042/1e6)<1e-10);
  assert.match(html,/jev-h2-h6\.json/);
  assert.match(html,/jev-h7\.json/);
- assert.match(html,/not its newer releases/)===null;
+ assert.doesNotMatch(html,/not its newer releases/);
 });
