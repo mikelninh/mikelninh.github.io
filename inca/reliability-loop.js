@@ -69,7 +69,36 @@
   const host=doc.getElementById('loop-app');if(!host)return;
   const $=id=>doc.getElementById(id);
   fetch('./reliability-loop-data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Evidence unavailable');return r.json();}).then(data=>{
-   const m=createMachine(data);let notice='Choose a trace. Inspect evidence, apply the reviewed correction and run the release gate.';
+   const m=createMachine(data);
+   let notice='Inspect the fictional error, apply one saved example correction, then test all 12.';
+   let reviewQueueOpen=false;
+   // Explain exactly which saved fields are swapped. No LLM/human work occurs on click.
+   function changeSummary(c){
+     const a=c.before.trace,b=c.after.trace;
+     if(c.fault_type==='invented_quote')return {
+       title:'The agent invented a quotation',
+       before:'Claimed: "'+a.quote+'"',
+       after:'Replace with an exact quote from '+b.source_id+'.'
+     };
+     if(c.fault_type==='external_action')return {
+       title:'The agent requested an unauthorized payment',
+       before:'Requested action: '+a.external_action,
+       after:'Remove the payment request; action becomes '+b.external_action+'.'
+     };
+     if(c.fault_type==='missing_citation')return {
+       title:'The agent quoted text without a source',
+       before:'Source reference: missing',
+       after:'Attach the verified source: '+b.source_id+'.'
+     };
+     if(c.fault_type==='skipped_verifier')return {
+       title:'The agent skipped source verification',
+       before:'Tool sequence: '+a.steps.join(' → '),
+       after:'Restore verify_source before suggest_handoff.'
+     };
+     return {title:'The agent used an outdated policy',
+       before:'Selected revision: '+a.selected_policy_revision,
+       after:'Replace the cited source with '+b.source_id+' (revision '+b.selected_policy_revision+').'};
+   }
    function render(){
     const c=m.getCase(),v=m.selectedSnapshot(),out=m.result(),t=v.trace,fi=m.state.corrected.has(c.id),inj=m.state.injections[c.id];
     $('case-list').innerHTML=data.cases.map(x=>{const ok=m.result(x.id).pass,sel=x.id===c.id;
@@ -109,25 +138,48 @@
         :c.fault_description+' The checker blocks the next step for review.';
     const last=m.state.lastSuite;
     const hasFix=m.state.corrected.size>0;
+    const planted=data.cases.filter(x=>x.fault_type!=='none');
+    const fixedPlanted=planted.filter(x=>m.state.corrected.has(x.id)&&m.result(x.id).pass).length;
+    const waiting=data.cases.filter(x=>!m.result(x.id).pass);
+    const queueCases=planted.filter(x=>x.id!=='CASE-027');
+    $('remaining-review').hidden=!(reviewQueueOpen && !last?.passed);
+    $('remaining-review-title').textContent=waiting.length
+      ?waiting.length+' other fictional case'+(waiting.length===1?' still needs':'s still need')+' fixes'
+      :'All five example fixes are staged';
+    $('remaining-progress').textContent=fixedPlanted+' / '+planted.length+' planted faults corrected';
+    $('remaining-list').innerHTML=queueCases.map(x=>{
+      const corrected=m.state.corrected.has(x.id)&&m.result(x.id).pass;
+      const change=changeSummary(x);
+      return '<article class="review-case'+(corrected?' resolved':'')+'">' +
+        '<div><small>'+escapeHTML(x.id)+' · '+escapeHTML(x.kind)+'</small>' +
+        '<h5>'+escapeHTML(change.title)+'</h5>' +
+        '<p class="review-diff"><span class="before">Before:</span> '+escapeHTML(change.before)+'<br>' +
+        '<span class="after">Sample correction:</span> '+escapeHTML(change.after)+'</p></div>' +
+        (corrected?'<span class="review-ok">✓ Sample fix staged</span>':
+          '<button type="button" class="btn secondary small" data-correct-case="'+escapeHTML(x.id)+'" aria-label="Apply sample fix for '+escapeHTML(x.id)+'">Apply sample fix →</button>')+
+        '</article>';
+    }).join('');
+    $('remaining-next').textContent=waiting.length
+       ?waiting.length+' fictional case'+(waiting.length===1?' remains':'s remain')+' blocked. Stage the fixes above; then rerun the same 12-case check.'
+       :'All five planted mistakes now have saved example corrections. Rerun the 12-case regression test to verify them.';
+    $('apply-fix').textContent=inj?'Restore the saved correction →':'Apply this sample correction →';
     const allCorrected=m.state.corrected.size===data.cases.length;
     $('apply-fix').hidden=(fi&&!inj)||(!inj&&out.pass);
     $('apply-fix').disabled=(!inj&&out.pass);
-    $('apply-fix').textContent=inj?'Apply the documented correction again →':'Apply the documented fix →';
     $('guided-gate').disabled=!hasFix;
-    $('guided-gate').hidden=!!(last&&!last.passed&&!allCorrected);
-    $('release-b').hidden=!(last&&!last.passed&&hasFix&&!allCorrected);
-    $('guided-restart').hidden=!hasFix&&!last;
+    $('guided-gate').hidden=!!(reviewQueueOpen&&waiting.length>0);
+    $('guided-restart').hidden=!hasFix&&!last&&!reviewQueueOpen;
     $('guided-hint').textContent=last?.passed
-      ?'All 12 fictional traces passed. To prove this check catches a recurring problem, open Engineer details and inject a test fault.'
-      :last&&!last.passed&&!allCorrected
-        ?'The corrected case is fine, but '+last.blocked_cases+' other cases still fail. Apply their pre-written corrections and run the checks again.'
-        :allCorrected&&!last
-          ?'All 12 pre-written corrections are staged. Run the regression checks to confirm they pass.'
+      ?'Passed: all 12 fictional traces meet these six checks. This does not approve or pay any claim.'
+      :reviewQueueOpen&&waiting.length
+        ?'Only the first example was fixed. The test found '+waiting.length+' other independent mistakes. Below you can see and stage their corrections one by one.'
+        :reviewQueueOpen&&!waiting.length
+          ?'The five example corrections are staged, but not yet retested. Click the regression test above.'
           :fi&&!last
-            ?'This case is corrected. Now test all 12 traces — fixing one case does not automatically fix the others.'
+            ?'CASE-027 now cites the applicable policy. Next, check the other 11 fictional traces. Fixing this case does not fix the others.'
             :inj&&!last
-              ?'You reintroduced a defect. Run the regression checks: the release should be blocked.'
-              :'The agent used outdated evidence. Apply a pre-written, fictional expert correction to this case.';
+              ?'A fault was reintroduced. Run the same checks to confirm it is blocked.'
+              :'The quoted text exists, but comes from an outdated policy. This button swaps in a saved fictional corrected trace; no person or AI reviews the case on click.';
     const step=last?.passed?4:allCorrected||fi||hasFix?3:1;
     for(const i of [1,2,3])$('guide-step-'+i).className='guided-step'+(step>i?' complete':step===i?' active':'');
 
@@ -140,25 +192,47 @@
     if(m.state.lastSuite){const r=m.state.lastSuite;$('release-result').hidden=false;
       $('release-result').className='release-result '+(r.passed?'success':'failure');
       $('release-headline').textContent=r.passed?'PASS · 12/12 gates clear':'BLOCKED · '+r.blocked_cases+' cases need review';
-      $('release-detail').textContent=r.passed_cases+'/12 passed. '+r.planted_faults_exposed+'/'+r.seeded_faults+' seeded errors corrected or blocked. No claims or payments authorized.';
-      $('release-failures').textContent=r.passed?'All six structural checks passed on every corrected trace.':r.rows.filter(x=>!x.pass).map(x=>x.id).join(' · ');
+      $('release-detail').textContent=r.passed_cases+'/12 fictional traces passed. '+fixedPlanted+'/'+planted.length+
+        ' planted errors have sample corrections; '+r.blocked_cases+' cases still fail the checks. No claim/payment action.';
+      $('release-failures').textContent=r.passed
+        ?'All 12 traces passed the six structural checks. Further claim checks would still be required.'
+        :'Failed cases: '+r.rows.filter(x=>!x.pass).map(x=>x.id).join(', ')+'. Each must be fixed and retested.';
     }else $('release-result').hidden=true;
     $('release-a').setAttribute('aria-pressed',String(m.state.corrected.size===0));
-    $('release-b').setAttribute('aria-pressed',String(m.state.corrected.size===data.cases.length&&!Object.keys(m.state.injections).length));
+
     $('current-release').textContent=m.state.corrected.size+'/12 corrected fixtures staged locally'+(inj?' · fault injection active':'');
    }
    host.addEventListener('click',event=>{
+    const remaining=event.target.closest('[data-correct-case]');
+    if(remaining){
+      const id=remaining.getAttribute('data-correct-case');
+      try{
+        const item=m.getCase(id);
+        if(item.fault_type==='none')throw Error('No faulty trace to correct');
+        if(!m.result(id).pass){
+          m.select(id);
+          m.applyCorrection(); // one pre-authored fictional replacement, no side effects
+          m.select('CASE-027'); // keep the introductory story in focus
+          notice='Staged the saved correction for '+id+'. Run the complete test after all remaining fixes.';
+        }
+        render();
+      }catch(e){notice='Could not apply sample correction: '+String(e.message||e);render();}
+      return;
+    }
     const choice=event.target.closest('[data-case]');if(choice){m.select(choice.getAttribute('data-case'));notice='Selected '+m.state.selected+'. Inspect the six guardrails.';render();return;}
     const command=event.target.closest('[data-command]');if(!command)return;
     try{
      const key=command.getAttribute('data-command');
      if(key==='fix'){m.applyCorrection();notice='Pre-authored expert correction replayed locally. Run the gate to verify.';}
-     else if(key==='release-a'){m.loadReleaseA();notice='Loaded release A: five deliberately faulty synthetic traces.';}
-     else if(key==='release-b'){m.loadReleaseB();notice='Loaded pre-authored release B. Run the regression gate to verify all twelve.';}
-     else if(key==='gate'){const x=m.suite();notice=x.passed?'Every trace passed the deterministic suite.':'The regression gate blocked unverified traces.';}
+     else if(key==='release-a'){m.loadReleaseA();reviewQueueOpen=false;notice='Original fictional release A restored. All sample corrections undone.';}
+     else if(key==='gate'){
+       const x=m.suite();
+       reviewQueueOpen=!x.passed&&m.result('CASE-027').pass;
+       notice=x.passed?'All 12 fictional traces passed the structural checks.':'The regression test blocked '+x.blocked_cases+' unfinished fictional cases.';
+     }
      else if(key==='inject'){m.inject($('fault-select').value);notice='Fault reintroduced. Run the gate to see release blocked.';}
      else if(key==='clear'){m.clearInjection();notice='Injected fault removed. Re-run gate to verify.';}
-     else if(key==='reset'){m.loadReleaseA();m.select('CASE-027');notice='Lab reset to initial fictional release A.';}
+     else if(key==='reset'){m.loadReleaseA();m.select('CASE-027');reviewQueueOpen=false;notice='Demo restarted. All sample fixes undone; five planted errors restored.';}
      render();
     }catch(e){notice='Action failed: '+String(e.message||e);render();}
    });
