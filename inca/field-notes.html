@@ -39,7 +39,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 50px;font-size:12px;color
   <h1>Two documents.<br>Two dates.<br><span style="color:#668d64">One clear next step.</span></h1>
   <p class="intro">A cancellation email and a travel provider's confirmation disagree. A Claims Expert needs to see <strong>what conflicts, where it came from, and what to do next</strong> — not another confident AI guess.</p>
   <p class="hero-explain">I built a small fictional claims workflow that finds the relevant evidence, verifies source quotations independently, and prepares a human handoff. No claim is approved or paid.</p>
-  <div class="ctas"><a class="cta" href="/inca/agent-ops.html">Try the recorded demo · 60 seconds ↗</a><a class="cta alt" href="#evidence">See the evidence ↓</a></div>
+  <div class="ctas"><a class="cta" href="/inca/agent-ops.html">Try the recorded demo · 60 seconds ↗</a><a class="cta alt" href="/inca/reliability-loop.html">New · Reliability Loop ↗</a></div>
   <div class="hero-evidence"><span class="mark" aria-hidden="true">✓</span><span><strong>5 of 6</strong> real GPT responses passed quote verification; <strong>1</strong> was safely blocked.</span></div>
  </div>
  <aside class="case-card" aria-label="Example fictional cancellation documents and human-review outcome">
@@ -65,8 +65,20 @@ footer{border-top:1px solid var(--line);padding:28px 0 50px;font-size:12px;color
   <div class="proofunit"><strong>968</strong><small>Real provider requests in H3/H4, H7 and H1/H5<br>earlier pilots excluded</small></div>
  </div>
 </section>
-<section class="section separate">
-<div class="eyebrow">02 · One project, three different readers</div><h2>Choose the detail you care about.</h2>
+<section class="section separate" id="reliability">
+ <div class="eyebrow">02 · The next challenge · Operating AI at scale</div>
+ <h2>INCA already has the agents.<br>What happens when one goes wrong?</h2>
+ <div class="two">
+ <div class="panel featured"><div class="eyebrow" style="color:#c7e4ca">NEW · CLAIMSOPS RELIABILITY LOOP</div><h3 style="font-size:26px">One exception. One correction. A safer next release.</h3>
+ <p>A simulated agent cites an outdated policy: the quote is real, but the version is wrong. Trace the mistake, stage a pre-authored human correction, and run an executable regression gate. Then inject the mistake again and watch the gate stop the release.</p>
+ <div class="links"><a href="/inca/reliability-loop.html">Try the 90-second investigation ↗</a></div></div>
+ <div class="panel"><div class="eyebrow">What this demonstrates</div><h3>Beyond another claims bot.</h3>
+ <p>I don't know which reliability controls INCA already has. Rather than rebuilding its agents, I built a tiny, inspectable example of how I would investigate exceptions and make recurring errors testable.</p>
+ <p class="small">12 entirely fictional traces · 5 planted failures · 6 deterministic checks · 0 real insurer actions or new LLM API calls. The corrected release passes 12/12 scripted checks; this is not a production performance claim.</p></div>
+ </div>
+ </section>
+ <section class="section separate">
+<div class="eyebrow">03 · One project, three different readers</div><h2>Choose the detail you care about.</h2>
 <div class="persona" role="tablist" aria-label="Choose your perspective">
  <button id="tab-hiring" type="button" role="tab" aria-selected="true" aria-controls="pane-hiring" data-show="hiring">Hiring manager · 60 sec</button>
  <button id="tab-engineer" type="button" role="tab" aria-selected="false" aria-controls="pane-engineer" data-show="engineer" tabindex="-1">Engineer · evidence & costs</button>
@@ -103,7 +115,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 50px;font-size:12px;color
  </div>
 </section>
 <section id="costs" class="section separate">
- <div class="eyebrow">03 · What about the money?</div>
+ <div class="eyebrow">04 · What about the money?</div>
  <div class="split-note"><div><h2>Fast decisions can be cheap. Bad decisions are not.</h2><p>Jev's inference was inexpensive in these API tests. But putting Jev before an optional GPT review cost <strong>more</strong> on my six and 240-case experiments — because it didn't save enough downstream work. That's the business question I care about.</p></div>
  <div class="panel"><div class="eyebrow">Measured tokens · estimated provider rates</div><h3 style="font-size:37px;margin:11px 0 4px">$0.04819</h3>
  <p class="small" style="margin-top:4px">Estimated inference cost for 968 recorded requests across the 300-case H3/H4 study, 160-call H7 version trial and 208-call H1/H5 decision study. Earlier pilots, infrastructure, reviewing and insurer case handling excluded.</p>
@@ -111,7 +123,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 50px;font-size:12px;color
  <p class="ethics">These are rate-card calculations from recorded token counts, not paid invoices. They do not demonstrate euros saved at an insurance company. The three included research studies are identified explicitly; earlier pilot call costs are excluded.</p>
 </section>
 <section class="section separate">
- <div class="eyebrow">04 · An engineering boundary</div><h2>AI suggests. Evidence and people decide.</h2>
+ <div class="eyebrow">05 · An engineering boundary</div><h2>AI suggests. Evidence and people decide.</h2>
  <div class="two">
   <div class="panel"><h3>I would automate</h3><p>Structured evidence gathering, source checks, missing-information drafts, failure replay, safe specialist routing, operational dashboards and regression tests.</p></div>
   <div class="panel"><h3>I would not automate without explicit authority</h3><p>Coverage determinations, liability acceptance, payments, consequential customer communications, or silent decisions based on unverified model confidence.</p></div>
@@ -119,7 +131,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 50px;font-size:12px;color
  <p class="ethics">This is a portfolio experiment using wholly fictional documents and code executed in a controlled environment. The model comparisons are exploratory, developer-authored experiments; they are not expert-reviewed real-claims benchmarks or evidence of production reliability. AI tools helped me build and test this work; I remain accountable for the approach, checks, interpretations and what is presented here.</p>
 </section>
 <section class="section separate" style="padding-bottom:45px">
- <div class="eyebrow">05 · The invitation</div><h2>I'd love to work on a real problem together.</h2>
+ <div class="eyebrow">06 · The invitation</div><h2>I'd love to work on a real problem together.</h2>
  <p class="intro">Show me a workflow that frustrates the Claims Experts. I'll ask questions, try to understand it, and help turn what we learn into a small, testable improvement.</p>
  <div class="ctas"><a class="cta" href="/inca/agent-ops.html">Try the main work sample ↗</a><a class="cta alt" href="/inca/first-30-days.html">What I'd test first ↗</a></div>
 </section>
