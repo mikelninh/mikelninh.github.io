@@ -1,0 +1,46 @@
+{
+  "schema": "INCA-JEV-H2-H6-EXPLORATORY",
+  "source_run": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/39691808881",
+  "source_artifact": "inca-jev-v2-300-complete-39691808881",
+  "dev_count": 60,
+  "holdout_count": 240,
+  "seeded_faults_holdout": 49,
+  "analysis_status": "POSTHOC_REPLAY_OF_ACTUAL_300_JEV_AND_300_GPT_RESPONSES",
+  "repeat_holdout_warning": "The frozen 240-case holdout had previously been inspected before this additional H2/H6 analysis; not a fresh independent blind test.",
+  "h2": {
+    "dev_selected_threshold": 0.13,
+    "holdout_optional_gpt_calls_all": 240,
+    "holdout_optional_gpt_calls_with_jev": 230,
+    "calls_skipped": 10,
+    "saved_fraction": 0.041666666666666664,
+    "critical_found": 44,
+    "critical_missed": 5,
+    "critical_recall": 0.8979591836734694,
+    "goal_met": false,
+    "gpt_only_cost_est_usd": 0.0207132,
+    "jev_all_cost_est_usd": 0.008078364,
+    "selected_gpt_cost_est_usd": 0.0198717,
+    "jev_first_cost_est_usd": 0.027950064,
+    "extra_cost_est_usd": 0.007236864,
+    "interpretation": "A Jev filter skipped only 10 optional audits and missed five seeded critical faults, while increasing model costs; not recommended for this optional-audit design."
+  },
+  "h6": {
+    "jev_brier": 0.07497333333333334,
+    "gpt_brier": 0.19020833333333334,
+    "base_rate_brier": 0.16248263888888892,
+    "jev_ece_five_bins": 0.1244166666666667,
+    "gpt_ece_five_bins": 0.12416666666666666,
+    "brier_improvement_vs_base": 0.5385763436264559,
+    "calibration_ece_goal": 0.1,
+    "calibration_goal_met": false
+  },
+  "cost_basis": "Published list-price Oct 2026: Jev $0.042/million input; GPT-4o mini $0.15/million input and $0.60/million output. Derived from recorded provider tokens, not invoices. Excludes human review, infrastructure and end-to-end processing.",
+  "scope": "Only optional trace QA, not insurance coverage, mandatory checks, automatic payment or customer-facing action.",
+  "limitations": [
+    "Previously inspected holdout means this is exploratory posthoc analysis, not new independent holdout.",
+    "Risk scores and seeds refer to planted artificial trace faults, not production insurer outcomes.",
+    "The GPТ judge was not selectively invoked in real time; call skipping is counterfactual on recorded API answers.",
+    "Scores were not independently calibrated; dev set contains only 11 positives.",
+    "No human review costs or work minutes were measured."
+  ]
+}
