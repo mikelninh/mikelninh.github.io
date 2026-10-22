@@ -172,7 +172,7 @@
     $('guided-hint').textContent=last?.passed
       ?'Passed: all 12 fictional traces meet these six checks. This does not approve or pay any claim.'
       :reviewQueueOpen&&waiting.length
-        ?'Only the first example was fixed. The test found '+waiting.length+' other independent mistakes. Below you can see and stage their corrections one by one.'
+        ?fixedPlanted+' of '+planted.length+' planted mistakes now have sample fixes; '+waiting.length+' other traces still fail. Choose and stage the remaining fixes individually below.'
         :reviewQueueOpen&&!waiting.length
           ?'The five example corrections are staged, but not yet retested. Click the regression test above.'
           :fi&&!last
