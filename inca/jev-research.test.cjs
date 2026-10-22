@@ -47,8 +47,8 @@ test('research page and main-app link are transparent and understandable',()=>{
 test('posthoc H2 filter savings and costs audited against real prior model requests',()=>{
  const a=JSON.parse(fs.readFileSync(path.join(__dirname,'jev-h2-h6.json'),'utf8'));
  assert.equal(a.source_run,'https://github.com/mikelninh/mikelninh.github.io/actions/runs/39691808881');
- assert.equal(a.h2.holdout_gpt_calls_baseline,240);
- assert.equal(a.h2.holdout_gpt_calls_with_jev,230);
+ assert.equal(a.h2.holdout_optional_gpt_calls_all,240);
+ assert.equal(a.h2.holdout_optional_gpt_calls_with_jev,230);
  assert.equal(a.h2.critical_missed,5);
  assert.equal(a.h2.critical_found,44);
  assert.equal(a.h2.goal_met,false);
