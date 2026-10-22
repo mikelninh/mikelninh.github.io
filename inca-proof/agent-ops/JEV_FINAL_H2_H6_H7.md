@@ -46,6 +46,25 @@ A separate genuinely new paired fictional-language test is implemented at [jev_h
 
 These constructed parallel language templates are *not professional translations or domain-expert insurance labels*. No full-case insurance coverage or payment decisions are made.
 
+### H7 results — actual pinned models, October 22 2026
+
+[160-request real GitHub Actions run](https://github.com/mikelninh/mikelninh.github.io/actions/runs/39751482592) · [Published machine-readable results](https://mikelninh.github.io/inca/jev-h7.json). The TypeSafe responses confirmed the exact requested pinned revisions: `jev-1.13.0` and `jev-1.14.0`. Zero errors.
+
+| 40 invented parallel scenario pairs per language | Jev 1.13 | Jev 1.14 |
+|---|---:|---:|
+| German specialist tool selection | 40/40 | 40/40 |
+| English specialist tool selection | 40/40 | 40/40 |
+| German seeded critical faults found at score ≥0.5 | 15/20 | 15/20 |
+| English seeded critical faults found at score ≥0.5 | 15/20 | 15/20 |
+| German median API time | 59.5 ms | 94.5 ms |
+| English median API time | 57.5 ms | 88.5 ms |
+| German Brier (lower better) | 0.123815 | 0.125683 |
+| English Brier (lower better) | 0.119552 | 0.122588 |
+
+On this small set, **no accuracy gain** from the newer revision. Latency is a one-run, serial-order observation and cannot establish a slower architecture. No professional translations or insurance expert labels were involved.
+
+**H7 estimated provider inference cost:** 51,868 measured input tokens per version × $0.042/million = **$0.002178456 per version**, **$0.004356912 combined** (rate-card assumption, not invoice).
+
 ### Cost interpretation
 
 Input token costs at dated provider list prices, **not verified invoices**: Jev $0.042/million input (output free), GPT-4o-mini $0.15/million input + $0.60/million output. The old 300+300 call experiment cost an **estimated $0.03569** in combined model inference; it does not measure the actual expenses of insurer workflows or employees. The H2 replay above shows why cheaper decision-token pricing is not sufficient evidence of process savings.

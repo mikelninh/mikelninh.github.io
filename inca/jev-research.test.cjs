@@ -43,3 +43,33 @@ test('research page and main-app link are transparent and understandable',()=>{
  assert.match(parent,/href="\/inca\/jev-research\.html"/);
  assert.match(parent,/<h1>One claim/);
 });
+
+test('posthoc H2 filter savings and costs audited against real prior model requests',()=>{
+ const a=JSON.parse(fs.readFileSync(path.join(__dirname,'jev-h2-h6.json'),'utf8'));
+ assert.equal(a.source_run,'https://github.com/mikelninh/mikelninh.github.io/actions/runs/39691808881');
+ assert.equal(a.h2.holdout_optional_gpt_calls_all,240);
+ assert.equal(a.h2.holdout_optional_gpt_calls_with_jev,230);
+ assert.equal(a.h2.critical_missed,5);
+ assert.equal(a.h2.critical_found,44);
+ assert.equal(a.h2.goal_met,false);
+ assert.equal(a.h6.calibration_goal_met,false);
+ assert.ok(a.h2.jev_first_cost_est_usd>a.h2.gpt_only_cost_est_usd);
+ assert.match(a.repeat_holdout_warning,/previously been inspected/i);
+});
+test('recorded H7 160-call 1.13 vs 1.14 version pins and costs correctly reported',()=>{
+ const b=JSON.parse(fs.readFileSync(path.join(__dirname,'jev-h7.json'),'utf8'));
+ assert.equal(b.source_run,'https://github.com/mikelninh/mikelninh.github.io/actions/runs/39751482592');
+ assert.equal(b.real_provider_calls,160);assert.equal(b.api_errors,0);
+ for(const version of ['jev-1.13.0','jev-1.14.0']){
+  for(const language of ['de','en']){
+   const v=b.models[version][language];
+   assert.equal(v.tool_correct,40);
+   assert.equal(v.critical_found_at_0_5,15);
+   assert.equal(v.critical_faults,20);
+  }
+ }
+ assert.ok(Math.abs(b.cost.both_versions_estimated_usd-103736*.042/1e6)<1e-10);
+ assert.match(html,/jev-h2-h6\.json/);
+ assert.match(html,/jev-h7\.json/);
+ assert.doesNotMatch(html,/not its newer releases/);
+});

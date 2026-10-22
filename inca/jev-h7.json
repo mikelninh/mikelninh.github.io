@@ -1,0 +1,74 @@
+{
+  "schema": "INCA-JEV-H7-BILINGUAL-REAL-API",
+  "source_run": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/39751482592",
+  "artifact_name": "inca-jev-h7-bilingual-39751482592",
+  "test_date": "2026-10-22",
+  "model_provenance": "exact pinned model revisions returned by TypeSafe API",
+  "new_concept_cases": 40,
+  "languages": [
+    "de",
+    "en"
+  ],
+  "paired_inputs": 80,
+  "real_provider_calls": 160,
+  "api_errors": 0,
+  "models": {
+    "jev-1.13.0": {
+      "de": {
+        "cases": 40,
+        "tool_correct": 40,
+        "critical_faults": 20,
+        "critical_found_at_0_5": 15,
+        "brier": 0.123815,
+        "median_api_ms": 59.5,
+        "input_tokens": 26529
+      },
+      "en": {
+        "cases": 40,
+        "tool_correct": 40,
+        "critical_faults": 20,
+        "critical_found_at_0_5": 15,
+        "brier": 0.1195525,
+        "median_api_ms": 57.5,
+        "input_tokens": 25339
+      }
+    },
+    "jev-1.14.0": {
+      "de": {
+        "cases": 40,
+        "tool_correct": 40,
+        "critical_faults": 20,
+        "critical_found_at_0_5": 15,
+        "brier": 0.1256825,
+        "median_api_ms": 94.5,
+        "input_tokens": 26529
+      },
+      "en": {
+        "cases": 40,
+        "tool_correct": 40,
+        "critical_faults": 20,
+        "critical_found_at_0_5": 15,
+        "brier": 0.1225875,
+        "median_api_ms": 88.5,
+        "input_tokens": 25339
+      }
+    }
+  },
+  "cost": {
+    "assumed_rate_usd_per_million_input_tokens": 0.042,
+    "jev-1.13.0_estimated_usd": 0.002178456,
+    "jev-1.14.0_estimated_usd": 0.002178456,
+    "both_versions_estimated_usd": 0.004356912,
+    "actual_invoice_known": false
+  },
+  "conclusion": "No measurable specialist-routing or seeded-critical-fault-recall improvement on 40 synthetic EN/DE concept pairs; later revision was slower in this serial run. Cannot establish general model performance, provider speed or multilingual competence.",
+  "caveats": [
+    "All documents invented and parallelized using controlled writing templates, not independent professional translations.",
+    "20 seeded critical tool-trace faults per language, invented by developer.",
+    "40 cases per language are too few for definitive version-quality claims.",
+    "Versions were run serially (1.13 before 1.14); latency differences confounded by time/server load.",
+    "Scoring threshold 0.5 exploratory and not validated for real claims.",
+    "No real claims, customers, payments, coverage determinations or human reviewer costs.",
+    "Actual provider-billed amount is unknown; rate card applied only to measured input tokens."
+  ]
+}
