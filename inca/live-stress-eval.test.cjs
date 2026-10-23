@@ -1,7 +1,7 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const js=fs.readFileSync(path.join(__dirname,'live-stress-eval.js'),'utf8');
-const html=fs.readFileSync(path.join(__dirname,'reliability-loop.html'),'utf8');
+const html=fs.readFileSync(path.join(__dirname,'reliability-loop-archive.html'),'utf8');
 test('new stress results are hidden before real model results exist',()=>{
  assert.ok(html.includes('id="stress-evaluation" hidden'));
  assert.ok(html.includes('live-stress-eval.js'));

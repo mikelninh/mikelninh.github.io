@@ -87,6 +87,7 @@ jobs:
           node --test inca/reliability-loop.test.cjs
           node --test inca/live-model-eval.test.cjs
           node --test inca/live-stress-eval.test.cjs
+          node --test inca/reliability-story.test.cjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site
@@ -145,7 +146,9 @@ jobs:
           fetch_until_ready "$base/inca/first-30-days.html" "If I joined INCA"
           fetch_until_ready "$base/inca/jev-research.html" "Can a small AI find the mistakes that matter?"
           fetch_until_ready "$base/inca/field-notes.html" "What I built."
-          fetch_until_ready "$base/inca/reliability-loop.html" 'id="gate-misses"'
+          fetch_until_ready "$base/inca/reliability-loop.html" 'id="story-proof"'
+          fetch_until_ready "$base/inca/reliability-loop-archive.html" 'id="gate-misses"'
+          fetch_until_ready "$base/inca/reliability-story.js" "INCA independent work sample"
           fetch_until_ready "$base/inca/reliability-loop.js" "IncaReliabilityLoop"
           fetch_until_ready "$base/inca/reliability-loop-data.json" "INCA-RELIABILITY-LOOP-V1"
           fetch_until_ready "$base/inca/jev-h1-h5.json" "INCA-JEV-H1-H5-PUBLIC"

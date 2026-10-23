@@ -1,7 +1,7 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const source=fs.readFileSync(path.join(__dirname,'live-model-eval.js'),'utf8');
-const page=fs.readFileSync(path.join(__dirname,'reliability-loop.html'),'utf8');
+const page=fs.readFileSync(path.join(__dirname,'reliability-loop-archive.html'),'utf8');
 test('real evidence viewer promises no invented default scores',()=>{
  for(const word of ['id="live-eval-app"','id="live-pending"','id="live-data" hidden','id="live-before"',
   'id="live-after"','id="live-docs"','id="live-baseline-json"','id="live-revised-json"','live-model-eval.js'])
