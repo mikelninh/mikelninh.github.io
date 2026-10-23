@@ -1,0 +1,89 @@
+name: INCA Live Model Release Experiment
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'inca-proof/model-eval/RELEASE_EXPERIMENT_REQUEST.md'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: inca-real-model-release-once
+  cancel-in-progress: false
+jobs:
+  compare:
+    name: Recorded OpenAI dev and holdout comparison
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout frozen prompts and invented cases
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Free deterministic tests and dry-run
+        run: |
+          set -euo pipefail
+          python -m unittest discover inca-proof/model-eval -p 'test_*.py' -v
+          python inca-proof/model-eval/release_experiment.py --mode dry-run
+      - name: Forty real OpenAI model requests on fictional claims (billable)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::error::Missing OPENAI_API_KEY secret; no model calls made."
+            exit 1
+          fi
+          python inca-proof/model-eval/release_experiment.py --mode live --out inca/live-model-eval.json
+          python - <<'PY'
+          import json
+          r=json.load(open("inca/live-model-eval.json",encoding="utf-8"))
+          assert r["schema"]=="INCA-LIVE-RELEASE-EVAL-1"
+          assert r["total_model_calls_planned"]==40
+          assert len(r["rows"])==40 and r["all_api_or_schema_errors"]==0
+          assert all(r["metrics"][split][v]["cases"]==10 for split in ("dev","holdout") for v in ("baseline","revised"))
+          print("40 real model outputs verified; no API or schema errors.")
+          PY
+      - name: Attach full fictional output for audit even when live run is incomplete
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: inca-live-model-experiment
+          path: inca/live-model-eval.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Commit only the complete verified report
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add inca/live-model-eval.json
+          if git diff --cached --quiet; then
+            echo "Same measured report, nothing to commit"
+          else
+            git commit -m "Publish recorded OpenAI fictional claims evaluation [skip ci]"
+            published=false
+            for attempt in $(seq 1 15); do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                published=true
+                break
+              fi
+              echo "Concurrent push; retry $attempt/15"
+              sleep 2
+            done
+            if [ "$published" != "true" ]; then
+              echo "::error::Could not safely publish verified model responses"
+              exit 1
+            fi
+          fi
+      - name: Trigger Pages with measured fictional model output
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run pages.yml --ref main
