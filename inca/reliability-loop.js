@@ -152,44 +152,48 @@
     const fixedPlanted=planted.filter(x=>m.state.corrected.has(x.id)&&m.result(x.id).pass).length;
     const waiting=data.cases.filter(x=>!m.result(x.id).pass);
     const queueCases=planted.filter(x=>x.id!=='CASE-027');
-    $('remaining-review').hidden=!(reviewQueueOpen && !last?.passed);
-    $('remaining-review-title').textContent=waiting.length
-      ?waiting.length+' other fictional case'+(waiting.length===1?' still needs':'s still need')+' fixes'
-      :'All five example fixes are staged';
-    $('remaining-progress').textContent=fixedPlanted+' / '+planted.length+' planted faults corrected';
-    $('remaining-list').innerHTML=queueCases.map(x=>{
-      const corrected=m.state.corrected.has(x.id)&&m.result(x.id).pass;
-      const change=changeSummary(x);
-      return '<article class="review-case'+(corrected?' resolved':'')+'">' +
-        '<div><small>'+escapeHTML(x.id)+' · '+escapeHTML(x.kind)+'</small>' +
-        '<h5>'+escapeHTML(change.title)+'</h5>' +
-        '<p class="review-diff"><span class="before">Before:</span> '+escapeHTML(change.before)+'<br>' +
-        '<span class="after">Sample correction:</span> '+escapeHTML(change.after)+'</p></div>' +
-        (corrected?'<span class="review-ok">✓ Sample fix staged</span>':
-          '<button type="button" class="btn secondary small" data-correct-case="'+escapeHTML(x.id)+'" aria-label="Apply sample fix for '+escapeHTML(x.id)+'">Apply sample fix →</button>')+
+    const nextCase=queueCases.find(x=>!m.result(x.id).pass);
+    const guidedQueue=reviewQueueOpen&&!last?.passed;
+    // One plain-language example at a time; engineering details are separately inspectable.
+    $('remaining-review').hidden=!guidedQueue;
+    $('remaining-progress').textContent=fixedPlanted+' / 5 example fixes loaded';
+    $('remaining-review-title').textContent=nextCase?'Next mistake':'All example fixes loaded';
+    const plain={
+      invented_quote:{title:'The AI invented a quote',problem:'That sentence is not in the policy.',fix:'Use the real policy wording.'},
+      external_action:{title:'The AI tried to start a payment',problem:'It is not allowed to do that.',fix:'Remove the payment action.'},
+      missing_citation:{title:'The quote has no source',problem:'Nobody can check where it came from.',fix:'Attach the verified policy document.'},
+      skipped_verifier:{title:'The AI skipped a check',problem:'It did not verify the source first.',fix:'Put the source check back.'}
+    };
+    if(nextCase){
+      const summary=plain[nextCase.fault_type];
+      $('remaining-list').innerHTML='<article class="review-case">'+
+        '<small>'+escapeHTML(nextCase.id)+' · '+escapeHTML(nextCase.kind)+'</small>'+
+        '<h5>'+escapeHTML(summary.title)+'</h5>'+
+        '<p class="review-diff">'+escapeHTML(summary.problem)+'<br><strong>Example fix:</strong> '+escapeHTML(summary.fix)+'</p>'+
+        '<button type="button" class="btn primary" data-correct-case="'+escapeHTML(nextCase.id)+'">Load this example fix →</button>'+
         '</article>';
-    }).join('');
-    $('remaining-next').textContent=waiting.length
-       ?waiting.length+' fictional case'+(waiting.length===1?' remains':'s remain')+' blocked. Stage the fixes above; then rerun the same 12-case check.'
-       :'All five planted mistakes now have saved example corrections. Rerun the 12-case regression test to verify them.';
+    }else{
+      $('remaining-list').innerHTML='<div class="retest"><p>All five example fixes are loaded. Check them again.</p>'+
+        '<button type="button" class="btn primary" data-command="gate">Run final check →</button></div>';
+    }
+    $('remaining-next').textContent='Saved examples only · No AI call or real claim action.';
+    const showFinished=!!last?.passed;
+    $('guided-intro').hidden=guidedQueue||showFinished;
+    $('focus-compare').hidden=guidedQueue||showFinished||!policyCase;
+    $('focus-difference').hidden=guidedQueue||showFinished||policyCase;
+    $('focus-explanation').hidden=guidedQueue||showFinished;
+    $('guided-actions').hidden=guidedQueue||showFinished;
+    $('guided-hint').hidden=guidedQueue||showFinished;
+    $('guided-summary').hidden=!showFinished;
     $('apply-fix').textContent=inj?'Restore the saved correction →':'Apply this sample correction →';
-    const allCorrected=m.state.corrected.size===data.cases.length;
     $('apply-fix').hidden=(fi&&!inj)||(!inj&&out.pass);
     $('apply-fix').disabled=(!inj&&out.pass);
     $('guided-gate').disabled=!hasFix;
-    $('guided-gate').hidden=!!(reviewQueueOpen&&waiting.length>0);
+    $('guided-gate').hidden=guidedQueue;
     $('guided-restart').hidden=!hasFix&&!last&&!reviewQueueOpen;
-    $('guided-hint').textContent=last?.passed
-      ?'Passed: all 12 fictional traces meet these six checks. This does not approve or pay any claim.'
-      :reviewQueueOpen&&waiting.length
-        ?fixedPlanted+' of '+planted.length+' planted mistakes now have sample fixes; '+waiting.length+' other traces still fail. Choose and stage the remaining fixes individually below.'
-        :reviewQueueOpen&&!waiting.length
-          ?'The five example corrections are staged, but not yet retested. Click the regression test above.'
-          :fi&&!last
-            ?'CASE-027 now cites the applicable policy. Next, check the other 11 fictional traces. Fixing this case does not fix the others.'
-            :inj&&!last
-              ?'A fault was reintroduced. Run the same checks to confirm it is blocked.'
-              :'The quoted text exists, but comes from an outdated policy. This button swaps in a saved fictional corrected trace; no person or AI reviews the case on click.';
+    $('guided-hint').textContent=fi&&!last
+      ?'This example now uses the right policy. Check all 12 cases to find other mistakes.'
+      :'The quote is real, but the policy version is wrong. This button loads a saved example; it does not call AI.';
     const step=last?.passed?4:(reviewQueueOpen&&waiting.length)?2:(hasFix?3:1);
     for(const i of [1,2,3])$('guide-step-'+i).className='guided-step'+(step>i?' complete':step===i?' active':'');
 
@@ -199,24 +203,18 @@
     $('metric-pass').textContent=passed+' / '+data.cases.length;$('metric-block').textContent=data.cases.length-passed;
     $('metric-escape').textContent='0*';$('metric-faults').textContent=String(data.metrics.fault_categories_tested);
     $('progress-bar').style.width=(passed/data.cases.length*100)+'%';
-    if(m.state.lastSuite){const r=m.state.lastSuite;$('release-result').hidden=false;
-      $('release-result').className='release-result '+(r.passed?'success':'failure');
-      const firstRepairPassed=m.state.corrected.has('CASE-027')&&m.result('CASE-027').pass;
-      const firstGateBlocked=firstRepairPassed&&!r.passed&&r.blocked_cases===4&&fixedPlanted===1;
-      $('release-headline').textContent=r.passed
-        ?'PASS · All 12 fictional cases passed these checks'
-        :firstGateBlocked
-          ?'BLOCKED · Your first correction worked. Four more cases need fixes.'
-          :'BLOCKED · '+r.blocked_cases+' fictional cases need fixes';
-      $('release-detail').textContent=r.passed
-        ?'12/12 fictional cases pass the six structural checks. Five saved example corrections passed this test. No claim or payment approved.'
-        :firstGateBlocked
-          ?'8/12 fictional cases pass. CASE-027 now passes these checks, but four other invented cases still fail. Review each example below, stage its saved correction and test again. No claim or payment approved.'
-          :r.passed_cases+'/12 fictional cases pass. '+fixedPlanted+'/'+planted.length+
-           ' planted faults have passing example corrections; '+r.blocked_cases+' cases still fail. No claim or payment approved.';
-      $('release-failures').textContent=r.passed
-        ?'All 12 traces passed the six structural checks. Further claim checks would still be required.'
-        :'Failed cases: '+r.rows.filter(x=>!x.pass).map(x=>x.id).join(', ')+'. Each must be fixed and retested.';
+    if(last){
+      // Do not repeat a blocked-state paragraph while the next example is on screen.
+      $('release-result').hidden=guidedQueue;
+      $('release-result').className='release-result '+(last.passed?'success':'failure');
+      $('release-headline').textContent=last.passed
+        ?'12 / 12 checks passed'
+        :last.blocked_cases+' cases still blocked';
+      $('release-detail').textContent=last.passed
+        ?'These fictional examples passed the six safety checks. No real claim was approved or paid.'
+        :'The remaining fictional cases must be corrected and tested again.';
+      $('release-failures').hidden=true;
+      $('release-failures').textContent='';
     }else $('release-result').hidden=true;
     $('release-a').setAttribute('aria-pressed',String(m.state.corrected.size===0));
 
@@ -229,11 +227,13 @@
       try{
         const item=m.getCase(id);
         if(item.fault_type==='none')throw Error('No faulty trace to correct');
+        const expected=data.cases.filter(x=>x.fault_type!=='none'&&x.id!=='CASE-027').find(x=>!m.result(x.id).pass);
+        if(!reviewQueueOpen||!expected||expected.id!==id)throw Error('Please use the next visible example');
         if(!m.result(id).pass){
           m.select(id);
           m.applyCorrection(); // one pre-authored fictional replacement, no side effects
           m.select('CASE-027'); // keep the introductory story in focus
-          notice='Staged the saved correction for '+id+'. Run the complete test after all remaining fixes.';
+          notice='Loaded one saved example correction for '+id+'. No real claim was changed.';
         }
         render();
       }catch(e){notice='Could not apply sample correction: '+String(e.message||e);render();}
@@ -250,7 +250,7 @@
        reviewQueueOpen=!x.passed&&m.result('CASE-027').pass;
        notice=x.passed?'All 12 fictional traces passed the structural checks.':'The regression test blocked '+x.blocked_cases+' unfinished fictional cases.';
      }
-     else if(key==='inject'){m.inject($('fault-select').value);notice='Fault reintroduced. Run the gate to see release blocked.';}
+     else if(key==='inject'){reviewQueueOpen=false;m.inject($('fault-select').value);notice='Fault reintroduced. Run the gate to see release blocked.';}
      else if(key==='clear'){m.clearInjection();notice='Injected fault removed. Re-run gate to verify.';}
      else if(key==='reset'){m.loadReleaseA();m.select('CASE-027');reviewQueueOpen=false;notice='Demo restarted. All sample fixes undone; five planted errors restored.';}
      render();

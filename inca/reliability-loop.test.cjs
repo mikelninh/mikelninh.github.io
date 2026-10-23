@@ -91,53 +91,62 @@ test('guided 90-second path actually updates the page on each button click',asyn
  assert.equal(el('remaining-review').hidden,true);
  assert.equal(el('guided-restart').hidden,true);
  assert.match(page,/Start over — undo all sample fixes/);
+ assert.match(page,/id="guided-summary" hidden/);
  assert.equal(el('metric-block').textContent,5);
  command('fix');
  assert.equal(el('focus-compare-symbol').textContent,'=');
  assert.equal(el('case-phase').textContent,'Saved sample correction staged');
  assert.equal(el('metric-block').textContent,4);
  assert.equal(el('guided-gate').disabled,false);
- assert.match(el('guided-hint').textContent,/Fixing this case does not fix the others/);
+ assert.match(el('guided-hint').textContent,/Check all 12 cases to find other mistakes/);
  command('gate');
- assert.match(el('release-headline').textContent,/BLOCKED · Your first correction worked/);
- assert.match(el('release-detail').textContent,/8\/12 fictional cases pass/);
- assert.match(el('release-detail').textContent,/four other invented cases still fail/);
+ assert.equal(el('release-result').hidden,true,'No duplicate blocked status during the guided queue');
+ assert.equal(el('guided-intro').hidden,true);
+ assert.equal(el('guided-actions').hidden,true);
+ assert.equal(el('guided-hint').hidden,true);
+ assert.equal(el('guided-summary').hidden,true);
  assert.equal(el('remaining-review').hidden,false);
- assert.equal(el('remaining-progress').textContent,'1 / 5 planted faults corrected');
- assert.match(el('remaining-review-title').textContent,/4 other fictional cases still need fixes/);
+ assert.equal(el('remaining-progress').textContent,'1 / 5 example fixes loaded');
+ assert.equal(el('remaining-review-title').textContent,'Next mistake');
+ assert.match(el('remaining-list').innerHTML,/CASE-028/);
+ assert.match(el('remaining-list').innerHTML,/real policy wording/);
+ assert.doesNotMatch(el('remaining-list').innerHTML,/CASE-029|CASE-030|CASE-031/);
  assert.equal(el('guided-gate').hidden,true);
- for(const word of ['CASE-028','CASE-029','CASE-030','CASE-031','invented a quotation','unauthorized payment','without a source','skipped source verification',
-                     'Before:','Sample correction:','Apply sample fix']){
-  assert.ok(el('remaining-list').innerHTML.includes(word),word);
- }
- assert.doesNotMatch(el('release-detail').textContent,/corrected or blocked/);
- assert.match(el('release-detail').textContent,/Review each example below, stage its saved correction and test again/);
  const correct=id=>host.on_click({target:{closest:q=>q==='[data-correct-case]'?{getAttribute:()=>id}:null}});
  const ids=['CASE-028','CASE-029','CASE-030','CASE-031'];
  for(const [i,id] of ids.entries()){
+   assert.match(el('remaining-list').innerHTML,new RegExp(id));
    correct(id);
    assert.equal(el('metric-block').textContent,3-i);
-   assert.equal(el('remaining-progress').textContent,(i+2)+' / 5 planted faults corrected');
+   assert.equal(el('remaining-progress').textContent,(i+2)+' / 5 example fixes loaded');
    assert.equal(el('remaining-review').hidden,false);
    assert.equal(el('focus-case-label').textContent.includes('CASE-027'),true);
+   if(i<3){
+     assert.match(el('remaining-list').innerHTML,new RegExp(ids[i+1]));
+     assert.doesNotMatch(el('remaining-list').innerHTML,new RegExp(id));
+   }
  }
- assert.match(el('remaining-review-title').textContent,/All five example fixes are staged/);
- assert.match(el('remaining-next').textContent,/Rerun the 12-case regression test/);
- assert.equal(el('guided-gate').hidden,false);
+ assert.match(el('remaining-review-title').textContent,/All example fixes loaded/);
+ assert.match(el('remaining-list').innerHTML,/Run final check/);
+ assert.match(el('remaining-next').textContent,/No AI call or real claim action/);
+ assert.equal(el('guided-actions').hidden,true);
  assert.equal(el('release-result').hidden,true);
  command('gate');
- assert.match(el('release-headline').textContent,/PASS/);
- assert.match(el('release-detail').textContent,/Five saved example corrections passed this test/);
+ assert.equal(el('release-headline').textContent,'12 / 12 checks passed');
+ assert.equal(el('release-result').hidden,false);
+ assert.equal(el('release-failures').hidden,true);
+ assert.match(el('release-detail').textContent,/No real claim was approved or paid/);
+ assert.equal(el('guided-summary').hidden,false);
  assert.equal(el('metric-pass').textContent,'12 / 12');
  assert.equal(el('guided-restart').hidden,false);
  el('fault-select').value='wrong_revision';
  command('inject');
  assert.equal(el('metric-block').textContent,1);
  command('gate');
- assert.match(el('release-headline').textContent,/BLOCKED/);
+ assert.match(el('release-headline').textContent,/blocked/);
  command('clear');
  command('gate');
- assert.match(el('release-headline').textContent,/PASS/);
+ assert.equal(el('release-headline').textContent,'12 / 12 checks passed');
  choice('CASE-029');assert.match(el('focus-case-label').textContent,/CASE-029/);
  assert.equal(el('focus-compare').hidden,true);
  assert.equal(el('focus-difference').hidden,false);
