@@ -1,6 +1,7 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
-const core=require('./reliability-story.js');
+const sandbox={exports:{}};new Function('module',fs.readFileSync(path.join(__dirname,'reliability-story.js'),'utf8'))(sandbox);
+const core=sandbox.exports;
 const page=fs.readFileSync(path.join(__dirname,'reliability-loop.html'),'utf8');
 const old=JSON.parse(fs.readFileSync(path.join(__dirname,'live-model-eval.json'),'utf8'));
 const stress=JSON.parse(fs.readFileSync(path.join(__dirname,'live-stress-eval.json'),'utf8'));
