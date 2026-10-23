@@ -22,6 +22,7 @@ test('recorded results produce route changes without double-counting model cost'
  assert.equal(el('stress-after').textContent,'19/20');
  assert.match(el('stress-takeaway').textContent,/1 of 20/);
  assert.match(el('stress-cost').textContent,/20 actual API requests/);
+ assert.match(el('stress-release-gate').textContent,/not a production approval/);
 });
 test('missing stress results stay hidden',async()=>{
  const n={};function el(id){return n[id]??={textContent:'',hidden:true};}

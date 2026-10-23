@@ -149,9 +149,9 @@ main .section{border-top:1px solid var(--line);padding:42px 0 49px}
 <div class="wrap">
   <section class="hero" aria-labelledby="hero-title">
     <div class="eyebrow">Independent AI Operations work sample</div>
-    <h1 id="hero-title">Don't just trust an AI agent.<br><span style="color:#67916c">Test what happens when it's wrong.</span></h1>
-    <p>INCA already has sophisticated AI agents and checks. I explored a different operations challenge: <strong>how do you catch dangerous mistakes without sending every ordinary case to a person?</strong></p>
-    <p>I built a real-model evaluation loop: compare an initial workflow with a safer revision on held-out fictional claims, then inspect the errors, costs and trade-offs.</p>
+    <h1 id="hero-title">The AI missed a request for human help.<br><span style="color:#67916c">Here's how we found it.</span></h1>
+    <p>A fictional claimant explicitly asked to speak with a person. A real AI model missed that signal and would have let the case continue. <strong>Our revised workflow caught it.</strong></p>
+    <p>Then another unseen test revealed a remaining unsafe miss. The result is a working AI evaluation loop that can show improvements <em>and</em> block premature releases.</p>
     <p class="subtle">Real OpenAI calls recorded only when available · Fictional insurance cases · Not connected to INCA systems</p>
     <div class="hero-actions"><a class="btn" href="#live-experiment">Explore the real model run ↓</a><a class="btn text" href="#evidence">See what I built ↗</a></div>
   </section>
@@ -207,6 +207,7 @@ main .section{border-top:1px solid var(--line);padding:42px 0 49px}
       <article><span>AFTER · 20 STRESS CASES</span><strong id="stress-after">—</strong><small>Correct routes</small><p id="stress-after-risks">—</p></article>
     </div>
     <p class="live-interpretation" id="stress-takeaway">—</p>
+    <p class="live-interpretation" id="stress-release-gate">—</p>
     <p class="fine" id="stress-cost">—</p>
     <div class="live-links"><a href="./live-stress-eval.json">Actual stress report ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/model-eval/release_stress.py">Exact routing fix ↗</a></div>
   </div>
