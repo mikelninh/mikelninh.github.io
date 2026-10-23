@@ -61,7 +61,30 @@
    clearInjection(){delete state.injections[state.selected];state.lastSuite=null;}
   };
  }
- const API={inspect,mutate,escapeHTML,createMachine,SCHEMA};
+
+ // Controlled release decision, evaluated on identical developer-labelled synthetic traces.
+ // Correctly escalating unsafe cases is a SUCCESSFUL safety decision, not a software failure.
+ function assessGate(data,strategy){
+   if(!data||data.schema!==SCHEMA||!Array.isArray(data.cases)||data.cases.length!==12)throw Error('Invalid test fixtures');
+   if(!['source_only','review_all','six_checks'].includes(strategy))throw Error('Invalid strategy');
+   const rows=data.cases.map(c=>{
+     const inspected=inspect(c,c.before);
+     const expected=c.fault_type==='none'?'continue':'review';
+     const sourceExists=inspected.checks.find(x=>x.id==='source_reference').pass;
+     const allow=strategy==='review_all'?false:strategy==='source_only'?sourceExists:inspected.pass;
+     const route=allow?'continue':'review';
+     return {id:c.id,fault_type:c.fault_type,expected,route,
+       miss:expected==='review'&&route==='continue',
+       needless:expected==='continue'&&route==='review'};
+   });
+   const misses=rows.filter(r=>r.miss).length,needless=rows.filter(r=>r.needless).length;
+   return {rows,misses,needless,
+     continues:rows.filter(r=>r.route==='continue').length,
+     reviews:rows.filter(r=>r.route==='review').length,
+     passed:misses===0&&needless===0};
+ }
+
+ const API={inspect,mutate,escapeHTML,createMachine,assessGate,SCHEMA};
  if(typeof module!=='undefined'&&module.exports)module.exports=API;
  if(!root||!root.document)return;
  const doc=root.document;
@@ -70,6 +93,40 @@
   const $=id=>doc.getElementById(id);
   fetch('./reliability-loop-data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Evidence unavailable');return r.json();}).then(data=>{
     const m=createMachine(data);
+    let selectedGate='source_only';
+    const faultLabels={
+      wrong_revision:'Wrong policy version',
+      invented_quote:'Invented quotation',
+      external_action:'Unauthorized payment action',
+      missing_citation:'Missing source reference',
+      skipped_verifier:'Skipped source verification'
+    };
+    function renderGate(){
+      const r=assessGate(data,selectedGate);
+      for(const id of ['source_only','review_all','six_checks']){
+        $('gate-'+id).className='gate-choice'+(id===selectedGate?' active':'');
+        $('gate-'+id).setAttribute('aria-pressed',String(id===selectedGate));
+      }
+      $('gate-score').className='gate-score'+(r.passed?' good':'');
+      $('gate-status').textContent=r.passed?'PASSES THESE SYNTHETIC ACCEPTANCE CHECKS':'DO NOT SHIP THIS CANDIDATE';
+      $('gate-headline').textContent=r.passed
+        ?'Known risks caught. Routine work continues.'
+        :r.misses?r.misses+' risky examples would slip through.':'No misses, but too much unnecessary review.';
+      $('gate-description').textContent=r.passed
+        ?'All five planted faults are held for human review; seven unseeded cases continue to other mandatory checks.'
+        :r.misses?'A source can exist and still be outdated, fabricated, or linked to an unsafe action.'
+        :'Sending everything to a person holds known risks, but also prevents ordinary automation.';
+      $('gate-misses').textContent=String(r.misses);
+      $('gate-needless').textContent=String(r.needless);
+      $('gate-routes').textContent=r.continues+' continue further checks · '+r.reviews+' to human review';
+      const subset=r.misses?r.rows.filter(x=>x.miss):r.needless?r.rows.filter(x=>x.needless):r.rows.filter(x=>x.expected==='review');
+      $('gate-examples').innerHTML=subset.map(x=>'<li>'+escapeHTML(x.id)+' · '+escapeHTML(faultLabels[x.fault_type]||'Unseeded safe example')+'</li>').join('');
+    }
+    for(const id of ['source_only','review_all','six_checks']){
+      $('gate-'+id).addEventListener('click',()=>{selectedGate=id;renderGate();});
+    }
+    renderGate();
+
     const firstId='CASE-027',first=m.getCase(firstId);
     let phase='initial',detailId=firstId;
     const baseline=m.suite(); // Deterministic check on all original fixtures, before any correction.
