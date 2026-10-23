@@ -148,9 +148,11 @@ test('guided 90-second path actually updates the page on each button click',asyn
  command('gate');
  assert.equal(el('release-headline').textContent,'12 / 12 checks passed');
  choice('CASE-029');assert.match(el('focus-case-label').textContent,/CASE-029/);
+ // After final success the guided headline stays hidden, while the engineering trace remains usable.
  assert.equal(el('focus-compare').hidden,true);
- assert.equal(el('focus-difference').hidden,false);
+ assert.equal(el('focus-difference').hidden,true);
  assert.match(el('focus-difference').textContent,/payment request/);
+ assert.equal(el('agent-action').textContent,'none');
  command('reset');
  assert.equal(el('metric-block').textContent,5);
  assert.equal(el('guided-gate').disabled,true);
