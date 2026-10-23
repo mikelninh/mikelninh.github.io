@@ -6,16 +6,17 @@
 
 This is a **working controlled simulation**, not a connection to INCA's MARS platform. Everything is developer-authored fiction: 12 cases, invented policy documents and agent traces, five deliberately planted structural failures. No real LLM calls, insurer data, coverage decisions, customer messages, payments, or human reviewer time. Explicit guardrails supplement—not replace—production controls.
 
-## The 90-second journey
+## The 30-second hiring-manager experience
 
-1. Start on **CASE-027**. The agent quotes **policy revision 2024** accurately, but the case's independently supplied policy metadata requires **2025**. A quotation from the wrong revision is not valid grounds to continue.
-2. Inspect the three source documents, original agent trace and **six checks**. The policy revision gate fails and the handoff becomes HUMAN_REVIEW_REQUIRED.
-3. Click **Apply saved example correction**: only CASE-027's old agent trace is replaced by a previously written, fictional corrected trace. No human or AI reviews anything on click.
-4. Click **Check all 12 fictional cases**: the suite reports **8/12 passing, four still blocked** internally. The main UI immediately shows only the next mistake, not a wall of results, and never presents a staged correction as a real-world claim approval.
-5. The page shows **only one next mistake at a time** (CASE-028 through CASE-031): a short description, a plain-language correction and **Load this example fix**. The next example replaces it after each click. Exact source/action/check changes remain inspectable in the engineering panel. No bulk correction occurs.
-6. Click **Run final check** after all four corrections are staged. **12/12** pass only after this explicit retest. Optionally open **Curious how it works?** to inspect the original traces and inject one of five planted defects, proving the gate blocks it again. **Start over — undo all sample fixes** restores the initial fictional state.
+The page tells the whole story up front: **problem → independent check → repeat-error test**.
 
-Everything in the workbench is recalculated client-side and remains ephemeral. The Python evaluator is the authoritative offline test reference; Node tests check parity against Python results.
+1. The fictional CASE-027 agent quotes real text from policy 2024, but the applicable version is 2025.
+2. **Run the independent check** evaluates the recorded trace and blocks the next step for human review. This does not execute an external action.
+3. **Replay saved fix & retest** replaces only CASE-027 with its developer-authored corrected trace; the six structural checks now pass. Four other deliberately faulty fictional traces remain blocked.
+4. Optional **Bring back the mistake** reintroduces the old policy into that corrected trace, and the same gate blocks it again. This is the core "prevent repeat" demonstration.
+5. Optional **engineering evidence** exposes the entire 12-case fixture set, six checks, source texts, and a clearly labelled action to load all five previously authored example corrections and retest. There is no requirement to click through four more mistakes.
+
+The default 2-click path deliberately does **not** pretend to fix all five cases. The standalone technical evidence measures **5/5 known deliberately planted faults blocked** in 12 invented traces. No model is trained or automatically improved. Everything in the browser is client-side and ephemeral. Python implements the authoritative reproducible fixture generator and evaluator; Node tests assert equivalent outputs and the visitor path.
 
 ## Actual implementation
 

@@ -69,195 +69,79 @@
   const host=doc.getElementById('loop-app');if(!host)return;
   const $=id=>doc.getElementById(id);
   fetch('./reliability-loop-data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Evidence unavailable');return r.json();}).then(data=>{
-   const m=createMachine(data);
-   let notice='Inspect the fictional error, apply one saved example correction, then test all 12.';
-   let reviewQueueOpen=false;
-   // Explain exactly which saved fields are swapped. No LLM/human work occurs on click.
-   function changeSummary(c){
-     const a=c.before.trace,b=c.after.trace;
-     if(c.fault_type==='invented_quote')return {
-       title:'The agent invented a quotation',
-       before:'Claimed: "'+a.quote+'"',
-       after:'Replace with an exact quote from '+b.source_id+'.'
-     };
-     if(c.fault_type==='external_action')return {
-       title:'The agent requested an unauthorized payment',
-       before:'Requested action: '+a.external_action,
-       after:'Remove the payment request; action becomes '+b.external_action+'.'
-     };
-     if(c.fault_type==='missing_citation')return {
-       title:'The agent quoted text without a source',
-       before:'Source reference: missing',
-       after:'Attach the verified source: '+b.source_id+'.'
-     };
-     if(c.fault_type==='skipped_verifier')return {
-       title:'The agent skipped source verification',
-       before:'Tool sequence: '+a.steps.join(' → '),
-       after:'Restore verify_source before suggest_handoff.'
-     };
-     return {title:'The agent used an outdated policy',
-       before:'Selected revision: '+a.selected_policy_revision,
-       after:'Replace the cited source with '+b.source_id+' (revision '+b.selected_policy_revision+').'};
-   }
-   function render(){
-    const c=m.getCase(),v=m.selectedSnapshot(),out=m.result(),t=v.trace,fi=m.state.corrected.has(c.id),inj=m.state.injections[c.id];
-    $('case-list').innerHTML=data.cases.map(x=>{const ok=m.result(x.id).pass,sel=x.id===c.id;
-      return '<button type="button" class="case-choice'+(sel?' active':'')+'" data-case="'+escapeHTML(x.id)+'" aria-pressed="'+sel+'"><span class="case-choice-id">'+escapeHTML(x.id)+' <span aria-hidden="true">'+(ok?'✓':'!')+'</span></span><small>'+escapeHTML(x.kind)+'</small></button>';
-    }).join('');
-    $('case-id').textContent=c.id;$('case-kind').textContent=c.kind;$('case-description').textContent=c.fault_description;
-    $('case-phase').textContent=inj?'Fault reintroduced':fi?'Saved sample correction staged':'Initial agent trace';
-    $('case-status').textContent=out.pass?'All six guardrails passed':'Human review required';
-    $('case-status').className='status '+(out.pass?'ok':'warn');
-    $('source-docs').innerHTML=v.documents.map(d=>'<div class="doc"><div class="doc-top"><strong>'+escapeHTML(d.title)+'</strong><span>'+escapeHTML(d.revision?'v'+d.revision:'Intake')+'</span></div><div class="doc-id">'+escapeHTML(d.id)+'</div><p>'+escapeHTML(d.text)+'</p></div>').join('');
-    for(const [el,val] of Object.entries({'agent-source':t.source_id||'(missing citation)','agent-revision':t.selected_policy_revision||'(missing)','agent-quote':t.quote||'(no quote)','agent-action':t.external_action||'(missing)','agent-steps':Array.isArray(t.steps)?t.steps.join(' → '):'(malformed)','agent-next':t.next_gate||'(missing)'}))$(el).textContent=val;
-    $('gate-checks').innerHTML=out.checks.map(x=>'<li class="check '+(x.pass?'pass':'fail')+'"><span class="check-icon" aria-hidden="true">'+(x.pass?'✓':'!')+'</span><div><strong>'+escapeHTML(x.label)+'</strong><small>'+escapeHTML(x.detail)+'</small></div></li>').join('');
-    $('case-explain').textContent=fi?c.human_correction.note+' This is a pre-authored fictional correction, not an insurer decision.':c.fault_description;
-
-    // Hiring-manager layer: one plain-language decision at a time.
-    // The complete checked trace remains inspectable, but hidden by default.
-    const headings={
-      policy_revision:'The agent used the wrong policy version.',
-      source_reference:'The source reference is missing.',
-      source_quote:"The quotation isn't supported by the document.",
-      no_external_action:'The agent requested an unauthorized action.',
-      verification_step:'The agent skipped a required verification.',
-      bounded_gate:'The suggested next step is not allowed.'
-    };
-    const firstFailed=out.failures[0];
-    const sourceRevision=t.selected_policy_revision||'(missing)';
-    $('focus-case-label').textContent=c.id+' · Fictional '+c.kind.toLowerCase()+' claim';
-    $('focus-title').textContent=out.pass?'This case now passes the checks.':headings[firstFailed]||'This trace needs human review.';
-    $('focus-used').textContent=sourceRevision==='(missing)'?'No version recorded':'Policy '+sourceRevision;
-    $('focus-required').textContent='Policy '+c.required_policy_revision;
-    const policyCase=c.fault_type==='wrong_revision';
-    $('focus-compare').hidden=!policyCase;
-    $('focus-compare-symbol').textContent=out.pass?'=':'≠';
-    $('focus-difference').hidden=policyCase;
-    if(!policyCase){
-      const sample=c.fault_type==='none'?null:changeSummary(c);
-      $('focus-difference').textContent=sample
-        ?(out.pass?'The saved example correction is staged: ':'Initial error: ')+(out.pass?sample.after:sample.before+' → '+sample.after)
-        :'No error was deliberately planted in this sample. Its structural checks pass.';
+    const m=createMachine(data);
+    const firstId='CASE-027',first=m.getCase(firstId);
+    let phase='initial',detailId=firstId;
+    const baseline=m.suite(); // Deterministic check on all original fixtures, before any correction.
+    const caught=baseline.planted_faults_exposed-baseline.unsafe_seeded_escapes;
+    $('proof-total').textContent=String(data.cases.length);
+    $('proof-planted').textContent=String(baseline.seeded_faults);
+    $('proof-caught').textContent=caught+' / '+baseline.seeded_faults;
+    $('case-select').innerHTML=data.cases.map(c=>'<option value="'+escapeHTML(c.id)+'">'+escapeHTML(c.id)+' · '+escapeHTML(c.kind)+'</option>').join('');
+    function renderAudit(){
+      const c=m.getCase(detailId),snap=m.selectedSnapshot(detailId),t=snap.trace,result=m.result(detailId);
+      $('case-select').value=detailId;
+      $('case-audit-status').textContent=result.pass?'Checks passed':'Blocked for review';
+      $('audit-checks').innerHTML=result.checks.map(k=>'<li class="'+(k.pass?'pass':'fail')+'"><strong>'+(k.pass?'✓ ':'! ')+escapeHTML(k.label)+'</strong><small>'+escapeHTML(k.detail)+'</small></li>').join('');
+      $('audit-documents').innerHTML=snap.documents.map(d=>'<div class="document-row"><strong>'+escapeHTML(d.title)+'</strong> · '+escapeHTML(d.id)+'<br>'+escapeHTML(d.text)+'</div>').join('');
+      const vals={'audit-source':t.source_id||'(missing)','audit-revision':t.selected_policy_revision||'(missing)','audit-quote':t.quote||'(missing)','audit-action':t.external_action||'(missing)','audit-steps':t.steps.join(' → '),'audit-gate':t.next_gate};
+      for(const [id,value] of Object.entries(vals))$(id).textContent=value;
     }
-    $('focus-status').textContent=out.pass?'Checks passed':'Needs review';
-    $('focus-status').className='status '+(out.pass?'ok':'warn');
-    $('focus-explanation').textContent=out.pass
-      ?'This trace passes the six structural checks. Other mandatory claim checks still apply; no approval is given.'
-      :firstFailed==='policy_revision'
-        ?'The quoted text may be genuine, but this case needs policy '+c.required_policy_revision+'. A valid quote from an outdated policy is still the wrong evidence.'
-        :c.fault_description+' The checker blocks the next step for review.';
-    const last=m.state.lastSuite;
-    const hasFix=m.state.corrected.size>0;
-    const planted=data.cases.filter(x=>x.fault_type!=='none');
-    const fixedPlanted=planted.filter(x=>m.state.corrected.has(x.id)&&m.result(x.id).pass).length;
-    const waiting=data.cases.filter(x=>!m.result(x.id).pass);
-    const queueCases=planted.filter(x=>x.id!=='CASE-027');
-    const nextCase=queueCases.find(x=>!m.result(x.id).pass);
-    const guidedQueue=reviewQueueOpen&&!last?.passed;
-    // One plain-language example at a time; engineering details are separately inspectable.
-    $('remaining-review').hidden=!guidedQueue;
-    $('remaining-progress').textContent=fixedPlanted+' / 5 example fixes loaded';
-    $('remaining-review-title').textContent=nextCase?'Next mistake':'All example fixes loaded';
-    const plain={
-      invented_quote:{title:'The AI invented a quote',problem:'That sentence is not in the policy.',fix:'Use the real policy wording.'},
-      external_action:{title:'The AI tried to start a payment',problem:'It is not allowed to do that.',fix:'Remove the payment action.'},
-      missing_citation:{title:'The quote has no source',problem:'Nobody can check where it came from.',fix:'Attach the verified policy document.'},
-      skipped_verifier:{title:'The AI skipped a check',problem:'It did not verify the source first.',fix:'Put the source check back.'}
-    };
-    if(nextCase){
-      const summary=plain[nextCase.fault_type];
-      $('remaining-list').innerHTML='<article class="review-case">'+
-        '<small>'+escapeHTML(nextCase.id)+' · '+escapeHTML(nextCase.kind)+'</small>'+
-        '<h5>'+escapeHTML(summary.title)+'</h5>'+
-        '<p class="review-diff">'+escapeHTML(summary.problem)+'<br><strong>Example fix:</strong> '+escapeHTML(summary.fix)+'</p>'+
-        '<button type="button" class="btn primary" data-correct-case="'+escapeHTML(nextCase.id)+'">Load this example fix →</button>'+
-        '</article>';
-    }else{
-      $('remaining-list').innerHTML='<div class="retest"><p>All five example fixes are loaded. Check them again.</p>'+
-        '<button type="button" class="btn primary" data-command="gate">Run final check →</button></div>';
+    function render(){
+      const snap=m.selectedSnapshot(firstId),used=snap.trace.selected_policy_revision,one=m.result(firstId),suite=m.suite();
+      $('agent-year').textContent='Policy '+used;
+      $('required-year').textContent='Policy '+first.required_policy_revision;
+      $('compare-symbol').textContent=used===first.required_policy_revision?'=':'≠';
+      $('verdict').hidden=phase==='initial';
+      $('verdict').className='outcome'+(one.pass&&phase!=='initial'?' passed':'');
+      $('primary-action').hidden=phase==='fixed'||phase==='all';
+      $('primary-action').setAttribute('data-action',phase==='initial'?'run':phase==='blocked'?'fix':phase==='regressed'?'restore':'run');
+      $('challenge-action').hidden=phase!=='fixed';
+      $('restart-action').hidden=phase==='initial';
+      if(phase==='initial'){
+        $('step-label').textContent='Before the check';
+        $('primary-action').textContent='Run the independent check →';
+      }else if(phase==='blocked'){
+        $('step-label').textContent='Caught by safety check';
+        $('verdict-title').textContent='BLOCKED · Human review required';
+        $('verdict-explain').textContent='The quote exists, but policy 2024 does not apply. The verifier refuses to let this example continue.';
+        $('primary-action').textContent='Replay saved fix & retest →';
+      }else if(phase==='fixed'){
+        $('step-label').textContent='Rechecked';
+        $('verdict-title').textContent='PASS · Correct policy verified';
+        $('verdict-explain').textContent='This saved correction passes all six structural checks. Four other fictional cases remain blocked. No claim was approved or paid.';
+      }else if(phase==='regressed'){
+        $('step-label').textContent='Mistake reintroduced';
+        $('verdict-title').textContent='BLOCKED AGAIN · Regression caught';
+        $('verdict-explain').textContent='The old policy was reintroduced into the corrected example. The same check catches it again.';
+        $('primary-action').textContent='Restore corrected example →';
+      }else if(phase==='all'){
+        $('step-label').textContent='All saved examples retested';
+        $('verdict-title').textContent='12 / 12 scripted cases pass';
+        $('verdict-explain').textContent='All five pre-written sample corrections pass the six structural checks. This is not a real-world approval or AI performance score.';
+      }
+      $('audit-suite-result').textContent=suite.passed_cases+'/'+data.cases.length+' fictional traces pass; '+suite.blocked_cases+' remain blocked. '+(suite.passed?'All saved examples pass these rules.':'Unsafe traces cannot proceed under these rules.');
+      renderAudit();
     }
-    $('remaining-next').textContent='Saved examples only · No AI call or real claim action.';
-    const showFinished=!!last?.passed;
-    $('guided-intro').hidden=guidedQueue||showFinished;
-    $('focus-compare').hidden=guidedQueue||showFinished||!policyCase;
-    $('focus-difference').hidden=guidedQueue||showFinished||policyCase;
-    $('focus-explanation').hidden=guidedQueue||showFinished;
-    $('guided-actions').hidden=guidedQueue||showFinished;
-    $('guided-hint').hidden=guidedQueue||showFinished;
-    $('guided-summary').hidden=!showFinished;
-    $('apply-fix').textContent=inj?'Restore the saved correction →':'Apply this sample correction →';
-    $('apply-fix').hidden=(fi&&!inj)||(!inj&&out.pass);
-    $('apply-fix').disabled=(!inj&&out.pass);
-    $('guided-gate').disabled=!hasFix;
-    $('guided-gate').hidden=guidedQueue;
-    $('guided-restart').hidden=!hasFix&&!last&&!reviewQueueOpen;
-    $('guided-hint').textContent=fi&&!last
-      ?'This example now uses the right policy. Check all 12 cases to find other mistakes.'
-      :'The quote is real, but the policy version is wrong. This button loads a saved example; it does not call AI.';
-    const step=last?.passed?4:(reviewQueueOpen&&waiting.length)?2:(hasFix?3:1);
-    for(const i of [1,2,3])$('guide-step-'+i).className='guided-step'+(step>i?' complete':step===i?' active':'');
-
-    // Primary guided button state is owned by the progressive-disclosure block above.
-    $('inject-fault').disabled=!fi;$('clear-fault').hidden=!inj;$('incident-alert').textContent=notice;
-    const passed=data.cases.filter(x=>m.result(x.id).pass).length;
-    $('metric-pass').textContent=passed+' / '+data.cases.length;$('metric-block').textContent=data.cases.length-passed;
-    $('metric-escape').textContent='0*';$('metric-faults').textContent=String(data.metrics.fault_categories_tested);
-    $('progress-bar').style.width=(passed/data.cases.length*100)+'%';
-    if(last){
-      // Do not repeat a blocked-state paragraph while the next example is on screen.
-      $('release-result').hidden=guidedQueue;
-      $('release-result').className='release-result '+(last.passed?'success':'failure');
-      $('release-headline').textContent=last.passed
-        ?'12 / 12 checks passed'
-        :last.blocked_cases+' cases still blocked';
-      $('release-detail').textContent=last.passed
-        ?'These fictional examples passed the six safety checks. No real claim was approved or paid.'
-        :'The remaining fictional cases must be corrected and tested again.';
-      $('release-failures').hidden=true;
-      $('release-failures').textContent='';
-    }else $('release-result').hidden=true;
-    $('release-a').setAttribute('aria-pressed',String(m.state.corrected.size===0));
-
-    $('current-release').textContent=fixedPlanted+'/5 planted error cases have sample corrections; '+waiting.length+' traces remain blocked'+(inj?' · reintroduced test fault active':'')+'.';
-   }
-   host.addEventListener('click',event=>{
-    const remaining=event.target.closest('[data-correct-case]');
-    if(remaining){
-      const id=remaining.getAttribute('data-correct-case');
+    host.addEventListener('click',event=>{
+      const control=event.target.closest('[data-action]');
+      if(!control)return;
+      const action=control.getAttribute('data-action');
       try{
-        const item=m.getCase(id);
-        if(item.fault_type==='none')throw Error('No faulty trace to correct');
-        const expected=data.cases.filter(x=>x.fault_type!=='none'&&x.id!=='CASE-027').find(x=>!m.result(x.id).pass);
-        if(!reviewQueueOpen||!expected||expected.id!==id)throw Error('Please use the next visible example');
-        if(!m.result(id).pass){
-          m.select(id);
-          m.applyCorrection(); // one pre-authored fictional replacement, no side effects
-          m.select('CASE-027'); // keep the introductory story in focus
-          notice='Loaded one saved example correction for '+id+'. No real claim was changed.';
-        }
+        if(action==='run'&&phase==='initial'){m.select(firstId);m.suite();phase='blocked';}
+        else if(action==='fix'&&phase==='blocked'){m.select(firstId);m.applyCorrection();m.suite();phase='fixed';}
+        else if(action==='regress'&&phase==='fixed'){m.select(firstId);m.inject('wrong_revision');m.suite();phase='regressed';}
+        else if(action==='restore'&&phase==='regressed'){m.select(firstId);m.clearInjection();m.suite();phase='fixed';}
+        else if(action==='reset'){m.loadReleaseA();m.select(firstId);m.suite();phase='initial';detailId=firstId;}
+        else if(action==='all-examples'){m.loadReleaseB();m.select(firstId);m.suite();phase='all';}
         render();
-      }catch(e){notice='Could not apply sample correction: '+String(e.message||e);render();}
-      return;
-    }
-    const choice=event.target.closest('[data-case]');if(choice){m.select(choice.getAttribute('data-case'));notice='Selected '+m.state.selected+'. Inspect the six guardrails.';render();return;}
-    const command=event.target.closest('[data-command]');if(!command)return;
-    try{
-     const key=command.getAttribute('data-command');
-     if(key==='fix'){m.applyCorrection();notice='Saved sample correction staged for '+m.state.selected+'. No new AI call or human review. Run the 12-case check to verify.';}
-     else if(key==='release-a'){m.loadReleaseA();reviewQueueOpen=false;notice='Original fictional release A restored. All sample corrections undone.';}
-     else if(key==='gate'){
-       const x=m.suite();
-       reviewQueueOpen=!x.passed&&m.result('CASE-027').pass;
-       notice=x.passed?'All 12 fictional traces passed the structural checks.':'The regression test blocked '+x.blocked_cases+' unfinished fictional cases.';
-     }
-     else if(key==='inject'){reviewQueueOpen=false;m.inject($('fault-select').value);notice='Fault reintroduced. Run the gate to see release blocked.';}
-     else if(key==='clear'){m.clearInjection();notice='Injected fault removed. Re-run gate to verify.';}
-     else if(key==='reset'){m.loadReleaseA();m.select('CASE-027');reviewQueueOpen=false;notice='Demo restarted. All sample fixes undone; five planted errors restored.';}
-     render();
-    }catch(e){notice='Action failed: '+String(e.message||e);render();}
-   });
-   render();
-  }).catch(e=>{host.innerHTML='<div class="load-failed"><strong>Could not load recorded fixtures.</strong><p>'+escapeHTML(e.message)+'</p><a href="./reliability-loop-data.json">Inspect the evidence JSON ↗</a></div>';});
+      }catch(e){$('audit-suite-result').textContent='The demonstration action failed: '+String(e.message||e);}
+    });
+    $('case-select').addEventListener('change',event=>{detailId=event.target.value;renderAudit();});
+    render();
+  }).catch(e=>{
+    host.innerHTML='<div class="demo"><strong>Could not load fictional test fixtures.</strong><p>'+escapeHTML(e.message)+'</p><a href="./reliability-loop-data.json">View the test data ↗</a></div>';
+  });
  }
  if(doc.readyState==='loading')doc.addEventListener('DOMContentLoaded',boot);else boot();
 })(typeof window!=='undefined'?window:null);
