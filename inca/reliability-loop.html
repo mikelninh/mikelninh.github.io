@@ -156,7 +156,7 @@ footer a{color:#46674d}
         <div class="measure"><strong id="stress-metric">—</strong><span>Correct routes · 20 new stress cases</span></div>
       </div>
       <p class="quick-footer" id="run-metrics">Loading verified API usage, latency and costs…</p>
-      <a class="primary-link" href="#engineering">Inspect actual model evidence ↓</a>
+      <a class="primary-link" id="inspect-open" href="#engineering-evidence">Inspect actual model evidence ↓</a>
     </section>
     <section class="release" aria-labelledby="release-title">
       <span class="release-status">⦸ &nbsp; Research release · Blocked</span>
@@ -203,7 +203,7 @@ footer a{color:#46674d}
       <div class="inner method">
         <div>
           <h3>What changed—and what didn't</h3>
-          <p>**Experiment A:** baseline and revised prompts plus evidence guard evaluated on ten held-out fictional examples. **Experiment B:** the same recorded model outputs were routed through two deterministic policies on 20 different stress examples. No model was trained, and B made only 20 (not 40) API requests.</p>
+          <p><strong>Experiment A:</strong> baseline and revised prompts plus evidence guard evaluated on ten held-out fictional examples. <strong>Experiment B:</strong> the same recorded model outputs were routed through two deterministic policies on 20 different stress examples. No model was trained, and B made only 20 (not 40) API requests.</p>
           <p>The holdout and stress cases share developer-authored templates, so neither is independent blinded validation.</p>
         </div>
         <div>
