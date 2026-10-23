@@ -47,8 +47,14 @@
         :(record.response_error||'No model extraction recorded');
     }
   }
+  const rescued=d.rows.find(x=>x.variant==='baseline'&&x.split==='holdout'&&x.unsafe_continue
+    &&d.rows.some(y=>y.id===x.id&&y.variant==='revised'&&y.route_correct&&!y.unsafe_continue));
   const impactful=d.rows.filter(x=>x.variant==='baseline'&&(!x.route_correct||x.api_or_schema_error));
-  const picked=impactful.find(x=>x.split==='dev')||impactful.find(x=>x.split==='holdout')||d.rows.find(x=>x.variant==='baseline'&&x.split==='holdout');
+  const picked=rescued||impactful.find(x=>x.split==='dev')||impactful.find(x=>x.split==='holdout')||d.rows.find(x=>x.variant==='baseline'&&x.split==='holdout');
+  const unresolved=d.rows.filter(x=>x.variant==='revised'&&x.split==='holdout'&&!x.route_correct);
+  $('live-discovery').textContent=rescued
+    ?'Failure caught: '+rescued.id+' originally let a risky case continue. The revised extraction sent it to human review. '+(unresolved.length?unresolved.length+' held-out case still has the wrong next route; see the next iteration.':'No held-out route mismatches remained in this small run.')
+    :'No rescued unsafe case was observed on this small held-out set. The recorded differences and errors remain visible below.';
   display(picked.id);
   $('live-case').addEventListener('change',e=>display(e.target.value));
   $('live-scope').textContent=d.limitations+' · Cost uses public token prices, not an invoice. No end-user model calls.';
