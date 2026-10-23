@@ -58,7 +58,7 @@ test('safe escaping and invalid fixture handling',()=>{
 });
 test('the first screen communicates problem solution proof and limits',()=>{
  for(const phrase of [
-  "Don't just trust an AI agent.",'01 / Problem','02 / Build','03 / Prove',
+  'The AI missed a request for human help.','01 / Problem','02 / Build','03 / Prove',
   'id="live-eval-app"','id="live-pending"','id="live-data" hidden',
   'id="decision-app"','id="gate-misses"','id="gate-needless"','id="gate-six_checks"',
   'id="loop-app"','Run the independent check','id="proof-caught"','id="engineering-details"',
