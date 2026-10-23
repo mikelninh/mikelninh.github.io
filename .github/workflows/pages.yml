@@ -86,6 +86,7 @@ jobs:
           python -m unittest discover inca-proof/reliability-loop -p 'test_*.py' -v
           node --test inca/reliability-loop.test.cjs
           node --test inca/live-model-eval.test.cjs
+          node --test inca/live-stress-eval.test.cjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site

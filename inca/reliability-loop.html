@@ -181,6 +181,7 @@ main .section{border-top:1px solid var(--line);padding:42px 0 49px}
       </div>
       <div class="live-run-cost"><span><strong id="live-latency">—</strong> mean API latency · held-out pair</span><span><strong id="live-cost">—</strong> estimated API cost · all calls</span></div>
       <p class="live-interpretation" id="live-interpretation">—</p>
+      <p class="live-interpretation" id="live-discovery">—</p>
       <div class="live-detail-head"><div><span class="eyebrow">Inspect the evidence</span><h3>What did the model actually say?</h3></div><label for="live-case">Case <select id="live-case"></select></label></div>
       <p class="live-case-context" id="live-case-context">—</p>
       <div class="live-case-docs" id="live-docs"></div>
@@ -191,6 +192,23 @@ main .section{border-top:1px solid var(--line);padding:42px 0 49px}
       <p class="fine" id="live-scope">—</p>
       <div class="live-links"><a href="./live-model-eval.json">Full measured JSON ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/model-eval/release_experiment.py">Runner + prompts ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/actions/workflows/inca-live-release-eval.yml">Live GitHub run ↗</a></div>
     </div>
+  </div>
+</div></section>
+
+<section class="section" id="stress-evaluation" hidden><div class="wrap">
+  <div class="section-heading"><span class="eyebrow">02 · Follow-up engineering iteration</span>
+    <h2>Found another failure. Fixed the decision order.</h2>
+    <p>Development case DOC-EVAL-081 exposed a routing priority bug: a possible coverage exclusion was sent to “request information” rather than specialist review. We changed one deterministic rule and evaluated it against an unused stress set.</p>
+  </div>
+  <div class="live-evidence" id="stress-evidence">
+    <span class="eyebrow">Same real model extractions · Two routing policies</span>
+    <div class="live-compare">
+      <article><span>BEFORE · 20 STRESS CASES</span><strong id="stress-before">—</strong><small>Correct routes</small><p id="stress-before-risks">—</p></article>
+      <article><span>AFTER · 20 STRESS CASES</span><strong id="stress-after">—</strong><small>Correct routes</small><p id="stress-after-risks">—</p></article>
+    </div>
+    <p class="live-interpretation" id="stress-takeaway">—</p>
+    <p class="fine" id="stress-cost">—</p>
+    <div class="live-links"><a href="./live-stress-eval.json">Actual stress report ↗</a><a href="https://github.com/mikelninh/mikelninh.github.io/blob/main/inca-proof/model-eval/release_stress.py">Exact routing fix ↗</a></div>
   </div>
 </div></section>
 <section class="section" id="decision"><div class="wrap">
@@ -281,4 +299,5 @@ main .section{border-top:1px solid var(--line);padding:42px 0 49px}
 </main>
 <footer class="wrap footer"><span>Michael Ninh · Independent INCA work sample</span><span>Catch the mistake. Keep people in control. Test the next release.</span></footer>
 <script src="./reliability-loop.js" defer></script>
-<script src="./live-model-eval.js" defer></script></body></html>
+<script src="./live-model-eval.js" defer></script>
+<script src="./live-stress-eval.js" defer></script></body></html>

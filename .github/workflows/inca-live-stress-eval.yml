@@ -1,0 +1,76 @@
+name: INCA Critical Route Stress Retest
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'inca-proof/model-eval/RELEASE_STRESS_REQUEST.md'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: inca-critical-route-stress-once
+  cancel-in-progress: false
+jobs:
+  retest:
+    name: Twenty real invented-document extractions, old vs corrected route
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline regression tests, no model costs
+        run: |
+          set -euo pipefail
+          python -m unittest discover inca-proof/model-eval -p 'test_*.py' -v
+          python inca-proof/model-eval/release_stress.py --mode dry-run
+      - name: Twenty actual OpenAI calls on held-back stress cases
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "$OPENAI_API_KEY" ]; then echo "::error::Missing OPENAI_API_KEY secret"; exit 1; fi
+          python inca-proof/model-eval/release_stress.py --mode live --out inca/live-stress-eval.json
+          python - <<'PY'
+          import json
+          r=json.load(open("inca/live-stress-eval.json",encoding="utf-8"))
+          assert r["schema"]=="INCA-LIVE-STRESS-ROUTE-1"
+          assert r["actual_model_requests"]==20 and len(r["rows"])==20
+          assert r["api_or_schema_errors"]==0
+          assert r["metrics"]["previous_route"]["cases"]==20
+          assert r["metrics"]["critical_review_first"]["cases"]==20
+          print("Recorded: 20 distinct actual model extractions; evaluated two routing policies.")
+          PY
+      - name: Keep all fictional model responses as evidence artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: inca-critical-route-stress-report
+          path: inca/live-stress-eval.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Publish only verified 20-model-response report
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add inca/live-stress-eval.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record real fictional OpenAI critical-route stress evaluation [skip ci]"
+            published=false
+            for attempt in $(seq 1 12); do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then published=true; break; fi
+              sleep 2
+            done
+            if [ "$published" != "true" ]; then exit 1; fi
+          fi
+      - name: Trigger Pages to show measured stress result
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run pages.yml --ref main
