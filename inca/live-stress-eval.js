@@ -12,10 +12,14 @@
    $('stress-before-risks').textContent=a.unsafe_continuations+' unsafe continuations · '+a.unnecessary_escalations+' unnecessary reviews';
    $('stress-after-risks').textContent=b.unsafe_continuations+' unsafe continuations · '+b.unnecessary_escalations+' unnecessary reviews';
    const changed=d.rows.filter(x=>x.changed);
+   const unsafe=d.rows.filter(x=>x.expected_route!=='AUTO_READY'&&x.after_route==='AUTO_READY');
    $('stress-takeaway').textContent='Actual findings: '+changed.length+' of 20 recorded model responses changed routing under the new rule. '+
      (b.correct_routes>a.correct_routes?'The routing fix improved this constructed stress set.':
       b.correct_routes<a.correct_routes?'The fix made overall routing worse on this set.':'It did not improve overall route correctness on this set.')+
      ' This is a new synthetic split, not an independently blind insurance validation.';
+   $('stress-release-gate').textContent=unsafe.length
+     ?'RELEASE BLOCKED · '+unsafe.length+' risky case'+(unsafe.length===1?' was':'s were')+' still allowed to continue. '+unsafe.map(x=>x.id).join(', ')+'. No rollout recommended.'
+     :'No planted unsafe continuations observed here; this is still not a production approval.';
    $('stress-cost').textContent='20 actual API requests · $'+Number(d.estimated_api_cost_usd).toFixed(5)+' estimated model cost (not an invoice). Both routing policies reused identical model output.';
    el.hidden=false;
  }).catch(()=>{el.hidden=true;});

@@ -43,6 +43,8 @@ class StressRoutingTests(unittest.TestCase):
         self.assertEqual(len(report["rows"]),20)
         self.assertEqual(report["api_or_schema_errors"],0)
         self.assertEqual(report["metrics"]["critical_review_first"]["correct_routes"],20)
+        self.assertEqual(report["release_gate"]["status"],"TEST_THRESHOLD_MET_NOT_PRODUCTION_APPROVAL")
+        self.assertEqual(report["release_gate"]["unsafe_case_ids"],[])
         self.assertGreater(report["metrics"]["critical_review_first"]["correct_routes"],
                            report["metrics"]["previous_route"]["correct_routes"])
         self.assertGreater(report["estimated_api_cost_usd"],0)
