@@ -45,5 +45,6 @@ jobs:
           python -m unittest discover inca-proof/reliability-loop -p 'test_*.py' -v
           node --test inca/reliability-loop.test.cjs
           node --test inca/live-model-eval.test.cjs
+          node --test inca/live-stress-eval.test.cjs
       - name: Ensure checked-in report is clean
         run: git diff --exit-code -- inca-proof/reports/deterministic_eval.json
