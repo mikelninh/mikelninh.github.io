@@ -6,6 +6,16 @@
 
 This is a **working controlled simulation**, not a connection to INCA's MARS platform. Everything is developer-authored fiction: 12 cases, invented policy documents and agent traces, five deliberately planted structural failures. No real LLM calls, insurer data, coverage decisions, customer messages, payments, or human reviewer time. Explicit guardrails supplement—not replace—production controls.
 
+## What makes the demonstration different
+
+The primary interaction is a **release-decision comparison**, not another claims agent or a rule-checking animation. It evaluates three independent routing strategies on the same 12 developer-authored fictional agent traces, seven unseeded and five carrying deliberately planted faults.
+
+- **Check source existence only:** 4 planted faulty traces would continue to other mandatory checks; zero unnecessary human reviews. The wrong policy revision, invented quotation, unauthorized action and skipped verification are missed.
+- **Review every case:** 0 known unsafe escapes; 7 unseeded clean traces are unnecessarily held by humans. The safe but unscalable extreme.
+- **Six independently evaluated trace checks:** 0 planted unsafe escapes; 0 unnecessary human reviews on these tightly constructed fixtures. The five known faulty traces are correctly routed to a person, the seven other fictional traces proceed only to additional mandatory checks.
+
+Correctly *blocking* a risky claim is a success, not a failed release. The experiment makes the quality/efficiency trade-off explicit. It is not a real-world prediction, model accuracy measurement, proof of new operational savings, claim payment approval, or an actual suggested INCA production rollout. The old CASE-027 saved-correction and fault-replay example stays optional behind a disclosure control.
+
 ## The 30-second hiring-manager experience
 
 The page tells the whole story up front: **problem → independent check → repeat-error test**.
