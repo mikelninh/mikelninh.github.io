@@ -73,7 +73,7 @@
     const firstId='CASE-027',first=m.getCase(firstId);
     let phase='initial',detailId=firstId;
     const baseline=m.suite(); // Deterministic check on all original fixtures, before any correction.
-    const caught=baseline.planted_faults_exposed-baseline.unsafe_seeded_escapes;
+    const caught=baseline.planted_faults_exposed; // Already excludes any planted faults that escaped.
     $('proof-total').textContent=String(data.cases.length);
     $('proof-planted').textContent=String(baseline.seeded_faults);
     $('proof-caught').textContent=caught+' / '+baseline.seeded_faults;
