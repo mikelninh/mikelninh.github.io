@@ -5,6 +5,17 @@ const shim={exports:{}};new Function('module',browserSource)(shim);
 const core=shim.exports;
 const data=JSON.parse(fs.readFileSync(path.join(__dirname,'reliability-loop-data.json'),'utf8'));
 const page=fs.readFileSync(path.join(__dirname,'reliability-loop.html'),'utf8');
+test('routing gates measure unsafe misses and needless human reviews separately',()=>{
+ const quick=core.assessGate(data,'source_only');
+ const blanket=core.assessGate(data,'review_all');
+ const balanced=core.assessGate(data,'six_checks');
+ assert.deepEqual([quick.misses,quick.needless,quick.continues,quick.reviews],[4,0,11,1]);
+ assert.deepEqual([blanket.misses,blanket.needless,blanket.continues,blanket.reviews],[0,7,0,12]);
+ assert.deepEqual([balanced.misses,balanced.needless,balanced.continues,balanced.reviews],[0,0,7,5]);
+ assert.equal(balanced.passed,true);assert.equal(quick.passed,false);assert.equal(blanket.passed,false);
+ assert.equal(balanced.rows.filter(r=>r.expected==='review').length,5);
+ assert.throws(()=>core.assessGate(data,'unknown_strategy'));
+});
 test('same six rules agree with Python for all 12 before and after snapshots',()=>{
   assert.equal(data.schema,core.SCHEMA);assert.equal(data.cases.length,12);
   for(const c of data.cases)for(const phase of ['before','after']){
@@ -47,7 +58,8 @@ test('safe escaping and invalid fixture handling',()=>{
 });
 test('the first screen communicates problem solution proof and limits',()=>{
  for(const phrase of [
-  'A convincing answer.','A dangerous mistake.','01 / Problem','02 / Solution','03 / Prevent',
+  "AI safety isn't",'01 / Problem','02 / Experiment','03 / Measure',
+  'id="decision-app"','id="gate-misses"','id="gate-needless"','id="gate-six_checks"',
   'id="loop-app"','Run the independent check','id="proof-caught"','id="engineering-details"',
   'id="case-select"','id="audit-checks"','id="audit-documents"',
   'No AI model, human reviewer','not an INCA or MARS integration','not a claim about real-world accuracy'
@@ -67,6 +79,19 @@ test('complete hiring-manager two-click path and optional regression proof',asyn
  new Function('module','window','fetch',browserSource)(shim,{document:doc},fetchMock);
  await new Promise(setImmediate);
  const host=el('loop-app');
+ assert.equal(el('gate-misses').textContent,'4');
+ assert.equal(el('gate-needless').textContent,'0');
+ assert.match(el('gate-headline').textContent,/4 risky examples/);
+ el('gate-review_all').on_click();
+ assert.equal(el('gate-misses').textContent,'0');
+ assert.equal(el('gate-needless').textContent,'7');
+ el('gate-six_checks').on_click();
+ assert.equal(el('gate-misses').textContent,'0');
+ assert.equal(el('gate-needless').textContent,'0');
+ assert.match(el('gate-routes').textContent,/7 continue further checks · 5 to human review/);
+ assert.match(el('gate-status').textContent,/PASSES/);
+ el('gate-source_only').on_click();
+ assert.match(el('gate-examples').innerHTML,/Wrong policy version/);
  const action=name=>host.on_click({target:{closest:q=>q==='[data-action]'?{getAttribute:()=>name}:null}});
  assert.equal(el('primary-action').textContent,'Run the independent check →');
  assert.equal(el('primary-action').attributes['data-action'],'run');
