@@ -1,7 +1,7 @@
 {
   "schema": 2,
   "source": "TED Search API v3 / api.ted.europa.eu",
-  "fetched_at": "2026-10-24T10:51:54.091960+00:00",
+  "fetched_at": "2026-10-24T20:42:56.368602+00:00",
   "coverage": "German IT/software/AI shortlist, last 60 days; up to 300 per query; active TED scope; not exhaustive",
   "successful_queries": 3,
   "queries": [
@@ -205,23 +205,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/733934-2026"
     },
     {
-      "id": "734498-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – PolBln 351_26 EU POLIKS-Schnittstelle OZG Onlinewache",
-      "buyer": "Polizei Berlin",
-      "buyer_country": "DEU",
-      "published": "2026-10-23",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "288675",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/734498-2026"
-    },
-    {
       "id": "734105-2026",
       "title": "Germany – IT services: consulting, software development, Internet and support – DiBA DL 2027",
       "buyer": "Bundesagentur für Arbeit (BA), vertreten durch den Vorstand, hier vertreten durch die Leitung des Geschäftsbereiches Einkauf im BA-Service-Haus",
@@ -243,6 +226,23 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/734105-2026"
+    },
+    {
+      "id": "734498-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – PolBln 351_26 EU POLIKS-Schnittstelle OZG Onlinewache",
+      "buyer": "Polizei Berlin",
+      "buyer_country": "DEU",
+      "published": "2026-10-23",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72000000"
+      ],
+      "value": "288675",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/734498-2026"
     },
     {
       "id": "734751-2026",
@@ -521,29 +521,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/736115-2026"
     },
     {
-      "id": "733993-2026",
-      "title": "Germany – Information systems – Rahmenvertrag über Extreme Networks Lösungen für das Landratsamt Ostalbkreis sowie die kreiseigenen Schulen",
-      "buyer": "Landratsamt Ostalbkreis - Zentrale Vergabestelle",
-      "buyer_country": "DEU",
-      "published": "2026-10-23",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-24",
-      "deadlines": [
-        {
-          "date": "2026-11-24",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "48810000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/733993-2026"
-    },
-    {
       "id": "733760-2026",
       "title": "Germany – Servers – Kauf von vier Rack-Servern für die VDI-Umgebung der Studienstiftung des deutschen Volkes e.V",
       "buyer": "Studienstiftung des deutschen Volkes e. V.",
@@ -568,6 +545,29 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/733760-2026"
+    },
+    {
+      "id": "733993-2026",
+      "title": "Germany – Information systems – Rahmenvertrag über Extreme Networks Lösungen für das Landratsamt Ostalbkreis sowie die kreiseigenen Schulen",
+      "buyer": "Landratsamt Ostalbkreis - Zentrale Vergabestelle",
+      "buyer_country": "DEU",
+      "published": "2026-10-23",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-24",
+      "deadlines": [
+        {
+          "date": "2026-11-24",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "48810000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/733993-2026"
     },
     {
       "id": "735386-2026",
@@ -785,6 +785,70 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/735701-2026"
     },
     {
+      "id": "735520-2026",
+      "title": "Germany – Software package and information systems – KI-Assistenzplattform",
+      "buyer": "Landschaftsverband Westfalen-Lippe, Zentrale Einkaufskoordination",
+      "buyer_country": "DEU",
+      "published": "2026-10-23",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-23",
+      "deadlines": [
+        {
+          "date": "2026-11-23",
+          "kind": "participation",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "48000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/735520-2026"
+    },
+    {
+      "id": "736456-2026",
+      "title": "Germany – Mainframe hardware – Next Generation Firewall des Herstellers Palo Alto",
+      "buyer": "Universität Paderborn",
+      "buyer_country": "DEU",
+      "published": "2026-10-23",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "30211200",
+        "48200000"
+      ],
+      "value": "230646",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/736456-2026"
+    },
+    {
+      "id": "733786-2026",
+      "title": "Germany – Software package and information systems – Microsoft-Lizenzen (Online-Services)",
+      "buyer": "Erste Abwicklungsanstalt AöR",
+      "buyer_country": "DEU",
+      "published": "2026-10-23",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-19",
+      "deadlines": [
+        {
+          "date": "2026-11-19",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "48000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/733786-2026"
+    },
+    {
       "id": "733776-2026",
       "title": "Germany – Public address systems – Technische Ausstattung Veranstaltungssaal",
       "buyer": "Stadt Forst (Lausitz), Die Bürgermeisterin, Fachbereich Bauverwaltung",
@@ -828,29 +892,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/735470-2026"
     },
     {
-      "id": "733786-2026",
-      "title": "Germany – Software package and information systems – Microsoft-Lizenzen (Online-Services)",
-      "buyer": "Erste Abwicklungsanstalt AöR",
-      "buyer_country": "DEU",
-      "published": "2026-10-23",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-19",
-      "deadlines": [
-        {
-          "date": "2026-11-19",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "48000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/733786-2026"
-    },
-    {
       "id": "735202-2026",
       "title": "Germany – Software package and information systems – Zentrale IT-Beschaffung 2026 für die Schulen ERZ, Los 1 – EDV für Zentrale PC/IT-Beschaffung; Los 2 - PC´s für Zentrale PC/IT-Beschaffung; Los 3 – Convertibles für Zentrale PC/IT-Beschaffung",
       "buyer": "Landratsamt Erzgebirgskreis Abteilung 2, Referat 23000 Liegenschaften und Zentrale Dienste SG Zentraler Service - ZENTRALE VERGABESTELLE, Frau Friedrich",
@@ -866,47 +907,6 @@
       "value": "484989",
       "currency": "EUR",
       "url": "https://ted.europa.eu/en/notice/-/detail/735202-2026"
-    },
-    {
-      "id": "735520-2026",
-      "title": "Germany – Software package and information systems – KI-Assistenzplattform",
-      "buyer": "Landschaftsverband Westfalen-Lippe, Zentrale Einkaufskoordination",
-      "buyer_country": "DEU",
-      "published": "2026-10-23",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-23",
-      "deadlines": [
-        {
-          "date": "2026-11-23",
-          "kind": "participation",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "48000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/735520-2026"
-    },
-    {
-      "id": "736456-2026",
-      "title": "Germany – Mainframe hardware – Next Generation Firewall des Herstellers Palo Alto",
-      "buyer": "Universität Paderborn",
-      "buyer_country": "DEU",
-      "published": "2026-10-23",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "30211200",
-        "48200000"
-      ],
-      "value": "230646",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/736456-2026"
     },
     {
       "id": "733271-2026",
@@ -1094,6 +1094,29 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/730768-2026"
     },
     {
+      "id": "730178-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Dienstleistungskontingent Netzwerk- und PC-Support",
+      "buyer": "Medizinische Universität Lausitz - Carl Thiem",
+      "buyer_country": "DEU",
+      "published": "2026-10-22",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-06",
+      "deadlines": [
+        {
+          "date": "2026-11-06",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/730178-2026"
+    },
+    {
       "id": "730355-2026",
       "title": "Germany – Software-related services – IT-Fachverfahren der Berliner Musikschulen",
       "buyer": "servicezentrum musikschulen | szm | in der Stiftung für Kulturelle Weiterbildung und Kulturberatung",
@@ -1143,55 +1166,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/730984-2026"
     },
     {
-      "id": "731743-2026",
-      "title": "Germany – Software package and information systems – 1946-CS-MDM",
-      "buyer": "BWI GmbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-22",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-23",
-      "deadlines": [
-        {
-          "date": "2026-11-23",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "48000000",
-        "72000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/731743-2026"
-    },
-    {
-      "id": "732782-2026",
-      "title": "Germany – Software package and information systems – 048 26_Erneuerung VMware Umgebung",
-      "buyer": "Klinikum St. Georg gGmbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-22",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-23",
-      "deadlines": [
-        {
-          "date": "2026-11-23",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "48000000",
-        "72268000",
-        "72260000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/732782-2026"
-    },
-    {
       "id": "731640-2026",
       "title": "Germany – Smart cards – Produktion, Personalisierung und versandfertige Bereitstellung von elektronischen Gesundheitskarten sowie von PIN-/PUK-Briefen",
       "buyer": "IKK eGK-Beschaffung 2026 GbR",
@@ -1216,6 +1190,30 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/731640-2026"
+    },
+    {
+      "id": "731743-2026",
+      "title": "Germany – Software package and information systems – 1946-CS-MDM",
+      "buyer": "BWI GmbH",
+      "buyer_country": "DEU",
+      "published": "2026-10-22",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-23",
+      "deadlines": [
+        {
+          "date": "2026-11-23",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "48000000",
+        "72000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/731743-2026"
     },
     {
       "id": "732863-2026",
@@ -1248,52 +1246,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/732863-2026"
     },
     {
-      "id": "733448-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Rahmenvereinbarung für Unterstützungsleistungen CRM",
-      "buyer": "gematik GmbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-22",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-20",
-      "deadlines": [
-        {
-          "date": "2026-11-20",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/733448-2026"
-    },
-    {
-      "id": "730178-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Dienstleistungskontingent Netzwerk- und PC-Support",
-      "buyer": "Medizinische Universität Lausitz - Carl Thiem",
-      "buyer_country": "DEU",
-      "published": "2026-10-22",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-06",
-      "deadlines": [
-        {
-          "date": "2026-11-06",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/730178-2026"
-    },
-    {
       "id": "733247-2026",
       "title": "Germany – Engineering-related scientific and technical services – Vermessungstechnische Straßenbefahrung 2027",
       "buyer": "Kommunalreferat, Recht und Verwaltung, Zentrale Dienste, Submissionsbüro",
@@ -1318,6 +1270,54 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/733247-2026"
+    },
+    {
+      "id": "733448-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Rahmenvereinbarung für Unterstützungsleistungen CRM",
+      "buyer": "gematik GmbH",
+      "buyer_country": "DEU",
+      "published": "2026-10-22",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-20",
+      "deadlines": [
+        {
+          "date": "2026-11-20",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/733448-2026"
+    },
+    {
+      "id": "732782-2026",
+      "title": "Germany – Software package and information systems – 048 26_Erneuerung VMware Umgebung",
+      "buyer": "Klinikum St. Georg gGmbH",
+      "buyer_country": "DEU",
+      "published": "2026-10-22",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-23",
+      "deadlines": [
+        {
+          "date": "2026-11-23",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "48000000",
+        "72268000",
+        "72260000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/732782-2026"
     },
     {
       "id": "732291-2026",
@@ -1631,34 +1631,21 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/732649-2026"
     },
     {
-      "id": "733061-2026",
-      "title": "Germany – Structural steelworks – Ohnhorststraße 18 - Gewächshausbau",
-      "buyer": "GMH | Gebäudemanagement Hamburg GmbH",
+      "id": "732847-2026",
+      "title": "Germany – Medical software package – Fallmanagement-Software Zahnmedizin",
+      "buyer": "mhplus BKK",
       "buyer_country": "DEU",
       "published": "2026-10-22",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-10-29",
-      "deadlines": [
-        {
-          "date": "2026-10-29",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
       "cpv": [
-        "45223210",
-        "41000000",
-        "44000000",
-        "48000000",
-        "45300000",
-        "45232460",
-        "45311000",
-        "45441000"
+        "48180000"
       ],
-      "value": "11042000",
+      "value": "",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/733061-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/732847-2026"
     },
     {
       "id": "733194-2026",
@@ -1702,22 +1689,34 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/733553-2026"
     },
     {
-      "id": "731194-2026",
-      "title": "Germany – Software package and information systems – Beschaffung Limsophy LIMS",
-      "buyer": "Ministerium für Ländlichen Raum, Landwirtschaft und Heimat Baden-Württemberg",
+      "id": "733061-2026",
+      "title": "Germany – Structural steelworks – Ohnhorststraße 18 - Gewächshausbau",
+      "buyer": "GMH | Gebäudemanagement Hamburg GmbH",
       "buyer_country": "DEU",
       "published": "2026-10-22",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "48000000",
-        "48400000"
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-10-29",
+      "deadlines": [
+        {
+          "date": "2026-10-29",
+          "kind": "tender",
+          "lot": ""
+        }
       ],
-      "value": "603573",
+      "cpv": [
+        "45223210",
+        "41000000",
+        "44000000",
+        "48000000",
+        "45300000",
+        "45232460",
+        "45311000",
+        "45441000"
+      ],
+      "value": "11042000",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/731194-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/733061-2026"
     },
     {
       "id": "731975-2026",
@@ -1778,9 +1777,9 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/730151-2026"
     },
     {
-      "id": "732847-2026",
-      "title": "Germany – Medical software package – Fallmanagement-Software Zahnmedizin",
-      "buyer": "mhplus BKK",
+      "id": "731194-2026",
+      "title": "Germany – Software package and information systems – Beschaffung Limsophy LIMS",
+      "buyer": "Ministerium für Ländlichen Raum, Landwirtschaft und Heimat Baden-Württemberg",
       "buyer_country": "DEU",
       "published": "2026-10-22",
       "notice_type": "can-standard",
@@ -1788,11 +1787,12 @@
       "deadline": "",
       "deadlines": [],
       "cpv": [
-        "48180000"
+        "48000000",
+        "48400000"
       ],
-      "value": "",
+      "value": "603573",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/732847-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/731194-2026"
     },
     {
       "id": "730078-2026",
@@ -1852,40 +1852,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/732983-2026"
     },
     {
-      "id": "733128-2026",
-      "title": "Germany – Servers – KI-Server-Appliances für Training und Inferenz großer KI-Modelle - PR1275979-2880-I",
-      "buyer": "Fraunhofer-Gesellschaft - Einkauf B12",
-      "buyer_country": "DEU",
-      "published": "2026-10-22",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "48820000"
-      ],
-      "value": "",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/733128-2026"
-    },
-    {
-      "id": "731546-2026",
-      "title": "Germany – Software package and information systems – Umstellung des bestehenden Gewerbefachverfahrens migewa auf das neue Software-Komplettsystem VOIS|GESO einschließlich Datenmigration, Inbetriebnahme und Systemservice",
-      "buyer": "Amt für Recht, Vergabe und Versicherungen",
-      "buyer_country": "DEU",
-      "published": "2026-10-22",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "48000000"
-      ],
-      "value": "",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/731546-2026"
-    },
-    {
       "id": "730414-2026",
       "title": "Germany – Software package and information systems – Strategy Cloud",
       "buyer": "BARMER",
@@ -1925,6 +1891,40 @@
       "value": "834550.06",
       "currency": "EUR",
       "url": "https://ted.europa.eu/en/notice/-/detail/731091-2026"
+    },
+    {
+      "id": "733128-2026",
+      "title": "Germany – Servers – KI-Server-Appliances für Training und Inferenz großer KI-Modelle - PR1275979-2880-I",
+      "buyer": "Fraunhofer-Gesellschaft - Einkauf B12",
+      "buyer_country": "DEU",
+      "published": "2026-10-22",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "48820000"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/733128-2026"
+    },
+    {
+      "id": "731546-2026",
+      "title": "Germany – Software package and information systems – Umstellung des bestehenden Gewerbefachverfahrens migewa auf das neue Software-Komplettsystem VOIS|GESO einschließlich Datenmigration, Inbetriebnahme und Systemservice",
+      "buyer": "Amt für Recht, Vergabe und Versicherungen",
+      "buyer_country": "DEU",
+      "published": "2026-10-22",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "48000000"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/731546-2026"
     },
     {
       "id": "731212-2026",
@@ -2285,6 +2285,51 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/727443-2026"
     },
     {
+      "id": "729536-2026",
+      "title": "Germany – Medical software package – PDMS - Patientendatenmanagementsystem inkl. Anästhesieplanungs-/- dokumentationssystem",
+      "buyer": "Universitätsklinikum Düsseldorf",
+      "buyer_country": "DEU",
+      "published": "2026-10-21",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-20",
+      "deadlines": [
+        {
+          "date": "2026-11-20",
+          "kind": "participation",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "48180000",
+        "72260000",
+        "48000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/729536-2026"
+    },
+    {
+      "id": "729643-2026",
+      "title": "Germany – Computer archiving services – Verlängerung 2021-0544-18 - Dynamisches Beschaffungssystem - Digitalisierung von Papierakten",
+      "buyer": "Stadt Münster",
+      "buyer_country": "DEU",
+      "published": "2026-10-21",
+      "notice_type": "pin-only",
+      "stage": "planning",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72252000",
+        "72000000",
+        "79995100",
+        "79999100"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/729643-2026"
+    },
+    {
       "id": "729598-2026",
       "title": "Germany – Public relations services – Zweite inhaltliche Ausbauphase des Familienportals des MASGZ",
       "buyer": "Ministerium für Arbeit, Soziales, Gesundheit und gesellschaftlichen Zusammenhalt des Landes Brandenburg",
@@ -2302,6 +2347,89 @@
       "value": "",
       "currency": "EUR",
       "url": "https://ted.europa.eu/en/notice/-/detail/729598-2026"
+    },
+    {
+      "id": "727257-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Beschaffung von Stonebranch UAC-Lizenzen einschließlich Implementierungsunterstützung [aa]",
+      "buyer": "Hamburger Hochbahn AG",
+      "buyer_country": "DEU",
+      "published": "2026-10-21",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-04",
+      "deadlines": [
+        {
+          "date": "2026-11-04",
+          "kind": "participation",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72000000"
+      ],
+      "value": "580000",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/727257-2026"
+    },
+    {
+      "id": "727280-2026",
+      "title": "Germany – Scanning services – Schreibstreifendigitalisierung - Digitalisierung von analogen Daten",
+      "buyer": "Landesamt für Natur, Umwelt und Klima NRW",
+      "buyer_country": "DEU",
+      "published": "2026-10-21",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "79999100",
+        "72310000",
+        "72312100",
+        "72316000"
+      ],
+      "value": "400000",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/727280-2026"
+    },
+    {
+      "id": "728747-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Erhebungssoftware für EVS und LWR",
+      "buyer": "Bundesrepublik Deutschland, vertreten durch das Bundesministerium des Innern, vertreten durch das Beschaffungsamt des BMI",
+      "buyer_country": "DEU",
+      "published": "2026-10-21",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72000000"
+      ],
+      "value": "966000",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/728747-2026"
+    },
+    {
+      "id": "728945-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – KONSENS-Projektmanagement für das Verfahren GINSTER",
+      "buyer": "Land Hessen, vertreten durch die Hessische Zentrale für Datenverarbeitung",
+      "buyer_country": "DEU",
+      "published": "2026-10-21",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-20",
+      "deadlines": [
+        {
+          "date": "2026-11-20",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72000000"
+      ],
+      "value": "844800",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/728945-2026"
     },
     {
       "id": "729959-2026",
@@ -2346,182 +2474,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/727027-2026"
     },
     {
-      "id": "727257-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Beschaffung von Stonebranch UAC-Lizenzen einschließlich Implementierungsunterstützung [aa]",
-      "buyer": "Hamburger Hochbahn AG",
-      "buyer_country": "DEU",
-      "published": "2026-10-21",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-04",
-      "deadlines": [
-        {
-          "date": "2026-11-04",
-          "kind": "participation",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "580000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/727257-2026"
-    },
-    {
-      "id": "726589-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Betreuung und Weiterentwicklung einer Moodle-Plattform für digitale Angebote des DAAD",
-      "buyer": "Deutscher Akademischer Austauschdienst e. V.",
-      "buyer_country": "DEU",
-      "published": "2026-10-21",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-26",
-      "deadlines": [
-        {
-          "date": "2026-11-26",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "1000000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/726589-2026"
-    },
-    {
-      "id": "727280-2026",
-      "title": "Germany – Scanning services – Schreibstreifendigitalisierung - Digitalisierung von analogen Daten",
-      "buyer": "Landesamt für Natur, Umwelt und Klima NRW",
-      "buyer_country": "DEU",
-      "published": "2026-10-21",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "79999100",
-        "72310000",
-        "72312100",
-        "72316000"
-      ],
-      "value": "400000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/727280-2026"
-    },
-    {
-      "id": "727521-2026",
-      "title": "Germany – Software supply services – Spend Management Solution (\"SMS\") Purchase-to-Pay, Accounts Payable, Expenses, Corporate Cards and Travel",
-      "buyer": "EIT RawMaterials GmbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-21",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-19",
-      "deadlines": [
-        {
-          "date": "2026-11-19",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72268000",
-        "72263000",
-        "48440000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/727521-2026"
-    },
-    {
-      "id": "729643-2026",
-      "title": "Germany – Computer archiving services – Verlängerung 2021-0544-18 - Dynamisches Beschaffungssystem - Digitalisierung von Papierakten",
-      "buyer": "Stadt Münster",
-      "buyer_country": "DEU",
-      "published": "2026-10-21",
-      "notice_type": "pin-only",
-      "stage": "planning",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72252000",
-        "72000000",
-        "79995100",
-        "79999100"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/729643-2026"
-    },
-    {
-      "id": "729536-2026",
-      "title": "Germany – Medical software package – PDMS - Patientendatenmanagementsystem inkl. Anästhesieplanungs-/- dokumentationssystem",
-      "buyer": "Universitätsklinikum Düsseldorf",
-      "buyer_country": "DEU",
-      "published": "2026-10-21",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-20",
-      "deadlines": [
-        {
-          "date": "2026-11-20",
-          "kind": "participation",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "48180000",
-        "72260000",
-        "48000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/729536-2026"
-    },
-    {
-      "id": "728747-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Erhebungssoftware für EVS und LWR",
-      "buyer": "Bundesrepublik Deutschland, vertreten durch das Bundesministerium des Innern, vertreten durch das Beschaffungsamt des BMI",
-      "buyer_country": "DEU",
-      "published": "2026-10-21",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "966000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/728747-2026"
-    },
-    {
-      "id": "728945-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – KONSENS-Projektmanagement für das Verfahren GINSTER",
-      "buyer": "Land Hessen, vertreten durch die Hessische Zentrale für Datenverarbeitung",
-      "buyer_country": "DEU",
-      "published": "2026-10-21",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-20",
-      "deadlines": [
-        {
-          "date": "2026-11-20",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "844800",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/728945-2026"
-    },
-    {
       "id": "727276-2026",
       "title": "Germany – IT services: consulting, software development, Internet and support – Integrierte Produktionsplanungs- und steuerung BaySF",
       "buyer": "Bayerische Staatsforsten AöR",
@@ -2549,6 +2501,54 @@
       "value": "0",
       "currency": "EUR",
       "url": "https://ted.europa.eu/en/notice/-/detail/727276-2026"
+    },
+    {
+      "id": "727521-2026",
+      "title": "Germany – Software supply services – Spend Management Solution (\"SMS\") Purchase-to-Pay, Accounts Payable, Expenses, Corporate Cards and Travel",
+      "buyer": "EIT RawMaterials GmbH",
+      "buyer_country": "DEU",
+      "published": "2026-10-21",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-19",
+      "deadlines": [
+        {
+          "date": "2026-11-19",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72268000",
+        "72263000",
+        "48440000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/727521-2026"
+    },
+    {
+      "id": "726589-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Betreuung und Weiterentwicklung einer Moodle-Plattform für digitale Angebote des DAAD",
+      "buyer": "Deutscher Akademischer Austauschdienst e. V.",
+      "buyer_country": "DEU",
+      "published": "2026-10-21",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-26",
+      "deadlines": [
+        {
+          "date": "2026-11-26",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72000000"
+      ],
+      "value": "1000000",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/726589-2026"
     },
     {
       "id": "726564-2026",
@@ -2782,29 +2782,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/728241-2026"
     },
     {
-      "id": "727807-2026",
-      "title": "Germany – Software package and information systems – Microsoft-Lizenzen (Online-Services)",
-      "buyer": "Erste Abwicklungsanstalt AöR",
-      "buyer_country": "DEU",
-      "published": "2026-10-21",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-19",
-      "deadlines": [
-        {
-          "date": "2026-11-19",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "48000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/727807-2026"
-    },
-    {
       "id": "729409-2026",
       "title": "Germany – Facilities management software package – Markterkundung zur Beschaffung einer CAFM-Lösung – Vorgangszeichen: O9611-e-003/26-073M",
       "buyer": "Bundesanstalt für Immobilienaufgaben",
@@ -2901,6 +2878,29 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/728155-2026"
+    },
+    {
+      "id": "727807-2026",
+      "title": "Germany – Software package and information systems – Microsoft-Lizenzen (Online-Services)",
+      "buyer": "Erste Abwicklungsanstalt AöR",
+      "buyer_country": "DEU",
+      "published": "2026-10-21",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-19",
+      "deadlines": [
+        {
+          "date": "2026-11-19",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "48000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/727807-2026"
     },
     {
       "id": "728979-2026",
@@ -3184,6 +3184,26 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/723762-2026"
     },
     {
+      "id": "724959-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Rahmenvertrag IT-Dienstleistungen für das Digitale Deutsche Frauenarchiv",
+      "buyer": "i.d.a. – informieren, dokumentieren, archivieren. Dachverband deutschsprachiger Lesben/Frauenarchive und -bibliotheken e.V.",
+      "buyer_country": "DEU",
+      "published": "2026-10-20",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72000000",
+        "72200000",
+        "72230000",
+        "72260000"
+      ],
+      "value": "252000",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/724959-2026"
+    },
+    {
       "id": "724921-2026",
       "title": "Germany – IT services: consulting, software development, Internet and support – P 1029 - SDN-Produktanalyse (SPA)",
       "buyer": "Bundesamt für Sicherheit in der Informationstechnik",
@@ -3205,6 +3225,29 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/724921-2026"
+    },
+    {
+      "id": "725371-2026",
+      "title": "Germany – Software supply services – Verlängerung der PingIDM",
+      "buyer": "Universität Stuttgart",
+      "buyer_country": "DEU",
+      "published": "2026-10-20",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-10-26",
+      "deadlines": [
+        {
+          "date": "2026-10-26",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72268000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/725371-2026"
     },
     {
       "id": "724273-2026",
@@ -3239,49 +3282,6 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/724277-2026"
-    },
-    {
-      "id": "724959-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Rahmenvertrag IT-Dienstleistungen für das Digitale Deutsche Frauenarchiv",
-      "buyer": "i.d.a. – informieren, dokumentieren, archivieren. Dachverband deutschsprachiger Lesben/Frauenarchive und -bibliotheken e.V.",
-      "buyer_country": "DEU",
-      "published": "2026-10-20",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72000000",
-        "72200000",
-        "72230000",
-        "72260000"
-      ],
-      "value": "252000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/724959-2026"
-    },
-    {
-      "id": "725371-2026",
-      "title": "Germany – Software supply services – Verlängerung der PingIDM",
-      "buyer": "Universität Stuttgart",
-      "buyer_country": "DEU",
-      "published": "2026-10-20",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-10-26",
-      "deadlines": [
-        {
-          "date": "2026-10-26",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72268000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/725371-2026"
     },
     {
       "id": "725987-2026",
@@ -3538,6 +3538,47 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/724004-2026"
     },
     {
+      "id": "725377-2026",
+      "title": "Germany – Computer equipment and supplies – Rahmenvertrag NetApp",
+      "buyer": "Zweites Deutsches Fernsehen",
+      "buyer_country": "DEU",
+      "published": "2026-10-20",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-10-27",
+      "deadlines": [
+        {
+          "date": "2026-10-27",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "30200000",
+        "48000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/725377-2026"
+    },
+    {
+      "id": "723949-2026",
+      "title": "Germany – Servers – Rahmenvereinbarung Industrieserver inkl. Roll-Out und Roll-In Leistungen",
+      "buyer": "Land Baden-Württemberg vertreten durch die IT Baden-Württemberg",
+      "buyer_country": "DEU",
+      "published": "2026-10-20",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "48820000"
+      ],
+      "value": "1",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/723949-2026"
+    },
+    {
       "id": "724169-2026",
       "title": "Germany – Servers – Serverinfrastruktur für die bestehende VMware-ESXi-Umgebung",
       "buyer": "Neckar-Odenwald-Kliniken gGmbH",
@@ -3562,47 +3603,6 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/724169-2026"
-    },
-    {
-      "id": "723949-2026",
-      "title": "Germany – Servers – Rahmenvereinbarung Industrieserver inkl. Roll-Out und Roll-In Leistungen",
-      "buyer": "Land Baden-Württemberg vertreten durch die IT Baden-Württemberg",
-      "buyer_country": "DEU",
-      "published": "2026-10-20",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "48820000"
-      ],
-      "value": "1",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/723949-2026"
-    },
-    {
-      "id": "725377-2026",
-      "title": "Germany – Computer equipment and supplies – Rahmenvertrag NetApp",
-      "buyer": "Zweites Deutsches Fernsehen",
-      "buyer_country": "DEU",
-      "published": "2026-10-20",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-10-27",
-      "deadlines": [
-        {
-          "date": "2026-10-27",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "30200000",
-        "48000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/725377-2026"
     },
     {
       "id": "723479-2026",
@@ -3757,6 +3757,44 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/724808-2026"
     },
     {
+      "id": "723362-2026",
+      "title": "Germany – Computer equipment and supplies – Rahmenvereinbarung Scanner",
+      "buyer": "Land Niedersachsen vertreten durch IT.Niedersachsen FG 24 - Zentrale Vergabestelle IT",
+      "buyer_country": "DEU",
+      "published": "2026-10-20",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "30200000",
+        "30216110",
+        "48318000"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/723362-2026"
+    },
+    {
+      "id": "723138-2026",
+      "title": "Germany – Building construction work – Neubau OGTS und Schulmensa – hier: Gebäudeautomation",
+      "buyer": "Gemeinde Memmelsdorf",
+      "buyer_country": "DEU",
+      "published": "2026-10-20",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "45210000",
+        "48921000",
+        "45311200"
+      ],
+      "value": "158365",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/723138-2026"
+    },
+    {
       "id": "722782-2026",
       "title": "Germany – Software package and information systems – AutoDesk Lizenzen",
       "buyer": "Hamburger Energienetze GmbH",
@@ -3781,62 +3819,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/722782-2026"
     },
     {
-      "id": "723138-2026",
-      "title": "Germany – Building construction work – Neubau OGTS und Schulmensa – hier: Gebäudeautomation",
-      "buyer": "Gemeinde Memmelsdorf",
-      "buyer_country": "DEU",
-      "published": "2026-10-20",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "45210000",
-        "48921000",
-        "45311200"
-      ],
-      "value": "158365",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/723138-2026"
-    },
-    {
-      "id": "723362-2026",
-      "title": "Germany – Computer equipment and supplies – Rahmenvereinbarung Scanner",
-      "buyer": "Land Niedersachsen vertreten durch IT.Niedersachsen FG 24 - Zentrale Vergabestelle IT",
-      "buyer_country": "DEU",
-      "published": "2026-10-20",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "30200000",
-        "30216110",
-        "48318000"
-      ],
-      "value": "",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/723362-2026"
-    },
-    {
-      "id": "722977-2026",
-      "title": "Germany – Switching station installation work – Gebäudeautomation - Neubau Stadthaus 4 - Bauwerke Münster GmbH",
-      "buyer": "Bauwerke Münster GmbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-20",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "45315700",
-        "48921000"
-      ],
-      "value": "596727.98",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/722977-2026"
-    },
-    {
       "id": "723798-2026",
       "title": "Germany – Servers – DDI-Lösung (DNS/DHCP/IPAM) inkl. Migration und Service – Rahmenvereinbarung",
       "buyer": "Flughafen Köln/Bonn GmbH",
@@ -3859,6 +3841,24 @@
       "value": "2000000",
       "currency": "EUR",
       "url": "https://ted.europa.eu/en/notice/-/detail/723798-2026"
+    },
+    {
+      "id": "722977-2026",
+      "title": "Germany – Switching station installation work – Gebäudeautomation - Neubau Stadthaus 4 - Bauwerke Münster GmbH",
+      "buyer": "Bauwerke Münster GmbH",
+      "buyer_country": "DEU",
+      "published": "2026-10-20",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "45315700",
+        "48921000"
+      ],
+      "value": "596727.98",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/722977-2026"
     },
     {
       "id": "724429-2026",
@@ -4194,6 +4194,95 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/722464-2026"
     },
     {
+      "id": "719518-2026",
+      "title": "Germany – Event services – Leistungen zur Unterstützung bei der Durchführung des Schulwettbewerbs zur Entwicklungspolitik und seiner Begleitmaßnahme - dem Song Contest \"Dein Song für EINE WELT!\" im Zeitraum vom 02. Januar 2027 bis zum 31. Dezember 2028",
+      "buyer": "Engagement Global gGmbH",
+      "buyer_country": "DEU",
+      "published": "2026-10-19",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-17",
+      "deadlines": [
+        {
+          "date": "2026-11-17",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "79952000",
+        "72000000",
+        "79822500",
+        "92370000",
+        "72200000",
+        "72400000",
+        "72413000",
+        "79823000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/719518-2026"
+    },
+    {
+      "id": "720180-2026",
+      "title": "Germany – Software-related services – Wartung Fairplay-Datenbanken 2026-2028",
+      "buyer": "Bundesamt für Ausrüstung, Informationstechnik und Nutzung der Bundeswehr",
+      "buyer_country": "DEU",
+      "published": "2026-10-19",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72260000"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/720180-2026"
+    },
+    {
+      "id": "721718-2026",
+      "title": "Germany – Business analysis consultancy services – Betriebswirtschaftliches Monitoring für die Hessischen Inklusionsbetriebe, LWV Hessen",
+      "buyer": "Landeswohlfahrtsverband Hessen - Zentrale Vergabestelle",
+      "buyer_country": "DEU",
+      "published": "2026-10-19",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72221000",
+        "79200000",
+        "79400000"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/721718-2026"
+    },
+    {
+      "id": "721055-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – UC_DL_2026",
+      "buyer": "Max Planck Information and Technology (MaxIT)",
+      "buyer_country": "DEU",
+      "published": "2026-10-19",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-10-23",
+      "deadlines": [
+        {
+          "date": "2026-10-23",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/721055-2026"
+    },
+    {
       "id": "721257-2026",
       "title": "Germany – Internet services – Förderung von Aufbau und Betrieb von nachhaltigen und hochleistungsfähigen Telekommunikationsnetzinfrastrukturen (Gigabit-Netz) im Landkreis Prignitz",
       "buyer": "Landkreis Prignitz",
@@ -4218,9 +4307,9 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/721257-2026"
     },
     {
-      "id": "721718-2026",
-      "title": "Germany – Business analysis consultancy services – Betriebswirtschaftliches Monitoring für die Hessischen Inklusionsbetriebe, LWV Hessen",
-      "buyer": "Landeswohlfahrtsverband Hessen - Zentrale Vergabestelle",
+      "id": "721859-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Stadt Haar: IT-Services",
+      "buyer": "Stadt Haar",
       "buyer_country": "DEU",
       "published": "2026-10-19",
       "notice_type": "can-standard",
@@ -4228,13 +4317,13 @@
       "deadline": "",
       "deadlines": [],
       "cpv": [
-        "72221000",
-        "79200000",
-        "79400000"
+        "72000000",
+        "72250000",
+        "50300000"
       ],
       "value": "",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/721718-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/721859-2026"
     },
     {
       "id": "719661-2026",
@@ -4263,6 +4352,87 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/719661-2026"
+    },
+    {
+      "id": "722341-2026",
+      "title": "Germany – Application service providers – MARKTERKUNDUNG Elektronische Einkaufsplattform",
+      "buyer": "Berliner Wasserbetriebe",
+      "buyer_country": "DEU",
+      "published": "2026-10-19",
+      "notice_type": "pin-only",
+      "stage": "planning",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72416000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/722341-2026"
+    },
+    {
+      "id": "718946-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Softwareentwicklung für das Projekt Landtagsverwaltung; LDBV",
+      "buyer": "Zentrale Vergabestelle im Bayerischen Landesamt für Steuern",
+      "buyer_country": "DEU",
+      "published": "2026-10-19",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-16",
+      "deadlines": [
+        {
+          "date": "2026-11-16",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/718946-2026"
+    },
+    {
+      "id": "722668-2026",
+      "title": "Germany – Medical equipments – Rahmenvereinbarung für Patientenmonitoring und Service und Wartungsdiensleistungen für zentrale Überwachungskomponenten für Telemetrie",
+      "buyer": "Universitätsklinikum Aachen AöR",
+      "buyer_country": "DEU",
+      "published": "2026-10-19",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-17",
+      "deadlines": [
+        {
+          "date": "2026-11-17",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "33100000",
+        "72000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/722668-2026"
+    },
+    {
+      "id": "722666-2026",
+      "title": "Germany – Maintenance of information technology software – Verlängerung Maintenance & Support Nexus - PR1253829-9632-I",
+      "buyer": "Fraunhofer-Gesellschaft - Einkauf B12",
+      "buyer_country": "DEU",
+      "published": "2026-10-19",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72267100"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/722666-2026"
     },
     {
       "id": "721379-2026",
@@ -4313,176 +4483,6 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/721796-2026"
-    },
-    {
-      "id": "719518-2026",
-      "title": "Germany – Event services – Leistungen zur Unterstützung bei der Durchführung des Schulwettbewerbs zur Entwicklungspolitik und seiner Begleitmaßnahme - dem Song Contest \"Dein Song für EINE WELT!\" im Zeitraum vom 02. Januar 2027 bis zum 31. Dezember 2028",
-      "buyer": "Engagement Global gGmbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-19",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-17",
-      "deadlines": [
-        {
-          "date": "2026-11-17",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "79952000",
-        "72000000",
-        "79822500",
-        "92370000",
-        "72200000",
-        "72400000",
-        "72413000",
-        "79823000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/719518-2026"
-    },
-    {
-      "id": "721055-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – UC_DL_2026",
-      "buyer": "Max Planck Information and Technology (MaxIT)",
-      "buyer_country": "DEU",
-      "published": "2026-10-19",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-10-23",
-      "deadlines": [
-        {
-          "date": "2026-10-23",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/721055-2026"
-    },
-    {
-      "id": "721859-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Stadt Haar: IT-Services",
-      "buyer": "Stadt Haar",
-      "buyer_country": "DEU",
-      "published": "2026-10-19",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72000000",
-        "72250000",
-        "50300000"
-      ],
-      "value": "",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/721859-2026"
-    },
-    {
-      "id": "722341-2026",
-      "title": "Germany – Application service providers – MARKTERKUNDUNG Elektronische Einkaufsplattform",
-      "buyer": "Berliner Wasserbetriebe",
-      "buyer_country": "DEU",
-      "published": "2026-10-19",
-      "notice_type": "pin-only",
-      "stage": "planning",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72416000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/722341-2026"
-    },
-    {
-      "id": "722668-2026",
-      "title": "Germany – Medical equipments – Rahmenvereinbarung für Patientenmonitoring und Service und Wartungsdiensleistungen für zentrale Überwachungskomponenten für Telemetrie",
-      "buyer": "Universitätsklinikum Aachen AöR",
-      "buyer_country": "DEU",
-      "published": "2026-10-19",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-17",
-      "deadlines": [
-        {
-          "date": "2026-11-17",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "33100000",
-        "72000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/722668-2026"
-    },
-    {
-      "id": "722666-2026",
-      "title": "Germany – Maintenance of information technology software – Verlängerung Maintenance & Support Nexus - PR1253829-9632-I",
-      "buyer": "Fraunhofer-Gesellschaft - Einkauf B12",
-      "buyer_country": "DEU",
-      "published": "2026-10-19",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72267100"
-      ],
-      "value": "",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/722666-2026"
-    },
-    {
-      "id": "720180-2026",
-      "title": "Germany – Software-related services – Wartung Fairplay-Datenbanken 2026-2028",
-      "buyer": "Bundesamt für Ausrüstung, Informationstechnik und Nutzung der Bundeswehr",
-      "buyer_country": "DEU",
-      "published": "2026-10-19",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72260000"
-      ],
-      "value": "",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/720180-2026"
-    },
-    {
-      "id": "718946-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Softwareentwicklung für das Projekt Landtagsverwaltung; LDBV",
-      "buyer": "Zentrale Vergabestelle im Bayerischen Landesamt für Steuern",
-      "buyer_country": "DEU",
-      "published": "2026-10-19",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-16",
-      "deadlines": [
-        {
-          "date": "2026-11-16",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/718946-2026"
     },
     {
       "id": "720207-2026",
@@ -4821,46 +4821,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/721631-2026"
     },
     {
-      "id": "718723-2026",
-      "title": "Germany – Software package and information systems – HCL Domino Lizenzen",
-      "buyer": "Deutsche Welle, Standort Bonn",
-      "buyer_country": "DEU",
-      "published": "2026-10-19",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-05",
-      "deadlines": [
-        {
-          "date": "2026-11-05",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "48000000"
-      ],
-      "value": "630252.1",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/718723-2026"
-    },
-    {
-      "id": "721914-2026",
-      "title": "Germany – Software package and information systems – Bereitstellung von Arbeitsplatzsystemen (Hardware & Software) sowie damit einhergehender Dienstleistungen",
-      "buyer": "Die Autobahn GmbH des Bundes",
-      "buyer_country": "DEU",
-      "published": "2026-10-19",
-      "notice_type": "can-modif",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "48000000"
-      ],
-      "value": "104718427.21",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/721914-2026"
-    },
-    {
       "id": "722079-2026",
       "title": "Germany – Statistical software package – Beschaffung und Integration eines Statistiktools für ein Social Intranet auf SharePoint-Online",
       "buyer": "Deutsche Bundesbank",
@@ -4884,28 +4844,21 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/722079-2026"
     },
     {
-      "id": "722526-2026",
-      "title": "Germany – Software package and information systems – Rahmenvereinbarung (RV) über die Beschaffung von Veeam Lizenzen und Produkten",
-      "buyer": "Rechenzentrum der Finanzverwaltung des Landes NRW",
+      "id": "721914-2026",
+      "title": "Germany – Software package and information systems – Bereitstellung von Arbeitsplatzsystemen (Hardware & Software) sowie damit einhergehender Dienstleistungen",
+      "buyer": "Die Autobahn GmbH des Bundes",
       "buyer_country": "DEU",
       "published": "2026-10-19",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-17",
-      "deadlines": [
-        {
-          "date": "2026-11-17",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
+      "notice_type": "can-modif",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
       "cpv": [
-        "48000000",
-        "48710000"
+        "48000000"
       ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/722526-2026"
+      "value": "104718427.21",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/721914-2026"
     },
     {
       "id": "722369-2026",
@@ -4932,21 +4885,27 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/722369-2026"
     },
     {
-      "id": "721057-2026",
-      "title": "Germany – Software package and information systems – Microsoft Enterprise Agreement Renewal 2026-2030",
-      "buyer": "Nord Ost West Informationstechnik GmbH",
+      "id": "718723-2026",
+      "title": "Germany – Software package and information systems – HCL Domino Lizenzen",
+      "buyer": "Deutsche Welle, Standort Bonn",
       "buyer_country": "DEU",
       "published": "2026-10-19",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-05",
+      "deadlines": [
+        {
+          "date": "2026-11-05",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
       "cpv": [
         "48000000"
       ],
-      "value": "",
+      "value": "630252.1",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/721057-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/718723-2026"
     },
     {
       "id": "720897-2026",
@@ -4964,6 +4923,47 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/720897-2026"
+    },
+    {
+      "id": "721057-2026",
+      "title": "Germany – Software package and information systems – Microsoft Enterprise Agreement Renewal 2026-2030",
+      "buyer": "Nord Ost West Informationstechnik GmbH",
+      "buyer_country": "DEU",
+      "published": "2026-10-19",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "48000000"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/721057-2026"
+    },
+    {
+      "id": "722526-2026",
+      "title": "Germany – Software package and information systems – Rahmenvereinbarung (RV) über die Beschaffung von Veeam Lizenzen und Produkten",
+      "buyer": "Rechenzentrum der Finanzverwaltung des Landes NRW",
+      "buyer_country": "DEU",
+      "published": "2026-10-19",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-17",
+      "deadlines": [
+        {
+          "date": "2026-11-17",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "48000000",
+        "48710000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/722526-2026"
     },
     {
       "id": "721231-2026",
@@ -5451,6 +5451,74 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/716155-2026"
     },
     {
+      "id": "716540-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Externe Beratung Microsoft Cloud",
+      "buyer": "Berufsgenossenschaft Holz und Metall",
+      "buyer_country": "DEU",
+      "published": "2026-10-16",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-26",
+      "deadlines": [
+        {
+          "date": "2026-11-26",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/716540-2026"
+    },
+    {
+      "id": "716259-2026",
+      "title": "Germany – Telephone and data transmission services – ÜSTRA_Mobilfunk_TNW 2025",
+      "buyer": "ÜSTRA Hannoversche Verkehrsbetriebe Aktiengesellschaft",
+      "buyer_country": "DEU",
+      "published": "2026-10-16",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "64210000",
+        "72000000",
+        "32250000",
+        "48000000"
+      ],
+      "value": "4000000",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/716259-2026"
+    },
+    {
+      "id": "718009-2026",
+      "title": "Germany – Internet services – Betrieb und strategische Weiterentwicklung des TikTok Kanals der FES @fes_online",
+      "buyer": "Friedrich-Ebert-Stiftung e.V., FuO/ Zentrale Dienste Berlin, Vergabestelle",
+      "buyer_country": "DEU",
+      "published": "2026-10-16",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-06",
+      "deadlines": [
+        {
+          "date": "2026-11-06",
+          "kind": "participation",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72400000",
+        "72415000",
+        "72416000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/718009-2026"
+    },
+    {
       "id": "717631-2026",
       "title": "Germany – System and support services – IT-Unterstützungsleistungen im Infrastruktur-Umfeld",
       "buyer": "Kaufmännische Krankenkasse - KKH",
@@ -5511,74 +5579,6 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/718412-2026"
-    },
-    {
-      "id": "716259-2026",
-      "title": "Germany – Telephone and data transmission services – ÜSTRA_Mobilfunk_TNW 2025",
-      "buyer": "ÜSTRA Hannoversche Verkehrsbetriebe Aktiengesellschaft",
-      "buyer_country": "DEU",
-      "published": "2026-10-16",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "64210000",
-        "72000000",
-        "32250000",
-        "48000000"
-      ],
-      "value": "4000000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/716259-2026"
-    },
-    {
-      "id": "716540-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Externe Beratung Microsoft Cloud",
-      "buyer": "Berufsgenossenschaft Holz und Metall",
-      "buyer_country": "DEU",
-      "published": "2026-10-16",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-26",
-      "deadlines": [
-        {
-          "date": "2026-11-26",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/716540-2026"
-    },
-    {
-      "id": "718009-2026",
-      "title": "Germany – Internet services – Betrieb und strategische Weiterentwicklung des TikTok Kanals der FES @fes_online",
-      "buyer": "Friedrich-Ebert-Stiftung e.V., FuO/ Zentrale Dienste Berlin, Vergabestelle",
-      "buyer_country": "DEU",
-      "published": "2026-10-16",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-06",
-      "deadlines": [
-        {
-          "date": "2026-11-06",
-          "kind": "participation",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72400000",
-        "72415000",
-        "72416000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/718009-2026"
     },
     {
       "id": "715995-2026",
@@ -6331,6 +6331,87 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/713891-2026"
     },
     {
+      "id": "712772-2026",
+      "title": "Germany – Software programming and consultancy services – Weiterentwicklung ePA 3.1.3. – 2",
+      "buyer": "BITMARCK GmbH",
+      "buyer_country": "DEU",
+      "published": "2026-10-15",
+      "notice_type": "can-modif",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72200000",
+        "72260000",
+        "72212100",
+        "30200000"
+      ],
+      "value": "216000",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/712772-2026"
+    },
+    {
+      "id": "713277-2026",
+      "title": "Germany – Software support services – Zentraler Anwendersupport eNorm (1st- und 2nd-Level-Support)",
+      "buyer": "Bundesrepublik Deutschland, vertreten durch die Bundesministerin der Justiz und für Verbraucherschutz",
+      "buyer_country": "DEU",
+      "published": "2026-10-15",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72261000",
+        "72253100"
+      ],
+      "value": "1",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/713277-2026"
+    },
+    {
+      "id": "713597-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Rahmenvertrag für Dienstleistungen im Bereich DOMEA",
+      "buyer": "Informationstechnikzentrum Bund (ITZBund)",
+      "buyer_country": "DEU",
+      "published": "2026-10-15",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-16",
+      "deadlines": [
+        {
+          "date": "2026-11-16",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72000000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/713597-2026"
+    },
+    {
+      "id": "711659-2026",
+      "title": "Germany – Software implementation services – L-Bank - Europaweite Vergabe zur Beschaffung und Implementierung einer CAFM-Software im Verhandlungsverfahren mit Teilnahmewettbewerb nach VgV",
+      "buyer": "Landeskreditbank Baden-Württemberg - Förderbank - (L-Bank)",
+      "buyer_country": "DEU",
+      "published": "2026-10-15",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72263000",
+        "48421000",
+        "72260000",
+        "72268000"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/711659-2026"
+    },
+    {
       "id": "711449-2026",
       "title": "Germany – Software supply services – BIM-0bjektdatenbank",
       "buyer": "Die Autobahn GmbH des Bundes",
@@ -6378,24 +6459,81 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/711848-2026"
     },
     {
-      "id": "711659-2026",
-      "title": "Germany – Software implementation services – L-Bank - Europaweite Vergabe zur Beschaffung und Implementierung einer CAFM-Software im Verhandlungsverfahren mit Teilnahmewettbewerb nach VgV",
-      "buyer": "Landeskreditbank Baden-Württemberg - Förderbank - (L-Bank)",
+      "id": "713290-2026",
+      "title": "Germany – Software-related services – RV LowCode OutSystems",
+      "buyer": "civillent GmbH",
       "buyer_country": "DEU",
       "published": "2026-10-15",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-10-27",
+      "deadlines": [
+        {
+          "date": "2026-10-27",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
       "cpv": [
-        "72263000",
-        "48421000",
         "72260000",
-        "72268000"
+        "48000000",
+        "72266000",
+        "72261000",
+        "72263000"
+      ],
+      "value": "4200000",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/713290-2026"
+    },
+    {
+      "id": "713469-2026",
+      "title": "Germany – Desktop computer – Nachhaltige Arbeitsplatzcomputer (produktneutral) der Kategorie Standard und Zusatzleistungen",
+      "buyer": "Bundesrepublik Deutschland, vertreten durch das Bundesministerium des Innern, vertreten durch das Beschaffungsamt des BMI",
+      "buyer_country": "DEU",
+      "published": "2026-10-15",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-10-27",
+      "deadlines": [
+        {
+          "date": "2026-10-27",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "30213300",
+        "30214000",
+        "72611000"
       ],
       "value": "",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/711659-2026"
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/713469-2026"
+    },
+    {
+      "id": "713751-2026",
+      "title": "Germany – Desktop computer – Nachhaltige Mini Arbeitsplatzcomputer (produktneutral) für die Bundespolizei und Zusatzleistungen",
+      "buyer": "Bundesrepublik Deutschland, vertreten durch das Bundesministerium des Innern, vertreten durch das Beschaffungsamt des BMI",
+      "buyer_country": "DEU",
+      "published": "2026-10-15",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-10-27",
+      "deadlines": [
+        {
+          "date": "2026-10-27",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "30213300",
+        "30214000",
+        "72611000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/713751-2026"
     },
     {
       "id": "712102-2026",
@@ -6421,46 +6559,22 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/712102-2026"
     },
     {
-      "id": "712325-2026",
-      "title": "Germany – Computer audit consultancy and hardware consultancy services – Beratungsleistungen zur Vor- und Nachbereitung eines Re-Zertifizierungs- bzw. Überwachungsaudits nach dem IT-Grundschutz BSI",
-      "buyer": "Servicezentrum Landentwicklung und Agrarförderung",
+      "id": "712670-2026",
+      "title": "Germany – Software-related services – Implementierung eines SAP S/4 HANA-Systems",
+      "buyer": "Charité - Universitätsmedizin Berlin",
       "buyer_country": "DEU",
       "published": "2026-10-15",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-13",
-      "deadlines": [
-        {
-          "date": "2026-11-13",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72150000",
-        "72810000",
-        "79417000"
-      ],
-      "value": "560000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/712325-2026"
-    },
-    {
-      "id": "712966-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – 81322958_Development_MSME_IT_Platform",
-      "buyer": "Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) GmbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-15",
-      "notice_type": "can-standard",
+      "notice_type": "can-modif",
       "stage": "result",
       "deadline": "",
       "deadlines": [],
       "cpv": [
-        "72000000"
+        "72260000",
+        "72268000"
       ],
-      "value": "562740",
+      "value": "0.01",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/712966-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/712670-2026"
     },
     {
       "id": "712615-2026",
@@ -6489,42 +6603,21 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/712615-2026"
     },
     {
-      "id": "712670-2026",
-      "title": "Germany – Software-related services – Implementierung eines SAP S/4 HANA-Systems",
-      "buyer": "Charité - Universitätsmedizin Berlin",
+      "id": "712966-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – 81322958_Development_MSME_IT_Platform",
+      "buyer": "Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) GmbH",
       "buyer_country": "DEU",
       "published": "2026-10-15",
-      "notice_type": "can-modif",
+      "notice_type": "can-standard",
       "stage": "result",
       "deadline": "",
       "deadlines": [],
       "cpv": [
-        "72260000",
-        "72268000"
+        "72000000"
       ],
-      "value": "0.01",
+      "value": "562740",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/712670-2026"
-    },
-    {
-      "id": "712772-2026",
-      "title": "Germany – Software programming and consultancy services – Weiterentwicklung ePA 3.1.3. – 2",
-      "buyer": "BITMARCK GmbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-15",
-      "notice_type": "can-modif",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72200000",
-        "72260000",
-        "72212100",
-        "30200000"
-      ],
-      "value": "216000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/712772-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/712966-2026"
     },
     {
       "id": "714702-2026",
@@ -6575,26 +6668,9 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/714644-2026"
     },
     {
-      "id": "713041-2026",
-      "title": "Germany – Industry specific software development services – Rahmenvereinbarung zur Weiterentwicklung der Frequenzplanungssoftware FRANSY",
-      "buyer": "Bayerischer Rundfunk A.d.ö.R.",
-      "buyer_country": "DEU",
-      "published": "2026-10-15",
-      "notice_type": "veat",
-      "stage": "other",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72212100"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/713041-2026"
-    },
-    {
-      "id": "713253-2026",
-      "title": "Germany – Programming services of application software – Virtuelle Tourist-Information - KI-basierte Gästeberatung, Los 2 - Digitale Service-Plattform (CMS & Ausspielsystem)",
-      "buyer": "Felsenland Südeifel Tourismus GmbH",
+      "id": "712325-2026",
+      "title": "Germany – Computer audit consultancy and hardware consultancy services – Beratungsleistungen zur Vor- und Nachbereitung eines Re-Zertifizierungs- bzw. Überwachungsaudits nach dem IT-Grundschutz BSI",
+      "buyer": "Servicezentrum Landentwicklung und Agrarförderung",
       "buyer_country": "DEU",
       "published": "2026-10-15",
       "notice_type": "cn-standard",
@@ -6603,21 +6679,18 @@
       "deadlines": [
         {
           "date": "2026-11-13",
-          "kind": "participation",
+          "kind": "tender",
           "lot": ""
         }
       ],
       "cpv": [
-        "72212000",
-        "48000000",
-        "72261000",
-        "72415000",
-        "72322000",
-        "48611000"
+        "72150000",
+        "72810000",
+        "79417000"
       ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/713253-2026"
+      "value": "560000",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/712325-2026"
     },
     {
       "id": "714091-2026",
@@ -6692,45 +6765,44 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/712992-2026"
     },
     {
-      "id": "713688-2026",
-      "title": "Germany – Software supply services – Rechercheportal_Juris",
-      "buyer": "Freistaat Thüringen vertreten durch das Thüringer Landesamt für Finanzen",
+      "id": "713041-2026",
+      "title": "Germany – Industry specific software development services – Rahmenvereinbarung zur Weiterentwicklung der Frequenzplanungssoftware FRANSY",
+      "buyer": "Bayerischer Rundfunk A.d.ö.R.",
       "buyer_country": "DEU",
       "published": "2026-10-15",
-      "notice_type": "can-social",
-      "stage": "result",
+      "notice_type": "veat",
+      "stage": "other",
       "deadline": "",
       "deadlines": [],
       "cpv": [
-        "72268000"
+        "72212100"
       ],
-      "value": "1018350",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/713688-2026"
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/713041-2026"
     },
     {
-      "id": "711842-2026",
-      "title": "Germany – Safety installations – ITDZ Berlin: Zutrittskontrollsystem",
-      "buyer": "IT-Dienstleistungszentrum Berlin (AöR)",
+      "id": "713394-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Dienstleistung eines Audits des Informationsverbundes HIL nach ISO 27001 auf Basis IT-Grundschutz",
+      "buyer": "HIL Heeresinstandsetzungslogistik GmbH",
       "buyer_country": "DEU",
       "published": "2026-10-15",
       "notice_type": "cn-standard",
       "stage": "competition",
-      "deadline": "2026-11-16",
+      "deadline": "2026-11-02",
       "deadlines": [
         {
-          "date": "2026-11-16",
-          "kind": "tender",
+          "date": "2026-11-02",
+          "kind": "participation",
           "lot": ""
         }
       ],
       "cpv": [
-        "35113300",
-        "72250000"
+        "72000000"
       ],
-      "value": "442600",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/711842-2026"
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/713394-2026"
     },
     {
       "id": "712775-2026",
@@ -6760,9 +6832,26 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/712775-2026"
     },
     {
-      "id": "711863-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Datawarehouse SAP4HANA",
-      "buyer": "Berlinovo Immobilien Gesellschaft mbH",
+      "id": "713688-2026",
+      "title": "Germany – Software supply services – Rechercheportal_Juris",
+      "buyer": "Freistaat Thüringen vertreten durch das Thüringer Landesamt für Finanzen",
+      "buyer_country": "DEU",
+      "published": "2026-10-15",
+      "notice_type": "can-social",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72268000"
+      ],
+      "value": "1018350",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/713688-2026"
+    },
+    {
+      "id": "715049-2026",
+      "title": "Germany – Software supply services – Einführung eines cloudbasierten CAFM-Systems (SaaS) inkl. Migration aus dem Bestandssystem zur nachhaltigen Unterstützung des operativen und strategischen Facility Managements",
+      "buyer": "Universität Siegen",
       "buyer_country": "DEU",
       "published": "2026-10-15",
       "notice_type": "can-standard",
@@ -6770,11 +6859,11 @@
       "deadline": "",
       "deadlines": [],
       "cpv": [
-        "72000000"
+        "72268000"
       ],
-      "value": "0.01",
+      "value": "0",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/711863-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/715049-2026"
     },
     {
       "id": "713045-2026",
@@ -6824,27 +6913,32 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/713053-2026"
     },
     {
-      "id": "713394-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Dienstleistung eines Audits des Informationsverbundes HIL nach ISO 27001 auf Basis IT-Grundschutz",
-      "buyer": "HIL Heeresinstandsetzungslogistik GmbH",
+      "id": "713253-2026",
+      "title": "Germany – Programming services of application software – Virtuelle Tourist-Information - KI-basierte Gästeberatung, Los 2 - Digitale Service-Plattform (CMS & Ausspielsystem)",
+      "buyer": "Felsenland Südeifel Tourismus GmbH",
       "buyer_country": "DEU",
       "published": "2026-10-15",
       "notice_type": "cn-standard",
       "stage": "competition",
-      "deadline": "2026-11-02",
+      "deadline": "2026-11-13",
       "deadlines": [
         {
-          "date": "2026-11-02",
+          "date": "2026-11-13",
           "kind": "participation",
           "lot": ""
         }
       ],
       "cpv": [
-        "72000000"
+        "72212000",
+        "48000000",
+        "72261000",
+        "72415000",
+        "72322000",
+        "48611000"
       ],
       "value": "",
       "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/713394-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/713253-2026"
     },
     {
       "id": "713679-2026",
@@ -6866,9 +6960,9 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/713679-2026"
     },
     {
-      "id": "715049-2026",
-      "title": "Germany – Software supply services – Einführung eines cloudbasierten CAFM-Systems (SaaS) inkl. Migration aus dem Bestandssystem zur nachhaltigen Unterstützung des operativen und strategischen Facility Managements",
-      "buyer": "Universität Siegen",
+      "id": "711863-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Datawarehouse SAP4HANA",
+      "buyer": "Berlinovo Immobilien Gesellschaft mbH",
       "buyer_country": "DEU",
       "published": "2026-10-15",
       "notice_type": "can-standard",
@@ -6876,11 +6970,35 @@
       "deadline": "",
       "deadlines": [],
       "cpv": [
-        "72268000"
+        "72000000"
       ],
-      "value": "0",
+      "value": "0.01",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/715049-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/711863-2026"
+    },
+    {
+      "id": "711842-2026",
+      "title": "Germany – Safety installations – ITDZ Berlin: Zutrittskontrollsystem",
+      "buyer": "IT-Dienstleistungszentrum Berlin (AöR)",
+      "buyer_country": "DEU",
+      "published": "2026-10-15",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-16",
+      "deadlines": [
+        {
+          "date": "2026-11-16",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "35113300",
+        "72250000"
+      ],
+      "value": "442600",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/711842-2026"
     },
     {
       "id": "712177-2026",
@@ -7130,33 +7248,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/712954-2026"
     },
     {
-      "id": "713290-2026",
-      "title": "Germany – Software-related services – RV LowCode OutSystems",
-      "buyer": "civillent GmbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-15",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-10-27",
-      "deadlines": [
-        {
-          "date": "2026-10-27",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72260000",
-        "48000000",
-        "72266000",
-        "72261000",
-        "72263000"
-      ],
-      "value": "4200000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/713290-2026"
-    },
-    {
       "id": "713481-2026",
       "title": "Germany – Construction work – Anna-Seghers-Straße -Gebäudeautomation",
       "buyer": "Stadt Brühl - Der Bürgermeister",
@@ -7377,30 +7468,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/712445-2026"
     },
     {
-      "id": "707789-2026",
-      "title": "Germany – Software maintenance and repair services – Verlängerung und Wartung von Bestandslizenzen für opentext",
-      "buyer": "Kassenärztliche Vereinigung Sachsen-Anhalt",
-      "buyer_country": "DEU",
-      "published": "2026-10-14",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-11",
-      "deadlines": [
-        {
-          "date": "2026-11-11",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72267000",
-        "72268000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/707789-2026"
-    },
-    {
       "id": "709047-2026",
       "title": "Germany – Software supply services – KI-Assistent für die Wohngeldstelle",
       "buyer": "Landratsamt Unstrut-Hainich-Kreis",
@@ -7465,6 +7532,24 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/709835-2026"
     },
     {
+      "id": "710708-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – IT-Betreuung des Schulnetzes Mayen-Koblenz",
+      "buyer": "Kreisverwaltung Mayen-Koblenz",
+      "buyer_country": "DEU",
+      "published": "2026-10-14",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72000000",
+        "48000000"
+      ],
+      "value": "1980983.44",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/710708-2026"
+    },
+    {
       "id": "710548-2026",
       "title": "Germany – IT services: consulting, software development, Internet and support – SAP-Beratung",
       "buyer": "Deutsche Gesetzliche Unfallversicherung e.V.",
@@ -7483,22 +7568,28 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/710548-2026"
     },
     {
-      "id": "710708-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – IT-Betreuung des Schulnetzes Mayen-Koblenz",
-      "buyer": "Kreisverwaltung Mayen-Koblenz",
+      "id": "707789-2026",
+      "title": "Germany – Software maintenance and repair services – Verlängerung und Wartung von Bestandslizenzen für opentext",
+      "buyer": "Kassenärztliche Vereinigung Sachsen-Anhalt",
       "buyer_country": "DEU",
       "published": "2026-10-14",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72000000",
-        "48000000"
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-11",
+      "deadlines": [
+        {
+          "date": "2026-11-11",
+          "kind": "tender",
+          "lot": ""
+        }
       ],
-      "value": "1980983.44",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/710708-2026"
+      "cpv": [
+        "72267000",
+        "72268000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/707789-2026"
     },
     {
       "id": "709558-2026",
@@ -7677,30 +7768,132 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/709338-2026"
     },
     {
-      "id": "711132-2026",
-      "title": "Germany – Government services – Analyse ökonomischer Effekte der Energiewende in der Energiewirtschaft",
-      "buyer": "Bundesministerium für Wirtschaft und Energie",
+      "id": "709836-2026",
+      "title": "Germany – Servers – Ersatzbeschaffung und Modernisierung der Virtualisierungsinfrastruktur Hyper-V S2D Cluster",
+      "buyer": "BEHALA Berliner Hafen- u. Lagerhausgesellschaft mbH",
       "buyer_country": "DEU",
       "published": "2026-10-14",
       "notice_type": "cn-standard",
       "stage": "competition",
-      "deadline": "2026-11-12",
+      "deadline": "2026-11-16",
       "deadlines": [
         {
-          "date": "2026-11-12",
+          "date": "2026-11-16",
           "kind": "tender",
           "lot": ""
         }
       ],
       "cpv": [
-        "75131000",
-        "72316000",
-        "79300000",
-        "71314000"
+        "48820000",
+        "72250000"
       ],
       "value": "",
       "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/711132-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/709836-2026"
+    },
+    {
+      "id": "710233-2026",
+      "title": "Germany – Financial analysis and accounting software development services – Bereitstellung einer Planungs- und Konsolidierungssoftware",
+      "buyer": "BEN Berlin Energie und Netzholding GmbH",
+      "buyer_country": "DEU",
+      "published": "2026-10-14",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-07-31",
+      "deadlines": [
+        {
+          "date": "2026-07-31",
+          "kind": "participation",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72212440",
+        "48440000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/710233-2026"
+    },
+    {
+      "id": "707730-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Projekt 1014: Security Automobillieferketten (AutoValueSec)",
+      "buyer": "Bundesamt für Sicherheit in der Informationstechnik",
+      "buyer_country": "DEU",
+      "published": "2026-10-14",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72000000"
+      ],
+      "value": "157053",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/707730-2026"
+    },
+    {
+      "id": "709829-2026",
+      "title": "Germany – System and support services – Rahmenvertrag über Unterstützungsleistungen für Betrieb und Weiterentwicklung der IT-Infrastruktur",
+      "buyer": "Leibniz-Institut für Oberflächenmodifizierung e.V.",
+      "buyer_country": "DEU",
+      "published": "2026-10-14",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72250000",
+        "72253000",
+        "72253200",
+        "72610000"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/709829-2026"
+    },
+    {
+      "id": "710213-2026",
+      "title": "Germany – Database services – Bereitstellung eines gesamtstädtischen Nutzungszugangs für die Datenbank Beck-Online",
+      "buyer": "Rechtsamt",
+      "buyer_country": "DEU",
+      "published": "2026-10-14",
+      "notice_type": "veat",
+      "stage": "other",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72320000",
+        "79100000"
+      ],
+      "value": "455000",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/710213-2026"
+    },
+    {
+      "id": "709032-2026",
+      "title": "Germany – Data collection and collation services – Auswertung und Erstellung der Berichte zu den Beschäftigungstrends im Freistaat Bayern 2027 und 2028 (an Hand der vom Auftragnehmer zu beschaffenden Betriebsbefragungen/Daten des IAB Betriebspanels sowie einer Aufstockung hierzu)",
+      "buyer": "Bayerisches Staatsministerium für Familie, Arbeit und Soziales",
+      "buyer_country": "DEU",
+      "published": "2026-10-14",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-23",
+      "deadlines": [
+        {
+          "date": "2026-11-23",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72314000",
+        "72316000",
+        "79315000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/709032-2026"
     },
     {
       "id": "708551-2026",
@@ -7731,46 +7924,48 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/708551-2026"
     },
     {
-      "id": "710233-2026",
-      "title": "Germany – Financial analysis and accounting software development services – Bereitstellung einer Planungs- und Konsolidierungssoftware",
-      "buyer": "BEN Berlin Energie und Netzholding GmbH",
+      "id": "709018-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Unterstützung der Öffentlichkeitsarbeit des attoworld-Teams (ex-post)",
+      "buyer": "Ludwig-Maximilians-Universität München",
+      "buyer_country": "DEU",
+      "published": "2026-10-14",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72000000",
+        "79416000"
+      ],
+      "value": "242850.4",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/709018-2026"
+    },
+    {
+      "id": "711132-2026",
+      "title": "Germany – Government services – Analyse ökonomischer Effekte der Energiewende in der Energiewirtschaft",
+      "buyer": "Bundesministerium für Wirtschaft und Energie",
       "buyer_country": "DEU",
       "published": "2026-10-14",
       "notice_type": "cn-standard",
       "stage": "competition",
-      "deadline": "2026-07-31",
+      "deadline": "2026-11-12",
       "deadlines": [
         {
-          "date": "2026-07-31",
-          "kind": "participation",
+          "date": "2026-11-12",
+          "kind": "tender",
           "lot": ""
         }
       ],
       "cpv": [
-        "72212440",
-        "48440000"
+        "75131000",
+        "72316000",
+        "79300000",
+        "71314000"
       ],
       "value": "",
       "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/710233-2026"
-    },
-    {
-      "id": "710213-2026",
-      "title": "Germany – Database services – Bereitstellung eines gesamtstädtischen Nutzungszugangs für die Datenbank Beck-Online",
-      "buyer": "Rechtsamt",
-      "buyer_country": "DEU",
-      "published": "2026-10-14",
-      "notice_type": "veat",
-      "stage": "other",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72320000",
-        "79100000"
-      ],
-      "value": "455000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/710213-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/711132-2026"
     },
     {
       "id": "708826-2026",
@@ -7796,49 +7991,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/708826-2026"
     },
     {
-      "id": "709018-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Unterstützung der Öffentlichkeitsarbeit des attoworld-Teams (ex-post)",
-      "buyer": "Ludwig-Maximilians-Universität München",
-      "buyer_country": "DEU",
-      "published": "2026-10-14",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72000000",
-        "79416000"
-      ],
-      "value": "242850.4",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/709018-2026"
-    },
-    {
-      "id": "709032-2026",
-      "title": "Germany – Data collection and collation services – Auswertung und Erstellung der Berichte zu den Beschäftigungstrends im Freistaat Bayern 2027 und 2028 (an Hand der vom Auftragnehmer zu beschaffenden Betriebsbefragungen/Daten des IAB Betriebspanels sowie einer Aufstockung hierzu)",
-      "buyer": "Bayerisches Staatsministerium für Familie, Arbeit und Soziales",
-      "buyer_country": "DEU",
-      "published": "2026-10-14",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-23",
-      "deadlines": [
-        {
-          "date": "2026-11-23",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72314000",
-        "72316000",
-        "79315000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/709032-2026"
-    },
-    {
       "id": "707780-2026",
       "title": "Germany – Geographic information systems (GIS or equivalent) – Vergabe der bestehenden Geo-Informationsinfrastruktur (GIS) des Landkreises Hildesheim",
       "buyer": "Landkreis Hildesheim",
@@ -7862,67 +8014,6 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/707780-2026"
-    },
-    {
-      "id": "707730-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Projekt 1014: Security Automobillieferketten (AutoValueSec)",
-      "buyer": "Bundesamt für Sicherheit in der Informationstechnik",
-      "buyer_country": "DEU",
-      "published": "2026-10-14",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "157053",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/707730-2026"
-    },
-    {
-      "id": "709836-2026",
-      "title": "Germany – Servers – Ersatzbeschaffung und Modernisierung der Virtualisierungsinfrastruktur Hyper-V S2D Cluster",
-      "buyer": "BEHALA Berliner Hafen- u. Lagerhausgesellschaft mbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-14",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-16",
-      "deadlines": [
-        {
-          "date": "2026-11-16",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "48820000",
-        "72250000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/709836-2026"
-    },
-    {
-      "id": "709829-2026",
-      "title": "Germany – System and support services – Rahmenvertrag über Unterstützungsleistungen für Betrieb und Weiterentwicklung der IT-Infrastruktur",
-      "buyer": "Leibniz-Institut für Oberflächenmodifizierung e.V.",
-      "buyer_country": "DEU",
-      "published": "2026-10-14",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72250000",
-        "72253000",
-        "72253200",
-        "72610000"
-      ],
-      "value": "",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/709829-2026"
     },
     {
       "id": "710314-2026",
@@ -8312,28 +8403,21 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/709868-2026"
     },
     {
-      "id": "707349-2026",
-      "title": "Germany – Software supply services – Umstellung des Matrix42 Lizenzmodells von unbefristeten Kauflizenzen mit Wartungsvertrag auf Subscription-Lizenzen",
-      "buyer": "Stadtwerke Bonn GmbH",
+      "id": "704364-2026",
+      "title": "Germany – Software-related services – Technische Betreuung und Weiterentwicklung der Internetauftritte www.drugcom.de und www.quit-the-shit.net",
+      "buyer": "Bundesinstitut für Öffentliche Gesundheit",
       "buyer_country": "DEU",
       "published": "2026-10-13",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-10",
-      "deadlines": [
-        {
-          "date": "2026-11-10",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
+      "notice_type": "can-modif",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
       "cpv": [
-        "72268000",
-        "72267000"
+        "72260000"
       ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/707349-2026"
+      "value": "321220",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/704364-2026"
     },
     {
       "id": "704967-2026",
@@ -8356,9 +8440,9 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/704967-2026"
     },
     {
-      "id": "705283-2026",
-      "title": "Germany – Industrial control software development services – Erweiterung Prozessleittechnik, BA 1 Abwasserreinigung",
-      "buyer": "Abwasserzweckverband Untere Elz",
+      "id": "705665-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Miniwettbewerb aus Rahmenvertrag AS260012 Rolle 1 Machine Learning Engineer",
+      "buyer": "Phoenics.IT GmbH",
       "buyer_country": "DEU",
       "published": "2026-10-13",
       "notice_type": "can-standard",
@@ -8366,13 +8450,11 @@
       "deadline": "",
       "deadlines": [],
       "cpv": [
-        "72212150",
-        "48822000",
-        "48921000"
+        "72000000"
       ],
-      "value": "0",
+      "value": "403560",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/705283-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/705665-2026"
     },
     {
       "id": "704386-2026",
@@ -8398,21 +8480,23 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/704386-2026"
     },
     {
-      "id": "704364-2026",
-      "title": "Germany – Software-related services – Technische Betreuung und Weiterentwicklung der Internetauftritte www.drugcom.de und www.quit-the-shit.net",
-      "buyer": "Bundesinstitut für Öffentliche Gesundheit",
+      "id": "705283-2026",
+      "title": "Germany – Industrial control software development services – Erweiterung Prozessleittechnik, BA 1 Abwasserreinigung",
+      "buyer": "Abwasserzweckverband Untere Elz",
       "buyer_country": "DEU",
       "published": "2026-10-13",
-      "notice_type": "can-modif",
+      "notice_type": "can-standard",
       "stage": "result",
       "deadline": "",
       "deadlines": [],
       "cpv": [
-        "72260000"
+        "72212150",
+        "48822000",
+        "48921000"
       ],
-      "value": "321220",
+      "value": "0",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/704364-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/705283-2026"
     },
     {
       "id": "705632-2026",
@@ -8440,21 +8524,28 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/705632-2026"
     },
     {
-      "id": "705665-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Miniwettbewerb aus Rahmenvertrag AS260012 Rolle 1 Machine Learning Engineer",
-      "buyer": "Phoenics.IT GmbH",
+      "id": "707349-2026",
+      "title": "Germany – Software supply services – Umstellung des Matrix42 Lizenzmodells von unbefristeten Kauflizenzen mit Wartungsvertrag auf Subscription-Lizenzen",
+      "buyer": "Stadtwerke Bonn GmbH",
       "buyer_country": "DEU",
       "published": "2026-10-13",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72000000"
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-10",
+      "deadlines": [
+        {
+          "date": "2026-11-10",
+          "kind": "tender",
+          "lot": ""
+        }
       ],
-      "value": "403560",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/705665-2026"
+      "cpv": [
+        "72268000",
+        "72267000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/707349-2026"
     },
     {
       "id": "704587-2026",
@@ -8485,29 +8576,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/704587-2026"
     },
     {
-      "id": "705067-2026",
-      "title": "Germany – Software supply services – VEEAM Handelspartnervergabe",
-      "buyer": "Die Autobahn GmbH des Bundes",
-      "buyer_country": "DEU",
-      "published": "2026-10-13",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-10",
-      "deadlines": [
-        {
-          "date": "2026-11-10",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72268000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/705067-2026"
-    },
-    {
       "id": "704360-2026",
       "title": "Germany – Software programming and consultancy services – Einführung von SIB Bauwerke Tag-1-Funktionalitäten",
       "buyer": "Bundesrepublik Deutschland, vertr. d. das Bundesministerium für Verkehr, vertr.d. Fernstraßen-Bundesamt",
@@ -8530,6 +8598,29 @@
       "value": "1306046",
       "currency": "EUR",
       "url": "https://ted.europa.eu/en/notice/-/detail/704360-2026"
+    },
+    {
+      "id": "705067-2026",
+      "title": "Germany – Software supply services – VEEAM Handelspartnervergabe",
+      "buyer": "Die Autobahn GmbH des Bundes",
+      "buyer_country": "DEU",
+      "published": "2026-10-13",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-10",
+      "deadlines": [
+        {
+          "date": "2026-11-10",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72268000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/705067-2026"
     },
     {
       "id": "705883-2026",
@@ -8738,83 +8829,6 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/705398-2026"
     },
     {
-      "id": "707133-2026",
-      "title": "Germany – Facilities management software development services – Beschaffung und Einführung eines Computer Aided Facility Management-Systems (CAFM)",
-      "buyer": "Amt für Recht, Vergabe und Versicherungen",
-      "buyer_country": "DEU",
-      "published": "2026-10-13",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72212421"
-      ],
-      "value": "",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/707133-2026"
-    },
-    {
-      "id": "707416-2026",
-      "title": "Germany – Software supply services – 1750-DE-Nextcloud Enterprise",
-      "buyer": "BWI GmbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-13",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72268000",
-        "72230000",
-        "72250000"
-      ],
-      "value": "",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/707416-2026"
-    },
-    {
-      "id": "705300-2026",
-      "title": "Germany – Systems and technical consultancy services – Digitalisierungsstrategie Parkraumbewirtschaftung",
-      "buyer": "Parkraumgesellschaft Baden-Württemberg mbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-13",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72220000",
-        "71311300"
-      ],
-      "value": "",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/705300-2026"
-    },
-    {
-      "id": "705091-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Beratungsleistungen für das Format Digi-Expert-kommunal für das Hessische Ministerium für Digitalisierung und Innovation in zwei Losen",
-      "buyer": "Land Hessen, vertreten durch die Hessische Zentrale für Datenverarbeitung",
-      "buyer_country": "DEU",
-      "published": "2026-10-13",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-10-22",
-      "deadlines": [
-        {
-          "date": "2026-10-22",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "2258000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/705091-2026"
-    },
-    {
       "id": "705311-2026",
       "title": "Germany – Software implementation services – SAP H4S4-Transformation und Einführung von SuccessFactors",
       "buyer": "Stadtwerke Bonn GmbH",
@@ -8839,9 +8853,9 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/705311-2026"
     },
     {
-      "id": "705454-2026",
-      "title": "Germany – Compulsory social security services – Abrechnung der Arzneimittel von öffentlichen Apotheken, Krankenhausapotheken und sonstigen Leistungserbringern nach § 300 SGB V",
-      "buyer": "Einkauf und Vergabemanagement der SBK",
+      "id": "706923-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Miniwettbewerb aus Rahmenvertrag AS260012 Rolle 2 Data Engineer",
+      "buyer": "Phoenics.IT GmbH",
       "buyer_country": "DEU",
       "published": "2026-10-13",
       "notice_type": "can-standard",
@@ -8849,12 +8863,28 @@
       "deadline": "",
       "deadlines": [],
       "cpv": [
-        "75300000",
-        "72512000"
+        "72000000"
       ],
-      "value": "2186760",
+      "value": "267806.25",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/705454-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/706923-2026"
+    },
+    {
+      "id": "707133-2026",
+      "title": "Germany – Facilities management software development services – Beschaffung und Einführung eines Computer Aided Facility Management-Systems (CAFM)",
+      "buyer": "Amt für Recht, Vergabe und Versicherungen",
+      "buyer_country": "DEU",
+      "published": "2026-10-13",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72212421"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/707133-2026"
     },
     {
       "id": "706138-2026",
@@ -8899,9 +8929,9 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/706573-2026"
     },
     {
-      "id": "706923-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Miniwettbewerb aus Rahmenvertrag AS260012 Rolle 2 Data Engineer",
-      "buyer": "Phoenics.IT GmbH",
+      "id": "707416-2026",
+      "title": "Germany – Software supply services – 1750-DE-Nextcloud Enterprise",
+      "buyer": "BWI GmbH",
       "buyer_country": "DEU",
       "published": "2026-10-13",
       "notice_type": "can-standard",
@@ -8909,11 +8939,72 @@
       "deadline": "",
       "deadlines": [],
       "cpv": [
+        "72268000",
+        "72230000",
+        "72250000"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/707416-2026"
+    },
+    {
+      "id": "705091-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Beratungsleistungen für das Format Digi-Expert-kommunal für das Hessische Ministerium für Digitalisierung und Innovation in zwei Losen",
+      "buyer": "Land Hessen, vertreten durch die Hessische Zentrale für Datenverarbeitung",
+      "buyer_country": "DEU",
+      "published": "2026-10-13",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-10-22",
+      "deadlines": [
+        {
+          "date": "2026-10-22",
+          "kind": "tender",
+          "lot": ""
+        }
+      ],
+      "cpv": [
         "72000000"
       ],
-      "value": "267806.25",
+      "value": "2258000",
       "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/706923-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/705091-2026"
+    },
+    {
+      "id": "705454-2026",
+      "title": "Germany – Compulsory social security services – Abrechnung der Arzneimittel von öffentlichen Apotheken, Krankenhausapotheken und sonstigen Leistungserbringern nach § 300 SGB V",
+      "buyer": "Einkauf und Vergabemanagement der SBK",
+      "buyer_country": "DEU",
+      "published": "2026-10-13",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "75300000",
+        "72512000"
+      ],
+      "value": "2186760",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/705454-2026"
+    },
+    {
+      "id": "705300-2026",
+      "title": "Germany – Systems and technical consultancy services – Digitalisierungsstrategie Parkraumbewirtschaftung",
+      "buyer": "Parkraumgesellschaft Baden-Württemberg mbH",
+      "buyer_country": "DEU",
+      "published": "2026-10-13",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72220000",
+        "71311300"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/705300-2026"
     },
     {
       "id": "706953-2026",
@@ -9206,26 +9297,9 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/705854-2026"
     },
     {
-      "id": "701337-2026",
-      "title": "Germany – Software implementation services – Zahlungsverkehrssoftware (CR 6)",
-      "buyer": "Landwirtschaftliche Rentenbank",
-      "buyer_country": "DEU",
-      "published": "2026-10-12",
-      "notice_type": "can-modif",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72263000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/701337-2026"
-    },
-    {
-      "id": "701641-2026",
-      "title": "Germany – Internet development services – Konzeption, Realisierung und Betreuung einer barrierefreien, geräteübergreifenden Web-Plattform mit nativer App-User-Experience",
-      "buyer": "Dresdner Verkehrsbetriebe AG",
+      "id": "703792-2026",
+      "title": "Germany – Software-related services – Pflege- und Supportleistungen (opentext-prime-protect) für die Software „Operations Orchestration“",
+      "buyer": "Deutsche Bundesbank, Zentralbereich Beschaffungen",
       "buyer_country": "DEU",
       "published": "2026-10-12",
       "notice_type": "cn-standard",
@@ -9234,17 +9308,16 @@
       "deadlines": [
         {
           "date": "2026-11-09",
-          "kind": "participation",
+          "kind": "tender",
           "lot": ""
         }
       ],
       "cpv": [
-        "72420000",
-        "72415000"
+        "72260000"
       ],
       "value": "",
       "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/701641-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/703792-2026"
     },
     {
       "id": "702925-2026",
@@ -9273,9 +9346,9 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/702925-2026"
     },
     {
-      "id": "701992-2026",
-      "title": "Germany – Software programming and consultancy services – TI-M ePA Client Weiterentwicklung PTV 1.1.2",
-      "buyer": "BITMARCK GmbH",
+      "id": "701337-2026",
+      "title": "Germany – Software implementation services – Zahlungsverkehrssoftware (CR 6)",
+      "buyer": "Landwirtschaftliche Rentenbank",
       "buyer_country": "DEU",
       "published": "2026-10-12",
       "notice_type": "can-modif",
@@ -9283,50 +9356,11 @@
       "deadline": "",
       "deadlines": [],
       "cpv": [
-        "72200000",
-        "72260000",
-        "72212100"
-      ],
-      "value": "216000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/701992-2026"
-    },
-    {
-      "id": "702457-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – IT-Outsourcing 2027",
-      "buyer": "Postbeamtenkrankenkasse",
-      "buyer_country": "DEU",
-      "published": "2026-10-12",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "8026734",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/702457-2026"
-    },
-    {
-      "id": "700499-2026",
-      "title": "Germany – Software supply services – EU-weite Ausschreibung über die Beschaffung einer Rahmenvereinbarung für eine Awareness-Maßnahme",
-      "buyer": "Gemeinsame Kommunale Datenzentrale Recklinghausen",
-      "buyer_country": "DEU",
-      "published": "2026-10-12",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72268000",
-        "72261000",
-        "80420000",
-        "80522000"
+        "72263000"
       ],
       "value": "",
       "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/700499-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/701337-2026"
     },
     {
       "id": "701461-2026",
@@ -9350,6 +9384,50 @@
       "value": "",
       "currency": "",
       "url": "https://ted.europa.eu/en/notice/-/detail/701461-2026"
+    },
+    {
+      "id": "700499-2026",
+      "title": "Germany – Software supply services – EU-weite Ausschreibung über die Beschaffung einer Rahmenvereinbarung für eine Awareness-Maßnahme",
+      "buyer": "Gemeinsame Kommunale Datenzentrale Recklinghausen",
+      "buyer_country": "DEU",
+      "published": "2026-10-12",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72268000",
+        "72261000",
+        "80420000",
+        "80522000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/700499-2026"
+    },
+    {
+      "id": "701641-2026",
+      "title": "Germany – Internet development services – Konzeption, Realisierung und Betreuung einer barrierefreien, geräteübergreifenden Web-Plattform mit nativer App-User-Experience",
+      "buyer": "Dresdner Verkehrsbetriebe AG",
+      "buyer_country": "DEU",
+      "published": "2026-10-12",
+      "notice_type": "cn-standard",
+      "stage": "competition",
+      "deadline": "2026-11-09",
+      "deadlines": [
+        {
+          "date": "2026-11-09",
+          "kind": "participation",
+          "lot": ""
+        }
+      ],
+      "cpv": [
+        "72420000",
+        "72415000"
+      ],
+      "value": "",
+      "currency": "",
+      "url": "https://ted.europa.eu/en/notice/-/detail/701641-2026"
     },
     {
       "id": "701881-2026",
@@ -9404,27 +9482,40 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/702232-2026"
     },
     {
-      "id": "703792-2026",
-      "title": "Germany – Software-related services – Pflege- und Supportleistungen (opentext-prime-protect) für die Software „Operations Orchestration“",
-      "buyer": "Deutsche Bundesbank, Zentralbereich Beschaffungen",
+      "id": "702457-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – IT-Outsourcing 2027",
+      "buyer": "Postbeamtenkrankenkasse",
       "buyer_country": "DEU",
       "published": "2026-10-12",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-11-09",
-      "deadlines": [
-        {
-          "date": "2026-11-09",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
       "cpv": [
-        "72260000"
+        "72000000"
       ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/703792-2026"
+      "value": "8026734",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/702457-2026"
+    },
+    {
+      "id": "701992-2026",
+      "title": "Germany – Software programming and consultancy services – TI-M ePA Client Weiterentwicklung PTV 1.1.2",
+      "buyer": "BITMARCK GmbH",
+      "buyer_country": "DEU",
+      "published": "2026-10-12",
+      "notice_type": "can-modif",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72200000",
+        "72260000",
+        "72212100"
+      ],
+      "value": "216000",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/701992-2026"
     },
     {
       "id": "702685-2026",
@@ -9572,69 +9663,28 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/703157-2026"
     },
     {
-      "id": "703823-2026",
-      "title": "Germany – Computer-related services – 115-Netzplattform",
-      "buyer": "FITKO (Föderale IT-Kooperation)",
+      "id": "700976-2026",
+      "title": "Germany – Software-related services – Data Consulting and Services for GrAS (524-2026-EU3)",
+      "buyer": "50Hertz Transmission GmbH",
       "buyer_country": "DEU",
       "published": "2026-10-12",
       "notice_type": "cn-standard",
       "stage": "competition",
-      "deadline": "2026-10-15",
+      "deadline": "2026-11-17",
       "deadlines": [
         {
-          "date": "2026-10-15",
-          "kind": "tender",
+          "date": "2026-11-17",
+          "kind": "participation",
           "lot": ""
         }
       ],
       "cpv": [
-        "72500000"
+        "72260000",
+        "72227000"
       ],
       "value": "",
       "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/703823-2026"
-    },
-    {
-      "id": "703856-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Beratungs- und Entwicklungsleistungen bei der Entwicklung von Interoperabilitätsfestlegungen",
-      "buyer": "gematik GmbH",
-      "buyer_country": "DEU",
-      "published": "2026-10-12",
-      "notice_type": "can-standard",
-      "stage": "result",
-      "deadline": "",
-      "deadlines": [],
-      "cpv": [
-        "72000000",
-        "72212100",
-        "72212600"
-      ],
-      "value": "3111000",
-      "currency": "EUR",
-      "url": "https://ted.europa.eu/en/notice/-/detail/703856-2026"
-    },
-    {
-      "id": "702912-2026",
-      "title": "Germany – IT services: consulting, software development, Internet and support – Rahmenvereinbarung für externe Dienstleistungen zur Unterstützung der Behörden bei der Anwendung von VIS.SAX",
-      "buyer": "Staatsbetrieb Sächsische Informatik Dienste",
-      "buyer_country": "DEU",
-      "published": "2026-10-12",
-      "notice_type": "cn-standard",
-      "stage": "competition",
-      "deadline": "2026-10-19",
-      "deadlines": [
-        {
-          "date": "2026-10-19",
-          "kind": "tender",
-          "lot": ""
-        }
-      ],
-      "cpv": [
-        "72000000"
-      ],
-      "value": "",
-      "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/702912-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/700976-2026"
     },
     {
       "id": "700802-2026",
@@ -9695,28 +9745,63 @@
       "url": "https://ted.europa.eu/en/notice/-/detail/701495-2026"
     },
     {
-      "id": "700976-2026",
-      "title": "Germany – Software-related services – Data Consulting and Services for GrAS (524-2026-EU3)",
-      "buyer": "50Hertz Transmission GmbH",
+      "id": "703823-2026",
+      "title": "Germany – Computer-related services – 115-Netzplattform",
+      "buyer": "FITKO (Föderale IT-Kooperation)",
       "buyer_country": "DEU",
       "published": "2026-10-12",
       "notice_type": "cn-standard",
       "stage": "competition",
-      "deadline": "2026-11-17",
+      "deadline": "2026-10-15",
       "deadlines": [
         {
-          "date": "2026-11-17",
-          "kind": "participation",
+          "date": "2026-10-15",
+          "kind": "tender",
           "lot": ""
         }
       ],
       "cpv": [
-        "72260000",
-        "72227000"
+        "72500000"
       ],
       "value": "",
       "currency": "",
-      "url": "https://ted.europa.eu/en/notice/-/detail/700976-2026"
+      "url": "https://ted.europa.eu/en/notice/-/detail/703823-2026"
+    },
+    {
+      "id": "703856-2026",
+      "title": "Germany – IT services: consulting, software development, Internet and support – Beratungs- und Entwicklungsleistungen bei der Entwicklung von Interoperabilitätsfestlegungen",
+      "buyer": "gematik GmbH",
+      "buyer_country": "DEU",
+      "published": "2026-10-12",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72000000",
+        "72212100",
+        "72212600"
+      ],
+      "value": "3111000",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/703856-2026"
+    },
+    {
+      "id": "703088-2026",
+      "title": "Germany – Database services – Rahmenvertrag Fortführung der Straßeninformationsbank",
+      "buyer": "Landesamt für Straßenbau und Verkehr, Zentrale",
+      "buyer_country": "DEU",
+      "published": "2026-10-12",
+      "notice_type": "can-standard",
+      "stage": "result",
+      "deadline": "",
+      "deadlines": [],
+      "cpv": [
+        "72320000"
+      ],
+      "value": "",
+      "currency": "EUR",
+      "url": "https://ted.europa.eu/en/notice/-/detail/703088-2026"
     },
     {
       "id": "703217-2026",
