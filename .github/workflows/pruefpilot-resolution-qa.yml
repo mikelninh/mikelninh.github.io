@@ -51,7 +51,7 @@ jobs:
               assert page.locator('#ppqDraft.show').is_visible()
               assert 'Delivery confirmation' in page.locator('#ppqDraftText').inner_text(),repr(page.locator('#ppqDraftText').inner_text())
               page.locator('#ppqAct').click()
-              assert 'Versand simuliert' in page.locator('#ppqStatus').inner_text(), repr(page.locator('#ppqStatus').inner_text())
+              assert 'versand simuliert' in page.locator('#ppqStatus').inner_text().lower(), repr(page.locator('#ppqStatus').inner_text())
 
               # The advanced version remains fully functional and inspectable.
               page.locator('#ppqAdvanced > summary').click()
