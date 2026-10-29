@@ -41,6 +41,21 @@ jobs:
               page.on('pageerror',lambda e: errors.append(str(e)))
               page.goto('http://127.0.0.1:8765/pruefpilot/',wait_until='networkidle')
 
+              # New first-screen review: users get problem → check → next action immediately.
+              assert page.locator('#ppqTitle').is_visible()
+              assert page.locator('#ppqRun').is_visible()
+              page.locator('#ppqRun').click()
+              page.locator('#ppqNext.show').wait_for(state='visible',timeout=5000)
+              assert 'Not ready for approval' in page.locator('#ppqFinding').inner_text()
+              page.locator('#ppqAct').click()
+              assert page.locator('#ppqDraft.show').is_visible()
+              assert 'Delivery confirmation' in page.locator('#ppqDraftText').inner_text()
+              page.locator('#ppqAct').click()
+              assert 'Versand simuliert' in page.locator('#ppqStatus').inner_text()
+
+              # The advanced version remains fully functional and inspectable.
+              page.locator('#ppqAdvanced > summary').click()
+              page.locator('[data-case="funding"]').click()
               # Case 01: missing evidence -> precise request -> waiting state.
               page.locator('#run').click()
               page.locator('#result.show').wait_for(state='visible',timeout=5000)
