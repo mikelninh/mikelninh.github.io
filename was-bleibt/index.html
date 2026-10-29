@@ -188,7 +188,7 @@ const PHOTO_ASSETS={youth:"data:image/webp;base64,UklGRtx6AABXRUJQVlA4INB6AABQkg
 const stories={
  'fahrkarten-fuer-ehrenamtliche-im-tagestreff':{image:PHOTO_ASSETS.dialogue,subtitle:'SOZIALE TEILHABE · LICHTENBERG',headline:'Damit Hilfe ankommt.',short:'Im TagesTreff unterstützen Ehrenamtliche wohnungslose Menschen. Der HVD bittet 2026 um Hilfe bei deren Fahrtkosten.',reason:'Ein konkreter Spendenaufruf zur Finanzierung von Fahrkarten für Ehrenamtliche ist veröffentlicht.',purpose:'Fahrkarten für Ehrenamtliche im TagesTreff'},
  'spendenaktion-demokratie-maedchen-raeume-und-jukuz':{image:PHOTO_ASSETS.youth,subtitle:'JUGEND & TEILHABE · BERLIN',headline:'Freiräume brauchen Rückhalt.',short:'Mädchen*räume und das JuKuZ „Gérard Philipe“ bieten jungen Menschen Begegnung, Beteiligung und Freiräume.',reason:'Der HVD veröffentlichte 2026 einen Spendenaufruf aufgrund unsicherer Finanzierung.',purpose:'Spendenaktion „Demokratie“'},
- 'kinderhospiz-berliner-herz':{image:PHOTO_ASSETS.care,subtitle:'HOSPIZARBEIT · FRIEDRICHSHAIN',headline:'Begleitung, wenn sie zählt.',short:'Das Kinderhospiz Berliner Herz begleitet Kinder mit lebensverkürzenden Erkrankungen und ihre Familien.',reason:'Das Kinderhospiz hat einen eigenständigen, offiziell dokumentierten Spendenweg.',purpose:'Kinderhospiz Berliner Herz'}
+ 'kinderhospiz-berliner-herz':{image:PHOTO_ASSETS.letter,subtitle:'HOSPIZARBEIT · FRIEDRICHSHAIN',headline:'Begleitung, wenn sie zählt.',short:'Das Kinderhospiz Berliner Herz begleitet Kinder mit lebensverkürzenden Erkrankungen und ihre Familien.',reason:'Das Kinderhospiz hat einen eigenständigen, offiziell dokumentierten Spendenweg.',purpose:'Kinderhospiz Berliner Herz'}
 };
 const featured=['spendenaktion-demokratie-maedchen-raeume-und-jukuz','kinderhospiz-berliner-herz','fahrkarten-fuer-ehrenamtliche-im-tagestreff'];
 const ranges=[['small','Bis 100 €','Ein kleiner Beitrag kann viel bedeuten.'],['medium','100–1.000 €','Regelmäßig oder gezielt helfen.'],['large','1.000–10.000 €','Mehr Möglichkeiten gemeinsam entdecken.'],['major','Über 10.000 €','Am besten im persönlichen Gespräch.'],['open','Noch offen','Erst entdecken, dann entscheiden.']];
@@ -204,7 +204,7 @@ const PHOTO_OVERRIDES={
  'ambulanter-hospizdienst-visite':'care',
  'hospiz-ludwigpark':'garden',
  'humanistische-lebenskunde':'school',
- 'kinderhospiz-berliner-herz':'knitting'
+ 'kinderhospiz-berliner-herz':'letter'
 };
 function photoFor(p){
   let key=PHOTO_OVERRIDES[p.id];if(key)return PHOTO_ASSETS[key];
