@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5f6f8">
-<meta name="description" content="OpenAction V11 — one shared project state, one next action, verified completion and permissioned proof.">
-<title>OpenAction — Visual Case Room V11</title>
+<meta name="theme-color" content="#f6f7f3">
+<meta name="description" content="OpenAction: Gemeinsamer Projektstand, klare Zuständigkeiten und der nächste sinnvolle Schritt. Interaktive Demo mit synthetischen Fällen.">
+<title>OpenAction — Gemeinsam ins Handeln</title>
 <link rel="stylesheet" href="../ui-v11.css?v=20260825-1">
 <link rel="stylesheet" href="./v11.css?v=20260825-2">
 <link rel="stylesheet" href="./v11-semantics.css?v=20260825-1">
 <link rel="stylesheet" href="../readability-v11.css?v=20260825-1">
+<link rel="stylesheet" href="./calm-v13.css?v=20261029-1">
 </head>
 <body>
 <div class="app">
@@ -29,6 +30,21 @@
   </header>
 
   <main class="case-shell">
+  <section class="oa-guide" id="oaGuide" aria-labelledby="oaGuideHeading">
+    <span class="oa-guide-kicker">OpenAction · Interaktive Beispieldemo</span>
+    <div class="oa-guide-top">
+      <div>
+        <h1 id="oaGuideHeading">Viele Beteiligte. Eine gemeinsame Richtung.</h1>
+        <p class="oa-guide-lead"><strong>Das Problem:</strong> Ein wichtiges Vorhaben kommt nicht voran, weil Nachweise, Zuständigkeiten und nächste Schritte auf mehrere Menschen verteilt sind. <strong>Die Lösung:</strong> Alle sehen denselben Stand – und jede Person nur ihre nächste Aufgabe.</p>
+        <div class="oa-guide-steps" aria-label="So funktioniert die Demo"><span>1 · Rolle wählen</span><span>2 · Aufgabe ansehen</span><span>3 · Nachweis prüfen</span></div>
+        <div class="oa-guide-controls"><label for="guideRole">Ich möchte die Perspektive wechseln<select id="guideRole"></select></label></div>
+        <div class="oa-guide-actions"><button type="button" class="oa-guide-button" id="guideAction">Meine Aufgabe ansehen →</button><button type="button" class="oa-guide-button oa-guide-secondary" id="guideReset">Beispiel zurücksetzen</button></div>
+        <p class="oa-guide-note">Synthetische Daten. Keine echten Klinikdaten, keine externen Freigaben.</p>
+      </div>
+      <aside class="oa-guide-card" aria-live="polite"><span class="oa-guide-kicker">Das Beispiel</span><strong id="guideCase">CareOS Pilot</strong><p id="guideGoal">Sichere Einführung Schritt für Schritt vorbereiten.</p><div class="oa-guide-steps"><span id="guideProgress">Offene Aufgaben sichtbar</span></div><span class="oa-guide-kicker" style="margin-top:14px">Deine nächste Aufgabe</span><strong id="guideNext">Aufgabe wird ermittelt</strong></aside>
+    </div>
+  </section>
+
     <header class="case-head">
       <div class="case-icon" id="caseIcon">✚</div>
       <div><div class="eyebrow" id="caseSub">Hospital AI · bounded pilot</div><h1 id="caseTitle"></h1><p id="caseGoal"></p></div>
@@ -85,5 +101,6 @@
 <script src="./v10-data.js?v=20260824-4"></script>
 <script src="./v10-app.js?v=20260824-4"></script>
 <script src="./v11-enhance.js?v=20260825-2"></script>
+<script src="./guided-v13.js?v=20261029-1"></script>
 </body>
 </html>
