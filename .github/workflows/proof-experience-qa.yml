@@ -152,7 +152,11 @@ jobs:
 
               # PrüfPilot: fail path + golden pass + explicit release authority.
               page.goto('http://127.0.0.1:8765/pruefpilot/',wait_until='networkidle')
-              assert 'Give it the document pack' in page.locator('h1').inner_text()
+              assert 'Dokumente fehlen' in page.locator('#ppqTitle').inner_text()
+              page.locator('#ppqRun').click()
+              page.locator('#ppqNext.show').wait_for(state='visible',timeout=5000)
+              assert 'Not ready for approval' in page.locator('#ppqFinding').inner_text()
+              page.locator('#ppqAdvanced > summary').click()
               page.locator('#run').click()
               page.locator('#result.show').wait_for(state='visible',timeout=5000)
               ptxt=page.locator('#result').inner_text()
@@ -214,7 +218,7 @@ jobs:
               mobile.screenshot(path='artifacts/proof-experience/trustready-demo-mobile.png',full_page=True)
               for path in ['almedia/','agents/','pruefpilot/']:
                 mobile.goto(f'http://127.0.0.1:8765/{path}',wait_until='networkidle')
-                assert mobile.locator('#run').is_visible()
+                assert mobile.locator('#ppqRun' if path=='pruefpilot/' else '#run').is_visible()
               mobile.goto('http://127.0.0.1:8765/cv.html',wait_until='networkidle')
               assert mobile.locator('h1').is_visible()
               assert mobile.locator('.project').count()==4
