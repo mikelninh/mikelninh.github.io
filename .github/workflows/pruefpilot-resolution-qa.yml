@@ -49,9 +49,9 @@ jobs:
               assert 'Not ready for approval' in page.locator('#ppqFinding').inner_text()
               page.locator('#ppqAct').click()
               assert page.locator('#ppqDraft.show').is_visible()
-              assert 'Delivery confirmation' in page.locator('#ppqDraftText').inner_text()
+              assert 'Delivery confirmation' in page.locator('#ppqDraftText').inner_text(),repr(page.locator('#ppqDraftText').inner_text())
               page.locator('#ppqAct').click()
-              assert 'Versand simuliert' in page.locator('#ppqStatus').inner_text()
+              assert 'Versand simuliert' in page.locator('#ppqStatus').inner_text(), repr(page.locator('#ppqStatus').inner_text())
 
               # The advanced version remains fully functional and inspectable.
               page.locator('#ppqAdvanced > summary').click()
