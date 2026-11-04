@@ -37,7 +37,10 @@ jobs:
         with:
           node-version: '22'
       - uses: browser-actions/setup-chrome@v2
+        id: setup-chrome
       - name: Run actual browser workflow smoke
+        env:
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
         run: node application-demos/v14-source/scripts/pilot-browser-smoke.mjs
       - name: Upload screenshot evidence
         if: always()
