@@ -14,3 +14,11 @@ test('public static mirror matches Vercel pilot exactly',()=>{
  const mirrorEngine=readFileSync(new URL('../../v14/pilot-engine.mjs',here),'utf8');
  assert.equal(source,mirror);assert.equal(sourceEngine,mirrorEngine);
 });
+
+test('legacy public landing links to the new pilot without breaking existing demo',()=>{
+ const legacy=readFileSync(new URL('../../return-loop.html',here),'utf8');
+ const entry=readFileSync(new URL('../../return-loop/index.html',here),'utf8');
+ assert.match(entry,/return-loop\.html/);
+ assert.match(legacy,/href="\.\/v14\/pilot\.html"/);
+ assert.match(legacy,/Eigenes anonymisiertes CSV testen/);
+});
