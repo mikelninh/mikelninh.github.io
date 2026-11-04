@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {parseCsv,classify,summarize} from '../public/pilot-engine.mjs';
+test('supports German semicolon CSV and escaped quotes',()=>{const rows=parseCsv('id;message;product\r\nA;"Die ""Naht"" ist kaputt";Socken\r\nB;"Wo ist das Paket?";Shirt');assert.equal(rows.length,2);assert.equal(rows[0].message,'Die "Naht" ist kaputt');});
+test('blocks missing headers, duplicate IDs and oversized input',()=>{assert.throws(()=>parseCsv('foo,bar\na,b'),/id und message/);assert.throws(()=>parseCsv('id,message\nA,kaputt\nA,kaputt'),/Doppelte/);assert.throws(()=>parseCsv('a'.repeat(1048577)),/1 MB/);});
+test('multi-label categories cite exact text and never trigger actions',()=>{const source='Die Naht ist gerissen, ich möchte eine Retoure.';const prediction=classify(source);assert.deepEqual(prediction.categories,['quality','return']);assert.ok(prediction.evidence.every(x=>source.includes(x.quote)));assert.equal(prediction.requiresHumanReview,true);assert.equal(prediction.externalActionsAllowed,false);});
+test('unknown input returns other with no invented evidence',()=>{const r=classify('Danke für deine Nachricht!');assert.deepEqual(r.categories,['other']);assert.deepEqual(r.evidence,[]);});
+test('unreviewed cases are pending and exports never imply automatic sending',()=>{const items=[{id:'A'},{id:'B'},{id:'C'}],reviews={A:{decision:'accepted',labels:['quality']},B:{decision:'escalated',labels:[]}};assert.deepEqual({...summarize(items,reviews),counts:undefined},{total:3,reviewed:2,pending:1,accepted:1,corrected:0,escalated:1,approvedToSend:0,counts:undefined});});
