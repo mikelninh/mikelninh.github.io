@@ -84,4 +84,16 @@ try{
  const screenshot=await cmd('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
  await writeFile('application-demos/v14-source/artifacts/pilot-desktop.png',Buffer.from(screenshot.data,'base64'));
  console.log('PASS Return Loop browser smoke: sample, accept, correct, escalate, export, CSV import, invalid CSV rejection, 390px mobile overflow, reload privacy, screenshots');
-} finally{ws?.close();child.kill('SIGTERM');server.close();await rm(temp,{recursive:true,force:true});}
+} finally{
+ ws?.close();
+ child.kill('SIGTERM');
+ await new Promise(resolve=>{
+  if(child.exitCode!==null || child.signalCode!==null)return resolve();
+  const timer=setTimeout(()=>{child.kill('SIGKILL');resolve();},3500);
+  child.once('exit',()=>{clearTimeout(timer);resolve();});
+ });
+ server.close();
+ // Chrome may finish writing its profile after SIGTERM: retry instead of
+ // treating harmless test teardown as a product failure.
+ await rm(temp,{recursive:true,force:true,maxRetries:8,retryDelay:200});
+}
