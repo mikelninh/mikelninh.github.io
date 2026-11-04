@@ -27,3 +27,22 @@ jobs:
       - name: Run deterministic and mocked inference tests (no paid API calls)
         working-directory: application-demos/v14-source
         run: npm test
+
+  browser-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: browser-actions/setup-chrome@v2
+      - name: Run actual browser workflow smoke
+        run: node application-demos/v14-source/scripts/pilot-browser-smoke.mjs
+      - name: Upload screenshot evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: return-loop-pilot-browser
+          path: application-demos/v14-source/artifacts/
+          if-no-files-found: ignore
