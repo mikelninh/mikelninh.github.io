@@ -3,10 +3,17 @@ on:
   push:
     paths:
       - 'application-demos/v14-source/**'
+      - 'application-demos/v14/**'
+      - 'application-demos/return-loop.html'
+      - 'scripts/product-live-readiness.mjs'
       - '.github/workflows/return-loop-v14-ci.yml'
   pull_request:
     paths:
       - 'application-demos/v14-source/**'
+      - 'application-demos/v14/**'
+      - 'application-demos/return-loop.html'
+      - 'scripts/product-live-readiness.mjs'
+      - '.github/workflows/return-loop-v14-ci.yml'
   workflow_dispatch:
 permissions:
   contents: read
