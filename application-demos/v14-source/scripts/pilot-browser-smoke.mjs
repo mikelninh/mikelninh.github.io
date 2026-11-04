@@ -62,6 +62,20 @@ try{
  await cmd('DOM.setFileInputFiles',{nodeId:node.nodeId,files:[csv]});await sleep(250);
  assert.match(await run("document.getElementById('metric').textContent"),/0 \/ 2/,'CSV import works in browser');
  assert.equal(await run("document.getElementById('ticket-id').textContent"),'C-1');
+ // Malformed uploads must not discard a previously valid review batch.
+ const bad=join(temp,'invalid.csv');await writeFile(bad,'id,message\\nDUP,Testing broken data\\nDUP,Testing duplicate identifiers\\n'.replaceAll('\\n','\n'));
+ await cmd('DOM.setFileInputFiles',{nodeId:node.nodeId,files:[bad]});await sleep(250);
+ assert.match(await run("document.getElementById('notice').textContent"),/Import gestoppt: Doppelte ID/);
+ assert.match(await run("document.getElementById('metric').textContent"),/0 \/ 2/,'bad import does not destroy the valid batch');
+ // Real Chromium mobile viewport and overflow check, not CSS grep.
+ await cmd('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+ await sleep(250);
+ const mobile=await run("({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth,workspace:!!document.getElementById('workspace')&&!document.getElementById('workspace').hidden})");
+ assert.ok(mobile.scroll<=mobile.client+1,'horizontal overflow on 390px mobile viewport: '+JSON.stringify(mobile));
+ assert.equal(mobile.workspace,true);
+ const mobileShot=await cmd('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
+ await mkdir('application-demos/v14-source/artifacts',{recursive:true});
+ await writeFile('application-demos/v14-source/artifacts/pilot-mobile.png',Buffer.from(mobileShot.data,'base64'));
  await cmd('Page.reload',{ignoreCache:true});await sleep(450);
  assert.equal(await run("document.getElementById('workspace').hidden"),true,'private state cleared on refresh');
  assert.ok(requests.every(x=>Object.hasOwn(types,x)||x==='/favicon.ico'),'no network calls to external services');
@@ -69,5 +83,5 @@ try{
  await run("document.getElementById('sample').click()");
  const screenshot=await cmd('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
  await writeFile('application-demos/v14-source/artifacts/pilot-desktop.png',Buffer.from(screenshot.data,'base64'));
- console.log('PASS Return Loop browser smoke: sample, accept, correct, escalate, export, CSV import, reload privacy, screenshot');
+ console.log('PASS Return Loop browser smoke: sample, accept, correct, escalate, export, CSV import, invalid CSV rejection, 390px mobile overflow, reload privacy, screenshots');
 } finally{ws?.close();child.kill('SIGTERM');server.close();await rm(temp,{recursive:true,force:true});}
