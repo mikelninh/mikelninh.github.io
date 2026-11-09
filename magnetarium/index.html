@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0a0c12">
   <meta name="description" content="A little playground for an invisible force. Move magnets, see field lines, discover patterns, and share your experiments.">
   <meta property="og:title" content="MAGNETARIUM — Make the invisible visible">
-  <meta property="og:description" content="An interactive magnetic field playground. Experiment with magnets, field lines, compasses and glowing patterns.">
+  <meta property="og:description" content="Six interactive magnetic discoveries with iron filings, free-moving magnets, compasses, field lines and glowing patterns.">
   <title>MAGNETARIUM — Make the invisible visible</title>
   <style>
     :root{--bg:#0a0c12;--panel:#11151d;--panel2:#161b24;--ink:#f4f1e9;--muted:#9cabb7;--line:rgba(208,229,238,.125);--mint:#a0f4cb;--coral:#ff907f;--blue:#91cee8;--shadow:0 24px 90px rgba(0,0,0,.25);--radius:18px}
@@ -35,21 +35,52 @@
     .micro-note{color:#91a7aa;font-size:10.5px;line-height:1.6;margin:11px 0 0}
     .shape-symbol{font-family:Georgia,serif;font-size:20px;color:#aedfd9;line-height:13px}
     @media(max-width:560px){.shape-choice{min-height:72px}.shape-grid,.motion-grid{gap:5px}.micro-note{font-size:10px}}
+
+    /* V3 — guided exhibits, dynamic physics, fourth lens */
+    .hero{padding:24px 0 17px}.hero h1{font-size:clamp(42px,4.8vw,64px)}
+    .exhibits{margin:1px 0 22px}.exhibits-header{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:10px}.exhibits-header h2{margin:7px 0 0;font-size:26px;line-height:1.16;letter-spacing:-.055em;font-weight:550}.exhibits-header h2 em{font-family:Georgia,serif;color:var(--mint);font-weight:400}.exhibits-header p{color:#97adb2;font-size:11px;margin:0 0 4px;line-height:1.5}
+    .exhibit-track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(167px,1fr);gap:9px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding-bottom:5px;scrollbar-width:thin;scrollbar-color:#3e6159 transparent}
+    .exhibit{scroll-snap-align:start;display:flex;flex-direction:column;align-items:flex-start;text-align:left;min-width:0;min-height:131px;border:1px solid #2f4147;border-radius:13px;background:linear-gradient(155deg,#15242a,#10161e);padding:13px 14px 14px;color:#f2efe9;transition:border-color .18s,background .18s,transform .18s}
+    .exhibit:hover{border-color:#7cbba7;transform:translateY(-2px)}.exhibit.active{border-color:#9cf2c7;background:linear-gradient(145deg,#223b37,#142528);box-shadow:inset 0 0 0 1px #a8f4c21a}.exhibit-art{height:42px;width:100%;position:relative;display:flex;align-items:center;gap:13px;font-family:Georgia,serif;font-size:33px;line-height:1;color:#81e8d6;text-shadow:0 0 15px #65c9c86a}.exhibit-art b{font-weight:400;font-size:29px;color:#f2a18e}.exhibit-art.grains{color:#e2c68b}.exhibit-art.grains b{font-size:17px;color:#f2ddb3}.exhibit-art.compass-art{color:#b7b1eb}.exhibit-art.bridge{color:#b9e9d9}.exhibit-art.ballet{color:#ecb9ee}.exhibit-no{font-size:9px;letter-spacing:.18em;color:#a3c0bc;font-weight:800;margin:4px 0 6px}.exhibit strong{font-size:13px;letter-spacing:-.02em}.exhibit small{color:#9db2b8;font-size:10px;margin-top:5px;line-height:1.35}
+    .mode-list{grid-template-columns:repeat(4,minmax(0,1fr))}.mode{font-size:10px;padding:9px 2px;min-height:73px}.mode svg{width:28px;height:25px}.motion-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.motion-choice{font-size:9px;min-height:40px}.motion-choice:last-child{color:#a6e9d0}.motion-choice:last-child.active{color:#ecffee}
+    .pin-button{display:none;width:100%;padding:9px 10px;margin-top:12px;text-align:left;border:1px solid #37534e;background:#142b29;border-radius:8px;color:#b4e8d4;font-size:11px}.pin-button.show{display:block}.pin-button:hover{background:#24433c}.pin-button[aria-pressed=true]{background:#285044;color:#e7ffed;border-color:#8ad5b1}
+    .chapter-panel{background:linear-gradient(128deg,#15232a,#111a21);padding:21px 23px 19px;border-top:1px solid #34484a}.chapter-meta{display:flex;justify-content:space-between;gap:10px;font-size:10px;color:#bce3d3;font-weight:800;letter-spacing:.13em}.chapter-spark{color:#a5b9ba;letter-spacing:.1em}.chapter-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px}.chapter-top h3{font-size:23px;letter-spacing:-.055em;font-weight:570;margin:0 0 6px}.chapter-top p{font-size:12px;color:#a6bbc0;margin:0;line-height:1.5}.chapter-nav{display:flex;gap:7px;flex:none}.chapter-nav button{padding:9px 11px}.chapter-task{display:flex;gap:12px;align-items:baseline;border-left:2px solid #a4efce;padding:4px 0 4px 12px;margin-top:20px}.task-label{color:#a8e9cf;font-size:9px;letter-spacing:.11em;font-weight:750;white-space:nowrap}.chapter-task p{font-size:12px;color:#d1e7df;line-height:1.6;margin:0}.why-toggle{border:0;background:none;color:#acdabf;display:flex;justify-content:space-between;gap:12px;width:100%;text-align:left;font-size:11px;padding:14px 0 2px;margin-top:7px}.why-toggle:hover{color:#ebffed}.chapter-why{margin:10px 0 0;color:#a8bfc0;font-size:12px;line-height:1.75;max-width:750px}
+    @media(max-width:1150px){.exhibit-track{grid-auto-columns:180px}}@media(max-width:800px){.exhibits-header h2{font-size:26px}.exhibits-header p{max-width:200px}.exhibit-track{grid-auto-columns:175px}.hero h1{font-size:clamp(43px,8.8vw,66px)}}
+    @media(max-width:560px){.hero{padding-bottom:17px}.exhibits{margin-bottom:15px}.exhibits-header{align-items:start}.exhibits-header h2{font-size:23px}.exhibits-header p{font-size:10px;max-width:124px}.exhibit-track{grid-auto-columns:155px;gap:8px}.exhibit{min-height:144px;padding:10px 12px}.exhibit-art{height:47px}.chapter-panel{padding:18px 15px}.chapter-top h3{font-size:21px}.chapter-top{align-items:start}.chapter-nav button{padding:8px}.chapter-task{flex-direction:column;gap:5px}.chapter-spark{font-size:9px}.mode{font-size:9px;min-height:69px}.motion-choice{font-size:9px}.mode-list{gap:4px}}
+    @media(prefers-reduced-motion:reduce){.exhibit:hover{transform:none}}
   </style>
 </head>
 <body>
  <div class="wrap">
   <header class="topbar">
    <a class="brand" href="#top" aria-label="Magnetarium home"><span class="logo">✳</span><span>MAGNETARIUM<small>THE INVISIBLE LAB</small></span></a>
-   <div class="topright"><span class="top-kicker">AN EXPERIMENT IN CURIOSITY · V2.0</span><button class="button desktop" id="saveBtn" aria-label="Save screenshot as PNG"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M7 3v7h10V3M8 21v-8h8v8"/></svg> Save image</button><button class="button primary" id="shareBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V3m0 0L7 8m5-5 5 5M5 14v6h14v-6"/></svg> Share experiment</button></div>
+   <div class="topright"><span class="top-kicker">AN EXPERIMENT IN CURIOSITY · V3.0</span><button class="button desktop" id="saveBtn" aria-label="Save screenshot as PNG"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M7 3v7h10V3M8 21v-8h8v8"/></svg> Save image</button><button class="button primary" id="shareBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V3m0 0L7 8m5-5 5 5M5 14v6h14v-6"/></svg> Share experiment</button></div>
   </header>
-  <section class="hero" id="top"><div><div class="eyebrow">WELCOME TO THE MAGNETIC PLAYGROUND</div><h1>Make the <em>invisible</em> visible.</h1><p>There is a hidden world of forces all around us. Choose a magnet shape, set it in motion and watch the invisible field slowly come alive.</p></div><aside>01 / FIELD EXPLORER<strong>A tiny universe. In your hands.</strong></aside></section>
+  <section class="hero" id="top"><div><div class="eyebrow">WELCOME TO THE MAGNETIC PLAYGROUND</div><h1>Make the <em>invisible</em> visible.</h1><p>Enter six little worlds of magnetic wonder. Follow a challenge, watch magnets respond, then break the rules and make a universe of your own.</p></div><aside>06 / EXPERIMENTS<strong>A little museum of invisible forces.</strong></aside></section>
   <main>
+   <section class="exhibits" id="exhibits" aria-label="Guided magnetic experiments">
+    <div class="exhibits-header"><div><span class="eyebrow">THE WONDER COLLECTION</span><h2>Choose a <em>discovery.</em></h2></div><p>Six experiments. Tap a card to begin. Then change anything.</p></div>
+    <div class="exhibit-track" role="group" aria-label="Choose an experiment">
+      <button class="exhibit active" data-chapter="0" aria-pressed="true"><span class="exhibit-art">↗ <b>↙</b></span><span class="exhibit-no">01 / FORCES</span><strong>The pull</strong><small>Watch opposites meet</small></button>
+      <button class="exhibit" data-chapter="1" aria-pressed="false"><span class="exhibit-art repulsion">↖ <b>↗</b></span><span class="exhibit-no">02 / FORCES</span><strong>The standoff</strong><small>Like poles push away</small></button>
+      <button class="exhibit" data-chapter="2" aria-pressed="false"><span class="exhibit-art grains">✳ <b>· · ·</b></span><span class="exhibit-no">03 / PATTERNS</span><strong>Iron constellations</strong><small>Scatter invisible needles</small></button>
+      <button class="exhibit" data-chapter="3" aria-pressed="false"><span class="exhibit-art compass-art">⌁ <b>↗</b></span><span class="exhibit-no">04 / DIRECTION</span><strong>Compass garden</strong><small>See which way is north</small></button>
+      <button class="exhibit" data-chapter="4" aria-pressed="false"><span class="exhibit-art bridge">∩ <b>⌣</b></span><span class="exhibit-no">05 / SHAPES</span><strong>The bridge</strong><small>Cross a horseshoe gap</small></button>
+      <button class="exhibit" data-chapter="5" aria-pressed="false"><span class="exhibit-art ballet">✺ <b>✧</b></span><span class="exhibit-no">06 / MOTION</span><strong>Magnetic ballet</strong><small>Let the whole scene dance</small></button>
+    </div>
+   </section>
    <div class="workspace">
     <div class="stage-card">
      <div class="stage-header"><span class="live"><i></i> LIVING FIELD <span style="font-weight:400;opacity:.55;margin-left:5px">/ 01</span></span><div class="stage-head-actions"><button class="tiny-button" id="pauseBtn" title="Pause motion and glowing particles">Ⅱ Pause motion</button><button class="tiny-button" id="resetBtn" title="Start over">↺ Reset</button></div></div>
      <div class="stage" id="stage"><canvas id="field" aria-label="Interactive magnetic field. Drag magnets to move them. Use the side controls to rotate and change the view."></canvas><div class="stage-meta" id="modeLabel">FERROCELL-INSPIRED<strong>Light finds a way</strong></div><div class="probe" id="probe"><span>FIELD AT CURSOR</span><b id="probeValue">—</b><span id="probeAngle">MOVE TO EXPLORE</span></div><div class="stage-bottomhint" id="dragHint"><span class="finger">↗</span> Drag a magnet to change the field</div></div>
      <div class="stage-footer"><span><strong><span id="magnetCount">1</span> MAGNET<span id="plural"></span></strong> IN YOUR UNIVERSE <span style="margin:0 8px;color:#536670">•</span> <span id="stateLabel">Single dipole</span></span><div class="footer-right"><button class="tiny-button" id="addBtn">＋ Add magnet</button><button class="tiny-button" id="mobileSaveBtn" title="Save screenshot">↓ PNG</button></div></div>
+     <section class="chapter-panel" aria-label="Current experiment">
+       <div class="chapter-meta"><span id="chapterCounter">01 / 06 · FIELD NOTES</span><span class="chapter-spark">✳ TRY IT YOURSELF</span></div>
+       <div class="chapter-top"><div><h3 id="chapterTitle">The pull</h3><p id="chapterIntro">Two magnetic opposites find one another.</p></div><div class="chapter-nav"><button class="tiny-button" id="chapterPrev" aria-label="Previous experiment">←</button><button class="tiny-button" id="chapterNext" aria-label="Next experiment">Next →</button></div></div>
+       <div class="chapter-task"><span class="task-label">✦ YOUR EXPERIMENT</span><p id="chapterTask">Drag the second magnet further away. Release it and watch it return.</p></div>
+       <button class="why-toggle" id="chapterWhyToggle" aria-expanded="false">Why does it happen? <span>＋</span></button>
+       <p class="chapter-why" id="chapterWhy" hidden></p>
+     </section>
     </div>
     <aside class="controls" aria-label="Magnet experiment controls">
      <div class="heading"><b>Experiment controls</b><span>◉ LIVE</span></div>
@@ -57,6 +88,7 @@
       <button class="mode active" data-mode="ferro" aria-pressed="true"><svg viewBox="0 0 40 28" fill="none"><path d="M1 24C10 3 30 3 39 24M6 25C13 12 27 12 34 25M12 25c3-5 13-5 16 0" stroke="#9cf2ca" stroke-width="1.5"/><circle cx="20" cy="23" r="2" fill="#f4c1b3"/></svg>Glow</button>
       <button class="mode" data-mode="lines" aria-pressed="false"><svg viewBox="0 0 40 28" fill="none"><path d="M2 21C4-5 36-5 38 21M7 22C9 3 31 3 33 22M13 22C15 14 25 14 27 22" stroke="#9bcced" stroke-width="1.4"/><path d="m33 9 4-2-1 5" stroke="#9bcced" stroke-width="1.2"/></svg>Field lines</button>
       <button class="mode" data-mode="compass" aria-pressed="false"><svg viewBox="0 0 40 28" fill="none"><circle cx="20" cy="14" r="11" stroke="#577c7a"/><path d="M13 21 24 9l-2 9z" fill="#f49381"/><path d="m27 7-5 11-9 3z" fill="#96dada"/></svg>Compass</button>
+      <button class="mode" data-mode="filings" aria-pressed="false"><svg viewBox="0 0 40 28" fill="none"><g stroke="#d8ba80" stroke-width="1.7"><path d="M5 8l6 3m5-6 4 4m4 4 7-3M8 20l4-4m5 4 5 3m8-4 5-4M23 4l2 6"/></g></svg>Iron filings</button>
      </div></div>
      <div class="section"><div class="section-title">02 — Choose a scene</div><div class="preset-grid">
        <button class="preset active" data-preset="single"><span class="magmini"><i></i></span><b>One magnet</b></button>
@@ -81,19 +113,21 @@
        <button class="motion-choice active" data-motion="breathe" aria-pressed="true">Breathe</button>
        <button class="motion-choice" data-motion="orbit" aria-pressed="false">Orbit</button>
        <button class="motion-choice" data-motion="spin" aria-pressed="false">Spin</button>
+       <button class="motion-choice" data-motion="free" aria-pressed="false">✦ Free physics</button>
       </div>
       <div class="range-row" style="margin-top:17px"><span>Time speed</span><output id="speedValue">0.6×</output></div>
       <input type="range" class="slider" min="0.2" max="2" value="0.6" step="0.1" id="speed" aria-label="Animation speed">
       <p class="micro-note" id="motionNote">The magnet wanders gently. Motion is choreographed, not caused by magnetic forces.</p>
+      <button class="pin-button" id="pinBtn" aria-pressed="false">◌ Pin selected magnet in place</button>
      </div>
      <div class="section"><div class="section-title">05 — Tune the universe</div><div class="range-row"><span>Magnetic strength</span><output id="strengthValue">1.0×</output></div><input type="range" class="slider" min="0.4" max="2.5" value="1" step="0.1" id="strength" aria-label="Selected magnet strength"><div class="range-row" style="margin-top:18px"><span>Glow intensity</span><output id="glowValue">75%</output></div><input type="range" class="slider" min="20" max="100" value="75" step="5" id="glow" aria-label="Glow intensity">
       <div class="selection"><div class="selection-top"><b id="selectedTitle">MAGNET 01 <span style="color:#a2dfbd">● Selected</span></b><small>ROTATE / FLIP</small></div><div class="rotate"><button id="rotateL" title="Rotate counter-clockwise by 30 degrees" aria-label="Rotate left 30 degrees">↶ 30°</button><button id="flip" title="Flip magnet 180 degrees" aria-label="Flip magnet poles">⇄ Flip</button><button id="rotateR" title="Rotate clockwise by 30 degrees" aria-label="Rotate right 30 degrees">↷ 30°</button></div></div>
      </div>
      <div class="section" style="border-bottom:0"><div class="section-title">06 — Keep exploring</div><div class="action-grid"><button class="button" id="shuffleBtn">✧ Surprise me</button><button class="button danger" id="removeBtn">− Remove magnet</button></div></div>
-     <div class="control-bottom"><div class="smallrow"><span class="info">i</span><strong>Small science note</strong></div><span id="scienceNote">An artistic view inspired by Ferrocells; the glowing lines are not an optical simulation. Magnet shapes use illustrative pole approximations.</span></div>
+     <div class="control-bottom"><div class="smallrow"><span class="info">i</span><strong>Small science note</strong></div><span id="scienceNote">An artistic view inspired by Ferrocells; the glowing lines are not an optical simulation. Magnetic shapes use illustrative 2D pole models.</span></div>
     </aside>
    </div>
-   <section class="learn" id="discover"><div class="learn-head"><div><div class="eyebrow">A LITTLE BIT OF WONDER</div><h2>What's <em>really</em> happening?</h2></div><p>A few things to look for while you play. Curiosity is the only equipment required.</p></div><div class="learn-grid"><article class="learn-tile"><span class="number">01 / TWO SIDES</span><h3>Opposites attract.</h3><p>Every bar magnet has a north and south pole. Bring opposite poles together and the field links up. Put like poles together and watch the pattern bend away.</p></article><article class="learn-tile"><span class="number">02 / INVISIBLE GEOMETRY</span><h3>One field, infinite possibilities.</h3><p>Magnetic fields have a direction and strength at every point. With multiple magnets, their fields add together — creating wonderfully complex shapes.</p></article><article class="learn-tile"><span class="number">03 / REAL VS. RENDERED</span><h3>Ferrocell magic is light.</h3><p>Real Ferrocells use an ultra-thin magnetic nanoparticle suspension and carefully placed lights. Our Glow mode is an interpretation, while Field lines and Compass use simplified pole models. The movement is artistic, not a force simulation.</p></article></div></section>
+   <section class="learn" id="discover"><div class="learn-head"><div><div class="eyebrow">A LITTLE BIT OF WONDER</div><h2>What's <em>really</em> happening?</h2></div><p>Six experiments are only the beginning. Here are three clues to carry into the laboratory.</p></div><div class="learn-grid"><article class="learn-tile"><span class="number">01 / TWO SIDES</span><h3>Opposites attract.</h3><p>Every bar magnet has a north and south pole. Bring opposite poles together and the field links up. Put like poles together and watch the pattern bend away.</p></article><article class="learn-tile"><span class="number">02 / INVISIBLE GEOMETRY</span><h3>One field, infinite possibilities.</h3><p>Magnetic fields have a direction and strength at every point. With multiple magnets, their fields add together — creating wonderfully complex shapes.</p></article><article class="learn-tile"><span class="number">03 / REAL VS. RENDERED</span><h3>Ferrocell magic is light.</h3><p>Real Ferrocells use an ultra-thin magnetic nanoparticle suspension and carefully placed lights. Our Glow mode is an interpretation, while Field lines and Compass use simplified pole models. Free physics uses a damped, simplified 2D magnetic-force model; Breathe, Orbit and Spin are choreographed movements.</p></article></div></section>
   </main>
   <footer class="bottom"><span>MAGNETARIUM · A LITTLE EXPERIMENT IN WONDER · BUILT TO EXPLORE & SHARE</span><span>NO DATA COLLECTION · RUNS OFFLINE · <a href="https://www.ferrocell.us/intro.html" target="_blank" rel="noopener">LEARN ABOUT REAL FERROCELLS ↗</a></span></footer>
  </div>
@@ -104,12 +138,12 @@
  const stage=$('#stage'),canvas=$('#field'),ctx=canvas.getContext('2d',{alpha:false});
  const layer=document.createElement('canvas'),lctx=layer.getContext('2d',{alpha:false});
  const heat=document.createElement('canvas'),hctx=heat.getContext('2d',{alpha:false});
- let W=800,H=540,DPR=1,mode='ferro',preset='single',magnets=[],selected=0,glow=.75,paused=false,paths=[],needsBuild=true,lastBuild=0,lastRender=0,dragging=-1,hover=null,tick=0,resizeStart=false,fieldSources=[],sourcesDirty=true,motion='breathe',speed=.6,motionElapsed=0,motionHome=[];
+ let W=800,H=540,DPR=1,mode='ferro',preset='single',magnets=[],selected=0,glow=.75,paused=false,paths=[],needsBuild=true,lastBuild=0,lastRender=0,dragging=-1,hover=null,tick=0,resizeStart=false,fieldSources=[],sourcesDirty=true,motion='breathe',speed=.6,motionElapsed=0,motionHome=[],chapterIndex=0,filingCount=0;
  const MAX=6;const TAU=Math.PI*2;const SHAPES=['bar','disc','ring','horse'];const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
  const iconColor=['#8cdde7','#adf7cd','#e7a8f4','#ffca91','#8fcae8','#eedfa4'];
- const legends={ferro:['FERROCELL-INSPIRED','Light finds a way','An artistic view inspired by Ferrocells; the glowing lines are not an optical simulation. Magnet shapes use illustrative pole approximations.'],lines:['MAGNETIC FIELD','Follow the invisible','Lines trace an illustrative, softened pole-source model in this 2D plane. Arrows show the direction a compass north end would point.'],compass:['VECTOR FIELD','A million tiny compasses','Each needle points along the local magnetic field. The model adds contributions from every magnet shape. No measured Tesla values are claimed.']};
+ const legends={filings:['IRON FILINGS','The field leaves its mark','Each golden dash is a simulated iron filing aligned with the local 2D field. Real iron filings can cluster and interact; these do not.'],ferro:['FERROCELL-INSPIRED','Light finds a way','An artistic view inspired by Ferrocells; the glowing lines are not an optical simulation. Magnetic shapes use illustrative 2D pole models.'],lines:['MAGNETIC FIELD','Follow the invisible','Lines trace an illustrative, softened pole-source model in this 2D plane. Arrows show the direction a compass north end would point.'],compass:['VECTOR FIELD','A million tiny compasses','Each needle points along the local magnetic field. The model adds contributions from every magnet shape. No measured Tesla values are claimed.']};
  function toast(message){const el=$('#toast');el.textContent=message;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2600)}
- function mag(x,y,a=0,s=1,shape='bar'){return {x,y,a,s,shape};}
+ function mag(x,y,a=0,s=1,shape='bar'){return {x,y,a,s,shape,pinned:false,vx:0,vy:0,omega:0};}
  function reanchor(){motionHome=magnets.map(m=>({x:m.x,y:m.y,a:m.a}));motionElapsed=0;}
  function makePreset(name){preset=name;const cx=W/2,cy=H/2,span=Math.min(W*.18,126),vertical=Math.min(H*.19,108);
   if(name==='single')magnets=[mag(cx,cy,0)];
@@ -119,8 +153,8 @@
   else if(name==='ring')magnets=[mag(cx,cy,0,1.5,'ring')];
   else if(name==='horse')magnets=[mag(cx,cy,0,1.2,'horse')];
   else if(name==='surprise')magnets=Array.from({length:2+Math.floor(Math.random()*3)},()=>mag(W*(.22+Math.random()*.56),H*(.23+Math.random()*.54),Math.random()*TAU,.7+Math.random()*1.0,SHAPES[Math.floor(Math.random()*SHAPES.length)]));
-  selected=0;reanchor();syncUI();dirty(true);}
- function source(m,lx,ly,q){const co=Math.cos(m.a),si=Math.sin(m.a);fieldSources.push({x:m.x+lx*co-ly*si,y:m.y+lx*si+ly*co,q:q*m.s,soft:15});}
+  selected=0;initMotionBodies();reanchor();syncUI();dirty(true);}
+ function source(m,lx,ly,q){const co=Math.cos(m.a),si=Math.sin(m.a);fieldSources.push({x:m.x+lx*co-ly*si,y:m.y+lx*si+ly*co,q:q*m.s,soft:15,owner:magnets.indexOf(m)});}
  function rebuildSources(){fieldSources=[];for(const m of magnets){if(m.shape==='bar'){
     source(m,40,0,1);source(m,-40,0,-1);
    }else if(m.shape==='horse'){
@@ -186,7 +220,21 @@
   }
   if(sel){c.strokeStyle='#b9f6cd';c.lineWidth=1.2;c.setLineDash([4,5]);if(m.shape==='disc'||m.shape==='ring'){c.beginPath();c.arc(0,0,m.shape==='ring'?50:42,0,TAU);c.stroke();}else c.strokeRect(-54,-49,108,98);c.setLineDash([]);}
   c.restore();}
- function buildStatic(){if(W<10)return;buildPaths();lctx.setTransform(DPR,0,0,DPR,0,0);background(lctx);if(mode==='ferro')drawGlow(lctx);else if(mode==='lines')drawLines(lctx);else drawCompass(lctx);needsBuild=false;lastBuild=performance.now();}
+ function drawFilings(c){
+  const cell=W<500?12:10;let shown=0;const gridX=Math.ceil(W/cell),gridY=Math.ceil(H/cell);
+  c.save();c.globalCompositeOperation='screen';
+  for(let yi=0;yi<gridY;yi++)for(let xi=0;xi<gridX;xi++){
+   const hash=(xi*127.1+yi*311.7),j=Math.sin(hash)*43758.5453,k=Math.sin(hash*1.173+27)*24919.3;
+   const x=(xi+.16+(j-Math.floor(j))*.7)*cell,y=(yi+.16+(k-Math.floor(k))*.7)*cell;
+   if(magnets.some(m=>inSolid(m,x,y)))continue;
+   const f=field(x,y),power=clamp(Math.log(1+f.mag)*.42,0,1),angle=Math.atan2(f.y,f.x),len=2.8+power*7.4;
+   if(power<.028)continue;
+   const ca=Math.cos(angle),sa=Math.sin(angle),a=.15+power*.68;
+   c.strokeStyle=`rgba(${Math.round(181+power*62)},${Math.round(150+power*57)},${Math.round(106+power*53)},${a.toFixed(2)})`;
+   c.lineWidth=power>.65?1.45:1.05;c.beginPath();c.moveTo(x-ca*len*.5,y-sa*len*.5);c.lineTo(x+ca*len*.5,y+sa*len*.5);c.stroke();shown++;
+  }c.restore();filingCount=shown;
+ }
+ function buildStatic(){if(W<10)return;if(mode!=='filings')buildPaths();lctx.setTransform(DPR,0,0,DPR,0,0);background(lctx);if(mode==='ferro')drawGlow(lctx);else if(mode==='lines')drawLines(lctx);else if(mode==='filings')drawFilings(lctx);else drawCompass(lctx);needsBuild=false;lastBuild=performance.now();}
  function drawParticles(c,t){if(mode!=='ferro'||paused)return;c.save();c.globalCompositeOperation='screen';for(let i=0;i<paths.length;i++){const p=paths[i];const pts=p.pts;if(pts.length<7)continue;const q=(p.phase+t*p.speed*.0001)%1;const at=Math.max(1,Math.min(pts.length-2,Math.floor(q*(pts.length-1))));const point=pts[at];const r=1.3+(i%4)*.35;c.globalAlpha=.35+.45*glow;c.shadowColor=p.color;c.shadowBlur=13;c.fillStyle='#d1ffef';c.beginPath();c.arc(point.x,point.y,r,0,TAU);c.fill();}c.restore();}
  function drawProbe(c){if(!hover)return;const{x,y}=hover,f=field(hover.x,hover.y),angle=Math.atan2(f.y,f.x);c.save();c.globalAlpha=.67;c.strokeStyle='#d4f7e6';c.lineWidth=1;c.setLineDash([2,6]);c.beginPath();c.arc(x,y,14,0,TAU);c.stroke();c.setLineDash([]);c.beginPath();c.moveTo(x-8,y);c.lineTo(x+8,y);c.moveTo(x,y-8);c.lineTo(x,y+8);c.stroke();c.translate(x,y);c.rotate(angle);c.strokeStyle='#ffe8c6';c.lineWidth=2;c.beginPath();c.moveTo(-5,0);c.lineTo(10,0);c.stroke();c.beginPath();c.moveTo(10,0);c.lineTo(5,-3);c.moveTo(10,0);c.lineTo(5,3);c.stroke();c.restore();}
  function animateMagnets(){const t=motionElapsed;for(let i=0;i<magnets.length;i++){const m=magnets[i],b=motionHome[i];if(!b)continue;
@@ -201,20 +249,75 @@
  }}
  function draw(t){requestAnimationFrame(draw);const minFrame=33;if(t-lastRender<minFrame)return;
   const dt=lastRender?Math.min(t-lastRender,100):32;lastRender=t;
-  if(!paused){tick+=dt;if(motion!=='still'&&dragging<0){motionElapsed+=dt*.001*speed;animateMagnets();dirty();}}
-  const minBuild=dragging>=0?95:motion!=='still'&&!paused?((W<610)?2300:1800):65;
+  if(!paused){tick+=dt;if(motion==='free'){stepPhysics(dt*.001*speed);}
+   else if(motion!=='still'&&dragging<0){motionElapsed+=dt*.001*speed;animateMagnets();dirty();}}
+  const minBuild=dragging>=0?95:motion==='free'&&!paused?(W<610?600:430):motion!=='still'&&!paused?((W<610)?2100:1600):65;
   if(needsBuild&&(t-lastBuild>minBuild||lastBuild===0))buildStatic();if(W<10)return;
   ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(layer,0,0);ctx.setTransform(DPR,0,0,DPR,0,0);drawParticles(ctx,tick);
   for(let i=0;i<magnets.length;i++)drawMagnet(ctx,magnets[i],i);drawProbe(ctx);
  }
  function resize(){const bounds=stage.getBoundingClientRect();if(bounds.width<10||bounds.height<10)return;const oldW=W,oldH=H;W=bounds.width;H=bounds.height;DPR=Math.min(window.devicePixelRatio||1,1.5);canvas.width=layer.width=Math.round(W*DPR);canvas.height=layer.height=Math.round(H*DPR);if(magnets.length){for(const m of magnets){m.x=clamp(m.x/oldW*W,30,W-30);m.y=clamp(m.y/oldH*H,30,H-30);}}else if(!resizeStart){resizeStart=true;const loaded=loadHash();if(!loaded)makePreset('single');}reanchor();dirty(true);}
+ const CHAPTERS=[
+  {title:'The pull',desc:'Two opposites find each other.',task:'Drag the free magnet to the right, then release. Can you feel the pull — without touching?',why:'Opposite magnetic poles attract. In our simplified 2D force model, each pole feels the field created by the other magnet. One magnet is pinned so the motion is easy to see.',preset:'attract',mode:'ferro',motion:'free',speed:.75},
+  {title:'The standoff',desc:'Same poles, very different story.',task:'Move the free magnet closer to the other one and release it. Try flipping its poles — does the outcome change?',why:'Like poles repel, while unlike poles attract. A free magnet may also turn because magnetic fields exert torque. The simulation uses damped, softened forces to remain stable.',preset:'repel',mode:'lines',motion:'free',speed:.75},
+  {title:'Iron constellations',desc:'A thousand tiny needles draw the field.',task:'Drag the magnet and rotate it. Where do the little golden filings align? Try adding a second magnet.',why:'Magnetic material tends to align with a magnetic field. Here every golden stroke rotates to follow the direction of our modelled 2D field. The grains do not move, interact or clump like real iron filings.',preset:'single',mode:'filings',motion:'still',speed:.6},
+  {title:'Compass garden',desc:'Every point has a direction.',task:'Drag the magnets apart, then hover or tap the field. Can you find a place where the arrows change direction?',why:'A compass needle aligns with the local field direction. Fields from multiple magnets add together, sometimes cancelling locally or changing sharply over short distances.',preset:'quad',mode:'compass',motion:'still',speed:.6},
+  {title:'The bridge',desc:'A horseshoe brings its poles face to face.',task:'Choose Field lines, then return to Iron filings. Rotate the horseshoe. What happens in the open gap?',why:'In a horseshoe magnet, the two poles face across a small air gap, so the field is often strong there. This 2D model uses two effective pole sources for the gap.',preset:'horse',mode:'filings',motion:'still',speed:.6},
+  {title:'Magnetic ballet',desc:'Give the whole universe a slow spin.',task:'Choose Free physics to let the magnets respond to each other. Or switch to Orbit for an endless choreographed dance.',why:'Orbit, Spin and Breathe are artistic animation modes. Free physics instead calculates an approximate magnetic force and torque with damping. Neither replaces a full 3D magnetic simulation.',preset:'quad',mode:'ferro',motion:'orbit',speed:.65}
+ ];
+ function initMotionBodies(){magnets.forEach((m,i)=>{m.vx=0;m.vy=0;m.omega=0;if(motion==='free')m.pinned=(i===0&&magnets.length>1);else m.pinned=false;});}
+ function fieldOther(x,y,owner){let bx=0,by=0;for(const p of fieldSources){if(p.owner===owner)continue;const dx=x-p.x,dy=y-p.y,r2=dx*dx+dy*dy+p.soft*p.soft;const z=9500*p.q/(r2*Math.sqrt(r2));bx+=dx*z;by+=dy*z;}return{x:bx,y:by};}
+ function stepPhysics(elapsed){if(magnets.length<2)return;const steps=Math.max(1,Math.ceil(elapsed/.018)),dt=elapsed/steps;
+  let didMove=false;
+  for(let n=0;n<steps;n++){
+   rebuildSources();const next=[];
+   for(let i=0;i<magnets.length;i++){
+    const m=magnets[i];if(m.pinned||i===dragging){next.push(null);continue;}
+    const co=Math.cos(m.a),si=Math.sin(m.a),half=m.shape==='horse'?32:m.shape==='ring'?33:m.shape==='disc'?25:36;
+    // The ring, disc and horseshoe are represented by effective pole pairs for motion.
+    const poles=m.shape==='horse'?[[33,-29,1.15],[33,29,-1.15]]:[[half,0,1],[-half,0,-1]];
+    let fx=0,fy=0,torque=0;
+    for(const [px,py,q] of poles){const rx=px*co-py*si,ry=px*si+py*co,B=fieldOther(m.x+rx,m.y+ry,i);const fpx=B.x*q*m.s*620,fpy=B.y*q*m.s*620;fx+=fpx;fy+=fpy;torque+=rx*fpy-ry*fpx;}
+    const friction=Math.exp(-2.5*dt),rotFriction=Math.exp(-3*dt);
+    const vx=clamp((m.vx+fx*dt)*friction,-180,180),vy=clamp((m.vy+fy*dt)*friction,-180,180),omega=clamp((m.omega+torque/65000*dt)*rotFriction,-2.8,2.8);
+    next.push({x:clamp(m.x+vx*dt,49,W-49),y:clamp(m.y+vy*dt,49,H-49),a:m.a+omega*dt,vx,vy,omega});
+   }
+   for(let i=0;i<magnets.length;i++){if(!next[i])continue;const m=magnets[i],v=next[i];Object.assign(m,v);didMove=true;
+    if(m.x===49||m.x===W-49)m.vx*=-.20;if(m.y===49||m.y===H-49)m.vy*=-.20;
+   }
+   // Gentle overlap correction prevents dipoles passing through each other.
+   for(let i=0;i<magnets.length;i++)for(let j=i+1;j<magnets.length;j++){
+     const a=magnets[i],b=magnets[j],dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||.001,min= a.shape==='horse'||b.shape==='horse'?75:62;
+     if(d>=min)continue;const overlap=(min-d),ux=dx/d,uy=dy/d;
+     if(!b.pinned&&j!==dragging){b.x=clamp(b.x+ux*overlap*(a.pinned||i===dragging?1:.5),48,W-48);b.y=clamp(b.y+uy*overlap*(a.pinned||i===dragging?1:.5),48,H-48);b.vx*=.55;b.vy*=.55;}
+     if(!a.pinned&&i!==dragging){a.x=clamp(a.x-ux*overlap*(b.pinned||j===dragging?1:.5),48,W-48);a.y=clamp(a.y-uy*overlap*(b.pinned||j===dragging?1:.5),48,H-48);a.vx*=.55;a.vy*=.55;}
+   }
+  }
+  if(didMove)dirty();
+ }
+ function syncChapter(){const c=CHAPTERS[chapterIndex];$$('.exhibit').forEach((b,i)=>{const active=i===chapterIndex;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
+  $('#chapterCounter').textContent=c?String(chapterIndex+1).padStart(2,'0')+' / 06 · FIELD NOTES':'◉ / FREE EXPLORATION';
+  $('#chapterTitle').textContent=c?c.title:'Your universe';$('#chapterIntro').textContent=c?c.desc:'There are no rules. Experiment and surprise yourself.';
+  $('#chapterTask').textContent=c?c.task:'Try changing the shape, strength and motion. Then share your experiment with a friend.';
+  $('#chapterWhy').textContent=c?c.why:'A rendered magnetic field can show direction and approximate strength, but our stylised models and physics are not measured 3D fields.';
+  $('#chapterWhy').hidden=true;$('#chapterWhyToggle').setAttribute('aria-expanded','false');$('#chapterWhyToggle').innerHTML='Why does it happen? <span>＋</span>';
+  $('#chapterPrev').disabled=chapterIndex===0;$('#chapterNext').textContent=chapterIndex>=CHAPTERS.length-1?'↺ First experiment':'Next →';
+ }
+ function setChapter(i,scroll=true){chapterIndex=((i%CHAPTERS.length)+CHAPTERS.length)%CHAPTERS.length;const c=CHAPTERS[chapterIndex];motion=c.motion;mode=c.mode;speed=c.speed;paused=false;$('#pauseBtn').textContent='Ⅱ Pause motion';makePreset(c.preset);
+  if(chapterIndex===0||chapterIndex===1){const span=Math.min(W*.16,102);magnets[0].x=W*.5-span;magnets[1].x=W*.5+span;magnets[0].pinned=true;magnets[1].pinned=false;reanchor();dirty(true);}
+  if(chapterIndex===5){magnets.forEach(m=>m.s=.85);reanchor();dirty(true);}
+  syncChapter();syncUI();if(scroll){const top=$('#stage').getBoundingClientRect().top;if(top>window.innerHeight*.75||top<0)$('#stage').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth',block:'start'});} }
+ $$('.exhibit').forEach(b=>b.addEventListener('click',()=>setChapter(Number(b.dataset.chapter))));
+ $('#chapterPrev').addEventListener('click',()=>setChapter(chapterIndex<=0?CHAPTERS.length-1:chapterIndex-1));
+ $('#chapterNext').addEventListener('click',()=>setChapter(chapterIndex>=CHAPTERS.length-1?0:chapterIndex+1));
+ $('#chapterWhyToggle').addEventListener('click',()=>{const expanded=$('#chapterWhyToggle').getAttribute('aria-expanded')==='true';$('#chapterWhyToggle').setAttribute('aria-expanded',String(!expanded));$('#chapterWhy').hidden=expanded;$('#chapterWhyToggle').innerHTML=expanded?'Why does it happen? <span>＋</span>':'Hide explanation <span>−</span>';});
  const shapeDescriptions={bar:'Classic bar: two opposite pole sources along its length.',disc:'Diametrically magnetised disc: distributed pole sources around the rim.',ring:'Diametrically magnetised ring: outer and inner rim sources make a different pattern.',horse:'Horseshoe magnet: opposite poles sit across an open gap.'};
- const motionDescriptions={still:'Nothing moves except the glowing light particles. Drag to experiment.',breathe:'Magnets drift and tilt gently. Choreographed motion, not force-driven dynamics.',orbit:'Magnets slowly circle together. A choreographed orbit, not a force simulation.',spin:'Magnets rotate slowly about their centres. Motion is imposed, not magnetic torque.'};
+ const motionDescriptions={still:'Nothing moves except the glowing light particles. Drag to experiment.',breathe:'Magnets drift and tilt gently. Choreographed motion, not force-driven dynamics.',orbit:'Magnets slowly circle together. A choreographed orbit, not a force simulation.',spin:'Magnets rotate slowly about their centres. Motion is imposed, not magnetic torque.',free:'A damped 2D toy-physics model of magnetic attraction, repulsion and torque — not a precision engineering simulation. Pin one magnet to make the effect clearer.'};
  function syncUI(){$$('.mode').forEach(b=>{const active=b.dataset.mode===mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});$$('.preset').forEach(b=>b.classList.toggle('active',b.dataset.preset===preset));
   $$('.shape-choice').forEach(b=>{const active=b.dataset.shape===(magnets[selected]?.shape||'bar');b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));b.disabled=!magnets[selected];});
   $$('.motion-choice').forEach(b=>{const active=b.dataset.motion===motion;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
-  $('#motionStatus').textContent=({still:'○ Static',breathe:'● Breathing',orbit:'● Orbiting',spin:'● Spinning'})[motion];
-  $('#motionNote').textContent=motionDescriptions[motion];$('#speed').value=String(speed);$('#speedValue').textContent=speed.toFixed(1)+'×';$('#speed').disabled=motion==='still';
+  $('#motionStatus').textContent=({still:'○ Static',breathe:'● Breathing',orbit:'● Orbiting',spin:'● Spinning',free:'● Magnetic forces'})[motion];
+  $('#motionNote').textContent=motionDescriptions[motion];$('#speed').value=String(speed);$('#speedValue').textContent=speed.toFixed(1)+'×';$('#speed').disabled=motion==='still';$('#pinBtn').classList.toggle('show',motion==='free');$('#pinBtn').disabled=!magnets[selected];$('#pinBtn').setAttribute('aria-pressed',String(!!magnets[selected]?.pinned));$('#pinBtn').textContent=magnets[selected]?.pinned?'● Pinned — click to release':'◌ Free magnet — click to pin';
   $('#magnetCount').textContent=magnets.length;$('#plural').textContent=magnets.length===1?'':'S';const current=magnets[selected];
   $('#shapeNote').textContent=current?shapeDescriptions[current.shape]:'Add a magnet to choose its shape.';
   $('#selectedTitle').innerHTML=current?'MAGNET '+String(selected+1).padStart(2,'0')+' <span style="color:#a2dfbd">● Selected</span>':'NO MAGNET SELECTED';
@@ -227,12 +330,12 @@
  function custom(){preset='custom';reanchor();syncUI();dirty(dragging<0);}
  function hit(x,y){for(let i=magnets.length-1;i>=0;i--){const m=magnets[i],dx=x-m.x,dy=y-m.y,co=Math.cos(m.a),si=Math.sin(m.a),u=dx*co+dy*si,v=-dx*si+dy*co;if(m.shape==='disc'||m.shape==='ring'){if(Math.hypot(u,v)<(m.shape==='ring'?45:36))return i;}else if(Math.abs(u)<55&&Math.abs(v)<(m.shape==='horse'?48:28))return i;}return -1;}
  function point(e){const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left),y:(e.clientY-r.top)};}
- canvas.addEventListener('pointerdown',e=>{const p=point(e),i=hit(p.x,p.y);if(i>=0){selected=i;dragging=i;canvas.setPointerCapture(e.pointerId);canvas.classList.add('dragging');$('#dragHint').classList.add('hidden');syncUI();}hover=p;});
- canvas.addEventListener('pointermove',e=>{const p=point(e);hover=p;const i=hit(p.x,p.y);canvas.classList.toggle('can-grab',i>=0&&dragging<0);if(dragging>=0){const m=magnets[dragging];m.x=clamp(p.x,27,W-27);m.y=clamp(p.y,27,H-27);custom();}const f=field(p.x,p.y);$('#probeValue').textContent=f.mag<.01?'< 0.01':f.mag.toFixed(2);$('#probeAngle').textContent='RELATIVE UNITS · '+Math.round((Math.atan2(f.y,f.x)*180/Math.PI+360)%360)+'°';});
+ canvas.addEventListener('pointerdown',e=>{const p=point(e),i=hit(p.x,p.y);if(i>=0){selected=i;dragging=i;magnets[i].vx=0;magnets[i].vy=0;magnets[i].omega=0;canvas.setPointerCapture(e.pointerId);canvas.classList.add('dragging');$('#dragHint').classList.add('hidden');syncUI();}hover=p;});
+ canvas.addEventListener('pointermove',e=>{const p=point(e);hover=p;const i=hit(p.x,p.y);canvas.classList.toggle('can-grab',i>=0&&dragging<0);if(dragging>=0){const m=magnets[dragging];m.x=clamp(p.x,48,W-48);m.y=clamp(p.y,48,H-48);custom();}const f=field(p.x,p.y);$('#probeValue').textContent=f.mag<.01?'< 0.01':f.mag.toFixed(2);$('#probeAngle').textContent='RELATIVE UNITS · '+Math.round((Math.atan2(f.y,f.x)*180/Math.PI+360)%360)+'°';});
  function endDrag(){if(dragging>=0){dragging=-1;reanchor();dirty();canvas.classList.remove('dragging');}}canvas.addEventListener('pointerup',endDrag);canvas.addEventListener('pointercancel',endDrag);canvas.addEventListener('lostpointercapture',endDrag);canvas.addEventListener('pointerleave',()=>{if(dragging<0){hover=null;$('#probeValue').textContent='—';$('#probeAngle').textContent='MOVE TO EXPLORE';}});
  $$('.mode').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;syncUI();dirty(true);}));$$('.preset').forEach(b=>b.addEventListener('click',()=>makePreset(b.dataset.preset)));
  $$('.shape-choice').forEach(b=>b.addEventListener('click',()=>{if(!magnets[selected])return;magnets[selected].shape=b.dataset.shape;custom();toast(b.dataset.shape==='horse'?'Horseshoe gap — watch the bridge!':b.dataset.shape[0].toUpperCase()+b.dataset.shape.slice(1)+' magnet selected.');}));
- $$('.motion-choice').forEach(b=>b.addEventListener('click',()=>{motion=b.dataset.motion;reanchor();syncUI();dirty(true);}));
+ $$('.motion-choice').forEach(b=>b.addEventListener('click',()=>{motion=b.dataset.motion;initMotionBodies();reanchor();syncUI();dirty(true);}));$('#pinBtn').addEventListener('click',()=>{const m=magnets[selected];if(!m)return;m.pinned=!m.pinned;m.vx=m.vy=m.omega=0;syncUI();});
  $('#speed').addEventListener('input',e=>{speed=Number(e.target.value);syncUI();});
  $('#strength').addEventListener('input',e=>{if(magnets[selected]){magnets[selected].s=Number(e.target.value);custom();}});
  $('#glow').addEventListener('input',e=>{glow=Number(e.target.value)/100;syncUI();dirty(true);});
@@ -240,22 +343,22 @@
  function rotate(delta){if(magnets[selected]){magnets[selected].a=(magnets[selected].a+delta+TAU)%TAU;custom();}}
  $('#addBtn').onclick=()=>{if(magnets.length<MAX){const n=magnets.length;magnets.push(mag(clamp(W*.52+(n%3-1)*46,45,W-45),clamp(H*.47+(n%2?70:-60),45,H-45),Math.PI/4*(n%4),1,magnets[selected]?.shape||'bar'));selected=magnets.length-1;custom();toast('Magnet added. Drag it anywhere.');}};
  $('#removeBtn').onclick=()=>{if(magnets[selected]){magnets.splice(selected,1);selected=clamp(selected,0,magnets.length-1);custom();toast('Magnet removed.');}};
- $('#shuffleBtn').onclick=()=>makePreset('surprise');$('#resetBtn').onclick=()=>{makePreset('single');toast('Fresh start.');};$('#pauseBtn').onclick=()=>{paused=!paused;$('#pauseBtn').textContent=paused?'▶ Animate':'Ⅱ Pause motion';};
- function stateObject(){return {v:2,mode,glow:Number(glow.toFixed(2)),motion,speed:Number(speed.toFixed(1)),magnets:magnets.map(m=>[Number((m.x/W).toFixed(4)),Number((m.y/H).toFixed(4)),Number(m.a.toFixed(4)),Number(m.s.toFixed(2)),m.shape])};}
+ $('#shuffleBtn').onclick=()=>makePreset('surprise');$('#resetBtn').onclick=()=>{setChapter(chapterIndex>=0?chapterIndex:0,false);toast('Scene restarted.');};$('#pauseBtn').onclick=()=>{paused=!paused;$('#pauseBtn').textContent=paused?'▶ Animate':'Ⅱ Pause motion';};
+ function stateObject(){return {v:3,chapter:chapterIndex,mode,glow:Number(glow.toFixed(2)),motion,speed:Number(speed.toFixed(1)),magnets:magnets.map(m=>[Number((m.x/W).toFixed(4)),Number((m.y/H).toFixed(4)),Number(m.a.toFixed(4)),Number(m.s.toFixed(2)),m.shape,m.pinned?1:0])};}
  function loadHash(){try{const x=window.location.hash.match(/(?:^#|&)s=([^&]+)/);if(!x)return false;const s=JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(x[1])))));
-  if(![1,2].includes(s.v)||!Array.isArray(s.magnets)||s.magnets.length>MAX)throw Error('bad');
-  const mm=s.magnets.map(a=>{if(!Array.isArray(a)||a.length<(s.v===2?5:4)||a.slice(0,4).some(v=>typeof v!=='number'||!Number.isFinite(v)))throw Error('bad');return mag(clamp(a[0],.04,.96)*W,clamp(a[1],.04,.96)*H,clamp(a[2],-100,100),clamp(a[3],.4,2.5),SHAPES.includes(a[4])?a[4]:'bar');});
-  magnets=mm;mode=['ferro','lines','compass'].includes(s.mode)?s.mode:'ferro';glow=clamp(Number(s.glow)||.75,.2,1);
-  motion=['still','breathe','orbit','spin'].includes(s.motion)?s.motion:'still';speed=clamp(Number(s.speed)||.6,.2,2);
-  preset='custom';selected=0;reanchor();syncUI();dirty();return true;
+  if(![1,2,3].includes(s.v)||!Array.isArray(s.magnets)||s.magnets.length>MAX)throw Error('bad');
+  const mm=s.magnets.map(a=>{if(!Array.isArray(a)||a.length<(s.v===2?5:4)||a.slice(0,4).some(v=>typeof v!=='number'||!Number.isFinite(v)))throw Error('bad');const m=mag(clamp(a[0],.04,.96)*W,clamp(a[1],.04,.96)*H,clamp(a[2],-100,100),clamp(a[3],.4,2.5),SHAPES.includes(a[4])?a[4]:'bar');m.pinned=s.v===3?a[5]===1:false;return m;});
+  magnets=mm;mode=['ferro','lines','compass','filings'].includes(s.mode)?s.mode:'ferro';glow=clamp(Number(s.glow)||.75,.2,1);
+  motion=['still','breathe','orbit','spin','free'].includes(s.motion)?s.motion:'still';speed=clamp(Number(s.speed)||.6,.2,2);chapterIndex=Number.isInteger(s.chapter)&&s.chapter>=0&&s.chapter<CHAPTERS.length?s.chapter:-1;
+  preset='custom';selected=0;reanchor();syncUI();syncChapter();dirty();return true;
  }catch(e){return false;}}
  async function share(){const raw=JSON.stringify(stateObject()),hash='s='+btoa(unescape(encodeURIComponent(raw)));const url=new URL(window.location.href);url.hash=hash;if(url.protocol==='file:'){toast('To share a link, upload this HTML to a website. The file itself works offline.');return;}try{if(navigator.share&&matchMedia('(pointer:coarse)').matches){await navigator.share({title:'Magnetarium',text:'Explore my magnet experiment',url:url.href});return;}await navigator.clipboard.writeText(url.href);toast('Experiment link copied — setup included!');}catch(e){if(e.name!=='AbortError'){window.prompt('Copy your experiment link:',url.href);}}}
  $('#shareBtn').onclick=share;
  function saveImage(){try{const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='magnetarium-'+mode+'-'+Date.now()+'.png';document.body.appendChild(a);a.click();a.remove();toast('Image saved!');}catch(e){toast('Screenshot unavailable in this browser.');}}
  $('#saveBtn').onclick=saveImage;$('#mobileSaveBtn').onclick=saveImage;
  document.addEventListener('keydown',e=>{if(e.target instanceof HTMLInputElement||e.metaKey||e.ctrlKey||e.altKey)return;if(e.key===' '){e.preventDefault();$('#pauseBtn').click();}else if(e.key.toLowerCase()==='f')$('#flip').click();else if(e.key.toLowerCase()==='r')$('#rotateR').click();else if(e.key==='Delete'||e.key==='Backspace')$('#removeBtn').click();else if('1234'.includes(e.key))makePreset(['single','attract','repel','quad'][Number(e.key)-1]);});
- window.addEventListener('hashchange',()=>{if(loadHash())dirty();});if(typeof ResizeObserver!=='undefined')new ResizeObserver(resize).observe(stage);else window.addEventListener('resize',resize);resize();syncUI();requestAnimationFrame(draw);
- window.__MAGNETARIUM_TEST__={getState:()=>({mode,preset,magnets:magnets.map(m=>({...m})),selected,glow,paused,paths:paths.length,motion,speed,motionElapsed,fieldSources:fieldSources.length}),field,makePreset,resize};
+ window.addEventListener('hashchange',()=>{if(loadHash())dirty();});if(typeof ResizeObserver!=='undefined')new ResizeObserver(resize).observe(stage);else window.addEventListener('resize',resize);resize();if(!window.location.hash.includes('s='))setChapter(0,false);else syncChapter();syncUI();requestAnimationFrame(draw);
+ window.__MAGNETARIUM_TEST__={getState:()=>({mode,preset,magnets:magnets.map(m=>({...m})),selected,glow,paused,paths:paths.length,motion,speed,motionElapsed,fieldSources:fieldSources.length,chapterIndex,filingCount}),field,makePreset,setChapter,stepPhysics,resize};
 })();
 </script>
 </body>
