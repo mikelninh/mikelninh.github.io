@@ -1,0 +1,45 @@
+{
+  "schema_version": "0.1.0",
+  "name": "GOOD THINGS · Agent Data Pilot",
+  "status": "preview_only_not_live",
+  "human_first": true,
+  "description": "Source-linked plant-based grocery discovery in Germany, with evidence-aware abstention.",
+  "endpoints": {
+    "catalog": "./catalog.json",
+    "human_test_lab": "./"
+  },
+  "tools": [
+    {
+      "name": "search_product_candidates",
+      "description": "Filter read-only catalogue by brand, store, category or nutrition where present.",
+      "side_effects": false
+    },
+    {
+      "name": "prepare_shopping_list",
+      "description": "Prepare an unpriced shortlist for the user to review; no purchase.",
+      "side_effects": false
+    }
+  ],
+  "forbidden_claims": [
+    "live_stock",
+    "current_price",
+    "independent_vegan_certification",
+    "allergen_safety",
+    "confirmed_delivery",
+    "automatic_purchase"
+  ],
+  "known_gaps": [
+    "No Netto products in this snapshot",
+    "No current prices",
+    "No verified store stock",
+    "No fully costed Vietnamese weekly recipes"
+  ],
+  "evidence": [
+    "source_url",
+    "source_dataset",
+    "vegan_source_status",
+    "nutrition_per_100g_or_ml"
+  ],
+  "model_evaluation_completed": false,
+  "note": "Manifest describes design-time capabilities, not a deployed API with an executable search endpoint. Agents can read catalog.json and do their own filtering."
+}
