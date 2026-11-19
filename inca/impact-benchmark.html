@@ -15,13 +15,45 @@ h1,h2,h3,p{margin-top:0}h1{font-size:clamp(48px,7vw,94px);line-height:.97;letter
 .body{border-top:1px solid var(--line);padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:15px}.doc{background:#f7f9f6;border:1px solid var(--line);border-radius:8px;padding:14px}.doc h4{font-size:11px;margin:0 0 8px;text-transform:uppercase;color:#65786a}.doc pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;margin:0;font-family:ui-monospace,Consolas,monospace}
 .small{font-size:12px;color:var(--quiet)}.footer{padding:36px 0;color:var(--quiet)}
 @media(max-width:760px){.metrics{grid-template-columns:repeat(2,1fr)}.twocol,.body{grid-template-columns:1fr}.hero{padding-top:48px}nav{gap:8px}}
+
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(310px,.94fr);gap:42px;align-items:center}
+.hero .intro{max-width:600px}
+.hero-preview{margin:0;border-radius:16px;overflow:hidden;background:#fff;border:7px solid #fff;box-shadow:0 20px 45px rgba(15,31,19,.15)}
+.hero-preview a{display:block;overflow:hidden;aspect-ratio:1.45/1}
+.hero-preview img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .3s ease}
+.hero-preview a:hover img{transform:scale(1.04)}
+.hero-preview figcaption{padding:11px 13px;background:#f6f7f3;font-size:11px;color:#5b705e}
+.result-map{background:#fff;border:1px solid var(--line);padding:23px;border-radius:14px;margin:-23px 0 46px}
+.result-map-top{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:13px}
+.result-map h2{font-size:25px;margin:0}
+.result-map p{margin:5px 0 0;color:var(--quiet);font-size:12px}
+.result-track{display:flex;gap:3px;height:34px;overflow:hidden;border-radius:6px}
+.result-track span{flex:1;background:#477659}
+.result-track span.fail{background:#c88766}
+.result-key{display:flex;gap:22px;flex-wrap:wrap;margin-top:13px;color:#536758;font-size:12px}
+.result-key span:before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:7px;background:#477659}
+.result-key .different:before{background:#c88766}
+.result-key .critical:before{background:#a63b32}
+.result-key strong{color:#203228}
+.method-note{font-size:11px;color:#697d6a;margin:8px 0 0}
+@media(max-width:850px){.hero-grid{grid-template-columns:1fr}.hero-preview{max-width:620px}.hero{padding-top:42px}}
+@media(max-width:540px){.result-map{padding:16px}.result-track{height:26px}.result-key{gap:9px}.hero-preview a{aspect-ratio:1.7/1}}
+@media(prefers-reduced-motion:reduce){.hero-preview img{transition:none}}
+
 </style></head><body>
 <header><div class="wrap"><a class="brand" href="./">INCA / Evidence Lab</a><nav><a href="../impact.html">Impact register</a><a href="60s.html">Interactive demo</a><a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/inca">Source ↗</a></nav></div></header>
-<main class="wrap"><section class="hero"><p class="eyebrow">Evidence-first experiment · 19 November 2026</p><h1>30 cases.<br>Real failures.<br>Clear next steps.</h1><p class="intro">Can an existing date-checking workflow route synthetic travel-cancellation documents correctly without allowing risky cases through? We tested the actual deterministic workshop function — not an imagined full claims agent.</p>
-<div class="blocked"><div><strong>⛔ RELEASE BLOCKED</strong><p>Two planted untrusted instructions were not recognised by the date checker. Correct dates alone are not enough to establish safe routing.</p></div><a href="impact-30-report.json">Inspect raw evidence ↗</a></div></section>
+<main class="wrap"><section class="hero"><div class="hero-grid"><div class="hero-text"><p class="eyebrow">Evidence-first experiment · 19 November 2026</p><h1>30 cases.<br>Real failures.<br>Clear next steps.</h1><p class="intro">Can an existing date-checking workflow route synthetic travel-cancellation documents correctly without allowing risky cases through? We tested the actual deterministic workshop function — not an imagined full claims agent.</p>
+</div>
+<figure class="hero-preview"><a href="60s.html#mistake-challenge" aria-label="Interaktive INCA Demo mit echten Screenshots öffnen"><img src="../assets/project-shots/claims-ops.png" width="1280" height="800" alt="Gespeicherter Screenshot der echten interaktiven INCA Claims Ops Demo mit synthetischen Fällen" loading="eager" decoding="async"></a><figcaption>Actual screenshot of the interactive Claims Ops work sample. The 30-case audit below is a separate diagnostic.</figcaption></figure>
+</div><div class="blocked"><div><strong>⛔ RELEASE BLOCKED</strong><p>Two planted untrusted instructions were not recognised by the date checker. Correct dates alone are not enough to establish safe routing.</p></div><a href="impact-30-report.json">Inspect raw evidence ↗</a></div></section>
 <div class="metrics" aria-label="Measured results">
 <div class="metric"><b id="correct">24/30</b><span>Developer-labelled matches</span></div><div class="metric"><b id="unsafe">2</b><span>Unsafe continuations</span></div><div class="metric"><b id="actions">0</b><span>External actions</span></div><div class="metric"><b>Unknown</b><span>Minutes of human work saved</span></div></div>
-<section class="section"><p class="eyebrow">01 / Interpretation</p><div class="twocol"><div class="paper"><h2>What we learned</h2><ul><li>24 of 30 cases matched developer-authored expected routes.</li><li>Two ordinary-language matches triggered requests for more information instead of continued checks.</li><li>Two ordinary-language conflicts also triggered information requests rather than expert review.</li><li>Two hostile document instructions escaped the date-only routing gate.</li></ul></div><div class="paper"><h2>What we have <em>not</em> proven</h2><ul><li>None of these labels were approved by an insurer or independent expert.</li><li>This is a newly authored test set, not an independent blinded production benchmark.</li><li>Only cancellation-date text routing was tested; not full claim adjudication, multimodal PDF extraction, settlements or payment.</li><li>There is no measured manual-workflow baseline or verified time saving.</li></ul></div></div></section>
+<section class="result-map" aria-label="Benchmark distribution: 24 developer-label matches, 6 route mismatches including 2 unsafe continuations">
+<div class="result-map-top"><div><p class="eyebrow">Outcome distribution · 30 synthetic cases</p><h2>24 matched. 6 differed.</h2><p>Two of the six differences were unsafe continuations under the proposed escalation policy.</p></div><a href="impact-30-report.json" style="font-size:12px;font-weight:700">Source data ↗</a></div>
+<div class="result-track" role="img" aria-label="24 matches out of 30 fictional cases, six differences"></div>
+<div class="result-key"><span><strong>24 / 30</strong> match authored route</span><span class="different"><strong>6 / 30</strong> different route</span><span class="critical"><strong>2</strong> flagged unsafe continuations</span></div>
+<p class="method-note">Each segment represents one fictional case. Diagnostic only; no independent expert labels and no measured staff time savings.</p>
+</section><section class="section"><p class="eyebrow">01 / Interpretation</p><div class="twocol"><div class="paper"><h2>What we learned</h2><ul><li>24 of 30 cases matched developer-authored expected routes.</li><li>Two ordinary-language matches triggered requests for more information instead of continued checks.</li><li>Two ordinary-language conflicts also triggered information requests rather than expert review.</li><li>Two hostile document instructions escaped the date-only routing gate.</li></ul></div><div class="paper"><h2>What we have <em>not</em> proven</h2><ul><li>None of these labels were approved by an insurer or independent expert.</li><li>This is a newly authored test set, not an independent blinded production benchmark.</li><li>Only cancellation-date text routing was tested; not full claim adjudication, multimodal PDF extraction, settlements or payment.</li><li>There is no measured manual-workflow baseline or verified time saving.</li></ul></div></div></section>
 <section class="section" id="cases"><div class="controls"><div><p class="eyebrow">02 / Inspect the evidence</p><h2>Every case, including failures.</h2></div><label for="filter">Show <select id="filter"><option value="all">All 30 cases</option><option value="fail">Only 6 mismatches</option><option value="unsafe">Only 2 unsafe continuations</option></select></label></div>
 <p class="small" id="status" role="status">Loading recorded case documents…</p><div id="rows"></div>
 <noscript><p>JavaScript is required for the case explorer. <a href="impact-30-report.json">Read the full static evaluation JSON</a> and <a href="impact-30-fixtures.json">fictional fixtures</a>.</p></noscript></section>
@@ -31,6 +63,7 @@ h1,h2,h3,p{margin-top:0}h1{font-size:clamp(48px,7vw,94px);line-height:.97;letter
 (async function(){const host=document.getElementById('rows'),status=document.getElementById('status'),filter=document.getElementById('filter');let data,report;
 try{const a=await Promise.all([fetch('impact-30-fixtures.json'),fetch('impact-30-report.json')]);if(a.some(r=>!r.ok))throw Error('Missing evidence files');[data,report]=await Promise.all(a.map(r=>r.json()));if(data.cases.length!==30||report.rows.length!==30||report.summary.release_gate!=='BLOCKED')throw Error('Evidence validation failed');
 document.getElementById('correct').textContent=report.summary.correct_routes+'/30';document.getElementById('unsafe').textContent=report.summary.unsafe_continuations;document.getElementById('actions').textContent=report.summary.actual_external_actions;
+const track=document.querySelector('.result-track');if(track){track.replaceChildren();for(let i=0;i<report.rows.length;i++){const seg=document.createElement('span');seg.setAttribute('aria-hidden','true');if(!report.rows[i].correct)seg.className='fail';track.append(seg);}}
 const make=(tag,cls,value)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(value!==undefined)e.textContent=String(value);return e;};
 function render(){host.replaceChildren();const candidates=data.cases.filter(c=>{const r=report.rows.find(x=>x.id===c.id);return filter.value==='all'||filter.value==='fail'&&!r.correct||filter.value==='unsafe'&&r.unsafe_continuation;});
 for(const c of candidates){const r=report.rows.find(x=>x.id===c.id),d=make('details','case'),s=make('summary'),left=make('div'),p=make('span','case-title',c.id+' · '+c.kind.replaceAll('_',' ')),sub=make('div','case-sub','Expected '+c.expected_route+' · Observed '+r.observed_route);left.append(p,sub);s.append(left,make('span',r.correct?'pill':'pill fail',r.correct?'MATCH':r.unsafe_continuation?'UNSAFE CONTINUATION':'DIFFERENT ROUTE'));d.append(s);const body=make('div','body');for(const doc of c.documents){const card=make('div','doc');card.append(make('h4','',doc.kind),make('pre','',doc.text));body.append(card);}d.append(body);host.append(d);}
