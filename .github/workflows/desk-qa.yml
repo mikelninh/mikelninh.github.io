@@ -1,0 +1,43 @@
+name: SIDE / SIDE — WebGL and workspace quality gate
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'desk/**'
+      - '.github/workflows/desk-qa.yml'
+permissions:
+  contents: write
+concurrency:
+  group: side-side-qa
+  cancel-in-progress: false
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate JavaScript syntax
+        run: |
+          node --check desk/app.js
+          node --check desk/world.js
+          node --check desk/test.mjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Test real 3D and editable local workspaces
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/desk-http.log 2>&1 &
+          node desk/test.mjs
+      - name: Save genuine desktop and mobile screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/project-shots/side-side-desktop.png assets/project-shots/side-side-mobile.png
+          if ! git diff --cached --quiet; then
+            git commit -m "Record actual SIDE / SIDE spatial UI screenshots"
+            git pull --rebase origin main
+            git push
+          fi
