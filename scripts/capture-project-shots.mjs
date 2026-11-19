@@ -39,7 +39,7 @@ try {
       if (!response || !response.ok()) throw new Error('HTTP ' + (response?.status() ?? 'no response'))
       await page.waitForTimeout(1800)
       const title = await page.title()
-      if (/^\\s*(404|not found|site not found)\\b/i.test(title)) throw new Error('Missing page: ' + title)
+      if (/^\s*(404|not found|site not found)\b/i.test(title)) throw new Error('Missing page: ' + title)
       const bodyText = (await page.locator('body').innerText({ timeout: 10000 })).trim()
       if (bodyText.length < 80) throw new Error('Page not populated: ' + bodyText.length + ' characters')
       await page.addStyleTag({ content: '*, *::before, *::after {animation-duration:0s!important; transition-duration:0s!important; caret-color:transparent!important}' })
