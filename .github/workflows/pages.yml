@@ -126,7 +126,8 @@ jobs:
             return 1
           }
 
-          fetch_until_ready "$base/" "I like to"
+          fetch_until_ready "$base/" "Technology that" 
+          fetch_until_ready "$base/impact.html" "Choose what"
           fetch_until_ready "$base/beyond-cv/" 'id="state-bridge"'
           fetch_until_ready "$base/beyond-cv/dksr/" "Was braucht eine Stadt"
           fetch_until_ready "$base/beyond-cv/dksr/case.js" "var sources="
