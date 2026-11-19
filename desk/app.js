@@ -254,5 +254,22 @@
     window.dispatchEvent(new Event('sideside:resize-world'));
   });
   render();
+  // Reliable fallback if optional Three.js or WebGL never starts.
+  setTimeout(() => {
+    const loading=byId('world-loading');
+    if (window.__sideSideWorldReady || !loading || loading.hidden) return;
+    loading.replaceChildren();loading.classList.add('fallback-world');
+    const heading=document.createElement('strong');heading.textContent='Your spaces are ready — in map mode.';
+    const note=document.createElement('p');note.textContent='3D graphics are unavailable here. Select a room or use the side-by-side desk below.';
+    const grid=document.createElement('div');grid.className='fallback-world-grid';
+    for(const room of spaces.slice(0,30)){
+      const btn=document.createElement('button');btn.type='button';btn.className='fallback-room';
+      const kind=document.createElement('small');kind.textContent=room.type.toUpperCase();
+      const name=document.createElement('span');name.textContent=room.name;
+      btn.append(kind,name);btn.addEventListener('click',()=>choose(room.id));grid.append(btn);
+    }
+    loading.append(heading,note,grid);
+    byId('world-status').textContent='2D map fallback · editable rooms';
+  },12000);
   window.dispatchEvent(new CustomEvent('sideside:ready',{detail:{spaces:getSpaces()}}));
 })();
