@@ -35,7 +35,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/project-shots/side-side-desktop.png assets/project-shots/side-side-mobile.png
+          git add assets/project-shots/side-side-desktop.png assets/project-shots/side-side-mobile.png assets/project-shots/side-side-world-desktop.png assets/project-shots/side-side-world-mobile.png
           if ! git diff --cached --quiet; then
             git commit -m "Record actual SIDE / SIDE spatial UI screenshots"
             git pull --rebase origin main
