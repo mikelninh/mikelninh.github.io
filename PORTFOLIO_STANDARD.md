@@ -102,3 +102,23 @@ Each case study links to a reproducible test or a clear validation gap, and iden
 The portfolio homepage retains **at most three featured proofs**. The broader register lives at [impact.html](impact.html).
 
 **Example:** INCA's new 30-case developer-authored cancellation-date benchmark found 24/30 correct routes, 2 unsafe continuations, and **blocked** the release; it is not expert-reviewed and does not measure time saved. See [recorded results](inca/impact-30-report.json).
+## Visual proof and design quality · 2026-11-19
+
+Beauty is part of usefulness: the interface should invite attention, reduce cognitive effort and make the outcome legible. Visual quality is **not** a reason to inflate impact claims.
+
+**Prefer in this order:**
+1. **Actual product screenshot** linked to the working page, visibly labelled as a saved screenshot and dated/versioned where possible.
+2. **Real recorded evidence** (small honest chart, before/after comparison, verified quote, sample audit or interaction).
+3. **Purpose-made explanatory diagram** if it clarifies the user journey or underlying system.
+4. **Generated illustration** for mission, community or conceptual storytelling only. Label illustrations clearly; never present an imagined interface as a live product screenshot or a fabricated impact chart.
+
+**Visual quality release checks:**
+- Screenshots must originate in the project's own build, never be invented. The link and screenshot path must resolve.
+- Every image needs accurate alt text, an honest caption, and an intentional mobile crop. Lazy-load images below the fold; use dimensions to avoid layout jumps.
+- Preserve one strong visual per section; avoid decorative clutter or repeated images that explain nothing.
+- Keep core text and calls to action accessible when images fail to load.
+- Mobile reading, clear typography, spacing, contrast, and attractive layout must survive a real viewport test.
+- Measured numbers remain bound to test evidence. Green engineering CI does not mean impact or safety is established.
+
+For the public portfolio, three screenshots are preserved at `assets/project-shots/{gitlaw,good-things,claims-ops}.png`. The [impact register](impact.html) uses them as clickable real-project previews. Animal Voices art is explicitly marked as an illustration.
+
