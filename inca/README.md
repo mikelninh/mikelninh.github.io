@@ -36,6 +36,12 @@ On 19 November 2026, the **unchanged** `interactive-case.js` function was evalua
 
 The 30 expected labels were authored by the developer, not by a claims expert. Cases were designed to probe the existing evaluator's likely weaknesses. This is a **reproducible diagnostic**, not a statistically representative independent blind benchmark, production accuracy estimate, LLM performance test, or claim that human workload decreased. The evaluation uses a limited date-only deterministic parser.
 
+### Ready for independent review
+
+- [Blinded 30-case reviewer pack](impact-independent-review-pack.md) — no developer labels or model predictions shown to the reviewer.
+- [Blank timing and adjudication CSV](impact-expert-review.csv) — records route, reasoning, reviewer qualification and measured task time.
+- The 2 flagged continuations are violations of the **proposed hostile-document escalation policy** in this diagnostic set, not actual executed prompt injections, payments or other external actions. The existing date-only checker executes no document instructions.
+
 ### Repeat the test locally
 
 ```bash
