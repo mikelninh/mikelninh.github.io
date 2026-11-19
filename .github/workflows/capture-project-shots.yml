@@ -5,6 +5,9 @@ on:
     paths:
       - .github/workflows/capture-project-shots.yml
       - scripts/capture-project-shots.mjs
+      - scripts/portfolio-ui-smoke.mjs
+      - index.html
+      - impact.html
 permissions:
   contents: write
 concurrency:
@@ -26,11 +29,13 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Capture public product interfaces
         run: node scripts/capture-project-shots.mjs
+      - name: Test portfolio UX at desktop and mobile widths
+        run: node scripts/portfolio-ui-smoke.mjs
       - name: Commit verified screenshots
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/project-shots/*.png assets/project-shots/capture-manifest.json
+          git add assets/project-shots/*.png assets/project-shots/capture-manifest.json assets/project-shots/portfolio-qa.json
           if ! git diff --cached --quiet; then
             git commit -m "Refresh captured project screenshots"
             git pull --rebase origin main
