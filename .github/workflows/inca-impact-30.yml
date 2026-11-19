@@ -1,0 +1,39 @@
+name: INCA 30-case impact benchmark — reproducibility gate
+
+on:
+  push:
+    paths:
+      - 'inca/interactive-case.js'
+      - 'inca/impact-30-fixtures.json'
+      - 'inca/impact-30-report.json'
+      - 'inca/impact-benchmark.test.cjs'
+      - 'inca/impact-benchmark.html'
+      - '.github/workflows/inca-impact-30.yml'
+  pull_request:
+    paths:
+      - 'inca/interactive-case.js'
+      - 'inca/impact-30-fixtures.json'
+      - 'inca/impact-30-report.json'
+      - 'inca/impact-benchmark.test.cjs'
+      - '.github/workflows/inca-impact-30.yml'
+  workflow_dispatch:
+
+jobs:
+  replay-and-audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Replay actual routing logic on all 30 fictional cases
+        run: node --test inca/impact-benchmark.test.cjs
+      - name: Validate existing operator workshop regressions
+        run: node --test inca/interactive-case.test.cjs
+      - name: Publish release boundary
+        run: |
+          echo "Benchmark reproducibility can pass while production release remains BLOCKED."
+          echo "Expected expert-reviewed labels: 0; measured minutes saved: unknown."
