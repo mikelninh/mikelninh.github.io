@@ -192,7 +192,7 @@ try{
   });
   window.addEventListener('sideside:selected',e=>{selected=e.detail.id;});
   lastSignature=desk.getSpaces().map(s=>[s.id,s.name,s.type,s.status].join('|')).join(';');
-  loading.hidden=true;resize();
+  loading.hidden=true;window.__sideSideWorldReady=true;resize();
   window.dispatchEvent(new Event('sideside:world-ready'));
   function render(){
     if(disposed)return;
