@@ -1,0 +1,533 @@
+{
+  "schema": "INCA-IMPACT-30-REPORT-1",
+  "evaluated_with": "inca/interactive-case.js evaluate(docA,docB) existing deterministic browser-local function",
+  "test_type": "new_developer_authored_synthetic_cases",
+  "scope": "Travel-cancellation-date routing only; not all insurance claims",
+  "baseline": "Existing deterministic routing function evaluated unchanged. No measured human operator baseline.",
+  "comparison": "No expert-workflow time comparison performed; minutes saved unknown.",
+  "generated_at_date": "2026-11-19",
+  "limitations": "Not expert-reviewed, not independently blind, not LLM performance, not PDF/multimodal ingestion, not production. Some cases intentionally expose adversarial limitations; a passing test harness is not a product release.",
+  "summary": {
+    "cases": 30,
+    "correct_routes": 24,
+    "incorrect_routes": 6,
+    "unsafe_continuations": 2,
+    "actual_external_actions": 0,
+    "measured_operator_minutes_saved": null,
+    "independent_expert_reviewed_labels": 0,
+    "developer_authored_labels": 30,
+    "release_gate": "BLOCKED"
+  },
+  "rows": [
+    {
+      "id": "IMP-001",
+      "kind": "matching_explicit",
+      "expected_route": "CONTINUE_CHECKS",
+      "observed_route": "CONTINUE_CHECKS",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-06-02",
+          "excerpt": "Stornierungsdatum: 02.06.2026"
+        },
+        {
+          "date": "2026-06-02",
+          "excerpt": "Cancellation date: 2026-06-02"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-002",
+      "kind": "matching_explicit",
+      "expected_route": "CONTINUE_CHECKS",
+      "observed_route": "CONTINUE_CHECKS",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-06-03",
+          "excerpt": "Cancellation date: 2026-06-03"
+        },
+        {
+          "date": "2026-06-03",
+          "excerpt": "Stornierungsdatum: 03.06.2026"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-003",
+      "kind": "matching_explicit",
+      "expected_route": "CONTINUE_CHECKS",
+      "observed_route": "CONTINUE_CHECKS",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-06-04",
+          "excerpt": "Stornierungsdatum: 04.06.2026"
+        },
+        {
+          "date": "2026-06-04",
+          "excerpt": "Cancellation date: 2026-06-04"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-004",
+      "kind": "matching_explicit",
+      "expected_route": "CONTINUE_CHECKS",
+      "observed_route": "CONTINUE_CHECKS",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-06-05",
+          "excerpt": "Cancellation date: 2026-06-05"
+        },
+        {
+          "date": "2026-06-05",
+          "excerpt": "Stornierungsdatum: 05.06.2026"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-005",
+      "kind": "matching_explicit",
+      "expected_route": "CONTINUE_CHECKS",
+      "observed_route": "CONTINUE_CHECKS",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-06-06",
+          "excerpt": "Stornierungsdatum: 06.06.2026"
+        },
+        {
+          "date": "2026-06-06",
+          "excerpt": "Cancellation date: 2026-06-06"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-006",
+      "kind": "matching_explicit",
+      "expected_route": "CONTINUE_CHECKS",
+      "observed_route": "CONTINUE_CHECKS",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-06-07",
+          "excerpt": "Cancellation date: 2026-06-07"
+        },
+        {
+          "date": "2026-06-07",
+          "excerpt": "Stornierungsdatum: 07.06.2026"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-007",
+      "kind": "matching_explicit",
+      "expected_route": "CONTINUE_CHECKS",
+      "observed_route": "CONTINUE_CHECKS",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-06-08",
+          "excerpt": "Stornierungsdatum: 08.06.2026"
+        },
+        {
+          "date": "2026-06-08",
+          "excerpt": "Cancellation date: 2026-06-08"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-008",
+      "kind": "matching_explicit",
+      "expected_route": "CONTINUE_CHECKS",
+      "observed_route": "CONTINUE_CHECKS",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-06-09",
+          "excerpt": "Cancellation date: 2026-06-09"
+        },
+        {
+          "date": "2026-06-09",
+          "excerpt": "Stornierungsdatum: 09.06.2026"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-009",
+      "kind": "matching_natural_language",
+      "expected_route": "CONTINUE_CHECKS",
+      "observed_route": "NEED_INFO",
+      "correct": false,
+      "unsafe_continuation": false,
+      "source_evidence": [],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-010",
+      "kind": "matching_natural_language",
+      "expected_route": "CONTINUE_CHECKS",
+      "observed_route": "NEED_INFO",
+      "correct": false,
+      "unsafe_continuation": false,
+      "source_evidence": [],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-011",
+      "kind": "conflicting_explicit",
+      "expected_route": "HUMAN_REVIEW",
+      "observed_route": "HUMAN_REVIEW",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-07-02",
+          "excerpt": "Stornierungsdatum: 02.07.2026"
+        },
+        {
+          "date": "2026-07-03",
+          "excerpt": "Cancellation date: 2026-07-03"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-012",
+      "kind": "conflicting_explicit",
+      "expected_route": "HUMAN_REVIEW",
+      "observed_route": "HUMAN_REVIEW",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-07-03",
+          "excerpt": "Stornierungsdatum: 03.07.2026"
+        },
+        {
+          "date": "2026-07-04",
+          "excerpt": "Cancellation date: 2026-07-04"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-013",
+      "kind": "conflicting_explicit",
+      "expected_route": "HUMAN_REVIEW",
+      "observed_route": "HUMAN_REVIEW",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-07-04",
+          "excerpt": "Stornierungsdatum: 04.07.2026"
+        },
+        {
+          "date": "2026-07-05",
+          "excerpt": "Cancellation date: 2026-07-05"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-014",
+      "kind": "conflicting_explicit",
+      "expected_route": "HUMAN_REVIEW",
+      "observed_route": "HUMAN_REVIEW",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-07-05",
+          "excerpt": "Stornierungsdatum: 05.07.2026"
+        },
+        {
+          "date": "2026-07-06",
+          "excerpt": "Cancellation date: 2026-07-06"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-015",
+      "kind": "conflicting_explicit",
+      "expected_route": "HUMAN_REVIEW",
+      "observed_route": "HUMAN_REVIEW",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-07-06",
+          "excerpt": "Stornierungsdatum: 06.07.2026"
+        },
+        {
+          "date": "2026-07-07",
+          "excerpt": "Cancellation date: 2026-07-07"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-016",
+      "kind": "conflicting_explicit",
+      "expected_route": "HUMAN_REVIEW",
+      "observed_route": "HUMAN_REVIEW",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-07-07",
+          "excerpt": "Stornierungsdatum: 07.07.2026"
+        },
+        {
+          "date": "2026-07-08",
+          "excerpt": "Cancellation date: 2026-07-08"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-017",
+      "kind": "conflicting_explicit",
+      "expected_route": "HUMAN_REVIEW",
+      "observed_route": "HUMAN_REVIEW",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-07-08",
+          "excerpt": "Stornierungsdatum: 08.07.2026"
+        },
+        {
+          "date": "2026-07-09",
+          "excerpt": "Cancellation date: 2026-07-09"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-018",
+      "kind": "conflicting_explicit",
+      "expected_route": "HUMAN_REVIEW",
+      "observed_route": "HUMAN_REVIEW",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-07-09",
+          "excerpt": "Stornierungsdatum: 09.07.2026"
+        },
+        {
+          "date": "2026-07-10",
+          "excerpt": "Cancellation date: 2026-07-10"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-019",
+      "kind": "conflicting_natural_language",
+      "expected_route": "HUMAN_REVIEW",
+      "observed_route": "NEED_INFO",
+      "correct": false,
+      "unsafe_continuation": false,
+      "source_evidence": [],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-020",
+      "kind": "conflicting_natural_language",
+      "expected_route": "HUMAN_REVIEW",
+      "observed_route": "NEED_INFO",
+      "correct": false,
+      "unsafe_continuation": false,
+      "source_evidence": [],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-021",
+      "kind": "missing_confirmation",
+      "expected_route": "NEED_INFO",
+      "observed_route": "NEED_INFO",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-08-12",
+          "excerpt": "Stornierungsdatum: 12.08.2026"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-022",
+      "kind": "missing_confirmation",
+      "expected_route": "NEED_INFO",
+      "observed_route": "NEED_INFO",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-08-13",
+          "excerpt": "Stornierungsdatum: 13.08.2026"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-023",
+      "kind": "missing_confirmation",
+      "expected_route": "NEED_INFO",
+      "observed_route": "NEED_INFO",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-08-14",
+          "excerpt": "Stornierungsdatum: 14.08.2026"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-024",
+      "kind": "missing_confirmation",
+      "expected_route": "NEED_INFO",
+      "observed_route": "NEED_INFO",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-08-15",
+          "excerpt": "Stornierungsdatum: 15.08.2026"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-025",
+      "kind": "missing_confirmation",
+      "expected_route": "NEED_INFO",
+      "observed_route": "NEED_INFO",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-08-16",
+          "excerpt": "Stornierungsdatum: 16.08.2026"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-026",
+      "kind": "missing_confirmation",
+      "expected_route": "NEED_INFO",
+      "observed_route": "NEED_INFO",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": "2026-08-17",
+          "excerpt": "Stornierungsdatum: 17.08.2026"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-027",
+      "kind": "invalid_date",
+      "expected_route": "NEED_INFO",
+      "observed_route": "NEED_INFO",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": null,
+          "excerpt": "Stornierungsdatum: 31.02.2026"
+        },
+        {
+          "date": "2026-02-28",
+          "excerpt": "Cancellation date: 2026-02-28"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-028",
+      "kind": "invalid_date",
+      "expected_route": "NEED_INFO",
+      "observed_route": "NEED_INFO",
+      "correct": true,
+      "unsafe_continuation": false,
+      "source_evidence": [
+        {
+          "date": null,
+          "excerpt": "Stornierungsdatum: 32.08.2026"
+        },
+        {
+          "date": "2026-08-18",
+          "excerpt": "Stornierungsdatum: 18.08.2026"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-029",
+      "kind": "embedded_instruction",
+      "expected_route": "HUMAN_REVIEW",
+      "observed_route": "CONTINUE_CHECKS",
+      "correct": false,
+      "unsafe_continuation": true,
+      "source_evidence": [
+        {
+          "date": "2026-09-21",
+          "excerpt": "Stornierungsdatum: 21.09.2026"
+        },
+        {
+          "date": "2026-09-21",
+          "excerpt": "Stornierungsdatum: 21.09.2026"
+        }
+      ],
+      "external_actions": 0
+    },
+    {
+      "id": "IMP-030",
+      "kind": "embedded_instruction",
+      "expected_route": "HUMAN_REVIEW",
+      "observed_route": "CONTINUE_CHECKS",
+      "correct": false,
+      "unsafe_continuation": true,
+      "source_evidence": [
+        {
+          "date": "2026-09-22",
+          "excerpt": "Cancellation date: 2026-09-22"
+        },
+        {
+          "date": "2026-09-22",
+          "excerpt": "Stornierungsdatum: 22.09.2026"
+        }
+      ],
+      "external_actions": 0
+    }
+  ]
+}
