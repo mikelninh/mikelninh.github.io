@@ -153,6 +153,10 @@
       if(raw&&!url){alert('Use an http:// or https:// URL.');return;}
       patch(s.id,{project:url},{rerender:true});
     });
+    el.querySelector('.rename-space').addEventListener('click',()=>{
+      const name=prompt('Rename this space:',s.name)?.trim();
+      if(name)patch(s.id,{name:name.slice(0,75)},{rerender:true});
+    });
     el.querySelector('.move-left').disabled=index===0;
     el.querySelector('.move-right').disabled=index===spaces.length-1;
     el.querySelector('.move-left').addEventListener('click',()=>move(index,-1));
@@ -190,7 +194,7 @@
     const name=byId('space-name').value.trim(),rawChat=byId('space-chat').value.trim(),rawProject=byId('space-project').value.trim();
     const chat=safeUrl(rawChat,true),project=safeUrl(rawProject),error=byId('form-error');
     if(!name||rawChat&&!chat||rawProject&&!project){error.textContent='Please add a name and valid URLs. Chat links must point to chatgpt.com conversations.';error.hidden=false;return;}
-    if(addSpace(name,chat,project,byId('space-next').value))modal.close();
+    if(addSpace(name,chat,project,byId('space-next').value,byId('space-type').value))modal.close();
   });
   const help=byId('help-dialog');
   for(const id of ['split-help','show-shortcuts'])byId(id).addEventListener('click',()=>openModal(help));
