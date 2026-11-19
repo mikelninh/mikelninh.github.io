@@ -24,6 +24,7 @@ try{
    const width=await page.evaluate(()=>document.documentElement.scrollWidth);
    if(width>config.width+4)throw Error('Horizontal overflow '+width+' > '+config.width);
    await page.screenshot({path:'assets/project-shots/side-side-'+config.name+'.png',animations:'disabled'});
+   await page.locator('#world-stage').screenshot({path:'assets/project-shots/side-side-world-'+config.name+'.png',animations:'disabled'});
    // Editable 2D cards and the browser-local storage actually work.
    await page.locator('#quick-add').fill('Fresh project room');
    await page.locator('#quick-add-btn').click();
