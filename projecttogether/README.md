@@ -1,5 +1,10 @@
 # Together OS / Gemeinsam ins Handeln
 
+[![Real screenshot of the ProjectTogether-aligned community action work sample](../assets/project-shots/projecttogether.png)](https://mikelninh.github.io/projecttogether/)
+
+*Original browser screenshot of the live work sample, captured 19 November 2026. This is not evidence of community outcomes.*
+
+
 An independent ProjectTogether-aligned collaboration work sample by Michael Ninh. Not an official ProjectTogether product.
 
 > **We measure our success not by what we create, but by what changes because we created it.**
