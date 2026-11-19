@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#101412">
+<meta name="description" content="A private, browser-local project and conversation workbench. Every idea gets a space; every space gets a next move.">
+<title>SIDE / SIDE — Project &amp; Chat Cockpit</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<a class="skip-link" href="#board">Skip to spaces</a>
+<header class="topbar">
+  <a class="brand" href="./" aria-label="Side by Side home"><span class="mark">↗</span><span>SIDE <i>/</i> SIDE</span><small>PERSONAL WORKBENCH</small></a>
+  <div class="top-right"><span class="local-status"><span class="online-dot"></span> SAVED ON THIS BROWSER</span><a href="https://mikelninh.github.io/" class="portfolio-link" target="_blank" rel="noopener noreferrer">Portfolio ↗</a></div>
+</header>
+<main>
+<section class="intro">
+ <div class="intro-copy"><p class="eyebrow">YOUR OPEN STUDIO <span class="separator">/</span> V1.0</p>
+ <h1>Less tab chaos.<br><em>More momentum.</em></h1>
+ <p>One place for the things you're building. Every project and conversation gets its own space, notes and next action. Keep them open side by side.</p></div>
+ <div class="intro-actions">
+  <button class="btn btn-bright" id="add-space" type="button"><span aria-hidden="true">＋</span> New space</button>
+  <button class="btn btn-subtle" id="split-help" type="button">↔ View real chats side by side</button>
+  <p>Start with the suggested projects. Rename, reorder or remove anything.</p>
+ </div>
+</section>
+<section class="control-panel" aria-label="Space controls">
+ <div class="control-head">
+  <div><span class="micro-label">YOUR WORKSPACES</span><h2><span id="space-count">6</span> spaces, one desk.</h2></div>
+  <div class="control-actions"><button class="text-action" id="export-data" type="button">↓ Export</button><button class="text-action" id="import-data" type="button">↑ Import</button><input id="import-file" type="file" accept=".json,application/json" hidden><button class="text-action" id="reset-data" type="button">Reset</button></div>
+ </div>
+ <div class="toolbar">
+  <label class="quick-add"><span aria-hidden="true">＋</span><input id="quick-add" type="text" maxlength="500" placeholder="Paste a ChatGPT conversation link, or type a project name…" aria-label="Paste a ChatGPT conversation link or enter a project name"><button type="button" id="quick-add-btn">Add ↗</button></label>
+  <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Find a space" aria-label="Search spaces"></label>
+  <label class="filter-label">Show <select id="filter" aria-label="Filter spaces"><option value="all">Everything</option><option value="chat">With a chat link</option><option value="active">In progress</option><option value="attention">Needs action</option></select></label>
+ </div>
+</section>
+<div class="board-meta"><span><span class="live-point"></span><span id="visible-count">0</span> visible</span><span class="drag-hint">← SCROLL SIDEWAYS TO EXPLORE · MOVE CARDS WITH THE ARROWS →</span></div>
+<section id="board" class="board" aria-label="Side-by-side project and chat spaces"></section>
+<section class="empty" id="empty" hidden><div class="empty-icon">✳</div><h2>No spaces match.</h2><p>Clear your filters or add a new space to get moving.</p><button id="clear-filters" class="btn btn-subtle">Show everything</button></section>
+<section class="bottom">
+ <div class="guidance"><span class="eyebrow">WHY THIS IS A WORKBENCH, NOT A CHAT CLONE</span><h2>Keep your thinking<br><em>close to your doing.</em></h2><p>This board organises links, your own notes and next actions. It cannot read ChatGPT conversations or embed their live interfaces. Open a chat from its card; use Chrome Split View for two real chats inside one browser window.</p></div>
+ <div class="privacy"><h3><span class="lock">⌁</span> Your links stay local</h3><p>Data is stored in this browser's storage for this site, not uploaded to a database. Anyone or any script with access to the same browser profile and website origin may be able to read it. Don't put passwords, private customer information or confidential chat content in notes.</p><button type="button" class="text-action" id="show-shortcuts">How to use the cockpit ↗</button></div>
+</section>
+</main>
+<footer><span>SIDE / SIDE · BUILD WITH INTENTION. MOVE WITH EVIDENCE.</span><span>Personal prototype · <a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/desk" target="_blank" rel="noopener noreferrer">Source ↗</a></span></footer>
+<dialog id="space-dialog" aria-labelledby="dialog-title">
+ <form id="space-form" method="dialog">
+  <div class="dialog-heading"><div><span class="micro-label">MAKE ROOM FOR WHAT MATTERS</span><h2 id="dialog-title">A new space.</h2></div><button type="button" class="close-dialog" aria-label="Close dialog">×</button></div>
+  <label>Space name<input id="space-name" name="name" maxlength="75" required placeholder="e.g. MEDTECH COPILOT"></label>
+  <label>ChatGPT conversation link <small>(optional)</small><input id="space-chat" name="chat" type="url" placeholder="https://chatgpt.com/c/…"></label>
+  <label>Project or demo link <small>(optional)</small><input id="space-project" name="project" type="url" placeholder="https://…"></label>
+  <label>One useful next step<textarea id="space-next" name="next" rows="2" maxlength="700" placeholder="What's the smallest action that moves it forward?"></textarea></label>
+  <p class="form-error" id="form-error" role="alert" hidden></p>
+  <div class="dialog-buttons"><button type="button" class="btn btn-subtle close-dialog">Cancel</button><button class="btn btn-bright" type="submit">Create space ↗</button></div>
+ </form>
+</dialog>
+<dialog id="help-dialog" aria-labelledby="help-title">
+ <div class="dialog-heading"><div><span class="micro-label">TWO WAYS TO WORK SIDE BY SIDE</span><h2 id="help-title">Actual chats, side by side.</h2></div><button type="button" class="close-dialog" aria-label="Close dialog">×</button></div>
+ <div class="help-step"><span class="step-num">01</span><div><h3>Inside this dashboard</h3><p>Paste a ChatGPT conversation link into any card. Edit next steps and notes without jumping between tabs.</p></div></div>
+ <div class="help-step"><span class="step-num">02</span><div><h3>Two real conversations in Chrome</h3><p>Open two chats as Chrome tabs. Right-click a tab and choose <strong>Add tab to new split view</strong>. Chrome shows both ChatGPT interfaces side by side in one browser window.</p></div></div>
+ <div class="help-step"><span class="step-num">03</span><div><h3>More than two chats?</h3><p>Use the optional local Chrome helper to list your open ChatGPT tabs and arrange 2–4 of them without copying their messages. It requires installing the unpacked extension; nothing is connected automatically.</p><a href="./SIDE-BY-SIDE-extension.zip" class="download-extension" download>Download Chrome tab helper (.zip) ↗</a></div></div>
+ <div class="help-foot"><p><strong>Important:</strong> This webpage cannot access your existing tabs. ChatGPT doesn't provide these conversations to this independent dashboard, and browser framing protections prevent an embedded live chat view.</p><button class="btn btn-bright close-dialog">Got it</button></div>
+</dialog>
+<template id="card-template">
+ <article class="space" draggable="false">
+  <div class="card-head"><div class="card-mark" aria-hidden="true">✳</div><div class="card-index"></div><div class="card-controls"><button class="mini-btn move-left" title="Move left" aria-label="Move space left">←</button><button class="mini-btn move-right" title="Move right" aria-label="Move space right">→</button><button class="mini-btn remove-space" title="Remove space" aria-label="Remove space">×</button></div></div>
+  <div class="card-content">
+   <div class="card-meta"><span class="card-kind">PROJECT</span><label class="status-control"><span class="sr-only">Status</span><select class="status-select" aria-label="Project status"><option value="next">NEXT UP</option><option value="doing">IN PROGRESS</option><option value="blocked">BLOCKED</option><option value="review">TO REVIEW</option><option value="done">DONE</option></select></label></div>
+   <h3 class="card-title"></h3>
+   <div class="project-preview" hidden><img class="preview-image" alt="" loading="lazy"><span class="preview-caption">LIVE DEMO ↗</span></div>
+   <div class="card-section"><div class="card-section-title"><span>01 / CONVERSATION</span><span class="chat-indicator">NOT LINKED</span></div>
+     <div class="chat-buttons"><a class="open-chat action-pill" href="#" target="_blank" rel="noopener noreferrer" hidden>Open ChatGPT chat ↗</a><button class="set-chat action-pill" type="button">＋ Paste chat link</button></div>
+     <input type="url" class="chat-input" aria-label="ChatGPT conversation URL" placeholder="https://chatgpt.com/c/…" hidden>
+     <p class="field-error" hidden></p>
+   </div>
+   <div class="card-section"><div class="card-section-title"><span>02 / NEXT MOVE</span><span class="save-hint">AUTO-SAVED</span></div>
+     <textarea class="next-input" rows="3" maxlength="700" aria-label="Next action" placeholder="One thing you can actually do next…"></textarea>
+   </div>
+   <div class="card-section notes-section"><div class="card-section-title"><span>03 / SCRATCHPAD</span></div>
+     <textarea class="notes-input" rows="4" maxlength="4000" aria-label="Scratchpad notes" placeholder="Questions, ideas, things to remember…"></textarea>
+   </div>
+  </div>
+  <div class="card-foot"><a class="project-link" href="#" rel="noopener noreferrer" target="_blank" hidden>Open project ↗</a><button class="edit-link" type="button">＋ Project link</button><span class="card-updated">LOCAL ONLY</span></div>
+  <div class="project-edit" hidden><label>Project/demo URL<input class="project-input" type="url" aria-label="Project or demo URL" placeholder="https://…"></label><button type="button" class="save-project btn">Save link</button><button type="button" class="cancel-project">Cancel</button></div>
+ </article>
+</template>
+<script src="./app.js" defer></script>
+</body>
+</html>
