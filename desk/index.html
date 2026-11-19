@@ -66,6 +66,7 @@
  <form id="space-form" method="dialog">
   <div class="dialog-heading"><div><span class="micro-label">MAKE ROOM FOR WHAT MATTERS</span><h2 id="dialog-title">A new space.</h2></div><button type="button" class="close-dialog" aria-label="Close dialog">×</button></div>
   <label>Space name<input id="space-name" name="name" maxlength="75" required placeholder="e.g. MEDTECH COPILOT"></label>
+  <label>What kind of space?<select id="space-type" name="type"><option value="personal">Topic / personal</option><option value="ai">AI / research</option><option value="community">Community / project</option><option value="agent">Agent / experiment</option></select></label>
   <label>ChatGPT conversation link <small>(optional)</small><input id="space-chat" name="chat" type="url" placeholder="https://chatgpt.com/c/…"></label>
   <label>Project or demo link <small>(optional)</small><input id="space-project" name="project" type="url" placeholder="https://…"></label>
   <label>One useful next step<textarea id="space-next" name="next" rows="2" maxlength="700" placeholder="What's the smallest action that moves it forward?"></textarea></label>
@@ -82,7 +83,7 @@
 </dialog>
 <template id="card-template">
  <article class="space" draggable="false">
-  <div class="card-head"><div class="card-mark" aria-hidden="true">✳</div><div class="card-index"></div><div class="card-controls"><button class="mini-btn move-left" title="Move left" aria-label="Move space left">←</button><button class="mini-btn move-right" title="Move right" aria-label="Move space right">→</button><button class="mini-btn remove-space" title="Remove space" aria-label="Remove space">×</button></div></div>
+  <div class="card-head"><div class="card-mark" aria-hidden="true">✳</div><div class="card-index"></div><div class="card-controls"><button class="mini-btn move-left" title="Move left" aria-label="Move space left">←</button><button class="mini-btn move-right" title="Move right" aria-label="Move space right">→</button><button class="mini-btn rename-space" title="Rename space" aria-label="Rename space">✎</button><button class="mini-btn remove-space" title="Remove space" aria-label="Remove space">×</button></div></div>
   <div class="card-content">
    <div class="card-meta"><span class="card-kind">PROJECT</span><label class="status-control"><span class="sr-only">Status</span><select class="status-select" aria-label="Project status"><option value="next">NEXT UP</option><option value="doing">IN PROGRESS</option><option value="blocked">BLOCKED</option><option value="review">TO REVIEW</option><option value="done">DONE</option></select></label></div>
    <h3 class="card-title"></h3>
