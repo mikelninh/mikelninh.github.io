@@ -1,0 +1,35 @@
+{
+  "schema": "PORTFOLIO-UI-SMOKE-1",
+  "tested_at_utc": "2026-11-19T15:32:19.387Z",
+  "scope": "Public screenshot capture, route loading, image loading, mobile menu, category filtering and horizontal overflow, at two viewports each. Not a user study.",
+  "checks": [
+    {
+      "name": "portfolio-home-desktop",
+      "viewport": "1280x900",
+      "status": "passed",
+      "hero": "Technology that helps people.\nEvidence that it works.",
+      "width": 1280
+    },
+    {
+      "name": "portfolio-home-mobile",
+      "viewport": "390x844",
+      "status": "passed",
+      "hero": "Technology that helps people.\nEvidence that it works.",
+      "width": 390
+    },
+    {
+      "name": "impact-desktop",
+      "viewport": "1280x900",
+      "status": "passed",
+      "hero": "From love\nto action.",
+      "width": 1280
+    },
+    {
+      "name": "impact-mobile",
+      "viewport": "390x844",
+      "status": "passed",
+      "hero": "From love\nto action.",
+      "width": 390
+    }
+  ]
+}
