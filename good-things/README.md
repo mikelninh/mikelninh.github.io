@@ -172,3 +172,15 @@ select count(*) as first_five_completed from (select user_id from public.gt_rati
 - Open Food Facts photo search contacts that service only when a visitor presses the photo-lookup button.
 
 **Product philosophy:** the more good things are shared, the more delightful the shelf becomes. But 0 fake reviews, 0 invented verification and 0 paid ratings.
+
+## Impact card · 2026-11-19
+
+> **We measure our success not by what we create, but by what changes because we created it.**
+
+| Project | Now → Desired change | Next action and measurable success |
+| --- | --- | --- |
+| GOOD THINGS | Vegan tier-list and discovery tools exist; actual grocery choices are unverified → People find satisfying, affordable plant-based alternatives | Observe 20 real shoppers using the comparison tool. Measure verified product substitutions, basket price, protein per euro and satisfaction after trying the product. |
+
+**Release/evidence rule:** Ratings, app usage and ingredient data do not by themselves show improved diets or avoided animal suffering. Keep uncertainty visible, include nutrition caveats, and do not count simulated shoppers as real impact.
+
+**Guiding line:** Love is our intention. Action is our expression. Impact is our evidence.
