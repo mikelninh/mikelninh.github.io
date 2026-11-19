@@ -29,7 +29,7 @@ try{
     if(await page.locator('#work .project').count()!==3)throw new Error('Expected three featured projects')
     const image=page.locator('.hero-proof-image img')
     await image.waitFor()
-    if(!await image.evaluate(el=>el.complete&&el.naturalWidth>100))throw new Error('Hero evidence screenshot did not load')
+    if(!await image.evaluate(async el=>{try{await el.decode();return el.naturalWidth>100}catch{return false}}))throw new Error('Hero evidence screenshot did not load')
     if(item.width<600){
      const menu=page.locator('.mobile-menu summary')
      if(!await menu.isVisible())throw new Error('Mobile menu hidden')
@@ -48,7 +48,7 @@ try{
     if(await page.locator('.project:visible').count()!==6)throw new Error('AI category should contain six')
     await filter.selectOption('all')
     if(await page.locator('.project:visible').count()!==15)throw new Error('Reset filter should show 15')
-    const loaded=await page.locator('.project-preview img').evaluateAll(imgs=>imgs.filter(i=>i.complete&&i.naturalWidth>100).length)
+    const loaded=await page.locator('.project-preview img').evaluateAll(async imgs=>{const outcomes=await Promise.all(imgs.map(async img=>{img.loading='eager';try{await img.decode();return img.naturalWidth>100}catch{return false}}));return outcomes.filter(Boolean).length})
     if(loaded!==9)throw new Error('Real screenshot image loading: '+loaded+'/9')
    }
    const pageWidth=await page.evaluate(()=>document.documentElement.scrollWidth)
