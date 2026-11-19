@@ -117,6 +117,8 @@ h1 em,h2 em{font-style:italic;color:#63836c}
 @media(max-width:540px){.wrap{width:calc(100% - 36px)}.topbar{height:60px}.navlinks a:not(.hello-link){display:none}.hero{padding:66px 0}.hero h1{font-size:clamp(48px,12vw,67px)}.hero-side{min-height:240px}.project-copy{padding:28px}.project-art{padding:22px}.footer-bottom a{margin-left:10px}.footer-bottom{align-items:start}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 
+.impact-feature-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:clamp(20px,6vw,70px);align-items:center}
+@media(max-width:800px){.impact-feature-grid{grid-template-columns:1fr}}
 /* Real, locally hosted captures from the actual applications. */
 .project-art{padding:0}
 .project-art>.project-screenshot{display:block;width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center top;z-index:3}
@@ -191,7 +193,7 @@ h1 em,h2 em{font-style:italic;color:#63836c}
 <h3>Should this insurance bill be paid?</h3>
 <p>A small parking accident. A surprisingly large repair bill. Our <strong>Claims Ops Loop</strong> lets you spot the mismatch and test a simple check that sends uncertain claims to a person before paying.</p>
 <p class="project-note">Try it in under a minute. Eight fictional cases; no customer data or live AI decisions.</p>
-<a class="project-link" href="inca-demo/">Review the example claim ↗</a>
+<a class="project-link" href="inca/60s.html">Review the example claim ↗</a>
 </div>
 <div class="project-art ops" aria-label="Actual screenshot of the Claims Ops Loop work sample"><img class="project-screenshot" src="assets/project-shots/claims-ops.png" width="1280" height="800" loading="lazy" decoding="async" alt="Real Claims Ops Loop work sample showing a synthetic insurance claim review" onerror="this.hidden=true">
 <div class="ops-shell"><div class="ops-label">CLAIMS OPS / SYNTHETIC EXERCISE</div><div class="ops-title">One decision needs a second look.</div><div class="ops-claim">Repair invoice ≠ reported incident</div><div class="ops-row"><span class="ops-step">Decision</span><span class="ops-arrow">→</span><span class="ops-step">Check</span><span class="ops-arrow">→</span><span class="ops-step">Human review</span></div></div>
@@ -212,7 +214,7 @@ h1 em,h2 em{font-style:italic;color:#63836c}
   </a>
 </aside>
 </div></section>
-<section class="section" aria-labelledby="impact-title"><div class="wrap" style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:clamp(20px,6vw,70px);align-items:center">
+<section class="section" aria-labelledby="impact-title"><div class="wrap impact-feature-grid">
 <div><div class="eyebrow">02 / From love to action</div><h2 id="impact-title" style="margin:20px 0 20px">What changes<br><em>because we build?</em></h2><p style="font-size:17px;color:#4f6758;max-width:600px">We measure our success not by what we create, but by what changes because we created it.</p><p>Each project now has a clear baseline, a desired outcome, an experiment, and a measurable test. Failed tests stay visible.</p><a class="btn btn-main" href="impact.html">See the impact register ↗</a></div>
 <aside class="about-note" style="font-size:clamp(22px,2.5vw,30px)">Love is our intention.<br>Action is our expression.<br><strong>Impact is our evidence.</strong><span>Our guiding principle · Evidence over vanity metrics</span></aside>
 </div></section>
