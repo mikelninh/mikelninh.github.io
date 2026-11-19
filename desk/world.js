@@ -131,7 +131,7 @@ function fallback(message){
 }
 try{
   scene=new THREE.Scene();scene.background=new THREE.Color(0x0b1510);scene.fog=new THREE.FogExp2(0x0b1510,.027);
-  camera=new THREE.PerspectiveCamera(49,1,.1,160);camera.position.set(0,21,28);
+  camera=new THREE.PerspectiveCamera(45,1,.1,160);camera.position.set(0,15.5,21);
   renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance',alpha:false});
   renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
   renderer.setSize(Math.max(stage.clientWidth,300),Math.max(stage.clientHeight,340));
@@ -184,7 +184,7 @@ try{
   });
   document.getElementById('reset-camera').addEventListener('click',()=>{
     selected=null;document.getElementById('world-inspector').hidden=true;
-    controls.target.set(0,0,0);camera.position.set(0,21,28);controls.update();
+    controls.target.set(0,0,0);camera.position.set(0,15.5,21);controls.update();
   });
   window.addEventListener('sideside:changed',()=>{
     const signature=desk.getSpaces().map(s=>[s.id,s.name,s.type,s.status].join('|')).join(';');
