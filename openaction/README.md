@@ -170,3 +170,10 @@ AGPL-3.0-or-later for the reference implementation. Domain integrations can keep
 | OpenAction | Auditable agent-routing research and bounded decision prototypes → More reliable automation while preserving human oversight | Run 20 independently reviewed shadow decisions; measure correct routing, blocked unsafe proposals, unnecessary escalations and the number of human interventions required. |
 
 **Evidence rule:** synthetic tests and green CI are engineering evidence, not proof of production safety, workforce time saved, or public benefit. Maintain stop gates for critical escapes.
+
+## Actual project screenshot · 19 November 2026
+
+[![Real screenshot of the OpenAction project coordination prototype](../assets/project-shots/openaction.png)](https://mikelninh.github.io/openaction/)
+
+*Captured from the real browser-visible demo. Screenshot alone does not establish agent reliability or adoption.*
+
