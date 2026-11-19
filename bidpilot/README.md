@@ -96,3 +96,10 @@ Open http://localhost:8000/bidpilot/. GitHub workflow `.github/workflows/bidpilo
 | BIDPILOT | Tender search and shortlist prototype; time saved for actual teams not independently observed → Teams identify suitable opportunities faster and with fewer missed tenders | Compare AI shortlist with domain-expert judgement on 20 new procurement notices. Measure top-k relevant recall, missed high-value matches and operator minutes per useful shortlist. |
 
 **Evidence status:** proposed evaluation only; no user-workflow ROI or expert-review claim from this impact card.
+
+## Actual project screenshot · 19 November 2026
+
+[![Real screenshot of BIDPILOT's tender discovery prototype](../assets/project-shots/bidpilot.png)](https://mikelninh.github.io/bidpilot/)
+
+*Captured from the live app in Chromium. Interface screenshot, not evidence of independently measured procurement time savings.*
+
