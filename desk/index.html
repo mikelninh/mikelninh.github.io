@@ -26,6 +26,22 @@
   <p>Start with the suggested projects. Rename, reorder or remove anything.</p>
  </div>
 </section>
+<section class="world-block" id="world" aria-label="Interactive 3D universe of projects, agents and conversations">
+  <div class="world-head"><div><span class="micro-label">THE LIVING MAP / EXPLORE YOUR DIGITAL WORLD</span><h2>Every idea deserves its own space.</h2><p class="world-sub">Orbit to explore · select a room to open its workspace · double-click to visit a linked project</p></div>
+    <div class="world-commands"><div class="view-switch" aria-label="Choose view"><button id="world-mode" type="button" aria-pressed="true">✦ World</button><button id="desk-mode" type="button" aria-pressed="false">☷ Desk</button></div><button id="reset-camera" type="button">⟳ Reset view</button></div></div>
+  <div class="world-stage" id="world-stage">
+   <div class="world-loading" id="world-loading" role="status"><div><strong>✦ Initialising your universe</strong><span>Preparing the rooms, pathways and agents…</span></div></div>
+   <div class="world-topnote">DRAG TO ORBIT &nbsp;·&nbsp; SCROLL TO ZOOM &nbsp;·&nbsp; TAP A ROOM TO ENTER</div>
+   <aside class="world-inspector" id="world-inspector" aria-live="polite" aria-label="Selected space" hidden>
+    <div class="inspector-head"><div><span class="inspector-type" id="inspector-type">SPACE</span><h3 id="inspector-name">Selected space</h3></div><button type="button" class="mini-btn" id="close-inspector" aria-label="Close selected space">×</button></div>
+    <p class="inspector-sub" id="inspector-summary">Enter this space to see its next move and links.</p>
+    <label for="inspector-next">NEXT MOVE<textarea id="inspector-next" rows="4" maxlength="700"></textarea></label>
+    <div class="inspector-actions"><a href="#" id="inspector-chat" target="_blank" rel="noopener noreferrer" hidden>Open conversation ↗</a><a href="#" id="inspector-project" target="_blank" rel="noopener noreferrer" hidden>Open project ↗</a><button type="button" id="inspector-card">Open 2D workspace ↓</button></div>
+    <p class="inspector-sub">Editing the next move updates this browser's local dashboard.</p>
+   </aside>
+  </div>
+  <div class="world-footer"><div class="world-legend"><span>AI &amp; trust</span><span>Community</span><span>Agent</span><span>Personal / studio</span></div><div id="world-status">3D world · Local-only data</div></div>
+ </section>
 <section class="control-panel" aria-label="Space controls">
  <div class="control-head">
   <div><span class="micro-label">YOUR WORKSPACES</span><h2><span id="space-count">6</span> spaces, one desk.</h2></div>
@@ -61,7 +77,7 @@
  <div class="dialog-heading"><div><span class="micro-label">TWO WAYS TO WORK SIDE BY SIDE</span><h2 id="help-title">Actual chats, side by side.</h2></div><button type="button" class="close-dialog" aria-label="Close dialog">×</button></div>
  <div class="help-step"><span class="step-num">01</span><div><h3>Inside this dashboard</h3><p>Paste a ChatGPT conversation link into any card. Edit next steps and notes without jumping between tabs.</p></div></div>
  <div class="help-step"><span class="step-num">02</span><div><h3>Two real conversations in Chrome</h3><p>Open two chats as Chrome tabs. Right-click a tab and choose <strong>Add tab to new split view</strong>. Chrome shows both ChatGPT interfaces side by side in one browser window.</p></div></div>
- <div class="help-step"><span class="step-num">03</span><div><h3>More than two chats?</h3><p>Use the optional local Chrome helper to list your open ChatGPT tabs and arrange 2–4 of them without copying their messages. It requires installing the unpacked extension; nothing is connected automatically.</p><a href="./SIDE-BY-SIDE-extension.zip" class="download-extension" download>Download Chrome tab helper (.zip) ↗</a></div></div>
+ <div class="help-step"><span class="step-num">03</span><div><h3>More than two chats?</h3><p>Keep 3–4 ChatGPT tabs in a dedicated browser window, or save their links in separate spaces here. A future browser extension could arrange existing tabs with your permission; this page cannot access them.</p><span class="download-extension">Optional local tab helper: not installed in this prototype.</span></div></div>
  <div class="help-foot"><p><strong>Important:</strong> This webpage cannot access your existing tabs. ChatGPT doesn't provide these conversations to this independent dashboard, and browser framing protections prevent an embedded live chat view.</p><button class="btn btn-bright close-dialog">Got it</button></div>
 </dialog>
 <template id="card-template">
@@ -88,5 +104,7 @@
  </article>
 </template>
 <script src="./app.js" defer></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"}}</script>
+<script type="module" src="./world.js"></script>
 </body>
 </html>
