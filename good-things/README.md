@@ -1,5 +1,10 @@
 # ✳ GOOD THINGS — Mikel & Huong
 
+[![Actual GOOD THINGS app screenshot showing vegan products and an interactive tier board](../assets/project-shots/good-things.png)](https://mikelninh.github.io/good-things/?view=duo)
+
+*Gespeicherter Screenshot der echten Anwendung. Die Live-Version kann inzwischen abweichen.*
+
+
 **Build:** 2.0.0 (Solo Shuffle + Together Shuffle + tasting conversations)
 **Website:** https://mikelninh.github.io/good-things/  
 **Source:** /good-things on the \`mikelninh.github.io\` GitHub Pages repository  
