@@ -1,5 +1,10 @@
 # INCA Evidence Lab — correctness, traceability, human workload
 
+[![Screenshot of the interactive Claims Ops demo showing a fictional claim workflow](../assets/project-shots/claims-ops.png)](https://mikelninh.github.io/inca/60s.html#mistake-challenge)
+
+*Real screenshot of the interactive work sample (not the benchmark itself). [Inspect the separate 30-case evaluation](https://mikelninh.github.io/inca/impact-benchmark.html).*
+
+
 > **We measure our success not by what we create, but by what changes because we created it.**
 >
 > **Love is our intention. Action is our expression. Impact is our evidence.**
