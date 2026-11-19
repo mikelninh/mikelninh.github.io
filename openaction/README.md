@@ -160,3 +160,13 @@ That turns the workspace itself into a testable product.
 ## License
 
 AGPL-3.0-or-later for the reference implementation. Domain integrations can keep their own licences and infrastructure; the protocol is designed to remain provider-neutral and forkable.
+
+## Impact card · 2026-11-19
+
+> We measure our success not by what we create, but by what changes because we created it.
+
+| Project | Now → Desired change | Next action and measurable success |
+| --- | --- | --- |
+| OpenAction | Auditable agent-routing research and bounded decision prototypes → More reliable automation while preserving human oversight | Run 20 independently reviewed shadow decisions; measure correct routing, blocked unsafe proposals, unnecessary escalations and the number of human interventions required. |
+
+**Evidence rule:** synthetic tests and green CI are engineering evidence, not proof of production safety, workforce time saved, or public benefit. Maintain stop gates for critical escapes.
