@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f8f8f4">
-<meta name="description" content="Michael Ninh — I build useful AI tools, small products and the occasional playful experiment. Work, projects and a bit of the human behind them.">
+<meta name="description" content="Michael Ninh is a Berlin-based AI and product builder. Explore working demos, inspectable evaluations and community projects designed for measurable impact.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Michael Ninh — An open studio">
-<meta property="og:description" content="Applied AI, thoughtful products and small things made for the joy of making them.">
+<meta property="og:description" content="Applied AI. Thoughtful products. Real demos, honest evidence and positive change.">
 <meta property="og:url" content="https://mikelninh.github.io/">
 <link rel="canonical" href="https://mikelninh.github.io/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<title>Michael Ninh — Work, ideas & small experiments</title>
+<title>Michael Ninh — Applied AI, Products & Measurable Impact</title>
 <style>
 :root{--paper:#f8f8f4;--white:#fff;--ink:#20302c;--secondary:#4f625a;--muted:#718079;--line:#d8dfd8;--deep:#203e32;--pale:#eaf0e8;--warm:#f2eee6;--mint:#dce9d7;--orange:#bd7049;--serif:"DM Serif Display",Georgia,serif;--sans:"Manrope",system-ui,sans-serif}
 *{box-sizing:border-box}
@@ -137,38 +137,96 @@ h1 em,h2 em{font-style:italic;color:#63836c}
 @media(max-width:800px){.play-feature{grid-template-columns:1fr}.play-feature-visual{min-height:320px;order:-1}.project-art>.project-screenshot{object-position:center top}}
 @media(max-width:540px){.play-feature{margin-top:35px}.play-feature-visual{min-height:230px}.play-feature-copy{padding:27px}}
 
+
+/* Impact-led design v2 — purposeful hierarchy and accessible contact routes */
+.hero{padding:clamp(58px,7.7vw,112px) 0 72px}
+.hero-grid{grid-template-columns:minmax(0,1.18fr) minmax(340px,.82fr);gap:clamp(24px,4.5vw,76px)}
+.hero h1{font-size:clamp(50px,6.2vw,79px);line-height:1.065;max-width:790px}
+.hero-lead{font-size:clamp(17px,1.5vw,19px);line-height:1.65}
+.hero-identity{font-size:13px;color:#667b6b;margin:16px 0 0}
+.hero-trust{display:flex;align-items:center;flex-wrap:wrap;gap:10px;color:#63816b;font-size:12px;margin-top:23px}
+.hero-trust a{color:#2a6249;text-decoration-thickness:1px}
+.hero-proof{background:#e9efe8;border:1px solid #d3dfd2;min-height:0;padding:0;overflow:hidden;box-shadow:0 26px 70px rgba(33,62,45,.08)}
+.hero-proof:before,.hero-proof:after{display:none}
+.hero-proof-image{height:205px;display:block;overflow:hidden;background:#e4e8e2}
+.hero-proof-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .25s}
+.hero-proof-image:hover img{transform:scale(1.025)}
+.hero-proof-content{padding:24px}
+.hero-proof-head{font:400 clamp(26px,2.8vw,35px)/1.11 var(--serif);letter-spacing:-.025em;margin:12px 0 20px}
+.hero-proof-head em{color:#678b75;font-style:italic}
+.hero-proof-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;border-top:1px solid #c7d9c8;padding:14px 0}
+.hero-proof-metrics span{font-size:10px;line-height:1.45;color:#637a6b}
+.hero-proof-metrics b{display:block;font-size:25px;font-weight:800;color:#2c4838;line-height:1.2}
+.hero-proof-disclaimer{font-size:11px;line-height:1.5;color:#6d7d72;margin:0 0 12px}
+.hero-proof-link{font-size:12px;color:#23583e;font-weight:800}
+.proof-line{display:flex;align-items:start;gap:9px;padding:12px 14px;background:#ecf5ee;border:1px solid #d4e5d6;border-radius:7px;color:#2b6443;font-size:12px;line-height:1.5;margin:2px 0 12px}
+.proof-dot{flex:none;width:8px;height:8px;background:#6a9e76;border-radius:50%;margin-top:5px}
+.proof-warn{background:#fff0eb;border-color:#f1d4cb;color:#8a4835}.proof-warn .proof-dot{background:#bd765b}
+.project-copy p{font-size:15px}
+.project-note{font-size:12px!important;line-height:1.6!important;color:#697e70!important}
+.project-link{font-size:13px}
+.project-actions{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 20px;margin-top:auto}
+.project-actions .project-link{margin-top:0}.secondary-link{color:#667c6e}
+.project-art{min-height:330px}
+.impact-lead{font-size:18px;color:#4f6758;max-width:600px}
+.footer-grid em{font-style:italic;color:#b9d6bd}
+.footer-contact{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.footer-contact>a:not(.btn){font-size:13px;color:#c1d7c5}
+.mobile-menu{display:none;position:relative}
+.mobile-menu summary{cursor:pointer;display:flex;align-items:center;gap:10px;list-style:none;padding:11px 12px;font-size:13px;font-weight:800;border:1px solid #c5d5c7;border-radius:7px;min-height:45px}
+.mobile-menu summary::-webkit-details-marker{display:none}
+.mobile-panel{position:absolute;right:0;top:calc(100% + 10px);z-index:50;display:grid;min-width:min(300px,calc(100vw - 36px));background:#fff;border:1px solid #d5e0d6;border-radius:12px;padding:10px;box-shadow:0 18px 50px rgba(23,52,36,.14)}
+.mobile-panel a{padding:12px 14px;color:#254936;text-decoration:none;font-size:14px;border-radius:7px}
+.mobile-panel a:hover,.mobile-panel a:focus-visible{background:#e7f0e6}
+.mobile-panel .mobile-contact{background:#254936;color:#fff}
+@media(max-width:1040px){.hero-grid{grid-template-columns:minmax(0,1.12fr) minmax(280px,.88fr);gap:28px}.hero h1{font-size:clamp(48px,5.8vw,69px)}}
+@media(max-width:800px){.hero-grid{grid-template-columns:1fr}.hero{padding:64px 0}.hero-proof{max-width:670px}.project-art{min-height:290px;order:-1}.project-art>.project-screenshot{object-fit:contain;background:#e8eee8}}
+@media(max-width:650px){.navlinks{display:none}.mobile-menu{display:block}.hero h1{font-size:clamp(42px,10.3vw,65px)}.hero-lead{font-size:16px}.project-copy{padding:26px}.project-copy p{font-size:15px}.hero-proof-image{height:180px}.hero-proof-content{padding:20px}.hero-proof-metrics b{font-size:22px}.footer-contact{width:100%}}
+
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="topbar"><nav class="wrap nav" aria-label="Main navigation">
 <a class="logo" href="#top">Michael Ninh <i>✳</i></a>
-<div class="navlinks"><a href="#work">Work</a><a href="impact.html">Impact</a><a href="#how">How I work</a><a href="beyond-cv/">Beyond the CV</a><a class="hello-link" href="#hello">Say hello ↗</a></div>
+<div class="navlinks"><a href="#work">Work</a><a href="impact.html">Impact</a><a href="#how">Approach</a><a href="beyond-cv/">About</a><a class="hello-link" href="#hello">Let's talk ↗</a></div>
+<details class="mobile-menu"><summary aria-label="Open site navigation">Menu <span aria-hidden="true">☰</span></summary>
+<div class="mobile-panel"><a href="#work">Selected work</a><a href="impact.html">All projects &amp; impact</a><a href="#how">How I work</a><a href="beyond-cv/">About me</a><a href="cv.html">View CV</a><a class="mobile-contact" href="#hello">Let's talk ↗</a></div></details>
 </nav></header>
 <main id="main">
 <section class="hero" id="top"><div class="wrap hero-grid">
 <div>
-<div class="eyebrow">Engineer · Builder · Curious human · Berlin</div>
-<h1>Hi, I’m Michael.<br>I like to <em>make things.</em></h1>
-<p class="hero-lead">I’m curious about how things work, why people struggle with them, and what might make life a little better. Sometimes the answer is an AI tool. Sometimes it’s a small product or a game. Sometimes it’s just trying something and seeing what happens.</p>
-<div class="hero-ctas"><a class="btn btn-main" href="#work">See what I’ve made <span aria-hidden="true">↓</span></a><a class="btn btn-line" href="impact.html">What changes because we build? ↗</a><a class="btn btn-line" href="beyond-cv/">Meet the person ↗</a></div>
+<div class="eyebrow">Michael Ninh · Berlin · Applied AI &amp; Product Engineering</div>
+<h1>Technology that <em>helps people.</em><br>Evidence that it <em>works.</em></h1>
+<p class="hero-lead">I turn complex, human problems into useful AI tools and thoughtful products — then test whether they actually make things better. From trustworthy automation to community projects.</p>
+<p class="hero-identity">Engineer by training. Builder by curiosity. Guided by a simple idea: <strong>Love → Action → Evidence.</strong></p>
+<div class="hero-ctas"><a class="btn btn-main" href="#work">Explore selected work <span aria-hidden="true">↓</span></a><a class="btn btn-line" href="#hello">Work with me ↗</a></div>
+<div class="hero-trust"><a href="inca/impact-benchmark.html">Inspectable evaluation ↗</a><span aria-hidden="true">·</span><a href="impact.html">15 project impact cards ↗</a></div>
 </div>
-<aside class="hero-side" aria-label="A note from Michael">
-<div class="side-top">A note from the desk · 001</div>
-<div class="side-quote">I’m quite good at asking “what if?”<br>Still working on the number of open tabs.</div>
-<div class="side-foot"><span>Love → Action → Evidence. Then improve it.</span></div>
+<aside class="hero-side hero-proof" aria-label="Featured evidence: INCA cancellation-date benchmark">
+<a class="hero-proof-image" href="inca/impact-benchmark.html" aria-label="Explore the INCA Evidence Lab benchmark">
+<img src="assets/project-shots/inca-benchmark.png" alt="Real screenshot of the INCA 30-case benchmark showing its blocked release status" width="1280" height="800" fetchpriority="high" decoding="async">
+</a>
+<div class="hero-proof-content">
+<div class="side-top">Featured proof · INCA Evidence Lab</div>
+<p class="hero-proof-head">We found the failure. <em>We showed the evidence.</em></p>
+<div class="hero-proof-metrics"><span><b>30</b> synthetic cases</span><span><b>24</b> label matches</span><span><b>2</b> safety escalations missed</span></div>
+<p class="hero-proof-disclaimer">Developer-labelled diagnostic, not expert validation. Release blocked; human time savings unmeasured.</p>
+<a class="hero-proof-link" href="inca/impact-benchmark.html">See the full test &amp; limitations ↗</a>
+</div>
 </aside>
 </div></section>
 <section class="section" id="work" aria-labelledby="work-title"><div class="wrap">
 <div class="eyebrow">01 / A few things you can actually try</div>
-<div class="section-intro"><h2 id="work-title">Here’s some<br><em>of my work.</em></h2><p>Three different kinds of problems. None of these are finished in the grand sense of the word. I’m sharing what exists, what it does, and where it still needs work.</p></div>
+<div class="section-intro"><h2 id="work-title">Here’s some<br><em>of my work.</em></h2><p>Three live experiences. Three different problems. Each one shows what exists today, what we can verify, and what still needs to improve.</p></div>
 <div class="project-stack">
 <article class="project">
 <div class="project-copy">
 <span class="project-tag">01 · Applied AI · Legal research</span>
 <h3>Finding the actual law should be the easy part.</h3>
 <p><strong>GitLaw</strong> makes German federal laws searchable, with sources you can open and verify. The goal is a more useful starting point for research – not to replace legal judgement.</p>
-<p class="project-note">Built with retrieval, APIs, MCP tools and tests. Source lookup is stronger than end-to-end legal advice.</p>
+<div class="proof-line"><span class="proof-dot"></span><span>Live demo: source search with inspectable legal references. Not legal advice.</span></div>
+<p class="project-note">Next proof: independently check 30 unfamiliar research questions and their citations.</p>
 <a class="project-link" href="https://mikelninh.github.io/gitlaw/">Try GitLaw ↗</a>
 </div>
 <div class="project-art law" aria-label="Actual screenshot of the GitLaw application"><img class="project-screenshot" src="assets/project-shots/gitlaw.png" width="1280" height="800" loading="lazy" decoding="async" alt="Real GitLaw website showing the searchable law research interface" onerror="this.hidden=true">
@@ -180,7 +238,8 @@ h1 em,h2 em{font-style:italic;color:#63836c}
 <span class="project-tag">02 · A playful product · Made together</span>
 <h3>How good is that vegan snack, really?</h3>
 <p><strong>GOOD THINGS</strong> is a little tasting shelf for vegan groceries. Rate what you’ve tried, drag products into S–F tiers, and compare notes with someone who may have wildly different taste.</p>
-<p class="project-note">Work in progress. We’re still improving the catalogue, product photos and nutrition details.</p>
+<div class="proof-line"><span class="proof-dot"></span><span>Live demo: rate, compare and organise vegan products into personal tiers.</span></div>
+<p class="project-note">Next proof: observe real shopping choices and verify whether the tool helps.</p>
 <a class="project-link" href="good-things/?view=duo">Try GOOD THINGS ↗</a>
 </div>
 <div class="project-art food" aria-label="Actual screenshot of the GOOD THINGS application"><img class="project-screenshot" src="assets/project-shots/good-things.png" width="1280" height="800" loading="lazy" decoding="async" alt="Real GOOD THINGS website showing the vegan discovery and tier board" onerror="this.hidden=true">
@@ -192,15 +251,16 @@ h1 em,h2 em{font-style:italic;color:#63836c}
 <span class="project-tag">03 · AI Operations · Work sample</span>
 <h3>When two documents disagree, who checks?</h3>
 <p>A cancelled trip. Two documents. Two different dates. The <strong>INCA Claims Ops</strong> work sample lets you inspect a synthetic mismatch, choose a safe next step and see how evidence checks should prevent premature decisions.</p>
-<p class="project-note">Three fictional interactive examples; no customer data, payments or real insurer decisions. The separate 30-case benchmark currently blocks release.</p>
-<a class="project-link" href="inca/60s.html#mistake-challenge">Try the one-minute claims challenge ↗</a>
+<div class="proof-line proof-warn"><span class="proof-dot"></span><span>30-case audit: 24 authored-label matches, 2 unsafe continuations. Release blocked.</span></div>
+<p class="project-note">Synthetic cases only; no real insurer decisions or independently verified time savings.</p>
+<div class="project-actions"><a class="project-link" href="inca/60s.html#mistake-challenge">Try the one-minute challenge ↗</a><a class="project-link secondary-link" href="inca/impact-benchmark.html">Inspect the 30-case audit ↗</a></div>
 </div>
 <div class="project-art ops" aria-label="Actual screenshot of the Claims Ops Loop work sample"><img class="project-screenshot" src="assets/project-shots/claims-ops.png" width="1280" height="800" loading="lazy" decoding="async" alt="Real Claims Ops Loop work sample showing a synthetic insurance claim review" onerror="this.hidden=true">
 <div class="ops-shell"><div class="ops-label">CLAIMS OPS / SYNTHETIC EXERCISE</div><div class="ops-title">One decision needs a second look.</div><div class="ops-claim">Repair invoice ≠ reported incident</div><div class="ops-row"><span class="ops-step">Decision</span><span class="ops-arrow">→</span><span class="ops-step">Check</span><span class="ops-arrow">→</span><span class="ops-step">Human review</span></div></div>
 </div>
 </article>
 </div>
-<div class="work-extra"><span>There’s more behind these three, including projects with explicit impact hypotheses.</span><a href="impact.html">Explore all project impact cards ↗</a></div>
+<div class="work-extra"><span>Explore more prototypes, community ideas and transparent evaluation plans.</span><a href="impact.html">See all 15 projects &amp; their next experiments ↗</a></div>
 <aside class="play-feature" aria-label="A playable little detour">
   <div class="play-feature-copy">
     <div class="eyebrow">A LITTLE DETOUR · PLAY SOMETHING</div>
@@ -215,7 +275,7 @@ h1 em,h2 em{font-style:italic;color:#63836c}
 </aside>
 </div></section>
 <section class="section" aria-labelledby="impact-title"><div class="wrap impact-feature-grid">
-<div><div class="eyebrow">02 / From love to action</div><h2 id="impact-title" style="margin:20px 0 20px">What changes<br><em>because we build?</em></h2><p style="font-size:17px;color:#4f6758;max-width:600px">We measure our success not by what we create, but by what changes because we created it.</p><p>Each project now has a clear baseline, a desired outcome, an experiment, and a measurable test. Failed tests stay visible.</p><a class="btn btn-main" href="impact.html">See the impact register ↗</a></div>
+<div><div class="eyebrow">02 / From love to action</div><h2 id="impact-title" style="margin:20px 0 20px">What changes<br><em>because we build?</em></h2><p class="impact-lead">We measure success not by what we create, but by what changes because we created it.</p><p>Each project now has a clear baseline, a desired outcome, an experiment, and a measurable test. Failed tests stay visible.</p><a class="btn btn-main" href="impact.html">See the impact register ↗</a></div>
 <aside class="about-note" style="font-size:clamp(22px,2.5vw,30px)">Love is our intention.<br>Action is our expression.<br><strong>Impact is our evidence.</strong><span>Our guiding principle · Evidence over vanity metrics</span></aside>
 </div></section>
 <section class="section principle" id="how"><div class="wrap principle-grid">
@@ -228,7 +288,7 @@ h1 em,h2 em{font-style:italic;color:#63836c}
 </div></section>
 </main>
 <footer class="footer" id="hello"><div class="wrap">
-<div class="footer-grid"><div><div class="eyebrow" style="color:#a7c3aa">05 / Say hello</div><h2>Got something<br>interesting on your mind?</h2><p>A job, a collaboration, a question, or just a good idea for a vegan dinner. I’d be glad to hear it.</p></div><a class="btn" href="mailto:mikel_ninh@yahoo.de">Write to me ↗</a></div>
+<div class="footer-grid"><div><div class="eyebrow" style="color:#a7c3aa">05 / Let's build something worthwhile</div><h2>Have a problem<br><em>worth solving?</em></h2><p>I'm interested in meaningful AI and product roles, thoughtful collaborations and projects that improve real lives. Tell me what you're working on — or challenge me with a difficult question.</p></div><div class="footer-contact"><a class="btn" href="mailto:mikel_ninh@yahoo.de?subject=Let%27s%20build%20something%20worthwhile">Start a conversation ↗</a><a href="cv.html">Or read my CV ↗</a></div></div>
 <div class="footer-bottom"><span>Michael Ninh · Berlin · Built with care and a few too many cups of tea.</span><div><a href="cv.html">CV</a><a href="https://github.com/mikelninh">GitHub</a><a href="https://www.linkedin.com/in/michael-ninh/">LinkedIn</a></div></div>
 </div></footer>
 </body>
