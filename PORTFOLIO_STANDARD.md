@@ -82,3 +82,23 @@ Give the page to someone for one minute. Afterwards they should be able to answe
 5. What should I click next?
 
 If they cannot, simplify again.
+
+## Impact principle · 2026-11-19
+
+> **We measure our success not by what we create, but by what changes because we created it.**
+>
+> **Love is our intention. Action is our expression. Impact is our evidence.**
+
+For each project, provide three scannable fields: **Now → Desired change → Next action and measurable success**. Separate these from actual measured evidence. Never promote a target to a result.
+
+Each case study links to a reproducible test or a clear validation gap, and identifies:
+- Whose experience should improve and why.
+- The observed baseline (or **not yet measured**).
+- The proposed intervention and test population.
+- Decision-quality metrics, human time, and harm / equity safeguards.
+- A concrete stop / revise / expand threshold.
+- A working demo or source link; if external uptime could not be checked, mark it unverified.
+
+The portfolio homepage retains **at most three featured proofs**. The broader register lives at [impact.html](impact.html).
+
+**Example:** INCA's new 30-case developer-authored cancellation-date benchmark found 24/30 correct routes, 2 unsafe continuations, and **blocked** the release; it is not expert-reviewed and does not measure time saved. See [recorded results](inca/impact-30-report.json).
