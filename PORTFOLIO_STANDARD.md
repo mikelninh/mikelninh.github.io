@@ -121,4 +121,9 @@ Beauty is part of usefulness: the interface should invite attention, reduce cogn
 - Measured numbers remain bound to test evidence. Green engineering CI does not mean impact or safety is established.
 
 For the public portfolio, three screenshots are preserved at `assets/project-shots/{gitlaw,good-things,claims-ops}.png`. The [impact register](impact.html) uses them as clickable real-project previews. Animal Voices art is explicitly marked as an illustration.
+### Fresh screenshot source of truth (19 November 2026)
+
+The existing GitHub Actions workflow [capture-project-shots.yml](.github/workflows/capture-project-shots.yml) now captures real browser views of 12 routes using Chromium/Playwright on Ubuntu 24.04, including nine project prototypes featured in [impact.html](impact.html). Screenshot provenance and any failures are stored at [assets/project-shots/capture-manifest.json](assets/project-shots/capture-manifest.json).
+
+**Verified capture result:** 12/12 target screenshots recorded on 2026-11-19; the automated capture workflow completed successfully. This validates screenshots of the loaded pages, **not every interactive behaviour, model response or real-world project impact**.
 
