@@ -60,5 +60,5 @@ The test loads the actual workshop evaluator and independently replays each reco
 - [Reliability loop](https://mikelninh.github.io/inca/reliability-loop.html)
 - [Recorded real-model responses](live-model-eval.json): distinct older developer-authored synthetic evaluation. Do not combine scores or claim it was an independent expert review.
 
-**Link status:** these file paths were checked against the GitHub repository on 19 November 2026. External HTTP availability of the GitHub Pages deployment was not independently verified in this session.
+**Link status:** these file paths were checked against the GitHub repository on 19 November 2026. The portfolio home, INCA benchmark viewer, INCA 60s work sample and several other selected public project pages were successfully fetched on 19 November 2026. This verifies page responses, not interactive behaviour, API access or end-to-end product operation.
 
