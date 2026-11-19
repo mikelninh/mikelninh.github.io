@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 870" role="img" aria-labelledby="title desc">
+<title id="title">Earth, seen from a quiet distance</title><desc id="desc">An original illustrated blue planet under warm stars, with a thin line of sunrise on its horizon.</desc>
+<defs>
+ <radialGradient id="sky" cx="65%" cy="24%" r="90%"><stop stop-color="#263a43"/><stop offset=".66" stop-color="#15262d"/><stop offset="1" stop-color="#101e23"/></radialGradient>
+ <radialGradient id="earth" cx="32%" cy="18%" r="88%"><stop stop-color="#92bfc0"/><stop offset=".28" stop-color="#468a8a"/><stop offset=".6" stop-color="#2d626c"/><stop offset="1" stop-color="#102e3e"/></radialGradient>
+ <linearGradient id="glow" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#f6cf9e" stop-opacity=".93"/><stop offset=".5" stop-color="#e09b78" stop-opacity=".42"/><stop offset="1" stop-color="#edb28e" stop-opacity="0"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="21"/></filter>
+ <clipPath id="planetclip"><circle cx="379" cy="740" r="343"/></clipPath>
+</defs>
+<rect width="720" height="870" fill="url(#sky)"/>
+<g fill="#f6e7d3">
+<circle cx="76" cy="91" r="1.6" opacity=".9"/><circle cx="175" cy="139" r="1.1" opacity=".6"/><circle cx="264" cy="72" r="2"/><circle cx="399" cy="124" r="1.2"/><circle cx="561" cy="93" r="1.8"/><circle cx="642" cy="200" r="1.1"/><circle cx="99" cy="301" r="1.4"/><circle cx="196" cy="270" r=".9"/><circle cx="495" cy="274" r="1.2"/><circle cx="591" cy="357" r="1.4"/><circle cx="665" cy="484" r="1.1"/><circle cx="43" cy="523" r="1.4"/><circle cx="141" cy="444" r=".8"/><circle cx="339" cy="246" r=".8"/><circle cx="460" cy="59" r=".9"/><circle cx="684" cy="80" r=".8"/>
+</g>
+<path d="M79 210v-15m-7.5 7.5h15M609 293v-12m-6 6h12" stroke="#e6b99d" stroke-width="1.2" opacity=".7"/>
+<circle cx="373" cy="713" r="369" fill="#e9a67e" opacity=".12" filter="url(#blur)"/>
+<circle cx="379" cy="740" r="353" fill="none" stroke="#f0c6aa" stroke-width="8" opacity=".25"/>
+<circle cx="379" cy="740" r="343" fill="url(#earth)"/>
+<g clip-path="url(#planetclip)">
+<path d="M-8 646c126-18 212-95 306-91 94 4 129 79 232 68 87-10 132-57 224-31" stroke="#bdd7cb" stroke-width="38" opacity=".18" fill="none"/>
+<path d="M65 724c63-75 111-37 162-85 44-41 83-34 127-2 43 32 92 32 128-1 66-61 135-45 223-26" stroke="#dbefdb" stroke-width="18" opacity=".19" fill="none"/>
+<path d="M-40 836c144-90 247-22 328-73 98-62 170-37 230 8 71 54 122 33 232-21" stroke="#c2d8c5" stroke-width="27" opacity=".14" fill="none"/>
+<path d="M-60 823c101-40 158-161 267-160 76 1 116 45 180 40" stroke="#eef1d9" stroke-width="12" opacity=".08" fill="none"/>
+<path d="M26 590c153 61 307 57 436 22 104-28 203-28 287 13" fill="none" stroke="#fee7cd" stroke-width="70" opacity=".08"/>
+<ellipse cx="562" cy="771" rx="370" ry="310" fill="#0b2432" opacity=".55"/>
+</g>
+<path d="M53 565Q370 305 704 565" fill="none" stroke="url(#glow)" stroke-width="5"/>
+<path d="M50 567Q371 312 704 566" fill="none" stroke="#f7cfad" stroke-width="1.7" opacity=".85"/>
+<g fill="#e9d8c6" opacity=".85" font-family="Georgia,serif" font-style="italic"><text x="77" y="774" font-size="15">a small, extraordinary world</text></g>
+</svg>
