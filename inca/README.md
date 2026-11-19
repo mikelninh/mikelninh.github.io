@@ -73,3 +73,9 @@ The test loads the actual workshop evaluator and independently replays each reco
 
 **Link status:** these file paths were checked against the GitHub repository on 19 November 2026. The portfolio home, INCA benchmark viewer, INCA 60s work sample and several other selected public project pages were successfully fetched on 19 November 2026. This verifies page responses, not interactive behaviour, API access or end-to-end product operation.
 
+## Actual benchmark screenshot · 19 November 2026
+
+[![Real screenshot of the INCA 30-case public benchmark with recorded outcomes](../assets/project-shots/inca-benchmark.png)](https://mikelninh.github.io/inca/impact-benchmark.html)
+
+*Captured from the public benchmark page. The findings still block release: 24/30 developer-label matches and two proposed-policy safety escapes.*
+
