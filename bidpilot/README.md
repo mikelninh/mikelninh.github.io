@@ -86,3 +86,13 @@ Open http://localhost:8000/bidpilot/. GitHub workflow `.github/workflows/bidpilo
 5. Pilot with five real studios and measure precision of top ten, minutes saved, return use, and willingness to pay.
 
 © Independent beta, not affiliated with the EU Publications Office.
+
+## Impact card · 2026-11-19
+
+> We measure our success not by what we create, but by what changes because we created it.
+
+| Project | Now → Desired change | Next action and measurable success |
+| --- | --- | --- |
+| BIDPILOT | Tender search and shortlist prototype; time saved for actual teams not independently observed → Teams identify suitable opportunities faster and with fewer missed tenders | Compare AI shortlist with domain-expert judgement on 20 new procurement notices. Measure top-k relevant recall, missed high-value matches and operator minutes per useful shortlist. |
+
+**Evidence status:** proposed evaluation only; no user-workflow ROI or expert-review claim from this impact card.
