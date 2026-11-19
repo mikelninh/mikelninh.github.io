@@ -1,5 +1,10 @@
 # GitLaw — Source-grounded German legal research
 
+[![Actual GitLaw app screenshot with source search and verification interface](../assets/project-shots/gitlaw.png)](https://mikelninh.github.io/gitlaw/)
+
+*Real saved application screenshot; the live interface may have changed.*
+
+
 **[Open the public GitLaw prototype](https://mikelninh.github.io/gitlaw/)**
 
 Independent developer prototype, not legal advice and not a substitute for verification of authoritative, up-to-date primary legal sources.
