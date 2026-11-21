@@ -179,6 +179,34 @@ def parse_consultations(issues):
             "note": "Public GitHub Issues. Counts do not measure public support or representativeness."}
 
 
+
+def carry_forward_official_evidence(cases, previous):
+    """Keep previously evidenced promulgations when a rolling RSS feed ages out.
+
+    Promulgation is a historical fact, not a live RSS membership flag. Retain
+    only evidence with a prior official Gazette URL and unchanged case/GESTA.
+    A carried proof is NOT independently rechecked during this run.
+    """
+    earlier = {str(c.get("id")): c for c in (previous or {}).get("cases", [])}
+    for case in cases:
+        if case.get("promulgation", {}).get("verified"):
+            continue
+        past = earlier.get(str(case.get("id"))) or {}
+        proof = past.get("promulgation") or {}
+        link = str(proof.get("url") or "")
+        if not (proof.get("verified") is True
+                and past.get("gesta") == case.get("gesta")
+                and link.startswith("https://www.recht.bund.de/")):
+            continue
+        case["promulgation"] = {
+            **proof, "verified": True,
+            "carried_forward": True,
+            "reverified_this_run": False,
+        }
+        case["stage"] = "promulgated"
+    return cases
+
+
 def changes_between(old, current):
     past = {x["id"]: x for x in old.get("cases", [])}
     events = list(old.get("changes", []))[:65]
@@ -229,6 +257,7 @@ def build(previous=None, api_get=None, rss=None, gii=None, issues=None):
     pinned = api_get(DIP_BASE+"/vorgang/"+PINNED_ID)
     chosen = [pinned]+[d for d in select_cases(docs) if str(d.get("id")) != PINNED_ID]
     cases = [case_view(d,rss,positions_from(d['id'],api_get)) for d in chosen]
+    cases = carry_forward_official_evidence(cases, previous)
     relevant = [x for x in rss if any(k in (x['title']+' '+x['subject']).lower() for k in KEYWORDS)][:35]
     current = {
         "schema":"lifebench-official-monitor-v1", "generated_at":now_utc(),
@@ -237,7 +266,9 @@ def build(previous=None, api_get=None, rss=None, gii=None, issues=None):
                     "gazette":{"status":gazette_health,"url":SOURCE_LINKS['gazette'],"count":len(rss),"checked_at":now_utc()},
                     "gii":{"status":gii_health,"url":SOURCE_LINKS['gii'],"count":len(gii),"checked_at":now_utc()},
                     "consultations":{"status":issues_health,"url":"https://github.com/mikelninh/mikelninh.github.io/issues","checked_at":now_utc()}},
-        "cases": cases,"gazette_related":relevant,"consultations":parse_consultations(issues),
+        "cases": cases,"gazette_related":relevant,
+        "consultations": ((previous or {}).get("consultations", parse_consultations([]))
+                          if issues_health != "ok" else parse_consultations(issues)),
         "changes": [],"outcome_status":"Unmeasured until independent data and a documented baseline exist",
         "last_verified_at":None,
     }
