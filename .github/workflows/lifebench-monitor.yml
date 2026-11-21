@@ -1,5 +1,10 @@
 name: LifeBench official law monitor
 on:
+  push:
+    paths:
+      - '.github/workflows/lifebench-monitor.yml'
+      - 'firstlight-lab/scripts/monitor.py'
+      - 'firstlight-lab/tests/**'
   workflow_dispatch:
   schedule:
     - cron: '13 6,18 * * *'
