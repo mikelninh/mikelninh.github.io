@@ -1,0 +1,58 @@
+name: LifeBench weekly roadmap report
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/lifebench-roadmap.yml'
+      - 'firstlight-lab/scripts/roadmap_status.py'
+      - 'firstlight-lab/tests/test_roadmap_status.py'
+  workflow_dispatch:
+  schedule:
+    - cron: '17 8 * * MON'
+permissions:
+  contents: write
+  issues: read
+concurrency:
+  group: lifebench-weekly-roadmap
+  cancel-in-progress: false
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Verify roadmap honesty and regression tests
+        run: python3 -m unittest discover firstlight-lab/tests -p 'test_*.py' -v
+      - name: Read official snapshot and GitHub milestones
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 firstlight-lab/scripts/roadmap_status.py
+      - name: Verify factual output contract
+        run: |
+          python3 - <<'PY'
+          import json
+          d=json.load(open('firstlight-lab/data/roadmap-status.json'))
+          assert d['schema']=='lifebench-roadmap-status-v1'
+          assert len(d['issues'])==6
+          assert d['report_kind']=='factual_task_status_not_impact'
+          assert isinstance(d['legislative_monitor']['entry_into_force_verified'],bool)
+          print('Weekly roadmap contract PASS', d['generated_at'])
+          PY
+      - name: Save the public factual report
+        run: |
+          set -euo pipefail
+          git config user.name 'lifebench-roadmap[bot]'
+          git config user.email 'lifebench-roadmap[bot]@users.noreply.github.com'
+          git add firstlight-lab/ROADMAP_STATUS.md firstlight-lab/data/roadmap-status.json
+          if git diff --cached --quiet; then
+            echo 'No change.'
+          else
+            git commit -m 'data(lifebench): weekly factual roadmap status [skip ci]'
+            for attempt in 1 2 3; do
+              git pull --rebase origin main && git push origin HEAD:main && exit 0
+              sleep $((attempt*3))
+            done
+            exit 1
+          fi
