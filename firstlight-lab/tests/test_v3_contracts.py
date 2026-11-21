@@ -63,8 +63,6 @@ class LifeBenchV3Contracts(unittest.TestCase):
         for num in range(152,158):
             self.assertTrue(any(f"/issues/{num}" in u for u in doc.links), f"Missing milestone #{num}")
         plan=(ROOT/"MASTERPLAN.md").read_text(encoding="utf-8")
-        self.assertIn("quality", plan.lower() or "") if False else None
-        self.assertIn("legal", plan.lower() or "") if False else None
         self.assertIn("independent", plan.lower())
         self.assertIn("human", plan.lower())
 
