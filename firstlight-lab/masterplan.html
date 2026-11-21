@@ -15,11 +15,18 @@
 .master-issue small{color:#698066}
 @media(max-width:1000px){.master-stages{grid-template-columns:repeat(4,minmax(0,1fr))}.master-issues{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.master-cols,.master-issues{grid-template-columns:1fr}.master-stages{grid-template-columns:repeat(2,minmax(0,1fr))}.master-timeline{grid-template-columns:1fr;gap:7px}.master-note{flex-direction:column;align-items:flex-start}.master-hero h1{font-size:56px}}
+.master-pulse{display:flex;justify-content:space-between;align-items:center;gap:18px;border:1px solid #dce7d9;border-radius:18px;background:#fff;padding:22px;margin:0 0 16px}.master-pulse>div{min-width:0}.master-pulse p{margin:6px 0 0}.master-pulse #master-pulse-value{font-size:clamp(19px,2.5vw,29px);letter-spacing:-.04em;font-weight:800;color:#2e482f}.master-pulse .m-chip{white-space:nowrap}@media(max-width:650px){.master-pulse{flex-direction:column;align-items:flex-start}.master-pulse .m-chip{white-space:normal}}
 </style></head><body><div class="shell">
 <header class="topbar"><a class="identity" href="./"><span class="sun">✳</span><span>FIRST LIGHT <span class="identity-alt">/ LifeBench</span></span></a><nav><a href="./studio.html">Experience Studio</a><a href="./lifebench.html">Democracy Lab</a><a href="./masterplan.html" class="current" aria-current="page">Masterplan</a></nav></header>
 <section class="master-hero"><div class="overline">LIFEBENCH · MASTERPLAN 2026–2035 · V1.0</div><h1>Ideen bewegen.<br><em>Das Leben verbessern.</em></h1>
 <p>Ein offenes System, das kollektives Wissen in demokratisches Handeln übersetzt. Von der ersten Frage über Gesetzesänderungen bis zur unabhängig überprüften Wirkung.</p>
 <div class="master-links"><a class="m-chip" href="./lifebench.html">Live-Workbench öffnen ↗</a><a class="m-chip" href="./MASTERPLAN.md">Vollständigen Masterplan lesen ↗</a><a class="m-chip" href="https://github.com/mikelninh/mikelninh.github.io/issues?q=is%3Aissue+is%3Aopen+LifeBench+Roadmap" target="_blank" rel="noopener noreferrer">Offene Meilensteine ↗</a></div></section>
+<section class="master-pulse" aria-label="Automatisch überprüfter Arbeitsstand">
+  <div><span class="overline">WÖCHENTLICHER PROJEKTSTATUS · AUS OFFENEN AUFGABEN</span>
+  <p id="master-pulse-value" role="status">Aktuellen Arbeitsstand laden …</p>
+  <p class="small muted" id="master-pulse-date">Ein geschlossenes Issue ist noch kein unabhängig bestätigtes Ergebnis.</p></div>
+  <a class="m-chip" href="https://github.com/mikelninh/mikelninh.github.io/blob/main/firstlight-lab/ROADMAP_STATUS.md" target="_blank" rel="noopener noreferrer">Bericht und Quellen ↗</a>
+</section>
 <div class="master-note"><strong>Nicht die Zahl der beschlossenen Gesetze zählt.<br>Entscheidend ist: Werden Leben nachweislich besser?</strong><span class="pill neutral">Menschen entscheiden · Evidenz zählt</span></div>
 <section style="padding:26px 0"><div class="overline">UNSER GEMEINSAMER ARBEITSZYKLUS</div><h2 style="font-size:clamp(28px,3.7vw,47px);letter-spacing:-.06em;margin:11px 0">Vom Problem zur Wirkung.</h2>
 <div class="master-stages">
@@ -48,4 +55,19 @@
 <p class="small muted" style="margin-top:17px">Die öffentlichen Aufgaben dokumentieren Planung und Fortschritt. Eine offene Aufgabe bedeutet ausdrücklich nicht, dass das Ergebnis bereits erreicht wurde.</p>
 </section>
 <footer><span>FIRST LIGHT / LifeBench · OPEN LONG-TERM PLAN</span><span>Reale Wirkung > schöne Versprechen</span><a href="./MASTERPLAN.md">Plan im Detail ↗</a></footer>
-</div></body></html>
+</div><script>
+(async()=>{
+  const status=document.getElementById('master-pulse-value'),date=document.getElementById('master-pulse-date');
+  try{
+    const res=await fetch('./data/roadmap-status.json',{cache:'no-store'});
+    if(!res.ok)throw Error('no status');
+    const d=await res.json();
+    if(d.schema!=='lifebench-roadmap-status-v1')throw Error('unexpected schema');
+    status.textContent=d.open_issues+' Aufgaben offen · '+d.closed_issues+' geschlossen · '+d.issue_count_unknown+' ungeprüft';
+    date.textContent='Zuletzt abgeglichen: '+new Date(d.generated_at).toLocaleDateString('de-DE')+'. Aufgabenstatus ist kein amtlicher Gesetzes- oder Wirkungsnachweis.';
+  }catch(e){
+    status.textContent='Automatischer Arbeitsstand gerade nicht verfügbar.';
+    date.textContent='Den öffentlichen Bericht bitte direkt auf GitHub prüfen.';
+  }
+})();
+</script></body></html>
