@@ -25,6 +25,26 @@ class MonitorTests(unittest.TestCase):
         self.assertTrue(case['promulgation']['verified'])
         self.assertFalse(case['entry_into_force']['verified'])
 
+    def test_promulgation_remains_proven_after_rss_expiry(self):
+        previous={"cases":[{"id":"334563","gesta":"F013",
+                             "promulgation":{"verified":True,"url":"https://www.recht.bund.de/eli/bund/bgbl-1/2026/999","citation":"BGBl. 2026 I Nr. 999","source":"BGBl GESTA exact match"}}]}
+        cases=[monitor.case_view({"id":"334563","titel":"Animal Law","gesta":"F013","beratungsstand":"Verabschiedet"},[],[])]
+        result=monitor.carry_forward_official_evidence(cases,previous)
+        self.assertTrue(result[0]["promulgation"]["verified"])
+        self.assertTrue(result[0]["promulgation"]["carried_forward"])
+        self.assertFalse(result[0]["promulgation"]["reverified_this_run"])
+        self.assertEqual(result[0]["stage"],"promulgated")
+
+    def test_reject_unofficial_or_mismatched_carry_forward(self):
+        previous={"cases":[{"id":"334563","gesta":"F013","promulgation":{"verified":True,"url":"https://example.com/not-an-official-gazette"}}]}
+        cases=[monitor.case_view({"id":"334563","titel":"Animal Law","gesta":"F013","beratungsstand":"Verabschiedet"},[],[])]
+        result=monitor.carry_forward_official_evidence(cases,previous)
+        self.assertFalse(result[0]["promulgation"]["verified"])
+        previous["cases"][0]["promulgation"]["url"]="https://www.recht.bund.de/eli/bund/bgbl-1/2026/999"
+        cases=[monitor.case_view({"id":"334563","titel":"Animal Law","gesta":"F014","beratungsstand":"Verabschiedet"},[],[])]
+        result=monitor.carry_forward_official_evidence(cases,previous)
+        self.assertFalse(result[0]["promulgation"]["verified"])
+
     def test_no_false_citizen_consensus(self):
         x=monitor.parse_consultations([{'title':'[LifeBench] Reform','html_url':'https://github.com/mikelninh/mikelninh.github.io/issues/12','state':'open','comments':5,'number':12},{'title':'Other','html_url':'https://github.com/mikelninh/mikelninh.github.io/issues/13','state':'open','comments':5},{'title':'[LifeBench] Pull','html_url':'https://github.com/mikelninh/mikelninh.github.io/issues/14','pull_request':{},'state':'open'}])
         self.assertEqual(x['count'],1)
