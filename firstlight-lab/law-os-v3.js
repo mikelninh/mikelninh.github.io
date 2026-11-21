@@ -301,7 +301,7 @@
       $('ai-status').textContent=await copy(value('ai-output'))?'Entwurf kopiert. Unabhängige Prüfung erforderlich.':'Kopieren fehlgeschlagen. Text auswählen oder als Datei exportieren.';
     });
     $('ai-export').addEventListener('click',()=>download('lifebench-'+mission()+'-arbeitsentwurf.txt',value('ai-output'),'text/plain'));
-    $('ai-output').addEventListener('input',()=>{generated=$('ai-output').value; $('ai-copy').disabled=!generated;$('ai-export').disabled=!generated;});
+    $('ai-output').addEventListener('input',()=>{generated=$('ai-output').value; $('ai-copy').disabled=!generated;$('ai-export').disabled=!generated;store(storageKey('generated'),{text:generated,origin:generatedBy==='none'?'user_edited':generatedBy,at:stamp()});});
     ['review-sources','review-jurisdiction','review-opposition','review-consent'].forEach(id=>$(id).addEventListener('change',reviewStatus));
     $('handoff-download').addEventListener('click',exportHandoff);
     $('submission-channel').addEventListener('change',renderChannel);
