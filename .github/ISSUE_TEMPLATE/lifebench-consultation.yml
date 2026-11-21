@@ -1,0 +1,60 @@
+name: 'LifeBench: öffentliche Konsultation'
+description: 'Beitragen zu einem Gesetzesvorschlag. Öffentliches GitHub-Issue, keine amtliche Beteiligung.'
+title: '[LifeBench] '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Für eine bessere Gesetzgebung
+        Diese Eingabe ist öffentlich auf GitHub. Bitte keine Gesundheitsdaten, Privatadressen, Telefonnummern oder Angaben über Dritte posten.
+        Dies ist eine zivilgesellschaftliche Plattform, keine Bundestag- oder Behörden-Konsultation.
+  - type: dropdown
+    id: mission
+    attributes:
+      label: Reformgebiet
+      options:
+        - Tierschutz und Übergang zu tierleidfreien Systemen
+        - Pflanzliche öffentliche Ernährung
+        - Transparenz beim Tierschutzvollzug
+        - Recht auf Reparatur
+        - KI-Rechenschaftspflicht
+        - Transparenz und Demokratie
+        - Anderes
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Das konkrete Problem
+      description: Welche Regelung oder Umsetzung sollte überprüft werden?
+      placeholder: 'Problem, betroffene Gruppen und öffentlich prüfbare Quellen…'
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Vorschlag und Alternativen
+      description: Was könnte sich ändern? Welche besseren oder einfacheren Alternativen gibt es?
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Kosten, Gegenargumente und betroffene Interessen
+      description: Bitte benennen Sie auch Risiken und Argumente, die gegen den Vorschlag sprechen.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Öffentliche Belege und Links
+      description: Nur öffentliche, nachvollziehbare Quellen. Keine personenbezogenen Daten.
+    validations:
+      required: false
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Hinweise
+      options:
+        - label: Ich verstehe, dass mein Beitrag öffentlich ist und keine amtliche Stellungnahme darstellt.
+          required: true

@@ -1,0 +1,34 @@
+name: 'LifeBench: Wirkungsnachweis'
+description: 'Öffentliche Datenquelle, Messung oder unabhängige Evaluation vorschlagen'
+title: '[LifeBench] Wirkung / Beleg: '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Diese Einreichung wird erst nach menschlicher Prüfung als verifiziert angezeigt. Bitte keine privaten oder sensiblen Angaben posten.
+  - type: input
+    id: identifier
+    attributes:
+      label: Vorgangsnummer / Gesetz / Reform
+      placeholder: 'z. B. DIP 334563'
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Originaldatenquelle (öffentliche URL)
+    validations:
+      required: true
+  - type: textarea
+    id: methodology
+    attributes:
+      label: Messmethode, Vergleichszeitraum und Einschränkungen
+      description: Baseline, Zeitfenster, Einheit, Stichprobengröße und Attribution
+    validations:
+      required: true
+  - type: textarea
+    id: counterevidence
+    attributes:
+      label: Gegenbelege und Unsicherheiten
+    validations:
+      required: true

@@ -1,0 +1,12 @@
+{
+  "schema": "lifebench-impact-registry-v1",
+  "review_policy": "Measured impact requires a before/after baseline, primary-source evidence, counterfactual reasoning and explicit human review. A new law alone is not an outcome.",
+  "missions": [
+    {"id": "animal", "title": "Tierschutz", "metrics": ["Verletzungen und Tierwohlindikatoren", "Tiere in belastenden Haltungsverfahren", "Kontroll- und Vollzugsquoten", "Betriebs- und Beschäftigungsübergänge"], "independent_sources": ["https://www.destatis.de/", "https://www.bmel-statistik.de/"], "baseline_status": "not_established", "verified_measurements": []},
+    {"id": "food", "title": "Öffentliche pflanzliche Verpflegung", "metrics": ["Anteil ausgewogener pflanzlicher Mahlzeiten", "Kosten pro Mahlzeit", "Ernährungsqualität", "Zufriedenheit und Lebensmittelverschwendung"], "independent_sources": ["https://www.dge.de/"], "baseline_status": "not_established", "verified_measurements": []},
+    {"id": "transparency", "title": "Transparenz beim Tierschutzvollzug", "metrics": ["Kontrollabdeckung", "Wiederholte schwere Verstöße", "Zeit bis zur Mängelbehebung"], "independent_sources": ["https://www.bmel.de/"], "baseline_status": "not_established", "verified_measurements": []},
+    {"id": "repair", "title": "Recht auf Reparatur", "metrics": ["Reparaturquote", "Reparaturkosten", "Elektronikabfall und Nutzungsdauer"], "independent_sources": ["https://www.umweltbundesamt.de/"], "baseline_status": "not_established", "verified_measurements": []},
+    {"id": "ai", "title": "KI-Rechenschaft", "metrics": ["Fehlentscheidungen", "Wirksame Einsprüche", "Unabhängige Sicherheitsprüfungen"], "independent_sources": ["https://digital-strategy.ec.europa.eu/"], "baseline_status": "not_established", "verified_measurements": []},
+    {"id": "democracy", "title": "Demokratische Beteiligung", "metrics": ["Veröffentlichte Stellungnahmen", "Begründete Rückmeldungen", "Diversität der Beteiligung und Nachvollziehbarkeit"], "independent_sources": ["https://www.bundestag.de/"], "baseline_status": "not_established", "verified_measurements": []}
+  ]
+}
