@@ -2,3 +2,13 @@
 
 /* Keep the horizontally scrollable mission rail from setting the grid's min-content width. */
 @media(max-width:700px){.workspace{grid-template-columns:minmax(0,1fr)}.sidebar{min-width:0;max-width:100%;overflow:hidden}.mission-list{max-width:100%;min-width:0;overflow-x:auto}.mission-top{min-width:0}.mission-top>div{min-width:0}}
+
+
+/* Official observational baselines remain visually separate from causal-impact claims. */
+.observed-panel{border:1px solid #cfdcc9;background:#eef4e7;padding:16px;border-radius:15px;display:grid;gap:7px;margin:0 0 13px}
+.observed-panel>strong{font-size:15px;letter-spacing:-.025em}
+.observed-panel>p{margin:0;font-size:12px}
+.observed-values{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:5px 0}
+.observed-cell{display:flex;flex-direction:column;gap:2px;padding:12px;border:1px solid #d7dfd0;background:#fff;border-radius:10px;min-width:0}
+.observed-cell>strong{font-size:clamp(23px,3vw,32px);letter-spacing:-.065em;line-height:1}
+.observed-cell>a{font-size:11px;color:#365b38;text-decoration:underline}
