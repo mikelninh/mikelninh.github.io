@@ -308,7 +308,7 @@
     $('submission-add').addEventListener('click',saveSubmission);
     $('impact-save').addEventListener('click',saveImpact);
     $('impact-export').addEventListener('click',()=>download('lifebench-'+mission()+'-evaluationsplan.json',impactDesign()));
-    $('mission-list').addEventListener('click',()=>setTimeout(resetMissionUI,0));
+    $('mission-list').addEventListener('click',resetMissionUI);
     renderChannel();loadData();resetMissionUI();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
