@@ -40,6 +40,6 @@ class RoadmapStatusTests(unittest.TestCase):
         self.assertFalse(s["legislative_monitor"]["impact_verified"])
         md=roadmap.render_md(s)
         self.assertIn("not independent evidence",md)
-        self.assertIn("Promulgation verified: False",md)
+        self.assertIn("**Promulgation verified:** False",md)
 
 if __name__=="__main__":unittest.main()
