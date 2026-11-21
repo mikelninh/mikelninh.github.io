@@ -1,0 +1,41 @@
+name: LifeBench UI and trust gates
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/lifebench-qa.yml'
+      - 'firstlight-lab/*.html'
+      - 'firstlight-lab/law-os*.js'
+      - 'firstlight-lab/law-os*.css'
+      - 'firstlight-lab/MASTERPLAN.md'
+      - 'firstlight-lab/tests/*.py'
+  pull_request:
+    paths:
+      - '.github/workflows/lifebench-qa.yml'
+      - 'firstlight-lab/*.html'
+      - 'firstlight-lab/law-os*.js'
+      - 'firstlight-lab/law-os*.css'
+      - 'firstlight-lab/MASTERPLAN.md'
+      - 'firstlight-lab/tests/*.py'
+permissions:
+  contents: read
+jobs:
+  static-and-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify JavaScript syntax
+        run: |
+          node --check firstlight-lab/law-os.js
+          node --check firstlight-lab/law-os-v3.js
+      - name: Verify monitor and civic trust contracts
+        run: python3 -m unittest discover firstlight-lab/tests -p 'test_*.py' -v
+      - name: Verify official data JSON
+        run: |
+          python3 -m json.tool firstlight-lab/data/law-feed.json >/dev/null
+          python3 -m json.tool firstlight-lab/data/impact-registry.json >/dev/null
+      - name: Summarise release gate
+        run: |
+          echo "LifeBench static, safety and evidence contracts passed."
+          echo "Browser QA and legal review remain separate requirements."
