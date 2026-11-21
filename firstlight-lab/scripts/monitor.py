@@ -47,7 +47,7 @@ def fetch_bytes(url: str, *, dip=False, github=False, attempts=2) -> bytes:
         headers["Authorization"] = "Bearer " + os.environ["GITHUB_TOKEN"]
     for attempt in range(attempts):
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=24) as response:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=12) as response:
                 return response.read(3_000_000)
         except Exception as e:
             if attempt == attempts-1:
@@ -195,9 +195,27 @@ def changes_between(old, current):
 
 def build(previous=None, api_get=None, rss=None, gii=None, issues=None):
     api_get = api_get or (lambda u: get_json(u,dip=True))
-    rss = parse_gazette(fetch_bytes(RSS_URL)) if rss is None else rss
-    gii = parse_gii(fetch_bytes(GII_URL)) if gii is None else gii
-    issues = get_json(GITHUB_ISSUES, github=True) if issues is None else issues
+    gazette_health = "ok"
+    gii_health = "ok"
+    issues_health = "ok"
+    if rss is None:
+        try:
+            rss = parse_gazette(fetch_bytes(RSS_URL, attempts=1))
+        except (RuntimeError, ET.ParseError) as exc:
+            print(f"WARN: Official BGBl feed unavailable: {type(exc).__name__}", file=sys.stderr)
+            rss, gazette_health = [], "unavailable"
+    if gii is None:
+        try:
+            gii = parse_gii(fetch_bytes(GII_URL, attempts=1))
+        except (RuntimeError, ET.ParseError) as exc:
+            print(f"WARN: Gesetze im Internet feed unavailable: {type(exc).__name__}", file=sys.stderr)
+            gii, gii_health = [], "unavailable"
+    if issues is None:
+        try:
+            issues = get_json(GITHUB_ISSUES, github=True)
+        except RuntimeError as exc:
+            print(f"WARN: Public consultations unavailable: {type(exc).__name__}", file=sys.stderr)
+            issues, issues_health = [], "unavailable"
     # Public API supports cursor pagination. Limit 6 pages / 600 items for predictable load.
     u = DIP_BASE+"/vorgang?"+urllib.parse.urlencode({"f.wahlperiode":"21","f.vorgangstyp":"Gesetzgebung"})
     docs = []
@@ -216,9 +234,9 @@ def build(previous=None, api_get=None, rss=None, gii=None, issues=None):
         "schema":"lifebench-official-monitor-v1", "generated_at":now_utc(),
         "contract":"Observed official parliamentary records are not the same as promulgation, effective law or measured impact.",
         "sources": {"dip":{"status":"ok","url":SOURCE_LINKS['dip'],"count":len(docs),"checked_at":now_utc()},
-                    "gazette":{"status":"ok","url":SOURCE_LINKS['gazette'],"count":len(rss),"checked_at":now_utc()},
-                    "gii":{"status":"ok","url":SOURCE_LINKS['gii'],"count":len(gii),"checked_at":now_utc()},
-                    "consultations":{"status":"ok","url":"https://github.com/mikelninh/mikelninh.github.io/issues","checked_at":now_utc()}},
+                    "gazette":{"status":gazette_health,"url":SOURCE_LINKS['gazette'],"count":len(rss),"checked_at":now_utc()},
+                    "gii":{"status":gii_health,"url":SOURCE_LINKS['gii'],"count":len(gii),"checked_at":now_utc()},
+                    "consultations":{"status":issues_health,"url":"https://github.com/mikelninh/mikelninh.github.io/issues","checked_at":now_utc()}},
         "cases": cases,"gazette_related":relevant,"consultations":parse_consultations(issues),
         "changes": [],"outcome_status":"Unmeasured until independent data and a documented baseline exist",
         "last_verified_at":None,
