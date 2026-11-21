@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - '.github/workflows/lifebench-monitor.yml'
+      - '.github/workflows/pages.yml'
       - 'firstlight-lab/scripts/monitor.py'
       - 'firstlight-lab/tests/**'
   workflow_dispatch:
