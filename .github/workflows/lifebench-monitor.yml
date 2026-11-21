@@ -37,8 +37,9 @@ jobs:
           x=json.load(open(p))
           assert x['schema']=='lifebench-official-monitor-v1'
           assert x['sources']['dip']['status']=='ok'
-          assert x['sources']['gazette']['status']=='ok'
+          assert x['sources']['gazette']['status'] in ('ok', 'unavailable')
           assert x['cases'][0]['id']=='334563'
+          if x['sources']['gazette']['status']!='ok': print('DEGRADED: BGBl source unavailable; no new promulgation claim permitted')
           assert all(not c['entry_into_force']['verified'] and not c['impact']['verified'] for c in x['cases'])
           print('Contract PASS:',len(x['cases']),'records')
           PY
