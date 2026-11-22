@@ -8,7 +8,7 @@
 <title>CHOICE LAB — Better choices, by design.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f7f7f0;--paper:#fffefa;--ink:#182621;--muted:#667269;--line:#dfe5d9;--green:#254c3d;--lime:#e1f5a8;--sage:#d9ebdd;--tangerine:#f9d9bc;--max:1160px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;font-size:15px;line-height:1.55}button,input,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #80a66a;outline-offset:3px}
@@ -31,56 +31,56 @@ footer{border-top:1px solid var(--line);padding:28px 0 37px;display:flex;justify
 <body>
 <div class="wrap">
   <header class="topbar">
-    <button class="brand" data-go="home" aria-label="Choice Lab home"><span class="brandmark">c.</span> CHOICE LAB <span style="font-size:10px;color:#819186;font-weight:600;letter-spacing:.1px;margin-left:4px">by LifeBench</span></button>
+    <button class="brand" data-go="home" aria-label="Choice Lab home"><span class="brandmark">C<span class="mark-dot">●</span></span><span class="brand-word">CHOICE<span class="slash">/</span>LAB</span><span class="byline">AN OPEN STUDY BY LIFEBENCH</span></button>
     <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">☰</button>
     <nav class="nav" id="nav" aria-label="Main navigation"><button data-go="home">Overview</button><button data-go="method">The science</button><button data-go="results">Results</button><button class="nav-cta" data-go="experiment">Take the experiment ↗</button></nav>
   </header>
   <main id="main">
     <section class="section active" id="screen-home">
-      <div class="hero">
-        <div>
-          <div class="eyebrow"><span class="dot"></span> HUMAN BEHAVIOUR, UNDER THE MICROSCOPE</div>
-          <h1>Same human.<br><em>Different choices.</em></h1>
-          <p class="lead">What if a better world begins with a better-designed choice? Explore how prices, defaults and everyday environments change what people decide to do.</p>
-          <div class="hero-actions"><button class="btn btn-primary" data-go="experiment">Take the experiment <span>↗</span></button><button class="btn btn-soft" data-go="results">Explore the evidence <span>↗</span></button></div>
-          <div class="notice-line">Open research prototype · Real questions · No pretend conclusions</div>
+      <div class="hero"><div class="hero-grain" aria-hidden="true"></div><div class="hero-vertical" aria-hidden="true">NOT MAGIC. JUST THE CONDITIONS.</div>
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="dot"></span> AN EXPERIMENT IN EVERYDAY DECISIONS</div>
+          <h1>Same human.<br><em>Different<br>choices.</em></h1>
+          <p class="lead">One lunch. Three menu designs. <strong>What changes when the choice stays the same, but the world around it doesn’t?</strong> Try it for yourself.</p>
+          <div class="hero-actions"><button class="btn btn-primary" data-go="experiment">Try the 60-second experiment <span>↗</span></button><button class="btn btn-soft" data-go="results">See what we’re learning <span>↗</span></button></div>
+          <div class="notice-line">A real experiment. Hypothetical choices. No invented findings.</div>
         </div>
         <div class="experience-wrap">
-          <div class="visual-orbit"></div>
+          <div class="visual-orbit"></div><div class="scene-num" aria-hidden="true">01<span>/03</span></div><div class="scene-caption" aria-hidden="true">CHANGE THE SETTING ↗</div>
           <div class="experience-card">
-            <div class="preview-head"><div><div class="studio-label">INTERACTIVE PREVIEW / 001</div><h3>What's for lunch?</h3></div><span class="pill">Try the design</span></div>
+            <div class="preview-head"><div><div class="studio-label">THE INTERACTIVE EXPERIMENT / 001</div><h3>First, change the rules.</h3></div><span class="pill">PLAYGROUND · NO DATA SAVED</span></div>
             <div class="switcher" id="preview-switcher"><button class="selected" data-preview="control">Equal price</button><button data-preview="discount">Discount</button><button data-preview="default">Default</button></div>
             <div class="menu-mini" id="preview-options"></div>
-            <div class="preview-caption" id="preview-caption" aria-live="polite"></div>
-            <div class="preview-foot"><small>Change the conditions above. Notice what you notice.</small><button class="btn btn-primary small" data-go="experiment">Join study <span class="arrow">↗</span></button></div>
+            <div class="preview-caption" id="preview-caption" aria-live="polite"></div><div class="condition-strip" aria-live="polite"><span class="condition-symbol">↳</span><div><small>WHAT CHANGED?</small><strong id="preview-insight">Both meals cost the same.</strong></div><span class="condition-arrow">↗</span></div>
+            <div class="preview-foot"><small>Explore freely. Participation requires consent.</small><button class="btn btn-primary small" data-go="experiment">Join study <span class="arrow">↗</span></button></div>
           </div>
         </div>
       </div>
-      <div class="band"><div><strong>01 /</strong> A genuine choice</div><div><strong>02 /</strong> An invisible variable</div><div><strong>03 /</strong> A measurable outcome</div></div>
+      <div class="band"><div><strong>01 /</strong> PLAY WITH THE MENU</div><div><strong>02 /</strong> CHANGE A SINGLE VARIABLE</div><div><strong>03 /</strong> OBSERVE THE DIFFERENCE</div></div>
       <div class="principles">
-        <div class="kicker">A BIG QUESTION. A SMALL EXPERIMENT.</div>
-        <h2 class="section-title">What makes us<br>change our minds <em style="font-family:Georgia,serif;color:#5b855e">without changing our minds?</em></h2>
+        <div class="kicker">THE BIG IDEA / BEHAVIOUR IS DESIGNED</div>
+        <h2 class="section-title">The invisible forces<br>behind <em>everyday choices.</em></h2>
         <div class="cards-3">
-          <div class="principle-card"><div class="num">01 · UNDERSTAND</div><h3>Values aren't actions.</h3><p>What we believe, what we intend and what we choose can be remarkably different.</p></div>
-          <div class="principle-card"><div class="num">02 · EXPERIMENT</div><h3>Design changes decisions.</h3><p>Compare identical choices in different environments. Random assignment helps isolate what changed.</p></div>
-          <div class="principle-card"><div class="num">03 · IMPROVE</div><h3>Measure what matters.</h3><p>Move beyond clicks towards actual purchases, lasting habits, wellbeing and legitimate policy.</p></div>
+          <div class="principle-card"><div class="num">01 · UNDERSTAND</div><h3>Belief ≠ behaviour.</h3><p>What we believe, what we intend and what we choose can be remarkably different.</p></div>
+          <div class="principle-card"><div class="num">02 · EXPERIMENT</div><h3>Context is a quiet architect.</h3><p>Compare identical choices in different environments. Random assignment helps isolate what changed.</p></div>
+          <div class="principle-card"><div class="num">03 · IMPROVE</div><h3>Reality gets the final word.</h3><p>Move beyond clicks towards actual purchases, lasting habits, wellbeing and legitimate policy.</p></div>
         </div>
       </div>
-      <div class="highlight-panel"><div><div class="kicker" style="color:#b5d4b2">FROM INTERFACE TO IMPACT</div><h2>Good design asks what people want.<br><em>Great research asks what actually happens.</em></h2><p>We're starting with plant-based meal choices. The bigger ambition is to help organisations test which systems, incentives and policies genuinely improve lives.</p></div><div class="buttonwrap"><button class="btn btn-white" data-go="method">Meet the method ↗</button></div></div>
+      <div class="highlight-panel"><div><div class="kicker" style="color:#b5d4b2">FROM INTERFACE TO IMPACT</div><h2>Less guessing.<br><em>More learning.</em></h2><p>We're starting with plant-based meal choices. The bigger ambition is to help organisations test which systems, incentives and policies genuinely improve lives.</p></div><div class="buttonwrap"><button class="btn btn-white" data-go="method">Meet the method ↗</button></div></div>
     </section>
     <section class="section" id="screen-experiment">
-      <div class="page-head"><div class="eyebrow"><span class="dot"></span> EXPERIMENT 001 / BEHAVIOUR BY DESIGN</div><h1>One lunch.<br><em>Three possible worlds.</em></h1><p>Make a hypothetical meal choice. The version of the menu you see is assigned by chance, not by your preferences.</p></div>
+      <div class="page-head"><div class="eyebrow"><span class="dot"></span> EXPERIMENT 001 / BEHAVIOUR BY DESIGN</div><h1>Your lunch.<br><em>Their rules.</em></h1><p>Make a hypothetical meal choice. The version of the menu you see is assigned by chance, not by your preferences.</p></div>
       <div class="trial-shell" id="trial-panel"></div>
     </section>
     <section class="section" id="screen-results">
-      <div class="page-head"><div class="eyebrow"><span class="dot"></span> THE EVIDENCE ROOM / 001</div><h1>What did we <em>learn?</em></h1><p>The result is only as good as the experiment. Live counts are displayed separately from a clearly fictional example, and neither represents real purchases.</p></div>
+      <div class="page-head"><div class="eyebrow"><span class="dot"></span> THE EVIDENCE ROOM / 001</div><h1>Pretty charts.<br><em>Uncomfortable honesty.</em></h1><p>The result is only as good as the experiment. Live counts are displayed separately from a clearly fictional example, and neither represents real purchases.</p></div>
       <div class="results-header"><span class="status-label" id="results-status">ILLUSTRATIVE DATA · NOT OBSERVED</span><div class="results-toggle"><button class="selected" data-source="scenario">Example scenario</button><button data-source="live">Live study</button></div></div>
       <div class="results-area"><div class="results-box"><h2>Plant-based choices by menu design</h2><div class="mini" id="results-subtitle">Invented results to explain the dashboard, not observations</div><div id="bars"></div></div><div class="insight-box"><div class="aside-caption" id="insight-label">EXAMPLE ONLY</div><div class="big-stat" id="insight-number">+32pp</div><h2 id="insight-title">A possible default effect</h2><p id="insight-copy">A made-up example of how a default could change simulated meal selection. No scientific claim follows from these numbers.</p><hr style="border:0;border-top:1px solid #c9dfc5;margin:23px 0"><div class="mini" id="n-total">180 fictional decisions</div></div></div>
       <div class="subnote"><strong>Research integrity:</strong> This is an opt-in, self-selected sample of hypothetical menu choices. Random assignment can compare the menu variants within participants, but it does not establish behaviour at actual restaurants, long-term habits or representative public opinion. An adequately powered field trial would follow.</div>
       <div class="tool-row"><button class="btn btn-soft small" id="refresh-live">↻ Refresh live results</button><button class="btn btn-soft small" id="export-csv">↓ Export aggregated CSV</button><button class="btn btn-soft small" data-go="method">Study design ↗</button></div>
     </section>
     <section class="section" id="screen-method">
-      <div class="page-head"><div class="eyebrow"><span class="dot"></span> OPEN METHODS / VERSION 1.0</div><h1>Beautiful questions.<br><em>Honest answers.</em></h1><p>Choice Lab is a research instrument, not a persuasion engine. We test whether a change genuinely helps people make informed, satisfying choices.</p></div>
+      <div class="page-head"><div class="eyebrow"><span class="dot"></span> OPEN METHODS / VERSION 1.0</div><h1>Make it beautiful.<br><em>Keep it honest.</em></h1><p>Choice Lab is a research instrument, not a persuasion engine. We test whether a change genuinely helps people make informed, satisfying choices.</p></div>
       <div class="method-grid">
         <article class="method-card"><div class="index">01 / THE HYPOTHESIS</div><h3>Can changing the context change the choice?</h3><p>Each participant sees one of three menus: equal-price control, a 20.8% plant-based discount, or a plant-based preselection with an easy opt-out. Food descriptions remain comparable.</p></article>
         <article class="method-card"><div class="index">02 / THE ASSIGNMENT</div><h3>One person. One randomised version.</h3><p>Random assignment happens after informed consent. Each browser stores its assignment and a unique trial token to discourage duplicate entries. No personal profile is collected.</p></article>
@@ -122,11 +122,26 @@ function navigate(view){
  window.scrollTo({top:0,behavior:"smooth"});
  try{history.replaceState(null,"","#"+view)}catch(e){}
 }
+function dishSVG(kind){
+ const plant=kind==="plant",seed=plant?"herb":"beef",a=plant?["#e9eeab","#829b48","#405e35"]:["#f5d7a9","#a06035","#67331f"];
+ return '<svg class="dish-art" viewBox="0 0 320 234" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+(plant?'Illustration of plant-based noodle soup':'Illustration of traditional beef noodle soup')+'">'
+ +'<defs><radialGradient id="broth-'+seed+'"><stop stop-color="'+a[0]+'"/><stop offset=".65" stop-color="'+a[1]+'"/><stop offset="1" stop-color="'+a[2]+'"/></radialGradient></defs>'
+ +'<ellipse cx="164" cy="206" rx="102" ry="17" fill="#193323" opacity=".16"/>'
+ +'<ellipse cx="161" cy="118" rx="116" ry="98" fill="#faf8e9" stroke="#d8cfb4" stroke-width="6"/>'
+ +'<ellipse cx="161" cy="118" rx="102" ry="84" fill="url(#broth-'+seed+')"/>'
+ +'<path d="M108 91c40-32 92 52 127 12M104 107c42-32 99 46 132 3M94 121c40-32 97 43 136-8M112 138c43-32 93 43 118-3" stroke="#f6e5b7" stroke-width="8" fill="none" stroke-linecap="round"/>'
+ +'<ellipse cx="128" cy="80" rx="25" ry="11" fill="'+(plant?'#446e3b':'#a65336')+'" transform="rotate(-30 128 80)"/>'
+ +'<ellipse cx="121" cy="119" rx="25" ry="11" fill="'+(plant?'#638d4c':'#bb6e49')+'" transform="rotate(33 121 119)"/>'
+ +'<ellipse cx="197" cy="151" rx="22" ry="10" fill="'+(plant?'#365b32':'#8d4229')+'" transform="rotate(18 197 151)"/>'
+ +'<g fill="'+(plant?'#d2e58a':'#75a35c')+'"><ellipse cx="205" cy="83" rx="18" ry="7" transform="rotate(35 205 83)"/><ellipse cx="211" cy="99" rx="20" ry="7" transform="rotate(-38 211 99)"/><ellipse cx="82" cy="150" rx="17" ry="7" transform="rotate(-28 82 150)"/></g>'
+ +'<g fill="#f8efdb"><circle cx="157" cy="82" r="5"/><circle cx="188" cy="132" r="4"/><circle cx="102" cy="135" r="4"/></g></svg>';
+}
+
 function menuRow(kind,arm,mini){
  const c=ARMS[arm],plant=kind==="plant",label=plant?"Plant-based Phở":"Traditional Phở",desc=plant?"Mushrooms, tofu, fragrant herbs":"Beef, rice noodles, aromatic broth",price=plant?c.pricePlant:c.priceBeef;
- if(mini){const picked=previewChoice===kind||(previewChoice===null&&c.preselect===kind);return '<button class="mini-option'+(picked?' is-chosen':'')+'" data-mini-choice="'+kind+'" aria-pressed="'+picked+'"><span class="mini-food '+kind+'">'+(plant?'🌿':'🍜')+'</span><span><span class="mini-title">'+label+'</span><span class="mini-desc">'+desc+'</span></span><strong>'+money(price)+'</strong><span class="check">'+(picked?'✓':'')+'</span></button>'}
+ if(mini){const picked=previewChoice===kind||(previewChoice===null&&c.preselect===kind);return '<button class="mini-option'+(picked?' is-chosen':'')+'" data-mini-choice="'+kind+'" aria-pressed="'+picked+'"><span class="mini-food '+kind+'">'+(plant?'✳':'✦')+'</span><span><span class="mini-title">'+label+'</span><span class="mini-desc">'+desc+'</span></span><strong>'+money(price)+'</strong><span class="check">'+(picked?'✓':'')+'</span></button>'}
  const picked=selected===kind;
- return '<button class="food-card'+(picked?' chosen':'')+'" data-choice="'+kind+'" aria-pressed="'+picked+'"><span class="food-art '+kind+'"><span class="plate"><span class="soup"></span><span class="noodles">〰</span><span class="garnish">'+(plant?'🥬':'🍜')+'</span></span></span><span class="food-info"><span class="food-top"><span class="food-name">'+label+'</span><span class="food-price">'+money(price)+'</span></span><span class="food-desc">'+desc+'</span><span class="choose-line">'+(picked?'Your selection':'Select this meal')+'</span></span></button>'
+ return '<button class="food-card'+(picked?' chosen':'')+'" data-choice="'+kind+'" aria-pressed="'+picked+'"><span class="food-art '+kind+'">'+dishSVG(kind)+'</span><span class="food-info"><span class="food-top"><span class="food-name">'+label+'</span><span class="food-price">'+money(price)+'</span></span><span class="food-desc">'+desc+'</span><span class="choose-line">'+(picked?'Your selection':'Select this meal')+'</span></span></button>'
 }
 function renderPreview(){
  document.querySelectorAll("[data-preview]").forEach(function(b){b.classList.toggle("selected",b.dataset.preview===previewArm)});
@@ -137,6 +152,7 @@ function renderPreview(){
  if(which) msg+=" Currently selected: "+(which==="plant"?"plant-based":"traditional")+".";
  else msg+=" Choose one to see how it feels.";
  document.getElementById("preview-caption").textContent=msg;
+ const note=document.getElementById("preview-insight"); if(note)note.textContent=previewArm==="control"?"Both meals cost exactly the same.":previewArm==="discount"?"The plant-based bowl is €2.60 cheaper.":"Plant-based Phở is selected for you.";
 }
 function renderTrial(){
  const p=document.getElementById("trial-panel"),step=stage==="consent"?0:stage==="menu"?1:stage==="reflect"?2:3;
