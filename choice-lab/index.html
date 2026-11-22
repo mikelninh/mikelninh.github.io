@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f7f0">
+<meta name="description" content="Choice Lab: an interactive research prototype exploring how interfaces, defaults and incentives shape our everyday decisions.">
+<title>CHOICE LAB — Better choices, by design.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f7f0;--paper:#fffefa;--ink:#182621;--muted:#667269;--line:#dfe5d9;--green:#254c3d;--lime:#e1f5a8;--sage:#d9ebdd;--tangerine:#f9d9bc;--max:1160px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;font-size:15px;line-height:1.55}button,input,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #80a66a;outline-offset:3px}
+.wrap{width:min(var(--max),calc(100% - 72px));margin:0 auto}.topbar{height:84px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:11px;background:transparent;border:0;color:var(--ink);font-weight:700;letter-spacing:-.8px;font-size:21px;padding:0}.brandmark{height:37px;width:37px;background:var(--green);color:var(--lime);border-radius:12px;display:grid;place-items:center;line-height:1;font-family:Georgia,serif;font-size:27px;font-style:italic}.nav{display:flex;align-items:center;gap:6px}.nav button{border:0;background:transparent;padding:11px 16px;border-radius:100px;color:#526158;font-size:13px;font-weight:600}.nav button:hover,.nav button.active{background:#e7eee3;color:var(--green)}.nav .nav-cta{background:var(--ink);color:white;padding:11px 20px}.nav .nav-cta:hover{background:#385441;color:white}.menu-toggle{display:none;background:transparent;border:1px solid var(--line);padding:9px 12px;border-radius:10px}.section{display:none;animation:rise .32s ease both}.section.active{display:block}@keyframes rise{from{opacity:.3;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.hero{display:grid;grid-template-columns:1.04fr .96fr;gap:54px;align-items:center;padding:81px 0 54px}.eyebrow{display:flex;align-items:center;gap:10px;letter-spacing:1.9px;font-size:10px;font-weight:700;text-transform:uppercase;color:#4f6959}.eyebrow .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#75a26c}.hero h1,.page-head h1{font-family:"DM Serif Display",Georgia,serif;font-weight:400;letter-spacing:-2.8px;line-height:1.02;font-size:clamp(56px,5.6vw,83px);margin:25px 0 25px}.hero h1 em,.page-head h1 em{font-weight:400;color:#547a57}.lead{max-width:540px;font-size:18px;color:#5e6b62;line-height:1.77}.hero-actions{margin-top:31px;display:flex;gap:11px;flex-wrap:wrap}.btn{border:1px solid transparent;border-radius:100px;padding:13px 22px;display:inline-flex;gap:11px;align-items:center;justify-content:center;font-weight:700;font-size:13px;transition:background .2s,transform .2s;text-align:center}.btn:hover{transform:translateY(-1px)}.btn-primary{background:var(--green);color:white}.btn-primary:hover{background:#37624d}.btn-soft{background:transparent;color:var(--ink);border-color:#ccd8cb}.btn-soft:hover{background:#e9f0e4}.btn-white{background:white;color:var(--green)}.small{padding:10px 17px;font-size:12px}.mini{font-size:12px;color:#728075}.notice-line{display:flex;align-items:center;gap:9px;font-size:12px;color:#67786d;margin-top:21px}.notice-line:before{content:"";height:6px;width:6px;border-radius:50%;background:#76a96c}
+.experience-wrap{background:#e1eddc;border-radius:26px;position:relative;padding:26px;box-shadow:0 24px 65px rgba(40,72,52,.08);min-height:480px}.visual-orbit{position:absolute;width:130px;height:130px;border:1px solid #acc9b2;border-radius:50%;right:-19px;top:-25px;pointer-events:none}.visual-orbit:after{content:"";width:52px;height:52px;position:absolute;right:10px;top:15px;background:#f7dcb8;border-radius:50%}.studio-label{font-size:10px;letter-spacing:1.3px;font-weight:800;color:#536b56}.experience-card{background:var(--paper);border:1px solid #d2dfce;border-radius:18px;padding:21px;position:relative;z-index:2;box-shadow:0 10px 23px #39583f12}.preview-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.preview-head h3{font-family:"DM Serif Display",Georgia,serif;font-size:27px;letter-spacing:-.7px;font-weight:400;margin:9px 0 5px}.pill{border:1px solid #d9e1d8;border-radius:100px;padding:6px 11px;font-size:10px;color:#5a6a5d;white-space:nowrap}.switcher{display:flex;background:#f0f2ea;padding:4px;gap:3px;border-radius:100px;margin:18px 0}.switcher button{flex:1;padding:9px 5px;border:0;background:transparent;border-radius:100px;font-size:11px;color:#69736a;font-weight:700}.switcher button.selected{background:#264e3b;color:#fff}.menu-mini{display:grid;gap:8px}.mini-option{border:1px solid #e3e7db;border-radius:12px;background:#fff;padding:11px;display:flex;align-items:center;gap:11px;text-align:left;color:var(--ink);width:100%}.mini-option.is-chosen{border-color:#427258;background:#f0f7ec}.mini-option .mini-food{display:grid;place-items:center;border-radius:10px;width:47px;height:47px;flex:none;font-size:24px}.mini-food.plant{background:#d6ecb7}.mini-food.beef{background:#f6d9c6}.mini-title{font-weight:700;font-size:12px;display:block}.mini-desc{font-size:10px;color:#849087}.mini-option strong{margin-left:auto;white-space:nowrap;font-size:12px}.mini-option .check{font-size:14px;color:#3d7857;margin-right:4px}.preview-caption{font-size:11px;min-height:31px;color:#627165;padding:12px 1px 0}.preview-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:15px}.preview-foot .arrow{font-size:21px}.preview-foot small{font-size:10px;color:#788578;max-width:230px}
+.band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:24px 0;margin-top:25px;display:flex;justify-content:space-between;gap:20px;color:#79877b;font-size:12px;letter-spacing:.4px}.band strong{color:#324b3d}.principles{padding:80px 0 96px}.kicker{color:#7c967e;font-weight:800;font-size:11px;letter-spacing:1.4px;text-transform:uppercase}.section-title{font-family:"DM Serif Display",Georgia,serif;font-weight:400;font-size:clamp(37px,4vw,57px);line-height:1.15;letter-spacing:-1.5px;margin:12px 0 24px}.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:29px}.principle-card{padding:30px;border:1px solid #e0e4dc;background:#fffefa;border-radius:19px;min-height:230px}.principle-card .num{font-size:12px;color:#789481}.principle-card h3{font-size:20px;letter-spacing:-.7px;margin:32px 0 12px}.principle-card p{font-size:13px;color:#69786c;line-height:1.7;margin:0}.highlight-panel{background:#254b3a;color:white;border-radius:24px;padding:44px;display:flex;gap:22px;justify-content:space-between;align-items:center;margin-bottom:90px}.highlight-panel h2{font-family:"DM Serif Display",Georgia,serif;font-weight:400;font-size:41px;line-height:1.18;margin:0}.highlight-panel p{color:#cbded1;max-width:510px}.highlight-panel .buttonwrap{flex:none}
+.page-head{padding:69px 0 25px}.page-head h1{font-size:clamp(44px,5.2vw,68px);margin:14px 0 18px}.page-head p{max-width:700px;color:#67766b;font-size:16px;line-height:1.75}
+.trial-shell{max-width:805px;margin:27px auto 110px;background:var(--paper);border:1px solid #e0e6db;border-radius:24px;padding:35px 40px;box-shadow:0 16px 45px #203d2710}.progress{display:flex;align-items:center;gap:7px;margin-bottom:27px}.progress span{height:4px;flex:1;border-radius:100px;background:#e6eadf}.progress .done{background:#5a8b6a}.step-label{font-size:11px;letter-spacing:1.3px;font-weight:800;color:#6d9870;text-transform:uppercase}.trial-shell h2{font-family:"DM Serif Display",Georgia,serif;font-size:43px;font-weight:400;letter-spacing:-.8px;line-height:1.2;margin:13px 0}.trial-shell p{color:#66776c;line-height:1.7}.consent-details{background:#f2f6ed;border-radius:14px;padding:18px 22px;margin:26px 0}.consent-details p{margin:0 0 10px;font-size:13px}.consent-details p:last-child{margin:0}.checklabel{display:flex;align-items:flex-start;gap:12px;margin:24px 0;cursor:pointer;font-size:13px;line-height:1.5}.checklabel input{width:17px;height:17px;accent-color:var(--green);margin-top:2px;flex:none}.actions-end{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:23px}.tiny-note{font-size:11px;color:#819084}.study-menu{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}.food-card{border:2px solid #e1e7dc;background:#fff;border-radius:18px;padding:0 0 18px;display:block;text-align:left;transition:border .18s,box-shadow .18s;overflow:hidden;color:var(--ink)}.food-card:hover{border-color:#83ad8c}.food-card.chosen{border-color:#397051;box-shadow:0 0 0 3px #cee5ca}.food-art{height:165px;display:grid;place-items:center;overflow:hidden;position:relative}.food-art.plant{background:radial-gradient(ellipse at 35% 27%,#eaf4c5 0%,#cbdca4 63%,#bacc98 100%)}.food-art.beef{background:radial-gradient(ellipse at 35% 27%,#f7e6d1 0%,#ebc29c 63%,#dba879 100%)}.food-art .plate{position:relative;width:140px;height:140px;border-radius:50%;background:#fcf9e8;border:10px solid #f9f5e7;box-shadow:0 7px 19px #283d2735, inset 0 0 0 7px #e9d6b4;display:grid;place-items:center}.plate .soup{height:109px;width:109px;position:absolute;border-radius:50%;background:radial-gradient(circle at 60% 50%,#ad7746 0%,#794b26 55%,#51341e 100%)}.plant .plate .soup{background:radial-gradient(circle at 60% 50%,#a9b56e 0%,#788344 55%,#536036 100%)}.food-art .garnish{position:absolute;font-size:41px;transform:rotate(-14deg);filter:drop-shadow(1px 3px 2px #14281340)}.food-art .noodles{position:absolute;color:#f5e9ca;font-size:25px;transform:translate(22px,23px) rotate(11deg)}.food-card .food-info{padding:19px 20px 0}.food-top{display:flex;justify-content:space-between;gap:10px;align-items:start}.food-name{font-weight:700;font-size:19px;letter-spacing:-.5px}.food-price{font-size:18px;font-weight:800}.food-desc{display:block;font-size:12px;color:#7a8a7f;min-height:39px;margin:7px 0 14px;line-height:1.5}.choose-line{color:#447b59;font-weight:700;font-size:12px}.food-card.chosen .choose-line:before{content:"✓ ";}.preselected-info{display:inline-flex;align-items:center;gap:7px;font-size:11px;background:#e7efdb;color:#4f6f50;border-radius:30px;padding:7px 12px;margin:5px 0}
+.reason-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:25px 0}.reason{border:1px solid #e0e5da;background:white;border-radius:12px;padding:14px;text-align:left;font-size:13px;font-weight:600;color:#5b6b60}.reason.active{background:#e4f1dc;border-color:#689774;color:#28563f}.scale{display:flex;justify-content:space-between;gap:7px;margin:17px 0}.scale button{border:1px solid #d8e2d7;border-radius:10px;background:#fff;padding:13px 0;flex:1;color:#566d5f}.scale button.active{background:#254b3b;color:#fff}.error{border-radius:9px;background:#fff0eb;color:#9d4335;padding:13px;margin-top:13px;font-size:12px;display:none}.success-icon{display:grid;place-items:center;width:64px;height:64px;background:#e2f4cf;border-radius:20px;font-size:32px;color:#305c3f}
+.results-area{display:grid;grid-template-columns:1.5fr .7fr;gap:16px;margin:20px 0 40px}.results-box,.insight-box{background:var(--paper);border:1px solid #e0e7dc;padding:29px;border-radius:22px}.results-box h2,.insight-box h2{font-size:19px;letter-spacing:-.4px;margin:0 0 6px}.results-header{display:flex;justify-content:space-between;align-items:center;gap:15px}.status-label{display:inline-flex;padding:7px 12px;border-radius:50px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;background:#f9e7d5;color:#87542c}.status-label.live{background:#dceedd;color:#326047}.results-toggle{display:inline-flex;border:1px solid #dce5d7;border-radius:100px;padding:4px;gap:2px}.results-toggle button{border:0;background:transparent;padding:8px 13px;border-radius:100px;font-size:11px;color:#6b806f;font-weight:800}.results-toggle button.selected{background:#264e3b;color:#fff}.bar-row{margin:24px 0 30px}.bar-top{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:700}.bar-track{background:#edf1e8;height:13px;overflow:hidden;border-radius:100px;margin:11px 0 5px}.bar-track .bar-fill{height:100%;background:#467b55;border-radius:100px;transition:width .45s ease}.bar-foot{display:flex;justify-content:space-between;font-size:11px;color:#829085}.big-stat{font-family:"DM Serif Display",Georgia,serif;font-size:65px;letter-spacing:-2.5px;line-height:1.05;margin:16px 0 4px}.insight-box{background:#e5f1df}.insight-box p{font-size:13px;color:#5c705e;line-height:1.75}.insight-box .aside-caption{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:800;color:#739077}.subnote{padding:15px 20px;border:1px dashed #d8e2d5;border-radius:13px;color:#69796c;font-size:12px;background:#f9faf5}.tool-row{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 70px}
+.method-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin:28px 0}.method-card{border:1px solid #e0e7df;border-radius:18px;background:white;padding:26px}.method-card .index{color:#85a081;font-size:12px}.method-card h3{font-size:19px;margin:15px 0 9px}.method-card p{color:#788679;font-size:13px;line-height:1.75}.method-bottom{background:#e4eddf;border-radius:20px;padding:35px;margin:10px 0 80px;display:flex;align-items:center;justify-content:space-between;gap:25px}.method-bottom h2{font-family:"DM Serif Display",Georgia,serif;font-weight:400;font-size:35px;line-height:1.2;margin:0 0 12px}.method-bottom p{font-size:13px;color:#607262;max-width:600px}
+footer{border-top:1px solid var(--line);padding:28px 0 37px;display:flex;justify-content:space-between;gap:22px;align-items:center;font-size:11px;color:#809082}footer strong{color:#4a6652}
+.toast{position:fixed;bottom:23px;left:50%;transform:translate(-50%,90px);background:#203e2f;color:white;border-radius:100px;padding:12px 19px;font-size:12px;z-index:100;opacity:0;transition:all .2s;box-shadow:0 10px 24px #233b2870}.toast.show{transform:translate(-50%,0);opacity:1}
+@media(max-width:970px){.hero{grid-template-columns:1fr;gap:30px;padding-top:50px}.hero h1{max-width:770px}.experience-wrap{max-width:570px;width:100%;margin:auto}.results-area{grid-template-columns:1fr}.highlight-panel{padding:34px}.wrap{width:min(var(--max),calc(100% - 40px))}}
+@media(max-width:650px){.topbar{height:auto;min-height:71px;flex-wrap:wrap;padding:14px 0}.brand{font-size:18px}.brandmark{height:33px;width:33px}.menu-toggle{display:block}.nav{display:none;width:100%;padding:14px 0 3px;flex-wrap:wrap}.nav.mobile-open{display:flex}.nav button{flex:1;font-size:12px;padding:10px}.nav .nav-cta{min-width:100%}.hero{padding-top:46px}.hero h1{font-size:59px;letter-spacing:-2.4px}.lead{font-size:16px}.experience-wrap{padding:14px;min-height:unset}.experience-card{padding:16px}.visual-orbit{display:none}.band{flex-direction:column;gap:9px;padding:20px 0}.principles{padding:54px 0}.cards-3{grid-template-columns:1fr}.principle-card{min-height:unset}.principle-card h3{margin:18px 0 7px}.highlight-panel{flex-direction:column;align-items:flex-start;margin-bottom:56px}.highlight-panel h2{font-size:35px}.page-head{padding-top:45px}.trial-shell{padding:22px 17px;margin:22px auto 65px}.trial-shell h2{font-size:35px}.study-menu{gap:10px}.food-art{height:125px}.food-art .plate{transform:scale(.75)}.food-card .food-info{padding:13px 11px 0}.food-name{font-size:15px}.food-price{font-size:15px}.food-desc{font-size:11px}.reason-grid{grid-template-columns:1fr 1fr}.results-box,.insight-box{padding:20px}.results-header{align-items:flex-start;flex-direction:column}.method-grid{grid-template-columns:1fr}.method-bottom{flex-direction:column;align-items:flex-start;padding:25px}footer{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <button class="brand" data-go="home" aria-label="Choice Lab home"><span class="brandmark">c.</span> CHOICE LAB <span style="font-size:10px;color:#819186;font-weight:600;letter-spacing:.1px;margin-left:4px">by LifeBench</span></button>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">☰</button>
+    <nav class="nav" id="nav" aria-label="Main navigation"><button data-go="home">Overview</button><button data-go="method">The science</button><button data-go="results">Results</button><button class="nav-cta" data-go="experiment">Take the experiment ↗</button></nav>
+  </header>
+  <main id="main">
+    <section class="section active" id="screen-home">
+      <div class="hero">
+        <div>
+          <div class="eyebrow"><span class="dot"></span> HUMAN BEHAVIOUR, UNDER THE MICROSCOPE</div>
+          <h1>Same human.<br><em>Different choices.</em></h1>
+          <p class="lead">What if a better world begins with a better-designed choice? Explore how prices, defaults and everyday environments change what people decide to do.</p>
+          <div class="hero-actions"><button class="btn btn-primary" data-go="experiment">Take the experiment <span>↗</span></button><button class="btn btn-soft" data-go="results">Explore the evidence <span>↗</span></button></div>
+          <div class="notice-line">Open research prototype · Real questions · No pretend conclusions</div>
+        </div>
+        <div class="experience-wrap">
+          <div class="visual-orbit"></div>
+          <div class="experience-card">
+            <div class="preview-head"><div><div class="studio-label">INTERACTIVE PREVIEW / 001</div><h3>What's for lunch?</h3></div><span class="pill">Try the design</span></div>
+            <div class="switcher" id="preview-switcher"><button class="selected" data-preview="control">Equal price</button><button data-preview="discount">Discount</button><button data-preview="default">Default</button></div>
+            <div class="menu-mini" id="preview-options"></div>
+            <div class="preview-caption" id="preview-caption" aria-live="polite"></div>
+            <div class="preview-foot"><small>Change the conditions above. Notice what you notice.</small><button class="btn btn-primary small" data-go="experiment">Join study <span class="arrow">↗</span></button></div>
+          </div>
+        </div>
+      </div>
+      <div class="band"><div><strong>01 /</strong> A genuine choice</div><div><strong>02 /</strong> An invisible variable</div><div><strong>03 /</strong> A measurable outcome</div></div>
+      <div class="principles">
+        <div class="kicker">A BIG QUESTION. A SMALL EXPERIMENT.</div>
+        <h2 class="section-title">What makes us<br>change our minds <em style="font-family:Georgia,serif;color:#5b855e">without changing our minds?</em></h2>
+        <div class="cards-3">
+          <div class="principle-card"><div class="num">01 · UNDERSTAND</div><h3>Values aren't actions.</h3><p>What we believe, what we intend and what we choose can be remarkably different.</p></div>
+          <div class="principle-card"><div class="num">02 · EXPERIMENT</div><h3>Design changes decisions.</h3><p>Compare identical choices in different environments. Random assignment helps isolate what changed.</p></div>
+          <div class="principle-card"><div class="num">03 · IMPROVE</div><h3>Measure what matters.</h3><p>Move beyond clicks towards actual purchases, lasting habits, wellbeing and legitimate policy.</p></div>
+        </div>
+      </div>
+      <div class="highlight-panel"><div><div class="kicker" style="color:#b5d4b2">FROM INTERFACE TO IMPACT</div><h2>Good design asks what people want.<br><em>Great research asks what actually happens.</em></h2><p>We're starting with plant-based meal choices. The bigger ambition is to help organisations test which systems, incentives and policies genuinely improve lives.</p></div><div class="buttonwrap"><button class="btn btn-white" data-go="method">Meet the method ↗</button></div></div>
+    </section>
+    <section class="section" id="screen-experiment">
+      <div class="page-head"><div class="eyebrow"><span class="dot"></span> EXPERIMENT 001 / BEHAVIOUR BY DESIGN</div><h1>One lunch.<br><em>Three possible worlds.</em></h1><p>Make a hypothetical meal choice. The version of the menu you see is assigned by chance, not by your preferences.</p></div>
+      <div class="trial-shell" id="trial-panel"></div>
+    </section>
+    <section class="section" id="screen-results">
+      <div class="page-head"><div class="eyebrow"><span class="dot"></span> THE EVIDENCE ROOM / 001</div><h1>What did we <em>learn?</em></h1><p>The result is only as good as the experiment. Live counts are displayed separately from a clearly fictional example, and neither represents real purchases.</p></div>
+      <div class="results-header"><span class="status-label" id="results-status">ILLUSTRATIVE DATA · NOT OBSERVED</span><div class="results-toggle"><button class="selected" data-source="scenario">Example scenario</button><button data-source="live">Live study</button></div></div>
+      <div class="results-area"><div class="results-box"><h2>Plant-based choices by menu design</h2><div class="mini" id="results-subtitle">Invented results to explain the dashboard, not observations</div><div id="bars"></div></div><div class="insight-box"><div class="aside-caption" id="insight-label">EXAMPLE ONLY</div><div class="big-stat" id="insight-number">+32pp</div><h2 id="insight-title">A possible default effect</h2><p id="insight-copy">A made-up example of how a default could change simulated meal selection. No scientific claim follows from these numbers.</p><hr style="border:0;border-top:1px solid #c9dfc5;margin:23px 0"><div class="mini" id="n-total">180 fictional decisions</div></div></div>
+      <div class="subnote"><strong>Research integrity:</strong> This is an opt-in, self-selected sample of hypothetical menu choices. Random assignment can compare the menu variants within participants, but it does not establish behaviour at actual restaurants, long-term habits or representative public opinion. An adequately powered field trial would follow.</div>
+      <div class="tool-row"><button class="btn btn-soft small" id="refresh-live">↻ Refresh live results</button><button class="btn btn-soft small" id="export-csv">↓ Export aggregated CSV</button><button class="btn btn-soft small" data-go="method">Study design ↗</button></div>
+    </section>
+    <section class="section" id="screen-method">
+      <div class="page-head"><div class="eyebrow"><span class="dot"></span> OPEN METHODS / VERSION 1.0</div><h1>Beautiful questions.<br><em>Honest answers.</em></h1><p>Choice Lab is a research instrument, not a persuasion engine. We test whether a change genuinely helps people make informed, satisfying choices.</p></div>
+      <div class="method-grid">
+        <article class="method-card"><div class="index">01 / THE HYPOTHESIS</div><h3>Can changing the context change the choice?</h3><p>Each participant sees one of three menus: equal-price control, a 20.8% plant-based discount, or a plant-based preselection with an easy opt-out. Food descriptions remain comparable.</p></article>
+        <article class="method-card"><div class="index">02 / THE ASSIGNMENT</div><h3>One person. One randomised version.</h3><p>Random assignment happens after informed consent. Each browser stores its assignment and a unique trial token to discourage duplicate entries. No personal profile is collected.</p></article>
+        <article class="method-card"><div class="index">03 / THE MEASURE</div><h3>Measure the decision, not the declaration.</h3><p>The primary outcome is the selected meal in a hypothetical web menu. Secondary measures are optional reason and confidence. This is not a sale, observed meal consumption or a measure of animal suffering.</p></article>
+        <article class="method-card"><div class="index">04 / THE LIMITS</div><h3>Keep the claims proportional.</h3><p>Self-selection, a single simulated decision, no participant verification, and possible repeat participation across devices limit inference. We need a registered protocol, sufficient sample, real-world outcome and independent replication before policy claims.</p></article>
+        <article class="method-card"><div class="index">05 / THE DATA</div><h3>Store as little as possible.</h3><p>With consent, our database stores the random trial token, assigned menu, selected meal, optional reason and confidence. No submitted name, email, free text or raw IP. Hosting providers may independently maintain operational access logs.</p></article>
+        <article class="method-card"><div class="index">06 / THE BIGGER ROADMAP</div><h3>From choices to institutions.</h3><p>Validate digital findings in restaurants and cafeterias; measure satisfaction and affordability; compare lasting habits; then examine whether institutional procurement and laws improve outcomes fairly and transparently.</p></article>
+      </div>
+      <div class="method-bottom"><div><h2>For Christopher: let's turn a demo<br>into a real research collaboration.</h2><p>The challenge is to make experimental design feel intuitive and useful in under 30 seconds, without compromising the science. We'd love honest critique of the experience, accessibility and a practical pilot with an organisation.</p></div><button class="btn btn-primary" id="copy-brief">Copy discussion brief ↗</button></div>
+    </section>
+  </main>
+  <footer><div><strong>CHOICE LAB</strong> · a LifeBench experiment · Built for curiosity, not certainty.</div><div>Simulated menu choices ≠ real purchases · v1.0 · <a href="https://github.com/mikelninh/mikelninh.github.io/tree/main/choice-lab" target="_blank" rel="noopener">Source ↗</a></div></footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+"use strict";
+const API="https://htffcvdopavknnylbowl.supabase.co/functions/v1/choice-lab-v1-api";
+const STORE="choice-lab-v1-session";
+const ARMS={
+ control:{name:"Equal-price menu",label:"Equal price",pricePlant:12.5,priceBeef:12.5,preselect:null,description:"Two meals, the same price."},
+ discount:{name:"Plant-based discount",label:"Price incentive",pricePlant:9.9,priceBeef:12.5,preselect:null,description:"The plant-based meal costs less."},
+ default:{name:"Plant-based preselection",label:"Plant-based default",pricePlant:12.5,priceBeef:12.5,preselect:"plant",description:"A plant-based meal is preselected, but you can change it."}
+};
+const ARM_NAMES={control:"Equal-price menu",discount:"Discount",default:"Plant-based default"};
+const FAKE=[{arm:"control",choice:"plant",responses:21},{arm:"control",choice:"beef",responses:39},{arm:"discount",choice:"plant",responses:34},{arm:"discount",choice:"beef",responses:26},{arm:"default",choice:"plant",responses:43},{arm:"default",choice:"beef",responses:17}];
+let previewArm="control",previewChoice=null,source="scenario",liveTotals=null,stage="consent",selected=null,reason=null,confidence=null,busy=false;
+let session=load();
+function load(){try{return JSON.parse(localStorage.getItem(STORE)||"null")||{}}catch(e){return {}}}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(session))}catch(e){}}
+function money(x){return "€"+x.toFixed(2)}
+function toast(message){const el=document.getElementById("toast");el.textContent=message;el.classList.add("show");setTimeout(function(){el.classList.remove("show")},3500)}
+function navigate(view){
+ document.querySelectorAll(".section").forEach(function(s){s.classList.toggle("active",s.id==="screen-"+view)});
+ document.querySelectorAll(".nav button").forEach(function(b){b.classList.toggle("active",b.dataset.go===view)});
+ document.getElementById("nav").classList.remove("mobile-open");
+ if(view==="experiment"){stage=session.submitted?"complete":"consent";renderTrial()}
+ if(view==="results"){renderResults();fetchLive()}
+ window.scrollTo({top:0,behavior:"smooth"});
+ try{history.replaceState(null,"","#"+view)}catch(e){}
+}
+function menuRow(kind,arm,mini){
+ const c=ARMS[arm],plant=kind==="plant",label=plant?"Plant-based Phở":"Traditional Phở",desc=plant?"Mushrooms, tofu, fragrant herbs":"Beef, rice noodles, aromatic broth",price=plant?c.pricePlant:c.priceBeef;
+ if(mini){const picked=previewChoice===kind||(previewChoice===null&&c.preselect===kind);return '<button class="mini-option'+(picked?' is-chosen':'')+'" data-mini-choice="'+kind+'" aria-pressed="'+picked+'"><span class="mini-food '+kind+'">'+(plant?'🌿':'🍜')+'</span><span><span class="mini-title">'+label+'</span><span class="mini-desc">'+desc+'</span></span><strong>'+money(price)+'</strong><span class="check">'+(picked?'✓':'')+'</span></button>'}
+ const picked=selected===kind;
+ return '<button class="food-card'+(picked?' chosen':'')+'" data-choice="'+kind+'" aria-pressed="'+picked+'"><span class="food-art '+kind+'"><span class="plate"><span class="soup"></span><span class="noodles">〰</span><span class="garnish">'+(plant?'🥬':'🍜')+'</span></span></span><span class="food-info"><span class="food-top"><span class="food-name">'+label+'</span><span class="food-price">'+money(price)+'</span></span><span class="food-desc">'+desc+'</span><span class="choose-line">'+(picked?'Your selection':'Select this meal')+'</span></span></button>'
+}
+function renderPreview(){
+ document.querySelectorAll("[data-preview]").forEach(function(b){b.classList.toggle("selected",b.dataset.preview===previewArm)});
+ const c=ARMS[previewArm];
+ document.getElementById("preview-options").innerHTML=menuRow("plant",previewArm,true)+menuRow("beef",previewArm,true);
+ const which=previewChoice||c.preselect;
+ let msg=c.description;
+ if(which) msg+=" Currently selected: "+(which==="plant"?"plant-based":"traditional")+".";
+ else msg+=" Choose one to see how it feels.";
+ document.getElementById("preview-caption").textContent=msg;
+}
+function renderTrial(){
+ const p=document.getElementById("trial-panel"),step=stage==="consent"?0:stage==="menu"?1:stage==="reflect"?2:3;
+ let html='<div class="progress" aria-label="Progress step '+(step+1)+' of 4">'+[0,1,2,3].map(function(i){return '<span class="'+(i<=step?'done':'')+'"></span>'}).join("")+'</div>';
+ if(stage==="consent"){
+ html+='<div class="step-label">Step 1 of 4 / Permission to participate</div><h2>You're the decision-maker.</h2><p>We'll randomly show you one of three menu designs and ask you to choose a hypothetical lunch. There is no actual purchase, and there are no right answers.</p><div class="consent-details"><p><strong>What we record:</strong> menu version, selected meal, optional reason and confidence, and a random token to prevent repeat submission from this browser.</p><p><strong>What we do not ask:</strong> name, email, account or free-text personal details. Results are shown only in aggregate; hosting providers may retain technical logs.</p><p><strong>Your choice:</strong> you can leave before submitting. This is a public demonstration study, not an academic clinical study.</p></div><label class="checklabel"><input type="checkbox" id="consent-check"><span>I am happy to contribute my hypothetical choice to this prototype research experiment.</span></label><div class="actions-end"><span class="tiny-note">Approximately 60 seconds · voluntary</span><button class="btn btn-primary" id="start-trial" disabled>See my menu ↗</button></div>';
+ }else if(stage==="menu"){
+ const c=ARMS[session.arm];
+ html+='<div class="step-label">Step 2 of 4 / Choose a meal</div><h2>What would you order?</h2><p>Imagine you are choosing lunch tomorrow at a nearby café. Both meals are equally available and described honestly.</p>'+(c.preselect?'<span class="preselected-info">✓ A meal is preselected. You can switch freely.</span>':'')+'<div class="study-menu">'+menuRow("plant",session.arm,false)+menuRow("beef",session.arm,false)+'</div><div class="actions-end"><span class="tiny-note">No actual order or payment will be made.</span><button id="confirm-choice" class="btn btn-primary" '+(!selected?'disabled':'')+'>Confirm my choice ↗</button></div>';
+ }else if(stage==="reflect"){
+ html+='<div class="step-label">Step 3 of 4 / Reflect</div><h2>What mattered most?</h2><p>You chose '+(selected==="plant"?"plant-based Phở":"traditional Phở")+'. These two optional questions help us understand the decision, not judge it.</p><div class="kicker" style="margin-top:26px">YOUR MAIN REASON (OPTIONAL)</div><div class="reason-grid" id="reasons">'+[["taste","Taste"],["price","Price"],["habit","Familiarity"],["curiosity","Curiosity"],["values","My values"],["other","Something else"]].map(function(a){return '<button class="reason'+(reason===a[0]?' active':'')+'" data-reason="'+a[0]+'">'+a[1]+'</button>'}).join("")+'</div><div class="kicker">HOW CONFIDENT DO YOU FEEL? (OPTIONAL)</div><div class="scale" id="confidence">'+[1,2,3,4,5].map(function(n){return '<button data-confidence="'+n+'" class="'+(confidence===n?'active':'')+'">'+n+'</button>'}).join("")+'</div><div class="tiny-note">1 = not very confident · 5 = extremely confident</div><div class="error" id="submit-error"></div><div class="actions-end"><button class="btn btn-soft small" id="back-menu">← Back</button><button class="btn btn-primary" id="submit-trial">Contribute my choice ↗</button></div>';
+ }else{
+ html+='<div class="success-icon">✓</div><div class="step-label" style="margin-top:24px">Step 4 of 4 / Submitted</div><h2>One choice. One useful datapoint.</h2><p>Thank you for contributing. You selected <strong>'+(session.choice==="plant"?"plant-based Phở":"traditional Phở")+'</strong>. Your assigned condition was <strong>'+ARM_NAMES[session.arm]+'</strong>.</p><div class="consent-details"><p><strong>Recorded:</strong> hypothetical choice only, not a real-world purchase.</p><p>Your browser is marked as having participated already. Responses are presented only in aggregated counts.</p></div><div class="actions-end"><button class="btn btn-primary" data-go="results">See the results ↗</button><button class="btn btn-soft" data-go="method">Understand the method ↗</button></div>';
+ }
+ p.innerHTML=html;
+ if(stage==="menu")document.querySelectorAll("[data-choice]").forEach(function(b){b.addEventListener("click",function(){selected=b.dataset.choice;renderTrial()})});
+ if(stage==="consent"){
+ const check=document.getElementById("consent-check"),button=document.getElementById("start-trial");
+ check.addEventListener("change",function(){button.disabled=!check.checked});
+ button.addEventListener("click",function(){session.arm=["control","discount","default"][crypto.getRandomValues(new Uint32Array(1))[0]%3];session.token=crypto.randomUUID();session.submitted=false;save();selected=ARMS[session.arm].preselect;stage="menu";renderTrial()});
+ }
+ if(stage==="menu")document.getElementById("confirm-choice").addEventListener("click",function(){if(!selected)return;stage="reflect";renderTrial()});
+ if(stage==="reflect"){
+ document.querySelectorAll("[data-reason]").forEach(function(b){b.addEventListener("click",function(){reason=b.dataset.reason;renderTrial()})});
+ document.querySelectorAll("[data-confidence]").forEach(function(b){b.addEventListener("click",function(){confidence=Number(b.dataset.confidence);renderTrial()})});
+ document.getElementById("back-menu").addEventListener("click",function(){stage="menu";renderTrial()});
+ document.getElementById("submit-trial").addEventListener("click",submitTrial);
+ }
+ p.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(){navigate(b.dataset.go)})});
+}
+async function submitTrial(){
+ if(busy)return;busy=true;const button=document.getElementById("submit-trial");button.disabled=true;button.textContent="Saving your choice…";
+ try{
+ const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token:session.token,arm:session.arm,choice:selected,reason:reason,confidence:confidence})});
+ const response=await r.json();
+ if(!r.ok&&r.status!==409)throw Error(response.error||"Could not save");
+ session.submitted=true;session.choice=selected;save();stage="complete";renderTrial();
+ }catch(e){const el=document.getElementById("submit-error");el.textContent="Your choice was not confirmed as saved. Please try again. ("+e.message+")";el.style.display="block";button.disabled=false;button.textContent="Retry saving ↗"}
+ finally{busy=false}
+}
+function normalise(rows){
+ const out={};["control","discount","default"].forEach(function(a){out[a]={plant:0,beef:0}});
+ (rows||[]).forEach(function(r){if(out[r.arm]&&["plant","beef"].includes(r.choice))out[r.arm][r.choice]=Math.max(0,Number(r.responses)||0)});
+ return out;
+}
+function renderResults(){
+ const sample=source==="scenario",data=normalise(sample?FAKE:liveTotals||[]);
+ const totals=["control","discount","default"].map(function(a){return data[a].plant+data[a].beef}),total=totals.reduce(function(a,b){return a+b},0);
+ const bars=document.getElementById("bars");
+ bars.innerHTML=["control","discount","default"].map(function(a,i){
+ const n=totals[i],v=n?Math.round(data[a].plant/n*100):0;
+ return '<div class="bar-row"><div class="bar-top"><span>'+ARM_NAMES[a]+'</span><span>'+(n?v+"%":"—")+'</span></div><div class="bar-track"><div class="bar-fill" style="width:'+v+'%"></div></div><div class="bar-foot"><span>'+data[a].plant+' plant-based selections</span><span>n = '+n+'</span></div></div>'
+ }).join("");
+ document.querySelectorAll("[data-source]").forEach(function(b){b.classList.toggle("selected",b.dataset.source===source)});
+ const status=document.getElementById("results-status");status.textContent=sample?"ILLUSTRATIVE DATA · NOT OBSERVED":"LIVE · OPT-IN HYPOTHETICAL CHOICES";status.classList.toggle("live",!sample);
+ document.getElementById("results-subtitle").textContent=sample?"Invented example only · 60 fictional participants per condition":"Live aggregate responses · not purchases, not representative";
+ const n0=totals[0],n2=totals[2],diff=n0&&n2?Math.round((data.default.plant/n2-data.control.plant/n0)*100):null;
+ document.getElementById("insight-label").textContent=sample?"MADE-UP SCENARIO":"REAL PROTOTYPE RESPONSES";
+ document.getElementById("insight-number").textContent=diff===null?"—":(diff>=0?"+":"")+diff+"pp";
+ document.getElementById("insight-title").textContent=sample?"An illustrative default effect":diff===null?"Not enough observations":"Observed sample difference";
+ document.getElementById("insight-copy").textContent=sample?"A fictional comparison that helps explain how we would visualise the effect. Do not treat these numbers as findings.":diff===null?"We cannot compare the default with the control until both have participants. Even then, this remains a hypothetical-choice study.":"The difference between default and control is descriptive, not a reliable estimate without sample-size planning and uncertainty analysis.";
+ document.getElementById("n-total").textContent=total+(sample?" fictional decisions":" real prototype responses");
+}
+async function fetchLive(){
+ try{
+ const r=await fetch(API,{method:"GET",cache:"no-store"});
+ if(!r.ok)throw Error("HTTP "+r.status);
+ const j=await r.json();if(!Array.isArray(j.arms))throw Error("Invalid response");
+ liveTotals=j.arms;if(source==="live")renderResults();
+ }catch(e){if(source==="live"){document.getElementById("results-subtitle").textContent="Live service unavailable. Refresh to retry.";toast("Could not reach the live study service")}}
+}
+function downloadCSV(){
+ const rows=normalise(source==="scenario"?FAKE:liveTotals||[]);
+ let csv="data_source,condition,meal,count\n";["control","discount","default"].forEach(function(a){["plant","beef"].forEach(function(c){csv+=[source==="scenario"?"fictional_demo":"live_prototype",a,c,rows[a][c]].join(",")+"\n"})});
+ const file=new Blob([csv],{type:"text/csv;charset=utf-8"}),u=URL.createObjectURL(file),a=document.createElement("a");a.href=u;a.download="choice-lab-"+source+"-aggregates.csv";a.click();setTimeout(function(){URL.revokeObjectURL(u)},1000)
+}
+const brief="CHOICE LAB · Co-design discussion with Christopher\n\nOne-liner: A human-centred experimentation platform to discover how interfaces, incentives and eventually policies shape decisions.\n\nLive demo: https://mikelninh.github.io/choice-lab/\n\nFirst experiment: randomised equal-price, plant-based discount, or plant-based default; hypothetical Phở choice; no actual purchases.\n\nThree things to discuss:\n1. Does the experience explain itself in 30 seconds?\n2. How would we improve accessibility, clarity and the integrity of the experiment?\n3. Which real organisation could pilot this in a cafeteria, restaurant or public service?\n\nGuardrails: Consent, minimal data, aggregate reporting, no synthetic results presented as real, independent evaluation before policy claims.\n\nNext: Co-design review → 10 usability tests → preregistered field trial → measured repeat behaviour.";
+document.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(){navigate(b.dataset.go)})});
+document.getElementById("menu-toggle").addEventListener("click",function(){document.getElementById("nav").classList.toggle("mobile-open")});
+document.getElementById("preview-switcher").addEventListener("click",function(e){const b=e.target.closest("[data-preview]");if(!b)return;previewArm=b.dataset.preview;previewChoice=null;renderPreview()});
+document.getElementById("preview-options").addEventListener("click",function(e){const b=e.target.closest("[data-mini-choice]");if(!b)return;previewChoice=b.dataset.miniChoice;renderPreview()});
+document.querySelectorAll("[data-source]").forEach(function(b){b.addEventListener("click",function(){source=b.dataset.source;renderResults();if(source==="live")fetchLive()})});
+document.getElementById("refresh-live").addEventListener("click",function(){source="live";renderResults();fetchLive();toast("Refreshing live counts")});
+document.getElementById("export-csv").addEventListener("click",downloadCSV);
+document.getElementById("copy-brief").addEventListener("click",async function(){try{await navigator.clipboard.writeText(brief);toast("Discussion brief copied")}catch(e){toast("Could not copy, browser permissions may be blocking it")}});
+renderPreview();renderResults();
+const initial=location.hash.replace("#","");navigate(["home","experiment","results","method"].includes(initial)?initial:"home");
+})();
+</script>
+</body>
+</html>
