@@ -32,7 +32,7 @@ for(const id of ['map','conflict-list','dossier','search','type-filters','region
  assert.ok(html.includes('id="'+id+'"'),'Missing DOM anchor '+id)
 }
 assert.ok(js.includes('openstreetmap.org/copyright'),'OSM attribution exists');
-assert.ok(js.includes('basemaps.cartocdn.com'),'Real geographic tile service');
+assert.ok(js.includes('tile.openstreetmap.org'),'Real geographic tile service');
 assert.ok(js.includes('NOT geolocated incidents')===false,'A headline must never be described as a geolocated incident');
 assert.ok(!/location\.geolocation|navigator\.geolocation|localStorage|document\.cookie/i.test(js),'No user geo or persistent tracking');
 assert.ok(css.includes('@media(max-width:520px)'),'Mobile breakpoint');
