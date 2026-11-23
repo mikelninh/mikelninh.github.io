@@ -20,6 +20,29 @@ jobs:
         uses: actions/checkout@v4
       - name: Verify sourced records, coordinate bounds, classification, and frontend code
         run: node the-way/checks.mjs
+      - name: Desktop and mobile browser QA
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/wayqa
+          cp the-way/e2e.mjs /tmp/wayqa/e2e.mjs
+          cd /tmp/wayqa
+          npm init -y >/dev/null
+          npm install --no-save --silent playwright-core@1.56.1
+          python3 -m http.server 8765 --directory "$GITHUB_WORKSPACE/the-way" >/tmp/way-http.log 2>&1 &
+          sleep 2
+          CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$CHROME_PATH" ]; then echo "No Chromium executable on runner"; exit 1; fi
+          WAY_URL=http://127.0.0.1:8765/ WAY_SHOTS="$GITHUB_WORKSPACE/the-way/screenshots" CHROME_PATH="$CHROME_PATH" node e2e.mjs
+      - name: Save browser screenshots
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: the-way-visual-qa
+          path: the-way/screenshots/
+          retention-days: 2
+          if-no-files-found: ignore
       - name: Inspect news endpoint (availability may depend on third-party feeds)
         continue-on-error: true
         run: |
