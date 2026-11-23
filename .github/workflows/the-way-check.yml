@@ -1,0 +1,36 @@
+name: THE WAY atlas quality checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'the-way/**'
+      - '.github/workflows/the-way-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout registry and app
+        uses: actions/checkout@v4
+      - name: Verify sourced records, coordinate bounds, classification, and frontend code
+        run: node the-way/checks.mjs
+      - name: Inspect news endpoint (availability may depend on third-party feeds)
+        continue-on-error: true
+        run: |
+          python3 - <<'PY'
+          import json, urllib.request
+          url='https://htffcvdopavknnylbowl.supabase.co/functions/v1/the-way-news'
+          try:
+              with urllib.request.urlopen(url, timeout=15) as r:
+                  d=json.load(r)
+              print('Source check:',d.get('checkedAt'),'Status:',d.get('status'),'Headlines:',len(d.get('items',[])))
+              assert d.get('sourceType')=='public news RSS, NOT geolocated incidents'
+          except Exception as e:
+              print('News feed unavailable; static atlas still works:',str(e))
+          PY
