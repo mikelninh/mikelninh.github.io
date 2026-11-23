@@ -38,4 +38,37 @@ assert.ok(!/location\.geolocation|navigator\.geolocation|localStorage|document\.
 assert.ok(css.includes('@media(max-width:520px)'),'Mobile breakpoint');
 assert.ok(css.includes('prefers-reduced-motion'),'Accessible reduced-motion styles');
 new vm.Script(js,{filename:'app.js'});
-console.log(JSON.stringify({status:'PASS',anchors:rows.length,categories:types,sourceRegistries:Object.keys(sources).length,coordinates:'valid',js:'valid',method:'geographic theatre anchors only'}));
+
+const ctx2={window:{}};vm.runInNewContext(read('processes.js'),ctx2,{filename:'processes.js'});
+const processRows=ctx2.window.WAY_PROCESSES;
+const processMeta=ctx2.window.WAY_PROCESS_META;
+assert.ok(Array.isArray(processRows)&&processRows.length>=6,'Six researched processes required');
+assert.equal(processMeta.reviewed,meta.reviewed,'Research and map review dates must match');
+const processIds=new Set();
+for(const r of processRows){
+ assert.ok(!processIds.has(r.id),'Duplicate process '+r.id);processIds.add(r.id);
+ assert.ok(r.anchorIds.length>0&&r.anchorIds.every(id=>set.has(id)),'Process without atlas geography: '+r.id);
+ assert.ok(r.agreement&&/^https:\/\//.test(r.agreement.url),'Missing document '+r.id);
+ assert.ok(r.agreement.date<=processMeta.reviewed,'Future agreement '+r.id);
+ assert.ok(r.commitments.length>=3,'At least three research commitments '+r.id);
+ assert.ok(r.milestones.length>=2,'Timeline evidence missing '+r.id);
+ for(const m of r.milestones){assert.ok(r.sources[m.source],'Missing timeline source '+r.id+':'+m.source);assert.ok(m.date<=processMeta.reviewed,'Future milestone '+m.id)}
+ for(const c of r.commitments){
+  assert.ok(c.title&&c.test&&c.finding,'Unclear commitment '+c.id);
+  assert.ok(c.evidence.length>0&&c.evidence.every(k=>r.sources[k]),'Unlinked commitment '+c.id);
+ }
+ for(const source of Object.values(r.sources)){
+  assert.ok(/^https:\/\//.test(source.url),'HTTPS evidence sources required');
+  assert.ok(source.date<=processMeta.reviewed,'Evidence from the future');
+  assert.ok(source.role&&source.kind&&source.org,'Evidence provenance required');
+ }
+}
+const progressHtml=read('progress.html');
+for(const id of ['process-list','story-content','source-list','share-process','export-process','count-commitments'])assert.ok(progressHtml.includes('id="'+id+'"'),'Missing progress UI '+id);
+assert.ok(html.includes('src="./processes.js'),'Atlas should load process links');
+assert.ok(html.includes('href="./progress.html"'),'The atlas needs a visible path to the ledger');
+assert.ok(js.includes('linkedProcess(c)'),'Atlas dossier bridge missing');
+new vm.Script(read('process-app.js'),{filename:'process-app.js'});
+assert.ok(read('process.css').includes('prefers-reduced-motion'),'Reduced motion needed in Peace Ledger');
+
+console.log(JSON.stringify({status:'PASS',anchors:rows.length,categories:types,sourceRegistries:Object.keys(sources).length,peaceProcesses:processRows.length,commitments:processRows.reduce((n,r)=>n+r.commitments.length,0),coordinates:'valid',js:'valid',method:'geographic theatre anchors only'}));
