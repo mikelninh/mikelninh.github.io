@@ -40,6 +40,11 @@ function sourceLinks(r){
 function infoPart(n,t,copy,highlight=false){
  return '<section class="dossier-section'+(highlight?' highlight':'')+'"><span class="label">'+safe(n+' / '+t)+'</span><p>'+safe(copy)+'</p></section>';
 }
+function linkedProcess(c){
+ const processes=Array.isArray(window.WAY_PROCESSES)?window.WAY_PROCESSES:[];
+ const r=processes.find(p=>Array.isArray(p.anchorIds)&&p.anchorIds.includes(c.id));
+ return r?'<div class="dossier-process-link"><span>NEW / FOLLOW THE PROMISE</span><p>Read the documented agreement, its milestones and evidence of implementation.</p><a href="./progress.html?process='+encodeURIComponent(r.id)+'">OPEN THE PEACE LEDGER ↗</a></div>':'';
+}
 function renderDetails(){
  const c=records.find(r=>r.id===state.selected),el=$("dossier-content"),empty=$("dossier-empty");
  $("atlas-ui").classList.toggle("dossier-open",!!c);
@@ -54,6 +59,7 @@ function renderDetails(){
  infoPart("04","WHAT STANDS IN THE WAY",c.barrier)+
  infoPart("05","POSSIBLE PATHS TOWARDS PEACE",c.path,true)+
  infoPart("06","HOW TO KNOW IF THINGS IMPROVE",c.measure,true)+
+ linkedProcess(c)+
  '<section class="dossier-section"><span class="label">07 / OPEN THE EVIDENCE</span><div class="source-stack">'+sourceLinks(c)+'</div><p class="disclosure">These links lead to broader monitoring and research programmes, not necessarily articles substantiating every sentence. Summaries and pathway ideas are independently authored hypotheses for critical review.</p></section>'+
  '<div class="dossier-actions"><button type="button" id="share-record">COPY LINK ↗</button><button type="button" id="clear-record">CLOSE</button></div>';
  $("close-dossier").onclick=clearSelection;
