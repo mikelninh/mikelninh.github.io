@@ -16,14 +16,15 @@
 <link rel="stylesheet" href="./style.css?v=1">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 <script src="./conflicts.js?v=1" defer></script>
-<script src="./app.js?v=1" defer></script>
+<script src="./processes.js?v=2" defer></script>
+<script src="./app.js?v=2" defer></script>
 </head>
 <body>
 <div id="app">
 <header class="masthead">
   <a class="wordmark" href="#top" aria-label="THE WAY homepage"><span class="logo-symbol" aria-hidden="true">✳</span><span class="logo-word">THE <i>WAY</i></span></a>
   <div class="masthead-center"><span class="on-air-dot"></span> AN OPEN ATLAS FOR PEACE <span class="separator">/</span> AN INDEPENDENT RESEARCH PROTOTYPE</div>
-  <div class="header-actions"><a class="header-link" href="#method">HOW IT WORKS</a><a class="header-button" href="#atlas">EXPLORE THE MAP <span aria-hidden="true">↗</span></a></div>
+  <div class="header-actions"><a class="header-link" href="./progress.html">PEACE LEDGER ✳</a><a class="header-link" href="#method">HOW IT WORKS</a><a class="header-button" href="#atlas">EXPLORE THE MAP <span aria-hidden="true">↗</span></a></div>
 </header>
 <main id="top">
 <section class="intro">
@@ -31,7 +32,7 @@
    <div class="eyebrow"><span class="index">01 / 04</span><span class="dash"></span> NOT ANOTHER WAR MAP.</div>
    <h1>Make peace<br><em>the way.</em></h1>
    <p class="intro-copy">A world full of conflict. A thousand reasons why. <strong>What would it actually take to make peace last?</strong></p>
-   <div class="intro-actions"><a href="#atlas" class="button button-dark">Explore the world <span>↗</span></a><a href="#approach" class="button button-outline">Understand the mission <span>↓</span></a></div>
+   <div class="intro-actions"><a href="#atlas" class="button button-dark">Explore the world <span>↗</span></a><a href="./progress.html" class="button button-outline">Follow the peace process <span>↗</span></a></div>
    <div class="intro-foot"><span class="micro-star">✳</span> PEOPLE BEFORE POLITICS. EVIDENCE BEFORE CERTAINTY.</div>
  </div>
  <div class="intro-art" aria-label="Stylised symbolic pathways towards peace">
@@ -42,7 +43,7 @@
  </div>
 </section>
 <section class="numbers" aria-label="Context and atlas coverage">
-  <div><div class="number" id="counter-total">52</div><span class="number-label">TRACKED THEATRE ANCHORS <small>Curated situations, not a count of wars</small></span></div>
+  <div><div class="number" id="counter-total">53</div><span class="number-label">TRACKED THEATRE ANCHORS <small>Curated situations, not a count of wars</small></span></div>
   <div><div class="number">65<span class="number-note">in 2025</span></div><span class="number-label">STATE-BASED CONFLICTS <small>UCDP annual research, not a live figure <a href="https://www.uu.se/en/press/press-releases/2026/2026-06-09-ucdp-record-number-of-conflicts-between-states" target="_blank" rel="noopener">↗</a></small></span></div>
   <div><div class="number">01<span class="number-note">shared planet</span></div><span class="number-label">THE LONG-TERM GOAL <small>Reduce harm. Build durable peace.</small></span></div>
 </section>
@@ -53,7 +54,7 @@
  </div>
  <div class="atlas-ui" id="atlas-ui">
    <aside class="atlas-sidebar" aria-label="Conflict atlas list">
-      <div class="list-head"><span class="list-kicker">THEATRES & CRISES</span><span id="filtered-count" class="count-pill">52</span></div>
+      <div class="list-head"><span class="list-kicker">THEATRES & CRISES</span><span id="filtered-count" class="count-pill">53</span></div>
       <label class="search-wrap"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7" stroke="currentColor" fill="none" stroke-width="1.7"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="1.7" /></svg><input type="search" id="search" placeholder="Find a country or conflict" autocomplete="off" aria-label="Search conflicts"><kbd>/</kbd></label>
       <div class="filter-label">BY SITUATION</div>
       <div class="filter-chips" id="type-filters" role="group" aria-label="Filter by type">
@@ -80,7 +81,8 @@
     <div class="dossier-content" id="dossier-content" hidden></div>
    </aside>
  </div>
- <div class="atlas-bottom"><div><span class="asterisk">✳</span><strong>Geography, not theatre.</strong> The map is geographically based on OpenStreetMap tiles. It intentionally avoids depicting speculative frontlines.</div><div><span id="atlas-last-reviewed">EDITORIAL REVIEW · 23 NOV 2026</span> <span class="slash">/</span> <button id="download-json">DOWNLOAD REGISTRY ↗</button></div></div>
+ <div class="peace-bridge"><div><span>BEYOND THE CONFLICT MAP</span><h3>What was promised?<br><em>What can we verify?</em></h3></div><a href="./progress.html" class="peace-bridge-link">OPEN THE PEACE LEDGER <span>↗</span></a></div>
+<div class="atlas-bottom"><div><span class="asterisk">✳</span><strong>Geography, not theatre.</strong> The map is geographically based on OpenStreetMap tiles. It intentionally avoids depicting speculative frontlines.</div><div><span id="atlas-last-reviewed">EDITORIAL REVIEW · 23 NOV 2026</span> <span class="slash">/</span> <button id="download-json">DOWNLOAD REGISTRY ↗</button></div></div>
 </section>
 <section class="updates" id="updates">
  <div class="section-intro compact">
