@@ -13,8 +13,8 @@ async function run(label,width,height){
  const errors=[];page.on('pageerror',e=>errors.push(String(e)));
  await page.goto(base,{waitUntil:'domcontentloaded',timeout:25000});
  await page.locator('.conflict-row').first().waitFor({timeout:20000});
- assert.equal(await page.locator('.conflict-row').count(),52,'Expected 52 list items');
- assert.equal((await page.locator('#counter-total').textContent()).trim(),'52');
+ assert.equal(await page.locator('.conflict-row').count(),53,'Expected 53 list items');
+ assert.equal((await page.locator('#counter-total').textContent()).trim(),'53');
  await page.screenshot({path:path.join(out,label+'-home.png'),fullPage:false});
  shots.push(label+'-home');
  await page.locator('#atlas').scrollIntoViewIfNeeded();
@@ -38,16 +38,45 @@ async function run(label,width,height){
  assert.equal(await page.locator('.conflict-row').count(),1);
  assert.match(await page.locator('.conflict-row').first().innerText(),/Ukraine/);
  await page.locator('#reset-filters').click();
- assert.equal(await page.locator('.conflict-row').count(),52);
+ assert.equal(await page.locator('.conflict-row').count(),53);
  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
  if(overflow>8)failures.push(label+': '+overflow+'px horizontal viewport overflow');
  if(errors.length)failures.push(label+': browser errors: '+errors.slice(0,3).join('; '));
- console.log(JSON.stringify({label,rows:52,mapLoaded,mapTileElements:tileCount,overflow,errors:errors.slice(0,3)}));
+ console.log(JSON.stringify({label,rows:53,mapLoaded,mapTileElements:tileCount,overflow,errors:errors.slice(0,3)}));
+ await page.close();
+}
+async function runLedger(label,width,height){
+ const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
+ const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ await page.goto(new URL('progress.html?process=colombia',base).toString(),{waitUntil:'domcontentloaded',timeout:30000});
+ await page.locator('.process-option').first().waitFor({timeout:20000});
+ assert.equal(await page.locator('.process-option').count(),6);
+ assert.match(await page.locator('#story-content h3').innerText(),/Colombia/);
+ await page.screenshot({path:path.join(out,label+'-peace-hero.png'),fullPage:false});
+ shots.push(label+'-peace-hero');
+ await page.locator('#workbench').scrollIntoViewIfNeeded();
+ await page.screenshot({path:path.join(out,label+'-peace-ledger.png'),fullPage:false});
+ shots.push(label+'-peace-ledger');
+ await page.locator('.process-option').filter({hasText:'Sudan'}).first().click();
+ assert.match(await page.locator('#story-content h3').innerText(),/Sudan/);
+ assert.ok((await page.locator('#source-list a').count())>=3,'Sudan source links');
+ await page.locator('button[data-view="commitments"]').click();
+ assert.equal(await page.locator('.commitment').count(),3);
+ await page.screenshot({path:path.join(out,label+'-peace-commitments.png'),fullPage:false});
+ shots.push(label+'-peace-commitments');
+ await page.locator('button[data-view="timeline"]').click();
+ assert.equal(await page.locator('.timeline-item').count(),3);
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
+ if(overflow>8)failures.push(label+': Peace Ledger horizontal overflow '+overflow+'px');
+ if(errors.length)failures.push(label+': Peace Ledger browser errors: '+errors.join('; '));
+ console.log(JSON.stringify({label,peaceProcesses:6,sudanSources:await page.locator('#source-list a').count(),timelineItems:3,overflow,errors:errors.slice(0,3)}));
  await page.close();
 }
 try{
  await run('desktop',1440,900);
  await run('mobile',390,844);
+ await runLedger('desktop',1440,900);
+ await runLedger('mobile',390,844);
  console.log(JSON.stringify({screenshots:shots,nonBlockingIssues:failures}));
  if(failures.some(x=>x.includes('horizontal viewport overflow')||x.includes('browser errors')))process.exitCode=1;
 }catch(e){console.error('End-to-end browser QA failed:',e);process.exitCode=1}
