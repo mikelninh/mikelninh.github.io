@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#eaece6">
+<meta name="description" content="THE WAY: an open, sourced atlas of conflict, its human impact, and credible paths to peace. A geographic map with transparent dates and methodology.">
+<meta property="og:title" content="THE WAY — A living atlas for peace">
+<meta property="og:description" content="Find where violence is happening, understand why, and explore what durable peace would require.">
+<meta property="og:type" content="website">
+<title>THE WAY · A living atlas for peace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAo9TchTHrQ8RZePRM7cYQYVKH0l5K8Qza1U6AA=" crossorigin="">
+<link rel="stylesheet" href="./style.css?v=1">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+<script src="./conflicts.js?v=1" defer></script>
+<script src="./app.js?v=1" defer></script>
+</head>
+<body>
+<div id="app">
+<header class="masthead">
+  <a class="wordmark" href="#top" aria-label="THE WAY homepage"><span class="logo-symbol" aria-hidden="true">✳</span><span class="logo-word">THE <i>WAY</i></span></a>
+  <div class="masthead-center"><span class="on-air-dot"></span> AN OPEN ATLAS FOR PEACE <span class="separator">/</span> AN INDEPENDENT RESEARCH PROTOTYPE</div>
+  <div class="header-actions"><a class="header-link" href="#method">HOW IT WORKS</a><a class="header-button" href="#atlas">EXPLORE THE MAP <span aria-hidden="true">↗</span></a></div>
+</header>
+<main id="top">
+<section class="intro">
+ <div class="intro-left">
+   <div class="eyebrow"><span class="index">01 / 04</span><span class="dash"></span> NOT ANOTHER WAR MAP.</div>
+   <h1>Make peace<br><em>the way.</em></h1>
+   <p class="intro-copy">A world full of conflict. A thousand reasons why. <strong>What would it actually take to make peace last?</strong></p>
+   <div class="intro-actions"><a href="#atlas" class="button button-dark">Explore the world <span>↗</span></a><a href="#approach" class="button button-outline">Understand the mission <span>↓</span></a></div>
+   <div class="intro-foot"><span class="micro-star">✳</span> PEOPLE BEFORE POLITICS. EVIDENCE BEFORE CERTAINTY.</div>
+ </div>
+ <div class="intro-art" aria-label="Stylised symbolic pathways towards peace">
+   <div class="orb-orbit orbit-one"></div><div class="orb-orbit orbit-two"></div>
+   <div class="earth-disc"><div class="disc-grid"></div><span class="disc-bloom">✳</span><span class="disc-label">ANOTHER WORLD<br>IS POSSIBLE.</span></div>
+   <div class="art-label-top">THE WORLD IS OUR HOME. <span>NOT A BATTLEFIELD.</span></div>
+   <div class="art-label-bottom">EARTH · 2026 <span>↑</span></div>
+ </div>
+</section>
+<section class="numbers" aria-label="Context and atlas coverage">
+  <div><div class="number" id="counter-total">52</div><span class="number-label">TRACKED THEATRE ANCHORS <small>Curated situations, not a count of wars</small></span></div>
+  <div><div class="number">65<span class="number-note">in 2025</span></div><span class="number-label">STATE-BASED CONFLICTS <small>UCDP annual research, not a live figure <a href="https://www.uu.se/en/press/press-releases/2026/2026-06-09-ucdp-record-number-of-conflicts-between-states" target="_blank" rel="noopener">↗</a></small></span></div>
+  <div><div class="number">01<span class="number-note">shared planet</span></div><span class="number-label">THE LONG-TERM GOAL <small>Reduce harm. Build durable peace.</small></span></div>
+</section>
+<section class="atlas-section" id="atlas">
+ <div class="section-intro">
+   <div class="eyebrow"><span class="index">02 / 04</span><span class="dash"></span> THE GLOBAL ATLAS</div>
+   <div class="title-row"><h2>See the world.<br><em>Understand the fractures.</em></h2><p>Every marker opens a dossier: who is involved, what drives the crisis, the human cost, and what a plausible path to peace would require.</p></div>
+ </div>
+ <div class="atlas-ui" id="atlas-ui">
+   <aside class="atlas-sidebar" aria-label="Conflict atlas list">
+      <div class="list-head"><span class="list-kicker">THEATRES & CRISES</span><span id="filtered-count" class="count-pill">52</span></div>
+      <label class="search-wrap"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7" stroke="currentColor" fill="none" stroke-width="1.7"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="1.7" /></svg><input type="search" id="search" placeholder="Find a country or conflict" autocomplete="off" aria-label="Search conflicts"><kbd>/</kbd></label>
+      <div class="filter-label">BY SITUATION</div>
+      <div class="filter-chips" id="type-filters" role="group" aria-label="Filter by type">
+       <button type="button" data-kind="all" class="active" aria-pressed="true">All <span id="kind-all">52</span></button>
+       <button type="button" data-kind="fighting" aria-pressed="false"><span class="tiny-circle violent"></span> Armed</button>
+       <button type="button" data-kind="violence" aria-pressed="false"><span class="tiny-circle organised"></span> Violence</button>
+       <button type="button" data-kind="risk" aria-pressed="false"><span class="tiny-circle watch"></span> Tensions</button>
+      </div>
+      <label class="region-select-wrap" for="region"><span>REGION</span><select id="region"><option value="all">All regions</option><option value="Africa">Africa</option><option value="Americas">Americas</option><option value="Asia">Asia & Pacific</option><option value="Europe">Europe & Eurasia</option><option value="Middle East">Middle East</option></select></label>
+      <div class="list-toolbar"><span id="list-result">Showing all tracked situations</span><button id="reset-filters" type="button">CLEAR ↗</button></div>
+      <div id="conflict-list" class="conflict-list" aria-live="polite"></div>
+      <div class="list-bottom">OPEN-SOURCE RESEARCH PROTOTYPE · <a href="#method">WHAT THIS MAP CAN AND CAN'T SAY ↗</a></div>
+   </aside>
+   <div class="map-stage">
+      <div id="map" role="application" aria-label="Geographic world map showing approximate conflict theatre positions"></div>
+      <div class="map-fallback" id="map-fallback" hidden><span>GLOBE VIEW UNAVAILABLE</span><p>The map tiles couldn't load. The entire searchable conflict list and dossiers still work.</p></div>
+      <div class="map-overline"><span class="dot">●</span> GLOBAL VIEW <span class="map-divider">/</span> THEATRE-LEVEL LOCATIONS</div>
+      <div class="map-tools"><button id="zoom-world" title="See the whole world" aria-label="Zoom to world">⌖ <span>WORLD</span></button><button id="map-info" title="Map limitations" aria-label="Read map precision statement">i</button></div>
+      <div class="map-legend" aria-label="Map category legend"><span><i class="legend-dot violent"></i> Armed conflict</span><span><i class="legend-dot organised"></i> Organised violence</span><span><i class="legend-dot watch"></i> Tension / instability</span></div>
+      <div class="map-disclaimer" id="map-note"><strong>Not a live frontline map.</strong> Pins mark approximate areas of broad conflict theatres, not specific attacks or safe boundaries. <button id="map-note-close" aria-label="Hide map note">×</button></div>
+   </div>
+   <aside class="dossier" id="dossier" aria-label="Selected conflict details">
+    <div class="dossier-empty" id="dossier-empty"><span class="dossier-emblem">✳</span><div class="dossier-count">52 STORIES.<br>ONE HUMANITY.</div><h3>Every conflict has a history.<br><em>Peace needs a future.</em></h3><p>Choose a point on the map or an item in the list to understand the situation and the openings for peace.</p><span class="dossier-gesture">← START BY EXPLORING</span></div>
+    <div class="dossier-content" id="dossier-content" hidden></div>
+   </aside>
+ </div>
+ <div class="atlas-bottom"><div><span class="asterisk">✳</span><strong>Geography, not theatre.</strong> The map is geographically based on OpenStreetMap tiles. It intentionally avoids depicting speculative frontlines.</div><div><span id="atlas-last-reviewed">EDITORIAL REVIEW · 23 NOV 2026</span> <span class="slash">/</span> <button id="download-json">DOWNLOAD REGISTRY ↗</button></div></div>
+</section>
+<section class="updates" id="updates">
+ <div class="section-intro compact">
+  <div class="eyebrow"><span class="index">03 / 04</span><span class="dash"></span> REPORTING, NOT RUMOUR</div>
+  <div class="title-row"><h2>The world<br><em>keeps moving.</em></h2><p>Freshly retrieved reporting, kept separate from our reviewed conflict dossiers. A headline is not proof of a battlefield event or a change of status.</p></div>
+ </div>
+ <div class="updates-layout">
+  <div class="news-panel">
+   <div class="news-head"><span class="live-title"><span class="on-air-dot"></span> LATEST REPORTS FROM PUBLIC FEEDS</span><button type="button" id="refresh-news">REFRESH ↻</button></div>
+   <div class="news-meta" id="news-status" aria-live="polite">Connecting to reporting sources…</div>
+   <div id="news-list" class="news-list"><div class="loading-note">Fetching dated reports from available sources.</div></div>
+   <p class="news-small">Stories appear with their actual publication dates. Source coverage is incomplete, and some feeds may be unavailable. <a href="https://news.un.org/en/" target="_blank" rel="noopener">UN News ↗</a></p>
+  </div>
+  <div class="updates-explainer">
+    <span class="caption">OUR RESEARCH PRINCIPLE / 001</span>
+    <div class="quote">“A war is not a dot.<br><em>It is millions of lives.”</em></div>
+    <p>This project separates four things that too often get mixed together: reported incidents, historical patterns, political analysis and possible responses.</p>
+    <a href="#method" class="text-link">OUR SOURCES & LIMITATIONS <span>↗</span></a>
+    <div class="explainer-mark" aria-hidden="true">✳</div>
+  </div>
+ </div>
+</section>
+<section class="approach" id="approach">
+ <div class="eyebrow"><span class="index">04 / 04</span><span class="dash"></span> BEYOND THE MAP</div>
+ <div class="approach-grid">
+ <div><h2>Conflict is designed<br>by systems.<br><em>Peace can be, too.</em></h2><p>There isn't one universal negotiation that ends every war. Durable peace requires context, political will, real security, legitimate institutions and sustained protection of civilians.</p><a href="https://dppa.un.org/en/prevention-and-mediation" target="_blank" rel="noopener" class="text-link">EXPLORE UN MEDIATION PRACTICE ↗</a></div>
+ <div class="peace-process" aria-label="Framework for analysing pathways to peace">
+   <div class="process-row"><span class="process-n">01</span><div><h3>Protect life now</h3><p>Humanitarian access, civilian safeguards, local ceasefires and independent monitoring.</p></div><span class="process-icon">↗</span></div>
+   <div class="process-row"><span class="process-n">02</span><div><h3>Make agreements credible</h3><p>Security assurances, reciprocal commitments, verifiable sequencing and accountable institutions.</p></div><span class="process-icon">↗</span></div>
+   <div class="process-row"><span class="process-n">03</span><div><h3>Repair what violence broke</h3><p>Justice, inclusion, legitimate governance, livelihoods and protection of rights.</p></div><span class="process-icon">↗</span></div>
+   <div class="process-row"><span class="process-n">04</span><div><h3>Prove whether peace lasts</h3><p>Independent indicators of safety, displacement, rights, services and agreement compliance.</p></div><span class="process-icon">↗</span></div>
+ </div>
+ </div>
+</section>
+<section class="method" id="method">
+ <div class="method-top"><div class="eyebrow">THE METHOD · VERSION 0.1</div><h2>No false certainty.<br><em>No forgotten lives.</em></h2></div>
+ <div class="method-columns">
+  <article><span>01 / COVERAGE</span><h3>52 theatre anchors ≠ all wars</h3><p>The registry groups distinct wars, communal and criminal violence, plus dangerous tensions. One country may contain multiple theatres. UCDP's 65-conflict count is for state-based conflicts in 2025, not this atlas's total.</p></article>
+  <article><span>02 / GEOGRAPHY</span><h3>Real geography, approximate points</h3><p>Every pin uses geographic latitude and longitude for a region or conflict theatre, not the coordinates of a battle or a front line. Cross-border crises and displaced populations cannot be represented by one dot.</p></article>
+  <article><span>03 / TIMELINESS</span><h3>Reviewed registry + live headlines</h3><p>Conflict assessments are an editorial snapshot reviewed 23 November 2026. News reports refresh independently when feeds work; they never auto-reclassify a theatre. Dates and original sources must be checked before making decisions.</p></article>
+  <article><span>04 / PEACE OPTIONS</span><h3>Hypotheses, not prescriptions</h3><p>Each dossier gives possible components of a peace process, not a guaranteed solution, a negotiated offer, or support for one party. Affected communities, mediators, legal experts and local stakeholders must evaluate them.</p></article>
+ </div>
+ <div class="source-panel"><div><span class="caption">PRIMARY RESEARCH & MONITORING SOURCES</span><h3>Follow the evidence.</h3></div><div class="source-links"><a href="https://www.cfr.org/global-conflict-tracker/dashboard" target="_blank" rel="noopener">CFR GLOBAL CONFLICT TRACKER ↗</a><a href="https://acleddata.com/conflict-index-2026-watchlist" target="_blank" rel="noopener">ACLED CONFLICT INDEX ↗</a><a href="https://ucdp.uu.se/" target="_blank" rel="noopener">UPPSALA CONFLICT DATA PROGRAM ↗</a><a href="https://dppa.un.org/en/prevention-and-mediation" target="_blank" rel="noopener">UN PEACEMAKING ↗</a><a href="https://reliefweb.int/updates" target="_blank" rel="noopener">UN OCHA RELIEFWEB ↗</a><a href="https://www.rescue.org/watchlist2026" target="_blank" rel="noopener">IRC EMERGENCY WATCHLIST ↗</a></div></div>
+ <div class="final-call"><span class="final-star">✳</span><h2>Peace is not a feeling.<br><em>It's something we build.</em></h2><p>THE WAY is an early, independently authored open-source research prototype. Help test the evidence, question an assumption, or connect a real mediation or humanitarian organisation.</p><div class="final-actions"><a class="button button-light" href="#atlas">EXPLORE THE ATLAS ↗</a><a class="button button-stroke" href="https://github.com/mikelninh/mikelninh.github.io/tree/main/the-way" target="_blank" rel="noopener">INSPECT THE SOURCE ↗</a></div></div>
+</section>
+</main>
+<footer><a href="#top" class="footer-logo">THE <i>WAY</i> ✳</a><span>A LIVING ATLAS FOR PEACE · NOT A SECURITY OR TRAVEL ADVISORY</span><span>BUILT FOR A WORLD WORTH SHARING <a href="#top">↑</a></span></footer>
+</div>
+</body>
+</html>
