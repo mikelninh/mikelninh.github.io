@@ -31,6 +31,10 @@ async function run(label,width,height){
  await page.locator('.dossier-top h3').waitFor();
  assert.match(await page.locator('.dossier-top h3').innerText(),/Sudan/);
  assert.ok((await page.locator('#dossier-content').innerText()).includes('POSSIBLE PATHS TOWARDS PEACE'));
+ const nextStep=page.locator('.dossier-process-link a');
+ assert.equal(await nextStep.count(),1,'Sudan dossier should link to the source ledger');
+ assert.match(await nextStep.getAttribute('href'),/process=sudan/);
+
  await page.screenshot({path:path.join(out,label+'-dossier.png'),fullPage:false});
  shots.push(label+'-dossier');
  await page.locator('#clear-record').click();
