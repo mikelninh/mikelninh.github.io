@@ -43,6 +43,19 @@ jobs:
           path: the-way/screenshots/
           retention-days: 2
           if-no-files-found: ignore
+      - name: Validate documentary source checker
+        continue-on-error: true
+        run: |
+          WAY_SOURCE_REPORT="$RUNNER_TEMP/way-sources.json" node the-way/watch.mjs
+          test -s "$RUNNER_TEMP/way-sources.json"
+      - name: Upload documentary source checks
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: the-way-source-check-ci
+          path: ${{ runner.temp }}/way-sources.json
+          retention-days: 2
+          if-no-files-found: ignore
       - name: Inspect news endpoint (availability may depend on third-party feeds)
         continue-on-error: true
         run: |
