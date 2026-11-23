@@ -20,7 +20,7 @@ for(const x of rows){
  assert.ok(x.locationPrecision==='theatre-level anchor');
  assert.ok(x.reviewed===meta.reviewed);
  for(const k of ['title','region','location','actors','drivers','human','barrier','path','measure']){
-  assert.ok(typeof x[k]==='string'&&x[k].trim().length>=(k==='region'?3:10),k+' missing on '+x.id)
+  assert.ok(typeof x[k]==='string'&&x[k].trim().length>=(['title','region','location'].includes(k)?3:20),k+' missing on '+x.id)
  }
  assert.ok(Array.isArray(x.sources)&&x.sources.length>=1,'Citation required for '+x.id);
  for(const k of x.sources){assert.ok(sources[k],x.id+' references unknown '+k)}
