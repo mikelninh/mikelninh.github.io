@@ -10,9 +10,9 @@ An open, geographically grounded map of conflicts and crisis theatres, their dri
 ## What is working
 
 - Responsive editorial website with a true geographic world basemap (Leaflet + OpenStreetMap Standard geographic raster tiles with visible attribution).
-- **52 curated geographic theatre anchors**, searched and filtered by region and three *distinct* types: armed conflict, organised violence, and tension / instability.
+- **53 curated geographic theatre anchors**, searched and filtered by region and three *distinct* types: armed conflict, organised violence, and tension / instability.
 - Approximate latitude/longitude anchored to broad locations. **Not** frontlines, military movements, incidents or travel-safety assessments.
-- Dossiers for all 52: involved actors, underlying drivers, impact on civilians, main negotiation barriers, peace-pathway hypotheses and tangible tests of progress.
+- Dossiers for all 53: involved actors, underlying drivers, impact on civilians, main negotiation barriers, peace-pathway hypotheses and tangible tests of progress.
 - In-page source links to established conflict and humanitarian research.
 - A clearly separate latest-reporting area using a public, read-only Supabase Edge Function fetching dated RSS items from UN News, BBC and The Guardian. The feed is a stream of headlines **not real-time battlefield events**.
 - Shareable conflict deep links, keyboard navigation, exportable JSON, mobile layout and reduced-motion support.
@@ -21,7 +21,7 @@ An open, geographically grounded map of conflicts and crisis theatres, their dri
 
 ## Coverage is not completeness
 
-- **52** is the number of records/theatre anchors in this prototype. A theatre is not necessarily a distinct UCDP armed conflict; countries can have more than one and some entries concern tension rather than organised fighting.
+- **53** is the number of records/theatre anchors in this prototype. A theatre is not necessarily a distinct UCDP armed conflict; countries can have more than one and some entries concern tension rather than organised fighting.
 - **65** is the number of *state-based armed conflicts in calendar year 2025* reported by Uppsala Conflict Data Program in June 2026. It is **not** a verified count of wars happening on 23 November 2026.
 - Different classification schemes from UCDP, ACLED and CFR are not interchangeable.
 - Every theatre description represents independently authored synthesis for review, not the original source's exact prose. The source references may be broad reports or monitoring programme homepages and do not necessarily document every sentence.
@@ -53,6 +53,36 @@ Source modules:
 - `checks.mjs`: deterministic data and source-contract tests
 
 Public news endpoint: `https://htffcvdopavknnylbowl.supabase.co/functions/v1/the-way-news`. The serverless function has no credentials or user identities and does not accept POST requests. It caches successful reports for roughly twenty minutes. News links should be checked at their original source.
+
+## The Peace Ledger (new)
+
+**[Explore six documented processes](https://mikelninh.github.io/the-way/progress.html)**
+
+This is a separate, source-linked evidence layer for **six selected peace processes**:
+Colombia (2016 agreement), Sudan (2023 Jeddah civilian-protection declaration), Yemen (2018 Stockholm Agreement), South Sudan (2018 revitalised agreement), Armenia–Azerbaijan (2025 initialled peace text), and Ethiopia–Tigray (2022 Pretoria agreement).
+
+Each case contains:
+- the instrument's **actual legal/documentary character** (signed, declaration, initialled, partial agreement);
+- three dated, source-cited milestones;
+- three implementation commitments, their specific verification questions and the extent of available evidence;
+- sources separated by role (primary document, UN mission mandate, monitoring or an independent rights report);
+- editorial caveats, original links, shareable case URLs and an exportable JSON research note;
+- **no synthetic peace score**, no claim that a signature proves compliance, and no fabrication of missing outcome measurements.
+
+**Data limitations:** This is a curated 23 November 2026 snapshot, not continuous implementation verification. Official statements are evidence that institutions made statements, not independent proof of all their downstream claims. Future reviewers must adjudicate updated reports, evidence conflict and contested facts.
+
+**PA-X copyright:** The University of Edinburgh’s PA-X v10 lists 2,257 agreements from 1990–2025. The dataset’s terms are CC BY-NC-SA for applicable materials, prohibit commercial reuse and prohibit duplicating the substantial/complete database in another competing tool. The site provides a source link and original research notes rather than reproducing its records or PDFs. See [PA-X Terms of Use](https://www.peaceagreements.org/cms/documents/8/Terms_of_Use_updated_added_local.pdf).
+
+The new \`processes.js\`, \`progress.html\`, \`process.css\` and \`process-app.js\` modules keep source claims human-reviewable. \`checks.mjs\` validates every document and timeline date against the snapshot, all source keys, and the link to its actual geographic theatre. Automated browser tests cover both the original map and the Peace Ledger in mobile/desktop.
+
+### Example research criteria
+
+- Colombia: UN mission mandate, former-combatant safety, civic security and defined aspects of agreement implementation;
+- Sudan: civilian-protection commitments, humanitarian access and free civilian movement;
+- Yemen: Hudaydah port monitoring, prisoner-related measures and national talks;
+- South Sudan: transition milestones, civilian safety and justice;
+- Armenia–Azerbaijan: initialling versus legal entry into force, borders and displaced rights;
+- Ethiopia–Tigray: ceasefire commitments, services and dialogue, with documented AU concerns.
 
 ## The work ahead
 
