@@ -140,9 +140,9 @@ function initializeMap(){
  if(!window.L || !L.map){mapFallback();return}
  try{
   map=L.map("map",{zoomControl:true,scrollWheelZoom:true,minZoom:1.5,maxZoom:12,worldCopyJump:false,preferCanvas:true});
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{
-   attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
-   maxZoom:19,subdomains:"abcd",detectRetina:true
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{
+   attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',
+   maxZoom:19,detectRetina:false
   }).addTo(map);
   const z=window.innerWidth<650?1.5:window.innerWidth<1120?1.8:2;
   map.setView([18,14],z,{animate:false});
