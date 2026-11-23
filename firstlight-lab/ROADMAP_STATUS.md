@@ -1,5 +1,5 @@
 # LifeBench · Weekly roadmap status
-**Checked at:** 2026-11-21T15:06:38+00:00
+**Checked at:** 2026-11-23T20:14:38+00:00
 **Type:** automated facts-only report, not autonomous engineering progress or a legislative-effect claim.
 
 **Milestones:** 6 open, 0 closed, 0 unavailable. Closed issues are **not automatically verified as completed**.
@@ -16,7 +16,7 @@
 ## Official animal-welfare legislative case
 - **DIP:** [334563](https://dip.bundestag.de/vorgang/334563)
 - **Reported parliamentary status:** Verabschiedet
-- **Monitor snapshot:** 2026-11-21T15:03:51Z
+- **Monitor snapshot:** 2026-11-23T18:02:22Z
 - **Source health:** dip=ok, gazette=unavailable, gii=unavailable, consultations=ok
 - **Promulgation verified:** False
 - **Entry into force verified:** False
