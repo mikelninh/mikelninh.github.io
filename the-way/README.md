@@ -9,7 +9,7 @@ An open, geographically grounded map of conflicts and crisis theatres, their dri
 
 ## What is working
 
-- Responsive editorial website with a true geographic world basemap (Leaflet + CARTO tiles + OpenStreetMap place/border data and attribution).
+- Responsive editorial website with a true geographic world basemap (Leaflet + OpenStreetMap Standard geographic raster tiles with visible attribution).
 - **52 curated geographic theatre anchors**, searched and filtered by region and three *distinct* types: armed conflict, organised violence, and tension / instability.
 - Approximate latitude/longitude anchored to broad locations. **Not** frontlines, military movements, incidents or travel-safety assessments.
 - Dossiers for all 52: involved actors, underlying drivers, impact on civilians, main negotiation barriers, peace-pathway hypotheses and tangible tests of progress.
@@ -37,7 +37,7 @@ An open, geographically grounded map of conflicts and crisis theatres, their dri
 - [UN DPPA Prevention & Mediation](https://dppa.un.org/en/prevention-and-mediation) and [UN Peacemaker](https://peacemaker.un.org/)
 - [OCHA ReliefWeb](https://reliefweb.int/updates)
 
-Tiles from CARTO based on OpenStreetMap, with required attribution displayed.
+Tiles from OpenStreetMap Standard, with required visible attribution, adapted in CSS for a dark appearance. This small research prototype must comply with the OSM tile-use policy (https://operations.osmfoundation.org/policies/tiles/); commercial or high-traffic use would require a separately licensed map provider.
 
 The 2026 UCDP API now requires a researcher access token in the `x-ucdp-access-token` header. Do not claim that the site retrieves current UCDP event data automatically until access is granted and a licensed, compliant pipeline is implemented.
 
