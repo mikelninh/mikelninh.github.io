@@ -8,7 +8,7 @@ window.WAY_PROCESSES=[
  id:"colombia", title:"Colombia",subtitle:"From an agreement to a durable peace",region:"Americas",anchorIds:["colombia","colombia-cauca"],date:"2016-11-24",type:"Signed final peace agreement",stage:"Implementation under monitoring",
  intro:"The 2016 Final Agreement between the Government of Colombia and FARC-EP created obligations beyond ending fighting. A UN verification mission continues to monitor defined parts of implementation. Other armed groups and violence are not covered automatically by that accord.",
  focus:"Can those who laid down arms live safely, and can agreement commitments be sustained?",
- agreement:{name:"Final Agreement for Ending the Conflict and Building a Stable and Lasting Peace",date:"2016-11-24",url:"https://peacemaker.un.org/en/areas-of-work/peace-agreements-database-and-language-of-peace-tool/peace-agreements-search",label:"UN agreement database"},
+ agreement:{name:"Final Agreement for Ending the Conflict and Building a Stable and Lasting Peace",date:"2016-11-24",url:"https://peacemaker.un.org/en/node/9804",label:"UN agreement database"},
  signals:[
  {label:"Agreement",detail:"2016 Final Agreement signed",type:"document"},
  {label:"Verification",detail:"UN mission mandate extended until October 2027",type:"observed"},
@@ -25,7 +25,7 @@ window.WAY_PROCESSES=[
  {id:"col-rights",title:"Enable safe civic participation",text:"Political participation must be possible without intimidation or violence.",test:"Independent reporting of threats, participation and protection of community leaders.",evidence:["unbrief"],finding:"Included as an outcome to track; a verified nationwide metric is not provided here."}
  ],
  sources:{
- agreement:{org:"United Nations Peacemaker",title:"Peace agreements search / Colombia",date:"2016-11-24",url:"https://peacemaker.un.org/en/areas-of-work/peace-agreements-database-and-language-of-peace-tool/peace-agreements-search",role:"Agreement archive",kind:"original"},
+ agreement:{org:"United Nations Peacemaker",title:"Final Agreement for Ending the Conflict and Building a Stable and Lasting Peace",date:"2016-11-24",url:"https://peacemaker.un.org/en/node/9804",role:"Agreement archive",kind:"original"},
  unbrief:{org:"United Nations DPPA",title:"Colombia peace deal must endure as insecurity grows",date:"2026-10-12",url:"https://dppa.un.org/en/news/colombia-peace-deal-must-endure-as-insecurity-grows-security-council-hears",role:"Dated UN analysis",kind:"report"},
  report:{org:"UN Verification Mission in Colombia",title:"Mission documents and the October 2026 Secretary-General report",date:"2026-10-08",url:"https://colombia.unmissions.org/en/documents",role:"Monitoring documents",kind:"report"},
  mandate:{org:"UN Mandate Registry",title:"Security Council Resolution 2833 (2026)",date:"2026-10-30",url:"https://mandates.un.org/mandate/S/RES/2833%20%282026%29",role:"Current mission mandate",kind:"original"}
