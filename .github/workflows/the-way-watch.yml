@@ -1,0 +1,26 @@
+name: THE WAY evidence source watch
+
+on:
+  schedule:
+    - cron: "20 7 * * *" # Daily, UTC; no assumption about local daylight time
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout reviewed source ledger
+        uses: actions/checkout@v4
+      - name: Check link availability without inferring compliance
+        run: |
+          WAY_SOURCE_REPORT="$RUNNER_TEMP/the-way-source-watch.json" node the-way/watch.mjs
+      - name: Preserve source availability report
+        uses: actions/upload-artifact@v4
+        with:
+          name: the-way-source-availability
+          path: ${{ runner.temp }}/the-way-source-watch.json
+          retention-days: 14
