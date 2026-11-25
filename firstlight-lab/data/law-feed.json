@@ -1,30 +1,30 @@
 {
   "schema": "lifebench-official-monitor-v1",
-  "generated_at": "2026-11-25T02:24:11Z",
+  "generated_at": "2026-11-25T17:10:55Z",
   "contract": "Observed official parliamentary records are not the same as promulgation, effective law or measured impact.",
   "sources": {
     "dip": {
       "status": "ok",
       "url": "https://dip.bundestag.de/",
       "count": 459,
-      "checked_at": "2026-11-25T02:24:11Z"
+      "checked_at": "2026-11-25T17:10:55Z"
     },
     "gazette": {
       "status": "unavailable",
       "url": "https://www.recht.bund.de/",
       "count": 0,
-      "checked_at": "2026-11-25T02:24:11Z"
+      "checked_at": "2026-11-25T17:10:55Z"
     },
     "gii": {
       "status": "unavailable",
       "url": "https://www.gesetze-im-internet.de/aktuDienst.html",
       "count": 0,
-      "checked_at": "2026-11-25T02:24:11Z"
+      "checked_at": "2026-11-25T17:10:55Z"
     },
     "consultations": {
       "status": "ok",
       "url": "https://github.com/mikelninh/mikelninh.github.io/issues",
-      "checked_at": "2026-11-25T02:24:11Z"
+      "checked_at": "2026-11-25T17:10:55Z"
     }
   },
   "cases": [
@@ -101,6 +101,223 @@
           "event": "3. Beratung",
           "source": "https://dip.bundestag.de/vorgang/334563",
           "position_id": "703317"
+        }
+      ],
+      "promulgation": {
+        "verified": false,
+        "url": null,
+        "citation": null,
+        "source": null
+      },
+      "entry_into_force": {
+        "verified": false,
+        "date": null,
+        "reason": "Full official legal text and commencement clause require independent verification"
+      },
+      "impact": {
+        "verified": false,
+        "reason": "No independently validated outcome series attached"
+      }
+    },
+    {
+      "id": "334566",
+      "title": "Gesetz zur Durchführung der Verordnung (EU) 2024/2847 über horizontale Cybersicherheitsanforderungen für Produkte mit digitalen Elementen (Cyberresilienz-Verordnung)",
+      "type": "official_legislative_procedure",
+      "gesta": "B046",
+      "status_raw": "Verkündet",
+      "stage": "promulgated",
+      "source_updated_at": "2026-11-25T16:40:03+01:00",
+      "source_date": "2026-11-20",
+      "source_url": "https://dip.bundestag.de/vorgang/334566",
+      "positions": [
+        {
+          "date": "2026-05-01",
+          "house": "Bundesrat",
+          "event": "Gesetzentwurf",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "692085"
+        },
+        {
+          "date": "2026-05-26",
+          "house": "Bundestag",
+          "event": "Gesetzentwurf",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "693507"
+        },
+        {
+          "date": "2026-06-11",
+          "house": "Bundestag",
+          "event": "1. Beratung",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "694892"
+        },
+        {
+          "date": "2026-06-12",
+          "house": "Bundesrat",
+          "event": "1. Durchgang",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "694642"
+        },
+        {
+          "date": "2026-06-12",
+          "house": "Bundesrat",
+          "event": "Beschlussdrucksache",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "694736"
+        },
+        {
+          "date": "2026-06-15",
+          "house": "Bundestag",
+          "event": "Unterrichtung über Stellungnahme des BR",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "694924"
+        },
+        {
+          "date": "2026-10-14",
+          "house": "Bundestag",
+          "event": "Bericht gemäß § 96 Geschäftsordnung BT",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "701786"
+        },
+        {
+          "date": "2026-10-14",
+          "house": "Bundestag",
+          "event": "Beschlussempfehlung und Bericht",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "701803"
+        },
+        {
+          "date": "2026-10-15",
+          "house": "Bundestag",
+          "event": "2. Beratung",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "702421"
+        },
+        {
+          "date": "2026-10-15",
+          "house": "Bundestag",
+          "event": "3. Beratung",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "702422"
+        },
+        {
+          "date": "2026-10-30",
+          "house": "Bundesrat",
+          "event": "Unterrichtung über Gesetzesbeschluss des BT",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "702841"
+        },
+        {
+          "date": "2026-10-30",
+          "house": "Bundesrat",
+          "event": "Unterrichtung über Gesetzesbeschluss des BT",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "702853"
+        },
+        {
+          "date": "2026-11-20",
+          "house": "Bundesrat",
+          "event": "2. Durchgang",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "704382"
+        },
+        {
+          "date": "2026-11-20",
+          "house": "Bundesrat",
+          "event": "Beschlussdrucksache",
+          "source": "https://dip.bundestag.de/vorgang/334566",
+          "position_id": "704463"
+        }
+      ],
+      "promulgation": {
+        "verified": true,
+        "url": null,
+        "citation": null,
+        "source": "DIP structured record"
+      },
+      "entry_into_force": {
+        "verified": false,
+        "date": null,
+        "reason": "Full official legal text and commencement clause require independent verification"
+      },
+      "impact": {
+        "verified": false,
+        "reason": "No independently validated outcome series attached"
+      }
+    },
+    {
+      "id": "338361",
+      "title": "Gesetz für einen planbaren, kosteneffizienten, netzverträglichen und marktorientierten Ausbau der erneuerbaren Energien im Stromsektor",
+      "type": "official_legislative_procedure",
+      "gesta": "E044",
+      "status_raw": "Überwiesen",
+      "stage": "deliberation",
+      "source_updated_at": "2026-11-25T15:57:12+01:00",
+      "source_date": "2026-11-24",
+      "source_url": "https://dip.bundestag.de/vorgang/338361",
+      "positions": [
+        {
+          "date": "2026-08-14",
+          "house": "Bundesrat",
+          "event": "Gesetzentwurf",
+          "source": "https://dip.bundestag.de/vorgang/338361",
+          "position_id": "698421"
+        },
+        {
+          "date": "2026-09-07",
+          "house": "Bundestag",
+          "event": "Gesetzentwurf",
+          "source": "https://dip.bundestag.de/vorgang/338361",
+          "position_id": "699106"
+        },
+        {
+          "date": "2026-09-14",
+          "house": "Bundesrat",
+          "event": "Empfehlungen der Ausschüsse",
+          "source": "https://dip.bundestag.de/vorgang/338361",
+          "position_id": "699488"
+        },
+        {
+          "date": "2026-09-22",
+          "house": "Bundesrat",
+          "event": "Plenarantrag",
+          "source": "https://dip.bundestag.de/vorgang/338361",
+          "position_id": "700040"
+        },
+        {
+          "date": "2026-09-24",
+          "house": "Bundestag",
+          "event": "1. Beratung",
+          "source": "https://dip.bundestag.de/vorgang/338361",
+          "position_id": "700370"
+        },
+        {
+          "date": "2026-09-25",
+          "house": "Bundesrat",
+          "event": "1. Durchgang",
+          "source": "https://dip.bundestag.de/vorgang/338361",
+          "position_id": "700445"
+        },
+        {
+          "date": "2026-09-25",
+          "house": "Bundesrat",
+          "event": "Beschlussdrucksache",
+          "source": "https://dip.bundestag.de/vorgang/338361",
+          "position_id": "700564"
+        },
+        {
+          "date": "2026-09-30",
+          "house": "Bundestag",
+          "event": "Unterrichtung über Stellungnahme des BR und Gegenäußerung der BRg",
+          "source": "https://dip.bundestag.de/vorgang/338361",
+          "position_id": "700878"
+        },
+        {
+          "date": "2026-11-24",
+          "house": "Bundestag",
+          "event": "Änderung der Ausschussüberweisung",
+          "source": "https://dip.bundestag.de/vorgang/338361",
+          "position_id": "704706"
         }
       ],
       "promulgation": {
@@ -540,132 +757,6 @@
       }
     },
     {
-      "id": "334566",
-      "title": "Gesetz zur Durchführung der Verordnung (EU) 2024/2847 über horizontale Cybersicherheitsanforderungen für Produkte mit digitalen Elementen (Cyberresilienz-Verordnung)",
-      "type": "official_legislative_procedure",
-      "gesta": "B046",
-      "status_raw": "Bundesrat hat Vermittlungsausschuss nicht angerufen",
-      "stage": "deliberation",
-      "source_updated_at": "2026-11-20T15:52:45+01:00",
-      "source_date": "2026-11-20",
-      "source_url": "https://dip.bundestag.de/vorgang/334566",
-      "positions": [
-        {
-          "date": "2026-05-01",
-          "house": "Bundesrat",
-          "event": "Gesetzentwurf",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "692085"
-        },
-        {
-          "date": "2026-05-26",
-          "house": "Bundestag",
-          "event": "Gesetzentwurf",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "693507"
-        },
-        {
-          "date": "2026-06-11",
-          "house": "Bundestag",
-          "event": "1. Beratung",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "694892"
-        },
-        {
-          "date": "2026-06-12",
-          "house": "Bundesrat",
-          "event": "1. Durchgang",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "694642"
-        },
-        {
-          "date": "2026-06-12",
-          "house": "Bundesrat",
-          "event": "Beschlussdrucksache",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "694736"
-        },
-        {
-          "date": "2026-06-15",
-          "house": "Bundestag",
-          "event": "Unterrichtung über Stellungnahme des BR",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "694924"
-        },
-        {
-          "date": "2026-10-14",
-          "house": "Bundestag",
-          "event": "Bericht gemäß § 96 Geschäftsordnung BT",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "701786"
-        },
-        {
-          "date": "2026-10-14",
-          "house": "Bundestag",
-          "event": "Beschlussempfehlung und Bericht",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "701803"
-        },
-        {
-          "date": "2026-10-15",
-          "house": "Bundestag",
-          "event": "2. Beratung",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "702421"
-        },
-        {
-          "date": "2026-10-15",
-          "house": "Bundestag",
-          "event": "3. Beratung",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "702422"
-        },
-        {
-          "date": "2026-10-30",
-          "house": "Bundesrat",
-          "event": "Unterrichtung über Gesetzesbeschluss des BT",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "702841"
-        },
-        {
-          "date": "2026-10-30",
-          "house": "Bundesrat",
-          "event": "Unterrichtung über Gesetzesbeschluss des BT",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "702853"
-        },
-        {
-          "date": "2026-11-20",
-          "house": "Bundesrat",
-          "event": "2. Durchgang",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "704382"
-        },
-        {
-          "date": "2026-11-20",
-          "house": "Bundesrat",
-          "event": "Beschlussdrucksache",
-          "source": "https://dip.bundestag.de/vorgang/334566",
-          "position_id": "704463"
-        }
-      ],
-      "promulgation": {
-        "verified": false,
-        "url": null,
-        "citation": null,
-        "source": null
-      },
-      "entry_into_force": {
-        "verified": false,
-        "date": null,
-        "reason": "Full official legal text and commencement clause require independent verification"
-      },
-      "impact": {
-        "verified": false,
-        "reason": "No independently validated outcome series attached"
-      }
-    },
-    {
       "id": "335473",
       "title": "Gesetz zur Durchführung der unionsrechtlichen Vorschriften über die Europäische Brieftasche für die Digitale Identität sowie zur Änderung anderer Rechtsvorschriften (Digitale Identitätengesetz - DIdG)",
       "type": "official_legislative_procedure",
@@ -1070,104 +1161,6 @@
         "verified": false,
         "reason": "No independently validated outcome series attached"
       }
-    },
-    {
-      "id": "338344",
-      "title": "Gesetz zur Neuregelung des Rechts über entwaldungsfreie Produkte sowie zur Umsetzung von bestimmten Vorschriften der Richtlinie (EU) 2024/1203 über den strafrechtlichen Schutz der Umwelt",
-      "type": "official_legislative_procedure",
-      "gesta": "F016",
-      "status_raw": "Verabschiedet",
-      "stage": "parliamentary_decision",
-      "source_updated_at": "2026-11-17T11:31:19+01:00",
-      "source_date": "2026-11-12",
-      "source_url": "https://dip.bundestag.de/vorgang/338344",
-      "positions": [
-        {
-          "date": "2026-08-14",
-          "house": "Bundesrat",
-          "event": "Gesetzentwurf",
-          "source": "https://dip.bundestag.de/vorgang/338344",
-          "position_id": "698404"
-        },
-        {
-          "date": "2026-09-11",
-          "house": "Bundesrat",
-          "event": "Empfehlungen der Ausschüsse",
-          "source": "https://dip.bundestag.de/vorgang/338344",
-          "position_id": "699458"
-        },
-        {
-          "date": "2026-09-25",
-          "house": "Bundesrat",
-          "event": "1. Durchgang",
-          "source": "https://dip.bundestag.de/vorgang/338344",
-          "position_id": "700469"
-        },
-        {
-          "date": "2026-09-25",
-          "house": "Bundesrat",
-          "event": "Beschlussdrucksache",
-          "source": "https://dip.bundestag.de/vorgang/338344",
-          "position_id": "700536"
-        },
-        {
-          "date": "2026-09-30",
-          "house": "Bundestag",
-          "event": "Gesetzentwurf",
-          "source": "https://dip.bundestag.de/vorgang/338344",
-          "position_id": "700864"
-        },
-        {
-          "date": "2026-10-08",
-          "house": "Bundestag",
-          "event": "1. Beratung",
-          "source": "https://dip.bundestag.de/vorgang/338344",
-          "position_id": "701597"
-        },
-        {
-          "date": "2026-11-11",
-          "house": "Bundestag",
-          "event": "Beschlussempfehlung und Bericht",
-          "source": "https://dip.bundestag.de/vorgang/338344",
-          "position_id": "703738"
-        },
-        {
-          "date": "2026-11-11",
-          "house": "Bundestag",
-          "event": "Bericht gemäß § 96 Geschäftsordnung BT",
-          "source": "https://dip.bundestag.de/vorgang/338344",
-          "position_id": "703830"
-        },
-        {
-          "date": "2026-11-12",
-          "house": "Bundestag",
-          "event": "2. Beratung",
-          "source": "https://dip.bundestag.de/vorgang/338344",
-          "position_id": "704184"
-        },
-        {
-          "date": "2026-11-12",
-          "house": "Bundestag",
-          "event": "3. Beratung",
-          "source": "https://dip.bundestag.de/vorgang/338344",
-          "position_id": "704186"
-        }
-      ],
-      "promulgation": {
-        "verified": false,
-        "url": null,
-        "citation": null,
-        "source": null
-      },
-      "entry_into_force": {
-        "verified": false,
-        "date": null,
-        "reason": "Full official legal text and commencement clause require independent verification"
-      },
-      "impact": {
-        "verified": false,
-        "reason": "No independently validated outcome series attached"
-      }
     }
   ],
   "gazette_related": [],
@@ -1178,6 +1171,14 @@
     "note": "Public GitHub Issues. Counts do not measure public support or representativeness."
   },
   "changes": [
+    {
+      "id": "334566",
+      "type": "official_status_change",
+      "at": "2026-11-25T17:10:55Z",
+      "old": "Bundesrat hat Vermittlungsausschuss nicht angerufen",
+      "new": "Verkündet",
+      "source_url": "https://dip.bundestag.de/vorgang/334566"
+    },
     {
       "id": "334563",
       "type": "first_observation",
