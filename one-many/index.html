@@ -1,0 +1,482 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="ONE/MANY: Von inspirierenden Geschichten zu eigener gesellschaftlicher Wirkung."><title>ONE / MANY · Jeder Anfang zählt.</title><style>
+:root{--bg:#f5f3ea;--ink:#1d3128;--green:#204b3a;--muted:#58675c;--line:#d5d9ca;--lime:#e2edb6;--white:#fffdf7}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,sans-serif}button,input,select,textarea{font:inherit;color:inherit}button,a,input,textarea,select{outline-offset:4px}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #7f9951}button{cursor:pointer}a{color:var(--green)}header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 5vw;border-bottom:1px solid var(--line)}.logo{font-size:25px;font-weight:850;letter-spacing:-.09em;white-space:nowrap}.logo span{color:#79945c}nav{display:flex;gap:5px;flex-wrap:wrap}nav button{border:0;background:none;padding:8px 12px;border-radius:20px;color:var(--muted);font-size:13px}nav button[aria-current=page]{background:var(--green);color:white}.wrap{max-width:1200px;margin:auto;padding:30px 28px 60px}.page[hidden]{display:none}h1,h2,h3,p{margin:0}h1,h2,h3{font:400 1em/1.05 Georgia,serif;letter-spacing:-.055em}h1{font-size:clamp(47px,7vw,91px)}h2{font-size:clamp(32px,4.5vw,55px)}h3{font-size:27px}.ey{font-size:11px;font-weight:750;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:center;min-height:430px;padding-bottom:32px}.hero h1{margin:15px 0 22px}.hero p{max-width:520px;color:var(--muted);font-size:19px}.hero svg{width:100%;max-height:390px}.btn{border:1px solid var(--green);border-radius:25px;padding:10px 17px;background:var(--green);color:#fff;display:inline-block;font-weight:650;text-decoration:none;font-size:14px}.btn.alt{background:transparent;color:var(--green)}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}.band{background:var(--green);color:white;padding:25px 30px;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}.band p{color:#d9e6d7}.band h2{font-size:36px}.section{margin-top:44px}.heading{margin-bottom:23px;display:flex;align-items:end;justify-content:space-between;gap:20px}.heading p{max-width:430px;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.card{padding:22px;background:var(--white);border:1px solid var(--line);display:flex;flex-direction:column;gap:12px;min-width:0}.card h3{line-height:1.12}.small{font-size:12px;color:var(--muted)}.metric{font:400 42px/1 Georgia,serif;letter-spacing:-.05em}.card .bottom{margin-top:auto}.card p{overflow-wrap:anywhere}.rule{border-top:1px solid var(--line);padding-top:11px}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}input,textarea,select{background:var(--white);border:1px solid #bec7b9;border-radius:5px;padding:11px;width:100%;min-width:0}textarea{resize:vertical;min-height:80px}.controls input{flex:2;min-width:160px}.controls select{flex:1;min-width:145px}.pill{display:inline-block;font-size:11px;color:var(--muted);border:1px solid var(--line);padding:3px 8px;border-radius:20px;align-self:flex-start}.steps{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0}.steps button{background:transparent;border:1px solid var(--line);padding:8px 12px;border-radius:25px;font-size:13px}.steps button.active{background:var(--green);color:white;border-color:var(--green)}.split{display:grid;grid-template-columns:250px 1fr;gap:15px}.sidebar{display:flex;flex-direction:column;gap:8px}.sidebar button{text-align:left;background:var(--white);border:1px solid var(--line);padding:12px;border-radius:4px;overflow-wrap:anywhere}.sidebar button.selected{background:var(--lime);border-color:var(--green)}.editor{padding:25px;background:var(--white);border:1px solid var(--line)}.editor h3{margin-bottom:10px}.field{display:block;font-size:13px;font-weight:650;margin:15px 0 5px}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}.notice{background:#e9eadc;padding:13px 16px;font-size:13px;margin:12px 0}.status{font-size:13px;color:var(--green);min-height:22px;margin-top:8px}.danger{color:#8b453a;border-color:#bb968b!important}.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}.timeline div{padding:18px;background:var(--white)}.timeline b{display:block;margin-bottom:5px}.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.statgrid .card{gap:5px}.empty{padding:30px;border:1px dashed var(--line);color:var(--muted)}footer{border-top:1px solid var(--line);padding:25px 5vw;color:var(--muted);font-size:12px}.linkline{display:flex;gap:10px;flex-wrap:wrap}dialog{max-width:680px;width:calc(100% - 28px);max-height:90vh;overflow:auto;background:var(--white);color:var(--ink);border:1px solid var(--line);padding:25px}dialog::backdrop{background:#13291fc0}summary{cursor:pointer;font-weight:650}.sr{position:absolute;clip:rect(0,0,0,0)}@media(max-width:780px){header{align-items:flex-start;flex-direction:column;padding:12px 18px}nav{gap:1px}nav button{padding:7px 9px}.wrap{padding:22px 17px 40px}.hero,.band,.split,.twocol{grid-template-columns:1fr}.hero{min-height:0;gap:0}.hero svg{max-height:260px}.hero p{font-size:17px}.grid{grid-template-columns:1fr 1fr}.heading{display:block}.heading p{margin-top:8px}.timeline{grid-template-columns:1fr 1fr}.statgrid{grid-template-columns:1fr 1fr}.editor{padding:17px}.sidebar{max-height:230px;overflow:auto}}@media(max-width:490px){.grid{grid-template-columns:1fr}.card{padding:18px}.controls select{flex-basis:45%}.band{padding:22px}}@media(prefers-reduced-motion:no-preference){.page:not([hidden]){animation:appear .2s ease-out}@keyframes appear{from{opacity:.6}to{opacity:1}}}
+</style></head><body><header><div class="logo">ONE<span>/</span>MANY <span class="small" style="letter-spacing:0;font-weight:400">01</span></div><nav aria-label="Hauptnavigation" id="nav"></nav></header><main class="wrap"><section class="page" id="home"><div class="hero"><div><div class="ey">A learning civilisation · v1.0 local</div><h1>Die Welt beginnt<br>mit einem<br><em>Menschen.</em></h1><p>Entdecke, was Menschen bereits verändert haben. Finde deinen eigenen Beitrag. Lass aus einer Idee überprüfbare Wirkung entstehen.</p><div class="actions"><button class="btn" data-go="archive">Geschichten entdecken ↗</button><button class="btn alt" id="homeStart">Etwas verändern</button></div></div><svg viewBox="0 0 420 420" role="img" aria-label="Ein Mensch und die Wellen seiner möglichen Wirkung"><circle cx="210" cy="210" r="190" fill="none" stroke="#c9d4bc"/><circle cx="210" cy="210" r="145" fill="#e3ead0" stroke="#c9d4bc"/><circle cx="210" cy="210" r="100" fill="#d6e3b9" stroke="#b2c7a1"/><circle cx="210" cy="210" r="52" fill="#b1cb95" stroke="#8eab7b"/><g id="dots"/><circle cx="210" cy="210" r="15" fill="#204b3a"/><circle cx="210" cy="210" r="4" fill="#fff"/><path d="M228 210H300L320 190" stroke="#204b3a" fill="none"/><text x="310" y="183" font-size="12" font-weight="bold" fill="#204b3a">DU.</text><text x="210" y="412" text-anchor="middle" font-size="10" letter-spacing="2" fill="#58675c">EIN ANFANG. VIELE MÖGLICHKEITEN.</text></svg></div><div class="band"><h2>Eine Menschheit, die gemeinsam weiser wird.</h2><p>Selbstwirksamkeit ist kein Alleingang. Wir verbinden persönliches Handeln, Gemeinschaft, Wissen und demokratische Institutionen, ohne Menschen ihre Entscheidungen abzunehmen.</p></div><div class="section"><div class="heading"><h2>Es begann klein.</h2><p>Wahre Geschichten, keine Garantie für Erfolg. Jeder Fall ist ein Ausgangspunkt zum Lernen.</p></div><div class="grid" id="featured"></div></div><div class="section"><div class="heading"><h2>Vom Lesen zum Handeln.</h2></div><div class="timeline"><div><b>01 Entdecken</b>Wissen finden.</div><div><b>02 Verstehen</b>Betroffene hören.</div><div><b>03 Erproben</b>Klein beginnen.</div><div><b>04 Beteiligen</b>Gemeinsam entscheiden.</div><div><b>05 Lernen</b>Wirkung überprüfen.</div></div></div></section>
+<section class="page" id="archive" hidden><div class="heading"><div><div class="ey">01 / Archiv</div><h2>Stories of change.</h2></div><p>64 Kurzporträts. Quellenhinweise sind Rechercheeinstiege, keine vollständige Wirkungsevaluation. Ungeprüfte Fälle sind gekennzeichnet.</p></div><div class="controls"><input id="search" aria-label="Suche" placeholder="Person, Land, Thema …"><select id="category" aria-label="Kategorie"><option value="">Alle Themen</option></select><select id="filter" aria-label="Quellenstatus"><option value="">Alle Fälle</option><option value="source">Mit Quellenhinweis</option><option value="candidate">Recherchekandidaten</option><option value="saved">Merkliste</option></select><button class="btn alt" id="random">Zufall ↗</button></div><p id="archiveCount" class="small" role="status"></p><div class="grid section" id="storyGrid" style="margin-top:12px"></div></section>
+<section class="page" id="methods" hidden><div class="heading"><div><div class="ey">02 / Methodensammlung</div><h2>Was können wir lernen?</h2></div><p>Praktische Ansätze, keine aus 64 Fällen bewiesenen Kausalgesetze. Prüfe jeden Ansatz im eigenen Kontext.</p></div><div class="grid" id="methodGrid"></div><div class="section notice">Forschungsziel: 10.000 vergleichbare Fälle, einschliesslich Fehlschlägen. Erfasse Ausgangslage, Ressourcen, Handlung, Ergebnis, Gegenbelege und Übertragbarkeit. Die Auswertung muss Selektionsbias und alternative Erklärungen berücksichtigen.</div><button class="btn alt" id="exportResearch">Forschungsdatensatz exportieren (JSON)</button></section>
+<section class="page" id="projects" hidden><div class="heading"><div><div class="ey">03 / Dein Arbeitsraum</div><h2>Let's change something.</h2></div><p>Für dich allein oder mit anderen. Deine Entwürfe bleiben lokal. Exportiere sie nur freiwillig.</p></div><div class="split"><aside><div class="actions" style="margin:0 0 10px"><button class="btn" id="newProject">+ Vorhaben</button><button class="btn alt" id="importButton">Vorhaben importieren</button><input type="file" id="importFile" accept="application/json,.json" hidden style="display:none"></div><div class="sidebar" id="projectList"></div></aside><div id="projectEditor" class="editor"></div></div></section>
+<section class="page" id="democracy" hidden><div class="heading"><div><div class="ey">04 / Demokratie</div><h2>Deine Stimme. Dein Beitrag.</h2></div><p>Offizielle Beteiligungswege für Berlin und Deutschland. Die Wahl des Anliegens und der Position liegt bei dir.</p></div><div class="grid" id="routeGrid"></div><div class="section"><h2>Gute Beteiligung braucht mehr als Tempo.</h2><div class="grid" style="margin-top:18px"><article class="card"><h3>Zugang</h3><p>Wer fehlt? Sind Sprache, Zeit, Barrierefreiheit und Zugang berücksichtigt?</p></article><article class="card"><h3>Verständigung</h3><p>Betroffene und unterschiedliche Perspektiven einbeziehen; Dissens dokumentieren.</p></article><article class="card"><h3>Verbindlichkeit</h3><p>Zuständigkeit, Entscheidungsspielraum, Rückmeldung und Evaluation klären.</p></article></div><p class="small" style="margin-top:12px">Grundlage: <a href="https://www.oecd.org/en/publications/2022/09/oecd-guidelines-for-citizen-participation-processes_63b34541.html" target="_blank" rel="noopener">OECD Guidelines for Citizen Participation Processes (2022)</a>. Keine Abstimmung in ONE/MANY ersetzt demokratisch legitimierte Verfahren.</p></div></section>
+<section class="page" id="impact" hidden><div class="heading"><div><div class="ey">05 / Wirkung</div><h2>Was hat sich verändert?</h2></div><p>Nur lokal dokumentierte Ergebnisse. Keine erfundenen Erfolgszahlen oder automatische Kausalitätsbehauptung.</p></div><div class="statgrid" id="stats"></div><div class="section" id="results"></div><div class="actions"><button id="exportAll" class="btn alt">Meine Daten exportieren (JSON)</button></div><div class="section band"><h2>Unser Pilot: 5 + 5.</h2><p>Vorschlag: fünf Einzelpersonen und fünf Gemeinschaften bearbeiten 100 Tage lang selbst gewählte Herausforderungen. Vorher-Nachher und Folgeaufgabe erfassen, Vergleichsgruppe prüfen. Keine Zusagen oder gemessenen Resultate.</p></div></section></main><footer>ONE / MANY · unabhängiger lokaler Prototyp · keine offizielle Partnerschaft · keine Konten, kein Tracking, keine Live-KI. Daten im Browser; Backups empfohlen. <button class="btn alt" id="share" style="padding:5px 10px;font-size:12px">Teilen</button> <span id="globalStatus" role="status"></span></footer><dialog id="detail"><div id="detailBody"></div><div class="actions"><button class="btn alt" id="closeDetail">Schliessen</button></div></dialog>
+<script id="dataset" type="application/json">[
+  [
+    "Frieden & Menschenrechte",
+    "Mahatma Gandhi",
+    "Indien · 1930",
+    "Der Salzmarsch machte ein koloniales Monopol zum Gegenstand eines gemeinsamen gewaltfreien Protests.",
+    "Eine verständliche Handlung kann viele Menschen verbinden.",
+    "https://dr.gandhiheritageportal.org/background-to-the-salt-satyagraha"
+  ],
+  [
+    "Frieden & Menschenrechte",
+    "Rosa Parks",
+    "USA · 1955",
+    "Ihre Weigerung, ihren Sitzplatz aufzugeben, wurde zum Auslöser eines von der schwarzen Gemeinschaft organisierten Busboykotts.",
+    "Mut braucht solidarische Strukturen.",
+    "https://www.archives.gov/education/lessons/rosa-parks"
+  ],
+  [
+    "Frieden & Menschenrechte",
+    "Martin Luther King Jr.",
+    "USA · 1955–1968",
+    "Er half, die Bürgerrechtsbewegung durch gewaltfreien Protest und Bündnisse zu organisieren.",
+    "Organisation verstärkt einzelne Stimmen.",
+    "https://www.loc.gov/exhibits/naacp/the-civil-rights-era.html"
+  ],
+  [
+    "Frieden & Menschenrechte",
+    "Leymah Gbowee",
+    "Liberia · 2003",
+    "Frauen unterschiedlicher Religionen schlossen sich in einer Friedensbewegung zusammen.",
+    "Gemeinsame Ziele können Trennlinien überwinden."
+  ],
+  [
+    "Frieden & Menschenrechte",
+    "Nelson Mandela",
+    "Südafrika · 20. Jahrhundert",
+    "Er kämpfte gemeinsam mit vielen anderen gegen die Apartheid und wirkte an der demokratischen Transition mit.",
+    "Langfristige Bündnisse und Verhandlungen zählen."
+  ],
+  [
+    "Frieden & Menschenrechte",
+    "Harriet Tubman",
+    "USA · 19. Jahrhundert",
+    "Sie unterstützte versklavte Menschen bei ihrer Flucht über die Underground Railroad.",
+    "Direkte Hilfe und Netzwerke können Freiheit ermöglichen."
+  ],
+  [
+    "Frieden & Menschenrechte",
+    "Kailash Satyarthi",
+    "Indien · seit 1980",
+    "Er organisierte Initiativen gegen die Ausbeutung von Kindern und für Bildung.",
+    "Betroffene brauchen Schutz und langfristige Perspektiven.",
+    "https://www.nobelpeaceprize.org/laureates/2014"
+  ],
+  [
+    "Frieden & Menschenrechte",
+    "Claudette Colvin",
+    "USA · 1955",
+    "Als Jugendliche widersetzte sie sich der Rassentrennung im Bus und wurde später Klägerin in einem wichtigen Gerichtsverfahren.",
+    "Auch weniger bekannte Beteiligte prägen Geschichte."
+  ],
+  [
+    "Natur & Klima",
+    "Wangari Maathai",
+    "Kenia · 1977",
+    "Das Green Belt Movement verband Baumpflanzungen mit lokaler Selbstorganisation und Frauenförderung.",
+    "Befähige andere, selbst Lösungen umzusetzen.",
+    "https://www.un.org/en/messengers-peace/wangari-maathai"
+  ],
+  [
+    "Natur & Klima",
+    "Rachel Carson",
+    "USA · 1962",
+    "Silent Spring machte Risiken bestimmter Pestizide einer breiten Öffentlichkeit verständlich.",
+    "Forschung kann öffentliche Debatten verändern."
+  ],
+  [
+    "Natur & Klima",
+    "Jadav Payeng",
+    "Indien · seit 1979",
+    "Er pflanzte Bäume auf einer Flussinsel und trug zur Entstehung eines Waldes bei.",
+    "Beharrlichkeit kann ökologische Veränderungen anstossen."
+  ],
+  [
+    "Natur & Klima",
+    "Yacouba Sawadogo",
+    "Burkina Faso · seit den 1980ern",
+    "Er entwickelte lokale Anbaumethoden zur Regeneration trockener Böden weiter.",
+    "Lokales Wissen ist eine Innovationsquelle."
+  ],
+  [
+    "Natur & Klima",
+    "Berta Cáceres",
+    "Honduras · 2000er",
+    "Sie organisierte gemeinsam mit indigenen Gemeinden Widerstand gegen ein Staudammprojekt.",
+    "Die Stimmen unmittelbar Betroffener gehören ins Zentrum."
+  ],
+  [
+    "Natur & Klima",
+    "Boyan Slat",
+    "Niederlande · 2013",
+    "Er gründete The Ocean Cleanup zur Entwicklung von Techniken gegen Plastikverschmutzung.",
+    "Technische Ideen müssen in der Praxis überprüft werden."
+  ],
+  [
+    "Natur & Klima",
+    "Iroro Tanshi",
+    "Nigeria · 2026",
+    "Sie entwickelte mit Gemeinden eine Strategie gegen Waldbrände zum Schutz bedrohter Lebensräume.",
+    "Naturschutz funktioniert mit lokalem Engagement.",
+    "https://www.goldmanprize.org/current-winners/"
+  ],
+  [
+    "Natur & Klima",
+    "Chipko-Bewegung",
+    "Indien · 1970er",
+    "Dorfbewohnerinnen und Dorfbewohner setzten sich gemeinsam gegen die Abholzung von Wäldern ein.",
+    "Gemeinschaften können natürliche Ressourcen verteidigen."
+  ],
+  [
+    "Tiere & Mitgefühl",
+    "Henry Spira",
+    "USA · 1980",
+    "Seine Kampagne gegen den Draize-Test trug dazu bei, Kosmetikunternehmen zur Suche nach Alternativen zu bewegen.",
+    "Konkrete, überprüfbare Veränderungen können Leid reduzieren.",
+    "https://www.cambridge.org/core/journals/cambridge-quarterly-of-healthcare-ethics/article/abs/henry-spiras-search-for-common-ground-on-animal-testing/57BF7E38A01BF17124BDA4D3CD9F535B"
+  ],
+  [
+    "Tiere & Mitgefühl",
+    "Ruth Harrison",
+    "Grossbritannien · 1964",
+    "Animal Machines rückte die Bedingungen intensiver Tierhaltung ins öffentliche Bewusstsein.",
+    "Mache verborgenes Leid sichtbar."
+  ],
+  [
+    "Tiere & Mitgefühl",
+    "Jane Goodall",
+    "Tansania · seit 1960",
+    "Ihre Langzeitbeobachtungen von Schimpansen prägten das Verständnis ihrer Fähigkeiten und den Naturschutz.",
+    "Genaues Beobachten kann unser Verhältnis zu Tieren verändern."
+  ],
+  [
+    "Tiere & Mitgefühl",
+    "Dian Fossey",
+    "Ruanda · 1967",
+    "Ihre Forschung und Schutzarbeit richteten Aufmerksamkeit auf Berggorillas.",
+    "Wissenschaft und Schutzarbeit können sich ergänzen."
+  ],
+  [
+    "Tiere & Mitgefühl",
+    "Ingrid Newkirk & Alex Pacheco",
+    "USA · 1980",
+    "Sie gründeten PETA, eine Organisation für Tierrechte mit teils kontroversen Kampagnen.",
+    "Methoden und Nebenwirkungen von Kampagnen kritisch prüfen."
+  ],
+  [
+    "Tiere & Mitgefühl",
+    "Donald Watson & Mitgründende",
+    "Grossbritannien · 1944",
+    "Sie gründeten die Vegan Society und verbreiteten ein Konzept tierproduktfreier Lebensweise.",
+    "Gemeinsame Sprache kann eine Praxis zugänglicher machen."
+  ],
+  [
+    "Tiere & Mitgefühl",
+    "Gene Baur & Lorri Houston",
+    "USA · 1986",
+    "Sie halfen Farm Sanctuary aufzubauen und gaben geretteten Nutztieren Schutz.",
+    "Konkrete Fürsorge macht abstrakte Werte greifbar."
+  ],
+  [
+    "Tiere & Mitgefühl",
+    "Anita Krajnc",
+    "Kanada · 2010er",
+    "Sie wirkte am Aufbau einer Bewegung mit, die das Schicksal von Tieren auf dem Weg zum Schlachthof sichtbar macht.",
+    "Zeugenschaft kann Aufmerksamkeit schaffen; Wirkung gesondert prüfen."
+  ],
+  [
+    "Gesundheit & Forschung",
+    "John Snow",
+    "Grossbritannien · 1854",
+    "Er untersuchte einen Choleraausbruch und verband Erkrankungen mit einer Wasserquelle.",
+    "Beobachtungen und Daten können Ursachen sichtbar machen."
+  ],
+  [
+    "Gesundheit & Forschung",
+    "Florence Nightingale",
+    "Grossbritannien · 1850er",
+    "Sie nutzte Statistik und organisatorische Reformen zur Verbesserung der Krankenpflege.",
+    "Daten verständlich machen und in bessere Abläufe übersetzen."
+  ],
+  [
+    "Gesundheit & Forschung",
+    "Ignaz Semmelweis",
+    "Wien · 1847",
+    "Er führte Handdesinfektion in einer Geburtsklinik ein und beobachtete sinkende Sterblichkeit.",
+    "Wirksame einfache Lösungen brauchen Akzeptanz und Umsetzung."
+  ],
+  [
+    "Gesundheit & Forschung",
+    "Tu Youyou",
+    "China · 1970er",
+    "Sie und ihr Forschungsteam entwickelten Artemisinin-basierte Ansätze gegen Malaria.",
+    "Altes Wissen und moderne Forschung können zusammenwirken."
+  ],
+  [
+    "Gesundheit & Forschung",
+    "Jonas Salk & Forschungsteams",
+    "USA · 1950er",
+    "Sie entwickelten und erprobten einen Impfstoff gegen Polio.",
+    "Forschung braucht grosse Kooperation und sorgfältige Evaluation."
+  ],
+  [
+    "Gesundheit & Forschung",
+    "Paul Farmer & Partners In Health",
+    "Haiti · seit 1987",
+    "Das Team baute medizinische Versorgung gemeinsam mit lokalen Partnern auf.",
+    "Versorgung muss auch soziale Hindernisse berücksichtigen."
+  ],
+  [
+    "Gesundheit & Forschung",
+    "Fred Hollows",
+    "Australien & weltweit · 20. Jahrhundert",
+    "Er setzte sich für zugängliche Augenmedizin und die Ausbildung lokaler Fachkräfte ein.",
+    "Kompetenzen vor Ort schaffen langfristige Kapazität."
+  ],
+  [
+    "Gesundheit & Forschung",
+    "Abdul Sattar Edhi",
+    "Pakistan · seit den 1950ern",
+    "Er baute mit vielen Helfenden ein Netzwerk sozialer und medizinischer Dienste auf.",
+    "Direkte Hilfe kann mit verlässlicher Infrastruktur wachsen."
+  ],
+  [
+    "Bildung & Wissen",
+    "Malala Yousafzai",
+    "Pakistan · seit 2009",
+    "Sie setzte sich öffentlich für den Bildungszugang von Mädchen ein.",
+    "Die Perspektive Betroffener verdient Gehör.",
+    "https://www.nobelpeaceprize.org/laureates/2014"
+  ],
+  [
+    "Bildung & Wissen",
+    "Maria Montessori",
+    "Italien · 1907",
+    "Sie eröffnete ein Kinderhaus und entwickelte eine Pädagogik, die eigenständiges Lernen betont.",
+    "Gestalte Umgebungen, die Lernen ermöglichen."
+  ],
+  [
+    "Bildung & Wissen",
+    "Paulo Freire",
+    "Brasilien · 1960er",
+    "Er entwickelte dialogorientierte Ansätze der Erwachsenenbildung.",
+    "Lernen beginnt mit den Erfahrungen der Lernenden."
+  ],
+  [
+    "Bildung & Wissen",
+    "Salman Khan",
+    "USA · 2000er",
+    "Aus Nachhilfevideos für Verwandte entwickelte sich die Khan Academy.",
+    "Ein nützliches Lernangebot kann vielen zugänglich gemacht werden."
+  ],
+  [
+    "Bildung & Wissen",
+    "Sugata Mitra",
+    "Indien · 1999",
+    "Er erprobte frei zugängliche Computer für selbstorganisiertes Lernen von Kindern.",
+    "Autonomie ist eine Hypothese, deren Bedingungen man prüfen kann."
+  ],
+  [
+    "Bildung & Wissen",
+    "Savitribai & Jyotirao Phule",
+    "Indien · 1848",
+    "Sie bauten Bildungsangebote für Mädchen und ausgegrenzte Gruppen auf.",
+    "Bildungszugang kann gesellschaftliche Grenzen hinterfragen."
+  ],
+  [
+    "Bildung & Wissen",
+    "Jaime Escalante",
+    "USA · 1980er",
+    "Er unterrichtete fortgeschrittene Mathematik an einer Schule mit vielen benachteiligten Jugendlichen.",
+    "Hohe Erwartungen und gute Unterstützung gehören zusammen."
+  ],
+  [
+    "Bildung & Wissen",
+    "Jimmy Wales, Larry Sanger & Community",
+    "Weltweit · 2001",
+    "Wikipedia entstand als gemeinschaftlich bearbeitbare Enzyklopädie.",
+    "Offenes Wissen kann durch viele Beiträge wachsen."
+  ],
+  [
+    "Gemeinschaft & Alltag",
+    "Martine Postma",
+    "Niederlande · 2009",
+    "Ein erstes Repair Café wurde zum Vorbild für lokale Reparaturtreffen.",
+    "Ein einfaches Format lässt sich wiederholen.",
+    "https://www.repaircafe.org/de/ueber/"
+  ],
+  [
+    "Gemeinschaft & Alltag",
+    "Paul Sinton-Hewitt",
+    "Grossbritannien · 2004",
+    "13 Laufende und fünf Freiwillige trafen sich zum ersten parkrun.",
+    "Niedrige Einstiegshürden erleichtern Gemeinschaft.",
+    "https://www.fph.org.uk/blog/the-story-behind-parkrun/"
+  ],
+  [
+    "Gemeinschaft & Alltag",
+    "foodsharing-Gründungsteams",
+    "Deutschland · 2012",
+    "Aus öffentlicher Aufmerksamkeit und digitalen Angeboten entstand ein Netzwerk zur Lebensmittelrettung.",
+    "Mach aus Aufmerksamkeit eine konkrete Handlung.",
+    "https://wiki.foodsharing.network/wiki/Vorstand%3AGeschichte_von_foodsharing"
+  ],
+  [
+    "Gemeinschaft & Alltag",
+    "Ole Kassow",
+    "Dänemark · 2012",
+    "Er initiierte Fahrradausflüge mit älteren Menschen, aus denen Cycling Without Age entstand.",
+    "Eine einfache Begegnung kann zum wiederholbaren Angebot werden.",
+    "https://www.ashoka-visionaryprogram.org/ashoka-fellows/"
+  ],
+  [
+    "Gemeinschaft & Alltag",
+    "Jos de Blok",
+    "Niederlande · 2006",
+    "Buurtzorg erprobte selbstorganisierte Teams in der ambulanten Pflege.",
+    "Gib Fachkräften Handlungsspielraum und überprüfe Ergebnisse.",
+    "https://www.ashoka-visionaryprogram.org/ashoka-fellows/"
+  ],
+  [
+    "Gemeinschaft & Alltag",
+    "Henri Dunant",
+    "Schweiz · 1863",
+    "Sein Einsatz nach der Schlacht von Solferino trug zur Gründung des Roten Kreuzes bei.",
+    "Aus einer Erfahrung kann dauerhafte humanitäre Infrastruktur entstehen."
+  ],
+  [
+    "Gemeinschaft & Alltag",
+    "Ann Cotton",
+    "Simbabwe · 1993",
+    "Sie gründete CAMFED, das Mädchenbildung mit lokalen Netzwerken unterstützt.",
+    "Lokale Gemeinschaften in die Umsetzung einbeziehen."
+  ],
+  [
+    "Gemeinschaft & Alltag",
+    "Veronika Scott",
+    "USA · 2010er",
+    "Aus einem Designprojekt entwickelte sich The Empowerment Plan mit Kleidung und Beschäftigungsmöglichkeiten.",
+    "Verbinde unmittelbare Hilfe mit langfristigen Möglichkeiten."
+  ],
+  [
+    "Technologie & offene Systeme",
+    "Tim Berners-Lee & CERN-Team",
+    "Schweiz · 1989–1993",
+    "Die Entwicklung des Web und die freie Bereitstellung der Software ermöglichten globale Weiterentwicklung.",
+    "Offene Standards können die Wirkung einer Erfindung vervielfachen.",
+    "https://home.cern/science/computing/the-birth-of-the-web/short-history-web/"
+  ],
+  [
+    "Technologie & offene Systeme",
+    "Linus Torvalds & Community",
+    "Finnland · 1991",
+    "Ein persönliches Betriebssystemprojekt entwickelte sich zum gemeinschaftlich gepflegten Linux-Kernel.",
+    "Offene Beiträge ermöglichen langfristige Verbesserung."
+  ],
+  [
+    "Technologie & offene Systeme",
+    "Luis von Ahn & Team",
+    "USA · 2011",
+    "Duolingo entwickelte digitale Sprachlernangebote mit niedrigem Zugangshindernis.",
+    "Lernwerkzeuge müssen zugänglich und wirksam sein."
+  ],
+  [
+    "Technologie & offene Systeme",
+    "Juliana Rotich & Ushahidi-Team",
+    "Kenia · 2008",
+    "Das Team baute Werkzeuge zur gemeinschaftlichen Erfassung von Kriseninformationen.",
+    "Dezentrale Informationen können Lagebilder verbessern."
+  ],
+  [
+    "Technologie & offene Systeme",
+    "Limor Fried",
+    "USA · 2005",
+    "Adafruit entwickelte offene Elektronikprojekte und Lernmaterialien.",
+    "Offene Bauanleitungen fördern eigenständiges Experimentieren."
+  ],
+  [
+    "Technologie & offene Systeme",
+    "Katherine Johnson & NASA-Teams",
+    "USA · 20. Jahrhundert",
+    "Ihre mathematische Arbeit unterstützte Raumfahrtmissionen.",
+    "Oft unsichtbare Expertise trägt kollektive Erfolge."
+  ],
+  [
+    "Technologie & offene Systeme",
+    "Grace Hopper",
+    "USA · 1950er",
+    "Sie trug zur Entwicklung von Compilern und zugänglicheren Programmiersprachen bei.",
+    "Werkzeuge können ganze Gruppen zu neuen Tätigkeiten befähigen."
+  ],
+  [
+    "Technologie & offene Systeme",
+    "Audrey Tang & Civic-Tech-Community",
+    "Taiwan · 2010er",
+    "Sie wirkte an digitalen Beteiligungs- und Transparenzformaten mit.",
+    "Technik kann menschliche Zusammenarbeit unterstützen.",
+    "https://rightlivelihood.org/the-change-makers/find-a-laureate/"
+  ],
+  [
+    "Wirtschaft & Institutionen",
+    "Muhammad Yunus & Grameen Bank",
+    "Bangladesch · 1970er",
+    "Sie erprobten Kleinkredite für Menschen ohne klassischen Bankzugang; die Wirkungen von Mikrokrediten sind differenziert zu betrachten.",
+    "Zugang verbessern und tatsächlichen Nutzen überprüfen."
+  ],
+  [
+    "Wirtschaft & Institutionen",
+    "Elinor Ostrom",
+    "USA · 20. Jahrhundert",
+    "Sie erforschte, wie Gemeinschaften gemeinsame Ressourcen selbst organisieren.",
+    "Regeln können von den Menschen mitgestaltet werden, die sie betreffen."
+  ],
+  [
+    "Wirtschaft & Institutionen",
+    "Amul & Verghese Kurien",
+    "Indien · 1940er–1970er",
+    "Genossenschaftliche Strukturen verbesserten den Marktzugang vieler Milchproduzenten; Tierwohlfolgen sind separat zu bewerten.",
+    "Gemeinschaftliches Eigentum kann Verhandlungsmacht verändern."
+  ],
+  [
+    "Wirtschaft & Institutionen",
+    "Friedrich Wilhelm Raiffeisen",
+    "Deutschland · 19. Jahrhundert",
+    "Er entwickelte ländliche Kreditgenossenschaften als Antwort auf wirtschaftliche Not.",
+    "Kooperation kann den Zugang zu Ressourcen verändern."
+  ],
+  [
+    "Wirtschaft & Institutionen",
+    "Mondragón-Gründungsteam",
+    "Spanien · 1956",
+    "Aus einer lokalen Initiative entstand ein Netzwerk von Arbeitergenossenschaften.",
+    "Institutionen können Beteiligung strukturell verankern."
+  ],
+  [
+    "Wirtschaft & Institutionen",
+    "Bunker Roy & Barefoot College",
+    "Indien · 1972",
+    "Das College setzt auf praktische Ausbildung und lokale Fähigkeiten, unter anderem in Solartechnik.",
+    "Vertraue auf die Lernfähigkeit der Menschen vor Ort."
+  ],
+  [
+    "Wirtschaft & Institutionen",
+    "Wawira Njiru",
+    "Kenia · 2012",
+    "Food for Education entwickelte Schulverpflegungsangebote für Kinder.",
+    "Ein konkretes Grundbedürfnis kann Ausgangspunkt einer Organisation sein.",
+    "https://skoll.org/community/awardees/"
+  ],
+  [
+    "Wirtschaft & Institutionen",
+    "Muhammad Ibrahim & Mo Ibrahim Foundation",
+    "Afrika · 2006",
+    "Die Stiftung entwickelte Initiativen und Indikatoren zur öffentlichen Regierungsführung.",
+    "Messung kann Debatten strukturieren, ersetzt aber keine Entscheidungen."
+  ]
+]</script><script>
+'use strict';const data=JSON.parse(document.querySelector('#dataset').textContent),$=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),key='one-many-v1-2026';let state={projects:[],saved:[],research:{},active:null};try{const v=JSON.parse(localStorage.getItem(key));if(v&&Array.isArray(v.projects))state={...state,...v}}catch{}function persist(){try{localStorage.setItem(key,JSON.stringify(state))}catch{$('globalStatus').textContent='Lokale Speicherung nicht verfügbar. Bitte exportieren.'}}const tabs=[['home','Start'],['archive','Geschichten'],['methods','Methoden'],['projects','Vorhaben'],['democracy','Demokratie'],['impact','Wirkung']];function go(id){if(!tabs.some(t=>t[0]===id))id='home';tabs.forEach(t=>{$(t[0]).hidden=t[0]!==id;document.querySelector('[data-tab="'+t[0]+'"]').setAttribute('aria-current',t[0]===id?'page':'false')});if(id==='archive')renderArchive();if(id==='projects')renderProjects();if(id==='impact')renderImpact();if(location.hash!=='#'+id)history.replaceState(null,'','#'+id);window.scrollTo(0,0)}tabs.forEach(([id,label])=>{let b=document.createElement('button');b.textContent=label;b.dataset.tab=id;b.onclick=()=>go(id);$('nav').append(b)});document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));const ns='http://www.w3.org/2000/svg';[52,100,145,190].forEach(r=>{for(let i=0,n=Math.round(r/6);i<n;i++){let a=i/n*Math.PI*2,c=document.createElementNS(ns,'circle');c.setAttribute('cx',210+Math.cos(a)*r);c.setAttribute('cy',210+Math.sin(a)*r);c.setAttribute('r',r===52?2.7:1.9);c.setAttribute('fill',i%4===0?'#204b3a':'#8da882');$('dots').append(c)}});
+function storyCard(i){let r=data[i],a=document.createElement('article');a.className='card';a.innerHTML='<div class="ey">'+esc(r[0])+'</div><h3>'+esc(r[1])+'</h3><div class="small">'+esc(r[2])+'</div><p>'+esc(r[3])+'</p><p class="rule"><b>Impuls:</b> '+esc(r[4])+'</p><span class="pill">'+(r[5]?'Quellenhinweis':'Recherchekandidat')+'</span><div class="actions bottom"><button class="btn" data-detail>Geschichte ↗</button><button class="btn alt" data-save>'+ (state.saved.includes(i)?'♥ Gemerkt':'♡ Merken')+'</button></div>';a.querySelector('[data-detail]').onclick=()=>detail(i);a.querySelector('[data-save]').onclick=()=>{state.saved=state.saved.includes(i)?state.saved.filter(x=>x!==i):[...state.saved,i];persist();renderArchive();renderFeatured()};return a}function renderFeatured(){$('featured').replaceChildren(...[1,8,data.findIndex(r=>r[1].includes('Sinton'))].filter(i=>i>=0).map(storyCard))}function subset(){let q=$('search').value.toLowerCase().trim(),c=$('category').value,f=$('filter').value;return data.map((r,i)=>i).filter(i=>(!q||data[i].join(' ').toLowerCase().includes(q))&&(!c||data[i][0]===c)&&(!f||f==='source'&&data[i][5]||f==='candidate'&&!data[i][5]||f==='saved'&&state.saved.includes(i)))}function renderArchive(){let a=subset();$('archiveCount').textContent=a.length+' von '+data.length+' Fällen · '+data.filter(r=>r[5]).length+' mit Quellenhinweis';$('storyGrid').replaceChildren(...a.map(storyCard));if(!a.length)$('storyGrid').textContent='Keine Treffer. Filter ändern.'}for(const c of [...new Set(data.map(r=>r[0]))]){let o=document.createElement('option');o.textContent=c;$('category').append(o)}['search','category','filter'].forEach(k=>$(k).addEventListener('input',renderArchive));$('random').onclick=()=>{let a=subset();if(a.length)detail(a[Math.floor(Math.random()*a.length)])};
+function detail(i){let r=data[i],n=state.research[i]||{};$('detailBody').innerHTML='<div class="ey">'+esc(r[0])+'</div><h2 style="margin:12px 0">'+esc(r[1])+'</h2><p class="small">'+esc(r[2])+'</p><p style="margin:15px 0">'+esc(r[3])+'</p><p class="rule"><b>Übertragbare Hypothese:</b> '+esc(r[4])+'</p><p class="small" style="margin-top:10px">'+(r[5]?'<a target="_blank" rel="noopener" href="'+esc(r[5])+'">Quellenhinweis öffnen ↗</a>':'Recherchekandidat: noch ohne geprüften Quellenhinweis.')+' · Kein vollständiger Wirkungsnachweis.</p><div class="actions"><button class="btn" id="useStory">Eigenes Vorhaben starten</button></div><details style="margin-top:20px"><summary>Fall erforschen und ergänzen</summary><p class="small">Deine Notizen sind lokal und ungeprüft.</p>'+[['origin','Ausgangslage & Ressourcen'],['action','Handlung & Beteiligte'],['outcome','Ergebnis & Gegenbelege'],['failure','Fehler & Nebenwirkungen'],['sources','Quellen / Belege']].map(([k,l])=>'<label class="field" for="r-'+k+'">'+l+'</label><textarea id="r-'+k+'">'+esc(n[k])+'</textarea>').join('')+'<div class="actions"><button class="btn alt" id="saveResearch">Notizen speichern</button></div><div class="status" id="rstatus" role="status"></div></details>';$('useStory').onclick=()=>{$('detail').close();createProject({inspiration:r[1]+' · '+r[4]})};$('saveResearch').onclick=()=>{state.research[i]=Object.fromEntries(['origin','action','outcome','failure','sources'].map(k=>[k,$('r-'+k).value]));persist();$('rstatus').textContent='Notizen gespeichert.'};$('detail').showModal()}$('closeDetail').onclick=()=>$('detail').close();
+const methods=[['Betroffene hören','Vor Entscheidungen Gespräche führen. Bedürfnisse, Barrieren und widersprüchliche Sichtweisen dokumentieren.','Mit drei freiwilligen Gesprächen beginnen.'],['Klein erproben','Eine überprüfbare Hypothese und eine kleine reversible Veränderung wählen.','Ausgangslage und Ergebnis nach zwei Wochen vergleichen.'],['Gemeinschaft bilden','Eine konkrete Aufgabe anbieten, Verantwortung verteilen und Zugang erleichtern.','Ein offenes Treffen mit klarer freiwilliger Aufgabe testen.'],['Wissen offen teilen','Methoden, Kontext, Fehler und Bedingungen nachvollziehbar dokumentieren.','Eine Anleitung schreiben und von einem anderen Team testen lassen.'],['Moralische Ambition','Bedeutung, Vernachlässigung, Lösbarkeit und eigene Fähigkeiten abwägen.','Drei mögliche Beiträge samt Unsicherheiten vergleichen.'],['Institutionen einbeziehen','Zuständigkeit klären, Alternativen und Evidenz offenlegen.','Einen offiziellen Beteiligungsweg prüfen; keine automatisierte Eingabe.']];methods.forEach(m=>{let a=document.createElement('article');a.className='card';a.innerHTML='<div class="ey">Methodenkarte</div><h3>'+esc(m[0])+'</h3><p>'+esc(m[1])+'</p><p class="rule">'+esc(m[2])+'</p><div class="actions bottom"><button class="btn alt">Ausprobieren ↗</button></div>';a.querySelector('button').onclick=()=>createProject({inspiration:m[0],action:m[2]});$('methodGrid').append(a)});
+const routes=[['Berlin · laufende Vorhaben','meinBerlin','Entdecke öffentliche Beteiligungsprojekte und deren jeweilige Fristen.','https://mein.berlin.de/'],['Berlin · Bezirk','Einwohnerantrag / Bürgerbegehren','Offizielle Erläuterung zu Zuständigkeiten, Voraussetzungen und Verfahren.','https://www.berlin.de/sen/inneres/buerger-und-staat/wahlen-und-abstimmungen/einwohnerantrag-buergerbegehren-und-buergerentscheid/'],['Berlin · Beratung','Raum für Beteiligung','Unterstützung bei Fragen zu Beteiligung und Anregungen.','https://www.berlin.de/raum-fuer-beteiligung/'],['Bund · Anliegen','Petitionsausschuss','Offizieller Einstieg zu Petitionen; aktuelle Portalhinweise und Voraussetzungen beachten.','https://epetitionen.bundestag.de/'],['Eigene Gruppe','Gemeinsam beraten','Freiwillig Perspektiven hören, Zuständigkeit klären, Entscheidungsregeln und Minderheitenpositionen dokumentieren.','https://www.oecd.org/en/publications/2022/09/oecd-guidelines-for-citizen-participation-processes_63b34541.html']];routes.forEach(r=>{let a=document.createElement('article');a.className='card';a.innerHTML='<div class="ey">'+esc(r[0])+'</div><h3>'+esc(r[1])+'</h3><p>'+esc(r[2])+'</p><div class="actions bottom"><a class="btn alt" href="'+r[3]+'" target="_blank" rel="noopener">Informationen ↗</a></div>';$('routeGrid').append(a)});
+const levels=['Individuum','Kleine Gruppe','Familie','Verein','Organisation','Stadt','Nation','Menschheit'],stages=['Verstehen','Planen','Handeln','Beteiligen','Auswerten'];function blank(extra={}){return {id:globalThis.crypto?.randomUUID?.()||Date.now()+'-'+Math.random(),title:'Neues Vorhaben',level:'Individuum',stage:0,status:'Entwurf',inspiration:'',problem:'',people:'',goal:'',alternatives:'',action:'',owner:'',date:'',metric:'',baseline:'',target:'',safety:'',log:'',route:'',feedback:'',result:'',evidence:'',learning:'',next:'',...extra}}function createProject(extra={}){let p=blank(extra);state.projects.push(p);state.active=p.id;persist();go('projects')}function active(){return state.projects.find(p=>p.id===state.active)}$('homeStart').onclick=()=>createProject();$('newProject').onclick=()=>createProject();function input(p,k,l,type='textarea'){return '<label class="field" for="f-'+k+'">'+l+'</label>'+(type==='textarea'?'<textarea id="f-'+k+'" data-field="'+k+'">'+esc(p[k])+'</textarea>':'<input id="f-'+k+'" data-field="'+k+'" type="'+type+'" value="'+esc(p[k])+'">')};function renderProjects(){let p=active();$('projectList').replaceChildren();state.projects.forEach(v=>{let b=document.createElement('button');b.className=v.id===state.active?'selected':'';b.textContent=v.title+' · '+v.status;b.onclick=()=>{state.active=v.id;persist();renderProjects()};$('projectList').append(b)});if(!p){$('projectEditor').innerHTML='<h3>Dein erster Schritt.</h3><p>Erstelle ein Vorhaben oder starte mit einer Geschichte.</p><div class="actions"><button class="btn" id="emptyNew">Jetzt anfangen</button></div>';$('emptyNew').onclick=()=>createProject();return}let panels=[()=>input(p,'inspiration','Inspiration / Methode')+input(p,'problem','Was ist die Herausforderung?')+input(p,'people','Wer ist betroffen? Wer fehlt am Tisch?')+input(p,'goal','Was soll sich konkret verbessern?'),()=>input(p,'alternatives','Welche Alternativen gibt es? Was spricht dagegen?')+input(p,'action','Kleinster sinnvoller Versuch')+'<div class="twocol">'+input(p,'owner','Verantwortlich / freiwillige Mitwirkende','text')+input(p,'date','Überprüfung am','date')+'</div>'+input(p,'metric','Messgrösse und Einheit','text')+'<div class="twocol">'+input(p,'baseline','Ausgangswert (Zahl)','number')+input(p,'target','Zielwert (Zahl)','number')+'</div>'+input(p,'safety','Einwilligung, Risiken, Ressourcen und Grenzen'),()=>input(p,'log','Was wurde tatsächlich getan? Datum, Aufgaben, Rückmeldungen.')+'<div class="notice">Teile den Plan per Export mit freiwilligen Mitwirkenden. Gemeinsame Live-Bearbeitung ist noch nicht vorhanden.</div>',()=>'<label class="field" for="f-route">Beteiligungsweg (optional)</label><select id="f-route" data-field="route"><option value="">Keiner / noch offen</option>'+routes.map(r=>'<option '+(p.route===r[1]?'selected':'')+'>'+esc(r[1])+'</option>').join('')+'</select><div class="actions"><button id="openRoutes" class="btn alt">Offizielle Wege ansehen ↗</button></div>'+input(p,'feedback','Zuständigkeit, unterschiedliche Positionen, Antwort / Verfahrensstand')+'<div class="notice">Keine automatischen Petitionen oder Abstimmungen. Zuständige Stellen entscheiden nach geltenden Regeln.</div>',()=>input(p,'result','Gemessener Ergebniswert (Zahl)','number')+input(p,'evidence','Belege, Kontext, Nebenwirkungen und Unsicherheiten')+input(p,'learning','Was haben wir gelernt? Was hat nicht funktioniert?')+input(p,'next','Nächster Versuch oder übertragbare Anleitung')+'<div id="delta" class="notice"></div>'];$('projectEditor').innerHTML='<div class="ey">Privater Arbeitsraum</div>'+input(p,'title','Titel','text')+'<div class="twocol"><div><label class="field" for="f-level">Ebene</label><select id="f-level" data-field="level">'+levels.map(l=>'<option '+(p.level===l?'selected':'')+'>'+l+'</option>').join('')+'</select></div><div><label class="field" for="f-status">Status (Selbstauskunft)</label><select id="f-status" data-field="status">'+['Entwurf','In Arbeit','Abgeschlossen','Pausiert'].map(l=>'<option '+(p.status===l?'selected':'')+'>'+l+'</option>').join('')+'</select></div></div><div class="steps">'+stages.map((s,i)=>'<button data-stage="'+i+'" class="'+(p.stage===i?'active':'')+'" aria-pressed="'+(p.stage===i)+'">'+(i+1)+' '+s+'</button>').join('')+'</div><h3>'+stages[p.stage]+'</h3>'+panels[p.stage]()+ '<div class="actions"><button class="btn" id="nextStage">'+(p.stage===4?'Zur Wirkungsübersicht':'Weiter ↗')+'</button><button class="btn alt" id="projectExport">JSON teilen</button><button class="btn alt" id="report">Bericht exportieren</button><button class="btn alt danger" id="remove">Löschen</button></div><div class="status" id="pstatus" role="status">Lokal gespeichert.</div>';document.querySelectorAll('[data-field]').forEach(e=>e.addEventListener('input',()=>{p[e.dataset.field]=e.value;persist();$('pstatus').textContent='Lokal gespeichert.';if(e.dataset.field==='title'||e.dataset.field==='status'){let b=$('projectList').querySelector('.selected');if(b)b.textContent=p.title+' · '+p.status}updateDelta(p)}));document.querySelectorAll('[data-stage]').forEach(b=>b.onclick=()=>{p.stage=Number(b.dataset.stage);persist();renderProjects()});$('nextStage').onclick=()=>{if(p.stage===4){go('impact');return}p.stage++;persist();renderProjects()};$('projectExport').onclick=()=>download('one-many-project.json',{schema:'one-many-project-v1',project:p});$('report').onclick=()=>downloadText('one-many-bericht.txt',report(p));$('remove').onclick=()=>{if(confirm('Vorhaben wirklich löschen?')){state.projects=state.projects.filter(x=>x.id!==p.id);state.active=state.projects[0]?.id||null;persist();renderProjects()}};if($('openRoutes'))$('openRoutes').onclick=()=>go('democracy');updateDelta(p)}function diff(p){if(p.baseline===''||p.result===''||!Number.isFinite(Number(p.baseline))||!Number.isFinite(Number(p.result)))return null;return Number(p.result)-Number(p.baseline)}function updateDelta(p){let e=$('delta');if(e)e.textContent=diff(p)===null?'Noch kein numerischer Vorher-Nachher-Vergleich.':'Gemeldete Veränderung: '+(diff(p)>0?'+':'')+diff(p).toLocaleString('de-DE')+' · Keine Aussage über Ursache oder Nutzen ohne Kontext.'}function report(p){return 'ONE/MANY – '+p.title+'\nSelbstauskunft, nicht unabhängig verifiziert.\n\n'+Object.entries(p).filter(([k])=>!['id','stage'].includes(k)).map(([k,v])=>k+': '+(v||'offen')).join('\n\n')}
+function downloadText(name,txt,mime='text/plain'){let a=document.createElement('a'),u=URL.createObjectURL(new Blob([txt],{type:mime+';charset=utf-8'}));a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}function download(n,o){downloadText(n,JSON.stringify(o,null,2),'application/json')}function cleanProject(raw){if(!raw||typeof raw!=='object'||Array.isArray(raw))throw Error('Ungültiges Projekt');let p=blank();for(let k of Object.keys(p))if(!['id','stage'].includes(k)&&typeof raw[k]==='string')p[k]=raw[k].slice(0,20000);p.stage=Number.isInteger(raw.stage)&&raw.stage>=0&&raw.stage<5?raw.stage:0;if(!levels.includes(p.level))p.level='Individuum';if(!['Entwurf','In Arbeit','Abgeschlossen','Pausiert'].includes(p.status))p.status='Entwurf';if(!routes.some(r=>r[1]===p.route))p.route='';return p}$('importButton').onclick=()=>$('importFile').click();$('importFile').onchange=async()=>{try{let f=$('importFile').files[0];if(!f)return;if(f.size>2e6)throw Error('Datei zu gross');let o=JSON.parse(await f.text());let raw=o.schema==='one-many-project-v1'?[o.project]:o.schema==='one-many-backup-v1'&&Array.isArray(o.projects)?o.projects:null;if(!raw||!raw.length||raw.length>100)throw Error('Unbekanntes oder leeres Format');let ps=raw.map(cleanProject);state.projects.push(...ps);state.active=ps[0].id;persist();renderProjects();$('pstatus').textContent=ps.length+' Vorhaben als Kopie importiert (keine Überschreibung).'}catch(e){$('globalStatus').textContent='Import fehlgeschlagen: '+e.message}finally{$('importFile').value=''}};function renderImpact(){let ps=state.projects,finished=ps.filter(p=>p.status==='Abgeschlossen'),logged=ps.filter(p=>p.log.trim()),measured=ps.filter(p=>diff(p)!==null&&p.evidence.trim());$('stats').replaceChildren();[['Vorhaben',ps.length],['Handlungen dokumentiert',logged.length],['Abgeschlossen (gemeldet)',finished.length],['Messung + Belegnotiz',measured.length]].forEach(([l,v])=>{let a=document.createElement('article');a.className='card';a.innerHTML='<div class="metric">'+v+'</div><div class="small">'+l+'</div>';$('stats').append(a)});$('results').replaceChildren();if(!ps.length){$('results').innerHTML='<div class="empty">Noch keine Vorhaben. Beginne mit einer Geschichte oder einer eigenen Herausforderung.</div>';return}ps.forEach(p=>{let a=document.createElement('article');a.className='card';a.style.marginBottom='10px';a.innerHTML='<div class="ey">'+esc(p.level)+' · '+esc(p.status)+'</div><h3>'+esc(p.title)+'</h3><p>'+esc(p.metric||'Messgrösse noch offen')+'</p><p class="rule">Ausgang: '+esc(p.baseline||'offen')+' · Ziel: '+esc(p.target||'offen')+' · Ergebnis: '+esc(p.result||'offen')+'</p><p class="small">'+esc(p.evidence||'Keine Belegnotiz')+'</p><div class="actions"><button class="btn alt">Vorhaben bearbeiten</button></div>';a.querySelector('button').onclick=()=>{state.active=p.id;go('projects')};$('results').append(a)})}$('exportAll').onclick=()=>download('one-many-backup.json',{schema:'one-many-backup-v1',projects:state.projects,saved:state.saved,research:state.research});$('exportResearch').onclick=()=>download('one-many-research.json',{schema:'one-many-research-v1',cases:data.map((r,i)=>({id:i+1,category:r[0],name:r[1],context:r[2],summary:r[3],hypothesis:r[4],source:r[5]||null,status:r[5]?'source-pointer':'candidate',localNotes:state.research[i]||null}))});$('share').onclick=async()=>{if(location.protocol==='file:'){$('globalStatus').textContent='Teile die HTML-Datei, keinen lokalen Dateipfad.';return}try{if(navigator.share)await navigator.share({title:'ONE/MANY',url:location.href.split('#')[0]});else{await navigator.clipboard.writeText(location.href.split('#')[0]);$('globalStatus').textContent='Link kopiert.'}}catch{$('globalStatus').textContent='Teilen abgebrochen oder nicht verfügbar.'}};renderFeatured();go(location.hash.slice(1)||'home');
+</script></body></html>
