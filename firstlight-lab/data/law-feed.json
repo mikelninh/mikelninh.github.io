@@ -1,30 +1,30 @@
 {
   "schema": "lifebench-official-monitor-v1",
-  "generated_at": "2026-11-26T01:46:38Z",
+  "generated_at": "2026-11-26T16:51:41Z",
   "contract": "Observed official parliamentary records are not the same as promulgation, effective law or measured impact.",
   "sources": {
     "dip": {
       "status": "ok",
       "url": "https://dip.bundestag.de/",
       "count": 459,
-      "checked_at": "2026-11-26T01:46:38Z"
+      "checked_at": "2026-11-26T16:51:41Z"
     },
     "gazette": {
-      "status": "ok",
+      "status": "unavailable",
       "url": "https://www.recht.bund.de/",
-      "count": 500,
-      "checked_at": "2026-11-26T01:46:38Z"
+      "count": 0,
+      "checked_at": "2026-11-26T16:51:41Z"
     },
     "gii": {
       "status": "unavailable",
       "url": "https://www.gesetze-im-internet.de/aktuDienst.html",
       "count": 0,
-      "checked_at": "2026-11-26T01:46:38Z"
+      "checked_at": "2026-11-26T16:51:41Z"
     },
     "consultations": {
       "status": "ok",
       "url": "https://github.com/mikelninh/mikelninh.github.io/issues",
-      "checked_at": "2026-11-26T01:46:38Z"
+      "checked_at": "2026-11-26T16:51:41Z"
     }
   },
   "cases": [
@@ -120,13 +120,139 @@
       }
     },
     {
+      "id": "338788",
+      "title": "Gesetz zur Optimierung und Absicherung des Ausbaus der Windenergie auf See",
+      "type": "official_legislative_procedure",
+      "gesta": "E033",
+      "status_raw": "Überwiesen",
+      "stage": "deliberation",
+      "source_updated_at": "2026-11-26T15:09:42+01:00",
+      "source_date": "2026-10-28",
+      "source_url": "https://dip.bundestag.de/vorgang/338788",
+      "positions": [
+        {
+          "date": "2026-09-04",
+          "house": "Bundesrat",
+          "event": "Gesetzentwurf",
+          "source": "https://dip.bundestag.de/vorgang/338788",
+          "position_id": "699011"
+        },
+        {
+          "date": "2026-09-28",
+          "house": "Bundestag",
+          "event": "Gesetzentwurf",
+          "source": "https://dip.bundestag.de/vorgang/338788",
+          "position_id": "700690"
+        },
+        {
+          "date": "2026-10-06",
+          "house": "Bundesrat",
+          "event": "Empfehlungen der Ausschüsse",
+          "source": "https://dip.bundestag.de/vorgang/338788",
+          "position_id": "701051"
+        },
+        {
+          "date": "2026-10-08",
+          "house": "Bundestag",
+          "event": "1. Beratung",
+          "source": "https://dip.bundestag.de/vorgang/338788",
+          "position_id": "701590"
+        },
+        {
+          "date": "2026-10-16",
+          "house": "Bundesrat",
+          "event": "1. Durchgang",
+          "source": "https://dip.bundestag.de/vorgang/338788",
+          "position_id": "702068"
+        },
+        {
+          "date": "2026-10-16",
+          "house": "Bundesrat",
+          "event": "Beschlussdrucksache",
+          "source": "https://dip.bundestag.de/vorgang/338788",
+          "position_id": "702122"
+        },
+        {
+          "date": "2026-10-28",
+          "house": "Bundestag",
+          "event": "Unterrichtung über Stellungnahme des BR und Gegenäußerung der BRg",
+          "source": "https://dip.bundestag.de/vorgang/338788",
+          "position_id": "702779"
+        }
+      ],
+      "promulgation": {
+        "verified": false,
+        "url": null,
+        "citation": null,
+        "source": null
+      },
+      "entry_into_force": {
+        "verified": false,
+        "date": null,
+        "reason": "Full official legal text and commencement clause require independent verification"
+      },
+      "impact": {
+        "verified": false,
+        "reason": "No independently validated outcome series attached"
+      }
+    },
+    {
+      "id": "334024",
+      "title": "Gesetz zur Änderung des Pflanzenschutzgesetzes",
+      "type": "official_legislative_procedure",
+      "gesta": "F011",
+      "status_raw": "Beschlussempfehlung liegt vor",
+      "stage": "status_unspecified",
+      "source_updated_at": "2026-11-26T13:14:08+01:00",
+      "source_date": "2026-11-25",
+      "source_url": "https://dip.bundestag.de/vorgang/334024",
+      "positions": [
+        {
+          "date": "2026-04-21",
+          "house": "Bundestag",
+          "event": "Gesetzentwurf",
+          "source": "https://dip.bundestag.de/vorgang/334024",
+          "position_id": "691139"
+        },
+        {
+          "date": "2026-04-23",
+          "house": "Bundestag",
+          "event": "1. Beratung",
+          "source": "https://dip.bundestag.de/vorgang/334024",
+          "position_id": "691458"
+        },
+        {
+          "date": "2026-11-25",
+          "house": "Bundestag",
+          "event": "Beschlussempfehlung und Bericht",
+          "source": "https://dip.bundestag.de/vorgang/334024",
+          "position_id": "704842"
+        }
+      ],
+      "promulgation": {
+        "verified": false,
+        "url": null,
+        "citation": null,
+        "source": null
+      },
+      "entry_into_force": {
+        "verified": false,
+        "date": null,
+        "reason": "Full official legal text and commencement clause require independent verification"
+      },
+      "impact": {
+        "verified": false,
+        "reason": "No independently validated outcome series attached"
+      }
+    },
+    {
       "id": "334566",
       "title": "Gesetz zur Durchführung der Verordnung (EU) 2024/2847 über horizontale Cybersicherheitsanforderungen für Produkte mit digitalen Elementen (Cyberresilienz-Verordnung)",
       "type": "official_legislative_procedure",
       "gesta": "B046",
       "status_raw": "Verkündet",
       "stage": "promulgated",
-      "source_updated_at": "2026-11-25T16:40:03+01:00",
+      "source_updated_at": "2026-11-26T10:21:13+01:00",
       "source_date": "2026-11-20",
       "source_url": "https://dip.bundestag.de/vorgang/334566",
       "positions": [
@@ -231,9 +357,9 @@
       ],
       "promulgation": {
         "verified": true,
-        "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/355",
-        "citation": "BGBl. 2026 I Nr. 355 vom 25.11.2026",
-        "source": "BGBl GESTA exact match"
+        "url": null,
+        "citation": null,
+        "source": "DIP structured record"
       },
       "entry_into_force": {
         "verified": false,
@@ -895,591 +1021,9 @@
         "verified": false,
         "reason": "No independently validated outcome series attached"
       }
-    },
-    {
-      "id": "333340",
-      "title": "Gesetz zur unionsrechtskonformen Präzisierung des Begriffs der Kundenanlage im Energiewirtschaftsgesetz",
-      "type": "official_legislative_procedure",
-      "gesta": "E031",
-      "status_raw": "Beschlussempfehlung liegt vor",
-      "stage": "status_unspecified",
-      "source_updated_at": "2026-11-19T11:15:40+01:00",
-      "source_date": "2026-10-12",
-      "source_url": "https://dip.bundestag.de/vorgang/333340",
-      "positions": [
-        {
-          "date": "2026-03-31",
-          "house": "Bundestag",
-          "event": "Gesetzentwurf",
-          "source": "https://dip.bundestag.de/vorgang/333340",
-          "position_id": "690128"
-        },
-        {
-          "date": "2026-09-24",
-          "house": "Bundestag",
-          "event": "1. Beratung",
-          "source": "https://dip.bundestag.de/vorgang/333340",
-          "position_id": "700334"
-        },
-        {
-          "date": "2026-10-12",
-          "house": "Bundestag",
-          "event": "Beschlussempfehlung und Bericht",
-          "source": "https://dip.bundestag.de/vorgang/333340",
-          "position_id": "701502"
-        }
-      ],
-      "promulgation": {
-        "verified": false,
-        "url": null,
-        "citation": null,
-        "source": null
-      },
-      "entry_into_force": {
-        "verified": false,
-        "date": null,
-        "reason": "Full official legal text and commencement clause require independent verification"
-      },
-      "impact": {
-        "verified": false,
-        "reason": "No independently validated outcome series attached"
-      }
-    },
-    {
-      "id": "325563",
-      "title": "Gesetz über den Zugang zu Schuldnerberatungsdiensten für Verbraucher (Schuldnerberatungsdienstegesetz - SchuBerDG)",
-      "type": "official_legislative_procedure",
-      "gesta": "C031",
-      "status_raw": "Verkündet",
-      "stage": "promulgated",
-      "source_updated_at": "2026-11-18T13:34:30+01:00",
-      "source_date": "2026-09-25",
-      "source_url": "https://dip.bundestag.de/vorgang/325563",
-      "positions": [
-        {
-          "date": "2025-09-05",
-          "house": "Bundesrat",
-          "event": "Gesetzentwurf",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "675789"
-        },
-        {
-          "date": "2025-09-29",
-          "house": "Bundestag",
-          "event": "Gesetzentwurf",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "677479"
-        },
-        {
-          "date": "2025-10-07",
-          "house": "Bundesrat",
-          "event": "Empfehlungen der Ausschüsse",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "677745"
-        },
-        {
-          "date": "2025-10-09",
-          "house": "Bundestag",
-          "event": "1. Beratung",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "678180"
-        },
-        {
-          "date": "2025-10-17",
-          "house": "Bundesrat",
-          "event": "1. Durchgang",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "678888"
-        },
-        {
-          "date": "2025-10-17",
-          "house": "Bundesrat",
-          "event": "Beschlussdrucksache",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "678956"
-        },
-        {
-          "date": "2025-10-29",
-          "house": "Bundestag",
-          "event": "Unterrichtung über Stellungnahme des BR und Gegenäußerung der BRg",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "679661"
-        },
-        {
-          "date": "2025-11-06",
-          "house": "Bundestag",
-          "event": "Nachträgliche Überweisung gemäß § 80 Geschäftsordnung BT",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "680568"
-        },
-        {
-          "date": "2025-11-12",
-          "house": "Bundestag",
-          "event": "Änderungsantrag",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "680773"
-        },
-        {
-          "date": "2025-11-12",
-          "house": "Bundestag",
-          "event": "Beschlussempfehlung und Bericht",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "680775"
-        },
-        {
-          "date": "2025-11-14",
-          "house": "Bundestag",
-          "event": "2. Beratung",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "681136"
-        },
-        {
-          "date": "2025-11-14",
-          "house": "Bundestag",
-          "event": "3. Beratung",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "681139"
-        },
-        {
-          "date": "2025-11-28",
-          "house": "Bundesrat",
-          "event": "Unterrichtung über Gesetzesbeschluss des BT",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "682016"
-        },
-        {
-          "date": "2025-11-28",
-          "house": "Bundesrat",
-          "event": "Unterrichtung über Gesetzesbeschluss des BT",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "682040"
-        },
-        {
-          "date": "2025-12-05",
-          "house": "Bundesrat",
-          "event": "Empfehlungen der Ausschüsse",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "682575"
-        },
-        {
-          "date": "2025-12-19",
-          "house": "Bundesrat",
-          "event": "Vertagung",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "683592"
-        },
-        {
-          "date": "2026-05-08",
-          "house": "Bundesrat",
-          "event": "2. Durchgang",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "692526"
-        },
-        {
-          "date": "2026-05-08",
-          "house": "Bundesrat",
-          "event": "Beschlussdrucksache",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "692599"
-        },
-        {
-          "date": "2026-05-11",
-          "house": "Bundestag",
-          "event": "Unterrichtung über Zustimmungsversagung durch den BR",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "692735"
-        },
-        {
-          "date": "2026-05-13",
-          "house": "Bundestag",
-          "event": "Unterrichtung über Anrufung des Vermittlungsausschusses durch die BRg",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "692874"
-        },
-        {
-          "date": "2026-05-13",
-          "house": "Bundesrat",
-          "event": "Unterrichtung über Anrufung des Vermittlungsausschusses durch die BRg",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "692909"
-        },
-        {
-          "date": "2026-09-23",
-          "house": "Bundestag",
-          "event": "Vermittlungsvorschlag",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "700147"
-        },
-        {
-          "date": "2026-09-25",
-          "house": "Bundesrat",
-          "event": "Unterrichtung über Beschluss des BT",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "700618"
-        },
-        {
-          "date": "2026-09-25",
-          "house": "Bundesrat",
-          "event": "BR-Sitzung",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "700629"
-        },
-        {
-          "date": "2026-09-25",
-          "house": "Bundesrat",
-          "event": "Beschlussdrucksache",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "700633"
-        },
-        {
-          "date": "2026-09-25",
-          "house": "Bundestag",
-          "event": "Abstimmung über Vermittlungsvorschlag",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "700657"
-        },
-        {
-          "date": "2026-09-25",
-          "house": "Bundesrat",
-          "event": "Protokollerklärung/Begleiterklärung zum Vermittlungsverfahren",
-          "source": "https://dip.bundestag.de/vorgang/325563",
-          "position_id": "702581"
-        }
-      ],
-      "promulgation": {
-        "verified": true,
-        "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/293",
-        "citation": "BGBl. 2026 I Nr. 293 vom 15.10.2026",
-        "source": "BGBl GESTA exact match"
-      },
-      "entry_into_force": {
-        "verified": false,
-        "date": null,
-        "reason": "Full official legal text and commencement clause require independent verification"
-      },
-      "impact": {
-        "verified": false,
-        "reason": "No independently validated outcome series attached"
-      }
     }
   ],
-  "gazette_related": [
-    {
-      "title": "Gesetz zur Durchführung der Verordnung (EU) 2024/2847 über horizontale Cybersicherheitsanforderungen für Produkte mit digitalen Elementen (Cyberresilienz-Verordnung)",
-      "date": "2026-11-25",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/355",
-      "citation": "BGBl. 2026 I Nr. 355 vom 25.11.2026",
-      "gesta": "B046",
-      "kind": "Gesetz",
-      "subject": "Deutsche Post AG, Deutsche Postbank AG, Deutsche Telekom AG; Öffentliche Informationstechnik; Elektrizität und Gas"
-    },
-    {
-      "title": "Verordnung zur Umsetzung der Richtlinie (EU) 2024/1785 zur Änderung der Richtlinie 2010/75/EU über Industrieemissionen und zur Änderung der Anzeige- und Erlaubnisverordnung",
-      "date": "2026-11-24",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/352",
-      "citation": "BGBl. 2026 I Nr. 352 vom 24.11.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Wasserwirtschaft; Umweltschutz"
-    },
-    {
-      "title": "Gesetz zur Modernisierung des Bundespolizeigesetzes",
-      "date": "2026-10-27",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/318",
-      "citation": "BGBl. 2026 I Nr. 318 vom 27.10.2026",
-      "gesta": "B021",
-      "kind": "Gesetz",
-      "subject": "Luftverkehr; Deutsche Post AG, Deutsche Postbank AG, Deutsche Telekom AG; Verfassungsschutz, Nachrichtendienst; Zollverwaltung; Bundesgrenzschutz, Bundespolizei; Zwischenstaatliche Rechtshilfe; Zölle; Waffen; Beschusswesen; Eisenbahnbaurecht und Eisenbahnbetriebsrecht; Kernenergie; Ausländerrecht; Öffentliche Informationstechnik; Behördenaufbau; Besoldung, Reise- und Umzugskosten, Unterhaltszuschuss; Apotheken- und Arzneimittelwesen, Gifte; Pass-, Ausweis- und Meldewesen; Bundeskriminalpolizei"
-    },
-    {
-      "title": "Siebte Verordnung über die Freigabe von Vorräten des Erdölbevorratungsverbandes",
-      "date": "2026-10-21",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/312",
-      "citation": "BGBl. 2026 I Nr. 312 vom 21.10.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Energieversorgung"
-    },
-    {
-      "title": "Gesetz zur Umsetzung der Richtlinie (EU) 2024/1785 zur Änderung der Richtlinie 2010/75/EU über Industrieemissionen",
-      "date": "2026-10-19",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/304",
-      "citation": "BGBl. 2026 I Nr. 304 vom 19.10.2026",
-      "gesta": "N012",
-      "kind": "Gesetz",
-      "subject": "Wasserwirtschaft; Umweltschutz; Bergbau"
-    },
-    {
-      "title": "Dritte Verordnung zur Änderung der EVPG-Verordnung",
-      "date": "2026-10-19",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/302",
-      "citation": "BGBl. 2026 I Nr. 302 vom 19.10.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Energieversorgung"
-    },
-    {
-      "title": "Gesetz über den Zugang zu Schuldnerberatungsdiensten für Verbraucher",
-      "date": "2026-10-15",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/293",
-      "citation": "BGBl. 2026 I Nr. 293 vom 15.10.2026",
-      "gesta": "C031",
-      "kind": "Gesetz",
-      "subject": "Nebengesetze zum Recht der Schuldverhältnisse"
-    },
-    {
-      "title": "Verordnung zur Modernisierung der nationalen Umsetzung von europäischen Regelungen zum Ökodesign und zur Energieverbrauchskennzeichnung",
-      "date": "2026-10-14",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/292",
-      "citation": "BGBl. 2026 I Nr. 292 vom 14.10.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Energieversorgung"
-    },
-    {
-      "title": "Gesetz zur Änderung des Umwelt-Rechtsbehelfsgesetzes und weiterer umweltrechtlicher Vorschriften",
-      "date": "2026-10-05",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/286",
-      "citation": "BGBl. 2026 I Nr. 286 vom 05.10.2026",
-      "gesta": "N013",
-      "kind": "Gesetz",
-      "subject": "Umweltschutz; Naturschutz; Bergbau"
-    },
-    {
-      "title": "Zweite Verordnung zur Änderung der Verordnung zur Kennzeichnung der Kraftfahrzeuge mit geringem Beitrag zur Schadstoffbelastung",
-      "date": "2026-09-30",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/278",
-      "citation": "BGBl. 2026 I Nr. 278 vom 30.09.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Umweltschutz"
-    },
-    {
-      "title": "Bekanntmachung über das Inkrafttreten des Ersten Gesetzes zur Änderung des Hohe-See-Einbringungsgesetzes",
-      "date": "2026-09-28",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/274",
-      "citation": "BGBl. 2026 I Nr. 274 vom 28.09.2026",
-      "gesta": "",
-      "kind": "Sonstiges",
-      "subject": "Umweltschutz"
-    },
-    {
-      "title": "Verordnung zur Umsetzung von § 27 Absatz 7 Satz 1 des Bundesbeamtengesetzes im Geschäftsbereich des Bundesministeriums der Justiz und für Verbraucherschutz",
-      "date": "2026-09-18",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/264",
-      "citation": "BGBl. 2026 I Nr. 264 vom 18.09.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Beamte"
-    },
-    {
-      "title": "Verordnung zur Anpassung der GAP-Direktzahlungen-Verordnung, der GAPInVeKoS-Verordnung und der GAP-Konditionalitäten-Verordnung an die Vorgaben der Verordnung (EU) 2025/2649 sowie zur Entlastung der landwirtschaftlichen Betriebe",
-      "date": "2026-08-18",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/237",
-      "citation": "BGBl. 2026 I Nr. 237 vom 18.08.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Sonstige Marktordnungsvorschriften, EWG-Durchführungsbestimmungen"
-    },
-    {
-      "title": "Zweite Verordnung zur Änderung der Agrarstatistikverordnung",
-      "date": "2026-08-14",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/234",
-      "citation": "BGBl. 2026 I Nr. 234 vom 14.08.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Allgemeine landwirtschaftliche Statistik"
-    },
-    {
-      "title": "Verordnung zur Umsetzung der Richtlinie (EU) 2023/2225 über Verbraucherkreditverträge im Gewerberecht",
-      "date": "2026-07-31",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/229",
-      "citation": "BGBl. 2026 I Nr. 229 vom 31.07.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Gewerbeordnung; Genehmigungsbedürftige Gewerbe"
-    },
-    {
-      "title": "Gesetz zur Änderung des Gebäudeenergiegesetzes, zur Änderung des Gebäude-Elektromobilitätsinfrastruktur-Gesetzes und zur Änderung weiterer Vorschriften im Wärmebereich",
-      "date": "2026-07-28",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/226",
-      "citation": "BGBl. 2026 I Nr. 226 vom 28.07.2026",
-      "gesta": "E035",
-      "kind": "Gesetz",
-      "subject": "Energieversorgung; Bürgerliches Gesetzbuch, Einführungsgesetz und zugehörige Gesetze; Umweltschutz; Wohnungsbauwesen; Bauwesen; Berufliche Bildung; Öffentliche Informationstechnik; Elektrizität und Gas; Schornsteinfeger"
-    },
-    {
-      "title": "Infrastruktur-Zukunftsgesetz",
-      "date": "2026-07-28",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/224",
-      "citation": "BGBl. 2026 I Nr. 224 vom 28.07.2026",
-      "gesta": "J016",
-      "kind": "Gesetz",
-      "subject": "Bundesfernstraßen; Luftverkehr; Umweltschutz; Allgemeines Straßenbaurecht; Allgemeines Eisenbahnrecht; Ausbau und Neubau der Bundeswasserstraßen; Wasserwirtschaft; Eisenbahnbaurecht und Eisenbahnbetriebsrecht; Naturschutz; Kernenergie; Finanzausgleich zwischen Bund und Ländern; Verwaltungsverfahren und -zwangsverfahren; Raumordnung; Personenbeförderung; Öffentliche Informationstechnik; Verwaltung der Bundeswasserstraßen; Ausbau der Bundesfernstraßen; Nicht bundeseigene Eisenbahnen"
-    },
-    {
-      "title": "Gesetz zur Durchführung der Verordnung (EU) 2024/1689 des Europäischen Parlaments und des Rates vom 13. Juni 2024 zur Festlegung harmonisierter Vorschriften für künstliche Intelligenz und zur Änderung der Verordnungen (EG) Nr. 300/2008, (EU) Nr. 167/2013, (EU) Nr. 168/2013, (EU) 2018/858, (EU) 2018/1139 und (EU) 2019/2144 sowie der Richtlinien 2014/90/EU, (EU) 2016/797 und (EU) 2020/1828",
-      "date": "2026-07-28",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/223",
-      "citation": "BGBl. 2026 I Nr. 223 vom 28.07.2026",
-      "gesta": "Q006",
-      "kind": "Gesetz",
-      "subject": "EWG-Durchführung; Strafgesetzbuch und zugehörige Gesetze; Sozialgesetzbuch; Aufsichtsrechtliche Vorschriften"
-    },
-    {
-      "title": "Gesetz zur Weiterentwicklung der Digitalisierung in der Migrationsverwaltung",
-      "date": "2026-07-28",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/222",
-      "citation": "BGBl. 2026 I Nr. 222 vom 28.07.2026",
-      "gesta": "B028",
-      "kind": "Gesetz",
-      "subject": "Ausländerrecht; Sozialhilfe und Wohlfahrtswesen; Pass-, Ausweis- und Meldewesen"
-    },
-    {
-      "title": "Anordnung über die Vertretung der Bundesrepublik Deutschland im Geschäftsbereich des Bundesministeriums der Justiz und für Verbraucherschutz",
-      "date": "2026-07-27",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/219",
-      "citation": "BGBl. 2026 I Nr. 219 vom 27.07.2026",
-      "gesta": "",
-      "kind": "Sonstiges",
-      "subject": "Beamte"
-    },
-    {
-      "title": "Gesetz zum Bürokratierückbau in der Gewerbeordnung und dem Energieverbrauchskennzeichnungsgesetz sowie anderer Rechtsvorschriften zur Aufhebung von Berichtspflichten",
-      "date": "2026-07-23",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/215",
-      "citation": "BGBl. 2026 I Nr. 215 vom 23.07.2026",
-      "gesta": "E020",
-      "kind": "Gesetz",
-      "subject": "Energieversorgung; Organisation der gewerblichen Wirtschaft; Gewerbeordnung; Elektrizität und Gas; Genehmigungsbedürftige Gewerbe; Wirtschaftsförderung; Kartellrecht; Handwerk im Allgemeinen"
-    },
-    {
-      "title": "Gesetz zur Ermöglichung der digitalen Fluggastabfertigung",
-      "date": "2026-07-22",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/213",
-      "citation": "BGBl. 2026 I Nr. 213 vom 22.07.2026",
-      "gesta": "J020",
-      "kind": "Gesetz",
-      "subject": "Luftverkehr; Ausländerrecht; Pass-, Ausweis- und Meldewesen"
-    },
-    {
-      "title": "Gesetz zur Umsetzung der Richtlinie (EU) 2024/1799 zur Förderung der Reparatur von Waren sowie zur Verbesserung der Verfügbarkeit von Vorsorgeverfügungen",
-      "date": "2026-07-22",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/212",
-      "citation": "BGBl. 2026 I Nr. 212 vom 22.07.2026",
-      "gesta": "C065",
-      "kind": "Gesetz",
-      "subject": "Bürgerliches Gesetzbuch, Einführungsgesetz und zugehörige Gesetze; Notare, Rechtsanwälte, Rechtsberater; Beurkundung"
-    },
-    {
-      "title": "Gesetz zur Anpassung des Verpackungsrechts und anderer Rechtsbereiche an die Verordnung (EU) 2025/40",
-      "date": "2026-07-17",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/207",
-      "citation": "BGBl. 2026 I Nr. 207 vom 17.07.2026",
-      "gesta": "N014",
-      "kind": "Gesetz",
-      "subject": "Umweltschutz; Berufliche Bildung; Statistik"
-    },
-    {
-      "title": "Verordnung zur Überführung der jährlichen Minderungsziele in Jahresemissionsgesamtmengen für die Jahre 2031 bis 2040",
-      "date": "2026-07-14",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/202",
-      "citation": "BGBl. 2026 I Nr. 202 vom 14.07.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Umweltschutz"
-    },
-    {
-      "title": "Verordnung zur Ablösung der Emissionshandelsverordnung 2030 zur Umsetzung des TEHG-Europarechtsanpassungsgesetzes 2024",
-      "date": "2026-07-14",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/201",
-      "citation": "BGBl. 2026 I Nr. 201 vom 14.07.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Umweltschutz"
-    },
-    {
-      "title": "Gesetz zur Digitalisierung des Vollzugs von Immobilienverträgen, der gerichtlichen Genehmigungen von notariellen Rechtsgeschäften und der steuerlichen Anzeigen der Notare",
-      "date": "2026-06-26",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/192",
-      "citation": "BGBl. 2026 I Nr. 192 vom 26.06.2026",
-      "gesta": "C044",
-      "kind": "Gesetz",
-      "subject": "Allgemeines Steuerrecht; Besitz- und Verkehrsteuern, Vermögensabgaben; Freiwillige Gerichtsbarkeit; Bauwesen; Verkehr mit landwirtschaftlichen Grundstücken; Zivilprozess, Zwangsversteigerung und Zwangsverwaltung; Nebengesetze zum Sachenrecht; Geldwäsche"
-    },
-    {
-      "title": "Gesetz zur Modernisierung der nationalen Umsetzung von europäischen Regelungen zum Ökodesign, zur Energieverbrauchskennzeichnung und zu weiteren Regelungen",
-      "date": "2026-06-26",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/191",
-      "citation": "BGBl. 2026 I Nr. 191 vom 26.06.2026",
-      "gesta": "E023",
-      "kind": "Gesetz",
-      "subject": "Energieversorgung; Sonstige Marktordnungsvorschriften, EWG-Durchführungsbestimmungen; Nebengesetze zum Recht der Schuldverhältnisse; Kartellrecht"
-    },
-    {
-      "title": "Erste Verordnung zur Änderung der Digitale Pflegeanwendungen-Verordnung",
-      "date": "2026-06-25",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/190",
-      "citation": "BGBl. 2026 I Nr. 190 vom 25.06.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Sozialgesetzbuch"
-    },
-    {
-      "title": "Gesetz zur Förderung und Modernisierung des Anwaltsnotariats, zur Änderung des Bundes-Immissionsschutzgesetzes, zur Digitalisierung des Führungszeugnisses und zur Verlängerung der Antragsfrist für Anträge von Soldatinnen und Soldaten auf Entschädigung wegen dienstrechtlicher Benachteiligung",
-      "date": "2026-06-24",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/183",
-      "citation": "BGBl. 2026 I Nr. 183 vom 24.06.2026",
-      "gesta": "C066",
-      "kind": "Gesetz",
-      "subject": "Umweltschutz; Rechtsstellung der Soldaten; Notare, Rechtsanwälte, Rechtsberater; Beurkundung; Strafverfahren, Strafvollzug, Bundeszentralregister; Gewerbeordnung"
-    },
-    {
-      "title": "Zweites Gesetz zur Weiterentwicklung der Treibhausgasminderungs-Quote",
-      "date": "2026-06-05",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/163",
-      "citation": "BGBl. 2026 I Nr. 163 vom 05.06.2026",
-      "gesta": "N010",
-      "kind": "Gesetz",
-      "subject": "Energieversorgung; Umweltschutz"
-    },
-    {
-      "title": "Gesetz zur weiteren Digitalisierung der Zwangsvollstreckung",
-      "date": "2026-05-26",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/152",
-      "citation": "BGBl. 2026 I Nr. 152 vom 26.05.2026",
-      "gesta": "C043",
-      "kind": "Gesetz",
-      "subject": "Verfassung und Verfahren der Verwaltungsgerichte; Verfassung und Verfahren der Finanzgerichte; Kostenrecht; Allgemeines Steuerrecht; Verfassung und Verfahren der Sozialgerichte; Freiwillige Gerichtsbarkeit; Notare, Rechtsanwälte, Rechtsberater; Beurkundung; Warenzeichenrecht; Verfassung und Verfahren der Arbeitsgerichte; Zivilprozess, Zwangsversteigerung und Zwangsverwaltung; Sozialgesetzbuch; Patentrecht"
-    },
-    {
-      "title": "Verordnung über den Lärmschutz bei öffentlichen Fernsehdarbietungen im Freien über die Fußball-Weltmeisterschaft der Männer 2026",
-      "date": "2026-05-19",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/147",
-      "citation": "BGBl. 2026 I Nr. 147 vom 19.05.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Umweltschutz"
-    },
-    {
-      "title": "Gesetz zur Umsetzung der Richtlinie (EU) 2023/2225 über Verbraucherkreditverträge und zur Regelung der Förderung klimaneutraler Mobilität",
-      "date": "2026-05-18",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/139",
-      "citation": "BGBl. 2026 I Nr. 139 vom 18.05.2026",
-      "gesta": "C028",
-      "kind": "Gesetz",
-      "subject": "Bürgerliches Gesetzbuch, Einführungsgesetz und zugehörige Gesetze; Nebengesetze zum Recht der Schuldverhältnisse; Allgemeine Preisvorschriften und Grundlagen des Preisrechts; Datenschutz; Gewerbeordnung; Bundeshaushalt; Vorschriften gegen den unlauteren Wettbewerb; Versicherungsvertragsrecht; Aufsichtsrechtliche Vorschriften; Verwaltungsgebühren"
-    },
-    {
-      "title": "Dritte Verordnung zur Änderung der Geräte- und Maschinenlärmschutzverordnung",
-      "date": "2026-05-13",
-      "url": "https://www.recht.bund.de/eli/bund/bgbl-1/2026/133",
-      "citation": "BGBl. 2026 I Nr. 133 vom 13.05.2026",
-      "gesta": "",
-      "kind": "Verordnung",
-      "subject": "Umweltschutz"
-    }
-  ],
+  "gazette_related": [],
   "consultations": {
     "count": 0,
     "open": 0,
