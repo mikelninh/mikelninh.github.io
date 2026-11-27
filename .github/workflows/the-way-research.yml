@@ -1,0 +1,39 @@
+name: THE WAY research mission
+on:
+  push:
+    paths:
+      - the-way/research.py
+      - .github/workflows/the-way-research.yml
+  workflow_dispatch:
+    inputs:
+      use_llm:
+        description: "Opt in to two bounded paid API calls on one public source (requires secret)"
+        required: true
+        default: false
+        type: boolean
+permissions:
+  contents: read
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test source and quote safety contracts
+        run: python3 the-way/research.py --self-test
+      - name: Retrieve and recheck six real sources
+        env:
+          USE_LLM: ${{ inputs.use_llm || false }}
+          OPENAI_API_KEY: ${{ secrets.THE_WAY_OPENAI_API_KEY }}
+        run: |
+          if [ "$USE_LLM" = "true" ]; then
+            python3 the-way/research.py --llm --output "$RUNNER_TEMP/research-report.json"
+          else
+            python3 the-way/research.py --output "$RUNNER_TEMP/research-report.json"
+          fi
+      - name: Upload human-reviewable research packet
+        uses: actions/upload-artifact@v4
+        with:
+          name: the-way-research-report
+          path: ${{ runner.temp }}/research-report.json
+          retention-days: 7
