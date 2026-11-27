@@ -71,26 +71,21 @@ assert.ok(js.includes('linkedProcess(c)'),'Atlas dossier bridge missing');
 new vm.Script(read('process-app.js'),{filename:'process-app.js'});
 assert.ok(read('process.css').includes('prefers-reduced-motion'),'Reduced motion needed in Peace Ledger');
 
-// Coherent design contract across all three product views.
-const deskHtml=read('review.html'),design=read('design-system.css');
-const pulseHtml=read('pulse.html');
-const storyHtml=read('stories.html');
-const pages=[html,progressHtml,deskHtml,pulseHtml,storyHtml],modes=['atlas','ledger','desk','pulse','stories'];
-const shells=pages.map((p,i)=>{
- assert.ok(p.includes('class="way-product way-'+modes[i]+'"'));
- assert.ok(p.includes('href="./design-system.css?v=4.0"'));
- assert.ok(i===3?p.includes('class="headline"'):i===4?p.includes('class="cover"'):p.includes('class="way-heading"'));
- const header=p.match(/<header class="way-shell">[\s\S]*?<\/header>/)?.[0];
+// THE WAY 1.0: all five product sections and two archive routes share one shell.
+const deskHtml=read('review.html'),design=read('way-one.css'),pulseHtml=read('pulse.html'),storyHtml=read('stories.html');
+const pages=[read('time.html'),read('explore.html'),storyHtml,progressHtml,deskHtml,html,pulseHtml];
+const navs=pages.map((p,i)=>{
+ assert.ok(p.includes('href="./way-one.css?v=1.0"'));
+ const header=p.match(/<header class="way-global">[\s\S]*?<\/header>/)?.[0];
  assert.ok(header,'Common shell missing');
- assert.equal((header.match(/aria-current="page"/g)||[]).length,1);
- return header.replace(' aria-current="page"','');
+ assert.equal((header.match(/aria-current="page"/g)||[]).length,i<5?1:0);
+ return header.match(/<nav class="way-nav"[\s\S]*?<\/nav>/)[0].replace(' aria-current="page"','');
 });
-assert.ok(shells.every(s=>s===shells[0]),'Navigation must be identical across product views');
-const footers=pages.map(p=>p.match(/<footer class="way-footer">[\s\S]*?<\/footer>/)?.[0]);
-assert.ok(footers[0]&&footers.every(x=>x===footers[0]),'Common footer must match');
-assert.ok(design.includes('--way-primary:#284eac')&&design.includes('--way-radius:12px'));
-assert.ok(!html.includes('<section class="intro">'),'Atlas must start with the actual product');
-assert.ok(!progressHtml.includes('<section class="hero"'),'Ledger must start with the actual product');
+assert.ok(navs.every(x=>x===navs[0]),'Shared navigation must match');
+assert.ok(design.includes('--way-primary:#2449d8')&&design.includes('--way-paper:#f5f2eb'));
+for(const p of pages)assert.ok(p.includes('class="way-global-footer"'));
+assert.ok(!html.includes('<section class="intro">'));
+assert.ok(!progressHtml.includes('<section class="hero"'));
 new vm.Script(deskHtml.match(/<script>([\s\S]*?)<\/script>/)[1],{filename:'review-inline.js'});
 
 
@@ -105,4 +100,5 @@ new vm.Script(pulseHtml.match(/<script>([\s\S]*?)<\/script>/)[1],{filename:'puls
 
 new vm.Script(storyHtml.match(/<script>([\s\S]*?)<\/script>/)[1],{filename:'stories-inline.js'});
 assert.ok(storyHtml.includes('id="observation-value"')&&storyHtml.includes('id="export-data"'));
+const timeData=JSON.parse(read('time-data.json'));assert.equal(timeData.values.length,80);assert.equal(timeData.values[79],65);
 console.log(JSON.stringify({status:'PASS',anchors:rows.length,categories:types,sourceRegistries:Object.keys(sources).length,peaceProcesses:processRows.length,commitments:processRows.reduce((n,r)=>n+r.commitments.length,0),coordinates:'valid',js:'valid',method:'geographic theatre anchors only'}));
