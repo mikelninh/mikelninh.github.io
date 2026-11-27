@@ -288,6 +288,18 @@ async function runScience(label,width,height){
  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);assert.ok(overflow<=2,'Science overflow '+overflow);assert.deepEqual(errors,[]);
  await page.goto(new URL('review.html#benchmark',base).href,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>document.querySelector('#benchmark').dataset.ready==='true');
  assert.equal(await page.locator('#bench-raw').innerText(),'8/12');assert.equal(await page.locator('#bench-coverage').innerText(),'0/4');
+ await page.waitForFunction(()=>document.querySelector('#nli-results').dataset.ready==='true'&&document.querySelector('#research-cycle').dataset.ready==='true',{},{timeout:20000});
+ assert.equal(await page.locator('#nli-raw').innerText(),'10/12');
+ assert.equal(await page.locator('#nli-guard').innerText(),'12/12');
+ assert.equal(await page.locator('#nli-coverage').innerText(),'4/4');
+ assert.equal(await page.locator('.cycle-role').count(),5);
+ assert.match(await page.locator('.cycle-role').nth(3).innerText(),/abstain \/ reject/);
+ await page.locator('#research-cycle').scrollIntoViewIfNeeded();
+ await page.screenshot({path:path.join(out,label+'-research-cycle.png'),fullPage:false});shots.push(label+'-research-cycle');
+ await page.locator('#nli-results').scrollIntoViewIfNeeded();
+ await page.screenshot({path:path.join(out,label+'-nli-benchmark.png'),fullPage:false});shots.push(label+'-nli-benchmark');
+ assert.deepEqual(errors,[]);
+
  await page.locator('#benchmark').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,label+'-benchmark.png'),fullPage:false});shots.push(label+'-benchmark');
  console.log(JSON.stringify({label,science:'pass',observations:921,csv:'pass',planExport:'pass',initiativeLinks:3,benchmark:'pass',overflow,errors}));await page.close();
 }
