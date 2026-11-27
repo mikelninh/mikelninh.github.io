@@ -1,0 +1,247 @@
+{
+  "edition": "2026-11-27",
+  "method": "Redaktionell übernommene amtliche Tabellenwerte. Keine Hochrechnung, kein Gesamtindex. Unterschiedliche Bezugsjahre.",
+  "metrics": [
+    {
+      "id": "population",
+      "label": "Bevölkerung",
+      "unit": "Einwohner",
+      "period": "31.12.2025",
+      "source": "https://www.statistikportal.de/de/bevoelkerung/flaeche-und-bevoelkerung",
+      "note": "Amtliche Bevölkerungsfortschreibung. Absolute Grösse, kein Wohlstandsindikator."
+    },
+    {
+      "id": "turnout",
+      "label": "Wahlbeteiligung",
+      "unit": "%",
+      "period": "Bundestagswahl 2025",
+      "source": "https://www.statistikportal.de/de/wahlen/bundestagswahl",
+      "note": "Anteil der Wähler an den Wahlberechtigten. Keine Messung der demokratischen Qualität."
+    },
+    {
+      "id": "poverty",
+      "label": "Armutsgefährdung",
+      "unit": "%",
+      "period": "2024",
+      "source": "https://www.statistikportal.de/de/nachhaltigkeit/ergebnisse/ziel-1-keine-armut/armutsgefaehrdungsquote",
+      "note": "Landesmedian, relative Einkommensarmut; Schwellen unterscheiden sich nach Land. Kein Vergleich gleicher absoluter Einkommensgrenzen."
+    },
+    {
+      "id": "male",
+      "label": "Lebenserwartung (männlich)",
+      "unit": "Jahre",
+      "period": "2022–2024",
+      "source": "https://www.statistikportal.de/de/nachhaltigkeit/ergebnisse/ziel-3-gesundheit-und-wohlergehen/lebenserwartung-bei-geburt",
+      "note": "Periodensterbetafel, keine individuelle Vorhersage."
+    },
+    {
+      "id": "female",
+      "label": "Lebenserwartung (weiblich)",
+      "unit": "Jahre",
+      "period": "2022–2024",
+      "source": "https://www.statistikportal.de/de/nachhaltigkeit/ergebnisse/ziel-3-gesundheit-und-wohlergehen/lebenserwartung-bei-geburt",
+      "note": "Periodensterbetafel, keine individuelle Vorhersage."
+    }
+  ],
+  "states": [
+    {
+      "name": "Baden-Württemberg",
+      "code": "BW",
+      "population": 11238761,
+      "turnout": 83.4,
+      "poverty": 15.1,
+      "male": 79.9,
+      "female": 84.1
+    },
+    {
+      "name": "Bayern",
+      "code": "BY",
+      "population": 13245503,
+      "turnout": 84.3,
+      "poverty": 15.1,
+      "male": 79.3,
+      "female": 83.7
+    },
+    {
+      "name": "Berlin",
+      "code": "BE",
+      "population": 3700577,
+      "turnout": 80.3,
+      "poverty": 19.1,
+      "male": 78.4,
+      "female": 83.3
+    },
+    {
+      "name": "Brandenburg",
+      "code": "BB",
+      "population": 2551889,
+      "turnout": 81.6,
+      "poverty": 13.4,
+      "male": 77.7,
+      "female": 83.4
+    },
+    {
+      "name": "Bremen",
+      "code": "HB",
+      "population": 706915,
+      "turnout": 77.8,
+      "poverty": 19.7,
+      "male": 76.7,
+      "female": 82.1
+    },
+    {
+      "name": "Hamburg",
+      "code": "HH",
+      "population": 1869473,
+      "turnout": 80.9,
+      "poverty": 19.5,
+      "male": 78.4,
+      "female": 83.1
+    },
+    {
+      "name": "Hessen",
+      "code": "HE",
+      "population": 6278594,
+      "turnout": 83.1,
+      "poverty": 17.2,
+      "male": 78.9,
+      "female": 83.3
+    },
+    {
+      "name": "Mecklenburg-Vorpommern",
+      "code": "MV",
+      "population": 1573685,
+      "turnout": 79.5,
+      "poverty": 14.1,
+      "male": 76.5,
+      "female": 82.8
+    },
+    {
+      "name": "Niedersachsen",
+      "code": "NI",
+      "population": 8000826,
+      "turnout": 83.4,
+      "poverty": 16.6,
+      "male": 78,
+      "female": 82.6
+    },
+    {
+      "name": "Nordrhein-Westfalen",
+      "code": "NW",
+      "population": 17986214,
+      "turnout": 82.2,
+      "poverty": 17.8,
+      "male": 78.1,
+      "female": 82.6
+    },
+    {
+      "name": "Rheinland-Pfalz",
+      "code": "RP",
+      "population": 4123022,
+      "turnout": 83,
+      "poverty": 16.6,
+      "male": 78.6,
+      "female": 83
+    },
+    {
+      "name": "Saarland",
+      "code": "SL",
+      "population": 1007342,
+      "turnout": 82.4,
+      "poverty": 17.6,
+      "male": 77.4,
+      "female": 82
+    },
+    {
+      "name": "Sachsen",
+      "code": "SN",
+      "population": 4026599,
+      "turnout": 81.1,
+      "poverty": 13,
+      "male": 78,
+      "female": 84
+    },
+    {
+      "name": "Sachsen-Anhalt",
+      "code": "ST",
+      "population": 2120252,
+      "turnout": 77.7,
+      "poverty": 15.1,
+      "male": 75.9,
+      "female": 82.3
+    },
+    {
+      "name": "Schleswig-Holstein",
+      "code": "SH",
+      "population": 2958519,
+      "turnout": 83.5,
+      "poverty": 17.3,
+      "male": 78.3,
+      "female": 82.8
+    },
+    {
+      "name": "Thüringen",
+      "code": "TH",
+      "population": 2078946,
+      "turnout": 80.7,
+      "poverty": 13.1,
+      "male": 77.4,
+      "female": 83.1
+    }
+  ],
+  "berlin": {
+    "period": "2025",
+    "source": "https://www.statistik-berlin-brandenburg.de/presse/2026/73-bevoelkerungsfortschreibung-2025-berlin/",
+    "total": 15312,
+    "districts": [
+      [
+        "Mitte",
+        1211
+      ],
+      [
+        "Friedrichshain-Kreuzberg",
+        675
+      ],
+      [
+        "Pankow",
+        1680
+      ],
+      [
+        "Charlottenburg-Wilmersdorf",
+        205
+      ],
+      [
+        "Spandau",
+        1865
+      ],
+      [
+        "Steglitz-Zehlendorf",
+        -704
+      ],
+      [
+        "Tempelhof-Schöneberg",
+        1681
+      ],
+      [
+        "Neukölln",
+        2128
+      ],
+      [
+        "Treptow-Köpenick",
+        4879
+      ],
+      [
+        "Marzahn-Hellersdorf",
+        2375
+      ],
+      [
+        "Lichtenberg",
+        2392
+      ],
+      [
+        "Reinickendorf",
+        -3075
+      ]
+    ]
+  }
+}
