@@ -11,19 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 4
     steps:
-      - name: Fetch official World Development Indicators
+      - name: Fetch documented OWID indicator exports with original-source attribution
         run: |
           python - <<'PY'
-          import json, urllib.request, datetime, hashlib, math
-          result={'source':'World Bank World Development Indicators','geography':'WLD','retrievedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'indicators':[]}
-          for code,name,unit in [('SP.DYN.LE00.IN','Life expectancy at birth','years'),('SH.DYN.MORT','Under-five mortality','per 1,000 live births'),('EG.ELC.ACCS.ZS','Access to electricity','% of population')]:
-              url='https://api.worldbank.org/v2/country/WLD/indicator/'+code+'?format=json&date=1960:2025&per_page=100'
-              with urllib.request.urlopen(url,timeout=30) as r: raw=r.read(2_000_000)
-              meta,rows=json.loads(raw)
-              vals=sorted([[int(r['date']),r['value']] for r in rows if r['value'] is not None])
-              assert len(vals)>20 and all(math.isfinite(v) and v>=0 for y,v in vals)
-              assert len({y for y,v in vals})==len(vals) and all(1960<=y<=2025 for y,v in vals)
-              if code=='EG.ELC.ACCS.ZS': assert all(v<=100 for y,v in vals)
-              result['indicators'].append({'code':code,'name':name,'unit':unit,'api':url,'source':'https://data.worldbank.org/indicator/'+code+'?locations=1W','lastUpdated':meta.get('lastupdated'),'sha256':hashlib.sha256(raw).hexdigest(),'values':vals})
+          import json, urllib.request, datetime, hashlib, math, csv, io
+          result={'source':'Our World in Data; UN WPP, UN IGME and World Bank WDI','geography':'WLD','retrievedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'indicators':[]}
+          specs=[('life-expectancy','Life expectancy at birth','years','UN World Population Prospects / OWID'),('child-mortality','Under-five mortality','deaths per 100 live births','UN IGME / OWID'),('share-of-the-population-with-access-to-electricity','Access to electricity','% of population','World Bank WDI / OWID')]
+          for slug,name,unit,provider in specs:
+              url='https://ourworldindata.org/grapher/'+slug+'.csv?tab=chart'
+              with urllib.request.urlopen(url,timeout=30) as r: raw=r.read(8_000_000)
+              rows=csv.DictReader(io.StringIO(raw.decode('utf-8-sig')))
+              fields=rows.fieldnames
+              assert fields[:3]==['Entity','Code','Year'] and len(fields)>=4, fields
+              col=fields[3]
+              vals=sorted([[int(r['Year']),float(r[col])] for r in rows if r['Entity']=='World' and r[col] and 1960<=int(r['Year'])<=2025])
+              assert len(vals)>20 and all(math.isfinite(v) and 0<=v<=120 for y,v in vals)
+              assert len({y for y,v in vals})==len(vals)
+              result['indicators'].append({'code':slug,'name':name,'unit':unit,'api':url,'source':'https://ourworldindata.org/grapher/'+slug,'provider':provider,'column':col,'sha256':hashlib.sha256(raw).hexdigest(),'values':vals})
           print('WDI_RECEIPT '+json.dumps(result,separators=(',',':')))
           PY
