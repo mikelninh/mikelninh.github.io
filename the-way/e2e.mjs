@@ -122,6 +122,8 @@ async function runPulse(label,width,height){
  console.log(JSON.stringify({label,earthPhoto:await page.locator('#earth-photo').evaluate(img=>({loaded:img.naturalWidth>0,width:img.naturalWidth}))}));
  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
  if(overflow>8)failures.push(label+': World Pulse horizontal viewport overflow '+overflow+'px');
+ await page.evaluate(()=>{document.activeElement?.blur();window.scrollTo({top:0,behavior:'instant'});});
+ await page.waitForTimeout(150);
  await page.screenshot({path:path.join(out,label+'-world-pulse.png'),fullPage:false});shots.push(label+'-world-pulse');
  await page.locator('.research-banner a').click();
  await page.waitForFunction(()=>document.querySelectorAll('.case-item').length===3);
