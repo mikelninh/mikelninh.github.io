@@ -206,6 +206,24 @@ async function runConnected(label,width,height){
  assert.equal(await page.locator('#metric-number').innerText(),'17');
  assert.equal(await page.locator('#lens-total').innerText(),'17 conflicts');
  await page.locator('#lens-year').selectOption('2025');
+ await page.waitForFunction(()=>document.querySelector('#historical-map').dataset.ready==='true'&&document.querySelector('#wellbeing-chart').dataset.ready==='true',{},{timeout:25000});
+ assert.equal(await page.locator('#historical-map').getAttribute('data-year'),'2025');
+ assert.equal(await page.locator('#historical-map').getAttribute('data-mapped-labels'),'40');
+ await page.locator('#map-year').selectOption('1946');
+ assert.equal(await page.locator('#metric-number').innerText(),'17');
+ assert.equal(await page.locator('#historical-map').getAttribute('data-year'),'1946');
+ await page.locator('#map-year').selectOption('2025');
+ await page.locator('#historical-geography').scrollIntoViewIfNeeded();
+ await page.screenshot({path:path.join(out,label+'-historical-geography.png'),fullPage:false});shots.push(label+'-historical-geography');
+ assert.equal(await page.locator('#wdi-controls button').count(),3);
+ assert.equal(await page.locator('#wdi-value').innerText(),'73.5');
+ await page.locator('#wdi-controls button').filter({hasText:'Under-five'}).click();
+ assert.equal(await page.locator('#wdi-value').innerText(),'37.4');
+ await page.locator('#wdi-controls button').filter({hasText:'Access to electricity'}).click();
+ assert.equal(await page.locator('#wdi-value').innerText(),'91.9');
+ await page.locator('#wellbeing').scrollIntoViewIfNeeded();
+ await page.screenshot({path:path.join(out,label+'-wellbeing.png'),fullPage:false});shots.push(label+'-wellbeing');
+
  assert.equal(await page.locator('#lens-location-count').innerText(),'40 labels');
  await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(out,label+'-unified-time.png'),fullPage:false});shots.push(label+'-unified-time');
  await page.locator('#history-lens').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,label+'-historical-lens.png'),fullPage:false});shots.push(label+'-historical-lens');
@@ -218,6 +236,21 @@ async function runConnected(label,width,height){
   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
   if(overflow>8)failures.push(label+': '+route+' horizontal viewport overflow '+overflow+'px');
  }
+ await page.locator('#ai-load').waitFor();
+ await page.waitForFunction(()=>!document.querySelector('#ai-load').disabled);
+ assert.equal(await page.locator('#ai-calls').innerText(),'4');
+ assert.ok(await page.locator('#ai-audit').isVisible());
+ await page.locator('#ai-research').scrollIntoViewIfNeeded();
+ await page.screenshot({path:path.join(out,label+'-ai-mission.png'),fullPage:false});shots.push(label+'-ai-mission');
+ await page.locator('#ai-load').click();
+ assert.equal(await page.locator('.case-item').count(),2);
+ await page.locator('.way-nav a').filter({hasText:'Peace Lab'}).click();
+ await page.waitForFunction(()=>document.querySelectorAll('.library-record').length===5);
+ await page.locator('#library-query').fill('Liberia');
+ assert.ok(await page.locator('.library-record').count()>0);
+ await page.locator('#library-query').fill('');
+ await page.locator('#peace-library').scrollIntoViewIfNeeded();
+ await page.screenshot({path:path.join(out,label+'-peace-library.png'),fullPage:false});shots.push(label+'-peace-library');
  assert.deepEqual(errors,[]);
  console.log(JSON.stringify({label,connectedNavigation:'pass',historyLens:'pass',errors}));
  await page.close();
