@@ -1,0 +1,23 @@
+name: THE WAY Germany source watch
+on:
+  push:
+    paths:
+      - .github/workflows/the-way-de-watch.yml
+  workflow_dispatch:
+  schedule:
+    - cron: '15 7 * * 1'
+permissions:
+  contents: read
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retrieve public data and legal sources
+        run: python3 the-way/de-watch.py "$RUNNER_TEMP/de-watch-report.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: the-way-de-watch
+          path: ${{ runner.temp }}/de-watch-report.json
+          retention-days: 30
