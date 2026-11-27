@@ -1,0 +1,86 @@
+{
+  "project": "THE WAY",
+  "mode": "live",
+  "generatedAt": "2026-11-27",
+  "method": "One-off AI-assisted source retrieval and deterministic exact-string match on returned text; editorial critique, not an independent LLM or expert review. No automatic claims or publication approval.",
+  "results": [
+    {
+      "status": "candidate_for_human_review",
+      "source": {
+        "title": "Ten years after Colombia's agreement",
+        "url": "https://colombia.unmissions.org/en/news/declaracion-atribuible-al-portavoz-del-secretario-general-decimo-aniversario-del",
+        "source": "United Nations",
+        "publishedAt": "2026-11-24",
+        "bodySha256": null,
+        "processIds": [
+          "colombia"
+        ]
+      },
+      "extraction": {
+        "claim": "The UN Secretary-General's spokesperson described five years remaining in the agreement's implementation timeframe.",
+        "quote": "With five years remaining in the timeframe for implementation",
+        "uncertainty": "The statement describes the timeframe, not the share of obligations completed."
+      },
+      "proof": {
+        "ok": true,
+        "errors": []
+      },
+      "critique": {
+        "decision": "allow_human_review",
+        "reason": "Check actual implementation against separate monitoring data."
+      }
+    },
+    {
+      "status": "candidate_for_human_review",
+      "source": {
+        "title": "UN verification mandate renewed and refocused",
+        "url": "https://colombia.unmissions.org/en/press-releases/el-consejo-de-seguridad-de-las-naciones-unidas-renueva-el-mandato-de-la",
+        "source": "United Nations",
+        "publishedAt": "2026-10-30",
+        "bodySha256": null,
+        "processIds": [
+          "colombia"
+        ]
+      },
+      "extraction": {
+        "claim": "The UN mission says comprehensive rural reform verification was removed from its renewed mandate.",
+        "quote": "the verification of comprehensive rural reform will no longer form part of the Mission's mandate",
+        "uncertainty": "This does not mean rural reform obligations ended or were fulfilled."
+      },
+      "proof": {
+        "ok": true,
+        "errors": []
+      },
+      "critique": {
+        "decision": "allow_human_review",
+        "reason": "Compare the renewed mandate with the original agreement and independently sourced rural reform data."
+      }
+    },
+    {
+      "status": "candidate_for_human_review",
+      "source": {
+        "title": "Reintegration and continuing insecurity",
+        "url": "https://dppa.un.org/en/news/this-week-in-dppa-10-16-october-2026",
+        "source": "United Nations",
+        "publishedAt": "2026-10-16",
+        "bodySha256": null,
+        "processIds": [
+          "colombia"
+        ]
+      },
+      "extraction": {
+        "claim": "The UN's weekly briefing reports that its Colombia representative highlighted reintegration of over 11,000 former combatants.",
+        "quote": "the reintegration of more than 11,000 former combatants",
+        "uncertainty": "This is a reported cumulative figure, not a rate of successful or safe long-term reintegration."
+      },
+      "proof": {
+        "ok": true,
+        "errors": []
+      },
+      "critique": {
+        "decision": "allow_human_review",
+        "reason": "Check denominator, definition, reporting period and civilian protection indicators before making comparative claims."
+      }
+    }
+  ]
+}
