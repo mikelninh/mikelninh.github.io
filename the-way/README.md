@@ -106,3 +106,7 @@ The new \`processes.js\`, \`progress.html\`, \`process.css\` and \`process-app.j
 - Use `node the-way/checks.mjs` to audit records.
 
 **Make peace the way.**
+
+## World Pulse edition · 27 November 2026
+
+Shareable entry: https://mikelninh.github.io/the-way/pulse.html . The existing atlas remains at its stable URL. World Pulse distinguishes dated editorial stories from automatic RSS retrieval. Colombia has three short quotes matched against the retrieved UN source texts in a one-off AI-assisted investigation; this is not independently expert-verified or a continuous agent run. The Research Desk can load this public packet, import a local JSON report, or scan the public news feed for Colombia keyword matches (unverified headline leads only). No secrets, autonomous publishing, or fabricated source receipts. Independent LLM analysis requires separately configured credentials and evaluation. Mobile navigation now fits all four sections plus methodology. The atlas registry remains the 23 November snapshot, not an exhaustive live global conflict assessment.
