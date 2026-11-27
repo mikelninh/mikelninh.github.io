@@ -71,4 +71,24 @@ assert.ok(js.includes('linkedProcess(c)'),'Atlas dossier bridge missing');
 new vm.Script(read('process-app.js'),{filename:'process-app.js'});
 assert.ok(read('process.css').includes('prefers-reduced-motion'),'Reduced motion needed in Peace Ledger');
 
+// Coherent design contract across all three product views.
+const deskHtml=read('review.html'),design=read('design-system.css');
+const pages=[html,progressHtml,deskHtml],modes=['atlas','ledger','desk'];
+const shells=pages.map((p,i)=>{
+ assert.ok(p.includes('class="way-product way-'+modes[i]+'"'));
+ assert.ok(p.includes('href="./design-system.css?v=4.0"'));
+ assert.ok(p.includes('class="way-heading"'));
+ const header=p.match(/<header class="way-shell">[\s\S]*?<\/header>/)?.[0];
+ assert.ok(header,'Common shell missing');
+ assert.equal((header.match(/aria-current="page"/g)||[]).length,1);
+ return header.replace(' aria-current="page"','');
+});
+assert.ok(shells.every(s=>s===shells[0]),'Navigation must be identical across product views');
+const footers=pages.map(p=>p.match(/<footer class="way-footer">[\s\S]*?<\/footer>/)?.[0]);
+assert.ok(footers[0]&&footers.every(x=>x===footers[0]),'Common footer must match');
+assert.ok(design.includes('--way-primary:#284eac')&&design.includes('--way-radius:12px'));
+assert.ok(!html.includes('<section class="intro">'),'Atlas must start with the actual product');
+assert.ok(!progressHtml.includes('<section class="hero"'),'Ledger must start with the actual product');
+new vm.Script(deskHtml.match(/<script>([\s\S]*?)<\/script>/)[1],{filename:'review-inline.js'});
+
 console.log(JSON.stringify({status:'PASS',anchors:rows.length,categories:types,sourceRegistries:Object.keys(sources).length,peaceProcesses:processRows.length,commitments:processRows.reduce((n,r)=>n+r.commitments.length,0),coordinates:'valid',js:'valid',method:'geographic theatre anchors only'}));
