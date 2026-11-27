@@ -11,23 +11,24 @@ window.WAY_PROCESSES=[
  agreement:{name:"Final Agreement for Ending the Conflict and Building a Stable and Lasting Peace",date:"2016-11-24",url:"https://peacemaker.un.org/en/node/9804",label:"UN agreement database"},
  signals:[
  {label:"Agreement",detail:"2016 Final Agreement signed",type:"document"},
- {label:"Verification",detail:"UN mission mandate extended until October 2027",type:"observed"},
+ {label:"Verification",detail:"UN mission renewed through October 2027; scope narrowed",type:"observed"},
  {label:"Implementation",detail:"Continued concerns raised by UN in October 2026",type:"open"}
  ],
  milestones:[
  {id:"col-1",date:"2016-11-24",title:"Final peace agreement signed",kind:"agreement",note:"The state and FARC-EP reached a final agreement; the text created a framework, not immediate proof of full implementation.",source:"agreement"},
  {id:"col-2",date:"2026-10-12",title:"UN briefing on implementation challenges",kind:"monitoring",note:"UN officials highlighted ongoing security concerns and uncertainty around the administration's approach to implementation.",source:"unbrief"},
- {id:"col-3",date:"2026-10-30",title:"UN verification mandate renewed",kind:"institution",note:"Security Council resolution 2833 extended the mission through 31 October 2027.",source:"mandate"}
+ {id:"col-3",date:"2026-10-30",title:"UN verification mandate renewed",kind:"institution",note:"Security Council resolution 2833 extended the mission through 31 October 2027; the UN mission announcement says comprehensive rural reform verification is no longer within its mandate.",source:"renewal"}
  ],
  commitments:[
  {id:"col-civilian",title:"Protect former combatants and communities",text:"Safety should be observed independently, not inferred from the agreement's existence.",test:"UN mission reports on security, civilian protection and verified incidents involving former combatants.",evidence:["unbrief","report"],finding:"Monitoring and continuing protection concerns documented; comprehensive safety not established."},
- {id:"col-implementation",title:"Implement relevant agreement provisions",text:"Track concrete delivery and institutional continuity against the original commitments.",test:"Compare periodically published mission mandates and implementation reports against specific agreed provisions.",evidence:["mandate","report"],finding:"UN monitoring continues under a defined mandate; this does not verify completion of the entire accord."},
+ {id:"col-implementation",title:"Implement relevant agreement provisions",text:"Track concrete delivery and institutional continuity against the original commitments.",test:"Compare periodically published mission mandates and implementation reports against specific agreed provisions.",evidence:["mandate","renewal","report"],finding:"The renewed mandate focuses on reintegration and security guarantees. Rural reform verification was removed from the mandate, not from the agreement. Completion of the accord is not established."},
  {id:"col-rights",title:"Enable safe civic participation",text:"Political participation must be possible without intimidation or violence.",test:"Independent reporting of threats, participation and protection of community leaders.",evidence:["unbrief"],finding:"Included as an outcome to track; a verified nationwide metric is not provided here."}
  ],
  sources:{
  agreement:{org:"United Nations Peacemaker",title:"Final Agreement for Ending the Conflict and Building a Stable and Lasting Peace",date:"2016-11-24",url:"https://peacemaker.un.org/en/node/9804",role:"Agreement archive",kind:"original"},
  unbrief:{org:"United Nations DPPA",title:"Colombia peace deal must endure as insecurity grows",date:"2026-10-12",url:"https://dppa.un.org/en/news/colombia-peace-deal-must-endure-as-insecurity-grows-security-council-hears",role:"Dated UN analysis",kind:"report"},
  report:{org:"UN Verification Mission in Colombia",title:"Mission documents and the October 2026 Secretary-General report",date:"2026-10-08",url:"https://colombia.unmissions.org/en/documents",role:"Monitoring documents",kind:"report"},
+ renewal:{org:"UN Verification Mission in Colombia",title:"UN Security Council renews and refocuses the verification mission",date:"2026-10-30",url:"https://colombia.unmissions.org/en/press-releases/el-consejo-de-seguridad-de-las-naciones-unidas-renueva-el-mandato-de-la",role:"Primary mission announcement",kind:"original"},
  mandate:{org:"UN Mandate Registry",title:"Security Council Resolution 2833 (2026)",date:"2026-10-30",url:"https://mandates.un.org/mandate/S/RES/2833%20%282026%29",role:"Current mission mandate",kind:"original"}
  },
  caveat:"UN verification covers a specified mandate, not every provision of the 2016 agreement. Colombia has additional conflicts involving other armed actors."
