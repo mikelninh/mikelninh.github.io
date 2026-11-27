@@ -1,6 +1,6 @@
 {
   "version": "2.0-development",
-  "method": "Four source-derived paraphrase tests and eight additional test cases. The contexts are deliberately short authored test fixtures, not independently annotated real-world evidence. REVIEW means eligible for human review, never approved. The guarded system abstains unless a claim is an exact extractive match or passes predeclared literal evidence checks; benchmark is development-only.",
+  "method": "Five source-derived paraphrase tests and seven fictional test cases. The contexts are deliberately short authored development fixtures, not independently annotated real-world evidence. REVIEW means eligible for human review, never approved. The guarded system abstains unless the proposed claim is an exact extractive match without a known injection marker.",
   "cases": [
     {
       "id": "kroc-denominator",
