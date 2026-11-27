@@ -114,6 +114,12 @@ async function runPulse(label,width,height){
  assert.equal(await page.locator('.way-nav a[aria-current="page"]').innerText(),'World pulse');
  assert.equal(await page.locator('.path-card').count(),3);
  assert.equal(await page.locator('.mini-story').count(),2);
+ await page.locator('#quick-search').fill('Colombia');
+ assert.ok(await page.locator('#quick-results a').count()>0);
+ assert.match(await page.locator('#quick-results a').first().getAttribute('href'),/conflict=colombia/);
+ await page.locator('#quick-search').fill('');
+ await page.locator('#earth-photo').evaluate(img=>img.complete||new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true});setTimeout(resolve,8000)}));
+ console.log(JSON.stringify({label,earthPhoto:await page.locator('#earth-photo').evaluate(img=>({loaded:img.naturalWidth>0,width:img.naturalWidth}))}));
  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
  if(overflow>8)failures.push(label+': World Pulse horizontal viewport overflow '+overflow+'px');
  await page.screenshot({path:path.join(out,label+'-world-pulse.png'),fullPage:false});shots.push(label+'-world-pulse');
