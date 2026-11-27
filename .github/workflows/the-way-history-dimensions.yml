@@ -1,0 +1,45 @@
+name: THE WAY historical dimensions
+on:
+  push:
+    paths:
+      - .github/workflows/the-way-history-dimensions.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Aggregate official UCDP classifications and named conflict locations
+        run: |
+          python3 - <<'PY'
+          import urllib.request, zipfile, io, csv, json, collections, hashlib
+          url='https://ucdp.uu.se/downloads/ucdpprio/ucdp-prio-acd-261-csv.zip'
+          with urllib.request.urlopen(url,timeout=45) as r: raw=r.read(30_000_000)
+          z=zipfile.ZipFile(io.BytesIO(raw))
+          rows=list(csv.DictReader(io.StringIO(z.read(next(n for n in z.namelist() if n.lower().endswith('.csv'))).decode('utf-8-sig'))))
+          assert {'year','conflict_id','type_of_conflict','location'}.issubset(rows[0]), rows[0].keys()
+          groups=collections.defaultdict(dict)
+          for r in rows:
+              y=int(r['year']); k=r['conflict_id']; t=int(r['type_of_conflict']); loc=r['location'].strip()
+              assert 1<=t<=4 and loc
+              assert k not in groups[y] or groups[y][k]==(t,loc)
+              groups[y][k]=(t,loc)
+          assert sorted(groups)==list(range(1946,2026))
+          out=[]
+          for y,d in sorted(groups.items()):
+              ts=[sum(t==i for t,l in d.values()) for i in range(1,5)]
+              locs=collections.Counter(l for t,l in d.values())
+              assert sum(ts)==sum(locs.values())==len(d)
+              out.append({'year':y,'types':ts,'locations':sorted(locs.items(),key=lambda x:(-x[1],x[0]))})
+          assert len(groups[2025])==65
+          doc={'version':'26.1','source':url,'sha256':hashlib.sha256(raw).hexdigest(),'definitions':['Extrasystemic','Interstate','Intrastate','Internationalized intrastate'],'locationNote':'UCDP location field: country or countries whose government or territory is disputed, not event locations. Original labels retained; joint labels counted as one location string.','years':out}
+          with open('history-dimensions.json','w') as f: json.dump(doc,f,ensure_ascii=False,separators=(',',':'))
+          print('VERIFIED',len(out),'years',out[-1]['types'],len(out[-1]['locations']),'2025 location labels')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: the-way-history-dimensions
+          path: history-dimensions.json
+          retention-days: 7
