@@ -2,7 +2,7 @@
   "project": "THE WAY",
   "mode": "live",
   "generatedAt": "2026-11-27",
-  "method": "One-off AI-assisted source retrieval and deterministic exact-string match on returned text; editorial critique, not an independent LLM or expert review. UN and Kroc reports. No automatic publication approval.",
+  "method": "One-off AI-assisted source retrieval and deterministic exact-string match on returned text; editorial critique, not an independent LLM or expert review. UN and Kroc reports. No automatic publication approval. The six quotations were subsequently rechecked by the actual public-source workflow; the recorded SHA-256 values refer to fetched HTML bytes, not a proof of the underlying claims.",
   "results": [
     {
       "status": "candidate_for_human_review",
@@ -11,7 +11,7 @@
         "url": "https://colombia.unmissions.org/en/news/declaracion-atribuible-al-portavoz-del-secretario-general-decimo-aniversario-del",
         "source": "United Nations",
         "publishedAt": "2026-11-24",
-        "bodySha256": null,
+        "bodySha256": "1a725f63e83cac299d95e418ab40fd385a1b172bd3f73b2429f277dd74ae9921",
         "processIds": [
           "colombia"
         ]
@@ -37,7 +37,7 @@
         "url": "https://colombia.unmissions.org/en/press-releases/el-consejo-de-seguridad-de-las-naciones-unidas-renueva-el-mandato-de-la",
         "source": "United Nations",
         "publishedAt": "2026-10-30",
-        "bodySha256": null,
+        "bodySha256": "03866dbdf0eb71088b1c636fae40c3535e7a9a74c5a6294e3385340ad809dc2d",
         "processIds": [
           "colombia"
         ]
@@ -63,7 +63,7 @@
         "url": "https://dppa.un.org/en/news/this-week-in-dppa-10-16-october-2026",
         "source": "United Nations",
         "publishedAt": "2026-10-16",
-        "bodySha256": null,
+        "bodySha256": "c9af7d92f8ee85e7ffce9f2e765ccda0adc66ffeee913c6d0591b84a658e4e5c",
         "processIds": [
           "colombia"
         ]
@@ -89,7 +89,7 @@
         "url": "https://kroc.nd.edu/news-events/news/kroc-institute-releases-special-report-on-five-years-of-colombian-peace-agreement-implementation/",
         "source": "Kroc Institute / Peace Accords Matrix",
         "publishedAt": "2021-12-07",
-        "bodySha256": null,
+        "bodySha256": "8f4e649439e2914d576a41967c43cc6f924413cffe8aac6a3ab484a11931014f",
         "processIds": [
           "colombia"
         ]
@@ -115,7 +115,7 @@
         "url": "https://kroc.nd.edu/news-events/news/engaging-with-influencers-peace-accords-matrix-visits-washington-d-c/",
         "source": "Kroc Institute / Peace Accords Matrix",
         "publishedAt": "2024-05-10",
-        "bodySha256": null,
+        "bodySha256": "f0b4458c8a17ed995ebff9a3e58905671e5b9ae5e445ebbac134f07837f4a533",
         "processIds": [
           "colombia"
         ]
@@ -141,7 +141,7 @@
         "url": "https://kroc.nd.edu/news-events/news/navigating-the-shift-new-kroc-institute-report-maps-the-future-of-colombian-peace-amidst-pivotal-political-transition/",
         "source": "Kroc Institute / Peace Accords Matrix",
         "publishedAt": "2026-05-13",
-        "bodySha256": null,
+        "bodySha256": "c610866710fb88418245d4ed9ac8d7e0a4bb267ffb3d007ec8a31ce9874add2c",
         "processIds": [
           "colombia"
         ]
@@ -160,5 +160,51 @@
         "reason": "Full implementation of provisions is not equivalent to civilian security. Gender and ethnic measures require separate examination."
       }
     }
-  ]
+  ],
+  "retrievalRun": {
+    "runUrl": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/46038409939",
+    "checkedAt": "2026-11-27T17:01:16.535116+00:00",
+    "documents": 6,
+    "matches": 6,
+    "modelCalls": 0,
+    "publicationApproved": false,
+    "events": [
+      {
+        "stage": "source_verify",
+        "source": "Ten years after Colombia's agreement",
+        "status": "candidate_for_human_review",
+        "at": "2026-11-27T17:01:22.002012+00:00"
+      },
+      {
+        "stage": "source_verify",
+        "source": "UN verification mandate renewed and refocused",
+        "status": "candidate_for_human_review",
+        "at": "2026-11-27T17:01:22.480162+00:00"
+      },
+      {
+        "stage": "source_verify",
+        "source": "Reintegration and continuing insecurity",
+        "status": "candidate_for_human_review",
+        "at": "2026-11-27T17:01:24.405822+00:00"
+      },
+      {
+        "stage": "source_verify",
+        "source": "Five-year assessment · October 2021",
+        "status": "candidate_for_human_review",
+        "at": "2026-11-27T17:01:25.091378+00:00"
+      },
+      {
+        "stage": "source_verify",
+        "source": "February 2024 implementation snapshot",
+        "status": "candidate_for_human_review",
+        "at": "2026-11-27T17:01:25.858887+00:00"
+      },
+      {
+        "stage": "source_verify",
+        "source": "November 2025 implementation snapshot",
+        "status": "candidate_for_human_review",
+        "at": "2026-11-27T17:01:26.132981+00:00"
+      }
+    ]
+  }
 }
