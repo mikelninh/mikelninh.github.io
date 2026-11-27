@@ -1,0 +1,33 @@
+name: THE WAY time atlas data
+on:
+  push:
+    paths:
+      - .github/workflows/the-way-time-data.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Fetch and aggregate official UCDP PRIO v26.1
+        run: |
+          python3 - <<'PY'
+          import urllib.request, zipfile, io, csv, json, collections, hashlib
+          url='https://ucdp.uu.se/downloads/ucdpprio/ucdp-prio-acd-261-csv.zip'
+          with urllib.request.urlopen(url,timeout=45) as r:
+              raw=r.read(30_000_000)
+          z=zipfile.ZipFile(io.BytesIO(raw))
+          files=[n for n in z.namelist() if n.lower().endswith('.csv')]
+          assert len(files)==1,files
+          rows=list(csv.DictReader(io.StringIO(z.read(files[0]).decode('utf-8-sig'))))
+          assert {'year','conflict_id'}.issubset(rows[0]), rows[0].keys()
+          groups=collections.defaultdict(set)
+          for r in rows:
+              groups[int(r['year'])].add(r['conflict_id'])
+          assert sorted(groups)==list(range(1946,2026))
+          values=[len(groups[y]) for y in range(1946,2026)]
+          assert values[-1]==65 and values[-2]==59 and values[-3]==59 and values[2010-1946]==31,values
+          print('VERIFIED_SERIES '+json.dumps({'version':'26.1','start':1946,'values':values,'source':url,'sha256':hashlib.sha256(raw).hexdigest()}))
+          PY
