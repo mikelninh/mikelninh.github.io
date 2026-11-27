@@ -1,0 +1,71 @@
+{
+  "reviewed": "2026-11-27",
+  "method": "Seed library of selected published studies, not a systematic review. Original articles and public research summaries were consulted. Findings are attributed, not universal causal guarantees.",
+  "studies": [
+    {
+      "id": "support",
+      "topic": "Institutions & support",
+      "title": "Identifying Pathways to Peace",
+      "authors": "Karina Mross, Julia Fiedler and colleagues",
+      "year": 2022,
+      "design": "Qualitative comparative analysis and case studies",
+      "scope": "36 post-civil-war peace episodes, 1990–2014",
+      "finding": "The authors find several configurations of post-conflict support associated with sustained peace. Political and governance support explains the largest share of cases; combined support appears particularly important in difficult contexts.",
+      "limit": "Comparative observational design; selection of support can depend on context. The study does not cover protracted ongoing conflicts and does not establish a universal treatment effect.",
+      "question": "Which combinations of support are feasible locally, and what outcome would show less risk of recurrence?",
+      "url": "https://doi.org/10.1093/isq/sqab091"
+    },
+    {
+      "id": "peacekeeping",
+      "topic": "Security & monitoring",
+      "title": "Does Peacekeeping Keep Peace?",
+      "authors": "Virginia Page Fortna",
+      "year": 2004,
+      "design": "Observational duration analysis",
+      "scope": "Peace after civil wars",
+      "finding": "The study examines whether peacekeeping is associated with longer periods of peace after civil war while accounting for the nonrandom deployment of missions.",
+      "limit": "Nonrandom intervention and residual confounding constrain causal interpretation. Mission design, local consent and context matter.",
+      "question": "What independent measures of compliance and civilian safety can monitor a particular mission?",
+      "url": "https://doi.org/10.1111/j.0020-8833.2004.00301.x"
+    },
+    {
+      "id": "inclusion",
+      "topic": "Inclusion & rights",
+      "title": "Women’s Participation in Peace Negotiations and the Durability of Peace",
+      "authors": "Jana Krause, Werner Krause and Piia Bränfors",
+      "year": 2018,
+      "design": "Quantitative comparative analysis and qualitative mechanisms",
+      "scope": "13 agreements with women signatories in six processes within a larger comparison",
+      "finding": "The authors report an association between women signatories, stronger reform provisions and more durable agreements; they discuss links between women delegates and civil society.",
+      "limit": "Few agreements with women signatories; selection and other institutional differences may influence results. Meaningful participation is also a right, independently of estimated effects.",
+      "question": "Can affected groups shape the agreement and its implementation, rather than merely attend negotiations?",
+      "url": "https://doi.org/10.1080/03050629.2018.1492386"
+    },
+    {
+      "id": "community",
+      "topic": "Community & trust",
+      "title": "Can Development Aid Contribute to Social Cohesion after Civil War?",
+      "authors": "James D. Fearon, Macartan Humphreys and Jeremy M. Weinstein",
+      "year": 2009,
+      "design": "Randomized field experiment",
+      "scope": "Community-driven reconstruction in northern Liberia",
+      "finding": "The researchers examine a local reconstruction program designed to foster collective decision-making. Behavioral evidence suggests improved collective action in the studied context.",
+      "limit": "A specific local intervention and outcome do not establish national peace durability or transferability to other conflicts.",
+      "question": "Which locally chosen collective-action outcomes can be measured safely, and compared to an appropriate baseline?",
+      "url": "https://doi.org/10.1257/aer.99.2.287"
+    },
+    {
+      "id": "prevention",
+      "topic": "Prevention",
+      "title": "Pathways for Peace: Inclusive Approaches to Preventing Violent Conflict",
+      "authors": "United Nations and World Bank",
+      "year": 2018,
+      "design": "Policy research synthesis",
+      "scope": "Cross-country conflict prevention",
+      "finding": "The report emphasizes prevention, attention to exclusion and grievances, and participation by affected groups in shaping institutions and development.",
+      "limit": "A policy synthesis is not a randomized evaluation of a particular intervention; local needs and rights cannot be inferred from global averages.",
+      "question": "What exclusion or unresolved grievance can be addressed through legitimate, locally led processes?",
+      "url": "https://www.worldbank.org/en/topic/fragilityconflictviolence/publication/pathways-for-peace-inclusive-approaches-to-preventing-violent-conflict"
+    }
+  ]
+}
