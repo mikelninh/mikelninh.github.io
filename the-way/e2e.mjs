@@ -138,10 +138,17 @@ async function runStories(label,width,height){
  await page.goto(new URL('stories.html',base).toString(),{waitUntil:'domcontentloaded',timeout:30000});
  await page.locator('#observation-value').waitFor();
  assert.equal(await page.locator('#observation-value').innerText(),'36%');
+ assert.equal(await page.locator('#unit-grid i').count(),100);
+ assert.equal(await page.locator('#unit-grid i.complete').count(),36);
  await page.locator('button[data-year="0"]').click();
  assert.equal(await page.locator('#observation-value').innerText(),'30%');
+ assert.equal(await page.locator('#unit-grid i.complete').count(),30);
+ await page.locator('#trend-view').click();
+ assert.ok(await page.locator('#trend-chart').isVisible());
+ await page.locator('#grid-view').click();
  await page.locator('button[data-year="1"]').click();
  assert.equal(await page.locator('#observation-value').innerText(),'32%');
+ assert.equal(await page.locator('#unit-grid i.complete').count(),32);
  await page.locator('button[data-year="2"]').click();
  assert.equal(await page.locator('#observation-value').innerText(),'36%');
  await page.locator('#south-sudan').scrollIntoViewIfNeeded();
@@ -152,7 +159,10 @@ async function runStories(label,width,height){
  await page.locator('#implementation').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,label+'-historical-data.png'),fullPage:false});shots.push(label+'-historical-data');
  if(overflow>8)failures.push(label+': Stories horizontal viewport overflow '+overflow+'px');
  if(errors.length)failures.push(label+': Stories browser errors: '+errors.join('; '));
- console.log(JSON.stringify({label,stories:'pass',photos,overflow,errors}));
+ await page.goto(new URL('stories.html?observation=2024-02#implementation',base).toString(),{waitUntil:'domcontentloaded'});
+ assert.equal(await page.locator('#observation-value').innerText(),'32%');
+ assert.equal(await page.locator('#unit-grid i.complete').count(),32);
+ console.log(JSON.stringify({label,stories:'pass',photos,overflow,errors,unitGrid:'100 points',shareDeepLink:'pass'}));
  await page.close();
 }
 try{
