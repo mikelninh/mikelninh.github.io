@@ -1,0 +1,32 @@
+name: THE WAY independent NLI benchmark
+on:
+  push:
+    paths:
+      - .github/workflows/the-way-nli.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      HF_HUB_DISABLE_XET: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install CPU inference dependencies
+        run: |
+          python -m pip install --quiet --index-url https://download.pytorch.org/whl/cpu torch==2.6.0
+          python -m pip install --quiet transformers==4.51.3 safetensors sentencepiece protobuf
+      - name: Evaluate independent NLI model
+        run: python the-way/benchmark-nli.py "$RUNNER_TEMP/nli-report.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: the-way-nli-report
+          path: ${{ runner.temp }}/nli-report.json
+          retention-days: 30
