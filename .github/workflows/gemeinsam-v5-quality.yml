@@ -1,0 +1,71 @@
+name: Gemeinsam quality gate
+on:
+  push:
+    paths:
+      - 'gemeinsam/index.html'
+      - '.github/workflows/gemeinsam-v5-quality.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Test interactions, links and responsive layout
+        run: |
+          python3 -m http.server 8765 >/tmp/gemeinsam-server.log 2>&1 &
+          node --input-type=module <<'JS'
+          import { chromium } from 'playwright';
+          import assert from 'node:assert/strict';
+          import { mkdir } from 'node:fs/promises';
+          const browser = await chromium.launch();
+          await mkdir('gemeinsam-test', {recursive:true});
+          try {
+            for (const width of [320,375,768,1024,1440]) {
+              const page = await browser.newPage({viewport:{width,height:900}});
+              const errors = [];
+              page.on('pageerror', e => errors.push(e.message));
+              await page.goto('http://127.0.0.1:8765/gemeinsam/');
+              await page.locator('meta[name=portfolio-version]').getAttribute('content').then(v=>assert.equal(v,'5'));
+              const dimensions = await page.evaluate(()=>({scroll:document.documentElement.scrollWidth, viewport:innerWidth}));
+              assert.ok(dimensions.scroll <= dimensions.viewport+1, JSON.stringify({width,...dimensions}));
+              for (const i of [1,2,0]) {
+                await page.locator('[data-role="'+i+'"]').click();
+                assert.equal(await page.locator('[data-role="'+i+'"]').getAttribute('aria-pressed'),'true');
+                assert.ok((await page.locator('#roleTitle').innerText()).length>5);
+              }
+              for(const [i,expected] of ['Zu früh','Sinnvoller nächster Schritt','Sicher, aber passiv'].entries()){
+                await page.locator('[data-choice="'+i+'"]').click();
+                assert.ok((await page.locator('#choiceFeedback').innerText()).startsWith(expected));
+              }
+              await page.locator('#resetChoice').click();
+              assert.equal(await page.locator('[data-choice][aria-pressed=true]').count(),0);
+              assert.equal(await page.locator('#resetChoice').isVisible(),false);
+              assert.ok((await page.locator('#kontakt h2').innerText()).includes('euch kennenzulernen'));
+              assert.deepEqual(errors,[]);
+              await page.screenshot({path:'gemeinsam-test/'+width+'.png',fullPage:true});
+              if(width===1440){
+                const links=await page.locator('a[href]').evaluateAll(nodes=>[...new Set(nodes.map(n=>n.getAttribute('href')))]);
+                for(const href of links){
+                  if(href.startsWith('#')){assert.equal(await page.locator(href).count(),1);continue;}
+                  if(!href.startsWith('../'))continue;
+                  const response=await page.request.get(new URL(href,page.url()).href);
+                  assert.ok(response.ok(),href+' returned '+response.status());
+                }
+              }
+              console.log('PASS '+width+'px');
+              await page.close();
+            }
+          } finally { await browser.close(); }
+          JS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gemeinsam-responsive-screenshots
+          path: gemeinsam-test/
