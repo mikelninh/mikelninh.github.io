@@ -1,0 +1,99 @@
+{
+  "project": "THE WAY",
+  "version": "2.0",
+  "generatedAt": "2026-11-27T19:47:39.686986+00:00",
+  "researchQuestion": "What can implementation evidence tell us, and what must still be measured?",
+  "sourceDocuments": 3,
+  "modelCalls": 3,
+  "models": [
+    "Qwen/Qwen2.5-0.5B-Instruct",
+    "cross-encoder/nli-deberta-v3-small"
+  ],
+  "stages": [
+    {
+      "role": "Historian",
+      "kind": "deterministic source retrieval",
+      "at": "2026-11-27T19:47:27.898351+00:00",
+      "result": "Three dated implementation assessments were retrieved and their exact source excerpts checked. These are commitments, not civilian safety outcomes.",
+      "sources": [
+        {
+          "title": "Five-year assessment · October 2021",
+          "url": "https://kroc.nd.edu/news-events/news/kroc-institute-releases-special-report-on-five-years-of-colombian-peace-agreement-implementation/",
+          "publishedAt": "2021-12-07",
+          "sha256": "8f4e649439e2914d576a41967c43cc6f924413cffe8aac6a3ab484a11931014f",
+          "quote": "30 percent of the 578 provisions within the agreement have been completed",
+          "quoteMatched": true
+        },
+        {
+          "title": "February 2024 implementation snapshot",
+          "url": "https://kroc.nd.edu/news-events/news/engaging-with-influencers-peace-accords-matrix-visits-washington-d-c/",
+          "publishedAt": "2024-05-10",
+          "sha256": "f0b4458c8a17ed995ebff9a3e58905671e5b9ae5e445ebbac134f07837f4a533",
+          "quote": "32 percent had completed implementation",
+          "quoteMatched": true
+        },
+        {
+          "title": "November 2025 implementation snapshot",
+          "url": "https://kroc.nd.edu/news-events/news/navigating-the-shift-new-kroc-institute-report-maps-the-future-of-colombian-peace-amidst-pivotal-political-transition/",
+          "publishedAt": "2026-05-13",
+          "sha256": "c610866710fb88418245d4ed9ac8d7e0a4bb267ffb3d007ec8a31ce9874add2c",
+          "quote": "36 percent of the 2016 Final Accord’s 578 stipulations have reached full implementation",
+          "quoteMatched": true
+        }
+      ]
+    },
+    {
+      "role": "Scientist",
+      "kind": "structured literature retrieval",
+      "at": "2026-11-27T19:47:27.898383+00:00",
+      "result": "The authors report an association between women signatories, stronger reform provisions and more durable agreements; they discuss links between women delegates and civil society.",
+      "source": "https://doi.org/10.1080/03050629.2018.1492386",
+      "method": "Quantitative comparative analysis and qualitative mechanisms",
+      "limit": "Few agreements with women signatories; selection and other institutional differences may influence results. Meaningful participation is also a right, independently of estimated effects.",
+      "note": "Uses the curated library record, not a fresh full-text literature review."
+    },
+    {
+      "role": "Mediator",
+      "kind": "LLM-generated research question",
+      "at": "2026-11-27T19:47:31.214137+00:00",
+      "result": "How does the presence of women delegates within peace implementation processes impact the effectiveness of agreements signed by women signatories?",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "note": "Raw proposal only; does not speak for conflict parties or establish feasibility."
+    },
+    {
+      "role": "Skeptic",
+      "kind": "independent NLI + explicit checks",
+      "at": "2026-11-27T19:47:39.686969+00:00",
+      "result": "abstain / reject",
+      "candidate": "The 2016 Final Accord's 578 stipulations had reached full implementation in 36% of cases, with 36% still needing to be fully implemented.",
+      "evidence": "36 percent of the 2016 Final Accord’s 578 stipulations have reached full implementation",
+      "model": "cross-encoder/nli-deberta-v3-small",
+      "modelRevision": "fa2804872c3b4bd748f38c0185cc85775361e735",
+      "label": "neutral",
+      "modelScore": 0.03755,
+      "ruleReasons": [],
+      "note": "The score is not a calibrated probability of truth; independent expert review is absent."
+    },
+    {
+      "role": "Evaluator",
+      "kind": "deterministic evaluation protocol",
+      "at": "2026-11-27T19:47:39.686982+00:00",
+      "result": "Prepare an outcome definition, baseline, follow-up, comparison and safeguards; do not estimate an effect before observing it.",
+      "plan": {
+        "question": "Can locally led participation improve the relevance of peace implementation decisions?",
+        "outcome": "Share of consenting participants reporting meaningful influence over decisions, as defined locally",
+        "unit": "proportion of consenting respondents; agreed follow-up window",
+        "baseline": null,
+        "followup": null,
+        "comparison": "Predefine sampling and comparison before observation; monitor attrition, adverse effects and selection bias.",
+        "safeguards": "Co-design with affected communities; informed consent; no sensitive identities in this public report; independent safeguarding review.",
+        "status": "hypothetical planning template; no intervention or outcome measured"
+      }
+    }
+  ],
+  "seconds": 13.3,
+  "publicationApproved": false,
+  "status": "human review required",
+  "method": "Bounded hybrid research cycle: two generative calls and one independent classification. Three deterministic role components, one generated question, one guarded model review. No autonomous intervention or new empirical outcome.",
+  "runUrl": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/46059059702"
+}
