@@ -82,8 +82,8 @@ async function runDesk(label,width,height){
  await page.goto(new URL('review.html',base).toString(),{waitUntil:'domcontentloaded',timeout:30000});
  await page.locator('.case-item').first().waitFor({timeout:20000});
  assert.match(await page.locator('#report-mode').innerText(),/SOURCE CANDIDATES/);
- assert.equal(await page.locator('.case-item').count(),3);
- assert.match(await page.locator('#run-status').innerText(),/3 exact quote matches/);
+ assert.equal(await page.locator('.case-item').count(),6);
+ assert.match(await page.locator('#run-status').innerText(),/6 exact quote matches/);
  assert.equal(await page.locator('.way-nav a[aria-current="page"]').innerText(),'Research desk');
  const color=await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--way-primary').trim());
  assert.equal(color,'#284eac');
@@ -98,7 +98,7 @@ async function runDesk(label,width,height){
  assert.equal(await page.locator('#decision-state').innerText(),'Not reviewed');
  assert.match(await page.locator('#report-mode').innerText(),/FICTIONAL/);
  await page.locator('#load-real').click();
- await page.waitForFunction(()=>document.querySelectorAll('.case-item').length===3);
+ await page.waitForFunction(()=>document.querySelectorAll('.case-item').length===6);
  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
  if(overflow>8)failures.push(label+': Research desk horizontal viewport overflow '+overflow+'px');
  if(errors.length)failures.push(label+': Research desk browser errors: '+errors.join('; '));
@@ -126,10 +126,33 @@ async function runPulse(label,width,height){
  await page.waitForTimeout(150);
  await page.screenshot({path:path.join(out,label+'-world-pulse.png'),fullPage:false});shots.push(label+'-world-pulse');
  await page.locator('.research-banner a').click();
- await page.waitForFunction(()=>document.querySelectorAll('.case-item').length===3);
+ await page.waitForFunction(()=>document.querySelectorAll('.case-item').length===6);
  assert.match(await page.locator('#report-mode').innerText(),/SOURCE CANDIDATES/);
  if(errors.length)failures.push(label+': World Pulse browser errors: '+errors.join('; '));
  console.log(JSON.stringify({label,pulse:'pass',overflow,errors}));
+ await page.close();
+}
+async function runStories(label,width,height){
+ const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
+ const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ await page.goto(new URL('stories.html',base).toString(),{waitUntil:'domcontentloaded',timeout:30000});
+ await page.locator('#observation-value').waitFor();
+ assert.equal(await page.locator('#observation-value').innerText(),'36%');
+ await page.locator('button[data-year="0"]').click();
+ assert.equal(await page.locator('#observation-value').innerText(),'30%');
+ await page.locator('button[data-year="1"]').click();
+ assert.equal(await page.locator('#observation-value').innerText(),'32%');
+ await page.locator('button[data-year="2"]').click();
+ assert.equal(await page.locator('#observation-value').innerText(),'36%');
+ await page.locator('#south-sudan').scrollIntoViewIfNeeded();
+ const photos=await page.locator('figure img').evaluateAll(async images=>{await Promise.all(images.map(i=>i.complete?Promise.resolve():new Promise(r=>{i.addEventListener('load',r,{once:true});i.addEventListener('error',r,{once:true});setTimeout(r,8000)})));return images.map(i=>({loaded:i.naturalWidth>0,width:i.naturalWidth}));});
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
+ await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));await page.waitForTimeout(100);
+ await page.screenshot({path:path.join(out,label+'-stories.png'),fullPage:false});shots.push(label+'-stories');
+ await page.locator('#implementation').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,label+'-historical-data.png'),fullPage:false});shots.push(label+'-historical-data');
+ if(overflow>8)failures.push(label+': Stories horizontal viewport overflow '+overflow+'px');
+ if(errors.length)failures.push(label+': Stories browser errors: '+errors.join('; '));
+ console.log(JSON.stringify({label,stories:'pass',photos,overflow,errors}));
  await page.close();
 }
 try{
@@ -141,6 +164,8 @@ try{
  await runDesk('mobile',390,844);
  await runPulse('desktop',1440,900);
  await runPulse('mobile',390,844);
+ await runStories('desktop',1440,900);
+ await runStories('mobile',390,844);
  console.log(JSON.stringify({screenshots:shots,nonBlockingIssues:failures}));
  if(failures.some(x=>x.includes('horizontal viewport overflow')||x.includes('browser errors')))process.exitCode=1;
 }catch(e){console.error('End-to-end browser QA failed:',e);process.exitCode=1}
