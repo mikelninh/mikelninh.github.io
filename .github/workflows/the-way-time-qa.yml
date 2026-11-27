@@ -1,0 +1,88 @@
+name: THE WAY time atlas browser QA
+on:
+  push:
+    paths:
+      - the-way/time.html
+      - the-way/time-data.json
+      - .github/workflows/the-way-time-qa.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test real browser on desktop and mobile
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/timeqa "$GITHUB_WORKSPACE/the-way/time-shots"
+          cd /tmp/timeqa
+          npm init -y >/dev/null
+          npm install --no-save --silent playwright-core@1.56.1
+          python3 -m http.server 8766 --directory "$GITHUB_WORKSPACE/the-way" >/tmp/time-http.log 2>&1 &
+          sleep 1
+          cat > test.mjs <<'JS'
+          import { chromium } from 'playwright-core';
+          import assert from 'node:assert/strict';
+          import path from 'node:path';
+          const browser=await chromium.launch({executablePath:process.env.CHROME_PATH,headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
+          const out=process.env.SHOTS;
+          try {
+           for(const [label,width,height] of [['desktop',1440,900],['mobile',390,844]]){
+            const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
+            const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+            await page.goto('http://127.0.0.1:8766/time.html',{waitUntil:'domcontentloaded'});
+            await page.waitForFunction(()=>document.querySelector('#earth').dataset.ready==='true'&&!document.querySelector('#year-range').disabled,{},{timeout:25000});
+            assert.equal(await page.locator('#hist-bars button').count(),80);
+            assert.equal(await page.locator('#hist-bars button:disabled').count(),0);
+            assert.equal(await page.locator('#metric-number').innerText(),'65');
+            assert.equal(await page.locator('#earth').getAttribute('data-visible-markers'),'0');
+            const globeBefore=await page.locator('#earth').evaluate(c=>c.toDataURL());
+            await page.locator('#rotate-right').click();
+            assert.notEqual(await page.locator('#earth').evaluate(c=>c.toDataURL()),globeBefore);
+            await page.locator('#reset').click();
+            await page.evaluate(()=>window.scrollTo(0,0));
+            await page.screenshot({path:path.join(out,label+'-time.png'),fullPage:false});
+            await page.locator('#year-range').evaluate(e=>{e.value='1946';e.dispatchEvent(new Event('input',{bubbles:true}))});
+            assert.equal(await page.locator('#metric-number').innerText(),'17');
+            assert.equal(await page.locator('#year').innerText(),'1946');
+            await page.locator('#year-range').evaluate(e=>{e.value='2010';e.dispatchEvent(new Event('input',{bubbles:true}))});
+            assert.equal(await page.locator('#metric-number').innerText(),'31');
+            await page.locator('#year-range').evaluate(e=>{e.value='2024';e.dispatchEvent(new Event('input',{bubbles:true}))});
+            assert.equal(await page.locator('#metric-number').innerText(),'59');
+            await page.locator('#play').click();
+            await page.waitForFunction(()=>document.querySelector('#year').textContent==='2025');
+            await page.locator('#play').click().catch(()=>{});
+            await page.locator('[data-mode=present]').click();
+            assert.equal(await page.locator('#place option').count(),54);
+            assert.ok(Number(await page.locator('#earth').getAttribute('data-visible-markers'))>0);
+            await page.locator('#place').selectOption('colombia');
+            assert.match(await page.locator('#detail h2').innerText(),/Colombia/);
+            assert.ok(page.url().includes('conflict=colombia'));
+            await page.evaluate(()=>window.scrollTo(0,0));
+            await page.screenshot({path:path.join(out,label+'-present.png'),fullPage:false});
+            await page.locator('[data-mode=future]').click();
+            await page.locator('[data-scenario="1"]').click();
+            assert.match(await page.locator('#scenario-note').innerText(),/Durable agreements/);
+            assert.equal(await page.locator('#earth').getAttribute('data-visible-markers'),'0');
+            await page.goto('http://127.0.0.1:8766/time.html?mode=past&year=2010',{waitUntil:'domcontentloaded'});
+            await page.waitForFunction(()=>!document.querySelector('#year-range').disabled);
+            assert.equal(await page.locator('#metric-number').innerText(),'31');
+            const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+            assert.ok(overflow<=2,'Horizontal overflow '+overflow);assert.deepEqual(errors,[]);
+            console.log(JSON.stringify({label,globe:'loaded and rotated',observations:80,verifiedYears:{1946:17,2010:31,2024:59,2025:65},registry:53,shareLink:'pass',future:'not a forecast',overflow,errors}));
+            await page.close();
+           }
+          }finally{await browser.close()}
+          JS
+          CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)" SHOTS="$GITHUB_WORKSPACE/the-way/time-shots" node test.mjs
+      - name: Upload actual screenshots
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: the-way-time-visual
+          path: the-way/time-shots
+          retention-days: 2
