@@ -73,11 +73,12 @@ assert.ok(read('process.css').includes('prefers-reduced-motion'),'Reduced motion
 
 // Coherent design contract across all three product views.
 const deskHtml=read('review.html'),design=read('design-system.css');
-const pages=[html,progressHtml,deskHtml],modes=['atlas','ledger','desk'];
+const pulseHtml=read('pulse.html');
+const pages=[html,progressHtml,deskHtml,pulseHtml],modes=['atlas','ledger','desk','pulse'];
 const shells=pages.map((p,i)=>{
  assert.ok(p.includes('class="way-product way-'+modes[i]+'"'));
  assert.ok(p.includes('href="./design-system.css?v=4.0"'));
- assert.ok(p.includes('class="way-heading"'));
+ assert.ok(i===3?p.includes('class="headline"'):p.includes('class="way-heading"'));
  const header=p.match(/<header class="way-shell">[\s\S]*?<\/header>/)?.[0];
  assert.ok(header,'Common shell missing');
  assert.equal((header.match(/aria-current="page"/g)||[]).length,1);
@@ -90,5 +91,15 @@ assert.ok(design.includes('--way-primary:#284eac')&&design.includes('--way-radiu
 assert.ok(!html.includes('<section class="intro">'),'Atlas must start with the actual product');
 assert.ok(!progressHtml.includes('<section class="hero"'),'Ledger must start with the actual product');
 new vm.Script(deskHtml.match(/<script>([\s\S]*?)<\/script>/)[1],{filename:'review-inline.js'});
+
+
+const evidence=JSON.parse(read('evidence-colombia.json'));
+assert.equal(evidence.mode,'live');
+assert.equal(evidence.results.length,3);
+assert.ok(evidence.method.includes('One-off'));
+for(const row of evidence.results){assert.ok(row.proof.ok&&row.extraction.quote.split(/\s+/).length<=25);assert.ok(row.source.url.startsWith('https://'));assert.ok(row.source.processIds.includes('colombia'));assert.ok(row.extraction.uncertainty&&row.critique.reason);}
+assert.ok(deskHtml.includes("evidence-colombia.json")&&deskHtml.includes('unverified_headline_lead'));
+assert.ok(pulseHtml.includes('href="./review.html?batch=colombia"')&&pulseHtml.includes('id="share-page"'));
+new vm.Script(pulseHtml.match(/<script>([\s\S]*?)<\/script>/)[1],{filename:'pulse-inline.js'});
 
 console.log(JSON.stringify({status:'PASS',anchors:rows.length,categories:types,sourceRegistries:Object.keys(sources).length,peaceProcesses:processRows.length,commitments:processRows.reduce((n,r)=>n+r.commitments.length,0),coordinates:'valid',js:'valid',method:'geographic theatre anchors only'}));
