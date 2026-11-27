@@ -76,11 +76,37 @@ async function runLedger(label,width,height){
  console.log(JSON.stringify({label,peaceProcesses:6,sudanSources:await page.locator('#source-list a').count(),timelineItems:3,overflow,errors:errors.slice(0,3)}));
  await page.close();
 }
+async function runDesk(label,width,height){
+ const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
+ const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ await page.goto(new URL('review.html',base).toString(),{waitUntil:'domcontentloaded',timeout:30000});
+ await page.locator('.case-item').first().waitFor({timeout:20000});
+ assert.match(await page.locator('#report-mode').innerText(),/FICTIONAL/);
+ assert.equal(await page.locator('.way-nav a[aria-current="page"]').innerText(),'Research desk');
+ const color=await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--way-primary').trim());
+ assert.equal(color,'#284eac');
+ await page.screenshot({path:path.join(out,label+'-research-desk.png'),fullPage:false});
+ shots.push(label+'-research-desk');
+ await page.locator('#mark-review').click();
+ assert.equal(await page.locator('#decision-state').innerText(),'Further investigation');
+ assert.ok(await page.locator('#export-decisions').isEnabled());
+ await page.locator('#mark-reject').click();
+ assert.equal(await page.locator('#decision-state').innerText(),'Rejected');
+ await page.locator('#demo').click();
+ assert.equal(await page.locator('#decision-state').innerText(),'Not reviewed');
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
+ if(overflow>8)failures.push(label+': Research desk horizontal viewport overflow '+overflow+'px');
+ if(errors.length)failures.push(label+': Research desk browser errors: '+errors.join('; '));
+ console.log(JSON.stringify({label,desk:'pass',overflow,errors}));
+ await page.close();
+}
 try{
  await run('desktop',1440,900);
  await run('mobile',390,844);
  await runLedger('desktop',1440,900);
  await runLedger('mobile',390,844);
+ await runDesk('desktop',1440,900);
+ await runDesk('mobile',390,844);
  console.log(JSON.stringify({screenshots:shots,nonBlockingIssues:failures}));
  if(failures.some(x=>x.includes('horizontal viewport overflow')||x.includes('browser errors')))process.exitCode=1;
 }catch(e){console.error('End-to-end browser QA failed:',e);process.exitCode=1}
