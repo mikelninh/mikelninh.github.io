@@ -84,9 +84,9 @@ async function runDesk(label,width,height){
  assert.match(await page.locator('#report-mode').innerText(),/SOURCE CANDIDATES/);
  assert.equal(await page.locator('.case-item').count(),6);
  assert.match(await page.locator('#run-status').innerText(),/6 exact quote matches/);
- assert.equal(await page.locator('.way-nav a[aria-current="page"]').innerText(),'Research desk');
+ assert.match(await page.locator('.way-nav a[aria-current="page"]').innerText(),/Intelligence/);
  const color=await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--way-primary').trim());
- assert.equal(color,'#284eac');
+ assert.equal(color,'#2449d8');
  await page.screenshot({path:path.join(out,label+'-research-desk.png'),fullPage:false});
  shots.push(label+'-research-desk');
  await page.locator('#mark-review').click();
@@ -111,7 +111,7 @@ async function runPulse(label,width,height){
  await page.goto(new URL('pulse.html',base).toString(),{waitUntil:'domcontentloaded',timeout:30000});
  await page.locator('.headline h1').waitFor();
  assert.match(await page.locator('.headline h1').innerText(),/Follow peace/);
- assert.equal(await page.locator('.way-nav a[aria-current="page"]').innerText(),'World pulse');
+ assert.equal(await page.locator('.way-nav a').count(),5);
  assert.equal(await page.locator('.path-card').count(),3);
  assert.equal(await page.locator('.mini-story').count(),2);
  await page.locator('#quick-search').fill('Colombia');
@@ -171,7 +171,7 @@ async function runExhibition(label,width,height){
  await page.goto(new URL('explore.html',base).toString(),{waitUntil:'domcontentloaded',timeout:30000});
  await page.waitForFunction(()=>document.querySelectorAll('#browse option').length===54);
  assert.equal(await page.locator('#total').innerText(),'53');
- assert.equal(await page.locator('.nav a').count(),3);
+ assert.equal(await page.locator('.way-nav a').count(),5);
  await page.waitForFunction(()=>document.querySelectorAll('#museum-map .leaflet-tile-loaded').length>0,{},{timeout:20000}).catch(()=>{});
  const tiles=await page.locator('#museum-map .leaflet-tile-loaded').count();
  await page.screenshot({path:path.join(out,label+'-exhibition.png'),fullPage:false});shots.push(label+'-exhibition');
@@ -194,7 +194,37 @@ async function runExhibition(label,width,height){
  if(errors.length)failures.push(label+': Exhibition browser errors: '+errors.join('; '));
  console.log(JSON.stringify({label,exhibition:'pass',tiles,overflow,errors}));await page.close();
 }
+async function runConnected(label,width,height){
+ const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
+ const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ await page.goto(new URL('time.html',base).toString(),{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>!document.querySelector('#year-range').disabled&&!document.querySelector('#lens-year').disabled&&document.querySelector('#earth').dataset.ready==='true',{},{timeout:25000});
+ assert.equal(await page.locator('.way-nav a').count(),5);
+ assert.equal(await page.locator('#lens-types .lens-row').count(),4);
+ assert.equal(await page.locator('#lens-total').innerText(),'65 conflicts');
+ await page.locator('#lens-year').selectOption('1946');
+ assert.equal(await page.locator('#metric-number').innerText(),'17');
+ assert.equal(await page.locator('#lens-total').innerText(),'17 conflicts');
+ await page.locator('#lens-year').selectOption('2025');
+ assert.equal(await page.locator('#lens-location-count').innerText(),'40 labels');
+ await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(out,label+'-unified-time.png'),fullPage:false});shots.push(label+'-unified-time');
+ await page.locator('#history-lens').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,label+'-historical-lens.png'),fullPage:false});shots.push(label+'-historical-lens');
+ for(const [name,route] of [['Explore','explore.html'],['Understand','stories.html'],['Peace Lab','progress.html'],['Intelligence','review.html']]){
+  await page.locator('.way-nav a').filter({hasText:name}).click();
+  assert.ok(page.url().includes(route));
+  assert.match(await page.locator('.way-nav a[aria-current="page"]').innerText(),new RegExp(name));
+  assert.equal(await page.locator('.way-nav a').count(),5);
+  assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--way-paper').trim()),'#f5f2eb');
+  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+  if(overflow>8)failures.push(label+': '+route+' horizontal viewport overflow '+overflow+'px');
+ }
+ assert.deepEqual(errors,[]);
+ console.log(JSON.stringify({label,connectedNavigation:'pass',historyLens:'pass',errors}));
+ await page.close();
+}
 try{
+ await runConnected('desktop',1440,900);
+ await runConnected('mobile',390,844);
  await runExhibition('desktop',1440,900);
  await runExhibition('mobile',390,844);
  await run('desktop',1440,900);
