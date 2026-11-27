@@ -255,7 +255,45 @@ async function runConnected(label,width,height){
  console.log(JSON.stringify({label,connectedNavigation:'pass',historyLens:'pass',errors}));
  await page.close();
 }
+async function runScience(label,width,height){
+ const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1,acceptDownloads:true});const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ await page.goto(new URL('science.html',base).href,{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>document.querySelector('#country-chart').dataset.ready==='true'&&document.querySelector('#action-entries').dataset.ready==='true'&&document.querySelectorAll('.scenario-card').length===4&&document.querySelector('#conflict-values').textContent.includes('Colombia'),{},{timeout:20000});
+ assert.equal(await page.locator('#data-receipt').innerText(),'921 observed values');
+ assert.equal(await page.locator('#a-value').innerText(),'77.9');assert.equal(await page.locator('#b-value').innerText(),'62.3');
+ await page.screenshot({path:path.join(out,label+'-science.png'),fullPage:false});shots.push(label+'-science');
+ await page.locator('#compare').scrollIntoViewIfNeeded();
+ await page.screenshot({path:path.join(out,label+'-compare.png'),fullPage:false});shots.push(label+'-compare');
+ await page.locator('#indicator').selectOption('SE.SEC.ENRR');
+ assert.equal(await page.locator('#a-value').innerText(),'—');
+ assert.equal(await page.locator('#compare-difference').innerText(),'—');
+ await page.locator('#indicator').selectOption('SH.DYN.MORT');
+ assert.equal(await page.locator('#a-value').innerText(),'11.5');
+ assert.equal(await page.locator('#b-value').innerText(),'86.4');
+ const download=page.waitForEvent('download');await page.locator('#compare-export').click();const d=await download;const csv=fs.readFileSync(await d.path(),'utf8');assert.ok(csv.includes('COL,2024,SH.DYN.MORT,11.5'));
+ await page.goto(page.url(),{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>document.querySelector('#country-chart').dataset.ready==='true');
+ assert.equal(await page.locator('#indicator').inputValue(),'SH.DYN.MORT');
+ assert.equal(await page.locator('#a-value').innerText(),'11.5');
+ await page.locator('#budget').fill('120000');assert.match(await page.locator('#allocation-0').innerText(),/30,000/);
+ await page.locator('#weight-0').evaluate(e=>{e.value=75;e.dispatchEvent(new Event('input',{bubbles:true}))});
+ assert.match(await page.locator('#allocation-0').innerText(),/60,000/);
+ await page.locator('#scenario').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,label+'-scenario.png'),fullPage:false});shots.push(label+'-scenario');
+ await page.locator('#apply-plan').click();assert.match(await page.locator('#plan-allocation').innerText(),/120,000/);
+ await page.locator('#plan-outcome').fill('Fictional test outcome');
+ await page.locator('#plan-baseline').fill('10');await page.locator('#plan-followup').fill('15');
+ assert.match(await page.locator('#plan-result').innerText(),/Entered change: 5/);
+ const exported=page.waitForEvent('download');await page.locator('#plan-form button[type=submit]').click();const file=await exported;const p=JSON.parse(fs.readFileSync(await file.path(),'utf8'));
+ assert.equal(p.descriptiveChange,5);assert.equal(p.allocation.budget,120000);assert.equal(p.allocation.items.reduce((a,x)=>a+x.amount,0),120000);
+ await page.locator('#action').scrollIntoViewIfNeeded();assert.equal(await page.locator('.action-item').count(),3);await page.screenshot({path:path.join(out,label+'-action.png'),fullPage:false});shots.push(label+'-action');
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);assert.ok(overflow<=2,'Science overflow '+overflow);assert.deepEqual(errors,[]);
+ await page.goto(new URL('review.html#benchmark',base).href,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>document.querySelector('#benchmark').dataset.ready==='true');
+ assert.equal(await page.locator('#bench-raw').innerText(),'8/12');assert.equal(await page.locator('#bench-coverage').innerText(),'0/4');
+ await page.locator('#benchmark').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,label+'-benchmark.png'),fullPage:false});shots.push(label+'-benchmark');
+ console.log(JSON.stringify({label,science:'pass',observations:921,csv:'pass',planExport:'pass',initiativeLinks:3,benchmark:'pass',overflow,errors}));await page.close();
+}
 try{
+ await runScience('desktop',1440,900);
+ await runScience('mobile',390,844);
  await runConnected('desktop',1440,900);
  await runConnected('mobile',390,844);
  await runExhibition('desktop',1440,900);
