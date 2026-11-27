@@ -1,0 +1,2 @@
+/* Share helper for sections without their own contextual share handler. */
+(()=>{'use strict';const button=document.querySelector('[data-global-share]');if(!button)return;button.addEventListener('click',async()=>{const url=location.href;const status=document.querySelector('.share-state');try{if(navigator.share){await navigator.share({title:document.title,url});return}await navigator.clipboard.writeText(url);status.textContent='Link copied'}catch(e){if(e.name==='AbortError')return;status.textContent=url}status.hidden=false;setTimeout(()=>status.hidden=true,3500)})})();
