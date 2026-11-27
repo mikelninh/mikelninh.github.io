@@ -2,7 +2,7 @@
   "project": "THE WAY",
   "mode": "live",
   "generatedAt": "2026-11-27",
-  "method": "One-off AI-assisted source retrieval and deterministic exact-string match on returned text; editorial critique, not an independent LLM or expert review. No automatic claims or publication approval.",
+  "method": "One-off AI-assisted source retrieval and deterministic exact-string match on returned text; editorial critique, not an independent LLM or expert review. UN and Kroc reports. No automatic publication approval.",
   "results": [
     {
       "status": "candidate_for_human_review",
@@ -80,6 +80,84 @@
       "critique": {
         "decision": "allow_human_review",
         "reason": "Check denominator, definition, reporting period and civilian protection indicators before making comparative claims."
+      }
+    },
+    {
+      "status": "candidate_for_human_review",
+      "source": {
+        "title": "Five-year assessment · October 2021",
+        "url": "https://kroc.nd.edu/news-events/news/kroc-institute-releases-special-report-on-five-years-of-colombian-peace-agreement-implementation/",
+        "source": "Kroc Institute / Peace Accords Matrix",
+        "publishedAt": "2021-12-07",
+        "bodySha256": null,
+        "processIds": [
+          "colombia"
+        ]
+      },
+      "extraction": {
+        "claim": "Kroc reported 30% of 578 stipulations fully implemented as of October 2021.",
+        "quote": "30 percent of the 578 provisions within the agreement have been completed",
+        "uncertainty": "Rounded percentage of stipulations, not people protected or a measure of peace."
+      },
+      "proof": {
+        "ok": true,
+        "errors": []
+      },
+      "critique": {
+        "decision": "allow_human_review",
+        "reason": "Compare with later Kroc assessments using the same denominator; check rounding and measurement definitions."
+      }
+    },
+    {
+      "status": "candidate_for_human_review",
+      "source": {
+        "title": "February 2024 implementation snapshot",
+        "url": "https://kroc.nd.edu/news-events/news/engaging-with-influencers-peace-accords-matrix-visits-washington-d-c/",
+        "source": "Kroc Institute / Peace Accords Matrix",
+        "publishedAt": "2024-05-10",
+        "bodySha256": null,
+        "processIds": [
+          "colombia"
+        ]
+      },
+      "extraction": {
+        "claim": "Kroc reported 32% of the 578 commitments fully implemented in February 2024.",
+        "quote": "32 percent had completed implementation",
+        "uncertainty": "Reported percentages are rounded; category totals need not equal exactly 100%."
+      },
+      "proof": {
+        "ok": true,
+        "errors": []
+      },
+      "critique": {
+        "decision": "allow_human_review",
+        "reason": "Do not infer continuous annual data or a linear trend between dated snapshots."
+      }
+    },
+    {
+      "status": "candidate_for_human_review",
+      "source": {
+        "title": "November 2025 implementation snapshot",
+        "url": "https://kroc.nd.edu/news-events/news/navigating-the-shift-new-kroc-institute-report-maps-the-future-of-colombian-peace-amidst-pivotal-political-transition/",
+        "source": "Kroc Institute / Peace Accords Matrix",
+        "publishedAt": "2026-05-13",
+        "bodySha256": null,
+        "processIds": [
+          "colombia"
+        ]
+      },
+      "extraction": {
+        "claim": "Kroc's tenth report places full implementation at 36% by November 2025.",
+        "quote": "36 percent of the 2016 Final Accord’s 578 stipulations have reached full implementation",
+        "uncertainty": "This is the latest of the three selected observations, not a November 2026 estimate."
+      },
+      "proof": {
+        "ok": true,
+        "errors": []
+      },
+      "critique": {
+        "decision": "allow_human_review",
+        "reason": "Full implementation of provisions is not equivalent to civilian security. Gender and ethnic measures require separate examination."
       }
     }
   ]
