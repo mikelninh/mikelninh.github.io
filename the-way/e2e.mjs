@@ -81,7 +81,9 @@ async function runDesk(label,width,height){
  const errors=[];page.on('pageerror',e=>errors.push(String(e)));
  await page.goto(new URL('review.html',base).toString(),{waitUntil:'domcontentloaded',timeout:30000});
  await page.locator('.case-item').first().waitFor({timeout:20000});
- assert.match(await page.locator('#report-mode').innerText(),/FICTIONAL/);
+ assert.match(await page.locator('#report-mode').innerText(),/SOURCE CANDIDATES/);
+ assert.equal(await page.locator('.case-item').count(),3);
+ assert.match(await page.locator('#run-status').innerText(),/3 exact quote matches/);
  assert.equal(await page.locator('.way-nav a[aria-current="page"]').innerText(),'Research desk');
  const color=await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--way-primary').trim());
  assert.equal(color,'#284eac');
@@ -94,10 +96,32 @@ async function runDesk(label,width,height){
  assert.equal(await page.locator('#decision-state').innerText(),'Rejected');
  await page.locator('#demo').click();
  assert.equal(await page.locator('#decision-state').innerText(),'Not reviewed');
+ assert.match(await page.locator('#report-mode').innerText(),/FICTIONAL/);
+ await page.locator('#load-real').click();
+ await page.waitForFunction(()=>document.querySelectorAll('.case-item').length===3);
  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
  if(overflow>8)failures.push(label+': Research desk horizontal viewport overflow '+overflow+'px');
  if(errors.length)failures.push(label+': Research desk browser errors: '+errors.join('; '));
  console.log(JSON.stringify({label,desk:'pass',overflow,errors}));
+ await page.close();
+}
+async function runPulse(label,width,height){
+ const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
+ const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ await page.goto(new URL('pulse.html',base).toString(),{waitUntil:'domcontentloaded',timeout:30000});
+ await page.locator('.headline h1').waitFor();
+ assert.match(await page.locator('.headline h1').innerText(),/Follow peace/);
+ assert.equal(await page.locator('.way-nav a[aria-current="page"]').innerText(),'World pulse');
+ assert.equal(await page.locator('.path-card').count(),3);
+ assert.equal(await page.locator('.mini-story').count(),2);
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
+ if(overflow>8)failures.push(label+': World Pulse horizontal viewport overflow '+overflow+'px');
+ await page.screenshot({path:path.join(out,label+'-world-pulse.png'),fullPage:false});shots.push(label+'-world-pulse');
+ await page.locator('.research-banner a').click();
+ await page.waitForFunction(()=>document.querySelectorAll('.case-item').length===3);
+ assert.match(await page.locator('#report-mode').innerText(),/SOURCE CANDIDATES/);
+ if(errors.length)failures.push(label+': World Pulse browser errors: '+errors.join('; '));
+ console.log(JSON.stringify({label,pulse:'pass',overflow,errors}));
  await page.close();
 }
 try{
@@ -107,6 +131,8 @@ try{
  await runLedger('mobile',390,844);
  await runDesk('desktop',1440,900);
  await runDesk('mobile',390,844);
+ await runPulse('desktop',1440,900);
+ await runPulse('mobile',390,844);
  console.log(JSON.stringify({screenshots:shots,nonBlockingIssues:failures}));
  if(failures.some(x=>x.includes('horizontal viewport overflow')||x.includes('browser errors')))process.exitCode=1;
 }catch(e){console.error('End-to-end browser QA failed:',e);process.exitCode=1}
