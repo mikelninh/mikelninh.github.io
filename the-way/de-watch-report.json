@@ -1,0 +1,122 @@
+{
+  "checkedAt": "2026-11-27T20:06:56.595106+00:00",
+  "sources": [
+    {
+      "name": "Bevölkerung",
+      "url": "https://www.statistikportal.de/de/bevoelkerung/flaeche-und-bevoelkerung",
+      "ok": true,
+      "needsReview": true,
+      "textSha256": "ac372d0f8eab321d3627752e690eead3c1f68b8254c57881f0f88c14add184b1",
+      "markersFound": [
+        "Baden-Württemberg",
+        "2025"
+      ],
+      "markersExpected": [
+        "Baden-Württemberg",
+        "2025"
+      ],
+      "changedSincePublished": null,
+      "note": "Initial baseline or changed source requires review; marker presence is not full data validation."
+    },
+    {
+      "name": "Wahlbeteiligung",
+      "url": "https://www.statistikportal.de/de/wahlen/bundestagswahl",
+      "ok": true,
+      "needsReview": true,
+      "textSha256": "e4f6f3979f62964205899efce09eae1ffd3dbedf8e3c2ceaec22b153f187ec17",
+      "markersFound": [
+        "Berlin",
+        "2025"
+      ],
+      "markersExpected": [
+        "Berlin",
+        "2025"
+      ],
+      "changedSincePublished": null,
+      "note": "Initial baseline or changed source requires review; marker presence is not full data validation."
+    },
+    {
+      "name": "Armutsgefährdung",
+      "url": "https://www.statistikportal.de/de/nachhaltigkeit/ergebnisse/ziel-1-keine-armut/armutsgefaehrdungsquote",
+      "ok": true,
+      "needsReview": true,
+      "textSha256": "b6800f6d004766579581420a420eb2d901103315a478241344ca1c382bce8e60",
+      "markersFound": [
+        "Landesmedian",
+        "2024"
+      ],
+      "markersExpected": [
+        "Landesmedian",
+        "2024"
+      ],
+      "changedSincePublished": null,
+      "note": "Initial baseline or changed source requires review; marker presence is not full data validation."
+    },
+    {
+      "name": "Lebenserwartung",
+      "url": "https://www.statistikportal.de/de/nachhaltigkeit/ergebnisse/ziel-3-gesundheit-und-wohlergehen/lebenserwartung-bei-geburt",
+      "ok": true,
+      "needsReview": true,
+      "textSha256": "08b11d4384b426f579d2a48ae6b9714338398ae9631f9057939635f3f8165027",
+      "markersFound": [
+        "2022/24",
+        "Berlin"
+      ],
+      "markersExpected": [
+        "2022/24",
+        "Berlin"
+      ],
+      "changedSincePublished": null,
+      "note": "Initial baseline or changed source requires review; marker presence is not full data validation."
+    },
+    {
+      "name": "Berlin Bezirke",
+      "url": "https://www.statistik-berlin-brandenburg.de/presse/2026/73-bevoelkerungsfortschreibung-2025-berlin/",
+      "ok": true,
+      "needsReview": true,
+      "textSha256": "b4a5c99fab1a4a887b692e8e5e38256a65008d0131d828e1a4a29b1dc0cc3b60",
+      "markersFound": [
+        "Treptow-Köpenick",
+        "15.312"
+      ],
+      "markersExpected": [
+        "Treptow-Köpenick",
+        "15.312"
+      ],
+      "changedSincePublished": null,
+      "note": "Initial baseline or changed source requires review; marker presence is not full data validation."
+    },
+    {
+      "name": "MiLoV5",
+      "url": "https://www.gesetze-im-internet.de/milov5/__1.html",
+      "ok": false,
+      "needsReview": true,
+      "error": "URLError"
+    },
+    {
+      "name": "RegG",
+      "url": "https://www.gesetze-im-internet.de/regg/BJNR239500993.html",
+      "ok": false,
+      "needsReview": true,
+      "error": "URLError"
+    },
+    {
+      "name": "Kiezfonds",
+      "url": "https://www.berlin.de/rathausblock-fk/mitmachen/kiezfonds/",
+      "ok": true,
+      "needsReview": true,
+      "textSha256": "bee2b1b68ae295b7fc3abf263d3e3fb2e748969a313465527ba4179d664cd365",
+      "markersFound": [
+        "Kiezfonds"
+      ],
+      "markersExpected": [
+        "Kiezfonds"
+      ],
+      "changedSincePublished": null,
+      "note": "Initial baseline or changed source requires review; marker presence is not full data validation."
+    }
+  ],
+  "publicationApproved": false,
+  "method": "Read-only retrieval, visible text fingerprint and marker checks. Comparison against last manually published baseline, not a full parliamentary feed or automatic data ingestion.",
+  "runUrl": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/46061299518"
+}
