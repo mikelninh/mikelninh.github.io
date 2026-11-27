@@ -142,20 +142,23 @@ function renderMarkers(){
  }
  redrawCluster([...bucket.values()].filter(x=>x.length));
 }
+function fitWorld(animate=false){
+ if(!map)return;
+ map.fitBounds([[-58,-179],[80,179]],{padding:[12,12],animate,maxZoom:2});
+}
 function initializeMap(){
  if(!window.L || !L.map){mapFallback();return}
  try{
-  map=L.map("map",{zoomControl:true,scrollWheelZoom:true,minZoom:1.5,maxZoom:12,worldCopyJump:false,preferCanvas:true});
+  map=L.map("map",{zoomControl:true,scrollWheelZoom:true,minZoom:0,maxZoom:12,zoomSnap:.25,zoomDelta:.75,worldCopyJump:false,preferCanvas:true});
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{
    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',
-   maxZoom:19,detectRetina:false
+   maxZoom:19,detectRetina:false,noWrap:true
   }).addTo(map);
-  const z=window.innerWidth<650?1.5:window.innerWidth<1120?1.8:2;
-  map.setView([18,14],z,{animate:false});
+  fitWorld();
   markerLayer=L.layerGroup().addTo(map);
   map.on("zoomend moveend",renderMarkers);
   renderMarkers();
-  setTimeout(()=>map.invalidateSize(),120);
+  setTimeout(()=>{map.invalidateSize();if(!state.selected)fitWorld();},120);
  }catch(e){mapFallback()}
 }
 function setFilter(kind){
@@ -210,7 +213,7 @@ function init(){
  $("reset-filters").addEventListener("click",()=>{
    state.q="";state.region="all";$("search").value="";$("region").value="all";setFilter("all");
  });
- $("zoom-world").addEventListener("click",()=>map&&map.setView([18,14],window.innerWidth<650?1.5:2,{animate:true}));
+ $("zoom-world").addEventListener("click",()=>fitWorld(true));
  $("map-info").addEventListener("click",()=>{$("map-note").hidden=false;notify("Pins mark broad conflict regions, never verified incidents")});
  $("map-note-close").addEventListener("click",()=>{$("map-note").hidden=true});
  $("download-json").addEventListener("click",downloadRegistry);
