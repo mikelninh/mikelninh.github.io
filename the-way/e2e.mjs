@@ -321,7 +321,30 @@ async function runGermany(label,width,height){
  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);assert.ok(overflow<=2,'Germany overflow '+overflow);assert.deepEqual(errors,[]);
  console.log(JSON.stringify({label,germany:'pass',indicators:8,geography:'loaded',missingValue:'pass',csv:'pass',planExport:'pass',overflow,errors}));await page.close();
 }
+async function runDeLab(label,width,height){
+ const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1,acceptDownloads:true});const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ await page.goto(new URL('de-lab.html',base).href,{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>document.querySelector('#atlas').dataset.ready==='true'&&document.querySelector('#state-map').dataset.ready==='true',{},{timeout:25000});
+ assert.equal(await page.locator('#state-map path').count(),16);assert.equal(await page.locator('#state-value').innerText(),'80,3');
+ await page.screenshot({path:path.join(out,label+'-de-lab.png'),fullPage:false});shots.push(label+'-de-lab');
+ await page.locator('[data-metric="poverty"]').click();assert.equal(await page.locator('#state-value').innerText(),'19,1');await page.locator('#state-select').selectOption('BY');assert.equal(await page.locator('#state-value').innerText(),'15,1');
+ const csv=page.waitForEvent('download');await page.locator('#atlas-export').click();const content=fs.readFileSync(await (await csv).path(),'utf8');assert.equal(content.split('\n').length,81);assert.ok(content.includes('BE,poverty,2024,19.1'));
+ await page.locator('[data-law="ticket"]').click();assert.match(await page.locator('#law-detail').innerText(),/2030/);
+ await page.locator('#solution-search').fill('Kiezkasse');assert.equal(await page.locator('#solutions .lab-record').count(),1);
+ assert.equal(await page.locator('#districts .district-row').count(),12);
+ await page.locator('#future-state').selectOption('BE');await page.locator('#future-target').fill('10');assert.equal(await page.locator('#future-rate').innerText(),'0,35 PP/Jahr');
+ await page.locator('#future-plan').click();assert.equal(await page.locator('#project-baseline').inputValue(),'19.1');
+ for(const k of ['step','safety'])await page.locator('#project-'+k).fill('Fiktiver Browsertest');
+ await page.locator('#project-followup').fill('18.1');assert.match(await page.locator('#project-result').innerText(),/-1/);
+ await page.locator('#project-form button[type=submit]').click();await page.reload();assert.equal(await page.locator('#project-step').inputValue(),'Fiktiver Browsertest');
+ const json=page.waitForEvent('download');await page.locator('#project-export').click();const p=JSON.parse(fs.readFileSync(await (await json).path(),'utf8'));assert.ok(Math.abs(p.difference+1)<1e-8);
+ await page.locator('#project-clear').click();assert.equal(await page.locator('#project-goal').inputValue(),'');
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);assert.ok(overflow<=2,'DE Lab overflow '+overflow);assert.deepEqual(errors,[]);
+ console.log(JSON.stringify({label,deLab:'pass',states:16,values:80,districts:12,law:'pass',scenario:'pass',localPersistence:'pass',exports:'pass',overflow,errors}));await page.close();
+}
 try{
+ await runDeLab('desktop',1440,900);
+ await runDeLab('mobile',390,844);
  await runGermany('desktop',1440,900);
  await runGermany('mobile',390,844);
  await runScience('desktop',1440,900);
