@@ -64,7 +64,7 @@ async function wellbeing(){
   }
   function select(i){index=i;point=p.indicators[index].values.length-1;range.max=point;range.value=point;range.disabled=false;[...controls.children].forEach((b,j)=>b.setAttribute('aria-pressed',String(j===i)));draw()}
   p.indicators.forEach((item,i)=>{const b=elem('button',item.name);b.type='button';b.onclick=()=>select(i);controls.append(b)});
-  range.oninput=()=>{point=Number(range.value);draw()};$('wdi-status').textContent='Three global indicators · UN and World Bank series via Our World in Data · retrieved '+p.retrievedAt.slice(0,10)+'.';select(0);
+  range.oninput=()=>{point=Number(range.value);draw()};$('wdi-status').textContent='Three global indicators · World Bank World Development Indicators · retrieved '+p.retrievedAt.slice(0,10)+'.';select(0);
  }catch(e){$('wdi-status').textContent='Wellbeing data could not be loaded. No estimates substituted.'}
 }
 historicalMap();wellbeing();
