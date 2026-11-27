@@ -303,7 +303,27 @@ async function runScience(label,width,height){
  await page.locator('#benchmark').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,label+'-benchmark.png'),fullPage:false});shots.push(label+'-benchmark');
  console.log(JSON.stringify({label,science:'pass',observations:921,csv:'pass',planExport:'pass',initiativeLinks:3,benchmark:'pass',overflow,errors}));await page.close();
 }
+async function runGermany(label,width,height){
+ const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1,acceptDownloads:true});const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ await page.goto(new URL('deutschland.html',base).href,{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>document.querySelector('#de-chart').dataset.ready==='true'&&document.querySelector('#de-map').dataset.ready==='true',{},{timeout:20000});
+ assert.equal(await page.locator('#de-indicators button').count(),8);assert.equal(await page.locator('#de-value').innerText(),'80,8');
+ await page.screenshot({path:path.join(out,label+'-germany.png'),fullPage:false});shots.push(label+'-germany');
+ await page.locator('.de-event button').filter({hasText:'1989'}).click();assert.match(await page.locator('#history-detail').innerText(),/gewaltfreier Protest/);
+ await page.locator('[data-code="VC.IHR.PSRC.P5"]').click();assert.equal(await page.locator('#de-year-label').innerText(),'2023');assert.equal(await page.locator('#de-value').innerText(),'0,91');
+ await page.locator('#de-year').evaluate(e=>{e.value='2024';e.dispatchEvent(new Event('input',{bubbles:true}))});assert.equal(await page.locator('#de-value').innerText(),'—');
+ await page.locator('[data-code="MS.MIL.XPND.GD.ZS"]').click();assert.equal(await page.locator('#de-value').innerText(),'1,84');
+ await page.locator('#daten').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,label+'-germany-data.png'),fullPage:false});shots.push(label+'-germany-data');
+ const dl=page.waitForEvent('download');await page.locator('#de-export').click();const d=await dl;assert.ok(fs.readFileSync(await d.path(),'utf8').includes('DEU,2024,MS.MIL.XPND.GD.ZS,1.8385782299'));
+ await page.goto(page.url(),{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>document.querySelector('#de-chart').dataset.ready==='true');assert.equal(await page.locator('#de-value').innerText(),'1,84');
+ for(const id of ['de-goal','de-step','de-measure','de-safety'])await page.locator('#'+id).fill('Fiktiver Browsertest');
+ const pl=page.waitForEvent('download');await page.locator('#de-plan button[type=submit]').click();const p=JSON.parse(fs.readFileSync(await (await pl).path(),'utf8'));assert.equal(p.ziel,'Fiktiver Browsertest');
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);assert.ok(overflow<=2,'Germany overflow '+overflow);assert.deepEqual(errors,[]);
+ console.log(JSON.stringify({label,germany:'pass',indicators:8,geography:'loaded',missingValue:'pass',csv:'pass',planExport:'pass',overflow,errors}));await page.close();
+}
 try{
+ await runGermany('desktop',1440,900);
+ await runGermany('mobile',390,844);
  await runScience('desktop',1440,900);
  await runScience('mobile',390,844);
  await runConnected('desktop',1440,900);
