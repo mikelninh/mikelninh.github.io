@@ -1,0 +1,29 @@
+name: THE WAY wellbeing data
+on:
+  push:
+    paths:
+      - .github/workflows/the-way-wellbeing.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Fetch official World Development Indicators
+        run: |
+          python - <<'PY'
+          import json, urllib.request, datetime, hashlib, math
+          result={'source':'World Bank World Development Indicators','geography':'WLD','retrievedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'indicators':[]}
+          for code,name,unit in [('SP.DYN.LE00.IN','Life expectancy at birth','years'),('SH.DYN.MORT','Under-five mortality','per 1,000 live births'),('EG.ELC.ACCS.ZS','Access to electricity','% of population')]:
+              url='https://api.worldbank.org/v2/country/WLD/indicator/'+code+'?format=json&date=1960:2025&per_page=100'
+              with urllib.request.urlopen(url,timeout=30) as r: raw=r.read(2_000_000)
+              meta,rows=json.loads(raw)
+              vals=sorted([[int(r['date']),r['value']] for r in rows if r['value'] is not None])
+              assert len(vals)>20 and all(math.isfinite(v) and v>=0 for y,v in vals)
+              assert len({y for y,v in vals})==len(vals) and all(1960<=y<=2025 for y,v in vals)
+              if code=='EG.ELC.ACCS.ZS': assert all(v<=100 for y,v in vals)
+              result['indicators'].append({'code':code,'name':name,'unit':unit,'api':url,'source':'https://data.worldbank.org/indicator/'+code+'?locations=1W','lastUpdated':meta.get('lastupdated'),'sha256':hashlib.sha256(raw).hexdigest(),'values':vals})
+          print('WDI_RECEIPT '+json.dumps(result,separators=(',',':')))
+          PY
