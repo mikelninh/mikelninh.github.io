@@ -75,5 +75,22 @@
       "status": "rejected_or_uncertain"
     }
   ],
-  "runUrl": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/46055108256"
+  "runUrl": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/46055108256",
+  "audit": {
+    "reviewed": "2026-11-27",
+    "reviewer": "ChatGPT-assisted editorial comparison with the original Kroc sources; not human expert approval",
+    "cases": [
+      {
+        "index": 0,
+        "judgment": "incorrect",
+        "note": "The model substituted organizations for peace-agreement stipulations. The skeptic allowed this unsupported substitution through."
+      },
+      {
+        "index": 1,
+        "judgment": "needs clarification",
+        "note": "The source reports 36% of 578 stipulations reached full implementation. The model's phrasing is awkward but preserves the percentage and denominator; the skeptic rejected it without an explanation."
+      }
+    ],
+    "conclusion": "The technical mission succeeded; the semantic evaluation failed. Keep the raw report as evidence, never promote either result to a verified public claim."
+  }
 }
