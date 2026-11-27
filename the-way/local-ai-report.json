@@ -1,0 +1,79 @@
+{
+  "project": "THE WAY",
+  "mode": "live",
+  "generatedAt": "2026-11-27T19:13:37.561427+00:00",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "revision": "a8b602d9dafd3a75d382e62757d83d89fca3be54",
+  "modelCalls": 4,
+  "publicationApproved": false,
+  "method": "CPU-hosted model: bounded reader and second-pass skeptic on freshly retrieved public sources. Both passes use the same small model; not independent expert review. All candidates require human review.",
+  "results": [
+    {
+      "source": {
+        "title": "February 2024 implementation snapshot",
+        "url": "https://kroc.nd.edu/news-events/news/engaging-with-influencers-peace-accords-matrix-visits-washington-d-c/",
+        "source": "Kroc Institute / Peace Accords Matrix",
+        "publishedAt": "2024-05-10",
+        "bodySha256": "f0b4458c8a17ed995ebff9a3e58905671e5b9ae5e445ebbac134f07837f4a533",
+        "processIds": [
+          "colombia"
+        ]
+      },
+      "extraction": {
+        "claim": "32% of organizations have completed their implementation.",
+        "quote": "32 percent had completed implementation",
+        "uncertainty": "Small-model paraphrase; exact quote matched but entailment and context require human review."
+      },
+      "proof": {
+        "ok": true,
+        "errors": []
+      },
+      "critique": {
+        "decision": "allow_human_review",
+        "reason": "REVIEW\n\nThe proposed statement is supported by the context provided. It accurately reflects the findings of the study on territorial implementation agendas, which indicate that 32% of organizations have completed their implementation. The statement aligns closely"
+      },
+      "status": "candidate_for_human_review"
+    },
+    {
+      "source": {
+        "title": "November 2025 implementation snapshot",
+        "url": "https://kroc.nd.edu/news-events/news/navigating-the-shift-new-kroc-institute-report-maps-the-future-of-colombian-peace-amidst-pivotal-political-transition/",
+        "source": "Kroc Institute / Peace Accords Matrix",
+        "publishedAt": "2026-05-13",
+        "bodySha256": "c610866710fb88418245d4ed9ac8d7e0a4bb267ffb3d007ec8a31ce9874add2c",
+        "processIds": [
+          "colombia"
+        ]
+      },
+      "extraction": {
+        "claim": "Full implementation of 578 stipulations has reached 36%.",
+        "quote": "36 percent of the 2016 Final Accord’s 578 stipulations have reached full implementation",
+        "uncertainty": "Small-model paraphrase; exact quote matched but entailment and context require human review."
+      },
+      "proof": {
+        "ok": true,
+        "errors": []
+      },
+      "critique": {
+        "decision": "reject",
+        "reason": "REJECT"
+      },
+      "status": "rejected_or_uncertain"
+    }
+  ],
+  "events": [
+    {
+      "stage": "reader_and_skeptic",
+      "at": "2026-11-27T19:13:47.917001+00:00",
+      "source": "February 2024 implementation snapshot",
+      "status": "candidate_for_human_review"
+    },
+    {
+      "stage": "reader_and_skeptic",
+      "at": "2026-11-27T19:13:52.567049+00:00",
+      "source": "November 2025 implementation snapshot",
+      "status": "rejected_or_uncertain"
+    }
+  ],
+  "runUrl": "https://github.com/mikelninh/mikelninh.github.io/actions/runs/46055108256"
+}
