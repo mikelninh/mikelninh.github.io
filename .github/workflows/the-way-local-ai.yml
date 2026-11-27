@@ -21,6 +21,9 @@ jobs:
       SCHEDULED: ${{ github.event_name == 'schedule' }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
       - name: Install CPU inference dependencies
         run: |
           python -m pip install --quiet --index-url https://download.pytorch.org/whl/cpu torch==2.6.0
