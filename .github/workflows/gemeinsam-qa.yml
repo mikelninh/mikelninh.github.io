@@ -1,0 +1,27 @@
+name: Gemeinsam portfolio QA
+on:
+  push:
+    paths:
+      - 'gemeinsam/**'
+      - 'tests/gemeinsam.cjs'
+      - '.github/workflows/gemeinsam-qa.yml'
+  workflow_dispatch:
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright
+      - run: npx playwright install --with-deps chromium
+      - run: |
+          python3 -m http.server 8765 > /tmp/gemeinsam-server.log 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8765/gemeinsam/ >/dev/null && break; sleep 1; done
+          node tests/gemeinsam.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gemeinsam-qa
+          path: gemeinsam-qa/
