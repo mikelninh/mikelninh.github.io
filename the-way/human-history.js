@@ -51,7 +51,7 @@ async function wellbeing(){
   function draw(){
    const item=p.indicators[index],values=item.values;const [yr,v]=values[point];const first=values[0],last=values[values.length-1];
    $('wdi-name').textContent=item.name;$('wdi-unit').textContent=item.unit;$('wdi-value').textContent=v.toFixed(1);$('wdi-year').textContent=yr;$('wdi-source').href=item.source;
-   $('wdi-detail').textContent=first[0]+' → '+last[0]+': '+first[1].toFixed(1)+' → '+last[1].toFixed(1)+' '+item.unit+'. '+values.length+' original annual observations. Source last updated: '+(item.lastUpdated||'not specified')+'.';
+   $('wdi-detail').textContent=first[0]+' → '+last[0]+': '+first[1].toFixed(1)+' → '+last[1].toFixed(1)+' '+item.unit+'. '+values.length+' original annual observations. Provider: '+item.provider+'.';
    const svg=d3.select('#wellbeing-chart');svg.selectAll('*').remove();const x=d3.scaleLinear().domain([first[0],last[0]]).range([52,734]), y=d3.scaleLinear().domain([0,Math.max(...values.map(r=>r[1]))*1.08]).nice().range([238,22]);
    const ticks=y.ticks(4);svg.append('g').selectAll('line').data(ticks).join('line').attr('x1',52).attr('x2',734).attr('y1',y).attr('y2',y).attr('stroke','#dfdfd7');svg.append('g').selectAll('text').data(ticks).join('text').attr('x',44).attr('y',d=>y(d)+4).attr('text-anchor','end').attr('font-size',11).attr('fill','#646973').text(d=>d);
    // No line across missing years: each continuous observed segment is separate.
@@ -64,8 +64,8 @@ async function wellbeing(){
   }
   function select(i){index=i;point=p.indicators[index].values.length-1;range.max=point;range.value=point;range.disabled=false;[...controls.children].forEach((b,j)=>b.setAttribute('aria-pressed',String(j===i)));draw()}
   p.indicators.forEach((item,i)=>{const b=elem('button',item.name);b.type='button';b.onclick=()=>select(i);controls.append(b)});
-  range.oninput=()=>{point=Number(range.value);draw()};$('wdi-status').textContent='Three global indicators · official World Development Indicators · retrieved '+p.retrievedAt.slice(0,10)+'.';select(0);
- }catch(e){$('wdi-status').textContent='World Bank data could not be loaded. No estimates substituted.'}
+  range.oninput=()=>{point=Number(range.value);draw()};$('wdi-status').textContent='Three global indicators · UN and World Bank series via Our World in Data · retrieved '+p.retrievedAt.slice(0,10)+'.';select(0);
+ }catch(e){$('wdi-status').textContent='Wellbeing data could not be loaded. No estimates substituted.'}
 }
 historicalMap();wellbeing();
 })();
