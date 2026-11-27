@@ -165,7 +165,38 @@ async function runStories(label,width,height){
  console.log(JSON.stringify({label,stories:'pass',photos,overflow,errors,unitGrid:'100 points',shareDeepLink:'pass'}));
  await page.close();
 }
+async function runExhibition(label,width,height){
+ const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
+ const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ await page.goto(new URL('explore.html',base).toString(),{waitUntil:'domcontentloaded',timeout:30000});
+ await page.waitForFunction(()=>document.querySelectorAll('#browse option').length===54);
+ assert.equal(await page.locator('#total').innerText(),'53');
+ assert.equal(await page.locator('.nav a').count(),3);
+ await page.waitForFunction(()=>document.querySelectorAll('#museum-map .leaflet-tile-loaded').length>0,{},{timeout:20000}).catch(()=>{});
+ const tiles=await page.locator('#museum-map .leaflet-tile-loaded').count();
+ await page.screenshot({path:path.join(out,label+'-exhibition.png'),fullPage:false});shots.push(label+'-exhibition');
+ await page.locator('#search').fill('Colombia');
+ assert.ok(await page.locator('#results button').count()>0);
+ await page.locator('#results button').first().click();
+ await page.locator('#detail h2').waitFor();
+ assert.match(await page.locator('#detail h2').innerText(),/Colombia/);
+ assert.ok(await page.locator('#detail a[href*="process=colombia"]').count());
+ await page.screenshot({path:path.join(out,label+'-exhibition-dossier.png'),fullPage:false});shots.push(label+'-exhibition-dossier');
+ await page.locator('#close-detail').click();
+ await page.locator('[data-kind="risk"]').click();
+ assert.equal(await page.locator('#browse option').count(),11);
+ await page.locator('#world-reset').click();
+ assert.equal(await page.locator('#browse option').count(),54);
+ await page.goto(new URL('explore.html?conflict=sudan',base).toString(),{waitUntil:'domcontentloaded'});
+ assert.match(await page.locator('#detail h2').innerText(),/Sudan/);
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
+ if(overflow>8)failures.push(label+': Exhibition horizontal viewport overflow '+overflow+'px');
+ if(errors.length)failures.push(label+': Exhibition browser errors: '+errors.join('; '));
+ console.log(JSON.stringify({label,exhibition:'pass',tiles,overflow,errors}));await page.close();
+}
 try{
+ await runExhibition('desktop',1440,900);
+ await runExhibition('mobile',390,844);
  await run('desktop',1440,900);
  await run('mobile',390,844);
  await runLedger('desktop',1440,900);
