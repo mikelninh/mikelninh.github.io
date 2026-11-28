@@ -1,0 +1,61 @@
+{
+  "asOf": "2026-11-28",
+  "note": "Redaktionelle Einstiegsauswahl, kein systematischer Vollreview. Keine Evidenzbewertung als Gesamtscore.",
+  "items": [
+    {
+      "id": "food-01",
+      "topic": "Ernährung",
+      "title": "Vegetarisches Angebot ausweiten",
+      "design": "Feldexperiment und Beobachtungsstudie",
+      "finding": "Eine Verdopplung des vegetarischen Angebotsanteils erhöhte in einer experimentell untersuchten Kantine den vegetarischen Verkaufsanteil um 7,8 Prozentpunkte.",
+      "limit": "Englische Universitätskantinen; vegetarisch ist nicht vegan; lokale Kosten und Akzeptanz offen.",
+      "metric": "Veganer Verkaufsanteil, Wareneinsatz, Abfall",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31570584/",
+      "year": 2019
+    },
+    {
+      "id": "home-01",
+      "topic": "Wohnen",
+      "title": "Housing First",
+      "design": "Systematischer Review randomisierter Studien",
+      "finding": "Housing First verbessert die Wohnstabilität gegenüber üblichen Hilfsangeboten; gesundheitliche Effekte sind weniger eindeutig.",
+      "limit": "Studienkontexte, Zielgruppen und lokale Wohnungsversorgung unterscheiden sich.",
+      "metric": "Anteil stabil untergebrachter Personen nach 12 Monaten",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30777888/",
+      "year": 2019
+    },
+    {
+      "id": "health-01",
+      "topic": "Gesundheit",
+      "title": "Bewegungsangebote bei Depression",
+      "design": "Systematischer Review und Netzwerk-Metaanalyse",
+      "finding": "Bewegung kann depressive Symptome verringern; unterschiedliche Bewegungsformen wurden untersucht.",
+      "limit": "Nicht als Ersatz für medizinische Versorgung; Vertrauenswürdigkeit einzelner Vergleiche und Zugang prüfen.",
+      "metric": "Teilnahme, validierte Symptommessung unter fachlicher Begleitung",
+      "url": "https://www.bmj.com/content/384/bmj-2023-075847",
+      "year": 2024
+    },
+    {
+      "id": "edu-01",
+      "topic": "Bildung",
+      "title": "Regelmässige individuelle Lernförderung",
+      "design": "Metaanalyse experimenteller Studien",
+      "finding": "Tutoring verbessert im Mittel Lernleistungen; Angebote im Schulalltag und durch geschulte Lehrkräfte oder Hilfskräfte zeigen häufig stärkere Effekte.",
+      "limit": "Unterschiedliche Altersgruppen, Curricula, Kosten und Umsetzungsqualität.",
+      "metric": "Lernfortschritt mit vergleichbarem Test, Kosten je Teilnahme",
+      "url": "https://doi.org/10.3102/00028312231208687",
+      "year": 2024
+    },
+    {
+      "id": "dem-01",
+      "topic": "Demokratie",
+      "title": "Öffentliche Beteiligungsverfahren nutzen",
+      "design": "Dokumentierter institutioneller Zugang",
+      "finding": "meinBerlin bietet Zugang zu Berliner Beteiligungsverfahren.",
+      "limit": "Kein kausaler Nachweis verbesserter politischer Entscheidungen; Verfahrensregeln und Rückmeldung prüfen.",
+      "metric": "Anteil beantworteter Vorschläge, dokumentierte Übernahme",
+      "url": "https://mein.berlin.de/",
+      "year": null
+    }
+  ]
+}
