@@ -19,20 +19,39 @@ def clean_doc(d):
         return None
     return {k:d.get(k) for k in ("id","titel","vorgangstyp","beratungsstand","datum","aktualisiert","wahlperiode")}
 def fetch_dip(out):
-    docs=[]; cursor=None; num=None
-    for _ in range(3):
+    docs={}; cursor=None; num=None; cursors=set()
+    for _ in range(50):
         q={"format":"json","f.wahlperiode":21,"f.vorgangstyp":"Gesetzgebung"}
         if cursor: q["cursor"]=cursor
         response=get_json(DIP+"/vorgang?"+urllib.parse.urlencode(q),{"Authorization":"ApiKey "+(os.environ.get("DIP_API_KEY") or PUBLIC_DIP),"Accept":"application/json"})
-        if not isinstance(response.get("documents"),list): raise ValueError("Invalid DIP shape")
-        docs += [x for x in map(clean_doc,response["documents"]) if x]
-        num=response.get("numFound")
+        page=response.get("documents"); total=response.get("numFound")
+        if not isinstance(page,list) or not isinstance(total,int) or total<1: raise ValueError("Invalid DIP shape")
+        if num is not None and total!=num: raise ValueError("Total changed during pagination")
+        num=total
+        for raw in page:
+            d=clean_doc(raw)
+            if not d: raise ValueError("Invalid legislative item")
+            docs[str(d["id"])]=d
+        if len(docs)==num: break
         nxt=response.get("cursor")
-        if not nxt or nxt==cursor or not response["documents"]: break
-        cursor=nxt
-    unique={str(d["id"]):d for d in docs}
-    if not unique: raise ValueError("Empty DIP snapshot; retaining prior snapshot")
-    write(out,{"status":"ok","retrievedAt":now(),"source":"Deutscher Bundestag/Bundesrat – DIP","query":"21. Wahlperiode; Gesetzgebung; bis zu drei Ergebnisseiten; nicht vollständig","totalMatching":num,"items":list(unique.values())})
+        if not nxt or nxt in cursors or not page: raise ValueError("Incomplete pagination")
+        cursors.add(nxt); cursor=nxt
+    if len(docs)!=num: raise ValueError("Incomplete snapshot; prior data preserved")
+    previous=json.loads((ROOT/"de-dip.json").read_text(encoding="utf-8"))
+    old={str(x["id"]):x for x in previous.get("items",[])}
+    changes=[]
+    for id,d in docs.items():
+        prev=old.get(id)
+        if prev is None: changes.append({"id":id,"kind":"first_seen","title":d["titel"],"after":d.get("beratungsstand")})
+        elif any(prev.get(k)!=d.get(k) for k in ("titel","beratungsstand")):
+            changes.append({"id":id,"kind":"metadata_changed","title":d["titel"],"before":prev.get("beratungsstand"),"after":d.get("beratungsstand"),"previousTitle":prev.get("titel")})
+    if previous.get("complete") is True:
+        for id,d in old.items():
+            if id not in docs: changes.append({"id":id,"kind":"missing_from_query","title":d["titel"],"before":d.get("beratungsstand")})
+    stamp=now()
+    batches=(previous.get("history") or [])[-29:]
+    batches.append({"retrievedAt":stamp,"previousRetrievedAt":previous.get("retrievedAt"),"previousComplete":previous.get("complete",False),"changes":changes})
+    write(out,{"status":"ok","retrievedAt":stamp,"source":"Deutscher Bundestag/Bundesrat – DIP","query":"21. Wahlperiode; Gesetzgebung; vollständig paginiert","totalMatching":num,"complete":True,"items":list(docs.values()),"history":batches})
 def review(out, topic):
     key=os.environ.get("OPENAI_API_KEY")
     if not key: raise RuntimeError("Missing OPENAI_API_KEY; no AI review run")
