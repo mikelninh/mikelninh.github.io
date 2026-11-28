@@ -13,8 +13,16 @@ on:
         default: dip
       topic:
         type: choice
-        options: [Ernährung, Wohnen, Gesundheit, Bildung, Demokratie]
+        options: [Ernährung, Wohnen, Gesundheit, Bildung, Demokratie, Mobilität, Soziale Sicherheit]
         default: Ernährung
+      question:
+        description: Optional specific research question (no personal data)
+        type: string
+        required: false
+      evidence_id:
+        description: Optional evidence ID from de-solutions.json
+        type: string
+        required: false
   schedule:
     - cron: '25 6 * * *'
 permissions:
@@ -63,7 +71,9 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TOPIC: ${{ inputs.topic }}
-        run: python3 the-way/de-pipeline.py review "$RUNNER_TEMP/agent-review.json" --topic "$TOPIC"
+          QUESTION: ${{ inputs.question }}
+          EVIDENCE_ID: ${{ inputs.evidence_id }}
+        run: python3 the-way/de-pipeline.py review "$RUNNER_TEMP/agent-review.json" --topic "$TOPIC" --question "$QUESTION" --evidence-id "$EVIDENCE_ID"
       - uses: actions/upload-artifact@v4
         with:
           name: unreviewed-ai-research
