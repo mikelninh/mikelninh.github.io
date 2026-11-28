@@ -1,0 +1,62 @@
+name: THE WAY Germany pipeline
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: Run DIP refresh or AI review
+        type: choice
+        options: [dip, review]
+        default: dip
+      topic:
+        type: choice
+        options: [Ernährung, Wohnen, Gesundheit, Bildung, Demokratie]
+        default: Ernährung
+  schedule:
+    - cron: '25 6 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: the-way-de-pipeline
+  cancel-in-progress: false
+jobs:
+  dip:
+    if: github.event_name == 'schedule' || inputs.task == 'dip'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch official data, preserve previous snapshot on failure
+        env:
+          DIP_API_KEY: ${{ secrets.DIP_API_KEY }}
+        run: python3 the-way/de-pipeline.py dip "$RUNNER_TEMP/de-dip.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dip-snapshot
+          path: ${{ runner.temp }}/de-dip.json
+      - name: Commit validated snapshot
+        run: |
+          cp "$RUNNER_TEMP/de-dip.json" the-way/de-dip.json
+          git config user.name "the-way-data[bot]"
+          git config user.email "the-way-data@users.noreply.github.com"
+          git add the-way/de-dip.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Refresh DIP snapshot"
+          git push
+  review:
+    if: github.event_name == 'workflow_dispatch' && inputs.task == 'review'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run four research roles
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TOPIC: ${{ inputs.topic }}
+        run: python3 the-way/de-pipeline.py review "$RUNNER_TEMP/agent-review.json" --topic "$TOPIC"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: unreviewed-ai-research
+          path: ${{ runner.temp }}/agent-review.json
+          retention-days: 7
