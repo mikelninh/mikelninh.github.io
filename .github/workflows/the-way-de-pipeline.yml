@@ -1,5 +1,9 @@
 name: THE WAY Germany pipeline
 on:
+  push:
+    paths:
+      - '.github/workflows/the-way-de-pipeline.yml'
+      - 'the-way/de-pipeline.py'
   workflow_dispatch:
     inputs:
       task:
@@ -20,13 +24,18 @@ concurrency:
   cancel-in-progress: false
 jobs:
   dip:
-    if: github.event_name == 'schedule' || inputs.task == 'dip'
+    if: github.event_name != 'workflow_dispatch' || inputs.task == 'dip'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
+      - name: Validate Python syntax and public data JSON
+        run: |
+          python3 -m py_compile the-way/de-pipeline.py
+          python3 -m json.tool the-way/de-solutions.json >/dev/null
+          python3 -m json.tool the-way/de-registry.json >/dev/null
       - name: Fetch official data, preserve previous snapshot on failure
         env:
           DIP_API_KEY: ${{ secrets.DIP_API_KEY }}
