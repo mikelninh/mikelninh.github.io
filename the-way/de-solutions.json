@@ -56,6 +56,62 @@
       "metric": "Anteil beantworteter Vorschläge, dokumentierte Übernahme",
       "url": "https://mein.berlin.de/",
       "year": null
+    },
+    {
+      "id": "edu-02",
+      "topic": "Bildung",
+      "title": "Kostenfreie Schulmahlzeiten",
+      "design": "Systematischer Review",
+      "finding": "Universelle kostenlose Mahlzeiten waren in US-Studien mit höherer Mittagessenteilnahme verbunden; andere Ergebnisse sind weniger sicher.",
+      "limit": "US-Kontext; Evidenzsicherheit für viele weitere Endpunkte gering. Berliner Ausgangslage und bestehende Angebote prüfen.",
+      "metric": "Teilnahme, Essensqualität, Kosten, Abfall",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39120904/",
+      "year": 2024
+    },
+    {
+      "id": "mob-01",
+      "topic": "Mobilität",
+      "title": "Umweltzonen",
+      "design": "Systematischer Review longitudinaler Studien",
+      "finding": "Mehrere Studien fanden Verbesserungen bei bestimmten kardiovaskulären Gesundheitsendpunkten; andere Ergebnisse waren uneinheitlicher.",
+      "limit": "Zonendesign, Fahrzeugbestand und begleitende Massnahmen unterscheiden sich.",
+      "metric": "Luftqualität, Gesundheitsindikatoren, Zugangskosten",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37393094/",
+      "year": 2023
+    },
+    {
+      "id": "mob-02",
+      "topic": "Mobilität",
+      "title": "Flächendeckende Verkehrsberuhigung",
+      "design": "Systematischer Review kontrollierter Vorher-nachher-Studien",
+      "finding": "Die Ergebnisse sprechen für mögliche Verringerungen von Verkehrsunfällen mit Verletzungen.",
+      "limit": "Ältere Evidenz; Verlagerungseffekte, Erreichbarkeit und lokale Unfallentwicklung prüfen.",
+      "metric": "Verletzungsunfälle, Geschwindigkeit, Verkehrsverlagerung",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12535454/",
+      "year": 2003
+    },
+    {
+      "id": "home-02",
+      "topic": "Wohnen",
+      "title": "Warme und energieeffiziente Wohnungen",
+      "design": "Rapid Review",
+      "finding": "Bauliche Verbesserungen waren unter anderem mit besserer Lebensqualität und psychischer Gesundheit verbunden.",
+      "limit": "Heterogene Interventionen; Mieterhöhung, Energieverbrauch und gesundheitliche Risiken getrennt untersuchen.",
+      "metric": "Raumtemperatur, Energiekosten, Wohnkosten, Lebensqualität",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38587096/",
+      "year": 2024
+    },
+    {
+      "id": "econ-01",
+      "topic": "Soziale Sicherheit",
+      "title": "Voreinstellungen für freiwillige Altersvorsorge",
+      "design": "Empirische Unternehmensstudien und spätere Langfristanalyse",
+      "finding": "Automatische Anmeldung erhöht häufig die Teilnahme; langfristige zusätzliche Ersparnisse können deutlich geringer ausfallen.",
+      "limit": "US-Altersvorsorgesystem; Ausstieg, Schulden, Einkommen und Verteilungseffekte prüfen. Nicht direkt auf Deutschland übertragbar.",
+      "metric": "Teilnahme, Nettoersparnis, Ausstiege, finanzielle Belastung",
+      "url": "https://www.nber.org/papers/w32828",
+      "relatedUrl": "https://www.nber.org/papers/w7682",
+      "year": 2024
     }
   ]
 }
