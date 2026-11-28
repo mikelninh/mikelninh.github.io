@@ -15,13 +15,13 @@ def write(path, obj):
     p = pathlib.Path(path); p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(obj, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
 def clean_doc(d):
-    if not isinstance(d, dict) or not str(d.get("id","")).isdigit() or not isinstance(d.get("titel"),str):
+    if not isinstance(d, dict) or d.get("vorgangstyp") != "Gesetzgebung" or not str(d.get("id","")).isdigit() or not isinstance(d.get("titel"),str):
         return None
     return {k:d.get(k) for k in ("id","titel","vorgangstyp","beratungsstand","datum","aktualisiert","wahlperiode")}
 def fetch_dip(out):
     docs=[]; cursor=None; num=None
     for _ in range(3):
-        q={"format":"json","f.wahlperiode":21}
+        q={"format":"json","f.wahlperiode":21,"f.vorgangstyp":"Gesetzgebung"}
         if cursor: q["cursor"]=cursor
         response=get_json(DIP+"/vorgang?"+urllib.parse.urlencode(q),{"Authorization":"ApiKey "+(os.environ.get("DIP_API_KEY") or PUBLIC_DIP),"Accept":"application/json"})
         if not isinstance(response.get("documents"),list): raise ValueError("Invalid DIP shape")
@@ -32,7 +32,7 @@ def fetch_dip(out):
         cursor=nxt
     unique={str(d["id"]):d for d in docs}
     if not unique: raise ValueError("Empty DIP snapshot; retaining prior snapshot")
-    write(out,{"status":"ok","retrievedAt":now(),"source":"Deutscher Bundestag/Bundesrat – DIP","query":"21. Wahlperiode; bis zu drei Ergebnisseiten; nicht vollständig","totalMatching":num,"items":list(unique.values())})
+    write(out,{"status":"ok","retrievedAt":now(),"source":"Deutscher Bundestag/Bundesrat – DIP","query":"21. Wahlperiode; Gesetzgebung; bis zu drei Ergebnisseiten; nicht vollständig","totalMatching":num,"items":list(unique.values())})
 def review(out, topic):
     key=os.environ.get("OPENAI_API_KEY")
     if not key: raise RuntimeError("Missing OPENAI_API_KEY; no AI review run")
